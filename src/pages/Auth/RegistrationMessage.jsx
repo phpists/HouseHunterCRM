@@ -26,6 +26,6 @@ export const RegistrationMessage = ({ ishover, onClick }) => (
 const StyledRegistrationMessage = styled.div`
   .description {
     transition: all 0.3s;
-    opacity: ${({ ishover }) => (ishover ? 0.3 : 1)} !important;
+    opacity: ${({ ishover }) => (ishover === "true" ? 0.3 : 1)} !important;
   }
 `;
