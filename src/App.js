@@ -1,10 +1,48 @@
-import logo from "./logo.svg";
-import "./App.css";
+import { styled } from "styled-components";
+import { Sidebar } from "./components/Sidebar/Sidebar";
+import { Header } from "./components/Header/Header";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Company } from "./pages/Company/Company";
 import { Auth } from "./pages/Auth/Auth";
 
 export const App = () => {
-  if (true) {
-    return <Auth />;
-  }
-  return <div className="App"></div>;
+  const navigate = useNavigate();
+  const [loggined, setLoggined] = useState(false);
+
+  useEffect(() => {
+    loggined && navigate("/company");
+  }, [loggined]);
+
+  return (
+    <>
+      {loggined ? (
+        <StyledApp>
+          <Sidebar />
+          <Header />
+          <div className="app-content">
+            <Routes>
+              <Route path="/company" element={<Company />} />
+              <Route path="*" element={<></>} />
+            </Routes>
+          </div>
+        </StyledApp>
+      ) : (
+        <Auth onAuth={() => setLoggined(true)} />
+      )}
+    </>
+  );
 };
+
+const StyledApp = styled.div`
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  grid-template-rows: max-content 1fr;
+  min-height: 100vh;
+  max-width: 2000px;
+  width: 100%;
+  margin: 0 auto;
+  .app-content {
+    padding: 0px 42px 40px 40px;
+  }
+`;

@@ -1,7 +1,7 @@
 import { Title } from "./Title";
-import { Button } from "./Button";
 import { Description } from "./Description";
 import arrowIcon from "../../assets/images/arrow.svg";
+import { Button } from "../../components/Button";
 
 export const LoginMessage = ({ onClick }) => (
   <div className="flex flex-col items-center">

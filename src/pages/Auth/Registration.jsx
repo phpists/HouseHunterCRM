@@ -2,8 +2,8 @@ import { styled } from "styled-components";
 import { Description } from "./Description";
 import { Title } from "./Title";
 import { Input } from "./Input";
-import { Button } from "./Button";
 import arrowIcon from "../../assets/images/arrow.svg";
+import { Button } from "../../components/Button";
 
 export const Registration = ({ onSuccess }) => {
   return (

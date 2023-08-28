@@ -29,7 +29,7 @@ export const Content = ({
     />
     <div className="left">
       {type === "registration" ? (
-        <Registration onSuccess={onSuccess} />
+        <Registration onSuccess={() => onSuccess()} />
       ) : (
         <RegistrationMessage
           ishover={isRightBlockHover}
@@ -49,7 +49,7 @@ export const Content = ({
       ) : (
         <Login
           onForgotPassword={() => onChangeForgotPassword(true)}
-          onSuccess={onSuccess}
+          onSuccess={() => onSuccess(true)}
         />
       )}
     </div>

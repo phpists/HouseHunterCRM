@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 import { Title } from "./Title";
 import { Description } from "./Description";
-import { Button } from "./Button";
 import homeIcon from "../../assets/images/home.svg";
 import { motion } from "framer-motion";
+import { Button } from "../../components/Button";
 
 export const SuccessMessage = ({ onClick }) => (
   <StyledSuccessMessage

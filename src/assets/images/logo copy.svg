@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="34" viewBox="0 0 40 34" fill="none">
+  <g clip-path="url(#clip0_3589_18725)">
+    <mask id="mask0_3589_18725" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-1" y="0" width="41" height="34">
+      <path d="M37.0018 29.8531L18.6298 4.12382L15.7358 0.0703125H-0.0355225L2.85929 4.12382L21.2304 29.8531L24.1252 33.9057H39.8957L37.0018 29.8531ZM26.1549 29.8531L7.78464 4.12382H13.7053L32.0764 29.8531H26.1549Z" fill="black"/>
+      <path d="M18.2046 33.9067H-0.0355301L2.85842 29.8532L9.08453 21.1338L11.5481 24.5829L7.78463 29.8532H15.3106L18.2046 33.9067Z" fill="black"/>
+      <path d="M39.8958 0.0703125L37.0018 4.12382L30.7766 12.8432L28.3139 9.3932L32.0765 4.12382H24.5513L21.6565 0.0703125H39.8958Z" fill="black"/>
+    </mask>
+    <g mask="url(#mask0_3589_18725)">
+      <rect width="40" height="34" fill="url(#paint0_linear_3589_18725)"/>
+    </g>
+  </g>
+  <defs>
+    <linearGradient id="paint0_linear_3589_18725" x1="9.71962" y1="-6.6729" x2="20.9418" y2="35.0537" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8F9FA"/>
+      <stop offset="1" stop-color="#ADB5BD"/>
+    </linearGradient>
+    <clipPath id="clip0_3589_18725">
+      <rect width="40" height="34" fill="white"/>
+    </clipPath>
+  </defs>
+</svg>

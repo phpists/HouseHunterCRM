@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { Title } from "../Title";
 import { Description } from "../Description";
 import { Input } from "../Input";
-import { Button } from "../Button";
+import { Button } from "../../../components/Button";
 
 export const ForgotPassword = ({ onClose }) => (
   <StyledforgotPassword className="flex flex-col items-center">

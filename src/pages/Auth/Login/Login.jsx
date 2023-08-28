@@ -3,8 +3,8 @@ import { Title } from "../Title";
 import { Description } from "../Description";
 import { Input } from "../Input";
 import { ForgotPassword } from "./ForgotPassword";
-import { Button } from "../Button";
 import arrowIcon from "../../../assets/images/arrow.svg";
+import { Button } from "../../../components/Button";
 
 export const Login = ({ onForgotPassword, onSuccess }) => {
   return (

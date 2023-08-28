@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { Title } from "./Title";
-import { Button } from "./Button";
 import { Description } from "./Description";
+import { Button } from "../../components/Button";
 
 export const RegistrationMessage = ({ ishover, onClick }) => (
   <StyledRegistrationMessage
