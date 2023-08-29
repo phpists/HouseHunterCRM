@@ -37,7 +37,8 @@ const StyledNavbarItem = styled(NavLink)`
   a {
     margin: 8px 0;
   }
-  &.active {
+  &.active,
+  &:hover {
     background: linear-gradient(
       90deg,
       rgba(93, 99, 255, 0.1) 0%,

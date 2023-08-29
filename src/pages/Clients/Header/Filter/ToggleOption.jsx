@@ -1,0 +1,32 @@
+import { useState } from "react";
+import { styled } from "styled-components";
+import { Toggle } from "../../../../components/Toggle";
+
+export const ToggleOption = ({ label, className }) => {
+  const [active, setActive] = useState(false);
+
+  return (
+    <StyledToggleOption
+      className={`flex items-center justify-between ${className}`}
+    >
+      <span>{label}</span>
+      <Toggle value={active} onChange={() => setActive(!active)} />
+    </StyledToggleOption>
+  );
+};
+
+const StyledToggleOption = styled.div`
+  padding: 7px 7px 7px 11px;
+  border-radius: 6px;
+  color: #fff;
+  font-family: Overpass;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 118%; /* 17.7px */
+  letter-spacing: 0.3px;
+  transition: all 0.3s;
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+`;

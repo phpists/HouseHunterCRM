@@ -25,6 +25,6 @@ export const List = ({
 };
 
 const StyledList = styled.div`
-  height: calc(100svh - 172px - 70px);
+  height: calc(100svh - 172px - 75px);
   overflow: auto;
 `;

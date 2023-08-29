@@ -5,14 +5,15 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Company } from "./pages/Company/Company";
 import { Auth } from "./pages/Auth/Auth";
+import { Clients } from "./pages/Clients/Clients";
 
 export const App = () => {
   const navigate = useNavigate();
-  const [loggined, setLoggined] = useState(false);
+  const [loggined, setLoggined] = useState(true);
 
-  useEffect(() => {
-    loggined && navigate("/company");
-  }, [loggined]);
+  //   useEffect(() => {
+  //     loggined && navigate("/company");
+  //   }, [loggined]);
 
   return (
     <>
@@ -22,6 +23,7 @@ export const App = () => {
           <Header />
           <div className="app-content">
             <Routes>
+              <Route path="/clients" element={<Clients />} />
               <Route path="/company" element={<Company />} />
               <Route path="*" element={<></>} />
             </Routes>
@@ -44,5 +46,6 @@ const StyledApp = styled.div`
   margin: 0 auto;
   .app-content {
     padding: 0px 42px 40px 40px;
+    overflow: auto;
   }
 `;

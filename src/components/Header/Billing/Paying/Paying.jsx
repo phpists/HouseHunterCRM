@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ApplePay } from "./ApplePay";
 import { Button } from "./Button";
 import { GooglePay } from "./GogglePay";

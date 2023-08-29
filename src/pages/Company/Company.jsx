@@ -5,7 +5,7 @@ import { Workers } from "./Workers/Workers";
 import { useState } from "react";
 
 export const Company = () => {
-  const [tarifOpen, setTarifOpen] = useState(true);
+  const [tarifOpen, setTarifOpen] = useState(false);
   const [tarifSelected, setTarifSelected] = useState(null);
   const [selectedWorkers, setSelectedWorkers] = useState([]);
   const [paying, setPaying] = useState(false);
