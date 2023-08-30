@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
-import { ObjectCard } from "./ObjectCard/ObjectCard";
 import objectPhoto from "../../../../../../assets/images/object.png";
+import { ObjectCard } from "../../../../../../components/ObjectCard";
 
 export const List = () => {
   return (

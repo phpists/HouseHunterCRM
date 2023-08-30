@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { Section } from "../Section";
-import { Field } from "../Field";
 import { Phones } from "./Phones";
+import { ProfileField } from "../../../../ProfileField";
 
 export const Contact = () => (
   <StyledContact>
@@ -9,7 +9,7 @@ export const Contact = () => (
       <div className="fields">
         <Phones />
         <div className="divider" />
-        <Field value="yuriyo@gmail.com" label="Пошта" />
+        <ProfileField value="yuriyo@gmail.com" label="Пошта" />
       </div>
     </Section>
   </StyledContact>

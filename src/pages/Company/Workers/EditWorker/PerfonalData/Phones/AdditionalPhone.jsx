@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { Field } from "../Field/Field";
+import { Field } from "../../../../../../components/Field";
 import { ReactComponent as RemoveIcon } from "../../../../../../assets/images/remove.svg";
 
 export const AdditionalPhone = ({ onRemove }) => (

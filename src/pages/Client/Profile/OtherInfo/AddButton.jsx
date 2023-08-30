@@ -1,0 +1,36 @@
+import { styled } from "styled-components";
+import { ReactComponent as PlusIcon } from "../../../../assets/images/plus.svg";
+
+export const AddButton = () => (
+  <StyledAddButton className="flex items-center justify-center">
+    <PlusIcon />
+  </StyledAddButton>
+);
+
+const StyledAddButton = styled.div`
+  width: 71px;
+  height: 70px;
+  flex-shrink: 0;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+  cursor: pointer;
+  svg {
+    height: 20px;
+    width: 20px;
+  }
+  g {
+    transition: all 0.3s;
+  }
+  &:hover {
+    background: #fff;
+    border: 1px solid #fff;
+    g {
+      opacity: 1;
+    }
+    path {
+      fill: #2c2c2c;
+    }
+  }
+`;

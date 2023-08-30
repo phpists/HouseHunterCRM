@@ -1,12 +1,12 @@
 import { styled } from "styled-components";
 import { Section } from "./Section";
-import { Field } from "./Field";
+import { ProfileField } from "../../../ProfileField";
 
 export const Password = () => (
   <StyledPassword>
     <Section>
       <div className="fields">
-        <Field value="423432423" label="Пароль" password />
+        <ProfileField value="423432423" label="Пароль" password />
       </div>
     </Section>
   </StyledPassword>

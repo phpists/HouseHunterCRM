@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
-import { Field } from "../Field";
 import { AddButton } from "./AddButton";
 import { useState } from "react";
 import { RemoveBtn } from "./RemoveBtn";
+import { ProfileField } from "../../../../ProfileField";
 
 export const Phones = () => {
   const [phoneAdded, setPhoneAdded] = useState(false);
@@ -10,7 +10,7 @@ export const Phones = () => {
   return (
     <StyledPhones>
       <div className="main-phone flex items-center justify-between">
-        <Field
+        <ProfileField
           value="+38 (097) 707 62 58"
           label="Номер телефону"
           className="phone-field"
@@ -19,7 +19,7 @@ export const Phones = () => {
       </div>
       {phoneAdded && (
         <div className="main-phone flex items-center justify-between">
-          <Field
+          <ProfileField
             value="+38 (097) 707 62 90"
             label="Номер телефону"
             className="phone-field"

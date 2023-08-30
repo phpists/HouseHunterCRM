@@ -1,13 +1,13 @@
 import { styled } from "styled-components";
 import { Section } from "./Section";
-import { Field } from "./Field";
+import { ProfileField } from "../../../ProfileField";
 
 export const BasicInfo = () => (
   <StyledBasicInfo>
     <Section>
       <div className="fields">
-        <Field value="Мицавка" label="Прізвище" />
-        <Field value="Юрій" label="Ім'я" />
+        <ProfileField value="Мицавка" label="Прізвище" />
+        <ProfileField value="Юрій" label="Ім'я" />
       </div>
     </Section>
   </StyledBasicInfo>

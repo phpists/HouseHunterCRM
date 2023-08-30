@@ -1,9 +1,11 @@
 import { styled } from "styled-components";
+import { fortmatNumber } from "../../../../../../utilits";
 
 export const Value = ({ from, to, type }) => (
   <StyledValue className="flex items-center">
-    {from}
-    {type ? <span className="first-type">{type}</span> : null} - {to}
+    {fortmatNumber(from)}
+    {type ? <span className="first-type">{type}</span> : null} -
+    {fortmatNumber(to)}
     {type ? <span>{type}</span> : null}
   </StyledValue>
 );

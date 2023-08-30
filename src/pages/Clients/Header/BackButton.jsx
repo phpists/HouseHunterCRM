@@ -18,7 +18,7 @@ const StyledBackButton = styled.button`
   transition: all 0.3s;
   backdrop-filter: blur(18.5px);
   cursor: pointer;
-  margin: 0 8px 3px;
+  margin: 0 8px 3px 0;
   flex-shrink: 0;
   g {
     opacity: 1;

@@ -3,10 +3,10 @@ import { MainInfo } from "./MainInfo/MainInfo";
 import { Phones } from "./Phones/Phones";
 import { Divider } from "./Divider";
 import { PhoneInfo } from "./PhoneInfo";
-import { Comment } from "./Comment";
 import { Objects } from "./Objects/Objects";
-import { More } from "./More/More";
 import { Arrow } from "./Arrow";
+import { Comment } from "../../../../components/Comment";
+import { MoreButton } from "../../../../components/MoreButton/MoreButton";
 
 export const Card = ({ selected, onSelect }) => {
   const handleClick = (e) => {
@@ -27,7 +27,7 @@ export const Card = ({ selected, onSelect }) => {
       <Comment />
       <Divider />
       <Objects />
-      <More />
+      <MoreButton />
       <Arrow />
     </StyledCard>
   );

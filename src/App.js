@@ -6,14 +6,15 @@ import { useEffect, useState } from "react";
 import { Company } from "./pages/Company/Company";
 import { Auth } from "./pages/Auth/Auth";
 import { Clients } from "./pages/Clients/Clients";
+import { Client } from "./pages/Client/Client";
 
 export const App = () => {
   const navigate = useNavigate();
-  const [loggined, setLoggined] = useState(true);
+  const [loggined, setLoggined] = useState(false);
 
-  //   useEffect(() => {
-  //     loggined && navigate("/company");
-  //   }, [loggined]);
+  useEffect(() => {
+    loggined && navigate("/company");
+  }, [loggined]);
 
   return (
     <>
@@ -24,6 +25,7 @@ export const App = () => {
           <div className="app-content">
             <Routes>
               <Route path="/clients" element={<Clients />} />
+              <Route path="/clients/:id" element={<Client />} />
               <Route path="/company" element={<Company />} />
               <Route path="*" element={<></>} />
             </Routes>

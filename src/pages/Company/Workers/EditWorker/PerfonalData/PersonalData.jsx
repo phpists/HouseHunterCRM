@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { Field } from "./Field/Field";
+import { Field } from "../../../../../components/Field";
 import { Phones } from "./Phones/Phones";
 
 export const PersonalData = () => {

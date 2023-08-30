@@ -23,9 +23,9 @@ const TYPES = {
   },
 };
 
-export const ClientAvatar = ({ type }) => (
+export const ClientAvatar = ({ type, className }) => (
   <StyledClientAvatar
-    className="flex items-center justify-center"
+    className={`flex items-center justify-center ${className}`}
     background={TYPES[type].background}
   >
     <img src={TYPES[type].icon} alt="" />
@@ -39,4 +39,8 @@ const StyledClientAvatar = styled.div`
   border-radius: 100%;
   background: ${({ background }) => background};
   border: 1px solid #fff;
+  padding: 12px;
+  img {
+    height: 100%;
+  }
 `;

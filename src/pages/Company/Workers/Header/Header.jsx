@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 import { Title } from "./Title";
 import { CreateButton } from "./CreateButton";
-import { Filter } from "./Filter/Filter";
 import { Search } from "./Search";
 import { Selected } from "./Selected";
+import { Filter } from "../../../../components/Filter/Filter";
 
 export const Header = ({ tarifSelected, selectedWorkers }) => (
   <StyledHeader className="flex items-center justify-between">
@@ -18,7 +18,7 @@ export const Header = ({ tarifSelected, selectedWorkers }) => (
     </div>
     <div className="flex items-center">
       <CreateButton />
-      <Filter />
+      <Filter className="mr-4" />
       <Search />
     </div>
   </StyledHeader>
