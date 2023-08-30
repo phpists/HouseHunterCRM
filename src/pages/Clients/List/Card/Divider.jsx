@@ -1,6 +1,8 @@
 import { styled } from "styled-components";
 
-export const Divider = () => <StyledDivider />;
+export const Divider = ({ className }) => (
+  <StyledDivider className={`${className}`} />
+);
 
 const StyledDivider = styled.div`
   width: 1px;

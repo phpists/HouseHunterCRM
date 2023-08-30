@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { styled } from "styled-components";
 
@@ -23,7 +24,7 @@ export const Title = () => {
       case "/company":
         return "Моя компанія";
       default:
-        return "";
+        return pathname.split("/")[1] === "client" ? "Клієнт" : "";
     }
   };
 

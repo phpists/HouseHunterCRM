@@ -25,7 +25,7 @@ export const App = () => {
           <div className="app-content">
             <Routes>
               <Route path="/clients" element={<Clients />} />
-              <Route path="/clients/:id" element={<Client />} />
+              <Route path="/client/:id" element={<Client />} />
               <Route path="/company" element={<Company />} />
               <Route path="*" element={<></>} />
             </Routes>

@@ -46,4 +46,7 @@ const StyledPhoneInfo = styled.div`
   &:hover {
     background: #656565;
   }
+  @media (max-width: 1500px) {
+    display: none;
+  }
 `;

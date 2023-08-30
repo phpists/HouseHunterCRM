@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 export const Arrow = () => (
   <StyledArrow
     className="flex items-center justify-center h-full arrow"
-    to="/clients/3"
+    to="/client/3"
   >
     <ArrowIcon />
   </StyledArrow>

@@ -23,7 +23,7 @@ export const Card = ({ selected, onSelect }) => {
       <Phones />
       <Divider />
       <PhoneInfo />
-      <Divider />
+      <Divider className="phone-divider" />
       <Comment />
       <Divider />
       <Objects />
@@ -52,4 +52,10 @@ const StyledCard = styled.div`
     }
   }
   ${({ selected }) => selected && "border: 1.4px solid #FFF;"}
+
+  @media (max-width: 1500px) {
+    .phone-divider {
+      display: none;
+    }
+  }
 `;

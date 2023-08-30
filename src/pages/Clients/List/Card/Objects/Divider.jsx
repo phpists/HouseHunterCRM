@@ -8,4 +8,7 @@ const StyledDivider = styled.div`
   height: 42px;
   opacity: 0.1;
   background: #fff;
+  @media (max-width: 1600px) {
+    margin: 0 4px 0;
+  }
 `;
