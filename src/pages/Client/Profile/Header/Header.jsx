@@ -16,6 +16,6 @@ const StyledHeader = styled.div`
     height: 88px;
     width: 88px;
     padding: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 `;

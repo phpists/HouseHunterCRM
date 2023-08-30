@@ -17,12 +17,20 @@ export const Header = () => (
       <ActionButton
         title="Поставити задачу"
         onClick={null}
-        className="mr-2.5"
+        className="mr-2.5 icon-btn"
       />
-      <ActionButton title="Передати кліента" onClick={null} />
+      <ActionButton
+        title="Передати кліента"
+        onClick={null}
+        className="icon-btn"
+      />
       <Divider />
-      <IconButton Icon={StarIcon} className="mr-2.5" onClick={null} />
-      <IconButton Icon={RemoveIcon} className="remove-btn" onClick={null} />
+      <IconButton Icon={StarIcon} className="mr-2.5 icon-btn" onClick={null} />
+      <IconButton
+        Icon={RemoveIcon}
+        className="remove-btn icon-btn"
+        onClick={null}
+      />
     </div>
   </StyledHeader>
 );

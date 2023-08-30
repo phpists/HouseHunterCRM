@@ -9,7 +9,7 @@ const StyledName = styled.div`
   font-family: Overpass;
   font-size: 17px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 200;
   line-height: 118%; /* 20.06px */
   letter-spacing: 0.34px;
   margin-right: 12px;

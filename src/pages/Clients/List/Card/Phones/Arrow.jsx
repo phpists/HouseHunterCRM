@@ -12,11 +12,12 @@ export const Arrow = ({ open, onToggleOpen }) => (
 );
 
 const StyledArrow = styled.div`
-  padding: 15px 3px;
+  padding: 0 3px;
   border-radius: 0 6px 6px 0;
   border-left: 1px solid rgba(255, 255, 255, 0.1);
   background: #444;
   transition: all 0.3s;
+  height: 100%;
   cursor: pointer;
   flex-shrink: 0;
   svg {

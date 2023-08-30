@@ -19,7 +19,7 @@ const StyledTotal = styled.div`
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 200;
     letter-spacing: 0.3px;
     opacity: 0.4;
   }
@@ -28,7 +28,7 @@ const StyledTotal = styled.div`
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 200;
     letter-spacing: 0.3px;
   }
 `;

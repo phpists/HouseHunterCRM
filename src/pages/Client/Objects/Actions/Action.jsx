@@ -39,12 +39,16 @@ const StyledAction = styled.div`
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 100;
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     opacity: 0.4;
     margin-top: 5px;
     width: max-content;
+  }
+  img {
+    height: 21px;
+    width: 21px;
   }
   ${({ active, index }) =>
     active &&

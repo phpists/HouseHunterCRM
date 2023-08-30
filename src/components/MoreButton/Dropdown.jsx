@@ -36,7 +36,7 @@ const StyledDropdown = styled.div`
   width: 138px;
   overflow: hidden;
   top: -28px;
-  right: -9px;
+  right: 0px;
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s;

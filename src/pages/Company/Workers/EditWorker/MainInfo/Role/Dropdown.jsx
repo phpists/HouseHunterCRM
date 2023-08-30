@@ -16,13 +16,14 @@ const StyledDropdown = styled.div`
   font-family: Overpass;
   font-size: 11px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 118%; /* 12.98px */
   letter-spacing: 0.22px;
   text-transform: uppercase;
   transition: all 0.3s;
   opacity: 0;
   visibility: hidden;
+  text-align: left;
   div {
     padding: 4px 8px 1px;
     background: rgba(88, 175, 255, 0.3);

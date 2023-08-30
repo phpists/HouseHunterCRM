@@ -26,7 +26,7 @@ export const Card = ({
 const StyledCard = styled.div`
   padding: 8px 8px 9px 9px;
   transition: all 0.3s;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.1);
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -35,7 +35,7 @@ const StyledCard = styled.div`
     font-family: Overpass;
     font-size: 20px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 200;
     line-height: 118%; /* 23.6px */
     letter-spacing: 0.4px;
   }
@@ -44,7 +44,7 @@ const StyledCard = styled.div`
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 120.182%; /* 13.22px */
     letter-spacing: 0.22px;
     opacity: 0.4;
@@ -80,6 +80,7 @@ const StyledCard = styled.div`
   }
 
   &:hover {
+    background: rgba(255, 255, 255, 0.15);
     .subtitle {
       ${({ hoverSubtitle }) =>
         hoverSubtitle &&

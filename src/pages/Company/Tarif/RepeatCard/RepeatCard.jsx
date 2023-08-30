@@ -5,7 +5,7 @@ import { Workers } from "./Workers/Workers";
 import { Button } from "../../../../components/Button";
 
 export const RepeatCard = ({ onOpenTarif }) => (
-  <StyledRepeatCard className="flex items-center justify-between">
+  <StyledRepeatCard className="flex items-end justify-between">
     <div>
       <Title />
       <Subtitle />
@@ -33,7 +33,7 @@ const StyledRepeatCard = styled.div`
     font-family: Overpass;
     font-size: 12px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 200;
     line-height: 118%; /* 14.16px */
     letter-spacing: 0.24px;
     height: 26px;

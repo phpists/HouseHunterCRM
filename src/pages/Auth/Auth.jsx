@@ -58,4 +58,7 @@ const StyledAuth = styled.div`
     background: rgba(44, 44, 44, 0.5);
     backdrop-filter: blur(4.5px);
   }
+  button {
+    font-weight: 400;
+  }
 `;

@@ -28,7 +28,7 @@ const StyledSearch = styled.div`
   height: 32px;
   flex-shrink: 0;
   border-radius: 8px;
-  border: 1.4px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
   transition: all 0.3s;
   cursor: pointer;
   margin-right: 15px;
@@ -38,14 +38,15 @@ const StyledSearch = styled.div`
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 200;
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     &::placeholder {
-      opacity: 0.4;
+      color: rgba(255, 255, 255, 0.4);
     }
   }
   &:hover {
+    border: 2px solid transparent;
     background: rgba(255, 255, 255, 0.2);
     g {
       opacity: 1;

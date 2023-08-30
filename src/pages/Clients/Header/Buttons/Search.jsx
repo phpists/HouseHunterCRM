@@ -7,8 +7,12 @@ export const Search = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="mr-2.5">
-      <IconButton Icon={SearchIcon} onClick={() => setOpen(true)} />
+    <div>
+      <IconButton
+        Icon={SearchIcon}
+        onClick={() => setOpen(true)}
+        className="icon-btn"
+      />
       {open && <Filter onClose={() => setOpen(false)} />}
     </div>
   );

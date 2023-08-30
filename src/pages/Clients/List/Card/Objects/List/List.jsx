@@ -17,6 +17,6 @@ const StyledList = styled.div`
   width: 185px;
   overflow: auto;
   @media (max-width: 1600px) {
-    width: 100px;
+    width: 140px;
   }
 `;

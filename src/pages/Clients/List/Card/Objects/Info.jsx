@@ -19,7 +19,7 @@ const StyledInfo = styled.div`
   font-family: Overpass;
   font-size: 11px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 100;
   line-height: 118%;
   letter-spacing: 0.22px;
   div {

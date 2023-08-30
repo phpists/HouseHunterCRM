@@ -4,7 +4,7 @@ import { Avatar } from "./Avatar";
 
 export const Owner = () => (
   <StyledOwner className="flex items-center">
-    <Status status={1} />
+    <Status status={1} className="status-badge" />
     <div className="name">Юрій О.</div>
     <Avatar />
   </StyledOwner>
@@ -20,8 +20,11 @@ const StyledOwner = styled.div`
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 118%; /* 16.52px */
     letter-spacing: 0.28px;
+  }
+  .status-badge {
+    border-radius: 20px;
   }
 `;

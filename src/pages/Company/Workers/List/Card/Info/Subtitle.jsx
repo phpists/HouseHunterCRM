@@ -10,7 +10,7 @@ const StyledSubtitle = styled.div`
   font-family: Open Sans;
   font-size: 11px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
   letter-spacing: 0.22px;
   opacity: 0.4;

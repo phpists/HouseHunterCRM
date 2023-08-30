@@ -3,22 +3,20 @@ import { Header } from "./Header/Header";
 import { Actions } from "./Actions/Actions";
 import { Card } from "./Card/Card";
 
-export const Objects = () => {
+export const Objects = ({ selected, onSelect }) => {
+  const data = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
   return (
     <StyledObjects>
       <Header />
       <div className="objects-content hide-scroll">
         <Actions />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {data.map((c, i) => (
+          <Card
+            key={1}
+            selected={selected === i}
+            onSelect={() => onSelect(i)}
+          />
+        ))}
       </div>
     </StyledObjects>
   );

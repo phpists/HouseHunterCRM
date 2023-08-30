@@ -43,25 +43,28 @@ const StyleField = styled.div`
   transition: all 0.3s;
   flex-shrink: 0;
   .field-content {
-    width: 100%;
+    width: 80%;
   }
   .value {
     color: #fff;
     font-family: Overpass;
-    font-size: 15px;
+    font-size: 14px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 200;
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
-    width: 100%;
+    width: 70%;
     ${({ hide }) => hide && "filter: blur(3px);"}
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
   .label {
     color: #fff;
     font-family: Open Sans;
-    font-size: 11px;
+    font-size: 10px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
@@ -80,6 +83,9 @@ const StyleField = styled.div`
       background: rgba(255, 255, 255, 0.2) !important;
       opacity: 1 !important;
     }
+  }
+  svg {
+    flex-shrink: 0;
   }
   .edit-icon {
     path {

@@ -19,7 +19,7 @@ const StyledCard = styled.div`
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 200;
     line-height: 118%;
     letter-spacing: 0.3px;
     color: ${({ type }) => (type ? "#FFF" : "#FF5151")};
@@ -31,7 +31,7 @@ const StyledCard = styled.div`
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;

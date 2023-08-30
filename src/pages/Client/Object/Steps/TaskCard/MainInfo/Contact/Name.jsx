@@ -29,7 +29,7 @@ export const Name = ({ type, name, onClick }) => {
     <StyledName
       color={TYPES[type].color}
       roleWith={TYPES[type].width}
-      className="flex items-center"
+      className="flex items-center justify-end"
       onClick={onClick}
     >
       <img src={TYPES[type].icon} alt="" className="icon name-content" />

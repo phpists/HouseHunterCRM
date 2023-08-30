@@ -17,7 +17,7 @@ const StyledTitle = styled.div`
   font-family: Overpass;
   font-size: 20px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 200;
   line-height: 118%;
   letter-spacing: 0.4px;
   .number {
@@ -27,9 +27,11 @@ const StyledTitle = styled.div`
   }
   .purple {
     color: #b61feb;
+    font-weight: 300;
   }
   .green {
     color: #2df47d;
+    font-weight: 300;
   }
   .end {
     margin: 0 5px;

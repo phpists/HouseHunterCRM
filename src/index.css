@@ -79,3 +79,10 @@ img {
   -ms-user-select: none;
   user-select: none;
 }
+
+.icon-btn {
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  &:hover {
+    border: 2px solid transparent !important;
+  }
+}

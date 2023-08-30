@@ -7,7 +7,7 @@ import { Subtitle } from "./Subtitle";
 export const Info = ({ isSelected }) => (
   <StyledInfo className="flex items-center">
     <Avatar />
-    <div>
+    <div className="flex flex-col items-start">
       <div className="flex items-start">
         <Name isSelected={isSelected} />
         <Status status={2} />

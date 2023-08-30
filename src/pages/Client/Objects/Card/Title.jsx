@@ -1,14 +1,30 @@
 import { styled } from "styled-components";
 
-export const Title = () => <StyledTitle>Галицький 1к, 100 м2</StyledTitle>;
+export const Title = () => (
+  <StyledTitle>
+    <span>
+      Галицький 1к, 100 м<sup>2</sup>
+    </span>
+  </StyledTitle>
+);
 
 const StyledTitle = styled.div`
   color: #fff;
   font-family: Overpass;
   font-size: 17px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 200;
   line-height: 118%; /* 20.06px */
   letter-spacing: 0.34px;
   margin-right: 10px;
+  width: 9svw;
+  max-width: 260px;
+  span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    display: block;
+    line-height: 1.5;
+  }
 `;

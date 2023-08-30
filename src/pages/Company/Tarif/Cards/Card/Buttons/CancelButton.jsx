@@ -14,7 +14,7 @@ const StyledCancelButton = styled.div`
     font-family: Overpass;
     font-size: 12px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 118%; /* 14.16px */
     letter-spacing: 0.24px;
     height: 26px;

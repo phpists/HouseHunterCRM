@@ -9,7 +9,7 @@ const StyledSectorTitle = styled.div`
   font-family: Overpass;
   font-size: 14px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 200;
   line-height: 118%;
   letter-spacing: 0.28px;
   text-transform: uppercase;

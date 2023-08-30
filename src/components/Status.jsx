@@ -9,10 +9,10 @@ const STATUSES = {
   2: { title: "Агент", color: "#58FF5E", background: "rgba(88, 255, 94, 0.3)" },
 };
 
-export const Status = ({ status }) => (
+export const Status = ({ status, className }) => (
   <StyledStatus
     status={STATUSES[status]}
-    className="flex items-center justify-center"
+    className={`flex items-center justify-center ${className}`}
   >
     {STATUSES[status].title}
   </StyledStatus>
@@ -28,7 +28,7 @@ const StyledStatus = styled.div`
   font-family: Overpass;
   font-size: 11px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 118%; /* 12.98px */
   letter-spacing: 0.22px;
   text-transform: uppercase;

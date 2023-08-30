@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { ReactComponent as ArrowIcon } from "../../../../assets/images/arrow-right-tarif.svg";
+import { ReactComponent as ArrowIcon } from "../../../../assets/images/clients-arrow.svg";
 import { NavLink } from "react-router-dom";
 
 export const Arrow = () => (
@@ -16,5 +16,10 @@ const StyledArrow = styled(NavLink)`
     transform: rotate(-45deg);
     opacity: 0.4;
     transition: all 0.3s;
+    width: 24px;
+    height: 24px;
+    path {
+      fill: #fff;
+    }
   }
 `;

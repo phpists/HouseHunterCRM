@@ -7,13 +7,17 @@ import { Comment } from "../../../../components/Comment";
 import { StepNumber } from "../../../../components/StepNumber";
 import { MoreButton } from "../../../../components/MoreButton/MoreButton";
 
-export const Card = () => {
+export const Card = ({ selected, onSelect }) => {
   return (
-    <StyledCard className="flex items-center justify-between">
-      <div className="flex items-center">
+    <StyledCard
+      className="flex items-center justify-between"
+      onClick={onSelect}
+      selected={selected}
+    >
+      <div className="flex items-center w-max">
         <ObjectCard className="object-card" date="04.10.23" />
-        <div>
-          <div className="flex items-center">
+        <div className="w-max">
+          <div className="flex items-center w-max">
             <Title />
             <Price />
           </div>
@@ -22,8 +26,10 @@ export const Card = () => {
       </div>
       <div className="flex items-center">
         <Comment className="comment-card" />
-        <StepNumber num={1} className="number" />
-        <MoreButton />
+        <div className="relative">
+          <StepNumber num={1} className="number" />
+          <MoreButton />
+        </div>
       </div>
     </StyledCard>
   );
@@ -34,6 +40,7 @@ const StyledCard = styled.div`
   border-radius: 14px;
   background: #3d3d3d;
   margin-bottom: 10px;
+  transition: all 0.3s;
   cursor: pointer;
   .object-card {
     width: 62px;
@@ -53,20 +60,29 @@ const StyledCard = styled.div`
     margin-right: 21px;
   }
   .more {
-    width: 0;
-  }
-  &:hover {
-    .more {
-      opacity: 1;
-      transform: translateX(0px);
-      width: 32px;
-      .divider {
-        display: none;
-      }
-    }
-    .number {
-      opacity: 0;
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.4s;
+    .divider {
       display: none;
     }
   }
+  .number {
+    transition: all 0.3s;
+  }
+  &:hover {
+    background: #484848;
+    .more {
+      opacity: 1;
+      left: 50%;
+    }
+    .number {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+  }
+
+  ${({ selected }) => selected && "border: 1.4px solid #FFF;"}
 `;

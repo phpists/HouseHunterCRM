@@ -14,7 +14,7 @@ const StyledClosedButton = styled.div`
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 200;
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   width: 100%;

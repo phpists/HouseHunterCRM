@@ -6,14 +6,17 @@ import { useState } from "react";
 import { Object } from "./Object/Object";
 
 export const Client = () => {
-  const [selectedObject, setSelectedObject] = useState(null);
+  const [selectedObject, setSelectedObject] = useState(0);
 
   return (
     <StyledClient>
       <Header />
       <div className="client-content">
         <Profile />
-        <Objects />
+        <Objects
+          selected={selectedObject}
+          onSelect={(value) => setSelectedObject(value)}
+        />
         <Object />
       </div>
     </StyledClient>

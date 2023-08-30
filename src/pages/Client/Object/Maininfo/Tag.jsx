@@ -17,12 +17,12 @@ const StyledTag = styled.div`
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 200;
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   border-radius: 9px;
   background: rgba(255, 255, 255, 0.05);
-  padding: 6px 12px 6px 6px;
+  padding: 6px 12px 4px 6px;
   cursor: pointer;
   span {
     text-overflow: ellipsis;

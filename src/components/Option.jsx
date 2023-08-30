@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 import checkIcon from "../assets/images/circle-green-check.svg";
 
-export const Option = ({ title, onChange, active }) => (
+export const Option = ({ title, onChange, active, className }) => (
   <StyledOption
-    className="flex items-center justify-between hover-effect-to-right"
+    className={`flex items-center justify-between hover-effect-to-right ${className}`}
     onClick={onChange}
     active={active}
   >
@@ -18,11 +18,11 @@ const StyledOption = styled.div`
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 200;
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   transition: all 0.3s;
-  background: rgba(255, 255, 255, 0);
+  background: rgba(255, 255, 255, 0.2);
   background: linear-gradient(
       to left,
       rgba(255, 255, 255, 0) 50%,
@@ -31,6 +31,7 @@ const StyledOption = styled.div`
     right;
   background-size: 210%;
   transition: 0.3s ease-out;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   &:hover {
     background-position: left;
   }

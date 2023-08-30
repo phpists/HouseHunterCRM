@@ -18,7 +18,7 @@ const StyledDateTag = styled.div`
   font-family: Overpass;
   font-size: 12px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 100;
   line-height: 118%; /* 14.16px */
   letter-spacing: 0.24px;
   img {

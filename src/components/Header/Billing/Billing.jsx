@@ -5,6 +5,7 @@ import { BillButton } from "./BillButton";
 import { useState } from "react";
 import { Paying } from "./Paying/Paying";
 import { Download } from "./Download/Download";
+import { Divider } from "./Divider";
 
 export const Billing = () => {
   const [open, setOpen] = useState(false);
@@ -46,13 +47,13 @@ export const Billing = () => {
       ) : (
         <BillButton onClick={() => setOpen(true)} />
       )}
+      <Divider />
     </StyledBilling>
   );
 };
 
 const StyledBilling = styled.div`
   padding: 12px 60px 13px 8px;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s;
   cursor: pointer;
   position: relative;
@@ -65,7 +66,11 @@ const StyledBilling = styled.div`
     & > .bill-btn {
       opacity: 1;
     }
+    .divider {
+      opacity: 0;
+    }
   }
+
   ${({ open }) =>
     open &&
     `
@@ -75,6 +80,9 @@ const StyledBilling = styled.div`
     border: none;
     .main-text {
         margin: 0 123px 0 0;
+    }
+    .divider {
+      opacity: 0;
     }
   `}
   ${({ attach }) =>

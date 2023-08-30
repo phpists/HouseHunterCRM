@@ -19,7 +19,7 @@ const StyledDropdown = styled.div`
   top: 100%;
   width: 100%;
   left: 0;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 0 0 8px 8px;
   overflow: hidden;
   backdrop-filter: blur(18.5px);
@@ -38,6 +38,7 @@ const StyledDropdown = styled.div`
     &:hover {
       opacity: 1;
       background: rgba(255, 255, 255, 0.1);
+      color: #fff;
     }
   }
   div:last-child {

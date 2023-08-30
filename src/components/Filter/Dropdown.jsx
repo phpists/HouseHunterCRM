@@ -38,7 +38,12 @@ export const Dropdown = ({ open }) => {
         active={manager}
         onChange={() => setManager(!rieltor)}
       />
-      <Option title="Керівник" active={boss} onChange={() => setBoss(!boss)} />
+      <Option
+        title="Керівник"
+        active={boss}
+        onChange={() => setBoss(!boss)}
+        className="last-option"
+      />
     </StyledDropdown>
   );
 };
@@ -49,7 +54,7 @@ const StyledDropdown = styled.div`
   right: 0;
   width: 220px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(18.5px);
   color: #fff;
   font-family: Overpass;
@@ -67,12 +72,16 @@ const StyledDropdown = styled.div`
   }
   .toggle-wrapper {
     padding: 6px 6px 7px 11px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
   .toggle {
     background: #323232;
   }
   .toggle--active {
     background: #35c511;
+  }
+  .last-option {
+    border: none;
   }
   ${({ open }) =>
     open &&

@@ -9,7 +9,7 @@ const StyledTitle = styled.div`
   font-family: Overpass;
   font-size: ${({ open }) => (open ? 20 : 15)}px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 118%;
   letter-spacing: ${({ open }) => (open ? 0.4 : 0.3)}px;
   margin-bottom: 2px;

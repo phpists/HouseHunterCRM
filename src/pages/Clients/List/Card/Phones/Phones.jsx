@@ -8,7 +8,7 @@ export const Phones = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <StyledPhones className="flex items-center" open={open}>
+    <StyledPhones open={open}>
       <Phone showOnHoverIcon />
       <Arrow open={open} onToggleOpen={() => setOpen(!open)} />
       <Dropdown open={open} onSelect={() => setOpen(false)} />
@@ -21,4 +21,6 @@ const StyledPhones = styled.div`
   border-radius: ${({ open }) => (open ? "6px 6px 0 0" : "6px")};
   flex-shrink: 0;
   height: max-content;
+  display: grid;
+  grid-template-columns: max-content max-content;
 `;

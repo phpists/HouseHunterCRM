@@ -16,7 +16,7 @@ const StyledSelected = styled.div`
   font-family: Overpass;
   font-size: 11px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 200;
   line-height: 118%; /* 12.98px */
   letter-spacing: 0.22px;
   text-transform: uppercase;
@@ -31,6 +31,7 @@ const StyledSelected = styled.div`
     &.active {
       background: #fff;
       color: #2c2c2c;
+      font-weight: 600 !important;
     }
   }
 `;

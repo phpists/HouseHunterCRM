@@ -16,13 +16,15 @@ const StyledButton = styled.button`
   height: 32px;
   flex-shrink: 0;
   border-radius: 8px;
-  border: 1.4px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
   transition: all 0.3s;
   g {
     transition: all 0.3s;
   }
   &:hover {
     background: rgba(255, 255, 255, 0.2);
+    border: 2px solid transparent;
+
     g {
       opacity: 1;
     }

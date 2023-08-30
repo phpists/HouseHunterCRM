@@ -21,5 +21,6 @@ const StyledBillButton = styled.div`
     font-style: normal;
     letter-spacing: 0.24px;
     margin-left: 26px;
+    height: 26px;
   }
 `;

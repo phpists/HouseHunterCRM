@@ -41,12 +41,21 @@ const StyledProfileField = styled.div`
   border-radius: 6px;
   cursor: pointer;
   position: relative;
+  background: rgba(255, 255, 255, 0);
+  background: linear-gradient(
+      to left,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 0.05) 50%
+    )
+    right;
+  background-size: 210%;
+  transition: 0.5s ease-out;
   .value {
     color: #fff;
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 200;
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     margin-bottom: 1px;
@@ -59,7 +68,7 @@ const StyledProfileField = styled.div`
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
@@ -76,7 +85,7 @@ const StyledProfileField = styled.div`
     z-index: 10;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background-position: left;
     .label {
       display: none;
     }
