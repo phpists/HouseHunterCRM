@@ -57,7 +57,7 @@ const StyledEditWorker = styled(motion.div)`
   border-left: 1px solid rgba(255, 255, 255, 0.4);
   background: rgba(44, 44, 44, 0.8);
   backdrop-filter: blur(12.5px);
-  height: calc(100svh - 172px);
+  height: calc(100svh - 161px);
   top: 132px;
   width: 361px;
   overflow: auto;

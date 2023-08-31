@@ -54,7 +54,7 @@ const StyledMaininfo = styled.div`
   padding: 6px;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.1);
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   .title-field {
     align-items: start !important;
   }

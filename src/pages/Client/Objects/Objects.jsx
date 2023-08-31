@@ -27,7 +27,7 @@ const StyledObjects = styled.div`
   background: #2b2b2b;
   .objects-content {
     padding: 10px;
-    height: calc(100svh - 310px);
+    height: calc(100svh - 295px);
     overflow: auto;
   }
 `;

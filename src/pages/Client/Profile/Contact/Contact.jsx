@@ -25,5 +25,5 @@ const StyledContact = styled.div`
   padding: 3px;
   border-radius: 9px;
   background: rgba(255, 255, 255, 0.2);
-  margin-bottom: 25px;
+  margin-bottom: 18px;
 `;

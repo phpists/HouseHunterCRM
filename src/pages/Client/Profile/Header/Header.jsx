@@ -10,7 +10,7 @@ export const Header = () => (
 );
 
 const StyledHeader = styled.div`
-  height: 199px;
+  height: 180px;
   .avatar {
     border: none;
     height: 88px;

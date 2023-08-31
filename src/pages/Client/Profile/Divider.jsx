@@ -7,5 +7,5 @@ const StyledDivider = styled.div`
   opacity: 0.2;
   background: #fff;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 `;

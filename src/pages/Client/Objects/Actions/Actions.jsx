@@ -35,5 +35,5 @@ export const Actions = () => {
 };
 
 const StyledActions = styled.div`
-  margin: 10px 0;
+  margin-bottom: 10px;
 `;

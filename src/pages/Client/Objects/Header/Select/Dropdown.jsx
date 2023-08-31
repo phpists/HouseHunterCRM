@@ -28,7 +28,7 @@ const StyledDropdown = styled.div`
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 200;
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     padding: 7px 12px 5px;
@@ -38,6 +38,7 @@ const StyledDropdown = styled.div`
     &:hover {
       opacity: 1;
       background: rgba(255, 255, 255, 0.1);
+      color: #fff;
     }
   }
   div:last-child {

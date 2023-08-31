@@ -17,5 +17,5 @@ const StyledBasicInfo = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 50%);
   gap: 4px;
-  margin-bottom: 25px;
+  margin-bottom: 18px;
 `;

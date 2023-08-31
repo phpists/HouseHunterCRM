@@ -20,5 +20,5 @@ export const Header = () => {
 };
 const StyledHeader = styled.div`
   padding: 33px 42px 0 40px;
-  margin-bottom: 31px;
+  margin-bottom: 20px;
 `;

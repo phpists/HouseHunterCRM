@@ -1,7 +1,10 @@
 import { styled } from "styled-components";
 
 export const LangCard = ({ title, icon, className }) => (
-  <StyledLangCard className={`flex items-center ${className}`} icon={icon}>
+  <StyledLangCard
+    className={`flex items-center justify-between ${className}`}
+    icon={icon}
+  >
     <span>{title}</span>
     <div />
   </StyledLangCard>
@@ -19,7 +22,7 @@ const StyledLangCard = styled.div`
     font-family: Lato;
     font-size: 15px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 400;
     line-height: normal;
     letter-spacing: 0.3px;
     opacity: 0.6;

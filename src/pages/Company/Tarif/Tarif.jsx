@@ -38,6 +38,6 @@ const StyledTarif = styled.div`
   padding: 16px;
   background: #323232;
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
-  height: calc(100svh - 101px - 30px - 40px - 421px);
+  height: calc(100svh - 101px - 24px - 40px - 421px);
   min-height: ${({ tarifOpen }) => (tarifOpen ? 400 : 215)}px;
 `;

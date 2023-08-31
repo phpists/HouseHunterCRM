@@ -17,7 +17,7 @@ const StyledDropzone = styled.div`
   font-family: Open Sans;
   font-size: 11px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   line-height: normal;
   letter-spacing: 0.22px;
   transition: all 0.3s;

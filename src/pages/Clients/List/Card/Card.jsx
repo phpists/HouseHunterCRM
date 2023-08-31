@@ -27,15 +27,17 @@ export const Card = ({ selected, onSelect }) => {
       <Comment />
       <Divider />
       <Objects />
-      <MoreButton />
-      <Arrow />
+      <div className="flex items-center">
+        <MoreButton />
+        <Arrow />
+      </div>
     </StyledCard>
   );
 };
 
 const StyledCard = styled.div`
   padding: 14px;
-  border-radius: 10px;
+  border-radius: 15px;
   background: #3d3d3d;
   transition: all 0.3s;
   cursor: pointer;

@@ -21,5 +21,5 @@ const StyledList = styled.div`
   grid-template-columns: 1fr;
   gap: 10px;
   overflow: auto;
-  height: calc(100svh - 256px);
+  height: calc(100svh - 245px);
 `;

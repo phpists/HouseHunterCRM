@@ -36,7 +36,7 @@ export const Header = () => (
 );
 
 const StyledHeader = styled.div`
-  margin-bottom: 19px;
+  margin-bottom: 15px;
   .remove-btn:hover {
     path {
       fill: #fc4444;

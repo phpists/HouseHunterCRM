@@ -45,14 +45,14 @@ const StyledFilter = styled(motion.div)`
   top: -18px;
   right: -20px;
   width: 439px;
-  height: calc(100svh - 173px);
+  height: calc(100svh - 162px);
   flex-shrink: 0;
   background: rgba(44, 44, 44, 0.8);
   backdrop-filter: blur(12.5px);
   z-index: 20;
   .content {
     padding: 0 20px 20px;
-    height: calc(100svh - 173px - 70px - 20px);
+    height: calc(100svh - 162px - 70px - 20px);
     overflow: auto;
   }
 `;

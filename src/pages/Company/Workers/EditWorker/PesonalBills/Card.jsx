@@ -3,7 +3,9 @@ import { styled } from "styled-components";
 export const Card = ({ type }) => (
   <StyledCard className="flex items-center justify-between" type={type}>
     <div>
-      <div className="title">Рахунок №2139Q87</div>
+      <div className="title flex items-center">
+        <span>Рахунок</span> №2139Q87
+      </div>
       <div className="subtitle">6 травня 2023 14:58</div>
     </div>
     <div className="price">1 000₴</div>
@@ -25,6 +27,7 @@ const StyledCard = styled.div`
     color: ${({ type }) => (type ? "#FFF" : "#FF5151")};
     span {
       opacity: 0.6;
+      margin-right: 3px;
     }
   }
   .subtitle {
@@ -42,7 +45,7 @@ const StyledCard = styled.div`
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 300;
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
   }
