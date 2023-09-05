@@ -96,6 +96,8 @@ const StyleField = styled.div`
     background: rgba(255, 255, 255, 0.05);
     .value {
       filter: blur(0px);
+      white-space: normal;
+      width: 100%;
     }
     .edit-btn {
       opacity: 0.4;

@@ -1,16 +1,24 @@
 import { styled } from "styled-components";
-import { ClientAvatar } from "../../../../components/ClientAvatar";
 import { Name } from "./Name";
+import { Avatar } from "./Avatar";
+import { Email } from "./Email";
+import { Tag } from "./Tag";
 
 export const Header = () => (
-  <StyledHeader className="flex flex-col items-center justify-center">
-    <ClientAvatar type={1} className="avatar" />
-    <Name />
+  <StyledHeader className="flex items-center justify-center">
+    <Avatar />
+    <div className="flex items-start">
+      <div className="flex flex-col items-start mr-3">
+        <Name />
+        <Email />
+      </div>
+      <Tag />
+    </div>
   </StyledHeader>
 );
 
 const StyledHeader = styled.div`
-  height: 180px;
+  padding: 20px 41px 20px 20px;
   .avatar {
     border: none;
     height: 88px;

@@ -4,9 +4,12 @@ import { Divider } from "../../Divider";
 import { Field } from "../../../../../components/Field";
 import { SelectTask } from "./SelectTask/SelectTask";
 import { Pledge } from "./Pledge/Pledge";
+import { DateField } from "../DateField/DateField";
 
 export const ThirdStep = () => (
   <StyledThirdStep>
+    <DateField />
+    <Divider />
     <Comment />
     <Divider />
     <SelectTask />

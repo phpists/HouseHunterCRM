@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.2.1",
     "framer-motion": "^10.16.1",
     "react": "^18.2.0",
+    "react-calendar": "^4.6.0",
     "react-dom": "^18.2.0",
     "react-input-mask": "^2.0.4",
     "react-ranger": "^2.1.0",

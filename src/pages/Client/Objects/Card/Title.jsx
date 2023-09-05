@@ -1,10 +1,8 @@
 import { styled } from "styled-components";
 
-export const Title = () => (
-  <StyledTitle>
-    <span>
-      Галицький 1к, 100 м<sup>2</sup>
-    </span>
+export const Title = ({ title, className }) => (
+  <StyledTitle className={`${className}`}>
+    <span>{title}</span>
   </StyledTitle>
 );
 
@@ -17,8 +15,8 @@ const StyledTitle = styled.div`
   line-height: 118%; /* 20.06px */
   letter-spacing: 0.34px;
   margin-right: 10px;
-  width: 9svw;
-  max-width: 260px;
+  width: 10svw;
+  max-width: 280px;
   span {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -26,5 +24,8 @@ const StyledTitle = styled.div`
     width: 100%;
     display: block;
     line-height: 1.5;
+  }
+  @media (max-width: 1400px) {
+    max-width: 150px;
   }
 `;

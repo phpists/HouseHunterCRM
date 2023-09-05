@@ -6,6 +6,7 @@ import { CreatedDate } from "./CreatedDate";
 import { Comment } from "../../../../components/Comment";
 import { StepNumber } from "../../../../components/StepNumber";
 import { MoreButton } from "../../../../components/MoreButton/MoreButton";
+import { Tag } from "./Tag";
 
 export const Card = ({ selected, onSelect }) => {
   return (
@@ -16,17 +17,26 @@ export const Card = ({ selected, onSelect }) => {
     >
       <div className="flex items-center w-max">
         <ObjectCard className="object-card" date="04.10.23" />
-        <div className="w-max">
+        <div className="w-max mr-5">
           <div className="flex items-center w-max">
-            <Title />
+            <Title title="Оренда комерційної нерухомості" />
             <Price />
+          </div>
+          <CreatedDate />
+        </div>
+        <div className="w-max mr-5">
+          <div className="flex items-center w-max">
+            <Title
+              title="Шевченківський, Галицький, Личаківський"
+              className="location"
+            />
+            <Tag />
           </div>
           <CreatedDate />
         </div>
       </div>
       <div className="flex items-center">
-        <Comment className="comment-card" />
-        <div className="relative">
+        <div className="relative flex items-center">
           <StepNumber num={1} className="number" />
           <MoreButton />
         </div>
@@ -36,8 +46,8 @@ export const Card = ({ selected, onSelect }) => {
 };
 
 const StyledCard = styled.div`
-  padding: 6px 21px 6px 6px;
-  border-radius: 14px;
+  padding: 6px 6px 6px 6px;
+  border-radius: 15px;
   background: #3d3d3d;
   margin-bottom: 10px;
   transition: all 0.3s;
@@ -60,11 +70,15 @@ const StyledCard = styled.div`
     margin-right: 21px;
   }
   .more {
-    position: absolute;
-    left: 100%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    transition: all 0.4s;
+    opacity: 1;
+    margin-left: 12px;
+    transform: translateX(0px);
+    button {
+      border: none;
+      width: 18px;
+      height: 18px;
+      background: none;
+    }
     .divider {
       display: none;
     }
@@ -74,15 +88,13 @@ const StyledCard = styled.div`
   }
   &:hover {
     background: #484848;
-    .more {
-      opacity: 1;
-      left: 50%;
-    }
-    .number {
-      opacity: 0;
-      transform: translateX(-10px);
+  }
+  .location {
+    max-width: 300px;
+    width: 15svw;
+    @media (max-width: 1600px) {
+      max-width: 150px;
     }
   }
-
   ${({ selected }) => selected && "border: 1.4px solid #FFF;"}
 `;

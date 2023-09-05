@@ -12,7 +12,7 @@ export const Arrow = () => (
 );
 
 const StyledArrow = styled(NavLink)`
-  margin-right: 27px;
+  margin-right: 18px;
   svg {
     transform: rotate(-45deg);
     opacity: 0.4;

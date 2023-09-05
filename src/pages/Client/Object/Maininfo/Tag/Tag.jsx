@@ -13,17 +13,12 @@ export const Tag = ({ Icon, text, className, onHover }) => (
 
 const StyledTag = styled.div`
   color: #fff;
-  text-overflow: ellipsis;
-  font-family: Overpass;
-  font-size: 15px;
+  font-family: Open Sans;
+  font-size: 13px;
   font-style: normal;
-  font-weight: 200;
-  line-height: 118%; /* 17.7px */
-  letter-spacing: 0.3px;
-  border-radius: 9px;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 6px 12px 4px 6px;
-  cursor: pointer;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.26px;
   span {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -31,8 +26,10 @@ const StyledTag = styled.div`
     line-height: 1.4;
   }
   svg {
-    margin: -4px 4px 0 0;
     flex-shrink: 0;
+    height: 16px;
+    width: 16px;
+    margin-right: 6px;
     g {
       opacity: 1;
     }

@@ -3,22 +3,28 @@ import { Slider } from "./Slider/Slider";
 import { Divider } from "../Divider";
 import { Field } from "../../../../components/Field";
 import { CreatedDate } from "./CreatedDate";
-import { Tag } from "./Tag";
-import { ReactComponent as LocationIcon } from "../../.../../../../assets/images/location.svg";
-import { ReactComponent as ExpandedIcon } from "../../.../../../../assets/images/epanded.svg";
+import { Tag } from "./Tag/Tag";
 import { ReactComponent as DoorsIcon } from "../../.../../../../assets/images/doors.svg";
-import { useState } from "react";
+import { ReactComponent as ExpandedIcon } from "../../.../../../../assets/images/epanded.svg";
+import { ReactComponent as BoxSelectIcon } from "../../.../../../../assets/images/box-select.svg";
+import { ReactComponent as StairsIcon } from "../../.../../../../assets/images/stairs.svg";
+import { TagDivider } from "./Tag/TagDivider";
 
 export const Maininfo = () => {
-  const [locationHover, setLocationHover] = useState(false);
-
   return (
-    <StyledMaininfo locationHover={locationHover}>
+    <StyledMaininfo>
       <Slider />
       <Divider />
       <Field
-        value="Оренда 1 кім квартири п. орлика Дрогобич"
-        label="Заголовок"
+        value="Оренда комерційної нерухомості"
+        label="Категорія"
+        textarea
+        className="title-field"
+      />
+      <Divider />
+      <Field
+        value="Шевченківський, Галицький, Личаківський"
+        label="Локація"
         textarea
         className="title-field"
       />
@@ -28,13 +34,9 @@ export const Maininfo = () => {
         <CreatedDate />
       </div>
       <Divider />
-      <div className="flex items-center">
-        <Tag
-          Icon={LocationIcon}
-          text="Львів, ул. Харьківськa, 12"
-          className="location mr-1.5"
-          onHover={(value) => setLocationHover(value)}
-        />
+      <div className="flex items-center tags">
+        <Tag Icon={DoorsIcon} text="2к" />
+        <TagDivider />
         <Tag
           Icon={ExpandedIcon}
           text={
@@ -42,10 +44,21 @@ export const Maininfo = () => {
               100 м<sup>2</sup>
             </>
           }
-          className="area-tag mr-1.5"
         />
-        <Tag Icon={DoorsIcon} text="2к" className="doors-tag" />
+        <TagDivider />
+        <Tag
+          Icon={BoxSelectIcon}
+          text={
+            <>
+              100 м<sup>2</sup>
+            </>
+          }
+        />
+        <TagDivider />
+        <Tag Icon={StairsIcon} text="8 із 18" />
       </div>
+      <Divider />
+      <Field value="+" label="Коментар" textarea className="title-field" />
     </StyledMaininfo>
   );
 };
@@ -62,6 +75,9 @@ const StyledMaininfo = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 50%);
     gap: 6px;
+  }
+  .tags {
+    padding: 0 6px;
   }
   .price-field {
     .value {
@@ -80,22 +96,4 @@ const StyledMaininfo = styled.div`
       transition: all 0.3s;
     }
   }
-
-  ${({ locationHover }) =>
-    locationHover &&
-    `
-    .location {
-        span {
-            width: auto;
-        }
-    }
-    .area-tag, .doors-tag {
-        padding: 7px 7px 5px 8px;
-        svg {
-            width: 0;
-            margin: 0;
-        }
-    }
-
-  `}
 `;

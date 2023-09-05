@@ -8,8 +8,7 @@ import { MoreInfo } from "./MoreInfo/MoreInfo";
 export const TaskCard = () => {
   const [open, setOpen] = useState(false);
 
-  const handleOpen = (e) =>
-    e.target.classList.contains("task-card") && !open && setOpen(true);
+  const handleOpen = (e) => !open && setOpen(true);
 
   return (
     <StyledTaskCard
