@@ -19,7 +19,7 @@ export const StatusButton = ({ type }) => {
   return (
     <StyledStatusButton
       type={TYPES[type]}
-      className={`${active && "active"}`}
+      className={`flex items-center justify-center ${active && "active"}`}
       onClick={() => setActive(!active)}
     >
       {TYPES[type].title}
@@ -30,6 +30,9 @@ export const StatusButton = ({ type }) => {
 const StyledStatusButton = styled.button`
   padding: 10px 20px;
   border-radius: 6px;
+  width: 150px;
+  height: 46px;
+  flex-shrink: 0;
   background: rgba(255, 255, 255, 0.15);
   color: rgba(255, 255, 255, 0.5);
   text-align: center;
@@ -38,12 +41,11 @@ const StyledStatusButton = styled.button`
   font-family: Overpass;
   font-size: 14px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 300;
   line-height: 118%; /* 16.52px */
   letter-spacing: 0.28px;
   text-transform: uppercase;
   transition: all 0.3s;
-  width: max-content;
   flex-shrink: 0;
   &:hover {
     color: ${({ type }) => type.color};

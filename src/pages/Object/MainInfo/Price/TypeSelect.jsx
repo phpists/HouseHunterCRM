@@ -37,7 +37,7 @@ const StyledTypeSelect = styled.div`
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 200;
     line-height: normal;
     letter-spacing: 0.28px;
     cursor: pointer;

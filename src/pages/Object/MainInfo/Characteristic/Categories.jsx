@@ -147,7 +147,7 @@ const StyledCategories = styled.div`
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 100;
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     border-radius: 6px;

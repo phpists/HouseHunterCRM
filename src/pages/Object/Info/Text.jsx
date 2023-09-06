@@ -10,6 +10,7 @@ export const Text = () => {
         textarea
         className="title"
         contentHeight
+        label="Опис"
       />
       <ProfileField
         value="Дуже топова хата, Юра треба брати вже"

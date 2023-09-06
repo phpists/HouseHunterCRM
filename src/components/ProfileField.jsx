@@ -85,7 +85,7 @@ const StyledProfileField = styled.div`
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 200;
+    font-weight: 100;
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     margin-bottom: 1px;
@@ -99,7 +99,7 @@ const StyledProfileField = styled.div`
         font-family: Overpass;
         font-size: 20px;
         font-style: normal;
-        font-weight: 300;
+        font-weight: 100 !important;
         line-height: 118%; /* 23.6px */
         letter-spacing: 0.4px;
     `}

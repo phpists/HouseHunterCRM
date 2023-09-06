@@ -39,7 +39,7 @@ const StyledSymbolSelect = styled.div`
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     line-height: normal;
     letter-spacing: 0.28px;
     cursor: pointer;

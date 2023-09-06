@@ -13,8 +13,8 @@ export const Header = () => {
       <div className="flex items-center">
         <SaveButton />
         <SendClientButton />
-        <IconButton Icon={StarIcon} />
-        <IconButton Icon={RemoveIcon} className="remove-btn" />
+        <IconButton Icon={StarIcon} className="icon-btn" />
+        <IconButton Icon={RemoveIcon} className="icon-btn remove-btn" />
       </div>
     </StyledHeader>
   );
@@ -28,6 +28,13 @@ const StyledHeader = styled.div`
   .remove-btn:hover {
     path {
       fill: #fc4444;
+    }
+  }
+
+  .icon-btn {
+    border: 1.4px solid rgba(255, 255, 255, 0.2) !important;
+    &:hover {
+      border: 1.4px solid rgba(255, 255, 255, 0) !important;
     }
   }
 `;

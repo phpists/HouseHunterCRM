@@ -8,7 +8,9 @@ export const Field = ({ value, label, className, hide, textarea }) => {
 
   return (
     <StyleField
-      className={`flex items-center justify-between ${className}`}
+      className={`flex items-center justify-between ${className} ${
+        edit && "edit"
+      }`}
       edit={edit}
       hide={hide}
     >
