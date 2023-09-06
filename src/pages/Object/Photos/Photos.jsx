@@ -8,17 +8,20 @@ import { Photo } from "./Photo";
 export const Photos = () => {
   const [photos, setPhotos] = useState([photo]);
 
+  console.log(photos.length !== 2);
   return (
     <StyledPhotos photosCount={photos.length}>
       <MainPhoto photo={photos[0]} photosCount={photos.length} />
-      <div className="photos hide-scroll">
-        {photos.slice(1, photos.length).map((p, i) => (
-          <Photo key={i} photo={p} />
-        ))}
-        {photos.length === 2 && (
-          <AddPhoto small onAdd={() => setPhotos([...photos, photo])} />
-        )}
-      </div>
+      {photos.length > 1 && (
+        <div className="photos hide-scroll">
+          {photos.slice(1, photos.length).map((p, i) => (
+            <Photo key={i} photo={p} />
+          ))}
+          {photos.length === 2 && (
+            <AddPhoto small onAdd={() => setPhotos([...photos, photo])} />
+          )}
+        </div>
+      )}
       {photos.length !== 2 && (
         <AddPhoto onAdd={() => setPhotos([...photos, photo])} />
       )}
