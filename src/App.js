@@ -7,14 +7,15 @@ import { Company } from "./pages/Company/Company";
 import { Auth } from "./pages/Auth/Auth";
 import { Clients } from "./pages/Clients/Clients";
 import { Client } from "./pages/Client/Client";
+import { Object } from "./pages/Object/Object";
 
 export const App = () => {
   const navigate = useNavigate();
-  const [loggined, setLoggined] = useState(false);
+  const [loggined, setLoggined] = useState(true);
 
-  useEffect(() => {
-    loggined && navigate("/company");
-  }, [loggined]);
+  //   useEffect(() => {
+  //     loggined && navigate("/company");
+  //   }, [loggined]);
 
   return (
     <>
@@ -26,6 +27,8 @@ export const App = () => {
             <Routes>
               <Route path="/clients" element={<Clients />} />
               <Route path="/client/:id" element={<Client />} />
+              <Route path="/object/:id" element={<Object />} />
+              <Route path="/object" element={<Object />} />
               <Route path="/company" element={<Company />} />
               <Route path="*" element={<></>} />
             </Routes>

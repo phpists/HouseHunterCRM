@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 import { ReactComponent as CheckboxIcon } from "../assets/images/checkbox.svg";
 
@@ -8,8 +8,27 @@ export const ProfileField = ({
   password,
   className,
   textarea,
+  grey,
+  big,
+  contentHeight,
 }) => {
   const [active, setActive] = useState(false);
+  const textareaRef = useRef(null);
+
+  const textAreaAdjust = (e) => {
+    e.target.style.height = "1px";
+    e.target.style.height = e.target.scrollHeight + "px";
+  };
+
+  const handleToggleActive = () => {
+    setActive(!active);
+  };
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [textareaRef.current]);
 
   return (
     <StyledProfileField
@@ -17,12 +36,19 @@ export const ProfileField = ({
       active={active}
       password={password}
       className={`${className}`}
+      grey={grey}
+      big={big}
     >
-      <CheckboxIcon onClick={() => setActive(false)} />
+      <CheckboxIcon onClick={handleToggleActive} />
       {active ? (
         <>
           {textarea ? (
-            <textarea className="value" defaultValue={value} />
+            <textarea
+              className="value"
+              defaultValue={value}
+              ref={textareaRef}
+              onChange={textAreaAdjust}
+            />
           ) : (
             <input className="value" defaultValue={value} />
           )}
@@ -30,14 +56,18 @@ export const ProfileField = ({
       ) : (
         <div className="value">{value}</div>
       )}
-      <div className="label">{active ? "Змінити" : label}</div>
-      <div className="label label-hover">Змінити</div>
+      {!big && (
+        <>
+          <div className="label">{active ? "Змінити" : label}</div>
+          <div className="label label-hover">Змінити</div>
+        </>
+      )}
     </StyledProfileField>
   );
 };
 
 const StyledProfileField = styled.div`
-  padding: 8px 11px 9px;
+  padding: ${({ big }) => (big ? "8px 11px 8px" : "8px 11px 9px")};
   border-radius: 6px;
   cursor: pointer;
   position: relative;
@@ -62,6 +92,17 @@ const StyledProfileField = styled.div`
     position: relative;
     transition: all 0.3s;
     ${({ password }) => password && " filter: blur(5px);"}
+    ${({ big }) =>
+      big &&
+      `
+        color: rgba(255, 255, 255, 0.40);
+        font-family: Overpass;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 118%; /* 23.6px */
+        letter-spacing: 0.4px;
+    `}
   }
   .label {
     color: #fff;
@@ -76,6 +117,7 @@ const StyledProfileField = styled.div`
 
   textarea {
     resize: none;
+    width: 100%;
   }
   .label-hover {
     display: none;
@@ -107,23 +149,39 @@ const StyledProfileField = styled.div`
     g {
       transition: all 0.3s;
     }
+    ${({ big }) =>
+      big &&
+      `
+       top: 50%;
+       transform: translateY(-50%);
+    `}
     &:hover {
       g {
         opacity: 1;
       }
     }
   }
-  ${({ active }) =>
+  ${({ active, grey }) =>
     active &&
     `
-    background: #FFF !important;
-    .value, .label {
-        color: #2C2C2C;
-        filter: blur(0px);
-    }
+    background:  ${grey ? "rgba(255, 255, 255, 0.05)" : "#FFF"} !important;
     svg {
         opacity: 1;
         visibility: visible;
+    }
+    ${
+      !grey
+        ? `
+        .value, .label {
+            color: #2C2C2C;
+            filter: blur(0px);
+        }
+    `
+        : `
+        path {
+            fill: #FFF;
+        }
+    `
     }
   `}
 `;

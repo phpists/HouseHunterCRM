@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { Select } from "./Select/Select";
+import { Select } from "../../../../components/Select/Select";
 import { Divider } from "./Divider";
 import { ReactComponent as LocationIcon } from "../../../../assets/images/location-color.svg";
 import { Ranger } from "./Ranger/Ranger";

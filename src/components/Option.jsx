@@ -1,17 +1,21 @@
 import { styled } from "styled-components";
 import checkIcon from "../assets/images/circle-green-check.svg";
+import { useState } from "react";
 
-export const Option = ({ title, onChange, active, className }) => (
-  <StyledOption
-    className={`flex items-center justify-between hover-effect-to-right ${className}`}
-    onClick={onChange}
-    active={active}
-  >
-    <span>{title}</span>
-    <img src={checkIcon} alt="" />
-  </StyledOption>
-);
+export const Option = ({ title, onChange, active, className }) => {
+  const [a, setA] = useState(false);
 
+  return (
+    <StyledOption
+      className={`flex items-center justify-between hover-effect-to-right ${className}`}
+      onClick={() => setA(!a)}
+      active={a}
+    >
+      <span>{title}</span>
+      <img src={checkIcon} alt="" />
+    </StyledOption>
+  );
+};
 const StyledOption = styled.div`
   padding: 8px 17px 6px 11px;
   color: #fff;

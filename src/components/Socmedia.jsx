@@ -1,14 +1,15 @@
 import { styled } from "styled-components";
-import viberIcon from "../../../../../assets/images/viber.svg";
-import telegramIcon from "../../../../../assets/images/telegram.svg";
-import { ReactComponent as CheckIcon } from "../../../../../assets/images/circle-green-check.svg";
+import viberIcon from "../assets/images/viber.svg";
+import telegramIcon from "../assets/images/telegram.svg";
+import { ReactComponent as CheckIcon } from "../assets/images/circle-green-check.svg";
+import { ReactComponent as ArrowIcon } from "../assets/images/socmedia-arrow.svg";
 
 const TYPES = {
   viber: { icon: viberIcon, color: "#7360F2" },
   telegram: { icon: telegramIcon, color: "#3D8ECC" },
 };
 
-export const Socmedia = ({ type, active, onClick, className }) => (
+export const Socmedia = ({ type, active, onClick, className, open }) => (
   <StyledSocmedia
     className={`flex items-center justify-between ${className} ${
       active && "active"
@@ -18,7 +19,7 @@ export const Socmedia = ({ type, active, onClick, className }) => (
   >
     <img src={TYPES[type].icon} alt="" />
     <div className="divider" />
-    <CheckIcon />
+    {open ? <ArrowIcon /> : <CheckIcon />}
   </StyledSocmedia>
 );
 

@@ -1,8 +1,9 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { styled } from "styled-components";
 
 export const Subtitle = () => {
   const { pathname } = useLocation();
+  const { id } = useParams();
 
   const handleGetSubtitle = () => {
     switch (pathname) {
@@ -25,6 +26,8 @@ export const Subtitle = () => {
       default:
         return pathname.split("/")[1] === "client"
           ? "Створенний  03.10.2022  13:19"
+          : pathname.split("/")[1] === "object"
+          ? `${id ? "Редагування" : "Створення"} об'єкта`
           : "";
     }
   };

@@ -2,15 +2,26 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import { Value } from "./Value";
 import { Label } from "./Label";
-import { ReactComponent as Arrow } from "../../../../../assets/images/arrow-down.svg";
+import { ReactComponent as Arrow } from "../../assets/images/arrow-down.svg";
 import { Dropdown } from "./Dropdown/Dropdown";
 import { SelectIcon } from "./SelectIcon";
 
-export const Select = ({ label, labelActive, value, Icon }) => {
+export const Select = ({
+  label,
+  labelActive,
+  value,
+  Icon,
+  hideArrowDefault,
+  className,
+}) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <StyledSelect open={open}>
+    <StyledSelect
+      open={open}
+      hideArrowDefault={hideArrowDefault}
+      className={`${className}`}
+    >
       <div
         className="flex items-center justify-between"
         onClick={() => setOpen(!open)}
@@ -36,11 +47,17 @@ const StyledSelect = styled.div`
   cursor: pointer;
   position: relative;
   color: #fff;
+  .arrow {
+    ${({ hideArrowDefault }) => hideArrowDefault && "opacity: 0;"}
+  }
   .arrow path {
     fill: #fff;
   }
   &:hover {
     background: rgba(255, 255, 255, 0.1);
+    .arrow {
+      opacity: 1;
+    }
     .select-icon {
       background: rgba(255, 255, 255, 0.1);
     }
@@ -70,6 +87,7 @@ const StyledSelect = styled.div`
     }
     .arrow {
         transform: rotate(180deg);
+        opacity: 1;
     }
     .select-icon {
         background: rgba(44, 44, 44, 0.85) !important;

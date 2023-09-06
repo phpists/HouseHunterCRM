@@ -24,7 +24,11 @@ export const Title = () => {
       case "/company":
         return "Моя компанія";
       default:
-        return pathname.split("/")[1] === "client" ? "Клієнт" : "";
+        return pathname.split("/")[1] === "client"
+          ? "Клієнт"
+          : pathname.split("/")[1] === "object"
+          ? "Картка об’екта"
+          : "";
     }
   };
 

@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
-import { Select } from "./Select/Select";
 import { Divider } from "./Divider";
 import { ToggleOption } from "./ToggleOption";
+import { Select } from "../../../../components/Select/Select";
 
 export const Topicality = () => {
   return (

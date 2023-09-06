@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import phoneIcon from "../../../../../assets/images/call.svg";
+import phoneIcon from "../../assets/images/call.svg";
 
 export const Phone = ({ showOnHoverIcon, className }) => (
   <StyledPhone className={`${className}`}>

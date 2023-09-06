@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { Socmedia } from "./Socmedia";
+import { Socmedia } from "../../../../../components/Socmedia";
 import { useState } from "react";
 import { ProfileField } from "../../../../../components/ProfileField";
 import { AddButton } from "./AddButton";

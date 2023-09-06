@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { MainInfo } from "./MainInfo/MainInfo";
-import { Phones } from "./Phones/Phones";
+import { Phones } from "../../../../components/Phones/Phones";
 import { Divider } from "./Divider";
 import { PhoneInfo } from "./PhoneInfo";
 import { Objects } from "./Objects/Objects";

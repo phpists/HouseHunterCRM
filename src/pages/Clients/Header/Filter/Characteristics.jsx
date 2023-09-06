@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { Select } from "./Select/Select";
+import { Select } from "../../../../components/Select/Select";
 import { ToggleOption } from "./ToggleOption";
 import { Divider } from "./Divider";
 import { Ranger } from "./Ranger/Ranger";
