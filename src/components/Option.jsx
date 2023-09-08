@@ -2,13 +2,13 @@ import { styled } from "styled-components";
 import checkIcon from "../assets/images/circle-green-check.svg";
 import { useState } from "react";
 
-export const Option = ({ title, onChange, active, className }) => {
+export const Option = ({ title, onChange, active, className, noSelect }) => {
   const [a, setA] = useState(false);
 
   return (
     <StyledOption
       className={`flex items-center justify-between hover-effect-to-right ${className}`}
-      onClick={() => setA(!a)}
+      onClick={() => setA(noSelect ? false : !a)}
       active={a}
     >
       <span>{title}</span>

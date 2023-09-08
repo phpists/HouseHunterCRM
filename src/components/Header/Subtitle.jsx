@@ -23,6 +23,8 @@ export const Subtitle = () => {
         return "Всього 296 агентів";
       case "/company":
         return "12 працівників";
+      case "/request":
+        return "Запит об'єкта";
       default:
         return pathname.split("/")[1] === "client"
           ? "Створенний  03.10.2022  13:19"

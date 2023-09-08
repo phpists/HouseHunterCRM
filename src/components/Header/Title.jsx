@@ -23,6 +23,8 @@ export const Title = () => {
         return "Структура";
       case "/company":
         return "Моя компанія";
+      case "/request":
+        return "Створення нового запиту";
       default:
         return pathname.split("/")[1] === "client"
           ? "Клієнт"
@@ -40,7 +42,7 @@ const StyledTitle = styled.h1`
   font-family: Overpass;
   font-size: 34px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 200;
   line-height: 118%; /* 40.12px */
   letter-spacing: 0.68px;
 `;
