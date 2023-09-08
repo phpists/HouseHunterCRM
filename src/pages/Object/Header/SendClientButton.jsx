@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 export const SendClientButton = () => (
-  <StyledSendClientButton>Зберігти зміни</StyledSendClientButton>
+  <StyledSendClientButton>Зберегти зміни</StyledSendClientButton>
 );
 
 const StyledSendClientButton = styled.div`

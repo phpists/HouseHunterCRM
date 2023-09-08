@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
-import { ReactComponent as ArrowBack } from "../../../../../../assets/images/calendar-back.svg";
-import { ReactComponent as ArrowNext } from "../../../../../../assets/images/calendar-next.svg";
+import { ReactComponent as ArrowBack } from "../../assets/images/calendar-back.svg";
+import { ReactComponent as ArrowNext } from "../../assets/images/calendar-next.svg";
 
 export const Header = ({ value, onChangeMonth }) => {
   const handleGetTitle = (date) => {
@@ -24,9 +24,8 @@ export const Header = ({ value, onChangeMonth }) => {
     return `${MONTHS[month]} ${year}`;
   };
 
-  console.log(value);
   return (
-    <StyledHeader className="flex items-center justify-between">
+    <StyledHeader className="flex items-center justify-between calendar-header">
       <span>{handleGetTitle(value)}</span>
       <div className="flex items-center">
         <ArrowBack className="mr-6" onClick={() => onChangeMonth(-1)} />

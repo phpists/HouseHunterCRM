@@ -21,5 +21,8 @@ const StyledPrice = styled.div`
   padding: 8px 15px;
   .field {
     flex-shrink: initial;
+    .value {
+      color: #50f835;
+    }
   }
 `;

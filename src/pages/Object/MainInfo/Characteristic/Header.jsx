@@ -1,11 +1,9 @@
 import { styled } from "styled-components";
-import { ReactComponent as RefreshIcon } from "../../../../assets/images/refresh.svg";
 
 export const Header = () => {
   return (
     <StyledHeader className="flex items-center justify-between">
-      <span>Характеристики</span>
-      <RefreshIcon />
+      <span>Дані об’єкту</span>
     </StyledHeader>
   );
 };

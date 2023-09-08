@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 export const SaveButton = () => (
-  <StyledSaveButton>Зберігти зміни</StyledSaveButton>
+  <StyledSaveButton>Зберегти зміни</StyledSaveButton>
 );
 
 const StyledSaveButton = styled.div`
@@ -15,14 +15,10 @@ const StyledSaveButton = styled.div`
   letter-spacing: 0.3px;
   padding: 8px 30px 6px 28px;
   border-radius: 8px;
-  border: 1.4px solid rgba(255, 255, 255, 0.4);
-  opacity: 0.4;
+  background: rgba(255, 255, 255, 0.2);
+  opacity: 1;
+  border: 1px solid transparent;
   cursor: pointer;
   transition: all 0.3s;
   margin-right: 10px;
-  &:hover {
-    background: rgba(255, 255, 255, 0.2);
-    opacity: 1;
-    border: 1px solid transparent;
-  }
 `;

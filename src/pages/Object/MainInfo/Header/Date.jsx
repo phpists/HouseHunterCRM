@@ -1,38 +1,46 @@
 import { styled } from "styled-components";
 import { Field } from "../../../../components/Field";
+import { Calendar } from "../../../../components/Calendar/Calendar";
+import { useState } from "react";
+import { ReactComponent as CalendarIcon } from "../../../../assets/images/calendar-card.svg";
 
 export const Date = () => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <StyledDate className="flex items-center justify-center">
+    <StyledDate
+      className={`flex items-center justify-between ${open && "active"}`}
+    >
       <div className="text-data">
         <div className="title">23.07.2023</div>
         <div className="subtitle">звільняється з </div>
       </div>
-      <Field
-        value="23.07.2023"
-        label="звільняється з "
-        className="header-field"
-      />
+      <CalendarIcon onClick={() => setOpen(!open)} />
+      <div className="dropdown">
+        <Calendar />
+      </div>
     </StyledDate>
   );
 };
 
-const StyledDate = styled.div`
+const StyledDate = styled.button`
   width: 100%;
   margin: 0 3px;
   cursor: pointer;
   position: relative;
+  padding: 7px 13.5px 6px 10px;
+  transition: all 0.3s;
   .text-data {
-    width: 100%;
     transition: all 0.3s;
+    border: 1px solid rgba(255, 255, 255, 0);
   }
   .title {
-    color: #fff;
+    color: #ff9f2e;
     text-align: center;
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: 200;
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
   }
@@ -47,23 +55,45 @@ const StyledDate = styled.div`
     letter-spacing: 0.22px;
     opacity: 0.4;
   }
-  .header-field {
-    flex-shrink: inherit;
+  .calendar-wrapper {
+    border-radius: 0 0 6px 6px;
+    border: none;
+  }
+  .dropdown {
     position: absolute;
-    width: 100%;
+    top: calc(100% + 9px);
+    border-radius: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: #3d3d3d;
+    z-index: 10;
+    visibility: hidden;
     opacity: 0;
     transition: all 0.3s;
-    z-index: 1;
-    background: #3c3c3c;
-    &.edit {
-      opacity: 1;
+    width: 328px;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden;
+  }
+
+  svg {
+    &:hover {
+      g {
+        opacity: 1;
+      }
     }
   }
   &:hover {
-    .text-data {
-      opacity: 0;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  &.active {
+    .dropdown {
+      opacity: 1;
+      visibility: visible;
     }
-    .header-field {
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.05);
+    g {
       opacity: 1;
     }
   }

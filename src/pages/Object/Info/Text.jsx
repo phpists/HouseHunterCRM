@@ -3,7 +3,7 @@ import { ProfileField } from "../../../components/ProfileField";
 
 export const Text = () => {
   return (
-    <StyledText>
+    <StyledText className="hide-scroll">
       <ProfileField value="Заголовок" big className="title" />
       <ProfileField
         value="ЗаголЗдам затишну, 2-к квартиру Оболонський проспект.м.Героїв Дніпра - 2 хвилини пішки!!Квартира у відмінному стані.Розглядаємо орендарів - без дітей та без домашніх тварин.Повністю укомплектована меблями та побутовою технікою.В комнаті ліжко, диван, стінка, шафа-купе. Домофон.овок"
@@ -27,6 +27,7 @@ const StyledText = styled.div`
   background: #3d3d3d;
   margin-bottom: 10px;
   height: calc(100svh - 364px);
+  overflow: auto;
   .title {
     margin-bottom: 10px;
     .value {

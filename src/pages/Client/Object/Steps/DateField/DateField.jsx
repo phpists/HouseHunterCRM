@@ -3,7 +3,7 @@ import { Field } from "./Field";
 import { ReactComponent as CalendarIcon } from "../../../../../assets/images/calendar.svg";
 import { ReactComponent as EditIcon } from "../../../../../assets/images/edit-calendar.svg";
 import { useState } from "react";
-import { Calendar } from "./Calendar/Calendar";
+import { Calendar } from "../../../../../components/Calendar/Calendar";
 import { Hours } from "./Hours";
 
 export const DateField = () => {

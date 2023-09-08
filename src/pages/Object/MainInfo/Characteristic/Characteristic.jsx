@@ -3,6 +3,7 @@ import { Header } from "./Header";
 import { Select } from "../../../../components/Select/Select";
 import { DetailPosition } from "./DetailPosition";
 import { Categories } from "./Categories";
+import { Info } from "./Info";
 
 export const Characteristic = () => {
   return (
@@ -26,6 +27,7 @@ export const Characteristic = () => {
           />
           <DetailPosition />
         </div>
+        <Info />
         <Categories />
       </div>
     </StyledCharacteristic>

@@ -27,7 +27,7 @@ export const Title = () => {
         return pathname.split("/")[1] === "client"
           ? "Клієнт"
           : pathname.split("/")[1] === "object"
-          ? "Картка об’екта"
+          ? "Картка об’єкта"
           : "";
     }
   };

@@ -13,7 +13,7 @@ export const Calendar = () => {
   };
 
   return (
-    <StyledCalendar>
+    <StyledCalendar className="calendar-wrapper">
       <Header value={value} onChangeMonth={handleChangeMonth} />
       {!loading && (
         <ReactCalendar

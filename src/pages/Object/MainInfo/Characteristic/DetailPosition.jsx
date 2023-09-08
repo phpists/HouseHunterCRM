@@ -35,59 +35,6 @@ export const DetailPosition = () => {
             </div>
           </>
         )}
-        <Select
-          value="Житловий фонд від 2011"
-          label="Тип будинку"
-          labelActive="Тип будинку"
-          hideArrowDefault
-        />
-        <div className="field-group">
-          <ProfileField
-            value="167 м2"
-            label="Загальна площа"
-            className="field"
-            grey
-          />
-          <ProfileField
-            value="45 м2"
-            label="Площа кухні / теріторії"
-            className="field"
-            grey
-          />
-        </div>
-        <Select
-          value="Від власника"
-          label="Тип угоди"
-          labelActive="Тип угоди"
-          hideArrowDefault
-        />
-        <Select
-          value="Новобудови"
-          label="Тип нерухомості"
-          labelActive="Тип нерухомості"
-          hideArrowDefault
-        />
-        <Select
-          value="Цегла"
-          label="Тип стін"
-          labelActive="Тип стін"
-          hideArrowDefault
-        />
-        <div className="field-group">
-          <ProfileField value="22-й" label="Поверх" className="field" grey />
-          <ProfileField
-            value="45"
-            label="Поверховість"
-            className="field"
-            grey
-          />
-        </div>
-        <ProfileField
-          value="4 кімнати"
-          label="Кількість кімнат"
-          className="field"
-          grey
-        />
       </div>
     </StyledDetailPosition>
   );

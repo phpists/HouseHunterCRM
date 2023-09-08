@@ -46,7 +46,7 @@ const StyledSymbolSelect = styled.div`
     transition: all 0.3s;
     border: 1px solid rgba(255, 255, 255, 0);
     &.active {
-      color: #fff;
+      color: #50f835;
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
   }
