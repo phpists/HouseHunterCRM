@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import { Ranger } from "../../Ranger/Ranger";
-
 export const Price = () => {
   return (
     <StyledPrice>
@@ -12,6 +11,8 @@ export const Price = () => {
           </>,
           "Обєкт",
         ]}
+        currency
+        big
       />
     </StyledPrice>
   );

@@ -78,6 +78,7 @@ const StyledTagsFilter = styled.div`
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     transition: all 0.3s;
+    width: 100%;
     &::placeholder {
       color: #fff;
       font-family: Overpass;
@@ -101,6 +102,7 @@ const StyledTagsFilter = styled.div`
   }
 
   .tags-wrapper {
+    width: 100%;
     margin-bottom: ${({ empty, search }) =>
       empty && search ? 0 : empty ? 1 : 4}px;
     ${({ empty }) =>

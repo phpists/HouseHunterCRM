@@ -3,6 +3,19 @@ import { useRanger } from "react-ranger";
 import { useState } from "react";
 import { Header } from "./Header/Header";
 import { Footer } from "./Footer/Footer";
+import { Statistic } from "./Statistic/Statistic";
+
+export const Segment = styled("div")`
+  background: ${(props) =>
+    props.index === 0
+      ? "#808080"
+      : props.index === 1
+      ? "#FFF"
+      : props.index === 2
+      ? "#808080"
+      : "#808080"};
+  height: 100%;
+`;
 
 export const Ranger = ({
   label,
@@ -13,9 +26,10 @@ export const Ranger = ({
   mainTypes = [],
   currency,
   mainType,
+  big,
 }) => {
   const [values, setValues] = useState([defaultStart, defaultEnd]);
-  const { getTrackProps, handles } = useRanger({
+  const { getTrackProps, handles, segments, interpolator } = useRanger({
     values,
     onChange: setValues,
     min,
@@ -24,15 +38,23 @@ export const Ranger = ({
   });
 
   return (
-    <StyledRanger>
+    <StyledRanger big={big}>
       <Header label={label} mainTypes={mainTypes} />
+      {big && (
+        <Statistic
+          activeSegment={
+            segments?.map(({ getSegmentProps }, i) => getSegmentProps())[1]
+          }
+        />
+      )}
       <div
         {...getTrackProps({
           style: {
             height: "3px",
             background: "#808080",
             borderRadius: "9px",
-            marginBottom: 16,
+            marginBottom: big ? 21 : 16,
+            zIndex: 100,
           },
         })}
       >
@@ -48,9 +70,13 @@ export const Ranger = ({
                 cursor: "grab",
                 boxShadow: "0px 4px 8px 0px rgba(0, 0, 0, 0.15)",
                 backdropFilter: "blur(5.5px)",
+                zIndex: 3,
               },
             })}
           />
+        ))}
+        {segments.map(({ getSegmentProps }, i) => (
+          <Segment {...getSegmentProps()} index={i} />
         ))}
       </div>
       <Footer currency={currency} values={values} mainType={mainType} />
@@ -59,12 +85,24 @@ export const Ranger = ({
 };
 
 const StyledRanger = styled.div`
-  padding: 8px 10px;
+  padding: ${({ big }) => (big ? "6px 10px 10px" : "8px 10px")};
   border-radius: 9px;
-  transition: all 0.3s;
+  padding: ${({ big }) => !big && "transition: all 0.3s;"};
+
+  /* transition: all 0.3s; */
   /* background: rgba(255, 255, 255, 0.05); */
   position: relative;
+  overflow: hidden;
+  .first-angle,
+  .second-angle {
+    opacity: 0;
+    transition: all 0s;
+  }
   &:hover {
     background: rgba(255, 255, 255, 0.05);
+    .first-angle,
+    .second-angle {
+      opacity: 1;
+    }
   }
 `;
