@@ -5,7 +5,7 @@ export const Tag = () => <StyledTag>Зробити Головним</StyledTag>;
 const StyledTag = styled.div`
   color: #fff;
   font-family: Open Sans;
-  font-size: 15px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;

@@ -7,7 +7,7 @@ import { TypeSelect } from "./TypeSelect";
 export const Price = () => {
   return (
     <StyledPrice className="flex items-center">
-      <Field value="22 000₴" label="Ціна" className="field" />
+      <Field value="22 000₴" label="Ціна" className="field" full />
       <Divider />
       <SymbolSelect />
       <TypeSelect />

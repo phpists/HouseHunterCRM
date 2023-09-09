@@ -1,14 +1,22 @@
 import { styled } from "styled-components";
 import { ReactComponent as Arrow } from "../../../assets/images/arrow-right.svg";
+import { useNavigate } from "react-router-dom";
 
-export const BackButton = ({ onClick }) => (
-  <StyledBackButton className="flex items-center">
-    <button className="flex items-center justify-center" onClick={onClick}>
-      <Arrow />
-    </button>
-    Назад
-  </StyledBackButton>
-);
+export const BackButton = () => {
+  const navigate = useNavigate();
+
+  return (
+    <StyledBackButton className="flex items-center">
+      <button
+        className="flex items-center justify-center"
+        onClick={() => navigate(-1)}
+      >
+        <Arrow />
+      </button>
+      Назад
+    </StyledBackButton>
+  );
+};
 
 const StyledBackButton = styled.button`
   color: #fff;

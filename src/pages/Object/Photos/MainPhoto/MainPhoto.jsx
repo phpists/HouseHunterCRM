@@ -21,4 +21,16 @@ const StyledMainPhoto = styled.div`
   flex-shrink: 0;
   margin-bottom: 15px;
   position: relative;
+  @media (max-width: 1500px) {
+    width: 350px;
+  }
+  @media (max-width: 1430px) {
+    width: 330px;
+  }
+  @media (max-width: 1400px) {
+    width: 280px;
+  }
+  @media (max-width: 1300px) {
+    width: 240px;
+  }
 `;

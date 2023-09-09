@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { styled } from "styled-components";
 
 export const Action = ({
@@ -9,6 +10,7 @@ export const Action = ({
   onChangeHover,
   active,
   index,
+  link,
 }) => (
   <StyledAction
     color={color}
@@ -18,13 +20,14 @@ export const Action = ({
     onMouseLeave={() => onChangeHover(null)}
     active={active}
     index={index}
+    to={link}
   >
     <img src={icon} alt="" />
     <span>{title}</span>
   </StyledAction>
 );
 
-const StyledAction = styled.div`
+const StyledAction = styled(NavLink)`
   padding: 15px;
   border-radius: 14px;
   border: 1px dashed ${({ color }) => color};

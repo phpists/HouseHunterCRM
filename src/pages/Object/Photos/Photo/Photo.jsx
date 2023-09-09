@@ -57,4 +57,7 @@ const StyledPhoto = styled.div`
       opacity: 1;
     }
   }
+  @media (max-width: 1500px) {
+    width: 90%;
+  }
 `;

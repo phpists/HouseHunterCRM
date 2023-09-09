@@ -42,5 +42,6 @@ const StyledRequest = styled.div`
   .request-card {
     height: calc(100svh - 325px);
     overflow: auto;
+    border-radius: 14px;
   }
 `;

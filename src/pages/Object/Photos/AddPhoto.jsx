@@ -4,7 +4,7 @@ import { ReactComponent as PlusIcon } from "../../../assets/images/plus.svg";
 export const AddPhoto = ({ small, onAdd }) => {
   return (
     <StyledAddPhoto
-      className="flex flex-col items-center justify-center"
+      className="flex flex-col items-center justify-center add-btn"
       small={small}
       onClick={onAdd}
     >
@@ -76,4 +76,16 @@ const StyledAddPhoto = styled.div`
     width: 100%;
     height: 100%;
   `}
+  @media (max-width: 1500px) {
+    width: 350px;
+  }
+  @media (max-width: 1430px) {
+    width: 330px;
+  }
+  @media (max-width: 1400px) {
+    width: 280px;
+  }
+  @media (max-width: 1300px) {
+    width: 240px;
+  }
 `;

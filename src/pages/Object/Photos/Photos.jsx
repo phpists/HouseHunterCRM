@@ -57,6 +57,7 @@ const StyledPhotos = styled.div`
   .photos-grid {
     display: grid;
     grid-template-columns: 193px 193px;
+    grid-auto-rows: 193px;
   }
   .photos {
     gap: 15px;
@@ -65,7 +66,46 @@ const StyledPhotos = styled.div`
     width: 401px;
     margin: 0 auto;
     position: relative;
-    overflow-x: hidden;
     ${({ photosCount }) => photosCount > 2 && "margin-bottom: 10px;"}
+  }
+
+  @media (max-width: 1500px) {
+    .photos {
+      width: 350px;
+    }
+    .photos-grid {
+      grid-template-columns: 1fr 1fr;
+      .add-btn {
+        width: 180px !important;
+      }
+    }
+  }
+  @media (max-width: 1430px) {
+    .photos {
+      width: 330px;
+    }
+    .photos-grid {
+      .add-btn {
+        width: 150px !important;
+      }
+    }
+  }
+
+  @media (max-width: 1400px) {
+    .photos {
+      width: 280px;
+    }
+  }
+
+  @media (max-width: 1300px) {
+    .photos {
+      width: 240px;
+    }
+    .photos-grid {
+      grid-template-columns: 1fr;
+      .add-btn {
+        width: 100% !important;
+      }
+    }
   }
 `;

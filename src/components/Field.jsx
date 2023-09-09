@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import { ReactComponent as EditIcon } from "../assets/images/edit-company.svg";
 import { ReactComponent as CheckIcon } from "../assets/images/check.svg";
 
-export const Field = ({ value, label, className, hide, textarea }) => {
+export const Field = ({ value, label, className, hide, textarea, full }) => {
   const [edit, setEdit] = useState(false);
 
   return (
@@ -13,6 +13,7 @@ export const Field = ({ value, label, className, hide, textarea }) => {
       }`}
       edit={edit}
       hide={hide}
+      full={full}
     >
       <div className="field-content">
         {edit ? (
@@ -59,7 +60,7 @@ const StyleField = styled.div`
     ${({ hide }) => hide && "filter: blur(3px);"}
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
+    ${({ full }) => (full ? "width: max-content;" : "white-space: nowrap;")}
   }
   .label {
     color: #fff;

@@ -20,6 +20,7 @@ export const Actions = () => {
         onChangeHover={handleChangeActive}
         active={active}
         index={1}
+        link="/request"
       />
       <Action
         icon={homeIcon}
@@ -29,6 +30,7 @@ export const Actions = () => {
         onChangeHover={handleChangeActive}
         active={active}
         index={2}
+        link="/object"
       />
     </StyledActions>
   );
