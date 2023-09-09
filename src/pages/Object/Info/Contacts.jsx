@@ -9,30 +9,32 @@ export const Contacts = () => {
   const [telegram, setTelegram] = useState(false);
 
   return (
-    <StyledContacts>
+    <StyledContacts className="hide-scroll">
       <div className="title">Контакти клієнта</div>
-      <div className="flex items-center">
+      <div className="flex items-center contacts-wrapper">
         <div className="client-info">
           <div className="name">Юрій Олексійович</div>
           <div className="label">Клієнт</div>
         </div>
         <Divider />
-        <div className="socmedias">
-          <Socmedia
-            type="viber"
-            active={true}
-            onClick={() => setViber(!viber)}
-            className="viber-card"
-            open
-          />
-          <Socmedia
-            type="telegram"
-            active={true}
-            onClick={() => setTelegram(!telegram)}
-            open
-          />
+        <div className="flex items-center">
+          <div className="socmedias">
+            <Socmedia
+              type="viber"
+              active={true}
+              onClick={() => setViber(!viber)}
+              className="viber-card"
+              open
+            />
+            <Socmedia
+              type="telegram"
+              active={true}
+              onClick={() => setTelegram(!telegram)}
+              open
+            />
+          </div>
+          <Phones top />
         </div>
-        <Phones top />
       </div>
     </StyledContacts>
   );
@@ -78,5 +80,10 @@ const StyledContacts = styled.div`
     grid-template-columns: max-content;
     gap: 3px;
     margin-right: 10px;
+  }
+  @media (max-width: 1300px) {
+    .contacts-wrapper {
+      flex-direction: column;
+    }
   }
 `;
