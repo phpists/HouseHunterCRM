@@ -3,7 +3,6 @@ import { ObjectCard } from "../../../../components/ObjectCard";
 import { Title } from "./Title";
 import { Price } from "./Price";
 import { CreatedDate } from "./CreatedDate";
-import { Comment } from "../../../../components/Comment";
 import { StepNumber } from "../../../../components/StepNumber";
 import { MoreButton } from "../../../../components/MoreButton/MoreButton";
 import { Tag } from "./Tag";

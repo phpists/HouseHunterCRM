@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import { StatusButton } from "./StatusButton";
-import { Field } from "../../../../components/Field";
 import { Date } from "./Date";
 
 export const Header = () => {

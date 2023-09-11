@@ -1,15 +1,15 @@
 import { styled } from "styled-components";
-import { Select } from "../Select/Select";
 import { Divider } from "../Divider";
-import { TagsFilter } from "../TagsFilter/TagsFilter";
 import { Price } from "./Price/Price";
+import { TagsFilter } from "../../../components/TagsFilter/TagsFilter";
+import { SelectTags } from "../../../components/SelectTags/SelectTags";
 
 export const Content = () => {
   return (
     <StyledContent>
-      <Select label="Категорія" />
+      <SelectTags label="Категорія" />
       <Divider />
-      <Select label="Локація" />
+      <SelectTags label="Локація" />
       <Divider />
       <TagsFilter label="Вулиця" />
       <Divider />

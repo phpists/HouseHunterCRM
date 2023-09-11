@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
-import { Ranger } from "../../Ranger/Ranger";
+import { Ranger } from "../../../../components/Ranger/Ranger";
+
 export const Price = () => {
   return (
     <StyledPrice>

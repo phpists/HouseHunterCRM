@@ -15,11 +15,11 @@ const StyledPhone = styled.div`
   color: #fff;
   transition: all 0.3s;
   background: #444;
-  padding: 7px 8px 6px;
+  padding: 7px 7.51px 6px;
   border-radius: 6px 0px 0px 6px;
   .phone {
     font-family: Overpass;
-    font-size: 15px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 100;
     line-height: 118%; /* 17.7px */

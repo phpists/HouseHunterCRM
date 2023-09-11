@@ -29,7 +29,7 @@ const StyledObject = styled.div`
   background: #2b2b2b;
   width: 360px;
   padding: 10px;
-  height: calc(100svh - 238px);
+  height: calc(100svh - 235px);
   overflow: auto;
   overflow-x: hidden;
 `;

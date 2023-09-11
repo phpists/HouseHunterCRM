@@ -1,17 +1,18 @@
 import { styled } from "styled-components";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { Header } from "./components/Header/Header";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import { useState } from "react";
 import { Company } from "./pages/Company/Company";
 import { Auth } from "./pages/Auth/Auth";
 import { Clients } from "./pages/Clients/Clients";
 import { Client } from "./pages/Client/Client";
 import { Object } from "./pages/Object/Object";
 import { Request } from "./pages/Request/Request";
+import { Objects } from "./pages/Objects/Objects";
 
 export const App = () => {
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
   const [loggined, setLoggined] = useState(true);
 
   //   useEffect(() => {
@@ -30,6 +31,7 @@ export const App = () => {
               <Route path="/client/:id" element={<Client />} />
               <Route path="/object/:id" element={<Object />} />
               <Route path="/object" element={<Object />} />
+              <Route path="/objects" element={<Objects />} />
               <Route path="/request" element={<Request />} />
               <Route path="/company" element={<Company />} />
               <Route path="*" element={<></>} />

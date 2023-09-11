@@ -4,11 +4,11 @@ import { Arrow } from "./Arrow";
 import { useState } from "react";
 import { Dropdown } from "./Dropdown";
 
-export const Phones = ({ top }) => {
+export const Phones = ({ top, className }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <StyledPhones open={open}>
+    <StyledPhones open={open} className={`${className}`}>
       <Phone showOnHoverIcon />
       <Arrow open={open} onToggleOpen={() => setOpen(!open)} />
       <Dropdown open={open} onSelect={() => setOpen(false)} top={top} />

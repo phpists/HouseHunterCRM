@@ -12,6 +12,7 @@ export const Info = () => {
 };
 
 const StyledInfo = styled.div`
-  height: calc(100svh - 248px);
+  height: calc(100svh - 228px);
   overflow: auto;
+  border-radius: 10px;
 `;

@@ -21,7 +21,7 @@ export const BackButton = () => {
 const StyledBackButton = styled.button`
   color: #fff;
   font-family: Overpass;
-  font-size: 20px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 200;
   line-height: 118%; /* 23.6px */

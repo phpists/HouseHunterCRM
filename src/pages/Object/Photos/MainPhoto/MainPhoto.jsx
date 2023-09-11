@@ -14,7 +14,7 @@ const StyledMainPhoto = styled.div`
   background: url(${({ photo }) => photo}) center/cover no-repeat;
   width: 400px;
   height: calc(
-    100svh - 346px -
+    100svh - 326px -
       ${({ photosCount }) =>
         photosCount === 1 ? 0 : photosCount === 2 ? 110 : 210}px
   );

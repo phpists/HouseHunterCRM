@@ -35,7 +35,7 @@ const StyledProfile = styled.div`
   position: relative;
   .profile-content {
     padding: 0 10px 10px;
-    height: calc(100svh - 360px);
+    height: calc(100svh - 348px);
     overflow: auto;
     border-radius: 10px;
   }

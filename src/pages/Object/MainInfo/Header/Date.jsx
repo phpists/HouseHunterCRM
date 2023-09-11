@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import { Field } from "../../../../components/Field";
 import { Calendar } from "../../../../components/Calendar/Calendar";
 import { useState } from "react";
 import { ReactComponent as CalendarIcon } from "../../../../assets/images/calendar-card.svg";

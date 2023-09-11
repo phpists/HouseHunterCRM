@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import { Divider } from "../Divider";
-import { Option } from "../../../../components/Option";
 import { ProfileField } from "../../../../components/ProfileField";
 import { Select } from "../../../../components/Select/Select";
 

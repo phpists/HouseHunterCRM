@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
-import { Ranger } from "../Ranger/Ranger";
+import { Ranger } from "../../../components/Ranger/Ranger";
 import { Divider } from "../Divider";
-import { Select } from "../Select/Select";
 import { ToggleOption } from "../ToggleOption";
+import { SelectTags } from "../../../components/SelectTags/SelectTags";
 
 export const Characteristic = () => {
   return (
@@ -45,14 +45,19 @@ export const Characteristic = () => {
         }
       />
       <Divider />
-      <Select label="Тип угоди" />
+      <SelectTags label="Тип угоди" />
       <ToggleOption label="Все крім цього" className="toggle-opt" />
       <Divider />
-      <Select label="Тип нерухомості" />
+      <SelectTags label="Тип нерухомості" />
       <ToggleOption label="Все крім цього" className="toggle-opt" />
       <Divider />
-      <Select label="Тип стін" />
+      <SelectTags label="Тип стін" />
       <ToggleOption label="Все крім цього" className="toggle-opt" />
+      <Divider />
+      <div className="opt-group">
+        <ToggleOption label="Діти" className="toggle-opt" />
+        <ToggleOption label="Тварини" className="toggle-opt" />
+      </div>
     </StyledCharacteristic>
   );
 };
@@ -63,5 +68,10 @@ const StyledCharacteristic = styled.div`
   background: rgba(255, 255, 255, 0.1);
   .toggle-opt {
     margin-top: 6.5px;
+  }
+  .opt-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
   }
 `;

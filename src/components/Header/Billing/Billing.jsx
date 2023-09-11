@@ -53,7 +53,7 @@ export const Billing = () => {
 };
 
 const StyledBilling = styled.div`
-  padding: 12px 60px 13px 8px;
+  padding: 12px 60px 11px 8px;
   transition: all 0.3s;
   cursor: pointer;
   position: relative;

@@ -26,7 +26,7 @@ const StyledText = styled.div`
   border-radius: 10px;
   background: #3d3d3d;
   margin-bottom: 10px;
-  height: calc(100svh - 364px);
+  height: calc(100svh - 344px);
   overflow: auto;
   .title {
     margin-bottom: 10px;

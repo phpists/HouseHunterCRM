@@ -2,7 +2,6 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import { ReactComponent as Arrows } from "../../../../assets/images/arrows.svg";
 import { Divider } from "../Divider";
-import { Select } from "../../../../components/Select/Select";
 import { ProfileField } from "../../../../components/ProfileField";
 
 export const DetailPosition = () => {

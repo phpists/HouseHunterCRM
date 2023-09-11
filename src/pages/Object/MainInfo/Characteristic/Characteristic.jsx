@@ -40,7 +40,7 @@ const StyledCharacteristic = styled.div`
   padding: 14px 14px 12px 15px;
   margin-bottom: 11px;
   .content-wrapper {
-    height: calc(100svh - 440px);
+    height: calc(100svh - 420px);
     overflow: auto;
   }
   .characteristic-content {

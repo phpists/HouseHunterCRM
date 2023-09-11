@@ -11,13 +11,16 @@ const StyledSaveButton = styled.div`
   font-size: 15px;
   font-style: normal;
   font-weight: 200;
-  line-height: 118%; /* 17.7px */
-  letter-spacing: 0.3px;
-  padding: 8px 30px 6px 28px;
+  padding: 6px 28px 6px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.2);
   opacity: 1;
   border: 1px solid transparent;
+  line-height: 118%; /* 17.7px */
+  letter-spacing: 0.3px;
+  leading-trim: both;
+  text-edge: cap;
+  height: 32px;
   cursor: pointer;
   transition: all 0.3s;
   margin-right: 20px;

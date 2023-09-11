@@ -2,7 +2,7 @@ import { useState } from "react";
 import { styled } from "styled-components";
 
 export const TypeSelect = () => {
-  const options = ["За об’єкт", "За м2"];
+  const options = ["За об’єкт", "За м²"];
   const [active, setActive] = useState(0);
   return (
     <StyledTypeSelect>

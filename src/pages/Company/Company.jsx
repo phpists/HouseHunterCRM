@@ -67,7 +67,7 @@ const StyledCompany = styled.div`
   grid-template-columns: 580px 1fr;
   gap: 0 30px;
   .info {
-    height: calc(100svh - 101px - 24px - 40px);
+    height: calc(100svh - 82px - 24px - 40px);
     overflow: auto;
   }
 `;

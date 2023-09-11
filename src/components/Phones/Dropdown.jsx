@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 export const Dropdown = ({ open, onSelect, top }) => (
   <StyledDropdown
     open={open}
+    initial={{ opacity: 0, visibility: "hidden" }}
     animate={{ opacity: open ? 1 : 0, visibility: open ? "visible" : "hidden" }}
     top={top}
   >

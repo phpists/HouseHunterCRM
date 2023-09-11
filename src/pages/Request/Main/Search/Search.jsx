@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
-import { TagsFilter } from "../../TagsFilter/TagsFilter";
 import { Divider } from "../../Divider";
+import { TagsFilter } from "../../../../components/TagsFilter/TagsFilter";
 
 export const Search = () => {
   return (

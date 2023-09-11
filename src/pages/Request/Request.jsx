@@ -30,7 +30,7 @@ export const Request = () => {
 const StyledRequest = styled.div`
   background: #323232;
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
-  padding: 23px 20px 20px;
+  padding: 15px 20px;
   .request-content {
     border-radius: 15px;
     background: #2b2b2b;
@@ -40,7 +40,7 @@ const StyledRequest = styled.div`
     gap: 15px;
   }
   .request-card {
-    height: calc(100svh - 325px);
+    height: calc(100svh - 302px);
     overflow: auto;
     border-radius: 14px;
   }

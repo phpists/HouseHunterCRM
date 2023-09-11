@@ -2,8 +2,8 @@ import { IconButton } from "../../../../components/IconButton";
 import { ReactComponent as StarIcon } from "../../../../assets/images/card-star.svg";
 import { ReactComponent as PlusIcon } from "../../../../assets/images/plus.svg";
 import { Search } from "./Search";
-import { Select } from "./Select/Select";
 import { styled } from "styled-components";
+import { SelectItems } from "../../../../components/SelectItems/SelectItems";
 
 export const Buttons = ({ favoritesFilter, onToggleFavoriteFilter }) => {
   return (
@@ -16,7 +16,7 @@ export const Buttons = ({ favoritesFilter, onToggleFavoriteFilter }) => {
         active={favoritesFilter}
       />
       <Search />
-      <Select />
+      <SelectItems title="клієнтів" />
     </StyledButtons>
   );
 };

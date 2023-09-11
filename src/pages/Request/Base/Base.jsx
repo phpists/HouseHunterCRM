@@ -1,16 +1,16 @@
 import { styled } from "styled-components";
 import { TitleDivider } from "./TitleDivider";
-import { Select } from "../Select/Select";
 import { Divider } from "../Divider";
 import { CheckOption } from "./CheckOption";
 import { ToggleOption } from "../ToggleOption";
 import { Period } from "./Period/Period";
+import { SelectTags } from "../../../components/SelectTags/SelectTags";
 
 export const Base = () => {
   return (
     <StyledBase className="request-card hide-scroll">
       <TitleDivider title="X company" />
-      <Select label="Категорія" notMultiSelect />
+      <SelectTags label="Категорія" notMultiSelect />
       <Divider />
       <CheckOption label="Неактуальні об’єкти" className="check-opt" />
       <CheckOption label="Здані об’єкти" className="check-opt" />
@@ -33,7 +33,11 @@ export const Base = () => {
       <Period />
       <CheckOption label="Вимкнути «Без співпраці»" className="check-opt" />
       <TitleDivider title="mls base" />
-      <Select label="Компанія" placeholder="Оберіть компанію" notMultiSelect />
+      <SelectTags
+        label="Компанія"
+        placeholder="Оберіть компанію"
+        notMultiSelect
+      />
       <CheckOption label="Неактуальні об’єкти" className="check-opt-mls" />
       <ToggleOption label="Все крім цього" />
     </StyledBase>
