@@ -8,11 +8,13 @@ import { ShowMore } from "./ShowMore/ShowMore";
 
 export const ObjectCard = ({ selected, onSelect }) => {
   const handleClick = (e) =>
-    e.target.classList.contains("object-card") && onSelect();
+    e.target.classList.contains("clickable") && onSelect();
 
   return (
     <StyledObjectCard
-      className={`object-card ${selected && "selected"}`}
+      className={`flex items-center justify-between clickable ${
+        selected && "selected"
+      }`}
       onClick={handleClick}
     >
       <Slider />
@@ -33,9 +35,9 @@ const StyledObjectCard = styled.div`
   display: grid;
   grid-template-columns: repeat(5, max-content);
   position: relative;
-  transition: all 0.3s;
+  transition: all 0.1s;
   border: 1px solid transparent;
-
+  cursor: pointer;
   &.selected {
     border: 1px solid #fff;
   }

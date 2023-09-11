@@ -40,6 +40,7 @@ const StyledDropdown = styled.div`
     background: rgba(255, 255, 255, 0.7);
     transform: all 0.3s;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
     &:hover {
       background: #fff;
     }

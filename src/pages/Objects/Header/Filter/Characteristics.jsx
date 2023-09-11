@@ -12,7 +12,7 @@ export const Characteristics = () => (
     <Divider />
     <SelectTags value="Оберіть тип стін" label="Тип стін" />
     <Divider />
-    <Ranger label="Поверх/Поверховість" />
+    <Ranger label="Поверх/Поверховість" defaultStart={0} defaultEnd={100} />
     <div className="otp-group">
       <ToggleOption label="Не перший" />
       <ToggleOption label="Не останній" />
@@ -22,9 +22,19 @@ export const Characteristics = () => (
       <ToggleOption label="Останній" />
     </div>
     <Divider />
-    <Ranger label="Загальна площа" mainType="м²" />
+    <Ranger
+      label="Загальна площа"
+      mainType="м²"
+      defaultStart={0}
+      defaultEnd={100}
+    />
     <Divider />
-    <Ranger label="Площа кухні" mainType="м²" />
+    <Ranger
+      label="Площа кухні"
+      mainType="м²"
+      defaultStart={0}
+      defaultEnd={100}
+    />
     <Divider />
     <SelectTags value="Оберіть" label="Планування" />
     <Divider />

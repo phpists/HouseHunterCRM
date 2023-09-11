@@ -3,7 +3,7 @@ import { Tag } from "./Tag";
 
 export const Header = () => {
   return (
-    <StyledHeader className="flex flex-wrap items-center">
+    <StyledHeader className="flex flex-wrap items-center clickable">
       <Tag title="здано до  09.09.2022" color="orange" />
       <Tag title="Потребує модерації" color="red" />
       <Tag title="База xbase" color="green" />

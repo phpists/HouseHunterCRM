@@ -21,7 +21,7 @@ const StyledDropdown = styled(motion.div)`
   background: #4b4b4b;
   border-radius: 0 0 9px 9px;
   overflow: hidden;
-  z-index: 2;
+  z-index: 101;
   .opt {
     padding: 8px 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);

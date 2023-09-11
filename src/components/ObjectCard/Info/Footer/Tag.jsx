@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const Tag = ({ title }) => <StyledTag>{title}</StyledTag>;
+export const Tag = ({ title }) => (
+  <StyledTag className="clickable">{title}</StyledTag>
+);
 
 const StyledTag = styled.div`
   padding: 1px 4px 2px 4px;

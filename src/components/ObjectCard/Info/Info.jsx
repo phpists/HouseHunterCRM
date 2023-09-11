@@ -5,7 +5,7 @@ import { Footer } from "./Footer/Footer";
 
 export const Info = () => {
   return (
-    <StyledInfo className="flex flex-col justify-between hide ">
+    <StyledInfo className="flex flex-col justify-between hide clickable ">
       <Header />
       <Text />
       <Footer />

@@ -19,7 +19,7 @@ const StyledFooter = styled.div`
     font-size: 15px;
     font-style: normal;
     font-weight: 400;
-    line-height: 118%; /* 17.7px */
+    line-height: 1.5;
     letter-spacing: 0.3px;
     padding: 7px 20px 6px 20px;
     height: 31px;

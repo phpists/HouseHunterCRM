@@ -19,9 +19,15 @@ export const Main = () => (
       ]}
       currency
       big
+      defaultStart={0}
+      defaultEnd={100}
     />
     <Divider />
-    <Ranger label="Кількість кімнат/Приміщень" />
+    <Ranger
+      label="Кількість кімнат/Приміщень"
+      defaultStart={0}
+      defaultEnd={100}
+    />
   </StyledMain>
 );
 

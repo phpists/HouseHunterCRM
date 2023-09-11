@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const Tag = ({ icon, title }) => (
-  <StyledTag className="flex items-center">
+  <StyledTag className="flex items-center clickable select-none">
     {icon && <img src={icon} alt="" />}
-    <div className="title">{title}</div>
+    <div className="title clickable">{title}</div>
   </StyledTag>
 );
 

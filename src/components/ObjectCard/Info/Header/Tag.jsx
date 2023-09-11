@@ -16,7 +16,11 @@ export const Tag = ({ title, color }) => {
     },
   };
 
-  return <StyledTag color={COLORS[color]}>{title}</StyledTag>;
+  return (
+    <StyledTag color={COLORS[color]} className="clickable">
+      {title}
+    </StyledTag>
+  );
 };
 
 const StyledTag = styled.div`

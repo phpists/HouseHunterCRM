@@ -2,9 +2,11 @@ import styled from "styled-components";
 
 export const Text = () => {
   return (
-    <StyledText className="hide-scroll">
-      <div className="title">Оренда 1 кім квартири п. орлика Дрогобич</div>
-      <div className="descr">
+    <StyledText className="hide-scroll clickable">
+      <div className="title clickable">
+        Оренда 1 кім квартири п. орлика Дрогобич
+      </div>
+      <div className="descr clickable">
         Оренда 1- кімнатної квартири кухня студія по вул. Шота Руставеллі. В
         квартирі є вся необхідна техніка та меблі, гарна, затишна. Розглядають
         всіх порядних орендарів, без дітей та домашніх улюбленців. Оренда 1-

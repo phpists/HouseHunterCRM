@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Divider = () => <StyledDivider />;
+export const Divider = () => <StyledDivider className="clickable" />;
 
 const StyledDivider = styled.div`
   width: 100%;

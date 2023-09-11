@@ -9,8 +9,8 @@ export const Contact = ({ type }) => {
   const [commentOpen, setCommentOpen] = useState(false);
 
   return (
-    <StyledContact>
-      <div className="flex items-center">
+    <StyledContact className="clickable">
+      <div className="flex items-center clickable">
         <CommentButton
           active={commentOpen}
           onClick={() => setCommentOpen(!commentOpen)}

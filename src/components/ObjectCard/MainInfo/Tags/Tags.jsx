@@ -21,7 +21,7 @@ export const Tags = () => {
   ];
 
   return (
-    <StyledTags className="flex flex-wrap hide-scroll">
+    <StyledTags className="flex flex-wrap hide-scroll clickable">
       {TAGS.map(({ title, icon }, i) => (
         <Tag key={i} title={title} icon={icon} />
       ))}
