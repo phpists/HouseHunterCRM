@@ -7,13 +7,13 @@ export const Phone = ({ commentOpen }) => {
   const [show, setShow] = useState(false);
 
   return (
-    <StyledPhone>
+    <StyledPhone className="clickable">
       {show ? (
         <Phones className={commentOpen ? "" : "phones"} />
       ) : (
         <ShowButton
           onClick={() => setShow(true)}
-          className={commentOpen ? "" : "mt-2.5"}
+          className={commentOpen ? "" : "mt-2.5 "}
         />
       )}
     </StyledPhone>

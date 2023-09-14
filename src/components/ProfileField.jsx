@@ -35,7 +35,7 @@ export const ProfileField = ({
       onClick={() => !active && setActive(true)}
       active={active}
       password={password}
-      className={`${className}`}
+      className={`${className} ${active && "active"}`}
       grey={grey}
       big={big}
     >
@@ -44,17 +44,17 @@ export const ProfileField = ({
         <>
           {textarea ? (
             <textarea
-              className="value"
+              className="value hide-scroll"
               defaultValue={value}
               ref={textareaRef}
               onChange={textAreaAdjust}
             />
           ) : (
-            <input className="value" defaultValue={value} />
+            <input className="value hide-scroll" defaultValue={value} />
           )}
         </>
       ) : (
-        <div className="value">{value}</div>
+        <div className="value hide-scroll">{value}</div>
       )}
       {!big && (
         <>
@@ -113,6 +113,7 @@ const StyledProfileField = styled.div`
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
+    margin-top: 2px;
   }
 
   textarea {

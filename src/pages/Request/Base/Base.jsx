@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { TitleDivider } from "./TitleDivider";
 import { Divider } from "../Divider";
-import { CheckOption } from "./CheckOption";
+import { CheckOption } from "../../../components/CheckOption";
 import { ToggleOption } from "../ToggleOption";
 import { Period } from "./Period/Period";
 import { SelectTags } from "../../../components/SelectTags/SelectTags";

@@ -31,4 +31,11 @@ export const Main = () => (
   </StyledMain>
 );
 
-const StyledMain = styled.div``;
+const StyledMain = styled.div`
+  .first-angle,
+  .second-angle {
+    &::after {
+      background: #4e4e4e !important;
+    }
+  }
+`;

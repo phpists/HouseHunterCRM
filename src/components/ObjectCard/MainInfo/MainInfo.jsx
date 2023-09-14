@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Price } from "./Price/Price";
+import { Price } from "../../Price/Price";
 import { Tags } from "./Tags/Tags";
 
 export const MainInfo = () => {

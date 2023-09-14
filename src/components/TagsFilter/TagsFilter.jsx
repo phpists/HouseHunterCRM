@@ -5,11 +5,11 @@ import { Count } from "./Count";
 import { motion } from "framer-motion";
 import { ReactComponent as SearchIcon } from "../../assets/images/search.svg";
 
-export const TagsFilter = ({ label, search }) => {
+export const TagsFilter = ({ label, search, initTags, className }) => {
   const [isActive, setIsActive] = useState(false);
 
   const [value, setValue] = useState("");
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState(initTags ?? []);
 
   const handleAddTag = (e) => {
     if (e.keyCode === 13) {
@@ -26,7 +26,7 @@ export const TagsFilter = ({ label, search }) => {
       empty={tags.length === 0}
       onMouseEnter={() => setIsActive(true)}
       onMouseLeave={() => setIsActive(false)}
-      className={`${isActive && "active"}`}
+      className={`${isActive && "active"} ${className}`}
       search={search}
     >
       <div className="flex items-center justify-between">
