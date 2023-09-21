@@ -5,13 +5,20 @@ import { Info } from "./Info";
 import { Avatar } from "./Avatar";
 import { EditProfile } from "./EditProfile/EditProfile";
 import { useState } from "react";
+import { UserInfoCard } from "../../UserInfoCard/UserInfoCard";
 
 export const Profile = () => {
   const [openEdit, setOpenEdit] = useState(false);
 
   return (
     <>
-      {openEdit && <EditProfile onClose={() => setOpenEdit(false)} />}
+      {openEdit && (
+        <UserInfoCard
+          onClose={() => setOpenEdit(false)}
+          title="Особистий профіль"
+          avatarBanner
+        />
+      )}
       <StyledProfile
         className="flex items-center"
         onClick={() => setOpenEdit(true)}

@@ -2,8 +2,18 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import { ReactComponent as EditIcon } from "../assets/images/edit-company.svg";
 import { ReactComponent as CheckIcon } from "../assets/images/check.svg";
+import ReactInputMask from "react-input-mask";
 
-export const Field = ({ value, label, className, hide, textarea, full }) => {
+export const Field = ({
+  value,
+  label,
+  className,
+  hide,
+  textarea,
+  full,
+  phone,
+  placeholder,
+}) => {
   const [edit, setEdit] = useState(false);
 
   return (
@@ -18,14 +28,16 @@ export const Field = ({ value, label, className, hide, textarea, full }) => {
       <div className="field-content">
         {edit ? (
           <>
-            {textarea ? (
+            {phone ? (
+              <ReactInputMask mask="+38(999)999-99-99" value={value} />
+            ) : textarea ? (
               <textarea type="text" className="value" defaultValue={value} />
             ) : (
               <input type="text" className="value" defaultValue={value} />
             )}
           </>
         ) : (
-          <div className="value">{value}</div>
+          <div className="value">{value ?? placeholder}</div>
         )}
         <div className="label">{edit ? "Редагування" : label}</div>
       </div>

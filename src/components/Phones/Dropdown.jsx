@@ -8,12 +8,13 @@ export const Dropdown = ({ open, onSelect, top }) => (
     initial={{ opacity: 0, visibility: "hidden" }}
     animate={{ opacity: open ? 1 : 0, visibility: open ? "visible" : "hidden" }}
     top={top}
+    className="notClickable"
   >
-    <div onClick={onSelect}>
-      <Phone className="phone-opt" />
+    <div onClick={onSelect} className="notClickable">
+      <Phone className="phone-opt notClickable" />
     </div>
-    <div onClick={onSelect}>
-      <Phone className="phone-opt" />
+    <div onClick={onSelect} className="notClickable">
+      <Phone className="phone-opt notClickable" />
     </div>
   </StyledDropdown>
 );

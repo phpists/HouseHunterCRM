@@ -2,12 +2,12 @@ import { styled } from "styled-components";
 import phoneIcon from "../../assets/images/call.svg";
 
 export const Phone = ({ showOnHoverIcon, className }) => (
-  <StyledPhone className={`${className}`}>
-    <div className="flex items-center">
-      <div className="phone">+38 (097) 707 62 58</div>
-      <img src={phoneIcon} alt="" />
+  <StyledPhone className={`${className} notClickable`}>
+    <div className="flex items-center notClickable">
+      <div className="phone notClickable">+38 (097) 707 62 58</div>
+      <img src={phoneIcon} alt="" className="notClickable" />
     </div>
-    <div className="subtitle">Телефон</div>
+    <div className="subtitle notClickable">Телефон</div>
   </StyledPhone>
 );
 

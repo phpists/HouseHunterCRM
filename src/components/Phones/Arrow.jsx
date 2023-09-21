@@ -3,11 +3,11 @@ import { ReactComponent as ArrowIcon } from "../../assets/images/arrow-down.svg"
 
 export const Arrow = ({ open, onToggleOpen }) => (
   <StyledArrow
-    className="flex items-center justify-center"
+    className="flex items-center justify-center notClickable"
     open={open}
     onClick={onToggleOpen}
   >
-    <ArrowIcon />
+    <ArrowIcon className="notClickable" />
   </StyledArrow>
 );
 

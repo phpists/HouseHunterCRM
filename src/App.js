@@ -11,6 +11,7 @@ import { Object } from "./pages/Object/Object";
 import { Request } from "./pages/Request/Request";
 import { Objects } from "./pages/Objects/Objects";
 import { Requests } from "./pages/Requests/Requests";
+import { Structure } from "./pages/Structure/Structure";
 
 export const App = () => {
   //   const navigate = useNavigate();
@@ -35,6 +36,7 @@ export const App = () => {
               <Route path="/objects" element={<Objects />} />
               <Route path="/request" element={<Request />} />
               <Route path="/requests" element={<Requests />} />
+              <Route path="/structure" element={<Structure />} />
               <Route path="/company" element={<Company />} />
               <Route path="*" element={<></>} />
             </Routes>
