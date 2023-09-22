@@ -40,6 +40,9 @@ export const Header = ({ selectedCount }) => {
 
 const StyledHeader = styled.div`
   margin-bottom: 20px;
+  .icon-btn {
+    margin-right: 10px;
+  }
   .select-wrapper {
     width: 250px;
   }

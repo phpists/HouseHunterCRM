@@ -23,6 +23,8 @@ const StyledDropdown = styled.div`
   border-radius: 0 0 8px 8px;
   overflow: hidden;
   backdrop-filter: blur(18.5px);
+  z-index: 100;
+
   div {
     color: rgba(255, 255, 255, 0.4);
     font-family: Overpass;

@@ -6,9 +6,9 @@ import { useState } from "react";
 import { Agent } from "./Agent/Agent";
 import { Field } from "../../../../components/Field";
 import { Status } from "./Status/Status";
-import { MoreButton } from "./MoreButton";
+import { MoreButton } from "./MoreButton/MoreButton";
 
-export const CallCard = ({ selected, onSelect }) => {
+export const CallCard = ({ selected, onSelect, openMore, onOpenMore }) => {
   const [open, setOpen] = useState();
 
   const handleClick = (e) =>
@@ -34,13 +34,13 @@ export const CallCard = ({ selected, onSelect }) => {
       />
       <Divider />
       <Status />
-      <MoreButton />
+      <MoreButton openMore={openMore} onOpenMore={onOpenMore} />
     </StyledCallCard>
   );
 };
 
 const StyledCallCard = styled.div`
-  padding: 10px;
+  padding: 10px 20px 10px 10px;
   border-radius: 10px;
   background: #3d3d3d;
   border: 1px solid rgba(255, 255, 255, 0);

@@ -4,27 +4,28 @@ import { Divider } from "./Divider";
 import { SeachInput } from "./SeachInput";
 import { List } from "./List/List";
 
-export const SelectItemsDropdown = () => {
+export const Dropdown = () => {
   return (
-    <StyledSelectItemsDropdown>
+    <StyledDropdown>
       <ToggleOption label="Опрацьовано" />
       <Divider />
       <SeachInput />
       <List />
-    </StyledSelectItemsDropdown>
+    </StyledDropdown>
   );
 };
 
-const StyledSelectItemsDropdown = styled.div`
+const StyledDropdown = styled.div`
   position: absolute;
-  top: 100%;
+  top: calc(100% + 28px);
   width: 100%;
-  left: 0;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 0px 0px 9px 9px;
+  right: -20px;
   overflow: hidden;
-  backdrop-filter: blur(18.5px);
-  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #4b4b4b;
+  border-radius: 9px;
+  width: 254px;
+  z-index: 20;
   padding: 6px;
-  z-index: 100;
 `;

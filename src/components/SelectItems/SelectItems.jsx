@@ -19,7 +19,7 @@ export const SelectItems = ({ title, selectedCount, dropdown }) => {
   }, [selectedCount]);
 
   return (
-    <div className="relative z-10">
+    <div className="relative z-300">
       <StyledSelectItems className="flex items-center" open={open}>
         <Title />
         <Selected

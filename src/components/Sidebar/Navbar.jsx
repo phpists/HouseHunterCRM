@@ -6,6 +6,7 @@ import { ReactComponent as HomeIcon } from "../../assets/images/home-sidebar.svg
 import { ReactComponent as XbaseIcon } from "../../assets/images/xbase.svg";
 import { ReactComponent as CalendarIcon } from "../../assets/images/calendar.svg";
 import { ReactComponent as CopyIcon } from "../../assets/images/copy.svg";
+import { ReactComponent as PhoneIcon } from "../../assets/images/phone-menu.svg";
 import { NavBarItem } from "./NavBarItem";
 
 const LINKS = [
@@ -16,6 +17,7 @@ const LINKS = [
   { icon: XbaseIcon, link: "/note" },
   { icon: CalendarIcon, link: "/calendar" },
   { icon: CopyIcon, link: "/structure" },
+  { icon: PhoneIcon, link: "/calls" },
 ];
 
 export const NavBar = () => (
