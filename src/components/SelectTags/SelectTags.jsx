@@ -10,6 +10,10 @@ export const SelectTags = ({
   placeholder,
   notMultiSelect,
   showTags,
+  Component,
+  search,
+  tagValue,
+  initValue,
 }) => {
   const [open, setOpen] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
@@ -44,13 +48,30 @@ export const SelectTags = ({
           </div>
         ) : (
           <div className="flex flex-wrap items-center">
-            <div className="value">
-              {placeholder
-                ? placeholder
-                : isEmpty
-                ? "Оберіть"
-                : "Оренда квартир"}
-            </div>
+            {!search ? (
+              <div className={`value ${tagValue && "value-tag"}`}>
+                {initValue
+                  ? initValue
+                  : placeholder
+                  ? placeholder
+                  : isEmpty
+                  ? "Оберіть"
+                  : "Оренда квартир"}
+              </div>
+            ) : (
+              <input
+                className="value"
+                placeholder={
+                  initValue
+                    ? initValue
+                    : placeholder
+                    ? placeholder
+                    : isEmpty
+                    ? "Оберіть"
+                    : "Оренда квартир"
+                }
+              />
+            )}
             {!isEmpty && !notMultiSelect && (
               <TagCount count={1} className="ml-2.5" />
             )}
@@ -61,7 +82,11 @@ export const SelectTags = ({
       {!isEmpty && showTags ? null : (
         <Arrow active={open} onClick={handleTaggleOpen} />
       )}
-      <Dropdown open={open} notMultiSelect={notMultiSelect} />
+      <Dropdown
+        open={open}
+        notMultiSelect={notMultiSelect}
+        Component={Component}
+      />
     </StyledSelectTags>
   );
 };
@@ -81,6 +106,32 @@ const StyledSelectTags = styled.div`
     letter-spacing: 0.3px;
     margin-bottom: 1px;
     transition: all 0.3s;
+    &::placeholder {
+      color: #fff;
+      font-family: Overpass;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 100;
+      line-height: 118%; /* 17.7px */
+      letter-spacing: 0.3px;
+    }
+  }
+  .value-tag {
+    display: flex;
+    padding: 1px 8px 2px 8px;
+    height: 20px;
+    color: #58afff;
+    border-radius: 5px;
+    background: rgba(88, 175, 255, 0.3);
+    leading-trim: both;
+    text-edge: cap;
+    font-family: Overpass;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 200;
+    line-height: 1.4;
+    letter-spacing: 0.28px;
+    text-transform: capitalize;
   }
   .label {
     color: #fff;

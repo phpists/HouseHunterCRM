@@ -2,14 +2,34 @@ import { styled } from "styled-components";
 import { Option } from "../Option";
 import { motion } from "framer-motion";
 
-export const Dropdown = ({ open, notMultiSelect }) => (
+export const Dropdown = ({ open, notMultiSelect, Component }) => (
   <StyledDropdown
     animate={{ opacity: open ? 1 : 0, visibility: open ? "visible" : "hidden" }}
   >
-    <Option title="Оренда квартир" className="opt" noSelect={notMultiSelect} />
-    <Option title="Оренда квартир" className="opt" noSelect={notMultiSelect} />
-    <Option title="Оренда квартир" className="opt" noSelect={notMultiSelect} />
-    <Option title="Оренда квартир" className="opt" noSelect={notMultiSelect} />
+    <Option
+      title="Оренда квартир"
+      className="opt"
+      noSelect={notMultiSelect}
+      Component={Component}
+    />
+    <Option
+      title="Оренда квартир"
+      className="opt"
+      noSelect={notMultiSelect}
+      Component={Component}
+    />
+    <Option
+      title="Оренда квартир"
+      className="opt"
+      noSelect={notMultiSelect}
+      Component={Component}
+    />
+    <Option
+      title="Оренда квартир"
+      className="opt"
+      noSelect={notMultiSelect}
+      Component={Component}
+    />
   </StyledDropdown>
 );
 

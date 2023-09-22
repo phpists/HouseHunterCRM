@@ -31,9 +31,19 @@ export const Field = ({
             {phone ? (
               <ReactInputMask mask="+38(999)999-99-99" value={value} />
             ) : textarea ? (
-              <textarea type="text" className="value" defaultValue={value} />
+              <textarea
+                type="text"
+                className="value"
+                defaultValue={value}
+                placeholder={placeholder}
+              />
             ) : (
-              <input type="text" className="value" defaultValue={value} />
+              <input
+                type="text"
+                className="value"
+                defaultValue={value}
+                placeholder={placeholder}
+              />
             )}
           </>
         ) : (
@@ -73,6 +83,15 @@ const StyleField = styled.div`
     text-overflow: ellipsis;
     overflow: hidden;
     ${({ full }) => (full ? "width: max-content;" : "white-space: nowrap;")}
+    &::placeholder {
+      color: #fff;
+      font-family: Overpass;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 200;
+      line-height: 118%; /* 17.7px */
+      letter-spacing: 0.3px;
+    }
   }
   .label {
     color: #fff;

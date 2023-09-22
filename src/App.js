@@ -12,6 +12,7 @@ import { Request } from "./pages/Request/Request";
 import { Objects } from "./pages/Objects/Objects";
 import { Requests } from "./pages/Requests/Requests";
 import { Structure } from "./pages/Structure/Structure";
+import { Calls } from "./pages/Calls/Calls";
 
 export const App = () => {
   //   const navigate = useNavigate();
@@ -38,6 +39,7 @@ export const App = () => {
               <Route path="/requests" element={<Requests />} />
               <Route path="/structure" element={<Structure />} />
               <Route path="/company" element={<Company />} />
+              <Route path="/calls" element={<Calls />} />
               <Route path="*" element={<></>} />
             </Routes>
           </div>

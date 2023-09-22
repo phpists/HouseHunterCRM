@@ -2,7 +2,14 @@ import { styled } from "styled-components";
 import checkIcon from "../assets/images/circle-green-check.svg";
 import { useState } from "react";
 
-export const Option = ({ title, onChange, active, className, noSelect }) => {
+export const Option = ({
+  title,
+  onChange,
+  active,
+  className,
+  noSelect,
+  Component,
+}) => {
   const [a, setA] = useState(false);
 
   return (
@@ -11,7 +18,10 @@ export const Option = ({ title, onChange, active, className, noSelect }) => {
       onClick={() => setA(noSelect ? false : !a)}
       active={a}
     >
-      <span>{title}</span>
+      <span className="flex items-center">
+        {Component}
+        {title}
+      </span>
       <img src={checkIcon} alt="" />
     </StyledOption>
   );

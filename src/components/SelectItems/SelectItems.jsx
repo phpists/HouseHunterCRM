@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Arrow } from "./Arrow";
 import { Dropdown } from "./Dropdown";
 
-export const SelectItems = ({ title, selectedCount }) => {
+export const SelectItems = ({ title, selectedCount, dropdown }) => {
   const [type, setType] = useState(null);
   const [open, setOpen] = useState(false);
 
@@ -30,7 +30,7 @@ export const SelectItems = ({ title, selectedCount }) => {
         />
         {type && <Arrow open={open} onToggleOpen={() => setOpen(!open)} />}
       </StyledSelectItems>
-      {open && <Dropdown />}
+      {open && <>{dropdown ? dropdown : <Dropdown />}</>}
     </div>
   );
 };
