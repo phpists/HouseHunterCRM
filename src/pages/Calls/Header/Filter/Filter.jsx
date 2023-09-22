@@ -27,7 +27,7 @@ export const Filter = ({ onClose }) => {
       animate={controls}
     >
       <Header onClose={handleClose} />
-      <div className="content">
+      <div className="content hide-scroll">
         <SectionTitle title="Статус" />
         <Status />
         <SectionTitle title="Період " />
