@@ -13,6 +13,7 @@ import { Objects } from "./pages/Objects/Objects";
 import { Requests } from "./pages/Requests/Requests";
 import { Structure } from "./pages/Structure/Structure";
 import { Calls } from "./pages/Calls/Calls";
+import { Dashboard } from "./pages/Dashboard/Dashboard";
 
 export const App = () => {
   //   const navigate = useNavigate();
@@ -30,6 +31,8 @@ export const App = () => {
           <Header />
           <div className="app-content">
             <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/empty" element={<Dashboard />} />
               <Route path="/clients" element={<Clients />} />
               <Route path="/client/:id" element={<Client />} />
               <Route path="/object/:id" element={<Object />} />
