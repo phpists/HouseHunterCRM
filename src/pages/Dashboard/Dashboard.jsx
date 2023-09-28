@@ -8,6 +8,8 @@ import { Steps } from "./Steps/Steps";
 import { Info } from "./Info";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { Header } from "./Header/Header";
+import { InfoButton } from "./InfoButton";
 
 export const Dashboard = () => {
   const { pathname } = useLocation();
@@ -18,18 +20,20 @@ export const Dashboard = () => {
   }, [pathname]);
 
   return (
-    <StyledDashboard>
+    <StyledDashboard className="hide-scroll">
       {empty ? (
         <Empty />
       ) : (
-        <div className="dashboard-content">
+        <div className="dashboard-content hide-scroll">
+          <Header />
           <div className="dashboard-col hide-scroll">
             <Clients />
             <Objects />
             <Requests />
           </div>
           <LastRequests />
-          <div className="dashboard-col hide-scroll">
+          <InfoButton className="dashboard-mob-info-btn" />
+          <div className="dashboard-col hide-scroll info-cards-desktop">
             <Steps className="steps-wrapper hide-scroll" />
             <Info />
           </div>
@@ -68,6 +72,30 @@ const StyledDashboard = styled.div`
     min-height: 200px;
     .divider {
       margin: 14px 0;
+    }
+  }
+  .dashboard-mob-info-btn {
+    display: none;
+  }
+
+  @media (max-width: 1100px) {
+    .dashboard-content {
+      grid-template-columns: 1fr;
+      max-height: max-content;
+      overflow: auto;
+      height: calc(100svh - 98px - 40px);
+    }
+    .dashboard-col {
+      max-height: max-content;
+    }
+    .info-cards-desktop {
+      display: none;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .dashboard-mob-info-btn {
+      display: flex;
     }
   }
 `;

@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 
 export const Info = () => (
-  <StyledInfo>
-    <h4 className="name">Юрій Олексійович</h4>
-    <div className="email">yuriyo@gmail.com</div>
+  <StyledInfo className="clickable">
+    <h4 className="name clickable">Юрій Олексійович</h4>
+    <div className="email clickable">yuriyo@gmail.com</div>
   </StyledInfo>
 );
 
@@ -27,5 +27,8 @@ const StyledInfo = styled.div`
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
+  }
+  @media (max-width: 1200px) {
+    display: none;
   }
 `;

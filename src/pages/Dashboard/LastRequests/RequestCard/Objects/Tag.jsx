@@ -16,4 +16,5 @@ const StyledTag = styled.div`
   line-height: 1;
   letter-spacing: 0.22px;
   height: 18px;
+  white-space: nowrap;
 `;

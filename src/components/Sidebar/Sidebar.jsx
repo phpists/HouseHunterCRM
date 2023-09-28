@@ -3,10 +3,13 @@ import { Logo } from "./Logo";
 import { CompanyLogo } from "../CompanyLogo";
 import { NavBar } from "./Navbar";
 
-export const Sidebar = () => {
+export const Sidebar = ({ sidebarOpen, onClose }) => {
   return (
-    <StyledSidebar className="flex flex-col justify-between items-center">
-      <Logo />
+    <StyledSidebar
+      className="flex flex-col justify-between items-center"
+      sidebarOpen={sidebarOpen}
+    >
+      <Logo onClose={onClose} />
       <NavBar />
       <CompanyLogo />
     </StyledSidebar>
@@ -21,4 +24,13 @@ const StyledSidebar = styled.div`
   padding: 26px 0 13px;
   height: 100svh;
   overflow: auto;
+  transition: all 0.3s;
+  @media (max-width: 1200px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    transform: translateX(${({ sidebarOpen }) => (sidebarOpen ? 0 : "-100%")});
+  }
 `;

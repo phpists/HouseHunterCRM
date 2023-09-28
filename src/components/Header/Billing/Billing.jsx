@@ -93,4 +93,8 @@ const StyledBilling = styled.div`
         margin: 0 0 0 0;
     }
   `}
+
+@media (max-width: 1200px) {
+    padding: 12px 24px 11px 8px;
+  }
 `;

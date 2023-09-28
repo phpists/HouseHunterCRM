@@ -61,4 +61,7 @@ const StyledFilter = styled(motion.div)`
     margin-bottom: 25px;
     padding: 8px;
   }
+  @media (max-width: 800px) {
+    width: 100%;
+  }
 `;

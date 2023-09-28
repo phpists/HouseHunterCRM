@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { SelectTags } from "../../SelectTags/SelectTags";
 import { ProfileField } from "../../ProfileField";
 
-export const Tags = () => {
+export const Tags = ({ className }) => {
   return (
-    <StyledTags className="flex flex-col hide-scroll clickable">
+    <StyledTags className={`flex flex-col hide-scroll clickable ${className}`}>
       <SelectTags label="Теги" showTags />
       <ProfileField
         label="Коментар"
@@ -39,5 +39,10 @@ const StyledTags = styled.div`
   }
   @media (min-width: 1700px) {
     width: 18svw;
+  }
+  @media (max-width: 1200px) {
+    width: calc((100% - 210px - 40px) / 2);
+    height: 250px;
+    margin-right: 18px;
   }
 `;

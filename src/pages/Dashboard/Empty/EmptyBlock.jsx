@@ -43,4 +43,14 @@ const StyledEmptyBlock = styled.div`
     line-height: normal;
     letter-spacing: 0.28px;
   }
+  @media (max-width: 1200px) {
+    padding: 20px;
+  }
+  @media (max-width: 600px) {
+    padding: 20px;
+    img,
+    .title {
+      margin-bottom: 8px;
+    }
+  }
 `;

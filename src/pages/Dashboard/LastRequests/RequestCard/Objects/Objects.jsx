@@ -54,4 +54,14 @@ const StyledObjects = styled.div`
       }
     }
   }
+  @media (max-width: 1100px) {
+    .arrow-main {
+      display: none;
+    }
+  }
+  @media (max-width: 900px) {
+    .bts {
+      margin-left: 8px;
+    }
+  }
 `;

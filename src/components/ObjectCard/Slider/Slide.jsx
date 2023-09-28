@@ -10,4 +10,7 @@ const StyledSlide = styled.div`
   border-radius: 8px;
   background: url(${({ photo }) => photo}) center/cover no-repeat;
   flex-shrink: 0;
+  @media (max-width: 800px) {
+    width: 100%;
+  }
 `;

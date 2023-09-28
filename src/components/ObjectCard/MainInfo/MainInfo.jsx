@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { Price } from "../../Price/Price";
 import { Tags } from "./Tags/Tags";
 
-export const MainInfo = () => {
+export const MainInfo = ({ className }) => {
   return (
-    <StyledMainInfo>
+    <StyledMainInfo className={`${className}`}>
       <Price />
       <Tags />
     </StyledMainInfo>
@@ -19,4 +19,9 @@ const StyledMainInfo = styled.div`
   margin-right: 10px;
   width: 220px;
   height: 32px;
+  @media (max-width: 1200px) {
+    height: 250px;
+    width: calc((100% - 210px - 20px) / 2);
+    margin-right: 0;
+  }
 `;

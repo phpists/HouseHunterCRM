@@ -33,4 +33,7 @@ const StyledObjects = styled.div`
       background: rgba(145, 111, 245, 0.1);
     }
   }
+  @media (max-width: 1100px) {
+    margin-bottom: 10px;
+  }
 `;

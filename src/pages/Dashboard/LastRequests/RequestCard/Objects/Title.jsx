@@ -12,4 +12,5 @@ const StyledTitle = styled.div`
   line-height: normal;
   letter-spacing: 0.22px;
   margin-bottom: 4px;
+  white-space: nowrap;
 `;

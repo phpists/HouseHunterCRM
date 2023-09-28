@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Title = () => (
-  <StyledTitle>Пам’ятка для початку роботи</StyledTitle>
+  <StyledTitle className="steps-title">Пам’ятка для початку роботи</StyledTitle>
 );
 
 const StyledTitle = styled.div`
@@ -13,4 +13,7 @@ const StyledTitle = styled.div`
   line-height: normal;
   letter-spacing: 0.4px;
   margin-bottom: 20px;
+  @media (max-width: 600px) {
+    font-size: 18px;
+  }
 `;

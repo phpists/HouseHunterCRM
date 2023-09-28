@@ -51,7 +51,7 @@ const StyledUserInfoCard = styled(motion.div)`
   background: rgba(44, 44, 44, 0.8);
   backdrop-filter: blur(12.5px);
   width: 361px;
-  z-index: 10;
+  z-index: 1088;
   .modal-content {
     padding: 0 10px 15px 11px;
   }

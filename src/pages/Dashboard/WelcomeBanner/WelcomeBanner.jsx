@@ -9,7 +9,7 @@ export const WelcomeBanner = ({ onClose }) => {
     <StyledWelcomeBanner className="flex items-center justify-between">
       <Text />
       <Divider />
-      <Steps />
+      <Steps className="steps" />
       <CloseButton onClose={onClose} />
     </StyledWelcomeBanner>
   );
@@ -21,4 +21,15 @@ const StyledWelcomeBanner = styled.div`
   padding: 40px 100px;
   position: relative;
   margin-bottom: 20px;
+  @media (max-width: 1200px) {
+    flex-direction: column;
+    align-items: start;
+    padding: 40px;
+    .steps {
+      width: 100%;
+    }
+  }
+  @media (max-width: 600px) {
+    padding: 20px;
+  }
 `;

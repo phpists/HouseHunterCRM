@@ -23,12 +23,7 @@ const photos = [object1, object2, object1, object2, object2, object2];
 
 export const Slider = () => {
   const sliderRef = useRef(null);
-  const [sliderHeight, setSliderHeight] = useState(200);
   const [currentSlide, setCurrentSlide] = useState(1);
-
-  useEffect(() => {
-    setSliderHeight(sliderRef?.current.offsetHeight ?? 200);
-  }, []);
 
   return (
     <StyledSlider className="flex items-center" ref={sliderRef}>
@@ -52,7 +47,7 @@ export const Slider = () => {
           ))}
         </SlickSlider>
       </div>
-      <Photos photos={photos} sliderHeight={sliderHeight} />
+      <Photos photos={photos} />
     </StyledSlider>
   );
 };
@@ -94,6 +89,17 @@ const StyledSlider = styled.div`
     .slider-arrows {
       opacity: 1;
       visibility: visible;
+    }
+  }
+  @media (max-width: 1200px) {
+    flex-direction: column;
+    height: auto;
+  }
+  @media (max-width: 800px) {
+    flex-direction: row;
+    margin: 0;
+    .slider {
+      width: calc(100svw - 60px - 8px - 44px - 24px - 29px);
     }
   }
 `;

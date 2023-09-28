@@ -1,7 +1,9 @@
 import { styled } from "styled-components";
 import avatarIcon from "../../../assets/images/avatar.png";
 
-export const Avatar = () => <StyledAvatar avatarIcon={avatarIcon} />;
+export const Avatar = () => (
+  <StyledAvatar avatarIcon={avatarIcon} className="clickable" />
+);
 
 const StyledAvatar = styled.div`
   width: 52px;

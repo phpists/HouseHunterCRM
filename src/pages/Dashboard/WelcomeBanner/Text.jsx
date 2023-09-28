@@ -30,4 +30,13 @@ const StyledText = styled.div`
     letter-spacing: 0.3px;
     opacity: 0.4;
   }
+  @media (max-width: 600px) {
+    .title {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      font-size: 14px;
+    }
+  }
 `;

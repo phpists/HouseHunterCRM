@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Arrow } from "./Arrow";
 import { Dropdown } from "./Dropdown";
 
-export const SelectItems = ({ title, selectedCount, dropdown }) => {
+export const SelectItems = ({ title, selectedCount, dropdown, className }) => {
   const [type, setType] = useState(null);
   const [open, setOpen] = useState(false);
 
@@ -20,15 +20,20 @@ export const SelectItems = ({ title, selectedCount, dropdown }) => {
 
   return (
     <div className="relative z-300">
-      <StyledSelectItems className="flex items-center" open={open}>
+      <StyledSelectItems
+        className={`flex items-center ${className}`}
+        open={open}
+      >
         <Title />
-        <Selected
-          value={type}
-          onChnage={(value) => setType(type === value ? null : value)}
-          title={title}
-          selectedCount={selectedCount}
-        />
-        {type && <Arrow open={open} onToggleOpen={() => setOpen(!open)} />}
+        <div className="flex items-center">
+          <Selected
+            value={type}
+            onChnage={(value) => setType(type === value ? null : value)}
+            title={title}
+            selectedCount={selectedCount}
+          />
+          {type && <Arrow open={open} onToggleOpen={() => setOpen(!open)} />}
+        </div>
       </StyledSelectItems>
       {open && <>{dropdown ? dropdown : <Dropdown />}</>}
     </div>

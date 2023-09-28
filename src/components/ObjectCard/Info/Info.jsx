@@ -3,9 +3,11 @@ import { Header } from "./Header/Header";
 import { Text } from "./Text";
 import { Footer } from "./Footer/Footer";
 
-export const Info = () => {
+export const Info = ({ className }) => {
   return (
-    <StyledInfo className="flex flex-col justify-between hide clickable ">
+    <StyledInfo
+      className={`flex flex-col justify-between hide clickable ${className}`}
+    >
       <Header />
       <Text />
       <Footer />

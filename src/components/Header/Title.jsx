@@ -44,4 +44,8 @@ const StyledTitle = styled.h1`
   font-weight: 200;
   line-height: 118%; /* 40.12px */
   letter-spacing: 0.64px;
+  @media (max-width: 1200px) {
+    font-size: 24px;
+    line-height: 1;
+  }
 `;

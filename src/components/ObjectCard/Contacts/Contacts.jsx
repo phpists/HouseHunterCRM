@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { Contact } from "./Contact/Contact";
 import { Divider } from "./Divider";
 
-export const Contacts = () => {
+export const Contacts = ({ className }) => {
   return (
-    <StyledContacts className="hide-scroll clickable">
+    <StyledContacts className={`hide-scroll clickable ${className}`}>
       <Contact type="owner" />
       <Divider />
       <Contact type="rieltor" />

@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { Header } from "./components/Header/Header";
-import { Route, Routes } from "react-router-dom";
-import { useState } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Company } from "./pages/Company/Company";
 import { Auth } from "./pages/Auth/Auth";
 import { Clients } from "./pages/Clients/Clients";
@@ -16,6 +16,9 @@ import { Calls } from "./pages/Calls/Calls";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
 
 export const App = () => {
+  const location = useLocation();
+  const [sidebarOpen, setSideBarOpen] = useState(false);
+
   //   const navigate = useNavigate();
   const [loggined, setLoggined] = useState(true);
 
@@ -23,12 +26,19 @@ export const App = () => {
   //     loggined && navigate("/company");
   //   }, [loggined]);
 
+  useEffect(() => {
+    setSideBarOpen(false);
+  }, [location]);
+
   return (
     <>
       {loggined ? (
         <StyledApp>
-          <Sidebar />
-          <Header />
+          <Sidebar
+            sidebarOpen={sidebarOpen}
+            onClose={() => setSideBarOpen(false)}
+          />
+          <Header onOpenSidebar={() => setSideBarOpen(true)} />
           <div className="app-content">
             <Routes>
               <Route path="/" element={<Dashboard />} />
@@ -65,5 +75,11 @@ const StyledApp = styled.div`
   .app-content {
     padding: 0px 42px 40px 40px;
     overflow: auto;
+  }
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr;
+    .app-content {
+      padding: 0px 24px 40px;
+    }
   }
 `;

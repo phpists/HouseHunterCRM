@@ -18,4 +18,7 @@ const StyledClients = styled.div`
   path {
     fill: #2df47d;
   }
+  @media (max-width: 1100px) {
+    margin-bottom: 10px;
+  }
 `;
