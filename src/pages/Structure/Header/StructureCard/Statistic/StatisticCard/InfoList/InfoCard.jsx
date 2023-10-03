@@ -31,5 +31,9 @@ const StyledInfoCard = styled.div`
     font-weight: 100;
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
+    margin-left: 10px;
+  }
+  @media (max-width: 1660px) {
+    /* height: auto; */
   }
 `;

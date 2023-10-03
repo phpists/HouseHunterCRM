@@ -4,6 +4,7 @@ import { Empty } from "./Empty";
 import { StructureCard } from "./Header/StructureCard/StructureCard";
 import { useState } from "react";
 import { UserInfoCard } from "../../components/UserInfoCard/UserInfoCard";
+import { MobileHeader } from "./Header/StructureCard/MobileHeader";
 
 export const Structure = () => {
   const [infoOpen, setInfoOpen] = useState(false);
@@ -18,6 +19,7 @@ export const Structure = () => {
   return (
     <StyledStructure className="hide-scroll">
       <Header level={level} />
+      <MobileHeader />
       {infoOpen && (
         <UserInfoCard onClose={() => setInfoOpen(false)} title="Детальніше" />
       )}
@@ -60,5 +62,10 @@ const StyledStructure = styled.div`
     grid-template-columns: 1fr;
     grid-auto-rows: max-content;
     gap: 20px;
+  }
+  @media (max-width: 850px) {
+    width: 100svw;
+    margin-left: -24px;
+    padding: 20px 24px;
   }
 `;

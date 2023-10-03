@@ -4,12 +4,12 @@ import megafoneIcon from "../assets/images/megafon-object.svg";
 export const ObjectCard = ({ photo, className, date }) => (
   <StyledObjectCard
     photo={photo}
-    className={`flex flex-col items-center justify-center ${className}`}
+    className={`flex flex-col items-center justify-center ${className} openInfo`}
   >
     {!photo && (
       <>
-        <img src={megafoneIcon} alt="" className="0.5" />
-        <span>{date ?? "04.10"}</span>
+        <img src={megafoneIcon} alt="" className="0.5 openInfo" />
+        <span className="openInfo">{date ?? "04.10"}</span>
       </>
     )}
   </StyledObjectCard>

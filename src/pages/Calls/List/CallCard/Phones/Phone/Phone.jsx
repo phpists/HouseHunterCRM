@@ -30,4 +30,7 @@ const StyledPhone = styled.div`
     border-bottom: 1px solid rgba(255, 255, 255, 0.40);
 
   `}
+  @media (min-width: 1600px) {
+    width: 100%;
+  }
 `;

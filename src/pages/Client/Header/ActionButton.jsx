@@ -1,8 +1,9 @@
 import { styled } from "styled-components";
 
-export const ActionButton = ({ title, onClick, className }) => (
+export const ActionButton = ({ title, smallTitle, onClick, className }) => (
   <StyledActionButton className={`${className}`} onClick={onClick}>
-    {title}
+    <div className="full">{title}</div>
+    <div className="small">{smallTitle ?? title}</div>
   </StyledActionButton>
 );
 
@@ -21,9 +22,26 @@ const StyledActionButton = styled.div`
   opacity: 0.4;
   cursor: pointer;
   transition: all 0.3s;
+  white-space: nowrap;
   &:hover {
     background: rgba(255, 255, 255, 0.2);
     opacity: 1;
     border: 1px solid transparent;
+  }
+  .small {
+    display: none;
+  }
+  @media (max-width: 700px) {
+    padding: 8px 14px;
+    font-size: 13px;
+    margin-right: 12px;
+    height: 31px;
+    line-height: 1;
+    .small {
+      display: block;
+    }
+    .full {
+      display: none;
+    }
   }
 `;

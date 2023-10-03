@@ -6,11 +6,18 @@ import { Price } from "./Price/Price";
 export const MainInfo = () => {
   return (
     <StyledMainInfo>
-      <Header />
+      <Header className="desktop-maininfo-header" />
       <Characteristic />
-      <Price />
+      <Price className="desktop-price-wrapper" />
     </StyledMainInfo>
   );
 };
 
-const StyledMainInfo = styled.div``;
+const StyledMainInfo = styled.div`
+  @media (max-width: 1300px) {
+    .desktop-maininfo-header,
+    .desktop-price-wrapper {
+      display: none;
+    }
+  }
+`;

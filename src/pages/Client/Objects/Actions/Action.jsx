@@ -53,20 +53,27 @@ const StyledAction = styled(NavLink)`
     height: 21px;
     width: 21px;
   }
-  ${({ active, index }) =>
-    active &&
-    active === index &&
-    `
+
+  @media (max-width: 700px) {
+    width: 100% !important;
+    margin: 0;
+  }
+
+  @media (min-width: 700px) {
+    ${({ active, index }) =>
+      active &&
+      active === index &&
+      `
         background: ${({ background }) => background};
         width: 100%;
         span {
             opacity: 1;
         }
     `}
-  ${({ active, index }) =>
-    active &&
-    active !== index &&
-    `
+    ${({ active, index }) =>
+      active &&
+      active !== index &&
+      `
         padding: 27px;
         width: 74px;
         span {
@@ -75,4 +82,5 @@ const StyledAction = styled(NavLink)`
             margin: 0;
         }
     `}
+  }
 `;

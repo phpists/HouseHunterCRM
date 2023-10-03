@@ -38,4 +38,10 @@ export const Actions = () => {
 
 const StyledActions = styled.div`
   margin-bottom: 10px;
+  @media (max-width: 700px) {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: max-content;
+    gap: 10px;
+  }
 `;

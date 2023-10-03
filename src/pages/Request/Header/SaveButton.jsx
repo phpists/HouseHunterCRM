@@ -4,7 +4,7 @@ export const SaveButton = () => (
   <StyledSaveButton>Зберегти зміни</StyledSaveButton>
 );
 
-const StyledSaveButton = styled.div`
+const StyledSaveButton = styled.button`
   color: #fff;
   text-align: center;
   font-family: Overpass;
@@ -24,4 +24,9 @@ const StyledSaveButton = styled.div`
   cursor: pointer;
   transition: all 0.3s;
   margin-right: 20px;
+  white-space: nowrap;
+  @media (max-width: 800px) {
+    margin-right: 15px;
+    width: 100%;
+  }
 `;

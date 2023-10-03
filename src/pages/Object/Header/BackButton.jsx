@@ -47,4 +47,7 @@ const StyledBackButton = styled.button`
       background: rgba(255, 255, 255, 0.4);
     }
   }
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;

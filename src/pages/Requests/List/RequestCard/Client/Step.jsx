@@ -37,4 +37,14 @@ const StyledStep = styled.div`
     line-height: 1.4;
     width: 107px;
   }
+  @media (max-width: 1600px) {
+    height: 47px;
+    border-radius: 5px;
+    padding: 4px 7px;
+    margin: 0;
+  }
+  @media (max-width: 700px) {
+    height: 26px;
+    margin-bottom: 15px;
+  }
 `;

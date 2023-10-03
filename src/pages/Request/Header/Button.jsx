@@ -4,7 +4,7 @@ export const Button = ({ title, className }) => (
   <StyledButton className={`${className}`}>{title}</StyledButton>
 );
 
-const StyledButton = styled.div`
+const StyledButton = styled.button`
   color: #fff;
   text-align: center;
   font-family: Overpass;
@@ -26,6 +26,7 @@ const StyledButton = styled.div`
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   opacity: 0.4;
+  white-space: nowrap;
   &:hover {
     opacity: 1;
     border: 1px solid rgba(255, 255, 255, 0);

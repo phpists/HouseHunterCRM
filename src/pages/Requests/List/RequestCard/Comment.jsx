@@ -38,4 +38,7 @@ const StyledComment = styled.div`
     width: 22svw;
     max-width: 550px;
   }
+  @media (max-width: 1600px) {
+    width: 100%;
+  }
 `;

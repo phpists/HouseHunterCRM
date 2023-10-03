@@ -1,7 +1,9 @@
 import { styled } from "styled-components";
 
 export const SaveButton = () => (
-  <StyledSaveButton>Зберегти зміни</StyledSaveButton>
+  <StyledSaveButton className="flex items-center">
+    Зберегти <span>зміни</span>
+  </StyledSaveButton>
 );
 
 const StyledSaveButton = styled.div`
@@ -21,4 +23,21 @@ const StyledSaveButton = styled.div`
   cursor: pointer;
   transition: all 0.3s;
   margin-right: 10px;
+  span {
+    margin-left: 5px;
+  }
+  @media (max-width: 800px) {
+    font-size: 13px;
+    padding: 8px 14px;
+    margin-right: 15px;
+
+    span {
+      display: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+    justify-content: center;
+  }
 `;

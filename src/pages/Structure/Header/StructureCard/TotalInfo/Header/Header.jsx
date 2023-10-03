@@ -7,7 +7,7 @@ import { Dropdown } from "./Dropdown/Dropdown";
 export const Header = ({ open, active, onToggleActive }) => {
   return (
     <StyledHeader
-      className="flex items-center clickable notClickable"
+      className="flex items-center justify-between clickable notClickable"
       open={open}
       onClick={onToggleActive}
       active={active}
@@ -51,4 +51,12 @@ const StyledHeader = styled.div`
     opacity: 1 !important;
   }
   `}
+
+  @media (max-width: 850px) {
+    border-radius: 6px 6px 0 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    g {
+      opacity: 1 !important;
+    }
+  }
 `;

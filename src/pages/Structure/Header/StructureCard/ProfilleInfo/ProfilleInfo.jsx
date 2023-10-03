@@ -38,4 +38,10 @@ const StyledProfilleInfo = styled.div`
     height: 100%;
     background: url(${({ bg }) => bg}) center/cover no-repeat;
   }
+  @media (max-width: 1660px) {
+    width: 100%;
+  }
+  @media (max-width: 850px) {
+    height: auto;
+  }
 `;

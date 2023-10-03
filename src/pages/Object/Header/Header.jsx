@@ -10,7 +10,7 @@ export const Header = () => {
   return (
     <StyledHeader className="flex items-center justify-between">
       <BackButton />
-      <div className="flex items-center">
+      <div className="btns-header flex items-center">
         <SaveButton />
         <SendClientButton />
         <IconButton Icon={StarIcon} className="icon-btn" />
@@ -35,6 +35,14 @@ const StyledHeader = styled.div`
     border: 1.4px solid rgba(255, 255, 255, 0.2) !important;
     &:hover {
       border: 1.4px solid rgba(255, 255, 255, 0) !important;
+    }
+  }
+  @media (max-width: 800px) {
+    padding: 20px !important;
+  }
+  @media (max-width: 600px) {
+    .btns-header {
+      width: 100%;
     }
   }
 `;

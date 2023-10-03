@@ -151,4 +151,5 @@ const StyleField = styled.div`
             filter: blur(0px);
         }
   `}
+
 `;

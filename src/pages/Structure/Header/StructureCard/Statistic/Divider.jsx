@@ -7,4 +7,7 @@ const StyledDivider = styled.div`
   height: 100%;
   background: rgba(255, 255, 255, 0.1);
   margin: 0 8px;
+  @media (max-width: 850px) {
+    display: none;
+  }
 `;

@@ -28,4 +28,8 @@ const StyledDropdown = styled.div`
   width: 254px;
   z-index: 20;
   padding: 6px;
+  @media (max-width: 600px) {
+    right: 0;
+    top: 20px;
+  }
 `;

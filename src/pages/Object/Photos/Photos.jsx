@@ -99,10 +99,12 @@ const StyledPhotos = styled.div`
 
   @media (max-width: 1300px) {
     .photos {
-      width: 240px;
+      width: 100%;
+      ${({ photosCount }) => photosCount === 2 && "height: 290px !important;"}
     }
     .photos-grid {
       grid-template-columns: 1fr;
+      grid-auto-rows: max-content;
       .add-btn {
         width: 100% !important;
       }

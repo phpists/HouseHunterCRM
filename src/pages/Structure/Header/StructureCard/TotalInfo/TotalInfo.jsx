@@ -25,7 +25,7 @@ export const TotalInfo = ({ open, onToggleOpen }) => {
       <Header
         open={open}
         active={active}
-        onToggleActive={() => setActive(!active)}
+        onToggleActive={() => setActive(!active && open)}
       />
       <div className="cards clickable notClickable">
         <Card open={open} title="Клієнти" icon={userCheckIcon} />

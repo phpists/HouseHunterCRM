@@ -75,6 +75,7 @@ const StyledApp = styled.div`
   .app-content {
     padding: 0px 42px 40px 40px;
     overflow: auto;
+    overflow-x: hidden;
   }
   @media (max-width: 1200px) {
     grid-template-columns: 1fr;

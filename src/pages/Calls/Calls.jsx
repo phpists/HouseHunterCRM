@@ -26,4 +26,9 @@ const StyledCalls = styled.div`
   padding: 15px 20px;
   background: #323232;
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
+  @media (max-width: 600px) {
+    width: 100svw;
+    margin-left: -24px;
+    padding: 20px 24px;
+  }
 `;

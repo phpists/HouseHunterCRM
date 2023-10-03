@@ -25,7 +25,11 @@ const StyledTitle = styled.div`
     display: block;
     line-height: 1.5;
   }
-  @media (max-width: 1400px) {
+  @media (max-width: 1700px) {
     max-width: 150px;
+  }
+  @media (max-width: 700px) {
+    max-width: 250px;
+    font-size: 14px;
   }
 `;

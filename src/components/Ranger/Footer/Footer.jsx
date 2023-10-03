@@ -11,12 +11,13 @@ export const Footer = ({ currency, values, mainType }) => {
       <PositionCard
         title="Від"
         value={values[0]}
-        className="mr-2.5"
+        className="from-card"
         mainType={mainType ? mainType : currency ? activeCurrency : null}
       />
       <PositionCard
         title="До"
         value={values[1]}
+        className="to-card"
         mainType={mainType ? mainType : currency ? activeCurrency : null}
       />
       {currency && (
@@ -29,4 +30,18 @@ export const Footer = ({ currency, values, mainType }) => {
   );
 };
 
-const StyledFooter = styled.div``;
+const StyledFooter = styled.div`
+  .from-card {
+    margin-right: 10px;
+  }
+
+  @media (max-width: 800px) {
+    .from-card {
+      margin-right: 4px;
+    }
+    .from-card,
+    .to-card {
+      min-width: 100px;
+    }
+  }
+`;

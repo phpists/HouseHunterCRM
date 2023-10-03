@@ -52,4 +52,8 @@ const StyledModal = styled(motion.div)`
   .modal-content {
     padding: 0 45px 20px 20px;
   }
+  @media (max-width: 600px) {
+    width: 100%;
+    border-left: none;
+  }
 `;

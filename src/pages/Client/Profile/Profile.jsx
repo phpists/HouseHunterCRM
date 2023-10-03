@@ -8,19 +8,19 @@ import { Comment } from "./Comment";
 import { OtherInfo } from "./OtherInfo/OtherInfo";
 import maskBackground from "../../../assets/images/auth-shape-mask.svg";
 
-export const Profile = () => {
+export const Profile = ({ className }) => {
   return (
-    <StyledProfile maskBackground={maskBackground}>
+    <StyledProfile maskBackground={maskBackground} className={className}>
       <Header />
       <Divider />
       <div className="profile-content hide-scroll">
-        <SectionTitle title="Basic info" />
+        <SectionTitle title="Дані клієнта" />
         <BasicInfo />
-        <SectionTitle title="Contact" />
+        <SectionTitle title="Контакти" />
         <Contact />
-        <SectionTitle title="Comment" />
+        <SectionTitle title="Коментар" />
         <Comment />
-        <SectionTitle title="Other info" />
+        <SectionTitle title="Фото / Додатково" />
         <OtherInfo />
       </div>
     </StyledProfile>

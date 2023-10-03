@@ -31,6 +31,11 @@ const StyledMainPhoto = styled.div`
     width: 280px;
   }
   @media (max-width: 1300px) {
-    width: 240px;
+    width: 100%;
+    height: calc(
+      453px -
+        ${({ photosCount }) =>
+          photosCount === 1 ? 0 : photosCount === 2 ? 220 : 210}px
+    );
   }
 `;

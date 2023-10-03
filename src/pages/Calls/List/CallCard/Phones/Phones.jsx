@@ -35,4 +35,14 @@ const StyledPhones = styled.div`
       opacity: 1;
     }
   }
+  @media (max-width: 1600px) {
+    width: 100%;
+    grid-template-columns: 1fr max-content;
+    .arrow-card {
+      display: none;
+    }
+  }
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;

@@ -1,13 +1,17 @@
 import styled from "styled-components";
 import phoneIcon from "../../../../../assets/images/small-phone.svg";
+import { ReactComponent as Arrow } from "../../../../../assets/images/call-arrow.svg";
 
 export const PhoneCalls = () => (
-  <StyledPhoneCalls>
-    <div className="flex items-center title">
-      <img src={phoneIcon} alt="" />
-      10
+  <StyledPhoneCalls className="flex items-center">
+    <div>
+      <div className="flex items-center title">
+        <img src={phoneIcon} alt="" />
+        10
+      </div>
+      <div className="subtitle">Викликів</div>
     </div>
-    <div className="subtitle">Викликів</div>
+    <Arrow className="arrow-down" />
   </StyledPhoneCalls>
 );
 
@@ -42,5 +46,16 @@ const StyledPhoneCalls = styled.div`
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
+  }
+  .arrow-down {
+    height: 24px;
+    width: 24px;
+    margin-left: 10px;
+  }
+
+  @media (min-width: 1600px) {
+    .arrow-down {
+      display: none;
+    }
   }
 `;

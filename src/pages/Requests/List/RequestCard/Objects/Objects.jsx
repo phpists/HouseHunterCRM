@@ -11,7 +11,7 @@ export const Objects = () => (
     <SeenTime />
     <div className="flex items-center clickable">
       <Photos />
-      <div className="clickable">
+      <div className="clickable objects-info-wrapper">
         <div className="flex items-center justify-between clickable">
           <div className="clickable">
             <Title />
@@ -29,4 +29,11 @@ const StyledObjects = styled.div`
   padding: 10px;
   border-radius: 9px;
   background: #363636;
+  @media (max-width: 1600px) {
+    width: 100%;
+  }
+
+  .objects-info-wrapper {
+    width: 100%;
+  }
 `;

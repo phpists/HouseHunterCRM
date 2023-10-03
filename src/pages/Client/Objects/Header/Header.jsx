@@ -11,7 +11,7 @@ export const Header = () => {
   return (
     <StyledHeader className="flex items-center justify-between">
       <Title />
-      <div className="flex items-center">
+      <div className="flex items-center header-btns">
         <Filter className="header-btn" />
         <Search open={isSearch} onOpen={() => setIsSearch(true)} />
         <Select open={!isSearch} onOpen={() => setIsSearch(false)} />
@@ -25,5 +25,14 @@ const StyledHeader = styled.div`
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   .header-btn {
     margin-right: 15px;
+  }
+
+  @media (max-width: 700px) {
+    padding: 0 0 20px;
+    margin-bottom: 10px;
+
+    .header-btns {
+      display: none;
+    }
   }
 `;

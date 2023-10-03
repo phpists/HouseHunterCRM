@@ -51,4 +51,7 @@ const StyledPositionCard = styled.div`
   span {
     margin-left: 3px;
   }
+  @media (max-width: 800px) {
+    padding: 4px;
+  }
 `;

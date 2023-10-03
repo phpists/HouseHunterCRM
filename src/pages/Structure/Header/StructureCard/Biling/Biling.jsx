@@ -25,4 +25,10 @@ const StyledBiling = styled.div`
   transition: all 0.3s;
   overflow-x: hidden;
   margin-right: ${({ open }) => (open ? "10px" : "0px")};
+  @media (max-width: 1660px) {
+    width: 100%;
+  }
+  @media (max-width: 850px) {
+    display: none;
+  }
 `;

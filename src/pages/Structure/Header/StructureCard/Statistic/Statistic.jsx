@@ -58,4 +58,11 @@ const StyledStatistic = styled.div`
   display: flex;
   margin-right: 10px;
   height: 224px;
+  @media (max-width: 850px) {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    gap: 18px;
+    margin: 0;
+  }
 `;

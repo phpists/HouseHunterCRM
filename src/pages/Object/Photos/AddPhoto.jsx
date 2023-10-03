@@ -86,6 +86,7 @@ const StyledAddPhoto = styled.div`
     width: 280px;
   }
   @media (max-width: 1300px) {
-    width: 240px;
+    width: 100%;
+    height: 87px;
   }
 `;

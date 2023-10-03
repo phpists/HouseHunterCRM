@@ -49,4 +49,7 @@ const StyledSymbolSelect = styled.div`
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
   }
+  @media (max-width: 800px) {
+    margin-left: 4px !important;
+  }
 `;

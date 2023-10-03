@@ -5,6 +5,8 @@ import { Info } from "./Info/Info";
 import { Comment } from "./Comment";
 import { Objects } from "./Objects/Objects";
 import { Actions } from "./Actions/Actions";
+import { DesktopContent } from "./DesktopContent";
+import { MobileContent } from "./MobileContent";
 
 export const RequestCard = ({ selected, onSelect }) => {
   const handleClick = (e) =>
@@ -16,20 +18,13 @@ export const RequestCard = ({ selected, onSelect }) => {
       onClick={handleClick}
       className="clickable"
     >
-      <Client />
-      <Date />
-      <Info />
-      <Comment />
-      <Objects />
-      <Actions />
+      <DesktopContent />
+      <MobileContent />
     </StyledRequestCard>
   );
 };
 
 const StyledRequestCard = styled.div`
-  display: grid;
-  grid-template-columns: repeat(6, max-content);
-  gap: 14px;
   border-radius: 10px;
   background: #3d3d3d;
   padding: 10px;

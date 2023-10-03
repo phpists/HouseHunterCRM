@@ -21,7 +21,7 @@ const StyledOpenButton = styled.button`
   letter-spacing: 0.22px;
   transition: all 0.3s;
   height: 34px;
-  width: 163px;
+  width: 100%;
   &:hover {
     background: rgba(255, 255, 255, 0.38);
     color: #fff;

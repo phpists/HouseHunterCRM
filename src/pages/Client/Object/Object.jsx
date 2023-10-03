@@ -5,11 +5,11 @@ import { StartButton } from "./StartButton";
 import { useState } from "react";
 import { Steps } from "./Steps/Steps";
 
-export const Object = () => {
+export const Object = ({ className }) => {
   const [started, setStarted] = useState(true);
 
   return (
-    <StyledObject className="hide-scroll">
+    <StyledObject className={`hide-scroll ${className}`}>
       <SectionTitle title="Оренда квартири" />
       <Maininfo />
       {started ? (

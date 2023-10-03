@@ -28,4 +28,16 @@ const StyledType = styled.div`
     letter-spacing: 0.22px;
     opacity: 0.4;
   }
+
+  @media (max-width: 1600px) {
+    width: auto;
+    padding: 0;
+    margin-bottom: 16px;
+    &:hover {
+      background: rgba(255, 255, 255, 0);
+    }
+    .title {
+      display: none;
+    }
+  }
 `;

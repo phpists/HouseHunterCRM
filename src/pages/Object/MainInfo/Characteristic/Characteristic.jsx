@@ -4,11 +4,14 @@ import { Select } from "../../../../components/Select/Select";
 import { DetailPosition } from "./DetailPosition";
 import { Categories } from "./Categories";
 import { Info } from "./Info";
+import { useState } from "react";
 
 export const Characteristic = () => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <StyledCharacteristic>
-      <Header />
+    <StyledCharacteristic open={open}>
+      <Header open={open} onToggleOpen={() => setOpen(!open)} />
       <div className="content-wrapper hide-scroll">
         <div className="characteristic-content">
           <Select
@@ -47,5 +50,19 @@ const StyledCharacteristic = styled.div`
     border-radius: 10px;
     background: #323232;
     padding: 8px;
+  }
+  @media (max-width: 1300px) {
+    .content-wrapper {
+      height: 411px;
+    }
+  }
+
+  @media (max-width: 800px) {
+    margin-bottom: 0px;
+    padding: 10px;
+    .content-wrapper {
+      transition: all 0.3s;
+      height: ${({ open }) => (open ? "calc(100svh - 420px)" : "0px")};
+    }
   }
 `;

@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 export const SendClientButton = () => (
-  <StyledSendClientButton>Зберегти зміни</StyledSendClientButton>
+  <StyledSendClientButton>Делегувати</StyledSendClientButton>
 );
 
 const StyledSendClientButton = styled.div`
@@ -24,5 +24,14 @@ const StyledSendClientButton = styled.div`
     background: rgba(255, 255, 255, 0.2);
     opacity: 1;
     border: 1px solid transparent;
+  }
+  @media (max-width: 800px) {
+    font-size: 13px;
+    padding: 8px 14px;
+    margin-right: 15px;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
+    justify-content: center;
   }
 `;

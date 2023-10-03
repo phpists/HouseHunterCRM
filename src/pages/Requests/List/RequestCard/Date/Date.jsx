@@ -31,4 +31,7 @@ const StyledDate = styled.div`
     padding-top: 0;
     background: none;
   }
+  @media (max-width: 1600px) {
+    width: 100%;
+  }
 `;

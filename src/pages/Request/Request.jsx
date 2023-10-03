@@ -9,7 +9,7 @@ export const Request = () => {
   return (
     <StyledRequest>
       <Header />
-      <div className="request-content">
+      <div className="request-content hide-scroll">
         <div>
           <CardTitle title="Головне" />
           <Main />
@@ -43,5 +43,24 @@ const StyledRequest = styled.div`
     height: calc(100svh - 302px);
     overflow: auto;
     border-radius: 14px;
+  }
+  @media (max-width: 1250px) {
+    .request-content {
+      grid-template-columns: 1fr;
+      height: calc(100svh - 260px);
+      overflow: auto;
+    }
+    .request-card {
+      height: 100%;
+    }
+  }
+
+  @media (max-width: 800px) {
+    padding: 20px 24px;
+    width: 100svw;
+    margin-left: -24px;
+    .request-content {
+      padding: 10px;
+    }
   }
 `;

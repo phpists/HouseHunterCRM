@@ -10,4 +10,12 @@ export const Arrow = ({ onClick }) => (
 const StyledArrow = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 1660px) {
+    position: absolute;
+    top: 11px;
+    right: 11px;
+  }
+  @media (max-width: 850px) {
+    display: none;
+  }
 `;

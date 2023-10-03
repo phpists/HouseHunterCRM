@@ -12,4 +12,7 @@ const StyledTitle = styled.div`
   font-weight: 200;
   line-height: normal;
   letter-spacing: 0.36px;
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;

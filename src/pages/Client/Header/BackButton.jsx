@@ -34,4 +34,7 @@ const StyledBackButton = styled.button`
   &:active {
     background: rgba(255, 255, 255, 0.4);
   }
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;

@@ -10,7 +10,7 @@ export const Date = () => {
     <StyledDate
       className={`flex items-center justify-between ${open && "active"}`}
     >
-      <div className="text-data">
+      <div className="text-data" onClick={() => setOpen(!open)}>
         <div className="title">23.07.2023</div>
         <div className="subtitle">звільняється з </div>
       </div>
@@ -94,6 +94,21 @@ const StyledDate = styled.button`
     background: rgba(255, 255, 255, 0.05);
     g {
       opacity: 1;
+    }
+  }
+  @media (max-width: 1300px) {
+    justify-content: center;
+    svg {
+      display: none;
+    }
+  }
+  @media (max-width: 800px) {
+    padding: 6px 10px;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.05);
+    margin: 0;
+    .title {
+      font-size: 14px;
     }
   }
 `;

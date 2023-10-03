@@ -4,9 +4,9 @@ import { Divider } from "./Divider";
 import { SymbolSelect } from "./SymbolSelect";
 import { TypeSelect } from "./TypeSelect";
 
-export const Price = () => {
+export const Price = ({ className }) => {
   return (
-    <StyledPrice className="flex items-center">
+    <StyledPrice className={`flex items-center ${className}`}>
       <Field value="22 000₴" label="Ціна" className="field" full />
       <Divider />
       <SymbolSelect />
@@ -21,8 +21,23 @@ const StyledPrice = styled.div`
   padding: 8px 15px;
   .field {
     flex-shrink: initial;
+    width: 120px;
     .value {
       color: #50f835;
+    }
+  }
+  @media (max-width: 800px) {
+    .field {
+      width: 77px;
+      padding-left: 0;
+      padding-right: 0;
+      flex-shrink: 0;
+      &:hover {
+        background: none;
+      }
+      .edit-btn {
+        display: none;
+      }
     }
   }
 `;

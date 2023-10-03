@@ -83,7 +83,21 @@ const StyledContacts = styled.div`
   }
   @media (max-width: 1300px) {
     .contacts-wrapper {
+      justify-content: space-between;
+    }
+  }
+  @media (max-width: 800px) {
+    .contacts-wrapper {
       flex-direction: column;
+      align-items: start;
+      gap: 10px;
+    }
+    padding: 10px;
+
+    .title {
+      color: #fff;
+      font-family: Overpass;
+      font-size: 18px;
     }
   }
 `;

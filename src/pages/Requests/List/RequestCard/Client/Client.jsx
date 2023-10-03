@@ -8,9 +8,23 @@ export const Client = () => {
     <StyledClient className="clickable">
       <Step />
       <Info />
-      <Phones />
+      <Phones classNameContent="phones-wrapper" />
     </StyledClient>
   );
 };
 
-const StyledClient = styled.div``;
+const StyledClient = styled.div`
+  @media (max-width: 1600px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  @media (max-width: 700px) {
+    flex-direction: column;
+    align-items: start;
+    .phones-wrapper {
+      width: 100%;
+    }
+  }
+`;

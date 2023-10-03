@@ -37,4 +37,10 @@ const StyledText = styled.div`
       background: rgba(255, 255, 255, 0.3);
     }
   }
+  @media (max-width: 1300px) {
+    height: max-content;
+  }
+  @media (max-width: 800px) {
+    padding: 10px;
+  }
 `;

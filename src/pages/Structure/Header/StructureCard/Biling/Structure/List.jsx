@@ -2,8 +2,6 @@ import { styled } from "styled-components";
 import { Avatar } from "./Avatar";
 import team1 from "../../../../../../assets/images/team-1.png";
 import team2 from "../../../../../../assets/images/team-2.png";
-import team3 from "../../../../../../assets/images/team-3.png";
-import team4 from "../../../../../../assets/images/team-4.png";
 
 const data = [team1, team2];
 
@@ -22,5 +20,8 @@ const StyledList = styled.div`
   width: 98px;
   div:not(:first-child) {
     margin-left: -10px;
+  }
+  @media (max-width: 850px) {
+    width: 100%;
   }
 `;

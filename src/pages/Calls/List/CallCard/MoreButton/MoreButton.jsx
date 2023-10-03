@@ -29,4 +29,20 @@ const StyledMoreButton = styled.button`
       opacity: 1;
     }
   }
+  @media (max-width: 1600px) {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: none;
+    top: 0px;
+    right: 9px;
+    &:hover,
+    &.open {
+      border: 1.4px solid rgba(255, 255, 255, 0);
+      z-index: 25;
+      g {
+        opacity: 1;
+      }
+    }
+  }
 `;

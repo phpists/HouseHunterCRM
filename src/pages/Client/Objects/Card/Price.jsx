@@ -15,9 +15,12 @@ const StyledPrice = styled.div`
   font-size: 11px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
+  line-height: 1;
   letter-spacing: 0.22px;
   span {
     font-weight: 400;
+  }
+  @media (max-width: 700px) {
+    height: 15px;
   }
 `;

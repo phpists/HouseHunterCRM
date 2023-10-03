@@ -47,6 +47,7 @@ const StyledStatusButton = styled.button`
   text-transform: uppercase;
   transition: all 0.3s;
   flex-shrink: 0;
+  white-space: nowrap;
   &:hover {
     color: ${({ type }) => type.color};
     background: ${({ type }) => type.background};
@@ -57,5 +58,11 @@ const StyledStatusButton = styled.button`
     color: ${({ type }) => type.color};
     background: ${({ type }) => type.background};
     opacity: 1 !important;
+  }
+  @media (max-width: 1300px) {
+    width: 100%;
+  }
+  @media (max-width: 800px) {
+    font-size: 11px;
   }
 `;

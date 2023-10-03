@@ -19,4 +19,7 @@ const StyledAgent = styled.div`
   background: rgba(255, 255, 255, 0.05);
   width: 185px;
   height: 60px;
+  @media (max-width: 1600px) {
+    width: 100%;
+  }
 `;

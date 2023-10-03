@@ -1,12 +1,7 @@
 import styled from "styled-components";
-import { Type } from "./Type/Type";
-import { Divider } from "./Divider";
-import { Phones } from "./Phones/Phones";
 import { useState } from "react";
-import { Agent } from "./Agent/Agent";
-import { Field } from "../../../../components/Field";
-import { Status } from "./Status/Status";
-import { MoreButton } from "./MoreButton/MoreButton";
+import { DesktopContent } from "./DesktopContent";
+import { MobileContent } from "./MobileContent";
 
 export const CallCard = ({ selected, onSelect, openMore, onOpenMore }) => {
   const [open, setOpen] = useState();
@@ -16,25 +11,22 @@ export const CallCard = ({ selected, onSelect, openMore, onOpenMore }) => {
 
   return (
     <StyledCallCard
-      className="flex items-start clickable"
+      className=" clickable"
       onClick={handleClick}
       selected={selected}
     >
-      <Type />
-      <Divider />
-      <Phones open={open} onToggleOpen={() => setOpen(!open)} />
-      <Divider />
-      <Agent />
-      <Divider />
-      <Field
-        placeholder="Почніть писати"
-        label="Коментар"
-        className="comment"
-        full
+      <DesktopContent
+        open={open}
+        onToggleOpen={() => setOpen(!open)}
+        openMore={openMore}
+        onOpenMore={onOpenMore}
       />
-      <Divider />
-      <Status />
-      <MoreButton openMore={openMore} onOpenMore={onOpenMore} />
+      <MobileContent
+        open={open}
+        onToggleOpen={() => setOpen(!open)}
+        openMore={openMore}
+        onOpenMore={onOpenMore}
+      />
     </StyledCallCard>
   );
 };
@@ -45,11 +37,7 @@ const StyledCallCard = styled.div`
   background: #3d3d3d;
   border: 1px solid rgba(255, 255, 255, 0);
   transition: all 0.3s;
-  .comment {
-    width: 204px;
-    height: 60px;
-    background: #444;
-  }
+  position: relative;
   &:hover {
     border: 1px solid rgba(255, 255, 255, 0.4);
   }
@@ -59,4 +47,8 @@ const StyledCallCard = styled.div`
     `
       border: 1px solid rgba(255, 255, 255, 1) !important;
   `}
+
+  @media (max-width: 1600px) {
+    padding: 10px;
+  }
 `;

@@ -21,8 +21,9 @@ export const Header = () => (
       />
       <ActionButton
         title="Передати кліента"
+        smallTitle="Передати"
         onClick={null}
-        className="icon-btn"
+        className="icon-btn send-client-btn"
       />
       <Divider />
       <IconButton Icon={StarIcon} className="mr-2.5 icon-btn" onClick={null} />
@@ -40,6 +41,16 @@ const StyledHeader = styled.div`
   .remove-btn:hover {
     path {
       fill: #fc4444;
+    }
+  }
+  @media (max-width: 700px) {
+    .send-client-btn {
+      width: 77px;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      line-height: 1;
     }
   }
 `;

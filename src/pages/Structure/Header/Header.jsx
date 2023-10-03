@@ -23,4 +23,7 @@ export const Header = ({ level }) => {
 
 const StyledHeader = styled.div`
   margin-bottom: 20px;
+  @media (max-width: 850px) {
+    display: none;
+  }
 `;
