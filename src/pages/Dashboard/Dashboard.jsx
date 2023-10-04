@@ -87,6 +87,7 @@ const StyledDashboard = styled.div`
     }
     .dashboard-col {
       max-height: max-content;
+      overflow: unset;
     }
     .info-cards-desktop {
       display: none;

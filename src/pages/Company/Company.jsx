@@ -78,6 +78,7 @@ const StyledCompany = styled.div`
     overflow: auto;
     .info {
       height: max-content;
+      overflow: unset;
     }
   }
 `;
