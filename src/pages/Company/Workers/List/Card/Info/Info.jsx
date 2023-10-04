@@ -17,4 +17,8 @@ export const Info = ({ isSelected }) => (
   </StyledInfo>
 );
 
-const StyledInfo = styled.div``;
+const StyledInfo = styled.div`
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+`;

@@ -19,4 +19,9 @@ const StyledList = styled.div`
   div:not(:first-child) {
     margin-left: -10px;
   }
+  @media (max-width: 600px) {
+    div:nth-child(n + 4) {
+      display: none;
+    }
+  }
 `;

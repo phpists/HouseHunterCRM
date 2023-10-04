@@ -10,7 +10,10 @@ export const Card = ({ onOpenEdit, tarifSelected, onSelect, isSelected }) => (
     onClick={() => (tarifSelected ? onSelect() : onOpenEdit())}
     isSelected={isSelected}
   >
-    <Info isSelected={isSelected} />
+    <div className="flex items-center info-wrapper">
+      <Info isSelected={isSelected} />
+      <Arrow className="more-arrow-mobile" />
+    </div>
     {tarifSelected && isSelected ? (
       <Selected />
     ) : tarifSelected ? (
@@ -19,7 +22,7 @@ export const Card = ({ onOpenEdit, tarifSelected, onSelect, isSelected }) => (
       <EnterStatus />
     )}
     <PayStatus />
-    <div className="flex items-center justify-center h-full">
+    <div className="flex items-center justify-center h-full more-arrow-desktop">
       <Arrow />
     </div>
   </StyledCard>
@@ -58,4 +61,21 @@ const StyledCard = styled.button`
         }
     }
   `}
+  .more-arrow-mobile {
+    display: none;
+  }
+  @media (max-width: 800px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    .more-arrow-desktop {
+      display: none;
+    }
+    .more-arrow-mobile {
+      display: block;
+      margin-left: 12px;
+    }
+    .info-wrapper {
+      grid-column: 1/3;
+    }
+  }
 `;

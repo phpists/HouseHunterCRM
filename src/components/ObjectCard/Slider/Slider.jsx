@@ -91,7 +91,7 @@ const StyledSlider = styled.div`
       visibility: visible;
     }
   }
-  @media (max-width: 1200px) {
+  @media (max-width: 1600px) {
     flex-direction: column;
     height: auto;
   }
@@ -99,7 +99,7 @@ const StyledSlider = styled.div`
     flex-direction: row;
     margin: 0;
     .slider {
-      width: calc(100svw - 60px - 8px - 44px - 24px - 29px);
+      width: calc(100svw - 60px - 8px - 44px - 24px - 39px);
     }
   }
 `;

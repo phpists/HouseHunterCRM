@@ -50,4 +50,7 @@ const StyledAddress = styled.div`
       transform: translateX(0px);
     }
   }
+  @media (max-width: 600px) {
+    padding: 8px 11px;
+  }
 `;

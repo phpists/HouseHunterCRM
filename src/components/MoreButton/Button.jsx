@@ -28,4 +28,9 @@ const StyledButton = styled.button`
       opacity: 1;
     }
   }
+  @media (max-width: 1600px) {
+    width: 18px;
+    height: 18px;
+    border: none;
+  }
 `;

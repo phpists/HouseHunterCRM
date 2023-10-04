@@ -17,6 +17,9 @@ const StyledList = styled.div`
   width: 185px;
   overflow: auto;
   @media (max-width: 1600px) {
-    width: 120px;
+    width: 100%;
+  }
+  @media (max-width: 850px) {
+    width: calc(100svw - 160px);
   }
 `;

@@ -57,8 +57,8 @@ const StyledEditWorker = styled(motion.div)`
   border-left: 1px solid rgba(255, 255, 255, 0.4);
   background: rgba(44, 44, 44, 0.8);
   backdrop-filter: blur(12.5px);
-  height: calc(100svh - 161px);
-  top: 132px;
+  height: calc(100svh - 147px);
+  top: 106px;
   width: 361px;
   overflow: auto;
   .content {
@@ -67,5 +67,20 @@ const StyledEditWorker = styled(motion.div)`
     height: calc(
       100svh - 172px - ${({ isScrolled }) => (isScrolled ? 85 : 240)}px - 70px
     );
+  }
+  @media (max-width: 1600px) {
+    height: calc(100svh - 185px);
+  }
+  @media (max-width: 1200px) {
+    right: 24px;
+    height: calc(100svh - 187px);
+    top: 98px;
+  }
+  @media (max-width: 800px) {
+    top: 170px;
+  }
+  @media (max-width: 600px) {
+    width: calc(100svw - 48px);
+    border: none;
   }
 `;

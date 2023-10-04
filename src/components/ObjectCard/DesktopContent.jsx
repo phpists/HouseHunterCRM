@@ -32,7 +32,7 @@ const StyledDesktopContent = styled.div`
     gap: 10px;
   }
 
-  @media (max-width: 1200px) {
+  @media (max-width: 1600px) {
     display: flex;
     flex-wrap: wrap;
     .desktop-item {

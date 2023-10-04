@@ -11,7 +11,7 @@ export const Search = () => {
       <IconButton
         Icon={SearchIcon}
         onClick={() => setOpen(true)}
-        className="icon-btn"
+        className="icon-btn icon-btn--last"
       />
       {open && <Filter onClose={() => setOpen(false)} />}
     </div>

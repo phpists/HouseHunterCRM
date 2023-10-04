@@ -61,4 +61,7 @@ const StyledSearch = styled.div`
       opacity: 1;
     }
   `}
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;

@@ -31,4 +31,7 @@ const StyledWorkers = styled.div`
   background: #323232;
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   height: max-content;
+  @media (max-width: 1500px) {
+    position: relative;
+  }
 `;

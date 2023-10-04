@@ -26,5 +26,9 @@ const StyledOwner = styled.div`
   }
   .status-badge {
     border-radius: 20px;
+    margin: 0;
+  }
+  @media (max-width: 600px) {
+    margin-top: 10px;
   }
 `;

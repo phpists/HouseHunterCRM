@@ -20,7 +20,7 @@ export const Info = ({ tarifOpen, onCloseTarif }) => {
         )}
       </div>
       {!tarifOpen && (
-        <div className="flex items-center">
+        <div className="flex items-center info-footer">
           <Address />
           <WebSite />
         </div>
@@ -35,5 +35,11 @@ const StyledInfo = styled.div`
   margin-bottom: 30px;
   .info-content {
     padding: 16px;
+  }
+  @media (max-width: 600px) {
+    .info-footer {
+      flex-direction: column;
+      text-align: left;
+    }
   }
 `;

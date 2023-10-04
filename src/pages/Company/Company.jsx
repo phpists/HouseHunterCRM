@@ -41,7 +41,7 @@ export const Company = () => {
   };
 
   return (
-    <StyledCompany>
+    <StyledCompany className="hide-scroll">
       <div className="info hide-scroll">
         <Info tarifOpen={tarifOpen} onCloseTarif={handleCloseTarif} />
         <Tarif
@@ -69,5 +69,15 @@ const StyledCompany = styled.div`
   .info {
     height: calc(100svh - 82px - 24px - 40px);
     overflow: auto;
+  }
+  @media (max-width: 1500px) {
+    grid-template-columns: 1fr;
+    /* height: calc(100svh - 107px); */
+    height: calc(100svh - 187px);
+
+    overflow: auto;
+    .info {
+      height: max-content;
+    }
   }
 `;

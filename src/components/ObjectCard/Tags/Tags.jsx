@@ -40,7 +40,7 @@ const StyledTags = styled.div`
   @media (min-width: 1700px) {
     width: 18svw;
   }
-  @media (max-width: 1200px) {
+  @media (max-width: 1600px) {
     width: calc((100% - 210px - 40px) / 2);
     height: 250px;
     margin-right: 18px;

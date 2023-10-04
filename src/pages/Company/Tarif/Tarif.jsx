@@ -40,4 +40,7 @@ const StyledTarif = styled.div`
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   height: calc(100svh - 78px - 24px - 40px - 421px);
   min-height: ${({ tarifOpen }) => (tarifOpen ? 400 : 215)}px;
+  @media (max-width: 1500px) {
+    height: max-content;
+  }
 `;

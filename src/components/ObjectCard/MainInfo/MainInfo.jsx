@@ -19,7 +19,7 @@ const StyledMainInfo = styled.div`
   margin-right: 10px;
   width: 220px;
   height: 32px;
-  @media (max-width: 1200px) {
+  @media (max-width: 1600px) {
     height: 250px;
     width: calc((100% - 210px - 20px) / 2);
     margin-right: 0;

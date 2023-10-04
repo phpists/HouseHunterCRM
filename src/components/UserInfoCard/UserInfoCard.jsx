@@ -55,4 +55,7 @@ const StyledUserInfoCard = styled(motion.div)`
   .modal-content {
     padding: 0 10px 15px 11px;
   }
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;

@@ -18,7 +18,7 @@ export const Header = ({ tarifSelected, selectedWorkers }) => (
     </div>
     <div className="flex items-center">
       <CreateButton />
-      <Filter className="mr-4" />
+      <Filter className="mr-4 filter-wrapper" />
       <Search />
     </div>
   </StyledHeader>
@@ -27,4 +27,10 @@ export const Header = ({ tarifSelected, selectedWorkers }) => (
 const StyledHeader = styled.div`
   padding: 18px 20px 19px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+
+  @media (max-width: 800px) {
+    .filter-wrapper {
+      display: none;
+    }
+  }
 `;

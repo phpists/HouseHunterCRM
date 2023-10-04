@@ -16,7 +16,7 @@ export const Buttons = ({ favoritesFilter, onToggleFavoriteFilter }) => {
         active={favoritesFilter}
       />
       <Search />
-      <SelectItems title="клієнтів" />
+      <SelectItems title="клієнтів" className="select-wrapper-desktop" />
     </StyledButtons>
   );
 };
@@ -27,6 +27,15 @@ const StyledButtons = styled.div`
     margin-right: 15px;
     &:hover {
       border: 2px solid transparent !important;
+    }
+  }
+
+  @media (max-width: 850px) {
+    .select-wrapper-desktop {
+      display: none;
+    }
+    .icon-btn--last {
+      margin: 0;
     }
   }
 `;

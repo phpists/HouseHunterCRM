@@ -55,4 +55,7 @@ const StyledFilter = styled(motion.div)`
     height: calc(100svh - 162px - 70px - 20px);
     overflow: auto;
   }
+  @media (max-width: 850px) {
+    width: 100svw;
+  }
 `;

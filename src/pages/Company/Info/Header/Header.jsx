@@ -27,4 +27,8 @@ const StyledHeader = styled.div`
   transition: all 0.3s;
   padding: 4px 17px 4px 4px;
   ${({ tarifOpen }) => !tarifOpen && "margin-bottom: 16px;"}
+  @media(max-width: 600px) {
+    flex-direction: column;
+    align-items: start;
+  }
 `;

@@ -10,7 +10,7 @@ export const RepeatCard = ({ onOpenTarif }) => (
       <Title />
       <Subtitle />
     </div>
-    <div className="flex items-center ">
+    <div className="flex items-center repeatcard-footer ">
       <Workers />
       <Button
         title="Повторити"
@@ -39,5 +39,13 @@ const StyledRepeatCard = styled.div`
     height: 26px;
     border-radius: 6px;
     border: 1.2px solid #fff;
+  }
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: start;
+    padding: 10px 15px;
+    .repeatcard-footer {
+      margin-top: 10px;
+    }
   }
 `;

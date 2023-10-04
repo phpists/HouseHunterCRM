@@ -105,4 +105,12 @@ const StyledCard = styled.div`
       opacity: 1;
     }
   }
+  @media (max-width: 600px) {
+    background: rgba(255, 255, 255, 0.05);
+    svg {
+      position: absolute;
+      top: 11px;
+      right: 9px;
+    }
+  }
 `;

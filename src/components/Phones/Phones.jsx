@@ -24,4 +24,5 @@ const StyledPhones = styled.div`
   display: grid;
   grid-template-columns: max-content max-content;
   width: max-content;
+
 `;

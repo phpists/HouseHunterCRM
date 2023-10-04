@@ -28,7 +28,7 @@ const StyledObjectCard = styled.div`
   &.selected {
     border: 1px solid #fff;
   }
-  @media (max-width: 1200px) {
+  @media (max-width: 1600px) {
     padding: 10px;
   }
 `;

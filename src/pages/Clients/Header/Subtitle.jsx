@@ -19,4 +19,7 @@ const StyledSubtitle = styled.div`
     color: rgba(255, 255, 255, 0.2);
     margin: 0 5px;
   }
+  @media (max-width: 850px) {
+    display: none;
+  }
 `;

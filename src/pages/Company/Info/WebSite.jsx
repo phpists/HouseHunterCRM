@@ -51,4 +51,9 @@ const StyledWebSite = styled.div`
       transform: translateX(0px);
     }
   }
+  @media (max-width: 600px) {
+    justify-content: start;
+    width: 100%;
+    padding: 8px 11px;
+  }
 `;
