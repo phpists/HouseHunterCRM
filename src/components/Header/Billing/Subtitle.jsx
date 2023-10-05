@@ -18,6 +18,7 @@ const StyledSubtitle = styled.div`
   font-weight: 300;
   line-height: normal;
   letter-spacing: 0.22px;
+
   span {
     color: rgba(255, 255, 255, 0.6);
   }

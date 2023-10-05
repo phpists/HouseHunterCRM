@@ -22,7 +22,7 @@ export const Profile = () => {
         />
       )}
       <StyledProfile
-        className="flex items-center clickable"
+        className="flex items-center clickable profile-header-block"
         onClick={(e) =>
           e.target.classList.contains("clickable") && setOpenEdit(true)
         }

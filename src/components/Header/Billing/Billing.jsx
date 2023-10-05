@@ -7,8 +7,7 @@ import { Paying } from "./Paying/Paying";
 import { Download } from "./Download/Download";
 import { Divider } from "./Divider";
 
-export const Billing = () => {
-  const [open, setOpen] = useState(false);
+export const Billing = ({ open, onToggleOpen, onToggleHover }) => {
   const [attach, setAttach] = useState(false);
   const [download, setDownload] = useState(false);
   const [downloading, setDownloading] = useState(false);
@@ -19,7 +18,15 @@ export const Billing = () => {
   };
 
   return (
-    <StyledBilling className="flex items-center" open={open} attach={attach}>
+    <StyledBilling
+      className="flex items-center"
+      open={open}
+      attach={attach}
+      onMouseEnter={() => onToggleHover(true)}
+      onMouseLeave={() => onToggleHover(false)}
+      onTouchStart={() => onToggleHover(true)}
+      onTouchEnd={() => onToggleHover(false)}
+    >
       {attach && (
         <Download
           download={download}
@@ -39,13 +46,13 @@ export const Billing = () => {
       </div>
       {open ? (
         <Paying
-          onClose={() => setOpen(false)}
+          onClose={() => onToggleOpen(false)}
           attach={attach}
           onChangeAttach={handleToggleAttach}
           downloading={downloading}
         />
       ) : (
-        <BillButton onClick={() => setOpen(true)} />
+        <BillButton onClick={() => onToggleOpen(true)} />
       )}
       <Divider />
     </StyledBilling>
@@ -101,6 +108,7 @@ const StyledBilling = styled.div`
   }
 
   @media (max-width: 600px) {
+    padding: 0 20px 0 12px;
     &:hover {
       padding: 14px 130px 11px 13px;
       background: none;

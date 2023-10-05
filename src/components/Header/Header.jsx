@@ -5,13 +5,19 @@ import { Billing } from "./Billing/Billing";
 import { Profile } from "./Profile/Profile";
 import { BurgerButton } from "./BurgerButton";
 import { useLocation } from "react-router-dom";
+import { useState } from "react";
 
 export const Header = ({ onOpenSidebar }) => {
   const { pathname } = useLocation();
   const isTextHide = pathname === "/";
+  const [openBilling, setOpenBilling] = useState(false);
+  const [hoverBilling, setHoverBilling] = useState(false);
 
   return (
-    <StyledHeader isTextHide={isTextHide}>
+    <StyledHeader
+      isTextHide={isTextHide}
+      openBilling={openBilling || hoverBilling}
+    >
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <BurgerButton onOpenSidebar={onOpenSidebar} />
@@ -21,7 +27,11 @@ export const Header = ({ onOpenSidebar }) => {
           </div>
         </div>
         <div className="flex items-center">
-          <Billing />
+          <Billing
+            open={openBilling}
+            onToggleOpen={(val) => setOpenBilling(val)}
+            onToggleHover={(val) => setHoverBilling(val)}
+          />
           <Profile />
         </div>
       </div>
@@ -56,5 +66,12 @@ const StyledHeader = styled.div`
     .header-text-footer {
       display: ${({ isTextHide }) => (isTextHide ? "none" : "block")};
     }
+    ${({ openBilling }) =>
+      openBilling &&
+      `
+        .profile-header-block {
+            display: none;
+        }
+    `}
   }
 `;
