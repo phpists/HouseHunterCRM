@@ -13,4 +13,7 @@ const StyledLoadedMessage = styled.div`
   font-weight: 400;
   line-height: normal;
   letter-spacing: 0.22px;
+  @media (max-width: 600px) {
+    font-size: 8px;
+  }
 `;

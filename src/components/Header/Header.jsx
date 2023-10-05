@@ -40,12 +40,14 @@ const StyledHeader = styled.div`
     margin-top: 20px;
   }
 
-  @media (max-width: 1200px) {
-    padding: 20px 24px;
+  @media (max-width: 1400px) {
     .header-text {
       ${({ isTextHide }) => isTextHide && "display: none;"}
       margin-left: 24px;
     }
+  }
+  @media (max-width: 1200px) {
+    padding: 20px 24px;
   }
   @media (max-width: 800px) {
     .header-text {

@@ -25,4 +25,9 @@ const StyledDropzone = styled.div`
     background: #313241;
     color: #5d63ff;
   }
+
+  @media (max-width: 600px) {
+    font-size: 8px;
+    padding: 8px 21px;
+  }
 `;

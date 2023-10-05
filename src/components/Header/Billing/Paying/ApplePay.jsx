@@ -26,16 +26,19 @@ const StyledApplePay = styled.div`
     display: none;
     width: 46px;
   }
-  &:hover {
-    background: #000;
-    border: 1px solid #000;
-    padding: 6px 19px 3px;
-    width: auto;
-    .icon-full {
-      display: block;
-    }
-    .icon {
-      display: none;
+
+  @media (min-width: 600px) {
+    &:hover {
+      background: #000;
+      border: 1px solid #000;
+      padding: 6px 19px 3px;
+      width: auto;
+      .icon-full {
+        display: block;
+      }
+      .icon {
+        display: none;
+      }
     }
   }
 `;

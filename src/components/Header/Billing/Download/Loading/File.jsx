@@ -15,4 +15,12 @@ const StyledFile = styled.div`
   border-radius: 6px;
   background: ${({ isLoaded }) => (isLoaded ? "#2FA112" : "#5d63ff")};
   margin-right: 7px;
+  @media (max-width: 600px) {
+    height: 30px;
+    width: 30px;
+    margin-right: 4px;
+    img {
+      height: 15px;
+    }
+  }
 `;

@@ -51,4 +51,8 @@ const StyledLoading = styled.div`
   padding: 3px 11px 3px 3px;
   margin-right: 7px;
   width: 275px;
+  @media (max-width: 600px) {
+    padding: 8px 21px;
+    width: auto;
+  }
 `;

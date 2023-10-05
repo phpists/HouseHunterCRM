@@ -95,6 +95,29 @@ const StyledBilling = styled.div`
   `}
 
 @media (max-width: 1200px) {
-    padding: 12px 24px 11px 8px;
+    &:hover {
+      padding: 12px 160px 11px 13px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    &:hover {
+      padding: 14px 130px 11px 13px;
+      background: none;
+    }
+    ${({ open }) =>
+      open &&
+      `
+      height: 58px;
+      background: none;
+        .main-text {
+            display: none;
+        }
+  `}
+    ${({ attach }) =>
+      attach &&
+      `
+    padding: 4px 54px 4px 4px !important;
+  `}
   }
 `;

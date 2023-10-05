@@ -14,4 +14,7 @@ const StyledTitle = styled.div`
   letter-spacing: ${({ open }) => (open ? 0.4 : 0.3)}px;
   margin-bottom: 2px;
   transition: all 0.3s;
+  @media (max-width: 1200px) {
+    font-size: 15px !important;
+  }
 `;
