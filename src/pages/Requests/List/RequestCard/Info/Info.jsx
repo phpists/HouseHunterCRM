@@ -32,7 +32,14 @@ const StyledInfo = styled.div`
       margin-top: 10px;
     }
   }
-  @media (max-width: 1600px) {
+  @media (min-width: 1400px) {
+    height: 136px;
+    width: 230px;
+  }
+  @media (min-width: 1600px) {
+    height: 136px;
+  }
+  @media (max-width: 1399.9px) {
     width: 100%;
   }
 `;

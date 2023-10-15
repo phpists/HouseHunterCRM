@@ -88,4 +88,16 @@ const StyledSlider = styled.div`
     left: 8px;
     z-index: 4;
   }
+  @media (min-width: 1400px) {
+    .slider {
+      width: 190px;
+      height: 220px;
+    }
+  }
+  @media (min-width: 1600px) {
+    .slider {
+      width: 267px;
+      height: 220px;
+    }
+  }
 `;

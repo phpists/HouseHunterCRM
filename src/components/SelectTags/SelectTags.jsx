@@ -96,6 +96,7 @@ const StyledSelectTags = styled.div`
   border-radius: 9px;
   transition: all 0.3s;
   position: relative;
+  justify-content: space-between;
   .value {
     color: #fff;
     font-family: Overpass;

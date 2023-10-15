@@ -32,6 +32,7 @@ const StyledDate = styled.button`
   .text-data {
     transition: all 0.3s;
     border: 1px solid rgba(255, 255, 255, 0);
+    margin-right: 5px;
   }
   .title {
     color: #ff9f2e;

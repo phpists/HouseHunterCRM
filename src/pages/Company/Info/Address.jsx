@@ -24,6 +24,7 @@ const StyledAddress = styled.div`
   transition: all 0.3s;
   cursor: pointer;
   position: relative;
+  white-space: nowrap;
   svg {
     margin-right: 7px;
   }

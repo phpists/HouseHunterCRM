@@ -46,7 +46,7 @@ const StyledObjects = styled.div`
     justify-content: space-between;
     margin-bottom: 10px;
   }
-  @media (max-width: 1550px) {
+  @media (max-width: 1400px) {
     .objects-content {
       height: auto;
     }

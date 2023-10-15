@@ -14,7 +14,7 @@ export const Header = () => {
       <div className="flex title-wrapper">
         <Title />
         <div className="mobile-action-btns flex items-center">
-          <SaveButton />
+          <SaveButton className="desktop-save-btn" />
           <IconButton Icon={StarIcon} className="icon-btn" />
           <IconButton Icon={RemoveIcon} className="icon-btn remove-btn" />
           <MoreButton />
@@ -71,6 +71,9 @@ const StyledHeader = styled.div`
     .mobile-action-btns {
       display: flex;
     }
+    .desktop-save-btn {
+      display: none;
+    }
   }
 
   @media (max-width: 800px) {
@@ -79,6 +82,9 @@ const StyledHeader = styled.div`
     }
     .bts {
       display: none;
+    }
+    .desktop-save-btn {
+      display: block;
     }
     .remove-btn {
       margin-left: 12px;

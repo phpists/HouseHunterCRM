@@ -16,10 +16,16 @@ export const List = () => {
 const StyledList = styled.div`
   width: 185px;
   overflow: auto;
-  @media (max-width: 1600px) {
-    width: 100%;
-  }
   @media (max-width: 850px) {
     width: calc(100svw - 160px);
+  }
+  @media (max-width: 1600px) {
+    width: 100px !important;
+  }
+  @media (max-width: 1500px) {
+    width: 65px !important;
+  }
+  @media (max-width: 1400px) {
+    width: 100%;
   }
 `;

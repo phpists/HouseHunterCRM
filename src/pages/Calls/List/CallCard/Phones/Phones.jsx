@@ -35,7 +35,7 @@ const StyledPhones = styled.div`
       opacity: 1;
     }
   }
-  @media (max-width: 1600px) {
+  @media (max-width: 1399.9px) {
     width: 100%;
     grid-template-columns: 1fr max-content;
     .arrow-card {

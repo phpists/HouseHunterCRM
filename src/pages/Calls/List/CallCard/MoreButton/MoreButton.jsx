@@ -29,7 +29,7 @@ const StyledMoreButton = styled.button`
       opacity: 1;
     }
   }
-  @media (max-width: 1600px) {
+  @media (max-width: 1399.9px) {
     position: absolute;
     width: 18px;
     height: 18px;
@@ -44,5 +44,11 @@ const StyledMoreButton = styled.button`
         opacity: 1;
       }
     }
+  }
+  @media (min-width: 1400px) {
+    margin: 14px 0 0 10px;
+  }
+  @media (min-width: 1600px) {
+    margin: 14px 0 0 20px;
   }
 `;

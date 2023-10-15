@@ -14,7 +14,7 @@ export const Client = () => {
 };
 
 const StyledClient = styled.div`
-  @media (max-width: 1600px) {
+  @media (max-width: 1399.9px) {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,5 +26,10 @@ const StyledClient = styled.div`
     .phones-wrapper {
       width: 100%;
     }
+  }
+  @media (min-width: 1400px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 `;

@@ -23,7 +23,7 @@ const StyledDesktopContent = styled.div`
   display: grid;
   grid-template-columns: repeat(5, max-content);
   grid-template-rows: 224px;
-  @media (max-width: 1660px) {
+  @media (max-width: 1399.9px) {
     display: none;
   }
 `;

@@ -29,7 +29,7 @@ const StyledType = styled.div`
     opacity: 0.4;
   }
 
-  @media (max-width: 1600px) {
+  @media (max-width: 1399.9px) {
     width: auto;
     padding: 0;
     margin-bottom: 16px;
@@ -39,5 +39,11 @@ const StyledType = styled.div`
     .title {
       display: none;
     }
+  }
+  @media (min-width: 1400px) {
+    width: 80px;
+  }
+  @media (min-width: 1600px) {
+    width: 120px;
   }
 `;

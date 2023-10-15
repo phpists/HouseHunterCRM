@@ -41,7 +41,7 @@ const StyledMobileContent = styled.div`
     margin-top: 10px;
     width: 100%;
   }
-  @media (min-width: 1600px) {
+  @media (min-width: 1400px) {
     display: none;
   }
   @media (max-width: 600px) {

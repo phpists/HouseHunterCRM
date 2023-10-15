@@ -35,7 +35,7 @@ const StyledClient = styled.div`
     grid-template-columns: max-content 1fr max-content;
     gap: 20px;
   }
-  @media (max-width: 1550px) {
+  @media (max-width: 1399.9px) {
     padding: 20px;
     .client-content {
       grid-template-columns: 1fr;

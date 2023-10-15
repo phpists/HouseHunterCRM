@@ -71,6 +71,9 @@ const StyledCompany = styled.div`
     overflow: auto;
   }
   @media (max-width: 1500px) {
+    grid-template-columns: 510px 1fr;
+  }
+  @media (max-width: 1399.9px) {
     grid-template-columns: 1fr;
     /* height: calc(100svh - 107px); */
     height: calc(100svh - 187px);

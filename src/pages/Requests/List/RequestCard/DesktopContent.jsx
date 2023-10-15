@@ -18,11 +18,11 @@ export const DesktopContent = () => (
 );
 
 const StyledDesktopContent = styled.div`
-  display: grid;
+  display: none;
   grid-template-columns: repeat(6, max-content);
   gap: 14px;
-
-  @media (max-width: 1600px) {
-    display: none;
+  justify-content: inherit;
+  @media (min-width: 1400px) {
+    display: grid;
   }
 `;

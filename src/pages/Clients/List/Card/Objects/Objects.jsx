@@ -18,7 +18,7 @@ const StyledObjects = styled.div`
   background: #323232;
   padding: 5px;
   margin-right: 24px;
-  @media (max-width: 1600px) {
+  @media (max-width: 1399.5px) {
     margin: 0;
   }
 `;

@@ -67,8 +67,9 @@ const StyledMobileContent = styled.div`
   }
   .more-billing-wrapper {
     margin-bottom: 14px;
+    display: none;
   }
-  @media (min-width: 1660px) {
+  @media (min-width: 1400px) {
     display: none;
   }
   @media (max-width: 850px) {
@@ -82,6 +83,9 @@ const StyledMobileContent = styled.div`
       margin-bottom: 10px;
     }
     .more-content-wrapper {
+      display: ${({ open }) => (open ? "block" : "none")};
+    }
+    .more-billing-wrapper {
       display: ${({ open }) => (open ? "block" : "none")};
     }
   }

@@ -20,4 +20,10 @@ const StyledStatus = styled.div`
   &:hover {
     background: rgba(255, 255, 255, 0.05);
   }
+  @media (min-width: 1400px) {
+    width: 120px;
+  }
+  @media (min-width: 1600px) {
+    width: 140px;
+  }
 `;

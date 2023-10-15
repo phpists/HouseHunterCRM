@@ -28,4 +28,10 @@ const StyledInfoText = styled.div`
     line-height: 118%; /* 14.16px */
     letter-spacing: 0.24px;
   }
+  @media (min-width: 1400px) {
+    margin-bottom: 10px;
+  }
+  @media (min-width: 1600px) {
+    margin-bottom: 0;
+  }
 `;

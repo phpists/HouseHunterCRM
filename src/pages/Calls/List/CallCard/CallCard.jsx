@@ -48,7 +48,7 @@ const StyledCallCard = styled.div`
       border: 1px solid rgba(255, 255, 255, 1) !important;
   `}
 
-  @media (max-width: 1600px) {
+  @media (max-width:1500px) {
     padding: 10px;
   }
 `;

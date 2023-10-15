@@ -30,15 +30,19 @@ const StyledComment = styled.div`
     height: 83px !important;
     overflow: auto;
   }
-  @media (min-width: 1750px) {
-    width: 20svw;
+  @media (max-width: 1399.9px) {
+    width: 100%;
+  }
+  @media (min-width: 1400px) {
+    width: 15svw;
     max-width: 500px;
   }
-  @media (min-width: 1900px) {
-    width: 22svw;
-    max-width: 550px;
+  @media (min-width: 1750px) {
+    width: 25svw;
+    max-width: 700px;
   }
-  @media (max-width: 1600px) {
-    width: 100%;
+  @media (min-width: 1900px) {
+    width: 30svw;
+    max-width: 550px;
   }
 `;

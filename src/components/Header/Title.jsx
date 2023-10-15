@@ -24,6 +24,8 @@ export const Title = () => {
         return "Моя компанія";
       case "/request":
         return "Створення нового запиту";
+      case "/calls":
+        return "Дзвінки";
       default:
         return pathname.split("/")[1] === "client"
           ? "Клієнт"

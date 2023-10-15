@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Header } from "./Header/Header";
-import { Empty } from "./Empty";
 import { StructureCard } from "./Header/StructureCard/StructureCard";
 import { useState } from "react";
 import { UserInfoCard } from "../../components/UserInfoCard/UserInfoCard";

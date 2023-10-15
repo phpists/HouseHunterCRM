@@ -25,6 +25,7 @@ const StyledDesktopContent = styled.div`
   height: max-content;
   display: grid;
   grid-template-columns: repeat(5, max-content);
+  justify-content: space-between;
   .mobile-footer {
     display: none;
     margin-top: 10px;
@@ -32,7 +33,7 @@ const StyledDesktopContent = styled.div`
     gap: 10px;
   }
 
-  @media (max-width: 1600px) {
+  @media (max-width: 1399.9px) {
     display: flex;
     flex-wrap: wrap;
     .desktop-item {

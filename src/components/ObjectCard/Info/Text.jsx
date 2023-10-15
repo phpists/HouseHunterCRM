@@ -46,7 +46,13 @@ const StyledText = styled.div`
     letter-spacing: 0.3px;
     opacity: 0.4;
   }
-  @media (max-width: 1600px) {
+  @media (max-width: 1399.9px) {
     width: 100%;
+  }
+  @media (min-width: 1400px) {
+    width: 240px;
+  }
+  @media (min-width: 1600px) {
+    width: 400px;
   }
 `;

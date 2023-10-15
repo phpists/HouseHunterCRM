@@ -27,7 +27,7 @@ const StyledMobileContent = styled.div`
     grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
-  @media (min-width: 1600px) {
+  @media (min-width: 1400px) {
     display: none;
   }
   @media (max-width: 700px) {

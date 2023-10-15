@@ -32,12 +32,12 @@ const StyledDesktopContent = styled.div`
       transform: rotate(0deg);
       opacity: 1;
     }
-    .more {
-      opacity: 1;
-      transform: translateX(0px);
-    }
   }
-  @media (max-width: 1600px) {
+  .more {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  @media (max-width: 1399.5px) {
     display: none;
   }
 `;

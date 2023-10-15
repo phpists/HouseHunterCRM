@@ -34,7 +34,7 @@ export const Maininfo = () => {
         <CreatedDate />
       </div>
       <Divider />
-      <div className="flex items-center tags">
+      <div className="flex flex-wrap items-center tags">
         <Tag Icon={DoorsIcon} text="2к" />
         <TagDivider />
         <Tag
@@ -78,6 +78,7 @@ const StyledMaininfo = styled.div`
   }
   .tags {
     padding: 0 6px;
+    gap: 10px 0;
   }
   .price-field {
     .value {

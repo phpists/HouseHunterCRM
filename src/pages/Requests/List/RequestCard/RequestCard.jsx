@@ -1,10 +1,4 @@
 import styled from "styled-components";
-import { Client } from "./Client/Client";
-import { Date } from "./Date/Date";
-import { Info } from "./Info/Info";
-import { Comment } from "./Comment";
-import { Objects } from "./Objects/Objects";
-import { Actions } from "./Actions/Actions";
 import { DesktopContent } from "./DesktopContent";
 import { MobileContent } from "./MobileContent";
 

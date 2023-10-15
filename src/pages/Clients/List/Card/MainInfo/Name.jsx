@@ -11,4 +11,5 @@ const StyledName = styled.div`
   font-weight: 200;
   line-height: 118%; /* 20.06px */
   letter-spacing: 0.34px;
+  white-space: nowrap;
 `;

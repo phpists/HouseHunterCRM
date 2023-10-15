@@ -34,13 +34,16 @@ const StyledTags = styled.div`
       font-size: 11px;
     }
   }
+  @media (min-width: 1400px) {
+    width: 195px;
+  }
   @media (min-width: 1600px) {
-    width: 240px;
+    width: 200px;
   }
   @media (min-width: 1700px) {
     width: 18svw;
   }
-  @media (max-width: 1600px) {
+  @media (max-width: 1399.9px) {
     width: calc((100% - 210px - 40px) / 2);
     height: 250px;
     margin-right: 18px;

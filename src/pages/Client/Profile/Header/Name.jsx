@@ -4,7 +4,7 @@ export const Name = () => <StyledName>Юрій Олексійович</StyledNam
 
 const StyledName = styled.div`
   color: #fff;
-  text-align: right;
+  text-align: left;
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;

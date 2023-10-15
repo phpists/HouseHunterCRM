@@ -31,7 +31,13 @@ const StyledDate = styled.div`
     padding-top: 0;
     background: none;
   }
-  @media (max-width: 1600px) {
+  @media (max-width: 1399.9px) {
     width: 100%;
+  }
+  @media (min-width: 1400px) {
+    width: 156px;
+  }
+  @media (min-width: 1550px) {
+    width: 310px;
   }
 `;

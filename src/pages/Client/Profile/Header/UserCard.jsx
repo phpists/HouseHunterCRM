@@ -18,6 +18,7 @@ export const UserCard = () => (
 );
 
 const StyledUserCard = styled.div`
+  text-align: left;
   .avatar {
     border: none;
     height: 88px;

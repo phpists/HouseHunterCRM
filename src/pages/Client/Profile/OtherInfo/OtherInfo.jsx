@@ -7,7 +7,7 @@ import { AddButton } from "./AddButton";
 
 export const OtherInfo = () => {
   return (
-    <StyledOtherInfo className="flex items-center">
+    <StyledOtherInfo className="flex items-center hide-scroll">
       <Photo photo={teamPhoto} />
       <Photo photo={teamPhoto2} />
       <Photo photo={teamPhoto3} />

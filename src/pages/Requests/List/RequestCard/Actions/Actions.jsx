@@ -29,7 +29,7 @@ const StyledActions = styled.div`
       }
     }
   }
-  @media (max-width: 1600px) {
+  @media (max-width: 1399.9px) {
     margin-left: 10px;
   }
 `;

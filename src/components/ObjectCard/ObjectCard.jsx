@@ -18,7 +18,7 @@ export const ObjectCard = ({ selected, onSelect }) => {
 };
 
 const StyledObjectCard = styled.div`
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
   background: #3d3d3d;
   position: relative;
@@ -28,7 +28,7 @@ const StyledObjectCard = styled.div`
   &.selected {
     border: 1px solid #fff;
   }
-  @media (max-width: 1600px) {
-    padding: 10px;
+  @media (min-width: 1400px) {
+    padding: 20px;
   }
 `;

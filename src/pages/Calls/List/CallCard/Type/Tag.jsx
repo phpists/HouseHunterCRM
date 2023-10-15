@@ -19,7 +19,7 @@ const StyledTag = styled.div`
   margin-bottom: 8px;
   padding: 5.5px 8px 6.5px;
   width: max-content;
-  @media (max-width: 1600px) {
+  @media (max-width: 1399.9px) {
     margin: 0 0 0 4px;
   }
 `;

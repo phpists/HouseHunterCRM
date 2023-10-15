@@ -30,18 +30,6 @@ export const MobileContent = () => (
       </div>
     </div>
     <ActionsButtons className="laptop-actions" />
-    {/* <MainInfo />
-    <Phones />
-    <Divider />
-    <PhoneInfo />
-    <Divider />
-    <Comment />
-    <Divider />
-    <Objects />
-    <div className="flex items-center">
-      <MoreButton />
-      <Arrow />
-    </div> */}
   </StyledMobileContent>
 );
 
@@ -76,7 +64,7 @@ const StyledMobileContent = styled.div`
   .mobile-actions {
     display: none;
   }
-  @media (min-width: 1600px) {
+  @media (min-width: 1400px) {
     display: none;
   }
 

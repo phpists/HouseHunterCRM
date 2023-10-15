@@ -91,7 +91,7 @@ const StyledSlider = styled.div`
       visibility: visible;
     }
   }
-  @media (max-width: 1600px) {
+  @media (max-width: 1399.9px) {
     flex-direction: column;
     height: auto;
   }

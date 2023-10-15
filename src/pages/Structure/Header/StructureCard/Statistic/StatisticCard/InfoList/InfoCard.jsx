@@ -17,7 +17,7 @@ const StyledInfoCard = styled.div`
     font-size: 14px;
     font-style: normal;
     font-weight: 300;
-    line-height: normal;
+    line-height: 1;
     letter-spacing: 0.28px;
     opacity: 0.6;
   }
@@ -29,11 +29,18 @@ const StyledInfoCard = styled.div`
     font-size: 15px;
     font-style: normal;
     font-weight: 100;
-    line-height: 118%; /* 17.7px */
+    line-height: 1; /* 17.7px */
     letter-spacing: 0.3px;
     margin-left: 10px;
   }
-  @media (max-width: 1660px) {
-    /* height: auto; */
+  @media (min-width: 1400px) {
+    .title {
+      font-size: 11px;
+    }
+  }
+  @media (min-width: 1500px) {
+    .title {
+      font-size: 14px;
+    }
   }
 `;

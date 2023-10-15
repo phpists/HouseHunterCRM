@@ -73,7 +73,7 @@ const StyledProfileMobile = styled.div`
     background-position: -198px -557px;
   }
 
-  @media (min-width: 1550px) {
+  @media (min-width: 1400px) {
     display: none;
   }
   @media (max-width: 700px) {

@@ -51,4 +51,10 @@ const StyledProfile = styled.div`
     background-size: 200%;
     background-position: -292px -557px;
   }
+  @media (min-width: 1400px) {
+    width: 290px;
+  }
+  @media (min-width: 1600px) {
+    width: 316px;
+  }
 `;

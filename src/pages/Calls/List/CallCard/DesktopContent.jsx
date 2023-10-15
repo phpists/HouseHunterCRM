@@ -33,12 +33,27 @@ export const DesktopContent = ({
 );
 
 const StyledDesktopContent = styled.div`
+  justify-content: space-between;
   .comment {
-    width: 204px;
+    width: 150px;
     height: 60px;
     background: #444;
+    .field-content {
+      width: 70%;
+    }
   }
-  @media (max-width: 1600px) {
+
+  @media (max-width: 1399.9px) {
     display: none;
+  }
+  @media (min-width: 1600px) {
+    .comment {
+      width: 204px;
+    }
+  }
+  @media (min-width: 1700px) {
+    .comment {
+      width: 15svw;
+    }
   }
 `;

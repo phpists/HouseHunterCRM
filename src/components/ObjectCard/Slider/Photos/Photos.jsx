@@ -16,7 +16,7 @@ const StyledPhotos = styled.div`
   gap: 6px;
   height: 200px;
   overflow: auto;
-  @media (max-width: 1600px) {
+  @media (max-width: 1399.9px) {
     display: flex;
     width: 200px;
     height: max-content;

@@ -23,7 +23,7 @@ const StyledArrow = styled(NavLink)`
       fill: #fff;
     }
   }
-  @media (max-width: 1600px) {
+  @media (max-width: 1399.5px) {
     margin: 0 0 21px;
   }
   @media (max-width: 850px) {

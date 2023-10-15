@@ -46,7 +46,7 @@ const StyledPhoneInfo = styled.div`
   &:hover {
     background: #656565;
   }
-  @media (max-width: 1600px) {
+  @media (max-width: 1400px) {
     width: 100%;
     flex-shrink: 1;
     justify-content: space-between;

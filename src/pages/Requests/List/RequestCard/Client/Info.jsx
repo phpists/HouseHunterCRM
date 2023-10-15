@@ -40,7 +40,7 @@ const StyledInfo = styled.div`
     letter-spacing: 0.24px;
     opacity: 0.4;
   }
-  @media (max-width: 1600px) {
+  @media (max-width: 1399.9px) {
     margin-bottom: 0;
   }
   @media (max-width: 700px) {
