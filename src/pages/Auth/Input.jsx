@@ -4,18 +4,33 @@ import eyeClosed from "../../assets/images/eye-close.svg";
 import { useState } from "react";
 import InputMask from "react-input-mask";
 
-export const Input = ({ placeholder = "", password, className, phone }) => {
+export const Input = ({
+  placeholder = "",
+  password,
+  className,
+  phone,
+  value,
+  onChange,
+  error,
+}) => {
   const [showPassword, setShowPassword] = useState(!password);
 
   return (
-    <StyledInput className={`${className}`}>
+    <StyledInput className={`${className}`} error={error}>
       {phone ? (
-        <InputMask mask="+38(999)999-99-99" placeholder={placeholder} />
+        <InputMask
+          mask="+38(999)999-99-99"
+          placeholder={placeholder}
+          value={value}
+          onChange={(e) => (onChange ? onChange(e.target.value) : null)}
+        />
       ) : (
         <input
           type={showPassword ? "text" : "password"}
           placeholder={placeholder}
           autoComplete="off"
+          value={value}
+          onChange={(e) => (onChange ? onChange(e.target.value) : null)}
         />
       )}
       {password && (
@@ -37,7 +52,8 @@ const StyledInput = styled.div`
     height: 32px;
     padding: 8px 12px 6px;
     border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid
+      ${({ error }) => (error ? "#ff2e2e" : "rgba(255, 255, 255, 0.2)")};
     color: #fff;
     font-family: Overpass;
     font-size: 15px;
@@ -54,7 +70,7 @@ const StyledInput = styled.div`
       background: #ffffff33;
     }
     &:focus {
-      color: #2deb1d;
+      color: ${({ error }) => (error ? "#ff2e2e" : "#2deb1d")};
     }
     width: 100%;
   }

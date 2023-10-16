@@ -86,3 +86,8 @@ img {
     border: 2px solid transparent !important;
   }
 }
+
+.ct-toast {
+  background: rgb(44 44 44) !important;
+  color: #fff !important;
+}

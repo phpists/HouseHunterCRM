@@ -1,10 +1,18 @@
 import { styled } from "styled-components";
 
-export const Button = ({ title, onClick, icon, outline, className }) => (
+export const Button = ({
+  title,
+  onClick,
+  icon,
+  outline,
+  className,
+  disabled,
+}) => (
   <StyledButton
     onClick={onClick}
     className={`flex items-center justify-center ${className}`}
     outline={outline}
+    disabled={disabled}
   >
     <span>{title}</span>
     {icon && (
@@ -29,6 +37,9 @@ const StyledButton = styled.button`
   line-height: 118%;
   letter-spacing: 0.3px;
   transition: all 0.3s;
+  opacity: ${({ disabled }) => (disabled ? "0.5" : 1)};
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "cursor")};
+
   .icon {
     width: 0;
     overflow: hidden;

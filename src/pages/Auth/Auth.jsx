@@ -4,8 +4,10 @@ import { Logo } from "./Logo";
 import { useState } from "react";
 import { Content } from "./Content";
 import { SuccessMessage } from "./SuccessMessage";
+import { useNavigate } from "react-router-dom";
 
-export const Auth = ({ onAuth }) => {
+export const Auth = () => {
+  const navigate = useNavigate();
   const [isRightBlockHover, setIsRightBlockHover] = useState("false");
   const [forgotPassword, setForgotPassword] = useState(false);
   const [type, setType] = useState("login");
@@ -13,17 +15,22 @@ export const Auth = ({ onAuth }) => {
 
   const handleSuccess = (isLogin) => {
     if (isLogin) {
-      onAuth();
+      navigate("/");
     } else {
       setSuccess(true);
     }
+  };
+
+  const handleCloseSuccessMessage = () => {
+    setSuccess(false);
+    setType("login");
   };
 
   return (
     <StyledAuth bg={bg}>
       <Logo success={success} />
       <div className="auth-content">
-        {success && <SuccessMessage onClick={onAuth} />}
+        {success && <SuccessMessage onClick={handleCloseSuccessMessage} />}
         <Content
           type={type}
           onChangeType={(value) => setType(value)}

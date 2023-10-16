@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { Header } from "./components/Header/Header";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Company } from "./pages/Company/Company";
 import { Auth } from "./pages/Auth/Auth";
@@ -14,17 +14,38 @@ import { Requests } from "./pages/Requests/Requests";
 import { Structure } from "./pages/Structure/Structure";
 import { Calls } from "./pages/Calls/Calls";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
+import { useLazyGetUserQuery } from "./store/auth/auth.api";
+import { useActions } from "./hooks/actions";
+import { useAppSelect } from "./hooks/redux";
+import { Loading } from "./components/Loading/Loading";
 
 export const App = () => {
+  const [getProfile] = useLazyGetUserQuery();
   const location = useLocation();
+  const navigate = useNavigate();
   const [sidebarOpen, setSideBarOpen] = useState(false);
+  const loggined = !!localStorage.getItem("token");
+  const { loginUser } = useActions();
+  const { user } = useAppSelect((state) => state.auth);
+  const [loading, setLoading] = useState(true);
+  const [load, setLoad] = useState(false);
 
-  //   const navigate = useNavigate();
-  const [loggined, setLoggined] = useState(true);
+  const handleGetUserData = () => {
+    getProfile().then((resp) => {
+      loginUser(resp?.data?.data);
+      setLoad(true);
+      setTimeout(() => setLoading(false), 1500);
+    });
+  };
 
-  //   useEffect(() => {
-  //     loggined && navigate("/company");
-  //   }, [loggined]);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/auth");
+    } else if (token && !user) {
+      handleGetUserData();
+    }
+  }, [location]);
 
   useEffect(() => {
     setSideBarOpen(false);
@@ -32,7 +53,9 @@ export const App = () => {
 
   return (
     <>
-      {loggined ? (
+      {loading ? (
+        <Loading load={load} />
+      ) : user ? (
         <StyledApp>
           <Sidebar
             sidebarOpen={sidebarOpen}
@@ -58,7 +81,7 @@ export const App = () => {
           </div>
         </StyledApp>
       ) : (
-        <Auth onAuth={() => setLoggined(true)} />
+        <Auth />
       )}
     </>
   );

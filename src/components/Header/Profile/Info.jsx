@@ -1,11 +1,18 @@
 import { styled } from "styled-components";
+import { useAppSelect } from "../../../hooks/redux";
 
-export const Info = () => (
-  <StyledInfo className="clickable">
-    <h4 className="name clickable">Юрій Олексійович</h4>
-    <div className="email clickable">yuriyo@gmail.com</div>
-  </StyledInfo>
-);
+export const Info = () => {
+  const { user } = useAppSelect((state) => state.auth);
+
+  return (
+    <StyledInfo className="clickable">
+      <h4 className="name clickable">
+        {user?.first_name ?? ""} {user?.last_name ?? ""}
+      </h4>
+      <div className="email clickable">{user?.email ?? ""}</div>
+    </StyledInfo>
+  );
+};
 
 const StyledInfo = styled.div`
   text-align: right;

@@ -28,7 +28,7 @@ const StyledMainInfo = styled.div`
     width: 40px;
     height: 40px;
   }
-  @media (max-width: 1400px) {
+  @media (max-width: 1399.9px) {
     margin-right: 8px;
     width: 100%;
     flex-shrink: 1;
