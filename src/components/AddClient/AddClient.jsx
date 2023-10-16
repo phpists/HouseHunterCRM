@@ -13,12 +13,12 @@ export const AddClient = ({ onClose }) => {
   const controls = useAnimationControls();
 
   const handleClose = () => {
-    controls.start({ opacity: 0 });
+    controls.start({ opacity: 0, zIndex: -20 });
     setTimeout(onClose, 500);
   };
 
   useEffect(() => {
-    controls.start({ opacity: 1 });
+    controls.start({ opacity: 1, zIndex: 102 });
   }, []);
 
   const handleClickOnOverlay = (e) =>

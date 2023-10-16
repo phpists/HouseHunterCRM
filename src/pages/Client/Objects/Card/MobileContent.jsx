@@ -14,7 +14,7 @@ export const MobileContent = () => (
     <div className="flex items-center w-full">
       <div className="cards-wrapper">
         <ObjectCard className="object-card" date="04.10.23" />
-        <StepNumber num={1} className="number" />
+        {/* <StepNumber num={1} className="number" /> */}
       </div>
       <div className="w-full">
         <div className="w-max mr-5">

@@ -30,7 +30,13 @@ export const PersonalData = () => {
         full
       />
       <Divider />
-      <Field value="test" placeholder="Почніть писати" label="Пароль" full />
+      <Field
+        value="test"
+        placeholder="Почніть писати"
+        label="Пароль"
+        full
+        hide
+      />
     </StyledPersonalData>
   );
 };

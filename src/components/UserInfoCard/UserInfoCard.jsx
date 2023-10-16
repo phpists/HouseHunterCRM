@@ -7,8 +7,9 @@ import { MainInfo } from "./MainInfo/MainInfo";
 import { PersonalData } from "./PersonalData";
 import { Footer } from "./Footer";
 import { Workers } from "./Workers/Workers";
+import { FooterDelete } from "./FooterDelete";
 
-export const UserInfoCard = ({ onClose, title, avatarBanner }) => {
+export const UserInfoCard = ({ onClose, title, avatarBanner, isDelete }) => {
   const controls = useAnimationControls();
 
   const handleClose = () => {
@@ -35,7 +36,7 @@ export const UserInfoCard = ({ onClose, title, avatarBanner }) => {
         <Workers />
         <SectionTitle title="Персональні дані" />
         <PersonalData />
-        {/* <Footer /> */}
+        {isDelete ? <FooterDelete /> : <Footer />}
       </div>
     </StyledUserInfoCard>
   );

@@ -50,7 +50,7 @@ const StyledFilter = styled(motion.div)`
   border-left: 1px solid rgba(255, 255, 255, 0.4);
   background: rgba(44, 44, 44, 0.8);
   backdrop-filter: blur(12.5px);
-  z-index: 20;
+  z-index: 25;
   .content {
     padding: 0 20px 20px;
     height: calc(100svh - 162px - 70px - 20px);

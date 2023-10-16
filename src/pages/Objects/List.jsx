@@ -24,6 +24,6 @@ const StyledList = styled.div`
   overflow: auto;
   gap: 10px;
   @media (max-width: 800px) {
-    height: calc(100svh - 340px);
+    height: calc(100svh - 200px);
   }
 `;

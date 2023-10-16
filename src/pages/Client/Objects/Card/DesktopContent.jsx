@@ -31,7 +31,7 @@ export const DesktopContent = () => (
     </div>
     <div className="flex items-center">
       <div className="relative flex items-center">
-        <StepNumber num={1} className="number" />
+        {/* <StepNumber num={1} className="number" /> */}
         <MoreButton />
       </div>
     </div>

@@ -4,11 +4,20 @@ import { ReactComponent as PlusIcon } from "../../../../assets/images/plus.svg";
 import { Search } from "./Search";
 import { styled } from "styled-components";
 import { SelectItems } from "../../../../components/SelectItems/SelectItems";
+import { useState } from "react";
+import { AddClient } from "../../../../components/AddClient/AddClient";
 
 export const Buttons = ({ favoritesFilter, onToggleFavoriteFilter }) => {
+  const [addClient, setAddClient] = useState(false);
+
   return (
     <StyledButtons className="flex items-center">
-      <IconButton Icon={PlusIcon} onClick={null} className="icon-btn" />
+      {addClient && <AddClient onClose={() => setAddClient(false)} />}
+      <IconButton
+        Icon={PlusIcon}
+        className="icon-btn"
+        onClick={() => setAddClient(true)}
+      />
       <IconButton
         Icon={StarIcon}
         onClick={onToggleFavoriteFilter}

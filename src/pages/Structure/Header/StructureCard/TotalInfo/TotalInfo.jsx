@@ -40,7 +40,6 @@ const StyledTotalInfo = styled.div`
   padding: 8px;
   border-radius: 10px;
   background: rgba(50, 50, 50, 0.8);
-  margin-right: 10px;
   height: 224px;
   .cards {
     display: grid;
@@ -48,5 +47,11 @@ const StyledTotalInfo = styled.div`
     grid-template-columns: 1fr;
     transition: all 0.3s;
     opacity: ${({ active }) => (active ? 0 : 1)};
+  }
+  @media (min-width: 1400px) {
+    margin-right: 10px;
+  }
+  @media (max-width: 850px) {
+    margin-top: 10px;
   }
 `;

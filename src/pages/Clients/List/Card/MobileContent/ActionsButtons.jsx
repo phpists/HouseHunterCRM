@@ -17,8 +17,11 @@ const StyledActionsButtons = styled.div`
     flex-direction: row;
     margin: 0 0 0 10px;
     width: auto;
+    .more {
+      display: none !important;
+    }
   }
-  @media (max-width: 1600px) {
+  @media (max-width: 1399.9px) {
     .more-btn {
       opacity: 1;
       transform: translateX(0);

@@ -23,4 +23,13 @@ const StyledContacts = styled.div`
   @media (min-width: 1900px) {
     width: 20svw;
   }
+  @media (max-width: 800px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    .divider-contacts {
+      display: none;
+    }
+  }
 `;

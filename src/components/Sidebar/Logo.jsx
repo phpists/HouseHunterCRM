@@ -1,8 +1,16 @@
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.svg";
+import styled from "styled-components";
 
 export const Logo = ({ onClose }) => (
-  <Link to={"/"} className="mb-2" onClick={onClose}>
+  <StyledLogo to={"/"} className="mb-2" onClick={onClose}>
     <img src={logo} alt="logo" />
-  </Link>
+  </StyledLogo>
 );
+
+const StyledLogo = styled(Link)`
+  img {
+    width: 80%;
+    margin: 0 auto;
+  }
+`;

@@ -34,7 +34,7 @@ const StyledMobileContent = styled.div`
     margin-bottom: 10px;
     height: 170px;
   }
-  @media (min-width: 800px) {
+  @media (min-width: 801px) {
     display: none;
   }
 `;

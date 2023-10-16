@@ -76,7 +76,7 @@ const StyledCompany = styled.div`
   @media (max-width: 1399.9px) {
     grid-template-columns: 1fr;
     /* height: calc(100svh - 107px); */
-    height: calc(100svh - 187px);
+    height: calc(100svh - 120px);
 
     overflow: auto;
     .info {

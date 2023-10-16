@@ -7,12 +7,15 @@ import { Tag } from "./Tag";
 import { Date } from "./Date";
 import { Divider } from "../Divider";
 
-export const Header = () => (
+export const Header = ({ onOpenInfo }) => (
   <StyledHeader className="flex items-center notClickable">
-    <Avatar />
+    <Avatar onOpenInfo={onOpenInfo} />
     <div>
       <LastTime />
-      <div className="flex items-baseline main-text notClickable">
+      <div
+        className="flex items-baseline main-text notClickable"
+        onClick={onOpenInfo}
+      >
         <Name />
         <Id />
       </div>

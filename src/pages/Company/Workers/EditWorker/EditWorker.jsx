@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import { motion, useAnimationControls } from "framer-motion";
 
 export const EditWorker = ({ onClose }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const controls = useAnimationControls();
 
   const handleClose = () => {
@@ -21,25 +20,15 @@ export const EditWorker = ({ onClose }) => {
     controls.start({ opacity: 1, translateX: 0 });
   }, []);
 
-  const handleScrollContent = (e) => {
-    if (e.target.scrollTop === 0 && isScrolled) {
-      setIsScrolled(false);
-    } else if (e.target.scrollTop > 0 && !isScrolled) {
-      setIsScrolled(true);
-    }
-  };
-
   return (
     <StyledEditWorker
-      isScrolled={isScrolled}
       className="hide-scroll"
       initial={{ opacity: 0, translateX: "100%" }}
       transition={{ duration: 0.4 }}
       animate={controls}
     >
       <Header onClose={handleClose} />
-      <MainInfo isScrolled={isScrolled} />
-      <div className="content hide-scroll" onScroll={handleScrollContent}>
+      <div className="content hide-scroll">
         <SectorTitle title="Загальна інформація" />
         <Info />
         <SectorTitle title="Персональні дані" />
@@ -64,9 +53,7 @@ const StyledEditWorker = styled(motion.div)`
   .content {
     padding: 15px 11px;
     overflow: auto;
-    height: calc(
-      100svh - 172px - ${({ isScrolled }) => (isScrolled ? 85 : 240)}px - 70px
-    );
+    height: calc(100svh - 172px - 25px - 70px);
   }
   @media (max-width: 1600px) {
     height: calc(100svh - 185px);

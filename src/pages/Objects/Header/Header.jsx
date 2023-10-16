@@ -7,9 +7,11 @@ import { ReactComponent as StarIcon } from "../../../assets/images/card-star.svg
 import { SelectItems } from "../../../components/SelectItems/SelectItems";
 import { Filter } from "./Filter/Filter";
 import { useState } from "react";
+import { AddClient } from "../../../components/AddClient/AddClient";
 
 export const Header = ({ selectedCount }) => {
   const [filterOpen, setFilterOpen] = useState(false);
+  const [addClient, setAddClient] = useState(false);
 
   return (
     <StyledHeader>
@@ -22,7 +24,11 @@ export const Header = ({ selectedCount }) => {
             active={filterOpen}
             onClick={() => setFilterOpen(true)}
           />
-          <IconButton Icon={PlusIcon} className="icon-btn" />
+          <IconButton
+            Icon={PlusIcon}
+            className="icon-btn"
+            onClick={() => setAddClient(true)}
+          />
           <IconButton Icon={StarIcon} className="icon-btn icon-btn-last" />
           <div className="select-wrapper flex items-center justify-end">
             <SelectItems title="об'єктів" selectedCount={selectedCount} />
@@ -37,6 +43,7 @@ export const Header = ({ selectedCount }) => {
         />
       </div>
       {filterOpen && <Filter onClose={() => setFilterOpen(false)} />}
+      {addClient && <AddClient onClose={() => setAddClient(false)} />}
     </StyledHeader>
   );
 };

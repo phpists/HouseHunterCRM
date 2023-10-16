@@ -1,20 +1,16 @@
 import { styled } from "styled-components";
 import { LoginAllow } from "./LoginAllow";
 import { PaidToDate } from "./PaidToDate";
-import { RegistationDate } from "./RegistationDate";
-import { LoginDate } from "./LoginDate";
+import { Profile } from "./Profile/Profile";
 
 export const Info = () => {
   return (
     <StyledInfo>
+      <Profile />
+      <div className="divider" />
       <LoginAllow />
       <div className="divider" />
       <PaidToDate />
-      <div className="divider" />
-      <div className="flex items-center">
-        <RegistationDate />
-        <LoginDate />
-      </div>
     </StyledInfo>
   );
 };

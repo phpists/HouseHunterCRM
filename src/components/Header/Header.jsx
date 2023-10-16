@@ -35,21 +35,11 @@ export const Header = ({ onOpenSidebar }) => {
           <Profile />
         </div>
       </div>
-      <div className="header-text-footer">
-        <Title />
-        <Subtitle />
-      </div>
     </StyledHeader>
   );
 };
 const StyledHeader = styled.div`
   padding: 20px 40px;
-
-  .header-text-footer {
-    display: none;
-    margin-top: 20px;
-  }
-
   @media (max-width: 1400px) {
     .header-text {
       ${({ isTextHide }) => isTextHide && "display: none;"}
@@ -62,9 +52,6 @@ const StyledHeader = styled.div`
   @media (max-width: 800px) {
     .header-text {
       display: none;
-    }
-    .header-text-footer {
-      display: ${({ isTextHide }) => (isTextHide ? "none" : "block")};
     }
     ${({ openBilling }) =>
       openBilling &&

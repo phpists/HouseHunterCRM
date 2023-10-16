@@ -10,6 +10,7 @@ import { Contact } from "./Contact/Contact";
 import { Password } from "./Password";
 import { motion, useAnimationControls } from "framer-motion";
 import { useEffect } from "react";
+import { Footer } from "./Footer";
 
 export const EditProfile = ({ onClose }) => {
   const controls = useAnimationControls();

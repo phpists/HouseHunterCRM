@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import avatar from "../../../../../../assets/images/profile-avatar.svg";
 
-export const Avatar = () => (
-  <StyledAvatar avatar={avatar} className="notClickable" />
+export const Avatar = ({ onOpenInfo }) => (
+  <StyledAvatar avatar={avatar} className="notClickable" onClick={onOpenInfo} />
 );
 
 const StyledAvatar = styled.div`

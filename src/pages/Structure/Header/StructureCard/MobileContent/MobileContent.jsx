@@ -25,6 +25,7 @@ export const MobileContent = ({ onOpenInfo }) => {
   };
 
   useEffect(() => {
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [totalInfoOpened]);
@@ -63,7 +64,7 @@ const StyledMobileContent = styled.div`
     display: grid;
     grid-template-columns: 1fr max-content;
     gap: 10px;
-    margin-bottom: 10px;
+    margin: 10px 0;
   }
   .more-billing-wrapper {
     margin-bottom: 14px;

@@ -20,7 +20,11 @@ export const Structure = () => {
       <Header level={level} />
       <MobileHeader />
       {infoOpen && (
-        <UserInfoCard onClose={() => setInfoOpen(false)} title="Детальніше" />
+        <UserInfoCard
+          onClose={() => setInfoOpen(false)}
+          title="Детальніше"
+          isDelete
+        />
       )}
       <div className="structure-content hide-scroll">
         {/* <Empty /> */}
@@ -66,5 +70,8 @@ const StyledStructure = styled.div`
     width: 100svw;
     margin-left: -24px;
     padding: 20px 24px;
+    .structure-content {
+      height: calc(100svh - 202px);
+    }
   }
 `;

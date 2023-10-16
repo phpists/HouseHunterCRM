@@ -43,7 +43,7 @@ const StyledDesktopContent = styled.div`
       display: grid;
     }
   }
-  @media (max-width: 800px) {
+  @media (max-width: 801px) {
     display: none;
   }
 `;

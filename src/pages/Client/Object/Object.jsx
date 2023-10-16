@@ -14,8 +14,8 @@ export const Object = ({ className }) => {
       <Maininfo />
       {started ? (
         <>
-          <SectionTitle title="Етап" />
-          <Steps />
+          {/* <SectionTitle title="Етап" /> */}
+          {/* <Steps /> */}
         </>
       ) : (
         <StartButton onClick={() => setStarted(true)} />

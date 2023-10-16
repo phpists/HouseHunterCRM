@@ -14,8 +14,8 @@ const LINKS = [
   { icon: UsersIcon, link: "/clients" },
   { icon: MegaphoneIcon, link: "/requests" },
   { icon: HomeIcon, link: "/objects" },
-  { icon: XbaseIcon, link: "/note" },
-  { icon: CalendarIcon, link: "/calendar" },
+  //   { icon: XbaseIcon, link: "/note" },
+  //   { icon: CalendarIcon, link: "/calendar" },
   { icon: CopyIcon, link: "/structure" },
   { icon: PhoneIcon, link: "/calls" },
 ];

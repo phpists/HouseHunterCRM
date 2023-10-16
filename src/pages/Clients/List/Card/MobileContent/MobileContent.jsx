@@ -35,6 +35,7 @@ export const MobileContent = () => (
 
 const StyledMobileContent = styled.div`
   width: 100%;
+  overflow: hidden;
   &:hover {
     .arrow svg {
       transform: rotate(0deg);

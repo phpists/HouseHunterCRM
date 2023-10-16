@@ -7,8 +7,8 @@ import bg from "../../../../../assets/images/profile-bg.png";
 
 export const ProfilleInfo = ({ onOpenInfo }) => {
   return (
-    <StyledProfilleInfo bg={bg} onClick={onOpenInfo} className="notClickable">
-      <Header />
+    <StyledProfilleInfo bg={bg} className="notClickable">
+      <Header onOpenInfo={onOpenInfo} />
       <Divider />
       <Phones className="phones-wrapper notClickable" />
       <Email />
