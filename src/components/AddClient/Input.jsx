@@ -1,18 +1,25 @@
 import ReactInputMask from "react-input-mask";
 import styled from "styled-components";
 
-export const Input = ({ label, className, phone }) => {
-  return (
-    <StyledInput className={`${className}`}>
-      <div className="label">{label}</div>
-      {phone ? (
-        <ReactInputMask mask="+38(999)999-99-99" />
-      ) : (
-        <input type="text" autoComplete="off" />
-      )}
-    </StyledInput>
-  );
-};
+export const Input = ({ label, className, phone, value, onChange, error }) => (
+  <StyledInput className={`${className}`} error={error}>
+    <div className="label">{label}</div>
+    {phone ? (
+      <ReactInputMask
+        mask="+38(999)999-99-99"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    ) : (
+      <input
+        type="text"
+        autoComplete="off"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    )}
+  </StyledInput>
+);
 
 const StyledInput = styled.div`
   margin-bottom: 15px;
@@ -31,7 +38,8 @@ const StyledInput = styled.div`
     border-radius: 6px;
     background: #474747;
     padding: 10px;
-    color: #fff;
+    color: ${({ error }) => (error ? "#ff2e2e" : "rgba(255, 255, 255, 1)")};
+
     leading-trim: both;
     text-edge: cap;
     font-family: Overpass;
@@ -40,5 +48,7 @@ const StyledInput = styled.div`
     font-weight: 200;
     line-height: 120%;
     width: 100%;
+    transition: all 0.3s;
+    ${({ error }) => error && "border: 1px solid #ff2e2e;"}
   }
 `;

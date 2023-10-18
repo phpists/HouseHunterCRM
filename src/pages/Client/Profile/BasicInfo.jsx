@@ -1,11 +1,23 @@
 import { styled } from "styled-components";
 import { ProfileField } from "../../../components/ProfileField";
 
-export const BasicInfo = () => {
+export const BasicInfo = ({ firstName, lastName, onChangeField, onSave }) => {
   return (
     <StyledBasicInfo>
-      <ProfileField value="Юрій" label="Ім'я" />
-      <ProfileField value="Олексійович" label="Прізвище" />
+      <ProfileField
+        value={firstName}
+        label="Ім'я"
+        placeholder="Введіть ім'я"
+        onChange={(val) => onChangeField("first_name", val)}
+        onSave={onSave}
+      />
+      <ProfileField
+        value={lastName}
+        label="Прізвище"
+        placeholder="Введіть прізвище"
+        onChange={(val) => onChangeField("last_name", val)}
+        onSave={onSave}
+      />
     </StyledBasicInfo>
   );
 };

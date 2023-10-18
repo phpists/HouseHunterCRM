@@ -1,12 +1,32 @@
 import { styled } from "styled-components";
 import { Header } from "./Header/Header";
 import { List } from "./List/List";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  useLazyGetClientsCountQuery,
+  useLazyGetClientsQuery,
+} from "../../store/clients/clients.api";
+import { useActions } from "../../hooks/actions";
+import { useRef } from "react";
 
 export const Clients = () => {
   const [favoritesFilter, setFavoritesFilter] = useState(false);
   const [selected, setSelected] = useState([]);
+  const [getClientCount] = useLazyGetClientsCountQuery();
+  const { saveClientsCount } = useActions();
+  const [clients, setClients] = useState([]);
+  const [getClients] = useLazyGetClientsQuery();
+  const currentPage = useRef(0);
 
+  const handleGetClients = () => {
+    getClients({ current_page: currentPage.current, item_on_page: 20 }).then(
+      (resp) => {
+        if (resp?.data?.error === 0 && resp?.data.data?.length) {
+          setClients([...clients, ...resp?.data.data]);
+        }
+      }
+    );
+  };
   const handleSelectClient = (index) => {
     const isExist = selected.find((w) => w === index);
     setSelected(
@@ -14,13 +34,26 @@ export const Clients = () => {
     );
   };
 
+  const handleGetClientsCount = () => {
+    getClientCount().then((resp) => saveClientsCount(resp?.data?.count ?? 0));
+  };
+
+  useEffect(() => {
+    handleGetClientsCount();
+    handleGetClients();
+  }, []);
+
   return (
     <StyledClients>
       <Header
         favoritesFilter={favoritesFilter}
         onToggleFavoriteFilter={() => setFavoritesFilter(!favoritesFilter)}
       />
-      <List selected={selected} onSelect={handleSelectClient} />
+      <List
+        selected={selected}
+        onSelect={handleSelectClient}
+        clients={clients}
+      />
     </StyledClients>
   );
 };

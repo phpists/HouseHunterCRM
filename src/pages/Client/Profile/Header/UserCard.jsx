@@ -4,15 +4,15 @@ import { Email } from "./Email";
 import { Name } from "./Name";
 import { Tag } from "./Tag";
 
-export const UserCard = () => (
+export const UserCard = ({ photo, name, email }) => (
   <StyledUserCard className="flex items-center">
-    <Avatar />
+    <Avatar photo={photo} />
     <div className="flex items-start">
       <div className="flex flex-col items-start mr-3">
-        <Name />
-        <Email />
+        <Name name={name} />
+        <Email email={email} />
       </div>
-      <Tag />
+      {/* <Tag /> */}
     </div>
   </StyledUserCard>
 );

@@ -1,10 +1,10 @@
 import { styled } from "styled-components";
 import phoneIcon from "../../assets/images/call.svg";
 
-export const Phone = ({ showOnHoverIcon, className }) => (
+export const Phone = ({ showOnHoverIcon, className, phone }) => (
   <StyledPhone className={`${className} notClickable`}>
     <div className="flex items-center notClickable">
-      <div className="phone notClickable">+38 (097) 707 62 58</div>
+      <div className="phone notClickable">{phone}</div>
       <img src={phoneIcon} alt="" className="notClickable" />
     </div>
     <div className="subtitle notClickable">Телефон</div>

@@ -2,10 +2,10 @@ import { styled } from "styled-components";
 import { ReactComponent as ArrowIcon } from "../../../../assets/images/clients-arrow.svg";
 import { NavLink } from "react-router-dom";
 
-export const Arrow = () => (
+export const Arrow = ({ id }) => (
   <StyledArrow
     className="flex items-center justify-center h-full arrow"
-    to="/client/3"
+    to={`/client/${id}`}
   >
     <ArrowIcon />
   </StyledArrow>

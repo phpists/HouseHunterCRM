@@ -3,12 +3,12 @@ import { Info } from "./Info";
 import { Divider } from "./Divider";
 import { List } from "./List/List";
 
-export const Objects = () => {
+export const Objects = ({ requestsCount, objectsCount }) => {
   return (
     <StyledObjects className="flex items-center">
-      <Info />
+      <Info requestsCount={requestsCount} objectsCount={objectsCount} />
       <Divider />
-      <List />
+      {/* <List /> */}
     </StyledObjects>
   );
 };

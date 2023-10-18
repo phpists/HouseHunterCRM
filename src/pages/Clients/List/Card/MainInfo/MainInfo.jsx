@@ -5,16 +5,16 @@ import { Id } from "./Id";
 import { CreatedAt } from "./CreatedAt";
 import smallAvatar from "../../../../../assets/images/small-avarar-orange.svg";
 
-export const MainInfo = () => {
+export const MainInfo = ({ name, id, dateCreate }) => {
   return (
     <StyledMainInfo className="flex items-center">
       <img src={smallAvatar} alt="" className="small-avatar" />
       <div className="ml-2 main-info-content">
         <div className="flex items-center">
-          <Name />
-          <Id />
+          <Name name={name} />
+          <Id id={id} />
         </div>
-        <CreatedAt />
+        <CreatedAt dateCreate={dateCreate} />
       </div>
     </StyledMainInfo>
   );

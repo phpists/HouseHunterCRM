@@ -1,12 +1,12 @@
 import { styled } from "styled-components";
 
-export const Info = () => (
+export const Info = ({ requestsCount, objectsCount }) => (
   <StyledInfo>
     <div className="flex items-center">
-      <span className="orange">12</span> Запитiв
+      <span className="orange">{requestsCount}</span> Запитiв
     </div>
     <div className="flex items-center">
-      <span className="blue">3</span> Об'єкта
+      <span className="blue">{objectsCount}</span> Об'єкта
     </div>
   </StyledInfo>
 );

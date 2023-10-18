@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
-export const Button = ({ onClick }) => (
-  <StyledButton onClick={onClick}>Відправити</StyledButton>
+export const Button = ({ onClick, disabled }) => (
+  <StyledButton onClick={onClick} disabled={disabled}>
+    Відправити
+  </StyledButton>
 );
 
 const StyledButton = styled.button`

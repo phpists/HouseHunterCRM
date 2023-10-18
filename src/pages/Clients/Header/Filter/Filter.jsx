@@ -44,6 +44,7 @@ const StyledFilter = styled(motion.div)`
   position: absolute;
   top: -18px;
   right: -20px;
+  bottom: 0;
   width: 439px;
   height: calc(100svh - 162px);
   flex-shrink: 0;
@@ -57,5 +58,9 @@ const StyledFilter = styled(motion.div)`
   }
   @media (max-width: 850px) {
     width: 100svw;
+    height: calc(100svh - 110px);
+    .content {
+      height: calc(100svh - 162px - 20px);
+    }
   }
 `;

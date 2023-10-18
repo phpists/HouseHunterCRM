@@ -6,7 +6,7 @@ import arrowIcon from "../../assets/images/arrow.svg";
 import { Button } from "../../components/Button";
 import { useLazyRegisterQuery } from "../../store/auth/auth.api";
 import { useState } from "react";
-import { emailValidation } from "../../utilits";
+import { emailValidation, handleRemovePhoneMask } from "../../utilits";
 import cogoToast from "cogo-toast";
 
 export const Registration = ({ onSuccess }) => {
@@ -22,18 +22,11 @@ export const Registration = ({ onSuccess }) => {
     setErrors({ email: emailValidation(val) });
   };
 
-  const handleFormatPhone = (phone) =>
-    phone
-      .replaceAll("(", "")
-      .replaceAll(")", "")
-      .replaceAll("-", "")
-      .substring(3);
-
   const handleSubmit = () => {
     const data = {
       password,
       id_phone_code: "1",
-      phone: handleFormatPhone(phone),
+      phone: handleRemovePhoneMask(phone),
       name,
       mod: "account",
       action: "create",

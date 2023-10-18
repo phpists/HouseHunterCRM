@@ -7,19 +7,80 @@ import { Contact } from "./Contact/Contact";
 import { Comment } from "./Comment";
 import { OtherInfo } from "./OtherInfo/OtherInfo";
 import maskBackground from "../../../assets/images/auth-shape-mask.svg";
+import { useEffect, useState } from "react";
+import { useLazyEditClientQuery } from "../../../store/clients/clients.api";
+import { useParams } from "react-router-dom";
+import cogoToast from "cogo-toast";
+import { handleRemovePhoneMask } from "../../../utilits";
 
-export const Profile = ({ className }) => {
+export const Profile = ({ className, data }) => {
+  const { id } = useParams();
+  const [updatedData, setUpdatedData] = useState({});
+  const [editClient] = useLazyEditClientQuery();
+
+  useEffect(() => {
+    setUpdatedData(data);
+  }, [data]);
+
+  const handleChangeField = (fieldName, value) =>
+    setUpdatedData({ ...updatedData, [fieldName]: value });
+
+  const handleSaveChanges = () => {
+    editClient({
+      ...updatedData,
+      id_client: id,
+      phones_json: JSON.stringify(
+        updatedData?.phone.map((phone) => ({
+          ...phone,
+          id_phone_code: 1,
+          phone: phone.phone?.includes("+38")
+            ? handleRemovePhoneMask(phone.phone)
+            : phone.phone,
+        }))
+      ),
+    }).then((resp) => {
+      if (resp?.data?.error === 0) {
+        cogoToast.success("Зміни успішно збережено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      } else if (resp?.data?.error) {
+        cogoToast.error(resp?.data?.messege ?? "Помилка", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      }
+    });
+  };
+
   return (
     <StyledProfile maskBackground={maskBackground} className={className}>
-      <Header />
+      <Header
+        photo={updatedData?.photo}
+        name={updatedData?.full_name}
+        email={updatedData?.email}
+      />
       <Divider />
       <div className="profile-content hide-scroll">
         <SectionTitle title="Дані клієнта" />
-        <BasicInfo />
+        <BasicInfo
+          firstName={updatedData?.first_name}
+          lastName={updatedData?.last_name}
+          onChangeField={handleChangeField}
+          onSave={handleSaveChanges}
+        />
         <SectionTitle title="Контакти" />
-        <Contact />
+        <Contact
+          phones={updatedData?.phone ?? []}
+          email={updatedData?.email}
+          onChangeField={handleChangeField}
+        />
         <SectionTitle title="Коментар" />
-        <Comment />
+        <Comment
+          comment={updatedData?.comment}
+          onChange={(val) => handleChangeField("comment", val)}
+          onSave={handleSaveChanges}
+        />
         <SectionTitle title="Фото / Додатково" />
         <OtherInfo />
       </div>

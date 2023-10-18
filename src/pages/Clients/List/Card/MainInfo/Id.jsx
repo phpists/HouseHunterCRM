@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const Id = () => <StyledId>ID1246</StyledId>;
+export const Id = ({ id }) => <StyledId>ID{id}</StyledId>;
 
 const StyledId = styled.div`
   padding: 1px 6px 2px;
@@ -13,4 +13,8 @@ const StyledId = styled.div`
   font-weight: 500;
   line-height: normal;
   letter-spacing: 0.22px;
+  max-width: 100px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;

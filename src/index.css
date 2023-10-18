@@ -91,3 +91,9 @@ img {
   background: rgb(44 44 44) !important;
   color: #fff !important;
 }
+
+button:disabled {
+  transition: all 0.3s;
+  cursor: not-allowed;
+  opacity: 0.5;
+}

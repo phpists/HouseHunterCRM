@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 import { ReactComponent as CheckboxIcon } from "../assets/images/checkbox.svg";
+import ReactInputMask from "react-input-mask";
 
 export const ProfileField = ({
   value,
+  placeholder,
   label,
   password,
   className,
@@ -11,6 +13,9 @@ export const ProfileField = ({
   grey,
   big,
   contentHeight,
+  onChange,
+  onSave,
+  phone,
 }) => {
   const [active, setActive] = useState(false);
   const textareaRef = useRef(null);
@@ -18,10 +23,12 @@ export const ProfileField = ({
   const textAreaAdjust = (e) => {
     e.target.style.height = "1px";
     e.target.style.height = e.target.scrollHeight + "px";
+    onChange && onChange(e.target.value);
   };
 
   const handleToggleActive = () => {
     setActive(!active);
+    active && onSave && onSave();
   };
 
   useEffect(() => {
@@ -42,19 +49,35 @@ export const ProfileField = ({
       <CheckboxIcon onClick={handleToggleActive} />
       {active ? (
         <>
-          {textarea ? (
+          {phone ? (
+            <ReactInputMask
+              className="value hide-scroll"
+              mask="+38(999)999-99-99"
+              placeholder={placeholder}
+              value={value}
+              onChange={(e) => (onChange ? onChange(e.target.value) : null)}
+            />
+          ) : textarea ? (
             <textarea
               className="value hide-scroll"
               defaultValue={value}
               ref={textareaRef}
               onChange={textAreaAdjust}
+              placeholder={placeholder}
             />
           ) : (
-            <input className="value hide-scroll" defaultValue={value} />
+            <input
+              className="value hide-scroll"
+              value={value}
+              placeholder={placeholder}
+              onChange={(e) => (onChange ? onChange(e.target.value) : null)}
+            />
           )}
         </>
       ) : (
-        <div className="value hide-scroll">{value}</div>
+        <div className="value hide-scroll">
+          {value?.length > 0 ? value : placeholder}
+        </div>
       )}
       {!big && (
         <>
@@ -91,6 +114,10 @@ const StyledProfileField = styled.div`
     margin-bottom: 1px;
     position: relative;
     transition: all 0.3s;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
     ${({ password }) => password && " filter: blur(5px);"}
     ${({ big }) =>
       big &&
@@ -102,7 +129,7 @@ const StyledProfileField = styled.div`
         font-weight: 100 !important;
         line-height: 118%; /* 23.6px */
         letter-spacing: 0.4px;
-    `}
+    `};
   }
   .label {
     color: #fff;

@@ -1,10 +1,10 @@
 import { styled } from "styled-components";
 import editIcon from "../assets/images/edit-company.svg";
 
-export const Comment = ({ className }) => (
+export const Comment = ({ className, comment }) => (
   <StyledComment className={`flex items-start ${className}`}>
     <div>
-      <div className="value">Дуже топовий клієнт</div>
+      <div className="value">{comment}</div>
       <div className="label">Коментар</div>
     </div>
     <img src={editIcon} alt="" />
@@ -27,6 +27,7 @@ const StyledComment = styled.div`
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     margin-bottom: 1px;
+    min-height: 10px;
   }
   .label {
     font-family: Open Sans;

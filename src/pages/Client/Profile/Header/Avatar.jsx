@@ -1,7 +1,9 @@
 import { styled } from "styled-components";
-import avatarIcon from "../../../../assets/images/avatar.png";
+import avatarIcon from "../../../../assets/images/small-avarar-orange.svg";
 
-export const Avatar = () => <StyledAvatar avatarIcon={avatarIcon} />;
+export const Avatar = ({ photo }) => (
+  <StyledAvatar avatarIcon={photo?.length > 0 ? photo : avatarIcon} />
+);
 
 const StyledAvatar = styled.div`
   width: 52px;

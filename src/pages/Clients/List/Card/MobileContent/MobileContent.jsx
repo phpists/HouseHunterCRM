@@ -6,27 +6,39 @@ import { Objects } from "../Objects/Objects";
 import { Comment } from "../../../../../components/Comment";
 import { ActionsButtons } from "./ActionsButtons";
 
-export const MobileContent = () => (
+export const MobileContent = ({
+  name,
+  id,
+  dateCreate,
+  phones,
+  requestsCount,
+  objectsCount,
+  comment,
+}) => (
   <StyledMobileContent className="flex items-center hide-scroll card">
     <div className="w-full">
       <div className="w-full header-content">
         <div className="w-full row-wrapper">
           <div className="flex items-center main-info-wrapper">
             <div className="flex items-center justify-between w-full">
-              <MainInfo />
-              <ActionsButtons className="mobile-actions" />
+              <MainInfo name={name} id={id} dateCreate={dateCreate} />
+              <ActionsButtons className="mobile-actions" id={id} />
             </div>
             <Phones
               className="mobile-phones-wrapper"
               classNameContent="mobile-phones-content-wrapper"
+              phones={phones?.map(({ phone }) => phone)}
             />
           </div>
-          <PhoneInfo />
+          <PhoneInfo
+            phone={phones?.map(({ phone }) => phone)[0] ?? ""}
+            name={name}
+          />
         </div>
       </div>
       <div className=" w-full row-wrapper">
-        <Objects />
-        <Comment />
+        <Objects requestsCount={requestsCount} objectsCount={objectsCount} />
+        <Comment comment={comment} />
       </div>
     </div>
     <ActionsButtons className="laptop-actions" />

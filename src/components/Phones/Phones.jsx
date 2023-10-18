@@ -4,14 +4,26 @@ import { Arrow } from "./Arrow";
 import { useState } from "react";
 import { Dropdown } from "./Dropdown";
 
-export const Phones = ({ top, className, classNameContent }) => {
+export const Phones = ({ top, className, classNameContent, phones }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <StyledPhones open={open} className={`${className}`}>
-      <Phone showOnHoverIcon className={classNameContent} />
-      <Arrow open={open} onToggleOpen={() => setOpen(!open)} />
-      <Dropdown open={open} onSelect={() => setOpen(false)} top={top} />
+      <Phone
+        showOnHoverIcon
+        className={classNameContent}
+        phone={phones?.length > 0 ? phones[0] : ""}
+      />
+      <Arrow
+        open={open}
+        onToggleOpen={() => (phones?.length > 1 ? setOpen(!open) : null)}
+      />
+      <Dropdown
+        open={open}
+        onSelect={() => setOpen(false)}
+        top={top}
+        options={phones?.filter((p, i) => i !== 0) ?? []}
+      />
     </StyledPhones>
   );
 };
@@ -24,5 +36,4 @@ const StyledPhones = styled.div`
   display: grid;
   grid-template-columns: max-content max-content;
   width: max-content;
-
 `;

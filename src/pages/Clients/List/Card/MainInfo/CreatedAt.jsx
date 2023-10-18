@@ -1,7 +1,10 @@
 import { styled } from "styled-components";
+import { handleFormatDate } from "../../../../../utilits";
 
-export const CreatedAt = () => (
-  <StyledCreatedAt>Створений 13.10.2022 13:19</StyledCreatedAt>
+export const CreatedAt = ({ dateCreate }) => (
+  <StyledCreatedAt>
+    Створений {handleFormatDate(Number(dateCreate) * 1000)}
+  </StyledCreatedAt>
 );
 
 const StyledCreatedAt = styled.div`

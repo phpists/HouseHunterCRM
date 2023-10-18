@@ -1,16 +1,20 @@
 import { useLocation, useParams } from "react-router-dom";
 import { styled } from "styled-components";
+import { useAppSelect } from "../../hooks/redux";
 
 export const Subtitle = () => {
   const { pathname } = useLocation();
   const { id } = useParams();
+  const { clientsCount } = useAppSelect((state) => state.clients);
 
   const handleGetSubtitle = () => {
     switch (pathname) {
       case "/":
         return "Що нового трапилося за сьгодні";
       case "/clients":
-        return "Всього 1 782 клієнтів";
+        return `Всього ${clientsCount} клієнт${
+          clientsCount > 0 && clientsCount < 8 ? "а" : "ів"
+        }`;
       case "/requests":
         return "1 837 нових запитів";
       case "/objects":

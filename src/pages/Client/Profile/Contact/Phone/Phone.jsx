@@ -5,29 +5,39 @@ import { ProfileField } from "../../../../../components/ProfileField";
 import { AddButton } from "./AddButton";
 import { RemoveBtn } from "./RemoveBtn";
 
-export const Phone = ({ isFirst, onRemove, onAdd }) => {
-  const [viber, setViber] = useState(false);
-  const [telegram, setTelegram] = useState(false);
-
+export const Phone = ({
+  isFirst,
+  onRemove,
+  onAdd,
+  phone,
+  viber,
+  telegram,
+  onChange,
+  onSave,
+}) => {
   return (
     <StyledPhone className="flex items-center">
       <div className="socmedias">
         <Socmedia
           type="viber"
-          active={viber}
-          onClick={() => setViber(!viber)}
+          active={viber === "1"}
+          onClick={() => onChange("viber", viber === "1" ? "0" : "1")}
           className="viber-card"
         />
         <Socmedia
           type="telegram"
-          active={telegram}
-          onClick={() => setTelegram(!telegram)}
+          active={telegram === "1"}
+          onClick={() => onChange("telegram", telegram === "1" ? "0" : "1")}
         />
       </div>
       <ProfileField
-        value="+38 (097) 707 62 58"
+        value={phone}
+        placeholder="Введіть телефон"
         label="Телефон"
-        className="w-full mr-1.5"
+        className="w-full mr-1.5 phone-input"
+        onChange={(val) => onChange("phone", val)}
+        onSave={onSave}
+        phone
       />
       {isFirst ? (
         <AddButton onClick={onAdd} />
@@ -39,10 +49,16 @@ export const Phone = ({ isFirst, onRemove, onAdd }) => {
 };
 
 const StyledPhone = styled.div`
+  z-index: 10;
+  position: relative;
   .socmedias {
     margin-right: 3px;
   }
   .viber-card {
     margin-bottom: 3px;
+  }
+
+  .phone-input .value {
+    width: 140px;
   }
 `;

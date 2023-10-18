@@ -2,7 +2,17 @@ import { styled } from "styled-components";
 import { DesktopContent } from "./DesktopContent";
 import { MobileContent } from "./MobileContent/MobileContent";
 
-export const Card = ({ selected, onSelect }) => {
+export const Card = ({
+  selected,
+  onSelect,
+  name,
+  id,
+  dateCreate,
+  phones,
+  requestsCount,
+  objectsCount,
+  comment,
+}) => {
   const handleClick = (e) => {
     e.target.classList.contains("card") && onSelect();
   };
@@ -13,8 +23,24 @@ export const Card = ({ selected, onSelect }) => {
       onClick={handleClick}
       selected={selected}
     >
-      <DesktopContent />
-      <MobileContent />
+      <DesktopContent
+        name={name}
+        id={id}
+        dateCreate={dateCreate}
+        phones={phones}
+        requestsCount={requestsCount}
+        objectsCount={objectsCount}
+        comment={comment}
+      />
+      <MobileContent
+        name={name}
+        id={id}
+        dateCreate={dateCreate}
+        phones={phones}
+        requestsCount={requestsCount}
+        objectsCount={objectsCount}
+        comment={comment}
+      />
     </StyledCard>
   );
 };

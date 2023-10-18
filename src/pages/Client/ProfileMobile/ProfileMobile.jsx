@@ -5,29 +5,96 @@ import { useState } from "react";
 import { ProfileModal } from "./ProfileModal";
 import { UserCard } from "../Profile/Header/UserCard";
 import maskBackground from "../../../assets/images/auth-shape-mask.svg";
+import { useParams } from "react-router-dom";
+import { useLazyEditClientQuery } from "../../../store/clients/clients.api";
+import { useEffect } from "react";
+import cogoToast from "cogo-toast";
+import { handleRemovePhoneMask } from "../../../utilits";
+import { useRef } from "react";
 
-export const ProfileMobile = () => {
+export const ProfileMobile = ({ data }) => {
   const [open, setOpen] = useState(false);
+  const { id } = useParams();
+  const [updatedData, setUpdatedData] = useState({});
+  const lastData = useRef({});
+  const [editClient] = useLazyEditClientQuery();
+
+  useEffect(() => {
+    setUpdatedData(data);
+    lastData.current = data;
+  }, [data]);
+
+  const handleSaveChanges = () => {
+    editClient({
+      ...lastData.current,
+      id_client: id,
+      phones_json: JSON.stringify(
+        lastData.current?.phone.map((phone) => ({
+          ...phone,
+          viber: phone.viber === "1",
+          telegram: phone.telegram === "1",
+          id_phone_code: 1,
+          phone: phone.phone?.includes("+38")
+            ? handleRemovePhoneMask(phone.phone)
+            : phone.phone,
+        }))
+      ),
+    }).then((resp) => {
+      if (resp?.data?.error === 0) {
+        cogoToast.success("Зміни успішно збережено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      } else if (resp?.data?.error) {
+        cogoToast.error(resp?.data?.messege ?? "Помилка", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      }
+    });
+  };
+
+  const handleChangeField = (fieldName, value) => {
+    const newData = { ...updatedData, [fieldName]: value };
+    lastData.current = newData;
+    setUpdatedData(newData);
+  };
 
   return (
     <>
       <StyledProfileMobile
         maskBackground={maskBackground}
-        className="wrapper"
-        onClick={(e) => e.target.classList.contains("wrapper") && setOpen(true)}
+        className="profileMobileContent"
+        onClick={(e) =>
+          e.target.classList.contains("profileMobileContent") && setOpen(true)
+        }
       >
-        <div
-          className="flex items-center justify-between cursor-pointer"
-          onClick={() => setOpen(true)}
-        >
-          <div className="main-ptofile-info flex items-center">
-            <UserCard />
-            <Phones classNameContent="phones-wrapper" />
+        <div className="flex items-center justify-between cursor-pointer">
+          <div className="main-ptofile-info flex items-start">
+            <UserCard
+              photo={updatedData?.photo}
+              name={updatedData?.name}
+              email={updatedData?.email}
+            />
+            <Phones
+              classNameContent="phones-wrapper"
+              phones={updatedData?.phone?.map(({ phone }) => phone) ?? []}
+            />
           </div>
-          <Arrow className="profile-mobile-arrow" />
+          <Arrow
+            className="profile-mobile-arrow"
+            onClick={() => setOpen(true)}
+          />
         </div>
       </StyledProfileMobile>
-      {open && <ProfileModal onClose={() => setOpen(false)} />}
+      {open && (
+        <ProfileModal
+          onClose={() => setOpen(false)}
+          data={updatedData}
+          onChangeField={handleChangeField}
+          onSave={handleSaveChanges}
+        />
+      )}
     </>
   );
 };

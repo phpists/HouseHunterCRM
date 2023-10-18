@@ -40,10 +40,15 @@ export const App = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) {
+    if (!token && location.pathname !== "/auth") {
       navigate("/auth");
+      setLoad(true);
+      setTimeout(() => setLoading(false), 1500);
     } else if (token && !user) {
       handleGetUserData();
+    } else {
+      setLoad(true);
+      setTimeout(() => setLoading(false), 1500);
     }
   }, [location]);
 

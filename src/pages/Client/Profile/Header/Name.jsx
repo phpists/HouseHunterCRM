@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const Name = () => <StyledName>Юрій Олексійович</StyledName>;
+export const Name = ({ name }) => <StyledName>{name}</StyledName>;
 
 const StyledName = styled.div`
   color: #fff;
@@ -11,4 +11,8 @@ const StyledName = styled.div`
   font-weight: 300;
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 80%;
+  white-space: nowrap;
 `;

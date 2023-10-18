@@ -7,10 +7,35 @@ import { useEffect, useState } from "react";
 import { Subtitle } from "./Subtitle";
 import { ReactComponent as Close } from "../../assets/images/close.svg";
 import { motion, useAnimationControls } from "framer-motion";
+import {
+  useLazyCreateClientQuery,
+  useLazyGetClientsCountQuery,
+} from "../../store/clients/clients.api";
+import { emailValidation, handleRemovePhoneMask } from "../../utilits";
+import cogoToast from "cogo-toast";
+import { useActions } from "../../hooks/actions";
 
 export const AddClient = ({ onClose }) => {
+  const [createClient] = useLazyCreateClientQuery();
   const [success, setSuccess] = useState(false);
   const controls = useAnimationControls();
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [getClientCount] = useLazyGetClientsCountQuery();
+  const { saveClientsCount } = useActions();
+
+  const handleGetClientsCount = () => {
+    getClientCount().then((resp) => saveClientsCount(resp?.data?.count ?? 0));
+  };
+
+  const handleChangeEmail = (val) => {
+    setEmail(val);
+    setErrors({ email: emailValidation(val) });
+  };
 
   const handleClose = () => {
     controls.start({ opacity: 0, zIndex: -20 });
@@ -23,6 +48,34 @@ export const AddClient = ({ onClose }) => {
 
   const handleClickOnOverlay = (e) =>
     e.target.classList.contains("overlay") && handleClose();
+
+  const handleSubmit = () => {
+    setLoading(true);
+    createClient({
+      first_name: name,
+      last_name: lastName,
+      email,
+      phones_json: JSON.stringify([
+        {
+          phone: handleRemovePhoneMask(phone),
+          id_phone_code: 1,
+          viber: false,
+          telegram: false,
+        },
+      ]),
+    }).then((resp) => {
+      setLoading(false);
+      if (resp?.data?.error === 0) {
+        setSuccess(true);
+        handleGetClientsCount();
+      } else if (resp?.data?.error) {
+        cogoToast.error(resp?.data?.messege ?? "Помилка", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      }
+    });
+  };
 
   return (
     <StyledAddClient
@@ -44,9 +97,35 @@ export const AddClient = ({ onClose }) => {
           <Subtitle />
         ) : (
           <div className="form">
-            <Input label="Ім’я" />
-            <Input label="Перевірка номера телефона" phone />
-            <Button onClick={() => setSuccess(true)} />
+            <Input label="Ім’я" value={name} onChange={(val) => setName(val)} />
+            <Input
+              label="Прізвище"
+              value={lastName}
+              onChange={(val) => setLastName(val)}
+            />
+            <Input
+              label="Email"
+              value={email}
+              onChange={handleChangeEmail}
+              error={errors?.email}
+            />
+            <Input
+              label="Перевірка номера телефона"
+              phone
+              value={phone}
+              onChange={(val) => setPhone(val)}
+            />
+            <Button
+              onClick={handleSubmit}
+              disabled={
+                name?.length === 0 ||
+                phone?.includes("_") ||
+                phone?.length === 0 ||
+                email?.length === 0 ||
+                errors?.email ||
+                loading
+              }
+            />
           </div>
         )}
       </div>
@@ -70,7 +149,7 @@ const StyledAddClient = styled(motion.div)`
     border-radius: 10px;
     background: #2b2b2b;
     padding: 40px;
-    height: 308px;
+    min-height: 308px;
     width: 280px;
     z-index: 2;
     transition: all 0.3s;

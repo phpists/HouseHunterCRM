@@ -5,16 +5,25 @@ import { Objects } from "./Objects/Objects";
 import { useState } from "react";
 import { Object } from "./Object/Object";
 import { ProfileMobile } from "./ProfileMobile/ProfileMobile";
+import { useParams } from "react-router-dom";
+import { useLazyGetClientQuery } from "../../store/clients/clients.api";
+import { useEffect } from "react";
 
 export const Client = () => {
+  const { id } = useParams();
+  const [getClient, { data: clientData }] = useLazyGetClientQuery(id);
   const [selectedObject, setSelectedObject] = useState(0);
+
+  useEffect(() => {
+    getClient(id);
+  }, [id]);
 
   return (
     <StyledClient>
       <Header />
       <div className="client-content hide-scroll">
-        <Profile className="item-desktop" />
-        <ProfileMobile />
+        <Profile className="item-desktop" data={clientData} />
+        <ProfileMobile data={clientData} />
         <Objects
           selected={selectedObject}
           onSelect={(value) => setSelectedObject(value)}

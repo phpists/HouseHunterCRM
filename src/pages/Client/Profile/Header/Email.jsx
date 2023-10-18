@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const Email = () => <StyledEmail>yuriyo@gmail.com</StyledEmail>;
+export const Email = ({ email }) => <StyledEmail>{email}</StyledEmail>;
 
 const StyledEmail = styled.div`
   color: #fff;
@@ -13,4 +13,8 @@ const StyledEmail = styled.div`
   letter-spacing: 0.22px;
   opacity: 0.4;
   margin-top: 2px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 80%;
+  white-space: nowrap;
 `;
