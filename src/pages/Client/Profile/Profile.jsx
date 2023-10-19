@@ -88,8 +88,9 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
         />
         <SectionTitle title="Фото / Додатково" />
         <OtherInfo
-          photo={data?.photo}
+          photo={updatedData?.photo}
           onChange={(val) => handleChangeField("photo", val)}
+          onRefreshClientData={onRefreshClientData}
         />
         <Footer
           onSave={handleSaveChanges}

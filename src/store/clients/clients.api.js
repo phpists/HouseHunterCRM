@@ -109,6 +109,18 @@ export const clients = createApi({
         }),
       }),
     }),
+    deleteClientPhoto: build.query({
+      query: (id_client) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "delete_img",
+          mod: "clients",
+          id_client,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -120,4 +132,5 @@ export const {
   useLazyEditClientQuery,
   useLazyGetNewClientsCountQuery,
   useLazyDeleteCientQuery,
+  useLazyDeleteClientPhotoQuery,
 } = clients;

@@ -101,6 +101,7 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
           onSave={handleSaveChanges}
           onReset={handleReset}
           loading={loading}
+          onRefreshClientData={onRefreshClientData}
         />
       )}
     </>

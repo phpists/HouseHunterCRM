@@ -15,6 +15,7 @@ export const ProfileModal = ({
   onSave,
   onReset,
   loading,
+  onRefreshClientData,
 }) => {
   return (
     <StyledProfileModal>
@@ -47,6 +48,7 @@ export const ProfileModal = ({
             <OtherInfo
               photo={data?.photo}
               onChange={(val) => onChangeField("photo", val)}
+              onRefreshClientData={onRefreshClientData}
             />
           </div>
           <Footer onSave={onSave} onReset={onReset} loading={loading} />

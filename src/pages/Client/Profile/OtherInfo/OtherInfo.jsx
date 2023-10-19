@@ -1,16 +1,25 @@
 import { styled } from "styled-components";
 import { Photo } from "./Photo";
 import { AddButton } from "./AddButton";
+import { useLazyDeleteClientPhotoQuery } from "../../../../store/clients/clients.api";
+import { useParams } from "react-router-dom";
 
-export const OtherInfo = ({ photo, onChange }) => {
+export const OtherInfo = ({ photo, onChange, onRefreshClientData }) => {
+  const { id } = useParams();
+  const [deletePhoto] = useLazyDeleteClientPhotoQuery();
+
   const handleAddPhoto = (file) => onChange(file);
+
+  const handleDeletePhoto = () => {
+    deletePhoto(id).then(() => onRefreshClientData());
+  };
 
   return (
     <StyledOtherInfo className="flex items-center hide-scroll">
       {photo ? (
         <Photo
           photo={photo?.type ? URL.createObjectURL(photo) : photo}
-          onRemove={() => onChange(null)}
+          onRemove={() => (photo?.type ? onChange(null) : handleDeletePhoto())}
         />
       ) : null}
       <AddButton onAdd={handleAddPhoto} />

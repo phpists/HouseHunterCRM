@@ -81,7 +81,7 @@ export const App = () => {
               <Route path="/structure" element={<Structure />} />
               <Route path="/company" element={<Company />} />
               <Route path="/calls" element={<Calls />} />
-              <Route path="*" element={<></>} />
+              <Route path="*" element={<Dashboard />} />
             </Routes>
           </div>
         </StyledApp>
