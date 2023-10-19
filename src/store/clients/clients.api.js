@@ -70,18 +70,42 @@ export const clients = createApi({
       }),
     }),
     editClient: build.query({
-      query: ({ id_client, email, first_name, last_name, phones_json }) => ({
+      query: ({
+        id_client,
+        email,
+        first_name,
+        last_name,
+        phones_json,
+        comment,
+        photo,
+      }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData(
+          {
+            action: "edit",
+            mod: "clients",
+            id_client,
+            email,
+            first_name,
+            last_name,
+            phones_json,
+            comment,
+          },
+          { photo }
+        ),
+      }),
+    }),
+    deleteCient: build.query({
+      query: ({ id_client }) => ({
         url: "",
         method: "POST",
         headers: headers(),
         body: handleToFormData({
-          action: "edit",
+          action: "delete",
           mod: "clients",
           id_client,
-          email,
-          first_name,
-          last_name,
-          phones_json,
         }),
       }),
     }),
@@ -94,5 +118,6 @@ export const {
   useLazyGetClientsQuery,
   useLazyGetClientQuery,
   useLazyEditClientQuery,
-  useGetNewClientsCountQuery,
+  useLazyGetNewClientsCountQuery,
+  useLazyDeleteCientQuery,
 } = clients;

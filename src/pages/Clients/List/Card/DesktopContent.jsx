@@ -19,11 +19,14 @@ export const DesktopContent = ({
 }) => (
   <StyledDesktopContent className="flex items-center justify-between hide-scroll card">
     <MainInfo name={name} id={id} dateCreate={dateCreate} />
-    <Phones phones={phones?.map(({ phone }) => phone)} />
+    <Phones
+      phones={phones?.map(({ phone }) => phone)}
+      classNameContent="desktop-phones"
+    />
     <Divider />
     <PhoneInfo phone={phones?.map(({ phone }) => phone)[0] ?? ""} name={name} />
     <Divider />
-    <Comment comment={comment} />
+    <Comment comment={comment} className="desktop-comment" />
     <Divider />
     <Objects requestsCount={requestsCount} objectsCount={objectsCount} />
     <div className="flex items-center">
@@ -47,5 +50,11 @@ const StyledDesktopContent = styled.div`
   }
   @media (max-width: 1399.5px) {
     display: none;
+  }
+  .desktop-phones {
+    width: 160px;
+  }
+  .desktop-comment {
+    width: 180px;
   }
 `;

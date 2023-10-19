@@ -41,7 +41,7 @@ export const MobileContent = ({
         <Comment comment={comment} />
       </div>
     </div>
-    <ActionsButtons className="laptop-actions" />
+    <ActionsButtons className="laptop-actions" id={id} />
   </StyledMobileContent>
 );
 

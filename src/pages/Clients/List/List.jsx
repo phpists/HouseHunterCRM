@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 import { Card } from "./Card/Card";
 
-export const List = ({ selected, onSelect, clients }) => {
+export const List = ({ selected, onSelect, clients, innerRef }) => {
   return (
-    <StyledList className="hide-scroll">
+    <StyledList className="hide-scroll" ref={innerRef}>
       {clients.map(
         (
           {
@@ -21,8 +21,8 @@ export const List = ({ selected, onSelect, clients }) => {
         ) => (
           <Card
             key={i}
-            selected={!!selected.find((s) => s === i)}
-            onSelect={() => onSelect(i)}
+            selected={!!selected.find((s) => s === id)}
+            onSelect={() => onSelect(id)}
             name={`${first_name} ${last_name}`}
             id={id}
             dateCreate={dt_add}

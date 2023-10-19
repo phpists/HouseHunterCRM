@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   clientsCount: 0,
+  newClientsCount: 0,
 };
 
 export const clientsSlice = createSlice({
@@ -10,6 +11,9 @@ export const clientsSlice = createSlice({
   reducers: {
     saveClientsCount(state, action) {
       state.clientsCount = action.payload;
+    },
+    saveNewClientsCount(state, action) {
+      state.newClientsCount = action.payload;
     },
   },
 });

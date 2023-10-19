@@ -16,21 +16,36 @@ export const emailValidation = (value) => {
   return false;
 };
 
-export const handleToFormData = (data) => {
+export const handleToFormData = (data, files) => {
   const formData = new FormData();
 
   Object.entries(data).forEach((field) => {
     if (Array.isArray(field[1])) {
       field[1].forEach((f, i) => {
-        Object.entries(f).forEach((fField) => {
-          formData.append(`${field[0]}[${i}][${fField[0]}]`, fField[1]);
-        });
+        if (typeof f === "object") {
+          Object.entries(f).forEach((fField) => {
+            formData.append(`${field[0]}[${i}][${fField[0]}]`, fField[1]);
+          });
+        } else {
+          formData.append(`${field[0]}[${i}]`, f);
+        }
       });
     } else {
       formData.append(field[0], field[1]);
     }
   });
 
+  if (files) {
+    Object.entries(files).forEach((field) => {
+      if (Array.isArray(field[1])) {
+        field[1].forEach((f, i) => {
+          formData.append(`${field[0]}[${i}]`, f);
+        });
+      } else {
+        formData.append(field[0], field[1]);
+      }
+    });
+  }
   return formData;
 };
 
@@ -39,7 +54,7 @@ export const handleRemovePhoneMask = (phone, removeFirstLetters = 3) =>
     .replaceAll("(", "")
     .replaceAll(")", "")
     .replaceAll("-", "")
-    .substring(removeFirstLetters);
+    .substring(phone?.includes("+38") ? removeFirstLetters : 0);
 
 export const handleFormatDate = (d) => {
   const date = new Date(d);

@@ -4,7 +4,7 @@ import editIcon from "../assets/images/edit-company.svg";
 export const Comment = ({ className, comment }) => (
   <StyledComment className={`flex items-start ${className}`}>
     <div>
-      <div className="value">{comment}</div>
+      <div className="value">{comment?.length > 0 ? comment : "-"}</div>
       <div className="label">Коментар</div>
     </div>
     <img src={editIcon} alt="" />

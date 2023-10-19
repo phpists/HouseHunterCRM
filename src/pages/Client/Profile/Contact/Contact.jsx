@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Divider } from "./Divider";
 import { ProfileField } from "../../../../components/ProfileField";
 
-export const Contact = ({ phones, email, onChangeField, onSave }) => {
+export const Contact = ({ phones, email, onChangeField }) => {
   const INIT_PHONE = {
     phone: "",
     code: "1",
@@ -26,16 +26,10 @@ export const Contact = ({ phones, email, onChangeField, onSave }) => {
       "phone",
       phones.filter((p, i) => i !== index)
     );
-    onSave();
   };
 
-  const handleChangePhone = (index, fieldName, value) => {
+  const handleChangePhone = (index, fieldName, value) =>
     handleChangeField(index, fieldName, value);
-
-    if (fieldName === "viber" || fieldName === "telegram") {
-      onSave();
-    }
-  };
 
   return (
     <StyledContact>
@@ -51,7 +45,6 @@ export const Contact = ({ phones, email, onChangeField, onSave }) => {
             onRemove={() => handleRemovePhone(i)}
             onAdd={handleAddPhone}
             isFirst={i === 0}
-            onSave={onSave}
           />
           <Divider />
         </React.Fragment>
@@ -60,7 +53,6 @@ export const Contact = ({ phones, email, onChangeField, onSave }) => {
         value={email}
         label="Пошта"
         onChange={(val) => onChangeField("email", val)}
-        onSave={onSave}
       />
     </StyledContact>
   );

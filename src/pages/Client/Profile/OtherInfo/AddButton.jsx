@@ -1,9 +1,18 @@
 import { styled } from "styled-components";
 import { ReactComponent as PlusIcon } from "../../../../assets/images/plus.svg";
+import { useRef } from "react";
 
-export const AddButton = () => (
+export const AddButton = ({ onAdd }) => (
   <StyledAddButton className="flex items-center justify-center">
     <PlusIcon />
+    <input
+      type="file"
+      name=""
+      id=""
+      accept="image/png, image/jpg, image/jpeg"
+      value=""
+      onChange={(e) => onAdd(e.target.files[0])}
+    />
   </StyledAddButton>
 );
 
@@ -16,6 +25,7 @@ const StyledAddButton = styled.div`
   background: rgba(255, 255, 255, 0.1);
   transition: all 0.3s;
   cursor: pointer;
+  position: relative;
   svg {
     height: 20px;
     width: 20px;
@@ -32,5 +42,14 @@ const StyledAddButton = styled.div`
     path {
       fill: #2c2c2c;
     }
+  }
+  input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
   }
 `;

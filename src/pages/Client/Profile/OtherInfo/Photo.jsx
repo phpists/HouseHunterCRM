@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 import { ReactComponent as RemoveIcon } from "../../../../assets/images/remove.svg";
 
-export const Photo = ({ photo }) => (
+export const Photo = ({ photo, onRemove }) => (
   <StyledPhoto photo={photo} className="flex items-center justify-center">
-    <RemoveIcon />
+    <RemoveIcon onClick={onRemove} />
   </StyledPhoto>
 );
 

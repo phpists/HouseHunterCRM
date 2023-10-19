@@ -8,14 +8,21 @@ import { Contact } from "../Profile/Contact/Contact";
 import { Comment } from "../Profile/Comment";
 import { OtherInfo } from "../Profile/OtherInfo/OtherInfo";
 
-export const ProfileModal = ({ onClose, data, onChangeField, onSave }) => {
+export const ProfileModal = ({
+  onClose,
+  data,
+  onChangeField,
+  onSave,
+  onReset,
+  loading,
+}) => {
   return (
     <StyledProfileModal>
       <Modal title="Профіль клієнта" onClose={onClose}>
         <div className="profile-modal-content">
           <UserCard
             photo={data?.photo}
-            name={data?.full_name}
+            name={`${data?.first_name ?? ""} ${data?.last_name ?? ""}`}
             email={data?.email}
           />
           <div>
@@ -24,25 +31,25 @@ export const ProfileModal = ({ onClose, data, onChangeField, onSave }) => {
               firstName={data?.first_name}
               lastName={data?.last_name}
               onChangeField={onChangeField}
-              onSave={onSave}
             />
             <SectionTitle title="Контакти" />
             <Contact
               phones={data?.phone ?? []}
               email={data?.email}
               onChangeField={onChangeField}
-              onSave={onSave}
             />
             <SectionTitle title="Коментар" />
             <Comment
               comment={data?.comment}
               onChange={(val) => onChangeField("comment", val)}
-              onSave={onSave}
             />
             <SectionTitle title="Фото / Додатково" />
-            <OtherInfo />
+            <OtherInfo
+              photo={data?.photo}
+              onChange={(val) => onChangeField("photo", val)}
+            />
           </div>
-          <Footer />
+          <Footer onSave={onSave} onReset={onReset} loading={loading} />
         </div>
       </Modal>
     </StyledProfileModal>

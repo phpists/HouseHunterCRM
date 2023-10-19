@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { ProfileField } from "../../../components/ProfileField";
 
-export const Comment = ({ comment, onChange, onSave }) => {
+export const Comment = ({ comment, onChange }) => {
   return (
     <StyledComment>
       <ProfileField
@@ -10,7 +10,6 @@ export const Comment = ({ comment, onChange, onSave }) => {
         label="Змінити"
         textarea
         onChange={(val) => onChange(val)}
-        onSave={onSave}
       />
     </StyledComment>
   );

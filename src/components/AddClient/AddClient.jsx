@@ -10,12 +10,13 @@ import { motion, useAnimationControls } from "framer-motion";
 import {
   useLazyCreateClientQuery,
   useLazyGetClientsCountQuery,
+  useLazyGetNewClientsCountQuery,
 } from "../../store/clients/clients.api";
 import { emailValidation, handleRemovePhoneMask } from "../../utilits";
 import cogoToast from "cogo-toast";
 import { useActions } from "../../hooks/actions";
 
-export const AddClient = ({ onClose }) => {
+export const AddClient = ({ onClose, onAdded }) => {
   const [createClient] = useLazyCreateClientQuery();
   const [success, setSuccess] = useState(false);
   const controls = useAnimationControls();
@@ -26,10 +27,12 @@ export const AddClient = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [getClientCount] = useLazyGetClientsCountQuery();
-  const { saveClientsCount } = useActions();
+  const { saveClientsCount, saveNewClientsCount } = useActions();
+  const [getNewClientsCount] = useLazyGetNewClientsCountQuery();
 
   const handleGetClientsCount = () => {
     getClientCount().then((resp) => saveClientsCount(resp?.data?.count ?? 0));
+    getNewClientsCount().then((resp) => saveNewClientsCount(resp?.data?.count));
   };
 
   const handleChangeEmail = (val) => {
@@ -68,6 +71,7 @@ export const AddClient = ({ onClose }) => {
       if (resp?.data?.error === 0) {
         setSuccess(true);
         handleGetClientsCount();
+        onAdded && onAdded();
       } else if (resp?.data?.error) {
         cogoToast.error(resp?.data?.messege ?? "Помилка", {
           hideAfter: 3,

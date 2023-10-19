@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 import { ReactComponent as CheckboxIcon } from "../assets/images/checkbox.svg";
 import ReactInputMask from "react-input-mask";
+import { handleRemovePhoneMask } from "../utilits";
 
 export const ProfileField = ({
   value,
@@ -76,7 +77,11 @@ export const ProfileField = ({
         </>
       ) : (
         <div className="value hide-scroll">
-          {value?.length > 0 ? value : placeholder}
+          {phone && value?.length > 0
+            ? handleRemovePhoneMask(value)
+            : value?.length > 0
+            ? value
+            : placeholder}
         </div>
       )}
       {!big && (

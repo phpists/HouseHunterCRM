@@ -13,6 +13,7 @@ const StyledName = styled.div`
   letter-spacing: 0.3px;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 80%;
+  width: 100%;
+  max-width: 150px;
   white-space: nowrap;
 `;

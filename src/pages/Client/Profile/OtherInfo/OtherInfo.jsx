@@ -1,17 +1,19 @@
 import { styled } from "styled-components";
 import { Photo } from "./Photo";
-import teamPhoto from "../../../../assets/images/team-1.png";
-import teamPhoto2 from "../../../../assets/images/team-2.png";
-import teamPhoto3 from "../../../../assets/images/team-3.png";
 import { AddButton } from "./AddButton";
 
-export const OtherInfo = () => {
+export const OtherInfo = ({ photo, onChange }) => {
+  const handleAddPhoto = (file) => onChange(file);
+
   return (
     <StyledOtherInfo className="flex items-center hide-scroll">
-      <Photo photo={teamPhoto} />
-      <Photo photo={teamPhoto2} />
-      <Photo photo={teamPhoto3} />
-      <AddButton />
+      {photo ? (
+        <Photo
+          photo={photo?.type ? URL.createObjectURL(photo) : photo}
+          onRemove={() => onChange(null)}
+        />
+      ) : null}
+      <AddButton onAdd={handleAddPhoto} />
     </StyledOtherInfo>
   );
 };
@@ -21,4 +23,6 @@ const StyledOtherInfo = styled.div`
   background: rgba(255, 255, 255, 0.2);
   padding: 3px;
   overflow: auto;
+  position: relative;
+  z-index: 20;
 `;

@@ -8,7 +8,7 @@ export const Objects = ({ requestsCount, objectsCount }) => {
     <StyledObjects className="flex items-center">
       <Info requestsCount={requestsCount} objectsCount={objectsCount} />
       <Divider />
-      {/* <List /> */}
+      <List />
     </StyledObjects>
   );
 };

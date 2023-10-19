@@ -17,4 +17,5 @@ const StyledEmail = styled.div`
   overflow: hidden;
   width: 80%;
   white-space: nowrap;
+  text-align: left;
 `;

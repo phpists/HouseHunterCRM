@@ -14,16 +14,25 @@ export const Client = () => {
   const [getClient, { data: clientData }] = useLazyGetClientQuery(id);
   const [selectedObject, setSelectedObject] = useState(0);
 
+  const handleGetClient = () => getClient(id);
+
   useEffect(() => {
-    getClient(id);
+    handleGetClient();
   }, [id]);
 
   return (
     <StyledClient>
       <Header />
       <div className="client-content hide-scroll">
-        <Profile className="item-desktop" data={clientData} />
-        <ProfileMobile data={clientData} />
+        <Profile
+          className="item-desktop"
+          data={clientData}
+          onRefreshClientData={handleGetClient}
+        />
+        <ProfileMobile
+          data={clientData}
+          onRefreshClientData={handleGetClient}
+        />
         <Objects
           selected={selectedObject}
           onSelect={(value) => setSelectedObject(value)}

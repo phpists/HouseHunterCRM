@@ -18,7 +18,7 @@ const StyledPhoneInfo = styled.div`
   cursor: pointer;
   transition: all 0.3s;
   flex-shrink: 0;
-
+  width: 163px;
   .name {
     color: #fff;
     font-family: Overpass;
@@ -28,6 +28,11 @@ const StyledPhoneInfo = styled.div`
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     margin-bottom: 1px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100px;
+    height: 1.2em;
+    white-space: nowrap;
   }
   .phone {
     color: #fff;
@@ -42,6 +47,7 @@ const StyledPhoneInfo = styled.div`
 
   img {
     margin-left: 29px;
+    flex-shrink: 0;
   }
   &:hover {
     background: #656565;
@@ -53,6 +59,7 @@ const StyledPhoneInfo = styled.div`
     height: 47px;
     .name {
       font-size: 14px;
+      width: 100%;
     }
   }
 `;

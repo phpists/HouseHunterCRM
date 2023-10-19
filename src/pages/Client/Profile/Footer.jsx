@@ -19,7 +19,11 @@ export const Footer = ({ onSave, onReset, loading }) => (
 );
 
 const StyledFooter = styled.div`
+  margin-top: 20px;
+  position: relative;
+  z-index: 20;
   .btn {
+    cursor: pointer;
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;

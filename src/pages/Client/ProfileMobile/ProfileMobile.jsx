@@ -12,12 +12,13 @@ import cogoToast from "cogo-toast";
 import { handleRemovePhoneMask } from "../../../utilits";
 import { useRef } from "react";
 
-export const ProfileMobile = ({ data }) => {
+export const ProfileMobile = ({ data, onRefreshClientData }) => {
   const [open, setOpen] = useState(false);
   const { id } = useParams();
   const [updatedData, setUpdatedData] = useState({});
   const lastData = useRef({});
   const [editClient] = useLazyEditClientQuery();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setUpdatedData(data);
@@ -25,6 +26,7 @@ export const ProfileMobile = ({ data }) => {
   }, [data]);
 
   const handleSaveChanges = () => {
+    setLoading(true);
     editClient({
       ...lastData.current,
       id_client: id,
@@ -40,7 +42,9 @@ export const ProfileMobile = ({ data }) => {
         }))
       ),
     }).then((resp) => {
+      setLoading(false);
       if (resp?.data?.error === 0) {
+        onRefreshClientData();
         cogoToast.success("Зміни успішно збережено", {
           hideAfter: 3,
           position: "top-right",
@@ -60,6 +64,8 @@ export const ProfileMobile = ({ data }) => {
     setUpdatedData(newData);
   };
 
+  const handleReset = () => setUpdatedData(data);
+
   return (
     <>
       <StyledProfileMobile
@@ -73,7 +79,7 @@ export const ProfileMobile = ({ data }) => {
           <div className="main-ptofile-info flex items-start">
             <UserCard
               photo={updatedData?.photo}
-              name={updatedData?.name}
+              name={`${data?.first_name ?? ""} ${data?.last_name ?? ""}`}
               email={updatedData?.email}
             />
             <Phones
@@ -93,6 +99,8 @@ export const ProfileMobile = ({ data }) => {
           data={updatedData}
           onChangeField={handleChangeField}
           onSave={handleSaveChanges}
+          onReset={handleReset}
+          loading={loading}
         />
       )}
     </>

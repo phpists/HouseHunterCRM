@@ -12,11 +12,13 @@ import { useLazyEditClientQuery } from "../../../store/clients/clients.api";
 import { useParams } from "react-router-dom";
 import cogoToast from "cogo-toast";
 import { handleRemovePhoneMask } from "../../../utilits";
+import { Footer } from "./Footer";
 
-export const Profile = ({ className, data }) => {
+export const Profile = ({ className, data, onRefreshClientData }) => {
   const { id } = useParams();
   const [updatedData, setUpdatedData] = useState({});
   const [editClient] = useLazyEditClientQuery();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setUpdatedData(data);
@@ -26,6 +28,7 @@ export const Profile = ({ className, data }) => {
     setUpdatedData({ ...updatedData, [fieldName]: value });
 
   const handleSaveChanges = () => {
+    setLoading(true);
     editClient({
       ...updatedData,
       id_client: id,
@@ -39,7 +42,9 @@ export const Profile = ({ className, data }) => {
         }))
       ),
     }).then((resp) => {
+      setLoading(false);
       if (resp?.data?.error === 0) {
+        onRefreshClientData();
         cogoToast.success("Зміни успішно збережено", {
           hideAfter: 3,
           position: "top-right",
@@ -53,11 +58,13 @@ export const Profile = ({ className, data }) => {
     });
   };
 
+  const handleReset = () => setUpdatedData(data);
+
   return (
     <StyledProfile maskBackground={maskBackground} className={className}>
       <Header
         photo={updatedData?.photo}
-        name={updatedData?.full_name}
+        name={`${data?.first_name ?? ""} ${data?.last_name ?? ""}`}
         email={updatedData?.email}
       />
       <Divider />
@@ -67,7 +74,6 @@ export const Profile = ({ className, data }) => {
           firstName={updatedData?.first_name}
           lastName={updatedData?.last_name}
           onChangeField={handleChangeField}
-          onSave={handleSaveChanges}
         />
         <SectionTitle title="Контакти" />
         <Contact
@@ -79,10 +85,17 @@ export const Profile = ({ className, data }) => {
         <Comment
           comment={updatedData?.comment}
           onChange={(val) => handleChangeField("comment", val)}
-          onSave={handleSaveChanges}
         />
         <SectionTitle title="Фото / Додатково" />
-        <OtherInfo />
+        <OtherInfo
+          photo={data?.photo}
+          onChange={(val) => handleChangeField("photo", val)}
+        />
+        <Footer
+          onSave={handleSaveChanges}
+          onReset={handleReset}
+          loading={loading}
+        />
       </div>
     </StyledProfile>
   );

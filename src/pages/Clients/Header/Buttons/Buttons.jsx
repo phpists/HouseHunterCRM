@@ -7,12 +7,21 @@ import { SelectItems } from "../../../../components/SelectItems/SelectItems";
 import { useState } from "react";
 import { AddClient } from "../../../../components/AddClient/AddClient";
 
-export const Buttons = ({ favoritesFilter, onToggleFavoriteFilter }) => {
+export const Buttons = ({
+  favoritesFilter,
+  onToggleFavoriteFilter,
+  onRefreshData,
+}) => {
   const [addClient, setAddClient] = useState(false);
 
   return (
     <StyledButtons className="flex items-center">
-      {addClient && <AddClient onClose={() => setAddClient(false)} />}
+      {addClient && (
+        <AddClient
+          onClose={() => setAddClient(false)}
+          onAdded={onRefreshData}
+        />
+      )}
       <IconButton
         Icon={PlusIcon}
         className="icon-btn"
