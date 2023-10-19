@@ -35,10 +35,8 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
           ...phone,
           viber: phone.viber === "1",
           telegram: phone.telegram === "1",
-          id_phone_code: 1,
-          phone: phone.phone?.includes("+38")
-            ? handleRemovePhoneMask(phone.phone)
-            : phone.phone,
+          id_phone_code: phone?.code,
+          phone: handleRemovePhoneMask(phone.phone),
         }))
       ),
     }).then((resp) => {
@@ -84,7 +82,11 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
             />
             <Phones
               classNameContent="phones-wrapper"
-              phones={updatedData?.phone?.map(({ phone }) => phone) ?? []}
+              phones={
+                updatedData?.phone?.map(
+                  ({ code, phone }) => `${code}${phone}`
+                ) ?? []
+              }
             />
           </div>
           <Arrow

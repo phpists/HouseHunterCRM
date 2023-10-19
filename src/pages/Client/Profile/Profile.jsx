@@ -35,10 +35,8 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
       phones_json: JSON.stringify(
         updatedData?.phone.map((phone) => ({
           ...phone,
-          id_phone_code: 1,
-          phone: phone.phone?.includes("+38")
-            ? handleRemovePhoneMask(phone.phone)
-            : phone.phone,
+          id_phone_code: phone?.code,
+          phone: handleRemovePhoneMask(phone.phone),
         }))
       ),
     }).then((resp) => {

@@ -4,7 +4,10 @@ import { Title } from "./Title";
 import { Input } from "./Input";
 import arrowIcon from "../../assets/images/arrow.svg";
 import { Button } from "../../components/Button";
-import { useLazyRegisterQuery } from "../../store/auth/auth.api";
+import {
+  useGetPhonesCodesQuery,
+  useLazyRegisterQuery,
+} from "../../store/auth/auth.api";
 import { useState } from "react";
 import { emailValidation, handleRemovePhoneMask } from "../../utilits";
 import cogoToast from "cogo-toast";
@@ -16,16 +19,23 @@ export const Registration = ({ onSuccess }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [phoneCode, setPhoneCode] = useState("1");
+  const { data: phonesCodes } = useGetPhonesCodesQuery();
 
   const handleChangeEmail = (val) => {
     setEmail(val);
     setErrors({ email: emailValidation(val) });
   };
 
+  const handleChangePhoneCode = (cod) => {
+    setPhoneCode(cod);
+    setPhone("");
+  };
+
   const handleSubmit = () => {
     const data = {
       password,
-      id_phone_code: "1",
+      id_phone_code: phoneCode,
       phone: handleRemovePhoneMask(phone),
       name,
       mod: "account",
@@ -70,6 +80,9 @@ export const Registration = ({ onSuccess }) => {
         phone
         value={phone}
         onChange={(val) => setPhone(val)}
+        phoneCode={phoneCode}
+        onChangePhoneCode={handleChangePhoneCode}
+        phonesCodes={phonesCodes}
       />
       <Input
         placeholder="Email"

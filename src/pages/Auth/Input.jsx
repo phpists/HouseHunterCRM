@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import eye from "../../assets/images/eye.svg";
 import eyeClosed from "../../assets/images/eye-close.svg";
 import { useState } from "react";
-import InputMask from "react-input-mask";
+import { PhoneInput } from "../../components/PhoneInput";
 
 export const Input = ({
   placeholder = "",
@@ -12,17 +12,22 @@ export const Input = ({
   value,
   onChange,
   error,
+  phoneCode,
+  phonesCodes,
+  onChangePhoneCode,
 }) => {
   const [showPassword, setShowPassword] = useState(!password);
 
   return (
     <StyledInput className={`${className}`} error={error}>
       {phone ? (
-        <InputMask
-          mask="+38(999)999-99-99"
-          placeholder={placeholder}
+        <PhoneInput
+          phoneCode={phoneCode}
+          phonesCodes={phonesCodes}
+          onChangePhoneCode={onChangePhoneCode}
           value={value}
-          onChange={(e) => (onChange ? onChange(e.target.value) : null)}
+          onChange={onChange}
+          inputClassName="value"
         />
       ) : (
         <input

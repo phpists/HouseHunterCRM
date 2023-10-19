@@ -50,11 +50,7 @@ export const handleToFormData = (data, files) => {
 };
 
 export const handleRemovePhoneMask = (phone, removeFirstLetters = 3) =>
-  phone
-    .replaceAll("(", "")
-    .replaceAll(")", "")
-    .replaceAll("-", "")
-    .substring(phone?.includes("+38") ? removeFirstLetters : 0);
+  phone.replaceAll("(", "").replaceAll(")", "").replaceAll("-", "");
 
 export const handleFormatDate = (d) => {
   const date = new Date(d);

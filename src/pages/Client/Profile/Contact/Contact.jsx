@@ -3,8 +3,11 @@ import { Phone } from "./Phone/Phone";
 import React, { useEffect, useState } from "react";
 import { Divider } from "./Divider";
 import { ProfileField } from "../../../../components/ProfileField";
+import { useGetPhonesCodesQuery } from "../../../../store/auth/auth.api";
 
 export const Contact = ({ phones, email, onChangeField }) => {
+  const { data: phonesCodes } = useGetPhonesCodesQuery();
+
   const INIT_PHONE = {
     phone: "",
     code: "1",
@@ -45,6 +48,8 @@ export const Contact = ({ phones, email, onChangeField }) => {
             onRemove={() => handleRemovePhone(i)}
             onAdd={handleAddPhone}
             isFirst={i === 0}
+            code={code}
+            phonesCodes={phonesCodes}
           />
           <Divider />
         </React.Fragment>

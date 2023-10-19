@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 import { ReactComponent as CheckboxIcon } from "../assets/images/checkbox.svg";
-import ReactInputMask from "react-input-mask";
 import { handleRemovePhoneMask } from "../utilits";
+import { PhoneInput } from "./PhoneInput";
 
 export const ProfileField = ({
   value,
@@ -17,6 +17,9 @@ export const ProfileField = ({
   onChange,
   onSave,
   phone,
+  phonesCodes,
+  phoneCode,
+  onChangePhoneCode,
 }) => {
   const [active, setActive] = useState(false);
   const textareaRef = useRef(null);
@@ -38,6 +41,11 @@ export const ProfileField = ({
     }
   }, [textareaRef.current]);
 
+  const handleChangePhoneCode = (cod) => {
+    onChangePhoneCode(cod);
+    onChange("");
+  };
+
   return (
     <StyledProfileField
       onClick={() => !active && setActive(true)}
@@ -47,16 +55,17 @@ export const ProfileField = ({
       grey={grey}
       big={big}
     >
-      <CheckboxIcon onClick={handleToggleActive} />
+      <CheckboxIcon onClick={handleToggleActive} className="check-icon" />
       {active ? (
         <>
           {phone ? (
-            <ReactInputMask
-              className="value hide-scroll"
-              mask="+38(999)999-99-99"
-              placeholder={placeholder}
+            <PhoneInput
+              phoneCode={phoneCode}
+              phonesCodes={phonesCodes}
+              onChangePhoneCode={handleChangePhoneCode}
               value={value}
-              onChange={(e) => (onChange ? onChange(e.target.value) : null)}
+              onChange={onChange}
+              inputClassName="value"
             />
           ) : textarea ? (
             <textarea
@@ -78,7 +87,12 @@ export const ProfileField = ({
       ) : (
         <div className="value hide-scroll">
           {phone && value?.length > 0
-            ? handleRemovePhoneMask(value)
+            ? `${
+                phonesCodes?.find(({ id }) => id === phoneCode)?.code
+                  ? phonesCodes?.find(({ id }) => id === phoneCode)?.code
+                  : phonesCodes?.find(({ code }) => code === phoneCode)?.code ??
+                    ""
+              }${handleRemovePhoneMask(value)}`
             : value?.length > 0
             ? value
             : placeholder}
@@ -156,8 +170,8 @@ const StyledProfileField = styled.div`
     display: none;
   }
 
-  svg {
-    z-index: 10;
+  .check-icon {
+    z-index: 80;
   }
   &:hover {
     background-position: left;
@@ -171,7 +185,7 @@ const StyledProfileField = styled.div`
       filter: blur(0px);
     }
   }
-  svg {
+  .check-icon {
     position: absolute;
     top: 7px;
     right: 7px;
@@ -198,7 +212,7 @@ const StyledProfileField = styled.div`
     active &&
     `
     background:  ${grey ? "rgba(255, 255, 255, 0.05)" : "#FFF"} !important;
-    svg {
+    .check-icon {
         opacity: 1;
         visibility: visible;
     }
@@ -217,4 +231,11 @@ const StyledProfileField = styled.div`
     `
     }
   `}
+  .code-select-wrapper {
+    color: #2c2c2c;
+    padding: 0;
+    .arrow path {
+      fill: #2c2c2c;
+    }
+  }
 `;

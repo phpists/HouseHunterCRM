@@ -67,6 +67,16 @@ export const auth = createApi({
         }),
       }),
     }),
+    getPhonesCodes: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        body: handleToFormData({
+          mod: "system_info",
+          action: "get_phone_codes",
+        }),
+      }),
+    }),
   }),
 });
 
@@ -76,4 +86,5 @@ export const {
   useLazyLogoutQuery,
   useLazyGetUserQuery,
   useLazyForgotPasswordQuery,
+  useGetPhonesCodesQuery,
 } = auth;

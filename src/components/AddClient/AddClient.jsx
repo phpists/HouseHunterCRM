@@ -15,9 +15,11 @@ import {
 import { emailValidation, handleRemovePhoneMask } from "../../utilits";
 import cogoToast from "cogo-toast";
 import { useActions } from "../../hooks/actions";
+import { useGetPhonesCodesQuery } from "../../store/auth/auth.api";
 
 export const AddClient = ({ onClose, onAdded }) => {
   const [createClient] = useLazyCreateClientQuery();
+  const { data: phonesCodes } = useGetPhonesCodesQuery();
   const [success, setSuccess] = useState(false);
   const controls = useAnimationControls();
   const [name, setName] = useState("");
@@ -29,12 +31,17 @@ export const AddClient = ({ onClose, onAdded }) => {
   const [getClientCount] = useLazyGetClientsCountQuery();
   const { saveClientsCount, saveNewClientsCount } = useActions();
   const [getNewClientsCount] = useLazyGetNewClientsCountQuery();
+  const [phoneCode, setPhoneCode] = useState("1");
 
   const handleGetClientsCount = () => {
     getClientCount().then((resp) => saveClientsCount(resp?.data?.count ?? 0));
     getNewClientsCount().then((resp) => saveNewClientsCount(resp?.data?.count));
   };
 
+  const handleChangePhoneCode = (code) => {
+    setPhone("");
+    setPhoneCode(code);
+  };
   const handleChangeEmail = (val) => {
     setEmail(val);
     setErrors({ email: emailValidation(val) });
@@ -61,7 +68,7 @@ export const AddClient = ({ onClose, onAdded }) => {
       phones_json: JSON.stringify([
         {
           phone: handleRemovePhoneMask(phone),
-          id_phone_code: 1,
+          id_phone_code: phoneCode,
           viber: false,
           telegram: false,
         },
@@ -118,6 +125,9 @@ export const AddClient = ({ onClose, onAdded }) => {
               phone
               value={phone}
               onChange={(val) => setPhone(val)}
+              phonesCodes={phonesCodes}
+              phoneCode={phoneCode}
+              onChangePhoneCode={handleChangePhoneCode}
             />
             <Button
               onClick={handleSubmit}

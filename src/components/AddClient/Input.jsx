@@ -1,14 +1,28 @@
 import ReactInputMask from "react-input-mask";
 import styled from "styled-components";
+import { CodeSelect } from "../Select copy/CodeSelect";
+import { PhoneInput } from "../PhoneInput";
 
-export const Input = ({ label, className, phone, value, onChange, error }) => (
-  <StyledInput className={`${className}`} error={error}>
+export const Input = ({
+  label,
+  className,
+  phone,
+  value,
+  onChange,
+  error,
+  phonesCodes,
+  phoneCode,
+  onChangePhoneCode,
+}) => (
+  <StyledInput className={`${className} `} error={error} phone={phone}>
     <div className="label">{label}</div>
     {phone ? (
-      <ReactInputMask
-        mask="+38(999)999-99-99"
+      <PhoneInput
+        phoneCode={phoneCode}
+        phonesCodes={phonesCodes}
+        onChangePhoneCode={onChangePhoneCode}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={onChange}
       />
     ) : (
       <input
@@ -35,7 +49,7 @@ const StyledInput = styled.div`
     text-align: left;
   }
   input {
-    border-radius: 6px;
+    border-radius: ${({ phone }) => (phone ? "0 6px 6px 0" : "6px")};
     background: #474747;
     padding: 10px;
     color: ${({ error }) => (error ? "#ff2e2e" : "rgba(255, 255, 255, 1)")};
@@ -49,6 +63,12 @@ const StyledInput = styled.div`
     line-height: 120%;
     width: 100%;
     transition: all 0.3s;
+    height: 37px;
     ${({ error }) => error && "border: 1px solid #ff2e2e;"}
+  }
+  .code-select-wrapper {
+    background: #474747;
+    padding: 10px;
+    height: 37px;
   }
 `;

@@ -14,6 +14,8 @@ export const Phone = ({
   telegram,
   onChange,
   onSave,
+  code,
+  phonesCodes,
 }) => {
   return (
     <StyledPhone className="flex items-center">
@@ -38,6 +40,9 @@ export const Phone = ({
         onChange={(val) => onChange("phone", val)}
         onSave={onSave}
         phone
+        phoneCode={code}
+        onChangePhoneCode={(cod) => onChange("code", cod)}
+        phonesCodes={phonesCodes}
       />
       {isFirst ? (
         <AddButton onClick={onAdd} />
@@ -49,7 +54,7 @@ export const Phone = ({
 };
 
 const StyledPhone = styled.div`
-  z-index: 10;
+  /* z-index: 10; */
   position: relative;
   .socmedias {
     margin-right: 3px;
@@ -58,6 +63,9 @@ const StyledPhone = styled.div`
     margin-bottom: 3px;
   }
 
+  .phone-input {
+    width: 180px !important;
+  }
   .phone-input .value {
     width: 140px;
   }

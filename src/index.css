@@ -97,3 +97,35 @@ button:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
+
+.react-tel-input .form-control {
+  width: 100% !important;
+  background: none !important;
+  border: none !important;
+}
+
+.react-tel-input .flag-dropdown {
+  background: none !important;
+  border: none !important;
+}
+
+.react-tel-input .country-list {
+  width: 200px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 0 0 8px 8px !important;
+  backdrop-filter: blur(18.5px) !important;
+}
+
+.react-tel-input .flag-dropdown:hover,
+.react-tel-input .flag-dropdown.open .selected-flag {
+  background: none !important;
+}
+
+.react-tel-input .country-list .country-name {
+  display: none !important;
+}
+
+.react-tel-input .country-list .country.highlight,
+.react-tel-input .country-list .country:hover {
+  background: rgba(255, 255, 255, 0.8) !important;
+}
