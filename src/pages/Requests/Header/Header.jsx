@@ -65,7 +65,7 @@ export const Header = ({
     <StyledHeader>
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          {isFavorite && <BackButton onClick={onFavorite} />}
+          {isFavorite && <BackButton onClick={onIsFavotite} />}
           <Title
             selectedCount={selectedCount}
             title={isFavorite ? "Обрано:" : "Обрано запитів "}

@@ -40,7 +40,7 @@ export const Requests = () => {
   }, []);
 
   const handleGetRequests = (isReset) => {
-    if (!isLoading.current && !isAllPages) {
+    if ((!isLoading.current && !isAllPages) || isReset) {
       isLoading.current = true;
       getRequests({
         current_page: currentPage.current,
@@ -57,7 +57,10 @@ export const Requests = () => {
               );
             }
           },
-          () => setIsAllPages(true),
+          () => {
+            setIsAllPages(true);
+            isReset && setRequests([]);
+          },
           true
         );
       });
