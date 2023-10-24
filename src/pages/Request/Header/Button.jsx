@@ -1,7 +1,13 @@
 import { styled } from "styled-components";
 
-export const Button = ({ title, className }) => (
-  <StyledButton className={`${className}`}>{title}</StyledButton>
+export const Button = ({ title, className, disabled, onClick }) => (
+  <StyledButton
+    className={`${className}`}
+    disabled={disabled}
+    onClick={onClick}
+  >
+    {title}
+  </StyledButton>
 );
 
 const StyledButton = styled.button`

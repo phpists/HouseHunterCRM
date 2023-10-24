@@ -27,11 +27,12 @@ export const Ranger = ({
   currency,
   mainType,
   big,
+  values = [0, 0],
+  onChange,
 }) => {
-  const [values, setValues] = useState([defaultStart, defaultEnd]);
   const { getTrackProps, handles, segments } = useRanger({
     values,
-    onChange: setValues,
+    onChange,
     min,
     max,
     stepSize: 1,

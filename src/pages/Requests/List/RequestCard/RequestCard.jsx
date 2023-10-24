@@ -2,7 +2,14 @@ import styled from "styled-components";
 import { DesktopContent } from "./DesktopContent";
 import { MobileContent } from "./MobileContent";
 
-export const RequestCard = ({ selected, onSelect }) => {
+export const RequestCard = ({
+  selected,
+  onSelect,
+  data,
+  id,
+  onDelete,
+  onFavorite,
+}) => {
   const handleClick = (e) =>
     e.target.classList.contains("clickable") && onSelect();
 
@@ -12,8 +19,18 @@ export const RequestCard = ({ selected, onSelect }) => {
       onClick={handleClick}
       className="clickable"
     >
-      <DesktopContent />
-      <MobileContent />
+      <DesktopContent
+        data={data}
+        id={id}
+        onDelete={onDelete}
+        onFavorite={onFavorite}
+      />
+      <MobileContent
+        data={data}
+        id={id}
+        onDelete={onDelete}
+        onFavorite={onFavorite}
+      />
     </StyledRequestCard>
   );
 };
@@ -25,5 +42,8 @@ const StyledRequestCard = styled.div`
   justify-content: space-between;
   border: 1px solid transparent;
   ${({ selected }) => selected && "border: 1px solid #fff;"}
-  cursor: pointer
+  cursor: pointer;
+  .value {
+    white-space: unset;
+  }
 `;

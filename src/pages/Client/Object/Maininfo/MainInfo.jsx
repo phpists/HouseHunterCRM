@@ -9,43 +9,105 @@ import { ReactComponent as ExpandedIcon } from "../../.../../../../assets/images
 import { ReactComponent as BoxSelectIcon } from "../../.../../../../assets/images/box-select.svg";
 import { ReactComponent as StairsIcon } from "../../.../../../../assets/images/stairs.svg";
 import { TagDivider } from "./Tag/TagDivider";
+import {
+  useGetLocationsQuery,
+  useGetRubricsQuery,
+} from "../../../../store/requests/requests.api";
+import { useState } from "react";
+import { useEffect } from "react";
+import { SelectTags } from "../../../../components/SelectTags/SelectTags";
+import { fortmatNumber } from "../../../../utilits";
 
-export const Maininfo = () => {
+export const Maininfo = ({ data, onChangeField, requestData }) => {
+  const { data: rubricsList } = useGetRubricsQuery();
+  const { data: locationsList } = useGetLocationsQuery();
+  const [formatedLocations, setFormatedLocations] = useState([]);
+
+  const handleFormatLocations = (formatedLocations = [], level = 0) => {
+    if (level >= 0) {
+      locationsList
+        .filter(({ id }) => Number(id) === level)
+        .forEach((parent) => {
+          const childrenlocations = locationsList.filter(
+            ({ id_parent }) => Number(id_parent) === level
+          );
+
+          childrenlocations.forEach((loc) => {
+            if (Number(loc.id) !== 0) {
+              formatedLocations = [
+                ...formatedLocations,
+                {
+                  title: `${parent.name} => ${loc.name}`,
+                  value: loc.id,
+                },
+              ];
+            }
+          });
+        });
+      handleFormatLocations(formatedLocations, level - 1);
+    } else {
+      setFormatedLocations(formatedLocations);
+    }
+  };
+
+  useEffect(() => {
+    if (locationsList) {
+      const lastParentId = Math.max(
+        ...locationsList?.map(({ id_parent }) => Number(id_parent))
+      );
+      handleFormatLocations([], lastParentId);
+    }
+  }, [locationsList]);
+
   return (
     <StyledMaininfo>
-      <Slider />
-      <Divider />
-      <Field
-        value="Оренда комерційної нерухомості"
+      {/* <Slider /> */}
+      {/* <Divider /> */}
+      <SelectTags
         label="Категорія"
-        textarea
-        className="title-field"
+        notMultiSelect
+        value={data.id_rubric}
+        onChange={(val) => onChangeField("id_rubric", val)}
+        options={
+          rubricsList
+            ? rubricsList?.map(({ id, name }) => ({ title: name, value: id }))
+            : []
+        }
+        viewOnly
       />
       <Divider />
-      <Field
-        value="Шевченківський, Галицький, Личаківський"
+      <SelectTags
         label="Локація"
-        textarea
-        className="title-field"
+        notMultiSelect
+        value={data.id_location}
+        onChange={(val) => onChangeField("id_location", val)}
+        options={formatedLocations}
+        viewOnly
       />
       <Divider />
       <div className="field-group">
-        <Field value="23 500₴" label="Вартість" className="price-field" />
+        <Field
+          value={fortmatNumber(Number(data?.price_min ?? 0))}
+          onChange={(val) => onChangeField("price_min", val)}
+          label="Вартість"
+          className="price-field"
+          viewOnly
+        />
         <CreatedDate />
       </div>
       <Divider />
       <div className="flex flex-wrap items-center tags">
-        <Tag Icon={DoorsIcon} text="2к" />
+        <Tag Icon={DoorsIcon} text={`${data?.room_min ?? 0}к`} />
         <TagDivider />
         <Tag
           Icon={ExpandedIcon}
           text={
             <>
-              100 м<sup>2</sup>
+              {requestData?.area_total_max ?? 0} м<sup>2</sup>
             </>
           }
         />
-        <TagDivider />
+        {/* <TagDivider />
         <Tag
           Icon={BoxSelectIcon}
           text={
@@ -53,12 +115,26 @@ export const Maininfo = () => {
               100 м<sup>2</sup>
             </>
           }
-        />
+        /> */}
         <TagDivider />
-        <Tag Icon={StairsIcon} text="8 із 18" />
+        <Tag
+          Icon={StairsIcon}
+          text={`${requestData?.address_storey} із ${requestData?.storey_count}`}
+        />
       </div>
       <Divider />
-      <Field value="+" label="Коментар" textarea className="title-field" />
+
+      {data?.comment?.length > 0 ? (
+        <>
+          <Field
+            value={data?.comment}
+            onChange={(val) => onChangeField("comment", val)}
+            label="Коментар"
+            textarea
+            className="title-field"
+          />
+        </>
+      ) : null}
     </StyledMaininfo>
   );
 };

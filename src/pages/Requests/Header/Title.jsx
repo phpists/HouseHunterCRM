@@ -1,7 +1,10 @@
 import styled from "styled-components";
 
-export const Title = ({ selectedCount }) => (
-  <StyledTitle>Обрано запитів {selectedCount}</StyledTitle>
+export const Title = ({ title, selectedCount }) => (
+  <StyledTitle>
+    {title}
+    {selectedCount}
+  </StyledTitle>
 );
 
 const StyledTitle = styled.div`

@@ -6,17 +6,18 @@ export const Subtitle = () => {
   const { pathname } = useLocation();
   const { id } = useParams();
   const { clientsCount } = useAppSelect((state) => state.clients);
+  const { requestsCount } = useAppSelect((state) => state.requests);
+
+  const handleGetEnding = (val) => (val > 0 && val < 8 ? "а" : "ів");
 
   const handleGetSubtitle = () => {
     switch (pathname) {
       case "/":
         return "Що нового трапилося за сьгодні";
       case "/clients":
-        return `Всього ${clientsCount} клієнт${
-          clientsCount > 0 && clientsCount < 8 ? "а" : "ів"
-        }`;
+        return `Всього ${clientsCount} клієнт${handleGetEnding(clientsCount)}`;
       case "/requests":
-        return "1 837 нових запитів";
+        return `${requestsCount} запит${handleGetEnding(requestsCount)}`;
       case "/objects":
         return "Понад 1 000 нових";
       case "/note":

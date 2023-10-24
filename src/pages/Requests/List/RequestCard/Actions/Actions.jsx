@@ -3,13 +3,41 @@ import { Button } from "./Button";
 import { ReactComponent as StarIcon } from "../../../../../assets/images/card-star.svg";
 import { ReactComponent as EditIcon } from "../../../../../assets/images/edit-company.svg";
 import { ReactComponent as RemoveIcon } from "../../../../../assets/images/remove.svg";
+import { useNavigate } from "react-router-dom";
+import { useLazyAddToFavoriteQuery } from "../../../../../store/requests/requests.api";
+import { handleResponse } from "../../../../../utilits";
+import cogoToast from "cogo-toast";
 
-export const Actions = () => {
+export const Actions = ({ id, clientId, onDelete, favorite, onFavorite }) => {
+  const navigate = useNavigate();
+  const [addToFavorites] = useLazyAddToFavoriteQuery();
+
+  const handleToggleFavorites = () => {
+    addToFavorites(id).then((resp) => {
+      handleResponse(resp, () => {
+        cogoToast.success("Статус успішно змінено!", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        onFavorite(id);
+      });
+    });
+  };
+
   return (
     <StyledActions>
-      <Button Icon={StarIcon} className="mb-2.5" />
-      <Button Icon={EditIcon} className="edit-btn mb-2.5" />
-      <Button Icon={RemoveIcon} className="remove-btn" />
+      <Button
+        Icon={StarIcon}
+        className="mb-2.5"
+        onClick={handleToggleFavorites}
+        active={favorite}
+      />
+      <Button
+        Icon={EditIcon}
+        className="edit-btn mb-2.5"
+        onClick={() => navigate(`/edit-request/${clientId}/${id}`)}
+      />
+      <Button Icon={RemoveIcon} className="remove-btn" onClick={onDelete} />
     </StyledActions>
   );
 };

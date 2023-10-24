@@ -29,6 +29,7 @@ const StyledObjects = styled.div`
   padding: 10px;
   border-radius: 9px;
   background: #363636;
+  opacity: 0.2;
   @media (max-width: 1399.9px) {
     width: 100%;
   }

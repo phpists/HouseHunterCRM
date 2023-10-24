@@ -76,7 +76,8 @@ export const App = () => {
               <Route path="/object/:id" element={<Object />} />
               <Route path="/object" element={<Object />} />
               <Route path="/objects" element={<Objects />} />
-              <Route path="/request" element={<Request />} />
+              <Route path="/create-request/:clientId" element={<Request />} />
+              <Route path="/edit-request/:clientId/:id" element={<Request />} />
               <Route path="/requests" element={<Requests />} />
               <Route path="/structure" element={<Structure />} />
               <Route path="/company" element={<Company />} />

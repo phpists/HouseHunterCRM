@@ -6,19 +6,29 @@ import { ToggleOption } from "../ToggleOption";
 import { Period } from "./Period/Period";
 import { SelectTags } from "../../../components/SelectTags/SelectTags";
 
-export const Base = () => {
+export const Base = ({ data, onChangeField }) => {
   return (
     <StyledBase className="request-card hide-scroll">
       <TitleDivider title="X company" />
-      <SelectTags label="Категорія" notMultiSelect />
-      <Divider />
-      <CheckOption label="Неактуальні об’єкти" className="check-opt" />
-      <CheckOption label="Здані об’єкти" className="check-opt" />
-      <CheckOption label="Об’єкти до видалення" className="check-opt" />
-      <CheckOption label="Актуальні об’єкти" className="check-opt" />
-      <CheckOption label="Відновлені об’єкти після видалення" />
-      <Divider />
+      {/* <SelectTags label="Категорія" notMultiSelect /> */}
+      {/* <Divider /> */}
+      {/* <CheckOption
+        label="Неактуальні об’єкти"
+        className="check-opt"
+        value={data?.not_actual}
+        onChange={(val) => onChangeField("not_actual", val ? 1 : 0)}
+      /> */}
+      {/* <CheckOption label="Здані об’єкти" className="check-opt" /> */}
       <CheckOption
+        label="Об’єкти до видалення"
+        className="check-opt"
+        value={data?.deleted}
+        onChange={(val) => onChangeField("deleted", val ? 1 : 0)}
+      />
+      {/* <CheckOption label="Актуальні об’єкти" className="check-opt" />
+      <CheckOption label="Відновлені об’єкти після видалення" /> */}
+      <Divider />
+      {/* <CheckOption
         label={
           <>
             Об’єкти <span className="xbase-title">xbase</span>
@@ -26,9 +36,14 @@ export const Base = () => {
         }
         className="check-opt"
       />
-      <CheckOption label="Клієнти передані" className="check-opt" />
-      <CheckOption label="Об’єкти протерміновані" className="check-opt" />
-      <CheckOption label="Об’єкти (ліквідність)" className="check-opt" />
+      <CheckOption label="Клієнти передані" className="check-opt" /> */}
+      <CheckOption
+        label="Об’єкти протерміновані"
+        className="check-opt"
+        value={data?.dt_deadline}
+        onChange={(val) => onChangeField("dt_deadline", val ? 1 : 0)}
+      />
+      {/* <CheckOption label="Об’єкти (ліквідність)" className="check-opt" />
       <TitleDivider title="street base" />
       <Period />
       <CheckOption label="Вимкнути «Без співпраці»" className="check-opt" />
@@ -39,7 +54,7 @@ export const Base = () => {
         notMultiSelect
       />
       <CheckOption label="Неактуальні об’єкти" className="check-opt-mls" />
-      <ToggleOption label="Все крім цього" />
+      <ToggleOption label="Все крім цього" /> */}
     </StyledBase>
   );
 };

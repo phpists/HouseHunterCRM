@@ -6,14 +6,33 @@ import { Comment } from "./Comment";
 import { Objects } from "./Objects/Objects";
 import { Actions } from "./Actions/Actions";
 
-export const DesktopContent = () => (
+export const DesktopContent = ({ data, id, onDelete, onFavorite }) => (
   <StyledDesktopContent>
-    <Client />
-    <Date />
-    <Info />
+    <Client
+      firstName={data?.usr_first_name}
+      lastName={data?.usr_last_name}
+      idClient={data?.id_client}
+      phones={data?.user_phones}
+      avatar={data?.usr_img?.length > 0 ? data?.usr_img[0] : null}
+    />
+    <Date category={data?.rubric_name} location={data?.location_name} />
+    <Info
+      priceMax={data?.price_max}
+      roomMin={data?.room_min}
+      roomMax={data?.room_min}
+      areaMin={data?.area_total_min}
+      storeyMin={data?.address_storey}
+      storeyMax={data?.storey_count}
+    />
     <Comment />
     <Objects />
-    <Actions />
+    <Actions
+      id={id}
+      clientId={data?.id_user}
+      onDelete={onDelete}
+      favorite={data?.favorite}
+      onFavorite={onFavorite}
+    />
   </StyledDesktopContent>
 );
 

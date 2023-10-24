@@ -13,6 +13,7 @@ export const Field = ({
   full,
   phone,
   placeholder,
+  viewOnly,
 }) => {
   const [edit, setEdit] = useState(false);
 
@@ -51,12 +52,14 @@ export const Field = ({
         )}
         <div className="label">{edit ? "Редагування" : label}</div>
       </div>
-      <div
-        className="edit-btn flex items-center justify-center"
-        onClick={() => setEdit(!edit)}
-      >
-        {edit ? <CheckIcon /> : <EditIcon className="edit-icon" />}
-      </div>
+      {viewOnly ? null : (
+        <div
+          className="edit-btn flex items-center justify-center"
+          onClick={() => setEdit(!edit)}
+        >
+          {edit ? <CheckIcon /> : <EditIcon className="edit-icon" />}
+        </div>
+      )}
     </StyleField>
   );
 };
@@ -151,5 +154,4 @@ const StyleField = styled.div`
             filter: blur(0px);
         }
   `}
-
 `;

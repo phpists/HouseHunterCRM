@@ -8,6 +8,7 @@ import {
 } from "../../store/clients/clients.api";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
+import { handleResponse } from "../../utilits";
 
 export const Clients = () => {
   const [favoritesFilter, setFavoritesFilter] = useState(false);
@@ -27,13 +28,18 @@ export const Clients = () => {
       getClients({ current_page: currentPage.current, item_on_page: 10 }).then(
         (resp) => {
           isLoading.current = false;
-          if (resp?.data?.error === 0 && resp?.data.data?.length) {
-            setClients(
-              isReset ? resp?.data?.data : [...clients, ...resp?.data.data]
-            );
-          } else {
-            setIsAllPages(true);
-          }
+          handleResponse(
+            resp,
+            () => {
+              if (resp?.data?.error === 0 && resp?.data.data?.length) {
+                setClients(
+                  isReset ? resp?.data?.data : [...clients, ...resp?.data.data]
+                );
+              }
+            },
+            () => setIsAllPages(true),
+            true
+          );
         }
       );
     }

@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { InfoText } from "./InfoText";
 import { Date } from "./Date";
 
-export const InfoCard = () => (
+export const InfoCard = ({ category }) => (
   <StyledInfoCard className="flex items-center justify-between clickable">
-    <InfoText />
+    <InfoText category={category} />
     <Date />
   </StyledInfoCard>
 );

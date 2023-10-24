@@ -9,28 +9,33 @@ import { MoreButton } from "../../../../components/MoreButton/MoreButton";
 import { Label } from "./Label";
 import { Divider } from "./Divider";
 
-export const MobileContent = () => (
+export const MobileContent = ({
+  date,
+  title,
+  location,
+  price,
+  onFavorite,
+  favorite,
+  onDelete,
+}) => (
   <StyledMobileContent className="flex items-center justify-between w-full">
     <div className="flex items-center w-full">
       <div className="cards-wrapper">
-        <ObjectCard className="object-card" date="04.10.23" />
+        <ObjectCard className="object-card" date={date} />
         {/* <StepNumber num={1} className="number" /> */}
       </div>
       <div className="w-full">
         <div className="w-max mr-5">
           <div className="flex items-center w-max">
-            <Title title="Оренда комерційної нерухомості" />
-            <Price />
+            <Title title={title} />
+            <Price price={price} />
           </div>
-          <CreatedDate />
+          <CreatedDate date={date} />
         </div>
         <Divider />
         <div className="w-max mr-5">
           <div className="flex items-center w-max">
-            <Title
-              title="Шевченківський, Галицький, Личаківський"
-              className="location"
-            />
+            <Title title={location} className="location" />
             <Tag />
           </div>
           <Label label="Локація" />
@@ -39,7 +44,11 @@ export const MobileContent = () => (
     </div>
     <div className="flex items-center more-btn-wrapper">
       <div className="relative flex items-center">
-        <MoreButton />
+        <MoreButton
+          onFavorite={onFavorite}
+          favorite={favorite}
+          onDelete={onDelete}
+        />
       </div>
     </div>
   </StyledMobileContent>

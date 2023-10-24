@@ -2,19 +2,15 @@ import styled from "styled-components";
 import { InfoCard } from "./InfoCard/InfoCard";
 import { TagsFilter } from "../../../../../components/TagsFilter/TagsFilter";
 
-export const Date = () => {
+export const Date = ({ category, location }) => {
   return (
     <StyledDate className="hide-scroll clickable">
-      <InfoCard />
+      <InfoCard category={category} />
       <TagsFilter
         label="Локація"
-        initTags={[
-          "Галицький",
-          "Личаківський",
-          "Шевченківський",
-          "Франківський",
-        ]}
+        initTags={[location]}
         className="tags-wrapper"
+        noEdit
       />
     </StyledDate>
   );

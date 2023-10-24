@@ -7,14 +7,14 @@ import childIcon from "../../../../../../assets/images/tag-child.svg";
 import petIcon from "../../../../../../assets/images/tag-pet.svg";
 import { Tag } from "./Tag";
 
-export const Tags = () => {
+export const Tags = ({ roomMin, roomMax, areaMin, storeyMin, storeyMax }) => {
   const TAGS = [
-    { title: "від 1 до 3", icon: doorIcon },
-    { title: "від 50 м²", icon: expendIcon },
-    { title: "від 5 до 8", icon: stairsIcon },
-    { title: "Хрущьовка", icon: homeIcon },
-    { title: "Діти", icon: childIcon },
-    { title: "Тварини", icon: petIcon },
+    { title: `від ${roomMin} до ${roomMax}`, icon: doorIcon },
+    { title: `від ${areaMin} м²`, icon: expendIcon },
+    { title: `від ${storeyMin} до ${storeyMax}`, icon: stairsIcon },
+    // { title: "Хрущьовка", icon: homeIcon },
+    // { title: "Діти", icon: childIcon },
+    // { title: "Тварини", icon: petIcon },
   ];
 
   return (

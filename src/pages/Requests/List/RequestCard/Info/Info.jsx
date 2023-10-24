@@ -1,16 +1,30 @@
 import styled from "styled-components";
 import { Price } from "../../../../../components/Price/Price";
 import { Tags } from "./Tags/Tags";
+import { fortmatNumber } from "../../../../../utilits";
 
-export const Info = () => {
+export const Info = ({
+  priceMax,
+  roomMin,
+  roomMax,
+  areaMin,
+  storeyMin,
+  storeyMax,
+}) => {
   return (
     <StyledInfo className="hide-scroll clickable">
       <Price
-        title="до 20 000₴"
+        title={`до ${fortmatNumber(Number(priceMax ?? 0))}₴`}
         subtitle="Бажана ціна"
         className="price-wrapper"
       />
-      <Tags />
+      <Tags
+        roomMin={roomMin}
+        roomMax={roomMax}
+        areaMin={areaMin}
+        storeyMin={storeyMin}
+        storeyMax={storeyMax}
+      />
     </StyledInfo>
   );
 };

@@ -1,12 +1,19 @@
 import styled from "styled-components";
-import avatar from "../../../../../assets/images/small-avatar.svg";
+import emptyAvatar from "../../../../../assets/images/small-avatar.svg";
 
-export const Info = () => (
-  <StyledInfo className="flex items-center clickable" avatar={avatar}>
+export const Info = ({ firstName, lastName, idClient, avatar }) => (
+  <StyledInfo
+    className="flex items-center clickable"
+    avatar={avatar ?? emptyAvatar}
+  >
     <div className="avatar clickable" />
     <div>
-      <div className="name clickable">Віталій Дуда</div>
-      <div className="id clickable">ID клієнта: 1246</div>
+      <div className="name clickable">
+        {firstName ?? ""} {lastName ?? ""}
+      </div>
+      <div className="id clickable">
+        ID клієнта: {idClient?.substring(0, 20)}...
+      </div>
     </div>
   </StyledInfo>
 );

@@ -12,7 +12,11 @@ import {
   useLazyGetClientsCountQuery,
   useLazyGetNewClientsCountQuery,
 } from "../../store/clients/clients.api";
-import { emailValidation, handleRemovePhoneMask } from "../../utilits";
+import {
+  emailValidation,
+  handleRemovePhoneMask,
+  handleResponse,
+} from "../../utilits";
 import cogoToast from "cogo-toast";
 import { useActions } from "../../hooks/actions";
 import { useGetPhonesCodesQuery } from "../../store/auth/auth.api";
@@ -75,16 +79,11 @@ export const AddClient = ({ onClose, onAdded }) => {
       ]),
     }).then((resp) => {
       setLoading(false);
-      if (resp?.data?.error === 0) {
+      handleResponse(resp, () => {
         setSuccess(true);
         handleGetClientsCount();
         onAdded && onAdded();
-      } else if (resp?.data?.error) {
-        cogoToast.error(resp?.data?.messege ?? "Помилка", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-      }
+      });
     });
   };
 

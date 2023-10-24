@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import { ProfileField } from "../../../components/ProfileField";
 
-export const Comment = () => {
+export const Comment = ({ value, onChange }) => {
   return (
     <StlyedComment>
       <ProfileField
-        value="Дуже топова хата, Юра треба брати вже"
+        value={value}
+        onChange={onChange}
         label="Коментар"
+        placeholder={"Введіть коментар"}
         textarea
       />
     </StlyedComment>

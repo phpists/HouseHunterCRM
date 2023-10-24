@@ -1,3 +1,5 @@
+import cogoToast from "cogo-toast";
+
 export const addZero = (num) => (num < 10 ? `0${num}` : num);
 
 export const fortmatNumber = (num) =>
@@ -27,11 +29,15 @@ export const handleToFormData = (data, files) => {
             formData.append(`${field[0]}[${i}][${fField[0]}]`, fField[1]);
           });
         } else {
-          formData.append(`${field[0]}[${i}]`, f);
+          f && formData.append(`${field[0]}[${i}]`, f);
         }
       });
+    } else if (typeof field[1] === "object") {
+      Object.entries(field[1]).forEach((fField) => {
+        formData.append(`${field[0]}[${fField[0]}]`, fField[1]);
+      });
     } else {
-      formData.append(field[0], field[1]);
+      field[1] && formData.append(field[0], field[1]);
     }
   });
 
@@ -52,7 +58,7 @@ export const handleToFormData = (data, files) => {
 export const handleRemovePhoneMask = (phone, removeFirstLetters = 3) =>
   phone.replaceAll("(", "").replaceAll(")", "").replaceAll("-", "");
 
-export const handleFormatDate = (d) => {
+export const handleFormatDate = (d, isShort) => {
   const date = new Date(d);
   const day = date.getDate();
   const month = date.getMonth();
@@ -60,5 +66,50 @@ export const handleFormatDate = (d) => {
   const hours = date.getHours();
   const minutes = date.getMinutes();
 
-  return `${addZero(day)}.${addZero(month)}.${year} ${hours}:${minutes}`;
+  return isShort
+    ? `${addZero(day)}.${addZero(month)}.${year}`
+    : `${addZero(day)}.${addZero(month)}.${year} ${hours}:${minutes}`;
+};
+
+export const handleChangeRange = (
+  values,
+  prevValues,
+  fields,
+  onChangeField
+) => {
+  if (values[0] !== prevValues[0]) {
+    onChangeField(fields[0], values[0] ?? 0);
+  } else {
+    onChangeField(fields[1], values[1] ?? 0);
+  }
+};
+
+export const handleGetFieldsOptions = (fields, fieldName) => {
+  const field = fields?.find(({ field }) => field === fieldName);
+  const options = field
+    ? Object.entries(field?.field_option)?.map((opt) => ({
+        title: opt[1],
+        value: opt[0],
+      }))
+    : null;
+
+  return options ?? null;
+};
+
+export const handleResponse = (
+  resp,
+  onSuccess,
+  onError,
+  notShowErrorMessage
+) => {
+  if (resp?.data?.error === 0 || !resp?.data?.messege) {
+    onSuccess && onSuccess();
+  } else if (resp?.data?.error || resp?.data?.messege) {
+    onError && onError();
+    !notShowErrorMessage &&
+      cogoToast.error(resp?.data?.messege ?? "Помилка", {
+        hideAfter: 3,
+        position: "top-right",
+      });
+  }
 };

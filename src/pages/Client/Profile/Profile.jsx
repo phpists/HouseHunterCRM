@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useLazyEditClientQuery } from "../../../store/clients/clients.api";
 import { useParams } from "react-router-dom";
 import cogoToast from "cogo-toast";
-import { handleRemovePhoneMask } from "../../../utilits";
+import { handleRemovePhoneMask, handleResponse } from "../../../utilits";
 import { Footer } from "./Footer";
 
 export const Profile = ({ className, data, onRefreshClientData }) => {
@@ -41,18 +41,13 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
       ),
     }).then((resp) => {
       setLoading(false);
-      if (resp?.data?.error === 0) {
+      handleResponse(resp, () => {
         onRefreshClientData();
         cogoToast.success("Зміни успішно збережено", {
           hideAfter: 3,
           position: "top-right",
         });
-      } else if (resp?.data?.error) {
-        cogoToast.error(resp?.data?.messege ?? "Помилка", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-      }
+      });
     });
   };
 

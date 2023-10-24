@@ -5,7 +5,7 @@ export const Date = () => (
   <StyledDate className="clickable">
     <div className="title flex items-cente clickabler">
       <img src={clockIcon} alt="" className="clickable" />
-      до 25.09.2022
+      до --.--.----
     </div>
     <div className="subtitle clickable">Термін запиту</div>
   </StyledDate>

@@ -5,12 +5,12 @@ import { Search } from "./Search";
 import { Select } from "./Select/Select";
 import { useState } from "react";
 
-export const Header = () => {
+export const Header = ({ requestsCount }) => {
   const [isSearch, setIsSearch] = useState(false);
 
   return (
     <StyledHeader className="flex items-center justify-between">
-      <Title />
+      <Title requestsCount={requestsCount} />
       <div className="flex items-center header-btns">
         <Filter className="header-btn" />
         <Search open={isSearch} onOpen={() => setIsSearch(true)} />

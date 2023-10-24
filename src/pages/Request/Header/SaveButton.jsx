@@ -1,7 +1,9 @@
 import { styled } from "styled-components";
 
-export const SaveButton = ({ className }) => (
-  <StyledSaveButton className={className}>Зберегти зміни</StyledSaveButton>
+export const SaveButton = ({ className, onClick }) => (
+  <StyledSaveButton className={className} onClick={onClick}>
+    Зберегти зміни
+  </StyledSaveButton>
 );
 
 const StyledSaveButton = styled.button`

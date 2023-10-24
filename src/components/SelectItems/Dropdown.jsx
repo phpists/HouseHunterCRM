@@ -1,15 +1,17 @@
 import { styled } from "styled-components";
 
 const OPTIONS = [
-  { title: "Додати в улюблене", value: "1" },
-  { title: "Передати", value: "1" },
-  { title: "Видалити", value: "1" },
+  { title: "Додати в улюблене", value: "favorite" },
+  { title: "Передати", value: "send" },
+  { title: "Видалити", value: "delete" },
 ];
 
-export const Dropdown = () => (
+export const Dropdown = ({ onSelect }) => (
   <StyledDropdown>
     {OPTIONS.map((opt, i) => (
-      <div key={i}>{opt.title}</div>
+      <div key={i} onClick={() => onSelect(opt.value)}>
+        {opt.title}
+      </div>
     ))}
   </StyledDropdown>
 );

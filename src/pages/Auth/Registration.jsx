@@ -9,7 +9,11 @@ import {
   useLazyRegisterQuery,
 } from "../../store/auth/auth.api";
 import { useState } from "react";
-import { emailValidation, handleRemovePhoneMask } from "../../utilits";
+import {
+  emailValidation,
+  handleRemovePhoneMask,
+  handleResponse,
+} from "../../utilits";
 import cogoToast from "cogo-toast";
 
 export const Registration = ({ onSuccess }) => {
@@ -44,14 +48,7 @@ export const Registration = ({ onSuccess }) => {
     };
 
     registrate(data).then((resp) => {
-      if (resp?.data?.error === 0) {
-        onSuccess();
-      } else if (resp?.data?.error) {
-        cogoToast.error(resp?.data?.messege ?? "Помилка", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-      }
+      handleResponse(resp, onSuccess);
     });
   };
 

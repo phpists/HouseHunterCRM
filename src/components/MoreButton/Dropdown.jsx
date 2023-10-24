@@ -3,17 +3,17 @@ import { ReactComponent as StarIcon } from "../../assets/images/card-star.svg";
 import { ReactComponent as UserIcon } from "../../assets/images/card-user.svg";
 import { ReactComponent as RemoveIcon } from "../../assets/images/remove.svg";
 
-export const Dropdown = () => (
+export const Dropdown = ({ onDelete, onFavorite, favorite }) => (
   <StyledDropdown className="dropdown">
-    <div className="flex items-center justify-between">
-      <span>В улюблене</span>
-      <StarIcon className="star-icon" />
+    <div className="flex items-center justify-between" onClick={onFavorite}>
+      <span>{favorite ? "З улюбленого" : "В улюблене"}</span>
+      <StarIcon className={`star-icon ${favorite && "active"}`} />
     </div>
     <div className="flex items-center justify-between">
       <span>Передати</span>
       <UserIcon className="user-icon" />
     </div>
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between" onClick={onDelete}>
       <span>Видалити</span>
       <RemoveIcon className="remove-icon" />
     </div>
@@ -59,6 +59,9 @@ const StyledDropdown = styled.div`
 
   .star-icon path {
     stroke: #3e46fb;
+  }
+  .star-icon.active {
+    fill: #3e46fb;
   }
   .user-icon path {
     fill: #3e46fb;

@@ -4,7 +4,7 @@ import { Description } from "../Description";
 import { Input } from "../Input";
 import { Button } from "../../../components/Button";
 import { useState } from "react";
-import { emailValidation } from "../../../utilits";
+import { emailValidation, handleResponse } from "../../../utilits";
 import { useLazyForgotPasswordQuery } from "../../../store/auth/auth.api";
 import cogoToast from "cogo-toast";
 
@@ -20,7 +20,7 @@ export const ForgotPassword = ({ onClose }) => {
 
   const handleSubmit = () => {
     forgotPassword({ email }).then((resp) => {
-      if (resp?.data?.error === 0) {
+      handleResponse(resp, () => {
         cogoToast.success(
           "Для зміни паролю перейдіть за посиланням у листі, який відправлено Вам на електронну пошту!",
           {
@@ -29,12 +29,7 @@ export const ForgotPassword = ({ onClose }) => {
           }
         );
         onClose();
-      } else if (resp?.data?.error) {
-        cogoToast.error(resp?.data?.messege ?? "Помилка", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-      }
+      });
     });
   };
 

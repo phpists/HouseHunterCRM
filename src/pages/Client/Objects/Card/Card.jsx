@@ -1,15 +1,62 @@
 import { styled } from "styled-components";
 import { DesktopContent } from "./DesktopContent";
 import { MobileContent } from "./MobileContent";
+import { useLazyAddToFavoriteQuery } from "../../../../store/requests/requests.api";
+import { handleResponse } from "../../../../utilits";
+import cogoToast from "cogo-toast";
 
-export const Card = ({ selected, onSelect, onOpenInfo }) => {
+export const Card = ({
+  selected,
+  onSelect,
+  onOpenInfo,
+  date,
+  title,
+  location,
+  price,
+  id,
+  favorite,
+  onChangeFavorite,
+  onDelete,
+}) => {
+  const [addToFavorites] = useLazyAddToFavoriteQuery();
+
   const handleClick = (e) =>
     e.target.classList.contains("openInfo") ? onOpenInfo() : onSelect();
 
+  const handleToggleFavorites = () => {
+    addToFavorites(id).then((resp) => {
+      handleResponse(resp, () => {
+        onChangeFavorite();
+        cogoToast.success("Статус успішно змінено!", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      });
+    });
+  };
+
   return (
     <StyledCard onClick={handleClick} selected={selected}>
-      <DesktopContent />
-      <MobileContent />
+      <DesktopContent
+        date={date}
+        title={title}
+        location={location}
+        price={price}
+        id={id}
+        onFavorite={handleToggleFavorites}
+        favorite={favorite}
+        onDelete={onDelete}
+      />
+      <MobileContent
+        date={date}
+        title={title}
+        location={location}
+        price={price}
+        id={id}
+        onFavorite={handleToggleFavorites}
+        favorite={favorite}
+        onDelete={onDelete}
+      />
     </StyledCard>
   );
 };

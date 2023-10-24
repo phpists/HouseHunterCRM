@@ -6,33 +6,44 @@ import { CreatedDate } from "./CreatedDate";
 import { Tag } from "./Tag";
 import { StepNumber } from "../../../../components/StepNumber";
 import { MoreButton } from "../../../../components/MoreButton/MoreButton";
+import { handleFormatDate } from "../../../../utilits";
+import { Label } from "./Label";
 
-export const DesktopContent = () => (
+export const DesktopContent = ({
+  date,
+  title,
+  location,
+  price,
+  onFavorite,
+  favorite,
+  onDelete,
+}) => (
   <StyledDesktopContent className="flex items-center justify-between">
     <div className="flex items-center w-max">
-      <ObjectCard className="object-card" date="04.10.23" />
+      <ObjectCard className="object-card" date={date} />
       <div className="w-max mr-5">
         <div className="flex items-center w-max">
-          <Title title="Оренда комерційної нерухомості" />
-          <Price />
+          <Title title={title} />
+          <Price price={price} />
         </div>
-        <CreatedDate />
+        <CreatedDate date={date} />
       </div>
       <div className="w-max mr-5">
         <div className="flex items-center w-max">
-          <Title
-            title="Шевченківський, Галицький, Личаківський"
-            className="location"
-          />
-          <Tag />
+          <Title title={location} className="location" />
+          {/* <Tag /> */}
         </div>
-        <CreatedDate />
+        <Label label="Локація" />
       </div>
     </div>
     <div className="flex items-center">
       <div className="relative flex items-center">
         {/* <StepNumber num={1} className="number" /> */}
-        <MoreButton />
+        <MoreButton
+          onFavorite={onFavorite}
+          favorite={favorite}
+          onDelete={onDelete}
+        />
       </div>
     </div>
   </StyledDesktopContent>

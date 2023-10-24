@@ -11,31 +11,39 @@ export const SelectTags = ({
   notMultiSelect,
   showTags,
   Component,
-  search,
   tagValue,
   initValue,
+  options,
+  value,
+  onChange,
+  viewOnly,
 }) => {
   const [open, setOpen] = useState(false);
-  const [isEmpty, setIsEmpty] = useState(true);
   const [isActive, setIsActive] = useState(false);
+  const [search, setSearch] = useState("");
 
-  const handleTaggleOpen = () => {
-    open && setIsEmpty(false);
+  const handleChangeValue = (val) => {
+    onChange(val);
+    setSearch("");
+    notMultiSelect && setOpen(false);
+  };
+
+  const handleToggleOpen = () => {
     setOpen(!open);
+    setSearch("");
   };
 
   return (
     <StyledSelectTags
-      className={`flex items-center justify-between ${isEmpty && "empty"} ${
+      className={`flex items-center justify-between ${!value && "empty"} ${
         open && "open"
       } ${isActive && "active"}`}
-      onClick={() => !isEmpty && setIsEmpty(true)}
       showTags={showTags}
       onMouseEnter={() => setIsActive(true)}
       onMouseLeave={() => setIsActive(false)}
     >
       <div>
-        {!isEmpty && showTags ? (
+        {!value && showTags ? (
           <div className="flex flex-wrap tags select-none">
             <Tag title="Актуально з 09.09.2022" isFirst type={true} />
             <Tag title="без дітей" />
@@ -48,44 +56,50 @@ export const SelectTags = ({
           </div>
         ) : (
           <div className="flex flex-wrap items-center">
-            {!search ? (
+            {!open ? (
               <div className={`value ${tagValue && "value-tag"}`}>
                 {initValue
                   ? initValue
                   : placeholder
                   ? placeholder
-                  : isEmpty
+                  : !value
                   ? "Оберіть"
-                  : "Оренда квартир"}
+                  : options?.find((opt) => opt.value === value)?.title}
               </div>
             ) : (
               <input
                 className="value"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 placeholder={
                   initValue
                     ? initValue
                     : placeholder
                     ? placeholder
-                    : isEmpty
-                    ? "Оберіть"
-                    : "Оренда квартир"
+                    : !value
+                    ? "Пошук"
+                    : options?.find((opt) => opt.value === value)?.title
                 }
               />
             )}
-            {!isEmpty && !notMultiSelect && (
+            {!value && !notMultiSelect && (
               <TagCount count={1} className="ml-2.5" />
             )}
           </div>
         )}
         <div className="label">{label}</div>
       </div>
-      {!isEmpty && showTags ? null : (
-        <Arrow active={open} onClick={handleTaggleOpen} />
+      {(!value && showTags) || viewOnly ? null : (
+        <Arrow active={open} onClick={handleToggleOpen} />
       )}
       <Dropdown
         open={open}
         notMultiSelect={notMultiSelect}
         Component={Component}
+        options={options}
+        onChange={handleChangeValue}
+        activeValue={value}
+        search={search}
       />
     </StyledSelectTags>
   );

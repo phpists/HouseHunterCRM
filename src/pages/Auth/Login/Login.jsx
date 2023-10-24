@@ -6,7 +6,7 @@ import { ForgotPassword } from "./ForgotPassword";
 import arrowIcon from "../../../assets/images/arrow.svg";
 import { Button } from "../../../components/Button";
 import { useState } from "react";
-import { emailValidation } from "../../../utilits";
+import { emailValidation, handleResponse } from "../../../utilits";
 import {
   useLazyLoginQuery,
   useLazyLogoutQuery,
@@ -33,15 +33,10 @@ export const Login = ({ onForgotPassword, onSuccess }) => {
       mod: "account",
       action: "login",
     }).then((resp) => {
-      if (resp?.data?.error === 0) {
+      handleResponse(resp, () => {
         localStorage.setItem("token", resp?.data.token);
         onSuccess();
-      } else if (resp?.data?.error) {
-        cogoToast.error(resp?.data?.messege ?? "Помилка", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-      }
+      });
     });
   };
 

@@ -1,18 +1,15 @@
-import { useState } from "react";
 import { styled } from "styled-components";
 import checkboxIcon from "../assets/images/checkbox-icon.svg";
 
-export const CheckOption = ({ label, className }) => {
-  const [active, setActive] = useState(false);
-
+export const CheckOption = ({ label, className, value, onChange }) => {
   return (
     <StyledCheckOption
       className={`flex items-center justify-between ${className}`}
     >
       <span className="label">{label}</span>
       <button
-        className={`flex items-center justify-center ${active && "active"}`}
-        onClick={() => setActive(!active)}
+        className={`flex items-center justify-center ${value && "active"}`}
+        onClick={() => (onChange ? onChange(value === 1 ? 0 : 1) : null)}
       >
         <img src={checkboxIcon} alt="" />
       </button>

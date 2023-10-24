@@ -5,7 +5,7 @@ import { Count } from "./Count";
 import { motion } from "framer-motion";
 import { ReactComponent as SearchIcon } from "../../assets/images/search.svg";
 
-export const TagsFilter = ({ label, search, initTags, className }) => {
+export const TagsFilter = ({ label, search, initTags, className, noEdit }) => {
   const [isActive, setIsActive] = useState(false);
 
   const [value, setValue] = useState("");
@@ -28,6 +28,7 @@ export const TagsFilter = ({ label, search, initTags, className }) => {
       onMouseLeave={() => setIsActive(false)}
       className={`${isActive && "active"} ${className}`}
       search={search}
+      noEdit={noEdit}
     >
       <div className="flex items-center justify-between">
         <div className="tags-wrapper flex flex-wrap">
@@ -37,12 +38,13 @@ export const TagsFilter = ({ label, search, initTags, className }) => {
               title={tag}
               onRemove={() => handleRemoveTag(i)}
               isHide={!isActive && i > 2}
+              noEdit={noEdit}
             />
           ))}
           {!isActive && tags.length > 2 && (
             <Count count={tags.slice(2).length} />
           )}
-          {!(tags.length > 0 && !isActive) && (
+          {!(tags.length > 0 && !isActive) && !noEdit && (
             <motion.input
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -114,12 +116,17 @@ const StyledTagsFilter = styled.div`
 
   &:hover,
   &.active {
-    background: rgba(255, 255, 255, 0.05);
-    input {
-      &::placeholder {
-        opacity: 1;
-      }
-    }
+    ${({ noEdit }) =>
+      !noEdit &&
+      `
+        background: rgba(255, 255, 255, 0.05);
+        input {
+        &::placeholder {
+            opacity: 1;
+        }
+        }
+    
+    `}
   }
 
   ${({ empty }) => !empty && "background: rgba(255, 255, 255, 0.05);"}

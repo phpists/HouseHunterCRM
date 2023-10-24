@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export const InfoText = () => (
+export const InfoText = ({ category }) => (
   <StyledInfoText className="clickable">
-    <div className="title clickable">Оренда квартир</div>
-    <div className="id clickable">ID: 332</div>
+    <div className="title clickable">{category}</div>
+    <div className="id clickable">Категорія</div>
   </StyledInfoText>
 );
 

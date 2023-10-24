@@ -1,7 +1,12 @@
 import styled from "styled-components";
 
-export const Button = ({ Icon, className }) => (
-  <StyledButton className={`flex items-center justify-center ${className}`}>
+export const Button = ({ Icon, className, onClick, active }) => (
+  <StyledButton
+    className={`flex items-center justify-center ${className} ${
+      active && "active"
+    }`}
+    onClick={onClick}
+  >
     <Icon />
   </StyledButton>
 );
@@ -17,7 +22,8 @@ const StyledButton = styled.button`
   svg {
     height: 18px;
   }
-  &:hover {
+  &:hover,
+  &.active {
     border-radius: 4px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     g,

@@ -6,18 +6,37 @@ import { Comment } from "./Comment";
 import { Objects } from "./Objects/Objects";
 import { Actions } from "./Actions/Actions";
 
-export const MobileContent = () => (
+export const MobileContent = ({ data, id, onDelete, onFavorite }) => (
   <StyledMobileContent className="flex ">
     <div>
-      <Client />
+      <Client
+        firstName={data?.usr_first_name}
+        lastName={data?.usr_last_name}
+        idClient={data?.id_client}
+        phones={data?.user_phones}
+        avatar={data?.usr_img?.length > 0 ? data?.usr_img[0] : null}
+      />
       <div className="mobile-content-wrapper">
-        <Date />
-        <Info />
+        <Date category={data?.rubric_name} location={data?.location_name} />
+        <Info
+          priceMax={data?.price_max}
+          roomMin={data?.room_min}
+          roomMax={data?.room_min}
+          areaMin={data?.area_total_min}
+          storeyMin={data?.address_storey}
+          storeyMax={data?.storey_count}
+        />
         <Comment />
         <Objects />
       </div>
     </div>
-    <Actions />
+    <Actions
+      id={id}
+      clientId={data?.id_client}
+      onDelete={onDelete}
+      favorite={data?.favorite}
+      onFavorite={onFavorite}
+    />
   </StyledMobileContent>
 );
 

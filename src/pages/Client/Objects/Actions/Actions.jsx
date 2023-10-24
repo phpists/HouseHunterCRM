@@ -3,8 +3,10 @@ import megaphoneIcon from "../../../../assets/images/megafon-object.svg";
 import homeIcon from "../../../../assets/images/home-gradient.svg";
 import { Action } from "./Action";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 export const Actions = () => {
+  const { id } = useParams();
   const [active, setActive] = useState(null);
 
   const handleChangeActive = (value) => setActive(value);
@@ -20,7 +22,7 @@ export const Actions = () => {
         onChangeHover={handleChangeActive}
         active={active}
         index={1}
-        link="/request"
+        link={`/create-request/${id}`}
       />
       <Action
         icon={homeIcon}

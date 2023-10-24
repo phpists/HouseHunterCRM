@@ -12,7 +12,7 @@ import { useEffect } from "react";
 export const Client = () => {
   const { id } = useParams();
   const [getClient, { data: clientData }] = useLazyGetClientQuery(id);
-  const [selectedObject, setSelectedObject] = useState(0);
+  const [selectedObject, setSelectedObject] = useState(null);
 
   const handleGetClient = () => getClient(id);
 
@@ -21,7 +21,7 @@ export const Client = () => {
   }, [id]);
 
   return (
-    <StyledClient>
+    <StyledClient isEmpty={!selectedObject}>
       <Header />
       <ProfileMobile data={clientData} onRefreshClientData={handleGetClient} />
       <div className="client-content hide-scroll">
@@ -34,7 +34,9 @@ export const Client = () => {
           selected={selectedObject}
           onSelect={(value) => setSelectedObject(value)}
         />
-        <Object className="item-desktop" />
+        {selectedObject ? (
+          <Object className="item-desktop" id={selectedObject} />
+        ) : null}
       </div>
     </StyledClient>
   );
@@ -47,7 +49,8 @@ const StyledClient = styled.div`
   position: relative;
   .client-content {
     display: grid;
-    grid-template-columns: max-content 1fr max-content;
+    grid-template-columns: ${({ isEmpty }) =>
+      isEmpty ? "max-content 1fr" : "max-content 1fr max-content"};
     gap: 20px;
   }
   @media (max-width: 1399.9px) {

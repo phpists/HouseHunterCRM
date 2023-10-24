@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { ReactComponent as CloseIcon } from "../../assets/images/close.svg";
 import { motion } from "framer-motion";
 
-export const Tag = ({ title, onRemove, isHide }) => (
+export const Tag = ({ title, onRemove, isHide, noEdit }) => (
   <StyledTag
     className="flex items-center"
     animate={{
@@ -13,9 +13,11 @@ export const Tag = ({ title, onRemove, isHide }) => (
     }}
   >
     <span>{title?.length > 40 ? `${title.substring(0, 40)}...` : title}</span>
-    <button className="flex items-center justify-center" onClick={onRemove}>
-      <CloseIcon />
-    </button>
+    {!noEdit && (
+      <button className="flex items-center justify-center" onClick={onRemove}>
+        <CloseIcon />
+      </button>
+    )}
   </StyledTag>
 );
 

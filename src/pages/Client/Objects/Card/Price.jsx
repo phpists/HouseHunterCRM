@@ -1,8 +1,10 @@
 import { styled } from "styled-components";
+import { fortmatNumber } from "../../../../utilits";
 
-export const Price = () => (
+export const Price = ({ price }) => (
   <StyledPrice className="flex items-center">
-    23 500<span>₴</span>
+    {fortmatNumber(Number(price ?? 0))}
+    <span>₴</span>
   </StyledPrice>
 );
 

@@ -121,6 +121,20 @@ export const clients = createApi({
         }),
       }),
     }),
+    getClientsRequest: build.query({
+      query: ({ current_page, item_on_page, id_client }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_request_my_client",
+          mod: "requests",
+          current_page,
+          item_on_page,
+          id_client,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -133,4 +147,5 @@ export const {
   useLazyGetNewClientsCountQuery,
   useLazyDeleteCientQuery,
   useLazyDeleteClientPhotoQuery,
+  useLazyGetClientsRequestQuery,
 } = clients;

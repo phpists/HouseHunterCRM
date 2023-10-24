@@ -4,19 +4,17 @@ import { useState } from "react";
 
 export const Option = ({
   title,
-  onChange,
+  onSelect,
   active,
   className,
   noSelect,
   Component,
 }) => {
-  const [a, setA] = useState(false);
-
   return (
     <StyledOption
       className={`flex items-center justify-between hover-effect-to-right ${className}`}
-      onClick={() => setA(noSelect ? false : !a)}
-      active={a}
+      onClick={onSelect}
+      active={active}
     >
       <span className="flex items-center">
         {Component}

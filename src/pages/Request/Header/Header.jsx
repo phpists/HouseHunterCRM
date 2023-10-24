@@ -6,29 +6,106 @@ import { IconButton } from "../../../components/IconButton";
 import { Title } from "./Title";
 import { Button } from "./Button";
 import { MoreButton } from "./MoreButton/MoreButton";
+import {
+  useLazyAddToFavoriteQuery,
+  useLazyDeleteRequestQuery,
+} from "../../../store/requests/requests.api";
+import { useState } from "react";
+import { Confirm } from "../../../components/Confirm/Confirm";
+import { useNavigate, useParams } from "react-router-dom";
+import { handleResponse } from "../../../utilits";
+import cogoToast from "cogo-toast";
 
-export const Header = () => {
+export const Header = ({
+  onSave,
+  favorite,
+  onToggleFavorite,
+  data,
+  onChangeField,
+}) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [addToFavorites] = useLazyAddToFavoriteQuery();
+  const [deleteRequest] = useLazyDeleteRequestQuery();
+  const [deleteModal, setDeleteModal] = useState(false);
+
+  const handleDeleteRequest = () => {
+    deleteRequest([id]).then((resp) =>
+      handleResponse(resp, () => {
+        cogoToast.success("Заявку успішно видалено!", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        navigate("/requests");
+      })
+    );
+  };
+
+  const handleToggleFavorites = () => {
+    addToFavorites(id).then((resp) => {
+      handleResponse(resp, () => {
+        onToggleFavorite();
+        cogoToast.success("Статус успішно змінено!", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      });
+    });
+  };
+
   return (
     <StyledHeader className="flex items-center justify-between">
       {/* <BackButton /> */}
+      {deleteModal && (
+        <Confirm
+          title="Видалити запит?"
+          onClose={() => setDeleteModal(false)}
+          onSubmit={handleDeleteRequest}
+        />
+      )}
       <div className="flex title-wrapper">
         <Title />
         <div className="mobile-action-btns flex items-center">
-          <SaveButton className="desktop-save-btn" />
-          <IconButton Icon={StarIcon} className="icon-btn" />
-          <IconButton Icon={RemoveIcon} className="icon-btn remove-btn" />
-          <MoreButton />
+          <SaveButton className="desktop-save-btn" onClick={onSave} />
+          {id && (
+            <>
+              <IconButton
+                Icon={StarIcon}
+                className="icon-btn"
+                onClick={handleToggleFavorites}
+                active={favorite}
+              />
+              <IconButton
+                Icon={RemoveIcon}
+                className="icon-btn remove-btn"
+                onClick={() => setDeleteModal(true)}
+              />
+              <MoreButton />
+            </>
+          )}
         </div>
       </div>
       <div className="flex items-center bts">
-        <SaveButton />
-        <Button title="Призупинити показ" />
-        <Button title="Пуста підбірка" />
-        <Button title="Неактуально" />
-        <div className="desktop-action-btns flex items-center">
-          <IconButton Icon={StarIcon} className="icon-btn" />
-          <IconButton Icon={RemoveIcon} className="icon-btn remove-btn" />
-        </div>
+        <SaveButton onClick={onSave} />
+        <Button title="Призупинити показ" disabled={!id} />
+        <Button title="Пуста підбірка" disabled={!id} />
+        <Button
+          title={Number(data?.not_actual) === 0 ? "Актуально" : "Неактуально"}
+          onClick={() =>
+            onChangeField("not_actual", Number(data?.not_actual) === 0 ? 1 : 0)
+          }
+          disabled={!id}
+        />
+        {id && (
+          <div className="desktop-action-btns flex items-center">
+            <IconButton Icon={StarIcon} className="icon-btn" />
+            <IconButton
+              Icon={RemoveIcon}
+              className="icon-btn remove-btn"
+              onClick={() => setDeleteModal(true)}
+            />
+          </div>
+        )}
       </div>
     </StyledHeader>
   );

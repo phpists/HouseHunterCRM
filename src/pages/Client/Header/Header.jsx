@@ -11,6 +11,7 @@ import { Confirm } from "../../../components/Confirm/Confirm";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import cogoToast from "cogo-toast";
+import { handleResponse } from "../../../utilits";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -20,18 +21,13 @@ export const Header = () => {
 
   const handleDeleteClient = () => {
     deleteClient({ id_client: [id] }).then((resp) => {
-      if (resp?.data?.error === 0) {
+      handleResponse(resp, () => {
         cogoToast.success("Клієнта успішно видалено!", {
           hideAfter: 3,
           position: "top-right",
         });
         navigate("/clients");
-      } else if (resp?.data?.error) {
-        cogoToast.error(resp?.data?.messege ?? "Помилка", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-      }
+      });
     });
   };
 

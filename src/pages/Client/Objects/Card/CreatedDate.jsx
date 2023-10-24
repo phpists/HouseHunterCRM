@@ -1,8 +1,9 @@
 import { styled } from "styled-components";
 
-export const CreatedDate = () => (
+export const CreatedDate = ({ date }) => (
   <StyledCreatedDate>
-    Створений 13.10.2022 <span>•</span> ID:1254
+    Створений {date}
+    {/* <span>•</span> ID:1254 */}
   </StyledCreatedDate>
 );
 

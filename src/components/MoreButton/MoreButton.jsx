@@ -3,12 +3,21 @@ import { Button } from "./Button";
 import { Dropdown } from "./Dropdown";
 import { Divider } from "./Divider";
 
-export const MoreButton = ({ className }) => {
+export const MoreButton = ({
+  className,
+  onDelete = () => null,
+  onFavorite = () => null,
+  favorite,
+}) => {
   return (
     <StyledMoreButton className="flex items-center more">
       <div className="btn-wrapper relative">
         <Button />
-        <Dropdown />
+        <Dropdown
+          onDelete={onDelete}
+          onFavorite={onFavorite}
+          favorite={favorite}
+        />
       </div>
       <Divider />
     </StyledMoreButton>
