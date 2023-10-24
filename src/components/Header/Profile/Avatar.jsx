@@ -1,9 +1,17 @@
 import { styled } from "styled-components";
-import avatarIcon from "../../../assets/images/avatar.png";
+import avatarIcon from "../../../assets/images/small-avatar-green.svg";
+import { useAppSelect } from "../../../hooks/redux";
 
-export const Avatar = () => (
-  <StyledAvatar avatarIcon={avatarIcon} className="clickable" />
-);
+export const Avatar = () => {
+  const { user } = useAppSelect((state) => state.auth);
+
+  return (
+    <StyledAvatar
+      avatarIcon={user?.photo?.length > 0 ? user?.photo : avatarIcon}
+      className="clickable"
+    />
+  );
+};
 
 const StyledAvatar = styled.div`
   width: 52px;

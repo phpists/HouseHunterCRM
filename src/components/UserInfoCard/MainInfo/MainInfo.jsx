@@ -6,11 +6,20 @@ import { LoginAllow } from "./LoginAllow";
 import { StatusCard } from "./StatusCard";
 import { AvatarBanner } from "./AvatarBanner";
 
-export const MainInfo = ({ avatarBanner }) => {
+export const MainInfo = ({
+  avatarBanner,
+  data,
+  onChangeField,
+  onRefreshData,
+}) => {
   return (
     <StyledMainInfo>
       {avatarBanner && <AvatarBanner />}
-      <Profile />
+      <Profile
+        data={data}
+        onChangeField={onChangeField}
+        onRefreshData={onRefreshData}
+      />
       <Divider />
       <BossSelect />
       <Divider />

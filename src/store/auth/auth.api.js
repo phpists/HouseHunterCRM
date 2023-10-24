@@ -77,6 +77,21 @@ export const auth = createApi({
         }),
       }),
     }),
+    editProfile: build.query({
+      query: ({ photo, ...data }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData(
+          {
+            mod: "profile",
+            action: "edit",
+            ...data,
+          },
+          { photo }
+        ),
+      }),
+    }),
   }),
 });
 
@@ -87,4 +102,5 @@ export const {
   useLazyGetUserQuery,
   useLazyForgotPasswordQuery,
   useGetPhonesCodesQuery,
+  useLazyEditProfileQuery,
 } = auth;

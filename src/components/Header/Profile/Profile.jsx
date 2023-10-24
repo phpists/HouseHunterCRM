@@ -7,10 +7,63 @@ import { EditProfile } from "./EditProfile/EditProfile";
 import { useState } from "react";
 import { UserInfoCard } from "../../UserInfoCard/UserInfoCard";
 import { NotificationsDropdown } from "./NotificationsDropdown/NotificationsDropdown";
+import { useAppSelect } from "../../../hooks/redux";
+import { useEffect } from "react";
+import { useActions } from "../../../hooks/actions";
+import {
+  useLazyEditProfileQuery,
+  useLazyGetUserQuery,
+} from "../../../store/auth/auth.api";
+import { handleResponse } from "../../../utilits";
+import cogoToast from "cogo-toast";
 
 export const Profile = () => {
   const [openEdit, setOpenEdit] = useState(false);
   const [openNotifications, setOpenNotifications] = useState(false);
+  const { user } = useAppSelect((state) => state.auth);
+  const [profileData, setProfileData] = useState(null);
+  const { loginUser } = useActions();
+  const [getProfile] = useLazyGetUserQuery();
+  const [editProfile] = useLazyEditProfileQuery();
+
+  const handleGetUserData = () => {
+    getProfile().then((resp) => {
+      loginUser(resp?.data?.data);
+    });
+  };
+
+  useEffect(() => {
+    setProfileData(user);
+  }, [user]);
+
+  const handleChangeField = (fieldName, value) => {
+    const newData = { ...profileData, [fieldName]: value };
+    setProfileData(newData);
+  };
+
+  const handleSave = () => {
+    const { first_name, last_name, email, phones, password, photo } =
+      profileData;
+
+    editProfile({
+      first_name,
+      last_name,
+      email,
+      phones_json: JSON.stringify(phones),
+      password: password?.length > 0 ? password : undefined,
+      photo,
+    }).then((resp) =>
+      handleResponse(resp, () => {
+        cogoToast.success("Зміни успішно", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        handleGetUserData();
+      })
+    );
+  };
+
+  const handleReset = () => setProfileData(user);
 
   return (
     <>
@@ -19,6 +72,11 @@ export const Profile = () => {
           onClose={() => setOpenEdit(false)}
           title="Особистий профіль"
           avatarBanner
+          data={profileData}
+          onChangeField={handleChangeField}
+          onRefreshData={handleGetUserData}
+          onSave={handleSave}
+          onReset={handleReset}
         />
       )}
       <StyledProfile

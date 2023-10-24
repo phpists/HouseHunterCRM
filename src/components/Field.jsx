@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import { ReactComponent as EditIcon } from "../assets/images/edit-company.svg";
 import { ReactComponent as CheckIcon } from "../assets/images/check.svg";
 import ReactInputMask from "react-input-mask";
+import { PhoneInput } from "./PhoneInput";
 
 export const Field = ({
   value,
@@ -14,8 +15,17 @@ export const Field = ({
   phone,
   placeholder,
   viewOnly,
+  phonesCodes,
+  phoneCode,
+  onChangePhoneCode,
+  onChange = () => null,
 }) => {
   const [edit, setEdit] = useState(false);
+
+  const handleChangePhoneCode = (cod) => {
+    onChangePhoneCode(cod);
+    onChange("");
+  };
 
   return (
     <StyleField
@@ -30,25 +40,34 @@ export const Field = ({
         {edit ? (
           <>
             {phone ? (
-              <ReactInputMask mask="+38(999)999-99-99" value={value} />
+              <PhoneInput
+                phoneCode={phoneCode}
+                phonesCodes={phonesCodes}
+                onChangePhoneCode={handleChangePhoneCode}
+                value={value}
+                onChange={onChange}
+                inputClassName="value"
+              />
             ) : textarea ? (
               <textarea
                 type="text"
                 className="value"
-                defaultValue={value}
+                value={value}
                 placeholder={placeholder}
+                onChange={(e) => onChange(e.target.value)}
               />
             ) : (
               <input
                 type="text"
                 className="value"
-                defaultValue={value}
+                value={value}
                 placeholder={placeholder}
+                onChange={(e) => onChange(e.target.value)}
               />
             )}
           </>
         ) : (
-          <div className="value">{value ?? placeholder}</div>
+          <div className="value">{value?.length > 0 ? value : placeholder}</div>
         )}
         <div className="label">{edit ? "Редагування" : label}</div>
       </div>

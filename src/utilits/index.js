@@ -43,6 +43,7 @@ export const handleToFormData = (data, files) => {
 
   if (files) {
     Object.entries(files).forEach((field) => {
+      console.log(field[0], field[1]);
       if (Array.isArray(field[1])) {
         field[1].forEach((f, i) => {
           formData.append(`${field[0]}[${i}]`, f);

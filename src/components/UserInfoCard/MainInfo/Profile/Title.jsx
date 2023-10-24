@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Title = () => <StyledTitle>Віталій Дуда</StyledTitle>;
+export const Title = ({ title }) => <StyledTitle>{title}</StyledTitle>;
 
 const StyledTitle = styled.div`
   color: #fff;
@@ -12,4 +12,8 @@ const StyledTitle = styled.div`
   font-weight: 100;
   line-height: 118%; /* 16.52px */
   letter-spacing: 0.28px;
+  width: 100px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;

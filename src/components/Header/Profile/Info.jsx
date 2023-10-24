@@ -25,6 +25,10 @@ const StyledInfo = styled.div`
     line-height: 118%;
     letter-spacing: 0.3px;
     margin-bottom: 2px;
+    width: 100px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   .email {
     text-align: right;
@@ -34,6 +38,10 @@ const StyledInfo = styled.div`
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
+    width: 100px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   @media (max-width: 1200px) {
     display: none;

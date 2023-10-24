@@ -1,15 +1,10 @@
 import { styled } from "styled-components";
 import { Button } from "../Button";
 
-export const Footer = () => (
+export const Footer = ({ onSave, onReset }) => (
   <StyledFooter className="flex items-center justify-between">
-    <Button title="Застосувати" onClick={null} className="btn enter-btn" />
-    <Button
-      title="Скасувати"
-      onClick={null}
-      className="btn cancel-btn"
-      disabled
-    />
+    <Button title="Застосувати" onClick={onSave} className="btn enter-btn" />
+    <Button title="Скасувати" onClick={onReset} className="btn cancel-btn" />
   </StyledFooter>
 );
 
@@ -25,11 +20,12 @@ const StyledFooter = styled.div`
     height: 31px;
     width: 100%;
     flex-shrink: 1;
+    background: rgba(255, 255, 255, 0.6);
+    &:hover {
+      background: rgba(255, 255, 255, 1);
+    }
   }
   .enter-btn {
     margin-right: 25px;
-  }
-  .cancel-btn {
-    background: rgba(255, 255, 255, 0.6);
   }
 `;

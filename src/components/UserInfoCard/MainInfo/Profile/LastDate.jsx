@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import timer from "../../../../assets/images/time.svg";
 
-export const LastDate = () => (
+export const LastDate = ({ data }) => (
   <StyledLastDate className="flex items-center">
     <img src={timer} alt="" />
-    Остання активність 9 хв тому
+    Остання активність {data}
   </StyledLastDate>
 );
 

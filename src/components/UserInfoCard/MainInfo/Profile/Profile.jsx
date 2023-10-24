@@ -5,14 +5,18 @@ import { Title } from "./Title";
 import { Subtitle } from "./Subtitle";
 import { RoleSelect } from "./RoleSelect/RoleSelect";
 
-export const Profile = () => (
+export const Profile = ({ data, onChangeField, onRefreshData }) => (
   <StyledProfile>
-    <LastDate />
+    <LastDate data={data?.last_active ?? ""} />
     <div className="flex items-center">
-      <Avatar />
+      <Avatar
+        photo={data?.photo}
+        onChangeField={onChangeField}
+        onRefreshData={onRefreshData}
+      />
       <div className="w-full">
         <div className="flex items-center justify-between">
-          <Title />
+          <Title title={`${data?.first_name ?? ""} ${data?.last_name ?? ""}`} />
           <RoleSelect />
         </div>
         <Subtitle />

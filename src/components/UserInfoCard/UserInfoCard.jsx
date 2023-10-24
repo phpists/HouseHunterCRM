@@ -9,7 +9,17 @@ import { Footer } from "./Footer";
 import { Workers } from "./Workers/Workers";
 import { FooterDelete } from "./FooterDelete";
 
-export const UserInfoCard = ({ onClose, title, avatarBanner, isDelete }) => {
+export const UserInfoCard = ({
+  onClose,
+  title,
+  avatarBanner,
+  isDelete,
+  data,
+  onChangeField,
+  onRefreshData,
+  onSave = () => null,
+  onReset = () => null,
+}) => {
   const controls = useAnimationControls();
 
   const handleClose = () => {
@@ -31,12 +41,21 @@ export const UserInfoCard = ({ onClose, title, avatarBanner, isDelete }) => {
       <Header onClose={handleClose} title={title} />
       <div className="modal-content">
         <SectionTitle title="Загальна інформація" />
-        <MainInfo avatarBanner={avatarBanner} />
+        <MainInfo
+          avatarBanner={avatarBanner}
+          data={data}
+          onChangeField={onChangeField}
+          onRefreshData={onRefreshData}
+        />
         <SectionTitle title="Працівники в підпорядкуванні" />
         <Workers />
         <SectionTitle title="Персональні дані" />
-        <PersonalData />
-        {isDelete ? <FooterDelete /> : <Footer />}
+        <PersonalData data={data} onChangeField={onChangeField} />
+        {isDelete ? (
+          <FooterDelete />
+        ) : (
+          <Footer onSave={onSave} onReset={onReset} />
+        )}
       </div>
     </StyledUserInfoCard>
   );
