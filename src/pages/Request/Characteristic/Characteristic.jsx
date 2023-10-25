@@ -111,6 +111,7 @@ export const Characteristic = ({ data, onChangeField, fields }) => {
             <Divider />
             <SelectTags
               label="Тип гаража"
+              placeholder="Оберіть тип гаража"
               notMultiSelect
               options={handleGetFieldsOptions(fields, "type_obj_garage")}
               value={data?.type_obj_garage}
@@ -125,6 +126,7 @@ export const Characteristic = ({ data, onChangeField, fields }) => {
             <Divider />
             <SelectTags
               label="Тип багатоповерхівки"
+              placeholder="Оберіть тип багатоповерхівки"
               notMultiSelect
               options={handleGetFieldsOptions(fields, "type_obj_apartment")}
               value={data?.type_obj_apartment}
@@ -139,6 +141,7 @@ export const Characteristic = ({ data, onChangeField, fields }) => {
             <Divider />
             <SelectTags
               label="Тип комерції"
+              placeholder="Оберіть тип комерції"
               notMultiSelect
               options={handleGetFieldsOptions(fields, "type_obj_commerce")}
               value={data?.type_obj_commerce}
@@ -153,6 +156,7 @@ export const Characteristic = ({ data, onChangeField, fields }) => {
             <Divider />
             <SelectTags
               label="Тип будинку"
+              placeholder="Оберіть тип будинку"
               notMultiSelect
               options={handleGetFieldsOptions(fields, "type_obj_house")}
               value={data?.type_obj_house}
@@ -167,6 +171,7 @@ export const Characteristic = ({ data, onChangeField, fields }) => {
             <Divider />
             <SelectTags
               label="Тип готелю"
+              placeholder="Оберіть тип готелю"
               notMultiSelect
               options={handleGetFieldsOptions(fields, "type_obj_hotel")}
               value={data?.type_obj_hotel}

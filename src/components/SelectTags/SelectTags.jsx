@@ -60,8 +60,6 @@ export const SelectTags = ({
               <div className={`value ${tagValue && "value-tag"}`}>
                 {initValue
                   ? initValue
-                  : placeholder
-                  ? placeholder
                   : !value
                   ? "Оберіть"
                   : options?.find((opt) => opt.value === value)?.title}
