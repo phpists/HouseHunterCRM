@@ -114,3 +114,17 @@ export const handleResponse = (
       });
   }
 };
+
+export const handleGetLocationAllPath = (locationsList, id, parentId, name) => {
+  const isParent = locationsList.find((parent) => parent.id === parentId);
+  if (!!isParent) {
+    return handleGetLocationAllPath(
+      locationsList,
+      id,
+      isParent?.id_parent,
+      `${name} => ${isParent?.name}`
+    );
+  } else {
+    return { value: id, title: name };
+  }
+};

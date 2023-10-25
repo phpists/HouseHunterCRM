@@ -87,26 +87,9 @@ export const Request = () => {
     if (id) {
       getRequest(id).then((resp) => {
         handleResponse(resp, () => {
-          setData({
-            id_client: resp?.data?.id_client,
-            id_rubric: resp?.data?.id_rubric,
-            id_location: resp?.data?.id_location,
-            type_obj_apartment: resp?.data?.type_obj_apartment,
-            price_min: resp?.data?.price_min,
-            price_max: resp?.data?.price_max,
-            room_min: resp?.data?.room_min,
-            room_max: resp?.data?.room_max,
-            address_storey: resp?.data?.address_storey,
-            storey_count: resp?.data?.storey_count,
-            area_total_min: resp?.data?.area_total_min,
-            area_total_max: resp?.data?.area_total_max,
-            comment: resp?.data?.comment,
-            not_actual: resp?.data?.not_actual,
-            dt_deadline: resp?.data?.dt_deadline,
-            deleted: resp?.data?.deleted,
-          });
-
+          setData(resp?.data);
           setFavorite(resp?.data?.favorite);
+          handleGetRubricsFields(resp?.data?.id_rubric);
         });
       });
     }

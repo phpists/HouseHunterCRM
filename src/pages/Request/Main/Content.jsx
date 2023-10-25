@@ -7,7 +7,7 @@ import {
   useGetLocationsQuery,
   useGetRubricsQuery,
 } from "../../../store/requests/requests.api";
-import { handleChangeRange } from "../../../utilits";
+import { handleChangeRange, handleGetLocationAllPath } from "../../../utilits";
 import { useEffect, useState } from "react";
 
 export const Content = ({ data, onChangeField }) => {
@@ -15,39 +15,22 @@ export const Content = ({ data, onChangeField }) => {
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
 
-  const handleFormatLocations = (formatedLocations = [], level = 0) => {
-    if (level >= 0) {
-      locationsList
-        .filter(({ id }) => Number(id) === level)
-        .forEach((parent) => {
-          const childrenlocations = locationsList.filter(
-            ({ id_parent }) => Number(id_parent) === level
-          );
+  const handleFormatLocations = () => {
+    const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
+    const locations = Object.entries(locationsList)
+      .sort((a, b) => Number(b[1].id_parent) - Number(a[1].id_parent))
+      ?.map((loc) => loc[1])
+      .filter((loc) => Number(loc?.id_parent) !== 0)
+      .map(({ id, id_parent, name }) => {
+        return handleGetLocationAllPath(locList, id, id_parent, name);
+      });
 
-          childrenlocations.forEach((loc) => {
-            if (Number(loc.id) !== 0) {
-              formatedLocations = [
-                ...formatedLocations,
-                {
-                  title: `${parent.name} => ${loc.name}`,
-                  value: loc.id,
-                },
-              ];
-            }
-          });
-        });
-      handleFormatLocations(formatedLocations, level - 1);
-    } else {
-      setFormatedLocations(formatedLocations);
-    }
+    setFormatedLocations(locations);
   };
 
   useEffect(() => {
     if (locationsList) {
-      const lastParentId = Math.max(
-        ...locationsList?.map(({ id_parent }) => Number(id_parent))
-      );
-      handleFormatLocations([], lastParentId);
+      handleFormatLocations();
     }
   }, [locationsList]);
 

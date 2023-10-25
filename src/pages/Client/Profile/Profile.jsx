@@ -13,15 +13,27 @@ import { useParams } from "react-router-dom";
 import cogoToast from "cogo-toast";
 import { handleRemovePhoneMask, handleResponse } from "../../../utilits";
 import { Footer } from "./Footer";
+import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
 
 export const Profile = ({ className, data, onRefreshClientData }) => {
   const { id } = useParams();
   const [updatedData, setUpdatedData] = useState({});
   const [editClient] = useLazyEditClientQuery();
   const [loading, setLoading] = useState(false);
+  const { data: phonesCodes } = useGetPhonesCodesQuery();
 
   useEffect(() => {
-    setUpdatedData(data);
+    setUpdatedData(
+      data
+        ? {
+            ...data,
+            phone: data?.phone.map(({ code, ...phoneData }) => ({
+              ...phoneData,
+              code: phonesCodes.find((phone) => phone.code === code)?.id,
+            })),
+          }
+        : null
+    );
   }, [data]);
 
   const handleChangeField = (fieldName, value) =>

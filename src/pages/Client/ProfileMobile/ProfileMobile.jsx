@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import cogoToast from "cogo-toast";
 import { handleRemovePhoneMask, handleResponse } from "../../../utilits";
 import { useRef } from "react";
+import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
 
 export const ProfileMobile = ({ data, onRefreshClientData }) => {
   const [open, setOpen] = useState(false);
@@ -19,9 +20,20 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
   const lastData = useRef({});
   const [editClient] = useLazyEditClientQuery();
   const [loading, setLoading] = useState(false);
+  const { data: phonesCodes } = useGetPhonesCodesQuery();
 
   useEffect(() => {
-    setUpdatedData(data);
+    setUpdatedData(
+      data
+        ? {
+            ...data,
+            phone: data?.phone.map(({ code, ...phoneData }) => ({
+              ...phoneData,
+              code: phonesCodes.find((phone) => phone.code === code)?.id,
+            })),
+          }
+        : null
+    );
     lastData.current = data;
   }, [data]);
 
@@ -79,7 +91,10 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
               classNameContent="phones-wrapper"
               phones={
                 updatedData?.phone?.map(
-                  ({ code, phone }) => `${code}${phone}`
+                  ({ code, phone }) =>
+                    `${
+                      phonesCodes.find((phone) => phone?.id === code)?.code
+                    }${phone}`
                 ) ?? []
               }
             />
