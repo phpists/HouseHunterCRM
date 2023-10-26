@@ -3,17 +3,30 @@ import { Divider } from "./Divider";
 import { Phones } from "../../../components/Phones/Phones";
 import { Socmedia } from "../../../components/Socmedia";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useLazyGetClientQuery } from "../../../store/clients/clients.api";
 
 export const Contacts = () => {
+  const { clientId } = useParams();
+  const [getClient, { data }] = useLazyGetClientQuery();
   const [viber, setViber] = useState(false);
   const [telegram, setTelegram] = useState(false);
+
+  const handleGetClient = () => getClient(clientId);
+
+  useEffect(() => {
+    handleGetClient();
+  }, [clientId]);
 
   return (
     <StyledContacts className="hide-scroll">
       <div className="title">Контакти клієнта</div>
       <div className="flex items-center contacts-wrapper">
         <div className="client-info">
-          <div className="name">Юрій Олексійович</div>
+          <div className="name">
+            {data?.first_name} {data?.last_name}
+          </div>
           <div className="label">Клієнт</div>
         </div>
         <Divider />
@@ -33,7 +46,10 @@ export const Contacts = () => {
               open
             />
           </div>
-          <Phones top />
+          <Phones
+            top
+            phones={data?.phone?.map(({ code, phone }) => `${code}${phone}`)}
+          />
         </div>
       </div>
     </StyledContacts>

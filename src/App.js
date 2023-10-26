@@ -73,8 +73,8 @@ export const App = () => {
               <Route path="/empty" element={<Dashboard />} />
               <Route path="/clients" element={<Clients />} />
               <Route path="/client/:id" element={<Client />} />
-              <Route path="/object/:id" element={<Object />} />
-              <Route path="/object" element={<Object />} />
+              <Route path="/create-object/:clientId" element={<Object />} />
+              <Route path="/edit-object/:clientId/:id" element={<Object />} />
               <Route path="/objects" element={<Objects />} />
               <Route path="/create-request/:clientId" element={<Request />} />
               <Route path="/edit-request/:clientId/:id" element={<Request />} />

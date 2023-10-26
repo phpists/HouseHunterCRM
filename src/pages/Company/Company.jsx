@@ -32,7 +32,6 @@ export const Company = () => {
 
   const handlePay = () => {
     setPaying(true);
-    console.log("here");
     setTimeout(() => {
       setPaying(false);
       setTarifSelected(null);

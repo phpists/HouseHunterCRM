@@ -20,9 +20,7 @@ export const Object = ({ className, id }) => {
   const [fields, setFields] = useState([]);
 
   useEffect(() => {
-    console.log("here", id);
     if (id) {
-      console.log("here");
       getRequest(id).then((resp) => {
         handleResponse(resp, () => {
           setData({

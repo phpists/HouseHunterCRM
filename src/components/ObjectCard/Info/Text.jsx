@@ -1,18 +1,13 @@
 import styled from "styled-components";
 
-export const Text = () => {
+export const Text = ({ data }) => {
   return (
     <StyledText className="hide-scroll clickable">
       <div className="title clickable">
-        Оренда 1 кім квартири п. орлика Дрогобич
+        {data?.title?.length > 0 ? data?.title : "-"}
       </div>
       <div className="descr clickable">
-        Оренда 1- кімнатної квартири кухня студія по вул. Шота Руставеллі. В
-        квартирі є вся необхідна техніка та меблі, гарна, затишна. Розглядають
-        всіх порядних орендарів, без дітей та домашніх улюбленців. Оренда 1-
-        кімнатної квартири кухня студія по вул. Шота Руставеллі. В квартирі є
-        вся необхідна техніка та меблі, гарна, затишна. Розглядають всіх
-        порядних орендарів, без дітей та домашніх улюбленців.
+        {data?.description?.length > 0 ? data?.description : "-"}
       </div>
     </StyledText>
   );
@@ -20,7 +15,7 @@ export const Text = () => {
 
 const StyledText = styled.div`
   width: 400px;
-  height: 130px;
+  max-height: 130px;
   overflow: auto;
   margin-bottom: 15px;
   .title {
@@ -51,6 +46,7 @@ const StyledText = styled.div`
   }
   @media (min-width: 1400px) {
     width: 240px;
+    height: 130px;
   }
   @media (min-width: 1600px) {
     width: 400px;

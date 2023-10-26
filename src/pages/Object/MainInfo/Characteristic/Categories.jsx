@@ -1,8 +1,16 @@
 import { styled } from "styled-components";
 import { Divider } from "../Divider";
 import { Option } from "../../../../components/Option";
+import {
+  handleCheckIsField,
+  handleGetFieldsOptions,
+} from "../../../../utilits";
+import React from "react";
+import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.api";
 
-export const Categories = () => {
+export const Categories = ({ data, onChangeField, fields }) => {
+  const { data: commentsToFields } = useGetCommentsToFieldsQuery();
+
   const Tech = [
     { title: "Електрочайник", value: "" },
     { title: "Кавомашина", value: "" },
@@ -16,103 +24,100 @@ export const Categories = () => {
     { title: "Холодильник", value: "Праска" },
   ];
 
-  const Media = [
-    { title: "Wi-Fi", value: "" },
-    { title: "Телевизор", value: "" },
-    { title: "Швидкісний інтернет", value: "" },
-    { title: "Кабельне, цифрове ТБ", value: "" },
-  ];
+  const Additional = fields
+    ? [
+        ...(handleCheckIsField(fields, "label_without_animals")
+          ? [
+              {
+                title: "Без тварин",
+                name: "label_without_animals",
+              },
+            ]
+          : []),
+        ...(handleCheckIsField(fields, "label_without_children")
+          ? [
+              {
+                title: "Без дітей",
+                name: "label_without_children",
+              },
+            ]
+          : []),
+        ...(handleCheckIsField(fields, "label_without_foreigners")
+          ? [
+              {
+                title: "Без іноземців",
+                name: "label_without_foreigners",
+              },
+            ]
+          : []),
+        ...(handleCheckIsField(fields, "label_without_students")
+          ? [
+              {
+                title: "Без студентів",
+                name: "label_without_students",
+              },
+            ]
+          : []),
+      ]
+    : [];
 
-  const Comfort = [
-    { title: "Кондиціонер", value: "" },
-    { title: "Грати на вікнах", value: "" },
-    { title: "Сигналізація", value: "" },
-    { title: "Пожежна сигналізація", value: "" },
-    { title: "Відеоспостереження", value: "" },
-    { title: "Консьєрж", value: "" },
-    { title: "Панорамні вікна", value: "" },
-    { title: "Кабельне, цифрове ТБ", value: "" },
-    { title: "Гостевой паркинг", value: "" },
-    { title: "Лифт", value: "" },
-    { title: "Хоз. помещение", value: "" },
-    { title: "Грузовой лифт", value: "" },
-    { title: "Підігрів підлог", value: "" },
-    { title: "Умный дом", value: "" },
-  ];
+  const handleToggleOption = (opt, categoryName) => {
+    const categoryData =
+      data[categoryName]?.length > 0 && data[categoryName] !== "0"
+        ? JSON.parse(data[categoryName])
+        : [];
+    const isActive = !!categoryData?.find((o) => o === opt);
+    const updatedValue = isActive
+      ? categoryData.filter((o) => o !== opt)
+      : [...categoryData, opt];
 
-  const Comunication = [
-    { title: "Газ", value: "" },
-    { title: "Електрика", value: "" },
-    { title: "Вивіз відходів", value: "" },
-    { title: "Центр. водопровід", value: "" },
-    { title: "Канализация септик", value: "" },
-    { title: "Скважина", value: "" },
-  ];
-
-  const Infrasture = [
-    { title: "Дитячий садок", value: "" },
-    { title: "Школа", value: "" },
-    { title: "Бювет", value: "" },
-    { title: "Зупинка транспорту", value: "" },
-    { title: "Метро", value: "" },
-    { title: "Ринок", value: "" },
-    { title: "Магазин, кіоск", value: "" },
-    { title: "Супермаркет, ТРЦ", value: "" },
-    { title: "Парк, зелена зона", value: "" },
-    { title: "Аптека", value: "" },
-    { title: "Лікарня, поліклініка", value: "" },
-    { title: "Центр міста", value: "" },
-    { title: "Ресторан, кафе", value: "" },
-    { title: "Відділення пошти", value: "" },
-  ];
-
-  const Additional = [
-    { title: "Тільки сім'ям", value: "" },
-    { title: "З господарями", value: "" },
-    { title: "Можна студентам", value: "" },
-    { title: "Можна іноземцям", value: "" },
-    { title: "Можна з дітьми", value: "" },
-    { title: "Можна з вихованцями", value: "" },
-    { title: "Можна курити", value: "" },
-    { title: "Можна с тваринами", value: "" },
-  ];
+    onChangeField(categoryName, JSON.stringify(updatedValue));
+  };
 
   return (
     <StyledCategories>
-      <Divider title="Побутова техніка" className="first-divider" />
-      <div className="options">
-        {Tech.map((opt, i) => (
-          <Option key={i} title={opt.title} className="opt" />
-        ))}
-      </div>
-      <Divider title="Мультимедіа" />
-      <div className="options">
-        {Media.map((opt, i) => (
-          <Option key={i} title={opt.title} className="opt" />
-        ))}
-      </div>
-      <Divider title="Комфорт" />
-      <div className="options">
-        {Comfort.map((opt, i) => (
-          <Option key={i} title={opt.title} className="opt" />
-        ))}
-      </div>
-      <Divider title="Комунікації" />
-      <div className="options">
-        {Comunication.map((opt, i) => (
-          <Option key={i} title={opt.title} className="opt" />
-        ))}
-      </div>
-      <Divider title="Інфраструктура (до 500 м.)" />
-      <div className="options">
-        {Infrasture.map((opt, i) => (
-          <Option key={i} title={opt.title} className="opt" />
-        ))}
-      </div>
+      {fields?.other_field && Object.entries(fields?.other_field)?.length > 0
+        ? Object.entries(fields?.other_field)
+            ?.filter(
+              (category) =>
+                Object.entries(category[1]?.field_option)?.length > 0
+            )
+            ?.map((category, i) => (
+              <React.Fragment key={i}>
+                <Divider title={commentsToFields?.object[category[0]]} />
+                <div className="options">
+                  {Object.entries(category[1]?.field_option)?.map((opt, j) => (
+                    <Option
+                      key={j}
+                      title={opt[1]}
+                      className="opt"
+                      active={
+                        data[category[0]]?.length > 0 &&
+                        data[category[0]] !== "0"
+                          ? !!JSON.parse(data[category[0]])?.find(
+                              (o) => o === opt[0]
+                            )
+                          : false
+                      }
+                      onSelect={() => handleToggleOption(opt[0], category[0])}
+                    />
+                  ))}
+                </div>
+              </React.Fragment>
+            ))
+        : null}
       <Divider title="Додатково" />
       <div className="options">
         {Additional.map((opt, i) => (
-          <Option key={i} title={opt.title} className="opt" />
+          <Option
+            key={i}
+            title={opt.title}
+            className="opt"
+            active={data[opt.name] === 1}
+            onSelect={() =>
+              onChangeField(opt.name, data[opt.name] === 1 ? 0 : 1)
+            }
+          />
         ))}
       </div>
     </StyledCategories>
@@ -140,6 +145,7 @@ const StyledCategories = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3px 4px;
+    grid-auto-rows: max-content;
   }
   .opt {
     border: none;

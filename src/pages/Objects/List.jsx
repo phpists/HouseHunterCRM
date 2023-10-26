@@ -1,15 +1,15 @@
 import styled from "styled-components";
 import { ObjectCard } from "../../components/ObjectCard/ObjectCard";
 
-export const List = ({ selected, onSelect }) => {
-  const data = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+export const List = ({ selected, onSelect, data }) => {
   return (
     <StyledList className="hide-scroll">
       {data.map((d, i) => (
         <ObjectCard
           key={i}
-          selected={!!selected.find((j) => j === 1 + i)}
-          onSelect={() => onSelect(1 + i)}
+          selected={!!selected.find((j) => j === d?.id)}
+          onSelect={() => onSelect(d?.id)}
+          data={d}
         />
       ))}
     </StyledList>

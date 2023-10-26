@@ -2,65 +2,71 @@ import { styled } from "styled-components";
 import { Divider } from "../Divider";
 import { ProfileField } from "../../../../components/ProfileField";
 import { Select } from "../../../../components/Select/Select";
+import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.api";
 
-export const Info = () => {
+export const Info = ({ fields, data, onChangeField }) => {
+  const { data: commentsToFields } = useGetCommentsToFieldsQuery();
+  const notAllowedFields = [
+    "comment",
+    "description",
+    "id_client",
+    "id_location",
+    "id_rubric",
+    "label_without_animals",
+    "label_without_children",
+    "label_without_foreigners",
+    "label_without_students",
+    "title",
+    "obj_is_actual",
+    "obj_is_actual_dt",
+    "photos_json",
+    "price",
+    "price_EUR",
+    "price_UAH",
+    "price_USD",
+    "id_location_street",
+    "is_actual_to_dt_end_agreement",
+    "address_house_number",
+    "price_history_json",
+    "price_for",
+    "price_currency",
+  ];
+
   return (
     <StyledCategories>
       <Divider title="Характеристики" className="first-divider" />
       <div className="fields">
-        <Select
-          value="Житловий фонд від 2011"
-          label="Тип будинку"
-          labelActive="Тип будинку"
-          hideArrowDefault
-        />
-        <div className="field-group">
-          <ProfileField
-            value="167 м2"
-            label="Загальна площа"
-            className="field"
-            grey
-          />
-          <ProfileField
-            value="45 м2"
-            label="Площа кухні / теріторії"
-            className="field"
-            grey
-          />
-        </div>
-        <Select
-          value="Від власника"
-          label="Тип угоди"
-          labelActive="Тип угоди"
-          hideArrowDefault
-        />
-        <Select
-          value="Новобудови"
-          label="Тип нерухомості"
-          labelActive="Тип нерухомості"
-          hideArrowDefault
-        />
-        <Select
-          value="Цегла"
-          label="Тип стін"
-          labelActive="Тип стін"
-          hideArrowDefault
-        />
-        <div className="field-group">
-          <ProfileField value="22-й" label="Поверх" className="field" grey />
-          <ProfileField
-            value="45"
-            label="Поверховість"
-            className="field"
-            grey
-          />
-        </div>
-        <ProfileField
-          value="4 кімнати"
-          label="Кількість кімнат"
-          className="field"
-          grey
-        />
+        {fields?.main_field
+          ? Object.entries(fields?.main_field)
+              .filter((field) => !notAllowedFields?.find((f) => f === field[0]))
+              .map((field) => {
+                if (typeof field[1]?.field_option === "object") {
+                  return (
+                    <Select
+                      value={data[field[0]]}
+                      options={Object.entries(field[1]?.field_option)?.map(
+                        (opt) => ({ value: opt[0], title: opt[1] })
+                      )}
+                      onChange={(val) => onChangeField(field[0], val)}
+                      label={commentsToFields?.object[field[0]]}
+                      labelActive={commentsToFields?.object[field[0]]}
+                      hideArrowDefault
+                    />
+                  );
+                } else {
+                  return (
+                    <ProfileField
+                      placeholder="Введіть значення"
+                      value={data[field[0]]}
+                      onChange={(val) => onChangeField(field[0], val)}
+                      label={commentsToFields?.object[field[0]]}
+                      className="field"
+                      grey
+                    />
+                  );
+                }
+              })
+          : null}
       </div>
     </StyledCategories>
   );

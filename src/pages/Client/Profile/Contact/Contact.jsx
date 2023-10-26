@@ -32,7 +32,7 @@ export const Contact = ({ phones, email, onChangeField }) => {
   };
 
   const handleChangePhone = (index, fieldName, value) =>
-    handleChangeField(index, fieldName, value);
+    value && handleChangeField(index, fieldName, value);
 
   return (
     <StyledContact>

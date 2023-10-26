@@ -20,6 +20,7 @@ const StyledTag = styled.div`
   font-weight: 300;
   line-height: 1;
   letter-spacing: 0.22px;
+  height: max-content;
   img {
     margin-right: 4px;
     height: 12px;

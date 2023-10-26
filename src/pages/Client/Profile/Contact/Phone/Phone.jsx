@@ -66,7 +66,7 @@ const StyledPhone = styled.div`
   .phone-input {
     width: 180px !important;
   }
-  .phone-input .value {
-    width: 140px;
+  .phone-input input.value {
+    width: 80px;
   }
 `;

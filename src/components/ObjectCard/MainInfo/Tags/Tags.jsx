@@ -7,17 +7,17 @@ import boxIcon from "../../../../assets/images/tag-box-select.svg";
 import brickIcon from "../../../../assets/images/tag-brick.svg";
 import { Tag } from "./Tag";
 
-export const Tags = () => {
+export const Tags = ({ data }) => {
   const TAGS = [
-    { title: "Оренда комерційної нерухомості" },
-    { title: "Львів - Личаківській район ", icon: homeIcon },
-    { title: "2 кімнати", icon: doorIcon },
-    { title: "108 м²", icon: expandIcon },
-    { title: "8 з 18", icon: stairsIcon },
-    { title: "108 м²", icon: boxIcon },
-    { title: "Купівля-продаж" },
-    { title: "Хрущьовка", icon: homeIcon },
-    { title: "Цегла", icon: brickIcon },
+    { title: data?.rubric_name },
+    { title: data?.location_name, icon: homeIcon },
+    { title: `${data?.rooms} кімнати`, icon: doorIcon },
+    { title: `${data?.area_total} м²`, icon: expandIcon },
+    { title: `${data?.address_storey}`, icon: stairsIcon },
+    { title: `${data?.area_plot_sotka} м²`, icon: boxIcon },
+    // { title: "Купівля-продаж" },
+    // { title: "Хрущьовка", icon: homeIcon },
+    // { title: "Цегла", icon: brickIcon },
   ];
 
   return (
@@ -32,6 +32,6 @@ export const Tags = () => {
 const StyledTags = styled.div`
   gap: 4px;
   width: 200px;
-  height: 140px;
+  max-height: 140px;
   overflow: auto;
 `;

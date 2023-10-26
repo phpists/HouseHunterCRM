@@ -5,18 +5,76 @@ import { SendClientButton } from "./SendClientButton";
 import { IconButton } from "../../../components/IconButton";
 import { ReactComponent as StarIcon } from "../../../assets/images/card-star.svg";
 import { ReactComponent as RemoveIcon } from "../../../assets/images/remove.svg";
+import { Confirm } from "../../../components/Confirm/Confirm";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { handleResponse } from "../../../utilits";
+import cogoToast from "cogo-toast";
+import {
+  useLazyAddToFavoritesQuery,
+  useLazyDeleteObjectQuery,
+} from "../../../store/objects/objects.api";
 
-export const Header = () => {
+export const Header = ({ onSave, favorite, onToggleFavorite }) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteObject] = useLazyDeleteObjectQuery();
+  const [addToFavorites] = useLazyAddToFavoritesQuery();
+
+  const handleDeleteRequest = () => {
+    deleteObject([id]).then((resp) =>
+      handleResponse(resp, () => {
+        cogoToast.success("Заявку успішно видалено!", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        navigate("/objects");
+      })
+    );
+  };
+
+  const handleToggleFavorites = () => {
+    addToFavorites(id).then((resp) => {
+      handleResponse(resp, () => {
+        onToggleFavorite();
+        cogoToast.success("Статус успішно змінено!", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      });
+    });
+  };
+
   return (
-    <StyledHeader className="flex items-center justify-between">
-      <BackButton />
-      <div className="btns-header flex items-center">
-        <SaveButton />
-        <SendClientButton />
-        <IconButton Icon={StarIcon} className="icon-btn" />
-        <IconButton Icon={RemoveIcon} className="icon-btn remove-btn" />
-      </div>
-    </StyledHeader>
+    <>
+      {" "}
+      {deleteModal && (
+        <Confirm
+          title="Видалити об'єкт?"
+          onClose={() => setDeleteModal(false)}
+          onSubmit={handleDeleteRequest}
+        />
+      )}
+      <StyledHeader className="flex items-center justify-between">
+        <BackButton />
+        <div className="btns-header flex items-center">
+          <SaveButton onClick={onSave} />
+          <SendClientButton />
+          <IconButton
+            Icon={StarIcon}
+            className="icon-btn"
+            onClick={handleToggleFavorites}
+            active={favorite}
+          />
+          <IconButton
+            Icon={RemoveIcon}
+            className="icon-btn remove-btn"
+            onClick={() => setDeleteModal(true)}
+          />
+        </div>
+      </StyledHeader>
+    </>
   );
 };
 

@@ -1,20 +1,23 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 
-export const TypeSelect = () => {
-  const options = ["За об’єкт", "За м²"];
-  const [active, setActive] = useState(0);
+export const TypeSelect = ({ value, onChange }) => {
+  const options = [
+    { title: "За об’єкт", value: 4 },
+    { title: "За м²", value: 1 },
+  ];
+
   return (
     <StyledTypeSelect>
       {options.map((opt, i) => (
         <div
           key={i}
           className={`flex items-end justify-center ${
-            active === i && "active"
+            value === opt.value && "active"
           }`}
-          onClick={() => setActive(i)}
+          onClick={() => onChange(opt.value)}
         >
-          {opt}
+          {opt.title}
         </div>
       ))}
     </StyledTypeSelect>

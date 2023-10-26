@@ -29,15 +29,16 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
             ...data,
             phone: data?.phone.map(({ code, ...phoneData }) => ({
               ...phoneData,
-              code: phonesCodes.find((phone) => phone.code === code)?.id,
+              code: phonesCodes?.find((phone) => phone.code === code)?.id,
             })),
           }
         : null
     );
   }, [data]);
 
-  const handleChangeField = (fieldName, value) =>
+  const handleChangeField = (fieldName, value) => {
     setUpdatedData({ ...updatedData, [fieldName]: value });
+  };
 
   const handleSaveChanges = () => {
     setLoading(true);

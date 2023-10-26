@@ -1,19 +1,29 @@
 import { styled } from "styled-components";
 import { ProfileField } from "../../../components/ProfileField";
 
-export const Text = () => {
+export const Text = ({ data, onChangeField }) => {
   return (
     <StyledText className="hide-scroll">
-      <ProfileField value="Заголовок" big className="title" />
       <ProfileField
-        value="ЗаголЗдам затишну, 2-к квартиру Оболонський проспект.м.Героїв Дніпра - 2 хвилини пішки!!Квартира у відмінному стані.Розглядаємо орендарів - без дітей та без домашніх тварин.Повністю укомплектована меблями та побутовою технікою.В комнаті ліжко, диван, стінка, шафа-купе. Домофон.овок"
+        value={data?.title}
+        placeholder="Введіть заголовок"
+        onChange={(val) => onChangeField("title", val)}
+        big
+        className="title"
+      />
+      <ProfileField
+        value={data?.description}
+        placeholder="Введіть опис"
+        onChange={(val) => onChangeField("description", val)}
         textarea
         className="title"
         contentHeight
         label="Опис"
       />
       <ProfileField
-        value="Дуже топова хата, Юра треба брати вже"
+        value={data?.comment}
+        placeholder="Введіть коментар"
+        onChange={(val) => onChangeField("comment", val)}
         label="Коментар"
         className="title"
       />

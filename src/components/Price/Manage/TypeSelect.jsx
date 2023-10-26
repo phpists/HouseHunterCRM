@@ -1,22 +1,29 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 
-export const TypeSelect = () => {
-  const options = ["За об’єкт", "За м²"];
-  const [active, setActive] = useState(0);
+export const TypeSelect = ({ priceFor }) => {
+  const options = [
+    { title: "За м²", value: 1 },
+    { title: "За Сотку", value: 2 },
+    { title: "За гектар", value: 3 },
+    { title: "За об’єкт", value: 4 },
+  ];
+
   return (
     <StyledTypeSelect>
-      {options.map((opt, i) => (
-        <div
-          key={i}
-          className={`flex items-end justify-center ${
-            active === i && "active"
-          }`}
-          onClick={() => setActive(i)}
-        >
-          {opt}
-        </div>
-      ))}
+      {options
+        .filter((opt) => priceFor === opt.value)
+        .map((opt, i) => (
+          <div
+            key={i}
+            className={`flex items-end justify-center ${
+              priceFor === opt.value && "active"
+            }`}
+            //   onClick={() => setActive(i)}
+          >
+            {opt.title}
+          </div>
+        ))}
     </StyledTypeSelect>
   );
 };

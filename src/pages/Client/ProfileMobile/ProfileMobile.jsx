@@ -29,7 +29,7 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
             ...data,
             phone: data?.phone.map(({ code, ...phoneData }) => ({
               ...phoneData,
-              code: phonesCodes.find((phone) => phone.code === code)?.id,
+              code: phonesCodes?.find((phone) => phone.code === code)?.id,
             })),
           }
         : null
@@ -93,7 +93,7 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
                 updatedData?.phone?.map(
                   ({ code, phone }) =>
                     `${
-                      phonesCodes.find((phone) => phone?.id === code)?.code
+                      phonesCodes?.find((phone) => phone?.id === code)?.code
                     }${phone}`
                 ) ?? []
               }

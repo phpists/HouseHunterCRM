@@ -1,10 +1,20 @@
 import { styled } from "styled-components";
 import { Counter } from "./Counter";
 import { Tag } from "./Tag";
+import noPhoto from "../../../../assets/images/no-photo.svg";
 
 export const MainPhoto = ({ photo, photosCount }) => (
-  <StyledMainPhoto photo={photo} photosCount={photosCount}>
-    <Counter />
+  <StyledMainPhoto
+    photo={
+      photo?.type
+        ? URL.createObjectURL(photo)
+        : photo?.length > 0
+        ? photo
+        : noPhoto
+    }
+    photosCount={photosCount}
+  >
+    {photosCount > 1 && <Counter photosCount={photosCount}/>}
     <Tag />
   </StyledMainPhoto>
 );

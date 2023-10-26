@@ -1,12 +1,14 @@
 import { useLocation, useParams } from "react-router-dom";
 import { styled } from "styled-components";
 import { useAppSelect } from "../../hooks/redux";
+import { useEffect } from "react";
 
 export const Subtitle = () => {
   const { pathname } = useLocation();
   const { id } = useParams();
   const { clientsCount } = useAppSelect((state) => state.clients);
   const { requestsCount } = useAppSelect((state) => state.requests);
+  const { objectsCount } = useAppSelect((state) => state.objects);
 
   const handleGetEnding = (val) => (val > 0 && val < 8 ? "а" : "ів");
 
@@ -19,7 +21,7 @@ export const Subtitle = () => {
       case "/requests":
         return `${requestsCount} запит${handleGetEnding(requestsCount)}`;
       case "/objects":
-        return "Понад 1 000 нових";
+        return `${objectsCount} об'єктів`;
       case "/note":
         return "345 нових об'єктів із трьох темплейтів";
       case "/calendar":
@@ -35,8 +37,14 @@ export const Subtitle = () => {
       default:
         return pathname.split("/")[1] === "client"
           ? "Створенний  03.10.2022  13:19"
-          : pathname.split("/")[1] === "object"
-          ? `${id ? "Редагування" : "Створення"} об'єкта`
+          : pathname.split("/")[1] === "create-request"
+          ? "Створення запиту"
+          : pathname.split("/")[1] === "edit-request"
+          ? `Редагування запиту`
+          : pathname.split("/")[1] === "create-object"
+          ? "Створення об'єкта"
+          : pathname.split("/")[1] === "edit-object"
+          ? `Редагування об'єкта`
           : "";
     }
   };

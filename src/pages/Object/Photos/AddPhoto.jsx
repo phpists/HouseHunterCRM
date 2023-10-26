@@ -6,7 +6,6 @@ export const AddPhoto = ({ small, onAdd }) => {
     <StyledAddPhoto
       className="flex flex-col items-center justify-center add-btn"
       small={small}
-      onClick={onAdd}
     >
       <div className="title flex items-end">
         <PlusIcon /> Додати файл
@@ -14,6 +13,14 @@ export const AddPhoto = ({ small, onAdd }) => {
       <div className="subtitle">
         Перетягніть або завантажте будь-який файл розміром не більше 30 МБ
       </div>
+      <input
+        type="file"
+        name=""
+        id=""
+        accept="image/png, image/jpg, image/jpeg"
+        value=""
+        onChange={(e) => onAdd(e.target.files[0])}
+      />
     </StyledAddPhoto>
   );
 };
@@ -26,6 +33,7 @@ const StyledAddPhoto = styled.div`
   height: 87px;
   transition: all 0.3s;
   cursor: pointer;
+  position: relative;
   .title {
     color: #fff;
     font-family: Overpass;
@@ -58,6 +66,16 @@ const StyledAddPhoto = styled.div`
     transition: all 0.3s;
     overflow: hidden;
   }
+  input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
   &:hover {
     background: rgba(255, 255, 255, 0.15);
     svg {

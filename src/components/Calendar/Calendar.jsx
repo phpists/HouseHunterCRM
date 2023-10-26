@@ -3,8 +3,7 @@ import { styled } from "styled-components";
 import ReactCalendar from "react-calendar";
 import { Header } from "./Header";
 
-export const Calendar = () => {
-  const [value, onChange] = useState(new Date());
+export const Calendar = ({ value = null, onChange = () => null }) => {
   const [loading, setLoading] = useState(false);
   const handleChangeMonth = (count) => {
     setLoading(true);

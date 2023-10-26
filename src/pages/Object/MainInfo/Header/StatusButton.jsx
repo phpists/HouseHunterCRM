@@ -13,14 +13,12 @@ const TYPES = {
     color: "#FF1D1D",
   },
 };
-export const StatusButton = ({ type }) => {
-  const [active, setActive] = useState(false);
-
+export const StatusButton = ({ type, active, onChange }) => {
   return (
     <StyledStatusButton
       type={TYPES[type]}
       className={`flex items-center justify-center ${active && "active"}`}
-      onClick={() => setActive(!active)}
+      onClick={onChange}
     >
       {TYPES[type].title}
     </StyledStatusButton>

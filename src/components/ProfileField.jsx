@@ -20,6 +20,7 @@ export const ProfileField = ({
   phonesCodes,
   phoneCode,
   onChangePhoneCode,
+  readOnly,
 }) => {
   const [active, setActive] = useState(false);
   const textareaRef = useRef(null);
@@ -48,14 +49,16 @@ export const ProfileField = ({
 
   return (
     <StyledProfileField
-      onClick={() => !active && setActive(true)}
+      onClick={() => !active && !readOnly && setActive(true)}
       active={active}
       password={password}
       className={`${className} ${active && "active"}`}
       grey={grey}
       big={big}
     >
-      <CheckboxIcon onClick={handleToggleActive} className="check-icon" />
+      {!readOnly && (
+        <CheckboxIcon onClick={handleToggleActive} className="check-icon" />
+      )}
       {active ? (
         <>
           {phone ? (
@@ -101,7 +104,9 @@ export const ProfileField = ({
       {!big && (
         <>
           <div className="label">{active ? "Змінити" : label}</div>
-          <div className="label label-hover">Змінити</div>
+          <div className="label label-hover">
+            {readOnly ? label : "Змінити"}
+          </div>
         </>
       )}
     </StyledProfileField>

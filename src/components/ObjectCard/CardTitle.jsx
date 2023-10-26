@@ -1,9 +1,7 @@
 import styled from "styled-components";
 
-export const CardTitle = () => (
-  <StyledCardTitle className="clickable">
-    Оренда 1 кім квартири п. орлика Дрогобич
-  </StyledCardTitle>
+export const CardTitle = ({ title = "-" }) => (
+  <StyledCardTitle className="clickable">{title}</StyledCardTitle>
 );
 
 const StyledCardTitle = styled.div`

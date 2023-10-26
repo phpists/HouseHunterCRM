@@ -1,14 +1,21 @@
 import { styled } from "styled-components";
 import { Tag } from "./Tag";
 import { ReactComponent as Remove } from "../../../../assets/images/remove.svg";
+import noPhoto from "../../../../assets/images/no-photo.svg";
 
-export const Photo = ({ photo, onRemove }) => (
+export const Photo = ({ photo, onRemove, onMakeMain }) => (
   <StyledPhoto
-    photo={photo}
+    photo={
+      photo?.type
+        ? URL.createObjectURL(photo)
+        : photo?.length > 0
+        ? photo
+        : noPhoto
+    }
     className="flex flex-col items-center justify-center"
   >
     <div className="photo-content flex flex-col items-center justify-center">
-      <Tag />
+      <Tag onClick={onMakeMain} />
       <Remove onClick={onRemove} />
     </div>
   </StyledPhoto>
@@ -58,6 +65,6 @@ const StyledPhoto = styled.div`
     }
   }
   @media (max-width: 1500px) {
-    width: 90%;
+    width: 100%;
   }
 `;

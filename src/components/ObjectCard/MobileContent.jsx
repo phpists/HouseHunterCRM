@@ -9,17 +9,17 @@ import { Tags } from "./Tags/Tags";
 import { Contacts } from "./Contacts/Contacts";
 import { ShowMore } from "./ShowMore/ShowMore";
 
-export const MobileContent = () => (
+export const MobileContent = ({ data }) => (
   <StyledMobileContent>
     <Header />
-    <CardTitle />
+    <CardTitle title={data?.title} />
     <Slider />
-    <CardDescription />
+    <CardDescription text={data?.description} />
     <Footer />
-    <MainInfo className="mobile-main-info" />
-    <Tags className="mobile-tags" />
-    <Contacts />
-    <ShowMore />
+    <MainInfo className="mobile-main-info" data={data} />
+    <Tags className="mobile-tags" data={data} />
+    <Contacts data={data} />
+    <ShowMore clientId={data?.id_client} id={data?.id} />
   </StyledMobileContent>
 );
 

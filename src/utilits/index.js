@@ -43,7 +43,6 @@ export const handleToFormData = (data, files) => {
 
   if (files) {
     Object.entries(files).forEach((field) => {
-      console.log(field[0], field[1]);
       if (Array.isArray(field[1])) {
         field[1].forEach((f, i) => {
           formData.append(`${field[0]}[${i}]`, f);
@@ -84,6 +83,15 @@ export const handleChangeRange = (
     onChangeField(fields[1], values[1] ?? 0);
   }
 };
+
+const handleFormatFields = (fields) =>
+  Object.entries(fields?.main_field ?? {})?.map((field) => ({
+    field: field[0],
+    ...field[1],
+  }));
+
+export const handleCheckIsField = (fields, fieldName) =>
+  !!handleFormatFields(fields)?.find(({ field }) => field === fieldName);
 
 export const handleGetFieldsOptions = (fields, fieldName) => {
   const field = fields?.find(({ field }) => field === fieldName);

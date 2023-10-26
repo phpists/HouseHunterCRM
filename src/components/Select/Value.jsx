@@ -1,6 +1,8 @@
 import { styled } from "styled-components";
 
-export const Value = ({ value }) => <StyledValue>{value}</StyledValue>;
+export const Value = ({ value }) => (
+  <StyledValue>{value?.length > 0 ? value : "Оберіть"}</StyledValue>
+);
 
 const StyledValue = styled.div`
   font-family: Overpass;

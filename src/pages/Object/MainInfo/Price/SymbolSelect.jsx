@@ -1,18 +1,17 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 
-export const SymbolSelect = () => {
+export const SymbolSelect = ({ value, onChange = () => null }) => {
   const options = ["₴", "$", "€"];
-  const [active, setActive] = useState(0);
   return (
     <StyledSymbolSelect>
       {options.map((opt, i) => (
         <div
           key={i}
           className={`flex items-end justify-center ${
-            active === i && "active"
+            value === 1 + i && "active"
           }`}
-          onClick={() => setActive(i)}
+          onClick={() => onChange(1 + i)}
         >
           {opt}
         </div>

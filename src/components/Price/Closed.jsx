@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../../assets/images/arrow-right.svg";
 
-export const Closed = ({ onOpen, title, subtitle }) => (
+export const Closed = ({ onOpen, price = 0, subtitle }) => (
   <StyledClosed className="flex items-start justify-between closed-wrapper">
     <div>
-      <div className="price">{title ?? "22 000₴"}</div>
+      <div className="price">{`${price}`}</div>
       {subtitle && <div className="subtitle">{subtitle}</div>}
     </div>
     <Arrow onClick={onOpen} />

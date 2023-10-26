@@ -2,17 +2,19 @@ import styled from "styled-components";
 import { SelectTags } from "../../SelectTags/SelectTags";
 import { ProfileField } from "../../ProfileField";
 
-export const Tags = ({ className }) => {
+export const Tags = ({ className, data }) => {
   return (
     <StyledTags className={`flex flex-col hide-scroll clickable ${className}`}>
       <SelectTags label="Теги" showTags />
-      <ProfileField
-        label="Коментар"
-        value="Оренда 1- кімнатної квартири кухня студія"
-        className="comment"
-        contentHeight
-        textarea
-      />
+      {data?.comment && (
+        <ProfileField
+          label="Коментар"
+          value={data?.comment}
+          className="comment"
+          contentHeight
+          readOnly
+        />
+      )}
     </StyledTags>
   );
 };

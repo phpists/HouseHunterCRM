@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { DesktopContent } from "./DesktopContent";
 import { MobileContent } from "./MobileContent";
 
-export const ObjectCard = ({ selected, onSelect }) => {
+export const ObjectCard = ({ selected, onSelect, data }) => {
   const handleClick = (e) =>
     e.target.classList.contains("clickable") && onSelect();
 
@@ -11,8 +11,8 @@ export const ObjectCard = ({ selected, onSelect }) => {
       className={` clickable ${selected && "selected"}`}
       onClick={handleClick}
     >
-      <DesktopContent />
-      <MobileContent />
+      <DesktopContent data={data} />
+      <MobileContent data={data} />
     </StyledObjectCard>
   );
 };

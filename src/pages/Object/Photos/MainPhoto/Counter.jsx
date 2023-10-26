@@ -1,6 +1,9 @@
 import { styled } from "styled-components";
+import { addZero } from "../../../../utilits";
 
-export const Counter = () => <StyledCounter>01/10</StyledCounter>;
+export const Counter = ({ photosCount }) => (
+  <StyledCounter>01/{addZero(photosCount)}</StyledCounter>
+);
 
 const StyledCounter = styled.div`
   border-radius: 5px;

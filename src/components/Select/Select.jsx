@@ -13,8 +13,15 @@ export const Select = ({
   Icon,
   hideArrowDefault,
   className,
+  onChange,
+  options,
 }) => {
   const [open, setOpen] = useState(false);
+
+  const handleChange = (val) => {
+    onChange(val);
+    setOpen(false);
+  };
 
   return (
     <StyledSelect
@@ -29,13 +36,13 @@ export const Select = ({
         <div className="flex items-center">
           {Icon && <SelectIcon Icon={Icon} />}
           <div>
-            <Value value={value} />
+            <Value value={options?.find((opt) => opt.value === value)?.title} />
             <Label label={open ? labelActive : label} />
           </div>
         </div>
         <Arrow className="arrow" />
       </div>
-      <Dropdown open={open} />
+      <Dropdown open={open} onChange={handleChange} options={options} />
     </StyledSelect>
   );
 };

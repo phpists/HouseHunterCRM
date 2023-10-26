@@ -4,13 +4,26 @@ import { Divider } from "./Divider";
 import { SymbolSelect } from "./SymbolSelect";
 import { TypeSelect } from "./TypeSelect";
 
-export const Price = ({ className }) => {
+export const Price = ({ className, data, onChangeField }) => {
   return (
     <StyledPrice className={`flex items-center ${className}`}>
-      <Field value="22 000₴" label="Ціна" className="field" full />
+      <Field
+        value={data?.price}
+        onChange={(val) => onChangeField("price", val)}
+        label="Ціна"
+        className="field"
+        placeholder="Введіть ціну"
+        full
+      />
       <Divider />
-      <SymbolSelect />
-      <TypeSelect />
+      <SymbolSelect
+        value={Number(data?.price_currency)}
+        onChange={(val) => onChangeField("price_currency", val)}
+      />
+      <TypeSelect
+        value={Number(data?.price_for)}
+        onChange={(val) => onChangeField("price_for", val)}
+      />
     </StyledPrice>
   );
 };
@@ -21,7 +34,8 @@ const StyledPrice = styled.div`
   padding: 8px 15px;
   .field {
     flex-shrink: initial;
-    width: 120px;
+    width: 150px !important;
+    flex-shrink: 0;
     .value {
       color: #50f835;
     }

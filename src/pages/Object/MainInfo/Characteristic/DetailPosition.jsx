@@ -4,7 +4,7 @@ import { ReactComponent as Arrows } from "../../../../assets/images/arrows.svg";
 import { Divider } from "../Divider";
 import { ProfileField } from "../../../../components/ProfileField";
 
-export const DetailPosition = () => {
+export const DetailPosition = ({ data, onChangeField }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -14,7 +14,16 @@ export const DetailPosition = () => {
       <div className="fields">
         {open && (
           <>
-            <div className="field-group">
+            <ProfileField
+              value={data?.address_house_number}
+              onChange={(val) => onChangeField("address_house_number", val)}
+              label="Будинок"
+              className="field"
+              grey
+              placeholder="Введіть значення"
+            />
+
+            {/* <div className="field-group">
               <ProfileField
                 value="22-й"
                 label="Вулиця"
@@ -31,7 +40,7 @@ export const DetailPosition = () => {
                 className="field"
                 grey
               />
-            </div>
+            </div> */}
           </>
         )}
       </div>

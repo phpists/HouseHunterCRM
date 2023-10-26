@@ -29,7 +29,11 @@ export const Title = () => {
       default:
         return pathname.split("/")[1] === "client"
           ? "Клієнт"
-          : pathname.split("/")[1] === "object"
+          : pathname.split("/")[1] === "create-request" ||
+            pathname.split("/")[1] === "edit-request"
+          ? "Картка запиту"
+          : pathname.split("/")[1] === "create-object" ||
+            pathname.split("/")[1] === "edit-object"
           ? "Картка об’єкта"
           : "";
     }

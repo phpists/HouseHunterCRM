@@ -32,7 +32,7 @@ export const Actions = () => {
         onChangeHover={handleChangeActive}
         active={active}
         index={2}
-        link="/object"
+        link={`/create-object/${id}`}
       />
     </StyledActions>
   );

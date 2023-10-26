@@ -1,6 +1,8 @@
 import { styled } from "styled-components";
 
-export const Tag = () => <StyledTag>Зробити Головним</StyledTag>;
+export const Tag = ({ onClick }) => (
+  <StyledTag onClick={onClick}>Зробити Головним</StyledTag>
+);
 
 const StyledTag = styled.div`
   color: #fff;

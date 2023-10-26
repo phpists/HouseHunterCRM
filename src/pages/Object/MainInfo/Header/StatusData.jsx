@@ -2,21 +2,24 @@ import { styled } from "styled-components";
 import { Calendar } from "../../../../components/Calendar/Calendar";
 import { useState } from "react";
 import { ReactComponent as CalendarIcon } from "../../../../assets/images/calendar-card.svg";
+import { handleFormatDate } from "../../../../utilits";
 
-export const Date = () => {
+export const StatusData = ({ value, onChange }) => {
   const [open, setOpen] = useState(false);
+
+  const handleChangeDate = (val) => onChange(val.getTime());
 
   return (
     <StyledDate
       className={`flex items-center justify-between ${open && "active"}`}
     >
       <div className="text-data" onClick={() => setOpen(!open)}>
-        <div className="title">23.07.2023</div>
+        <div className="title">{handleFormatDate(new Date(value), true)}</div>
         <div className="subtitle">звільняється з </div>
       </div>
       <CalendarIcon onClick={() => setOpen(!open)} />
       <div className="dropdown">
-        <Calendar />
+        <Calendar value={new Date(value)} onChange={handleChangeDate} />
       </div>
     </StyledDate>
   );

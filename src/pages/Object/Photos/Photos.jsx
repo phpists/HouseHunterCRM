@@ -5,12 +5,20 @@ import { useState } from "react";
 import photo from "../../../assets/images/object.png";
 import { Photo } from "./Photo/Photo";
 import DraggableList from "react-draggable-lists";
+import noPhoto from "../../../assets/images/no-photo.svg";
 
-export const Photos = () => {
-  const [photos, setPhotos] = useState([photo]);
+export const Photos = ({ photos, onChange }) => {
+  const handleMakePhotoMain = (index, photo) => {
+    const filteredPhotos = photos.filter((p, i) => i !== index);
+    onChange([photo, ...filteredPhotos]);
+  };
+
   return (
     <StyledPhotos photosCount={photos.length}>
-      <MainPhoto photo={photos[0]} photosCount={photos.length} />
+      <MainPhoto
+        photo={photos[0] ?? noPhoto}
+        photosCount={photos.length === 0 ? 1 : photos.length}
+      />
 
       {photos.length > 1 && (
         <>
@@ -20,26 +28,32 @@ export const Photos = () => {
                 <Photo
                   key={i}
                   photo={p}
-                  onRemove={() => setPhotos(photos.filter((p, j) => i !== j))}
+                  onRemove={() =>
+                    onChange(photos.filter((p, j) => 1 + i !== j))
+                  }
+                  onMakeMain={() => handleMakePhotoMain(1 + i, p)}
                 />
               ))}
               {photos.length === 2 && (
-                <AddPhoto small onAdd={() => setPhotos([...photos, photo])} />
+                <AddPhoto small onAdd={(file) => onChange([...photos, file])} />
               )}
             </div>
           ) : (
-            <div className="photos hide-scroll">
-              <DraggableList width={207} height={211} rowSize={2}>
-                {photos.slice(1, photos.length).map((p, i) => (
-                  <Photo
-                    key={i}
-                    photo={p}
-                    onRemove={() => setPhotos(photos.filter((p, j) => i !== j))}
-                  />
-                ))}
-              </DraggableList>
+            <div className="photos photos-more hide-scroll">
+              {/* <DraggableList width={207} height={211} rowSize={2}> */}
+              {photos.slice(1, photos.length).map((p, i) => (
+                <Photo
+                  key={i}
+                  photo={p}
+                  onRemove={() =>
+                    onChange(photos.filter((p, j) => 1 + i !== j))
+                  }
+                  onMakeMain={() => handleMakePhotoMain(1 + i, p)}
+                />
+              ))}
+              {/* </DraggableList> */}
               {photos.length === 2 && (
-                <AddPhoto small onAdd={() => setPhotos([...photos, photo])} />
+                <AddPhoto small onAdd={(file) => onChange([...photos, file])} />
               )}
             </div>
           )}
@@ -47,7 +61,7 @@ export const Photos = () => {
       )}
 
       {photos.length !== 2 && (
-        <AddPhoto onAdd={() => setPhotos([...photos, photo])} />
+        <AddPhoto onAdd={(file) => onChange([...photos, file])} />
       )}
     </StyledPhotos>
   );
@@ -69,6 +83,11 @@ const StyledPhotos = styled.div`
     ${({ photosCount }) => photosCount > 2 && "margin-bottom: 10px;"}
   }
 
+  .photos-more {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
   @media (max-width: 1500px) {
     .photos {
       width: 350px;

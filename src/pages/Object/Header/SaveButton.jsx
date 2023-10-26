@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
-export const SaveButton = () => (
-  <StyledSaveButton className="flex items-center">
+export const SaveButton = ({ onClick }) => (
+  <StyledSaveButton onClick={onClick} className="flex items-center">
     Зберегти <span>зміни</span>
   </StyledSaveButton>
 );

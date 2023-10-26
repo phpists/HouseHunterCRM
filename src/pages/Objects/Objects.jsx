@@ -1,10 +1,20 @@
 import styled from "styled-components";
 import { Header } from "./Header/Header";
 import { List } from "./List";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  useLazyGetAllObjectsQuery,
+  useLazyGetObjectsCountQuery,
+} from "../../store/objects/objects.api";
+import { useActions } from "../../hooks/actions";
 
 export const Objects = () => {
+  const [getAllObjects] = useLazyGetAllObjectsQuery();
+  const [getObjectsCount] = useLazyGetObjectsCountQuery();
+  const { saveObjectsCount } = useActions();
   const [selected, setSelected] = useState([]);
+  const [objects, setObjects] = useState([]);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const handleSelect = (index) =>
     setSelected(
@@ -13,10 +23,49 @@ export const Objects = () => {
         : [...selected, index]
     );
 
+  const handleGetObjectsCount = () => {
+    getObjectsCount().then((resp) => saveObjectsCount(resp?.data?.count ?? 0));
+  };
+
+  useEffect(() => {
+    getAllObjects().then((resp) =>
+      setObjects(Object.entries(resp?.data)?.map((obj) => obj[1]))
+    );
+    handleGetObjectsCount();
+  }, []);
+
+  const handleToggleFavoritesStatus = () => {
+    setObjects(
+      objects.map((req) => {
+        if (!!selected.find((s) => s === req[0])) {
+          let request = [];
+          request[0] = req[0];
+          request[1] = { ...req[1], favorite: !req[1]?.favorite };
+          return request;
+        }
+        return req;
+      })
+    );
+    setSelected([]);
+  };
+
+  const handleDeleteSuccess = () => {
+    setObjects(objects.filter((obj) => !selected.find((s) => s === obj.id)));
+    setSelected([]);
+    handleGetObjectsCount();
+  };
+
   return (
     <StyledObjects>
-      <Header selectedCount={selected.length} />
-      <List selected={selected} onSelect={handleSelect} />
+      <Header
+        selectedCount={selected.length}
+        selected={selected}
+        onFavorite={handleToggleFavoritesStatus}
+        isFavorite={isFavorite}
+        onIsFavotite={() => setIsFavorite(!isFavorite)}
+        onDelete={handleDeleteSuccess}
+      />
+      <List selected={selected} onSelect={handleSelect} data={objects ?? []} />
     </StyledObjects>
   );
 };

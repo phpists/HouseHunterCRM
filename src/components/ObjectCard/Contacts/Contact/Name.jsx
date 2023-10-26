@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export const Name = ({ type }) => (
+export const Name = ({ type, name = "-" }) => (
   <StyledName type={type}>
-    <div className="name">Віталій Дуда</div>
+    <div className="name">{name}</div>
     <div className="role">{type === "owner" ? "Власник" : "Наш Рієлтор"}</div>
   </StyledName>
 );

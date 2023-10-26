@@ -9,6 +9,7 @@ export const Label = ({ label }) => (
 
 const StyledLabel = styled.div`
   position: relative;
+  text-transform: capitalize;
   .label {
     font-family: Open Sans;
     font-size: 11px;

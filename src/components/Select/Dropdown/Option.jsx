@@ -1,7 +1,10 @@
 import { styled } from "styled-components";
 
 export const Option = ({ title, onSelect }) => (
-  <StyledOption className="flex items-center justify-between">
+  <StyledOption
+    className="flex items-center justify-between"
+    onClick={onSelect}
+  >
     {title} <span>→</span>
   </StyledOption>
 );

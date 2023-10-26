@@ -2,9 +2,12 @@ import styled from "styled-components";
 import { Closed } from "./Closed";
 import { useState } from "react";
 import { Manage } from "./Manage/Manage";
+import { fortmatNumber } from "../../utilits";
 
-export const Price = ({ title, subtitle, className }) => {
+export const Price = ({ title, subtitle, className, prices, priceFor }) => {
   const [open, setOpen] = useState(false);
+  const [activeCurrency, setActiveCurrency] = useState(0);
+  const options = ["₴", "$", "€"];
 
   return (
     <StyledPrice
@@ -12,9 +15,16 @@ export const Price = ({ title, subtitle, className }) => {
       className={`${open && "flex items-center"} ${className}`}
     >
       {open ? (
-        <Manage />
+        <Manage
+          onChangeCurrency={(val) => setActiveCurrency(val)}
+          activeCurrency={activeCurrency}
+          priceFor={priceFor}
+        />
       ) : (
         <Closed
+          price={`${fortmatNumber(Number(prices[activeCurrency]) ?? 0)} ${
+            options[activeCurrency]
+          }`}
           onOpen={() => setOpen(true)}
           title={title}
           subtitle={subtitle}

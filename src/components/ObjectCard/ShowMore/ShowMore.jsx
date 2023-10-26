@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { Button } from "./Button";
 import { Dropdown } from "./Dropdown";
 
-export const ShowMore = () => {
+export const ShowMore = ({ clientId, id }) => {
   return (
     <StyledShowMore>
       <Button />
-      <Dropdown />
+      <Dropdown clientId={clientId} id={id} />
     </StyledShowMore>
   );
 };

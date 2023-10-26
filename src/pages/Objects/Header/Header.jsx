@@ -8,15 +8,66 @@ import { SelectItems } from "../../../components/SelectItems/SelectItems";
 import { Filter } from "./Filter/Filter";
 import { useState } from "react";
 import { AddClient } from "../../../components/AddClient/AddClient";
+import { handleResponse } from "../../../utilits";
+import {
+  useLazyAddToFavoritesQuery,
+  useLazyDeleteObjectQuery,
+} from "../../../store/objects/objects.api";
+import cogoToast from "cogo-toast";
+import { BackButton } from "../../Clients/Header/BackButton";
 
-export const Header = ({ selectedCount }) => {
+export const Header = ({
+  selectedCount,
+  selected,
+  onFavorite,
+  isFavorite,
+  onIsFavotite,
+  onDelete,
+}) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClient, setAddClient] = useState(false);
+  const [addToFavorites] = useLazyAddToFavoritesQuery();
+  const [deleteObject] = useLazyDeleteObjectQuery();
+
+  const handleToggleFavorites = () => {
+    Promise.all(
+      selected?.map((id) =>
+        addToFavorites(id).then((resp) => {
+          handleResponse(resp, () => {
+            cogoToast.success("Статус успішно змінено!", {
+              hideAfter: 3,
+              position: "top-right",
+            });
+          });
+        })
+      )
+    ).then((resp) => {
+      handleResponse(resp, onFavorite);
+    });
+  };
+
+  const handleDelete = () => {
+    deleteObject(selected).then((resp) =>
+      handleResponse(resp, () => {
+        cogoToast.success(
+          `Обєкт${selectedCount === 1 ? "" : "и"} успішно видалено!`,
+          {
+            hideAfter: 3,
+            position: "top-right",
+          }
+        );
+        onDelete();
+      })
+    );
+  };
 
   return (
     <StyledHeader>
       <div className="flex items-center justify-between">
-        <Title selectedCount={selectedCount} />
+        <div className="flex items-center">
+          {isFavorite && <BackButton onClick={onIsFavotite} />}
+          <Title selectedCount={selectedCount} title={"Обрано"} />
+        </div>
         <div className="flex items-center bts">
           <IconButton
             Icon={SettingIcon}
@@ -29,9 +80,20 @@ export const Header = ({ selectedCount }) => {
             className="icon-btn"
             onClick={() => setAddClient(true)}
           />
-          <IconButton Icon={StarIcon} className="icon-btn icon-btn-last" />
+          <IconButton
+            Icon={StarIcon}
+            className="icon-btn icon-btn-last"
+            active={isFavorite}
+            onClick={onIsFavotite}
+          />
           <div className="select-wrapper flex items-center justify-end">
-            <SelectItems title="об'єктів" selectedCount={selectedCount} />
+            <SelectItems
+              title="об'єктів"
+              selectedCount={selectedCount}
+              onToggleFavorite={handleToggleFavorites}
+              deleteConfirmTitle="Видалити об'єкт(и)?"
+              onDelete={handleDelete}
+            />
           </div>
         </div>
       </div>
@@ -40,6 +102,9 @@ export const Header = ({ selectedCount }) => {
           title="об'єктів"
           selectedCount={selectedCount}
           className="mobile-select"
+          onToggleFavorite={handleToggleFavorites}
+          deleteConfirmTitle="Видалити об'єкт(и)?"
+          onDelete={handleDelete}
         />
       </div>
       {filterOpen && <Filter onClose={() => setFilterOpen(false)} />}

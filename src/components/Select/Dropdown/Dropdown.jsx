@@ -2,18 +2,14 @@ import { styled } from "styled-components";
 import { Option } from "./Option";
 import { motion } from "framer-motion";
 
-export const Dropdown = ({ open }) => (
+export const Dropdown = ({ open, onChange, options }) => (
   <StyledDropdown
     className="hide-scroll select-none"
     animate={{ opacity: open ? 1 : 0, visibility: open ? "visible" : "hidden" }}
   >
-    <Option title="Квартиры" onSelect={() => null} />
-    <Option title="Квартиры" onSelect={() => null} />
-    <Option title="Квартиры" onSelect={() => null} />
-    <Option title="Квартиры" onSelect={() => null} />
-    <Option title="Квартиры" onSelect={() => null} />
-    <Option title="Квартиры" onSelect={() => null} />
-    <Option title="Квартиры" onSelect={() => null} />
+    {options?.map(({ title, value }, i) => (
+      <Option key={i} title={title} onSelect={() => onChange(value)} />
+    ))}
   </StyledDropdown>
 );
 

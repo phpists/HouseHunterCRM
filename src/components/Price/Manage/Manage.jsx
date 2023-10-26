@@ -2,12 +2,15 @@ import styled from "styled-components";
 import { SymbolSelect } from "./SymbolSelect";
 import { TypeSelect } from "./TypeSelect";
 
-export const Manage = () => {
+export const Manage = ({ onChangeCurrency, activeCurrency, priceFor }) => {
   return (
     <StyledManage className="flex items-center">
-      <SymbolSelect />
+      <SymbolSelect
+        onChangeCurrency={onChangeCurrency}
+        activeCurrency={activeCurrency}
+      />
       <div className="divider" />
-      <TypeSelect />
+      <TypeSelect priceFor={priceFor} />
     </StyledManage>
   );
 };

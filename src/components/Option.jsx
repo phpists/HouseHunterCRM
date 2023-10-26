@@ -9,6 +9,7 @@ export const Option = ({
   className,
   noSelect,
   Component,
+  
 }) => {
   return (
     <StyledOption

@@ -6,17 +6,17 @@ import { Tags } from "./Tags/Tags";
 import { Contacts } from "./Contacts/Contacts";
 import { ShowMore } from "./ShowMore/ShowMore";
 
-export const DesktopContent = () => (
+export const DesktopContent = ({ data }) => (
   <StyledDesktopContent className="flex items-center justify-between">
     <Slider />
-    <MainInfo />
+    <MainInfo data={data} />
     <Info className="desktop-item" />
-    <Tags />
+    <Tags data={data} />
     <Contacts className="desktop-item" />
-    <ShowMore />
+    <ShowMore clientId={data?.id_client} id={data?.id} />
     <div className="mobile-footer w-full">
-      <Info />
-      <Contacts />
+      <Info data={data} />
+      <Contacts data={data} />
     </div>
   </StyledDesktopContent>
 );
@@ -29,7 +29,7 @@ const StyledDesktopContent = styled.div`
   .mobile-footer {
     display: none;
     margin-top: 10px;
-    grid-template-columns: 1fr 200px;
+    grid-template-columns: 1fr max-content;
     gap: 10px;
   }
 

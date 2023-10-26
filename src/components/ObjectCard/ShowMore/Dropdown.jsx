@@ -1,6 +1,7 @@
+import { NavLink } from "react-router-dom";
 import { styled } from "styled-components";
 
-export const Dropdown = () => (
+export const Dropdown = ({ clientId, id }) => (
   <StyledDropdown className="dropdown">
     <div className="flex items-center justify-between">
       <span>Знайти схожі</span>
@@ -11,6 +12,12 @@ export const Dropdown = () => (
     <div className="flex items-center justify-between">
       <span>Історія тегів</span>
     </div>
+    <NavLink
+      to={`/edit-object/${clientId}/${id}`}
+      className="flex items-center justify-between"
+    >
+      <span>Редагувати</span>
+    </NavLink>
   </StyledDropdown>
 );
 
@@ -35,7 +42,8 @@ const StyledDropdown = styled.div`
   visibility: hidden;
   transition: all 0.3s;
   z-index: 3;
-  div {
+  div,
+  a {
     padding: 5px 5px 5px 6px;
     background: rgba(255, 255, 255, 0.7);
     transform: all 0.3s;
