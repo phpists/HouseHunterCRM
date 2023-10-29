@@ -32,6 +32,7 @@ export const REQUEST_INIT = {
   not_actual: 0,
   dt_deadline: 0,
   deleted: 0,
+  price_currency: 1,
 };
 
 export const Request = () => {

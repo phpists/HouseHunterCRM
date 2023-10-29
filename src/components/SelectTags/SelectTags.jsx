@@ -17,6 +17,7 @@ export const SelectTags = ({
   value,
   onChange,
   viewOnly,
+  tags,
 }) => {
   const [open, setOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -43,16 +44,22 @@ export const SelectTags = ({
       onMouseLeave={() => setIsActive(false)}
     >
       <div>
+        {!value && showTags && tags?.length === 0 && (
+          <div className="value">Пусто</div>
+        )}
         {!value && showTags ? (
           <div className="flex flex-wrap tags select-none">
-            <Tag title="Актуально з 09.09.2022" isFirst type={true} />
-            <Tag title="без дітей" />
-            <Tag title="без тварин" />
-            <Tag title="без дітей" />
-            <Tag title="без тварин" />
-            <Tag title="без іноземців" isHide={!isActive} />
-            <Tag title="без іноземців" isHide={!isActive} />
-            {!isActive && <TagCount count={2} />}
+            {tags?.slice(0, isActive ? tags.length : 3)?.map((tag, i) => (
+              <Tag
+                key={i}
+                title={tag?.title}
+                isFirst={i === 0}
+                viewOnly={viewOnly}
+              />
+            ))}
+            {!isActive && tags.length - 3 > 0 && (
+              <TagCount count={tags.length - 3} />
+            )}
           </div>
         ) : (
           <div className="flex flex-wrap items-center">

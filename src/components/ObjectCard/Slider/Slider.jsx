@@ -3,8 +3,7 @@ import SlickSlider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useEffect, useRef, useState } from "react";
-import object1 from "../../../assets/images/object.png";
-import object2 from "../../../assets/images/object2.png";
+import noPhoto from "../../../assets/images/no-photo.svg";
 import { Slide } from "./Slide";
 import { Photos } from "./Photos/Photos";
 import { Arrows } from "./Arrows";
@@ -16,23 +15,36 @@ const settings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   swipeToSlide: false,
-  touchMove: false,
+  touchMove: true,
 };
 
-const photos = [object1, object2, object1, object2, object2, object2];
-
-export const Slider = () => {
+export const Slider = ({ photos }) => {
   const sliderRef = useRef(null);
+  const slickRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(1);
 
+  const handleChangeSlide = (val) => {
+    slickRef.current.slickGoTo(val - 1);
+  };
+
+  useEffect(() => {
+    slickRef.current.slickGoTo(0);
+  }, []);
+
   return (
-    <StyledSlider className="flex items-center" ref={sliderRef}>
+    <StyledSlider
+      className="flex items-center"
+      ref={sliderRef}
+      empty={photos?.length < 2}
+    >
       <div className="relative slider">
-        <Arrows
-          currentSlide={currentSlide}
-          total={photos.length}
-          onChangeSlide={(value) => setCurrentSlide(value)}
-        />
+        {photos?.length > 1 && (
+          <Arrows
+            currentSlide={currentSlide}
+            total={photos.length}
+            onChangeSlide={handleChangeSlide}
+          />
+        )}
         <SlickSlider
           {...settings}
           beforeChange={(currentSlide, nextSlide) =>
@@ -41,13 +53,31 @@ export const Slider = () => {
           currentSlide={currentSlide}
           prevArrow={<></>}
           nextArrow={<></>}
+          ref={slickRef}
         >
-          {photos.map((photo, i) => (
-            <Slide key={i} photo={photo} />
-          ))}
+          {photos?.length === 0 ? (
+            <Slide photo={noPhoto} active empty />
+          ) : (
+            photos
+              ?.map(({ name }) => name)
+              .map((photo, i) => (
+                <Slide
+                  key={i}
+                  photo={photo}
+                  active={currentSlide === 1 + i}
+                  empty={photos?.length === 1}
+                />
+              ))
+          )}
         </SlickSlider>
       </div>
-      <Photos photos={photos} />
+      {photos?.length > 1 ? (
+        <Photos
+          photos={photos?.map(({ name }, i) => name)}
+          onSelect={handleChangeSlide}
+          active={currentSlide}
+        />
+      ) : null}
     </StyledSlider>
   );
 };
@@ -100,6 +130,12 @@ const StyledSlider = styled.div`
     margin: 0;
     .slider {
       width: calc(100svw - 60px - 8px - 44px - 24px - 39px);
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .slider {
+      ${({ empty }) => empty && "width: 252px;"}
     }
   }
 `;

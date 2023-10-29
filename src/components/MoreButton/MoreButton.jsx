@@ -10,8 +10,8 @@ export const MoreButton = ({
   favorite,
 }) => {
   return (
-    <StyledMoreButton className="flex items-center more">
-      <div className="btn-wrapper relative">
+    <StyledMoreButton className="flex items-center more noClickable">
+      <div className="btn-wrapper relative noClickable">
         <Button />
         <Dropdown
           onDelete={onDelete}

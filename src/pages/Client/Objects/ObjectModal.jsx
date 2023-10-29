@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { Modal } from "../Modal/Modal";
 import { Object } from "../Object/Object";
 
-export const ObjectModal = ({ onClose, id }) => (
+export const ObjectModal = ({ onClose, selectedObject }) => (
   <StyledObjectModal>
     <Modal title="Детальніше" onClose={onClose}>
       <div className="object-modal-content">
-        <Object className="object-wrapper" id={id} />
+        <Object className="object-wrapper" selectedObject={selectedObject} />
       </div>
     </Modal>
   </StyledObjectModal>

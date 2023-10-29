@@ -8,9 +8,9 @@ export const SymbolSelect = ({ active, onChange }) => {
         <div
           key={i}
           className={`flex items-baseline justify-center ${
-            active === opt && "active"
+            active === 1 + i && "active"
           }`}
-          onClick={() => onChange(options[i])}
+          onClick={() => onChange(1 + i)}
         >
           {opt}
         </div>

@@ -3,6 +3,7 @@ import { Divider } from "../Divider";
 import { Option } from "../../../../components/Option";
 import {
   handleCheckIsField,
+  handleFormatFields,
   handleGetFieldsOptions,
 } from "../../../../utilits";
 import React from "react";
@@ -64,15 +65,24 @@ export const Categories = ({ data, onChangeField, fields }) => {
   const handleToggleOption = (opt, categoryName) => {
     const categoryData =
       data[categoryName]?.length > 0 && data[categoryName] !== "0"
-        ? JSON.parse(data[categoryName])
+        ? JSON.parse(
+            typeof data[categoryName] === "string"
+              ? data[categoryName]
+              : JSON.stringify(data[categoryName])
+          )
         : [];
     const isActive = !!categoryData?.find((o) => o === opt);
     const updatedValue = isActive
       ? categoryData.filter((o) => o !== opt)
       : [...categoryData, opt];
 
-    onChangeField(categoryName, JSON.stringify(updatedValue));
+    onChangeField(categoryName, updatedValue);
   };
+
+  const handleGetFieldType = (fieldName) =>
+    handleFormatFields(fields?.other_field)?.find(
+      ({ field }) => field === fieldName
+    )?.type;
 
   return (
     <StyledCategories>
@@ -81,6 +91,9 @@ export const Categories = ({ data, onChangeField, fields }) => {
             ?.filter(
               (category) =>
                 Object.entries(category[1]?.field_option)?.length > 0
+            )
+            ?.filter(
+              (category) => commentsToFields?.object[category[0]]?.length > 0
             )
             ?.map((category, i) => (
               <React.Fragment key={i}>
@@ -92,14 +105,22 @@ export const Categories = ({ data, onChangeField, fields }) => {
                       title={opt[1]}
                       className="opt"
                       active={
-                        data[category[0]]?.length > 0 &&
-                        data[category[0]] !== "0"
-                          ? !!JSON.parse(data[category[0]])?.find(
-                              (o) => o === opt[0]
-                            )
+                        handleGetFieldType(category[0]) === "int"
+                          ? data[category[0]] === opt[0]
+                          : data[category[0]]?.length > 0 &&
+                            data[category[0]] !== "0"
+                          ? !!JSON.parse(
+                              typeof data[category[0]] === "string"
+                                ? data[category[0]]
+                                : JSON.stringify(data[category[0]])
+                            )?.find((o) => o === opt[0])
                           : false
                       }
-                      onSelect={() => handleToggleOption(opt[0], category[0])}
+                      onSelect={() =>
+                        handleGetFieldType(category[0]) === "json"
+                          ? handleToggleOption(opt[0], category[0])
+                          : onChangeField(category[0], opt[0])
+                      }
                     />
                   ))}
                 </div>

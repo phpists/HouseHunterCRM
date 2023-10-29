@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import SlickSlider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import prevIcon from "../../../../../assets/images/prev-arrow.svg";
 import nextIcon from "../../../../../assets/images/next-arrow.svg";
 import object1 from "../../../../../assets/images/object.png";
@@ -21,15 +21,23 @@ const settings = {
   touchMove: false,
 };
 
-const photos = [object1, object2, object1, object2];
-
-export const Slider = () => {
+export const Slider = ({ photos }) => {
+  const slickRef = useRef();
   const [currentSlide, setCurrentSlide] = useState(1);
 
+  const handleChangeSlide = (val) => {
+    slickRef.current.slickGoTo(val - 1);
+  };
+
   return (
-    <StyledSlider className="flex items-center">
+    <StyledSlider
+      className="flex items-center"
+      isOnePhoto={photos?.length === 1}
+    >
       <div className="relative slider">
-        <Counter current={currentSlide} total={photos.length} />
+        {photos?.length > 1 ? (
+          <Counter current={currentSlide} total={photos.length} />
+        ) : null}
         <SlickSlider
           {...settings}
           beforeChange={(currentSlide, nextSlide) =>
@@ -46,13 +54,23 @@ export const Slider = () => {
               <img src={nextIcon} alt="" />
             </button>
           }
+          ref={slickRef}
         >
           {photos.map((photo, i) => (
-            <Slide key={i} photo={photo} />
+            <Slide
+              key={i}
+              photo={photo}
+              active={currentSlide === 1 + i}
+              isOnePhoto={photos?.length === 1}
+            />
           ))}
         </SlickSlider>
       </div>
-      <Photos photos={photos} />
+      <Photos
+        photos={photos}
+        onSelect={handleChangeSlide}
+        active={currentSlide}
+      />
     </StyledSlider>
   );
 };
@@ -65,6 +83,7 @@ const StyledSlider = styled.div`
     overflow: hidden;
     border-radius: 9px;
     flex-shrink: 0;
+    ${({ isOnePhoto }) => isOnePhoto && "width: 100% !important;"}
   }
   .slick-arrow {
     transition: all 0.3s;

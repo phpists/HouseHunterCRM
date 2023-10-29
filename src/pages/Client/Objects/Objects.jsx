@@ -2,126 +2,184 @@ import { styled } from "styled-components";
 import { Header } from "./Header/Header";
 import { Actions } from "./Actions/Actions";
 import { Card } from "./Card/Card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ObjectModal } from "./ObjectModal";
 import { MobileHeader } from "./MobileHeader/MobileHeader";
 import { SelectItems } from "../../../components/SelectItems/SelectItems";
-import { useLazyGetClientsRequestQuery } from "../../../store/clients/clients.api";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { RequestsList } from "./RequestsList";
 import { useRef } from "react";
-import { Confirm } from "../../../components/Confirm/Confirm";
-import { useLazyDeleteRequestQuery } from "../../../store/requests/requests.api";
+import { ObjectsList } from "./ObjectsList";
+import {
+  useLazyAddToFavoritesQuery,
+  useLazyDeleteObjectQuery,
+} from "../../../store/objects/objects.api";
+import {
+  useLazyAddToFavoriteQuery,
+  useLazyDeleteRequestQuery,
+} from "../../../store/requests/requests.api";
 import { handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
 
 export const Objects = ({ selected, onSelect }) => {
-  const { id } = useParams();
-  const [requests, setRequests] = useState([]);
-  const [getClientsRequests, { data: requestsData }] =
-    useLazyGetClientsRequestQuery();
   const [openInfo, setOpenInfo] = useState(false);
-  const requestsCurrentPage = useRef(0);
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null);
-  const [deleteRequest] = useLazyDeleteRequestQuery();
+  const [requestsCount, setRequestCount] = useState(0);
+  const [objectsCount, setObjectsCount] = useState(0);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [deleteObjects] = useLazyDeleteObjectQuery();
+  const [deleteRequests] = useLazyDeleteRequestQuery();
+  const [addObjectsToFavorites] = useLazyAddToFavoritesQuery();
+  const [addRequestsToFavorites] = useLazyAddToFavoriteQuery();
+  const [refreshObjects, setRefreshObjects] = useState(false);
+  const [refreshRequests, setRefreshRequests] = useState(false);
 
-  const handleGetClientsRequests = () => {
-    getClientsRequests({
-      current_page: requestsCurrentPage.current,
-      item_on_page: 40,
-      id_client: id,
-    }).then((resp) => {
-      const data = resp?.data?.data;
-      onSelect(Object.entries(data)[0][1]?.id ?? null);
-      setRequests(data);
-    });
-  };
-  useEffect(() => {
-    handleGetClientsRequests();
-  }, []);
+  const handleRefreshObjects = (val) => setRefreshObjects(val);
+  const handleRefreshRequests = (val) => setRefreshRequests(val);
 
-  const handleDeleteRequestSuccess = (id) => {
-    setRequests(
-      Object.fromEntries(
-        Object.entries(requests).filter((req) => id !== req[1]?.id)
-      )
+  const handleSelectItem = (item) =>
+    setSelectedItems(
+      !!selectedItems.find((s) => s.id === item.id)
+        ? selectedItems.filter((s) => s.id !== item.id)
+        : [...selectedItems, item]
     );
-  };
 
-  const handleToggleFavoriteStatus = (id) => {
-    setRequests(
-      Object.fromEntries(
-        Object.entries(requests).map((req) => {
-          if (req[1]?.id === id) {
-            let request = [];
-            request[0] = req[0];
-            request[1] = { ...req[1], favorite: !req[1]?.favorite };
-            return request;
-          }
-          return req;
-        })
-      )
-    );
-  };
+  const handleGetSelectedItemsByType = (type) =>
+    selectedItems.filter((s) => s.type === type)?.map(({ id }) => id);
 
-  const handleCancelDeleteRequest = () => {
-    setDeleteModal(false);
-  };
+  const handleClearSelectedItemsByType = (type) =>
+    setSelectedItems(selectedItems?.filter((s) => s.type !== type));
 
-  const handleOnDeleteRequest = (id) => {
-    setDeleteModal(true);
-    setSelectedCard(id);
-  };
-
-  const handleDeleteRequest = () => {
-    deleteRequest([selectedCard]).then((resp) =>
+  const handleDeleteObjects = (objects) => {
+    deleteObjects(objects).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Заявку успішно видалено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-        handleDeleteRequestSuccess(selectedCard);
-        setSelectedCard(null);
+        cogoToast.success(
+          `Обєкт${objects?.length === 1 ? "" : "и"} успішно видалено!`,
+          {
+            hideAfter: 3,
+            position: "top-right",
+          }
+        );
+        handleRefreshObjects(true);
+        handleClearSelectedItemsByType("object");
       })
     );
+  };
+
+  const handleDeleteRequest = (requests) => {
+    deleteRequests(requests).then((resp) =>
+      handleResponse(resp, () => {
+        cogoToast.success(
+          `Заявк${requests?.length === 1 ? "у" : "и"} успішно видалено!`,
+          {
+            hideAfter: 3,
+            position: "top-right",
+          }
+        );
+        handleClearSelectedItemsByType("request");
+        handleRefreshRequests(true);
+      })
+    );
+  };
+
+  const handleDeleteItems = () => {
+    const objects = handleGetSelectedItemsByType("object");
+    const requests = handleGetSelectedItemsByType("request");
+
+    objects?.length > 0 && handleDeleteObjects(objects);
+    requests?.length > 0 && handleDeleteRequest(requests);
+  };
+
+  const handleToggleObjectsFavorites = (objects) => {
+    Promise.all(
+      objects?.map((id) =>
+        addObjectsToFavorites(id).then((resp) => {
+          handleResponse(resp, () => {
+            cogoToast.success("Статус успішно змінено!", {
+              hideAfter: 3,
+              position: "top-right",
+            });
+          });
+        })
+      )
+    ).then((resp) => {
+      handleClearSelectedItemsByType("object");
+      handleRefreshObjects(true);
+    });
+  };
+
+  const handleToggleRequestsFavorites = (requests) => {
+    Promise.all(
+      requests?.map((id) =>
+        addRequestsToFavorites(id).then((resp) => {
+          handleResponse(resp, () => {
+            cogoToast.success("Статус успішно змінено!", {
+              hideAfter: 3,
+              position: "top-right",
+            });
+          });
+        })
+      )
+    ).then((resp) => {
+      //   handleResponse(resp, onFavorite);
+      handleClearSelectedItemsByType("request");
+      handleRefreshRequests(true);
+    });
+  };
+
+  const handleToggleItemsFavoriteStatus = () => {
+    const objects = handleGetSelectedItemsByType("object");
+    const requests = handleGetSelectedItemsByType("request");
+
+    objects?.length > 0 && handleToggleObjectsFavorites(objects);
+    requests?.length > 0 && handleToggleRequestsFavorites(requests);
   };
 
   return (
     <StyledObjects>
       {openInfo && (
-        <ObjectModal onClose={() => setOpenInfo(false)} id={selected} />
-      )}
-      {deleteModal && (
-        <Confirm
-          title="Видалити запит?"
-          onClose={handleCancelDeleteRequest}
-          onSubmit={handleDeleteRequest}
+        <ObjectModal
+          onClose={() => setOpenInfo(false)}
+          selectedObject={selected}
         />
       )}
-      <Header requestsCount={0} />
+
+      <Header
+        requestsCount={requestsCount}
+        objectsCount={objectsCount}
+        selectedCount={selectedItems?.length}
+        onDelete={handleDeleteItems}
+        onToggleFavorite={handleToggleItemsFavoriteStatus}
+      />
       <div className="objects-content hide-scroll">
         <Actions />
         <MobileHeader />
-        <SelectItems title="запитів" className="mobile-select" />
-        {requests && Object.entries(requests)?.length
-          ? Object.entries(requests).map((c, i) => (
-              <Card
-                key={1}
-                selected={selected === c[1]?.id}
-                onSelect={() => onSelect(c[1]?.id)}
-                onOpenInfo={() => setOpenInfo(true)}
-                date={c[1]?.dt_add}
-                title={c[1]?.rubric}
-                location={c[1]?.location}
-                price={c[1]?.price_min}
-                id={c[1]?.id}
-                favorite={c[1]?.favorite}
-                onChangeFavorite={() => handleToggleFavoriteStatus(c[1]?.id)}
-                onDelete={() => handleOnDeleteRequest(c[1]?.id)}
-              />
-            ))
-          : null}
+        <SelectItems
+          title="запитів"
+          className="mobile-select"
+          selectedCount={selectedItems?.length}
+          deleteConfirmTitle="Видалити обрані заявку(ки)/ об'єкт(и)?"
+          onDelete={handleDeleteItems}
+          onToggleFavorite={handleToggleItemsFavoriteStatus}
+        />
+        <ObjectsList
+          onSelect={onSelect}
+          onOpenInfo={(val) => setOpenInfo(val)}
+          active={selected?.id}
+          onChangeObjectsCount={(val) => setObjectsCount(val)}
+          selectedItems={selectedItems}
+          onSelectItem={handleSelectItem}
+          isRefresh={refreshObjects}
+          onRefreshed={() => handleRefreshObjects(false)}
+        />
+        <RequestsList
+          onSelect={onSelect}
+          onOpenInfo={(val) => setOpenInfo(val)}
+          active={selected}
+          onChangeRequestsCount={(val) => setRequestCount(val)}
+          selectedItems={selectedItems}
+          onSelectItem={handleSelectItem}
+          isRefresh={refreshRequests}
+          onRefreshed={() => handleRefreshRequests(false)}
+        />
       </div>
     </StyledObjects>
   );

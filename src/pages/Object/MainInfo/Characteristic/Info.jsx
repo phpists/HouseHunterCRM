@@ -39,6 +39,9 @@ export const Info = ({ fields, data, onChangeField }) => {
         {fields?.main_field
           ? Object.entries(fields?.main_field)
               .filter((field) => !notAllowedFields?.find((f) => f === field[0]))
+              ?.filter(
+                (field) => commentsToFields?.object[field[0]]?.length > 0
+              )
               .map((field) => {
                 if (typeof field[1]?.field_option === "object") {
                   return (

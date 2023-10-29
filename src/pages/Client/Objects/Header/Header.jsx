@@ -5,16 +5,28 @@ import { Search } from "./Search";
 import { Select } from "./Select/Select";
 import { useState } from "react";
 
-export const Header = ({ requestsCount }) => {
+export const Header = ({
+  requestsCount,
+  objectsCount,
+  selectedCount,
+  onDelete,
+  onToggleFavorite,
+}) => {
   const [isSearch, setIsSearch] = useState(false);
 
   return (
     <StyledHeader className="flex items-center justify-between">
-      <Title requestsCount={requestsCount} />
+      <Title requestsCount={requestsCount} objectsCount={objectsCount} />
       <div className="flex items-center header-btns">
         <Filter className="header-btn" />
         <Search open={isSearch} onOpen={() => setIsSearch(true)} />
-        <Select open={!isSearch} onOpen={() => setIsSearch(false)} />
+        <Select
+          open={!isSearch}
+          onOpen={() => setIsSearch(false)}
+          selectedCount={selectedCount}
+          onDelete={onDelete}
+          onToggleFavorite={onToggleFavorite}
+        />
       </div>
     </StyledHeader>
   );

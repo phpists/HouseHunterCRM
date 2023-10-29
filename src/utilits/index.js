@@ -34,7 +34,13 @@ export const handleToFormData = (data, files) => {
       });
     } else if (typeof field[1] === "object") {
       Object.entries(field[1]).forEach((fField) => {
-        formData.append(`${field[0]}[${fField[0]}]`, fField[1]);
+        if (Array.isArray(fField[1])) {
+          fField[1].forEach((f, i) => {
+            formData.append(`${field[0]}[${fField[0]}][]`, f);
+          });
+        } else {
+          formData.append(`${field[0]}[${fField[0]}]`, fField[1]);
+        }
       });
     } else {
       field[1] && formData.append(field[0], field[1]);
@@ -84,14 +90,16 @@ export const handleChangeRange = (
   }
 };
 
-const handleFormatFields = (fields) =>
-  Object.entries(fields?.main_field ?? {})?.map((field) => ({
+export const handleFormatFields = (fields) =>
+  Object.entries(fields ?? {})?.map((field) => ({
     field: field[0],
     ...field[1],
   }));
 
 export const handleCheckIsField = (fields, fieldName) =>
-  !!handleFormatFields(fields)?.find(({ field }) => field === fieldName);
+  !!handleFormatFields(fields?.main_field)?.find(
+    ({ field }) => field === fieldName
+  );
 
 export const handleGetFieldsOptions = (fields, fieldName) => {
   const field = fields?.find(({ field }) => field === fieldName);

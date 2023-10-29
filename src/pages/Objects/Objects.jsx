@@ -27,10 +27,15 @@ export const Objects = () => {
     getObjectsCount().then((resp) => saveObjectsCount(resp?.data?.count ?? 0));
   };
 
-  useEffect(() => {
-    getAllObjects().then((resp) =>
-      setObjects(Object.entries(resp?.data)?.map((obj) => obj[1]))
+  const handleGetObjects = () =>
+    getAllObjects({ only_favorite: isFavorite ?? undefined }).then((resp) =>
+      setObjects(
+        resp?.data ? Object.entries(resp?.data)?.map((obj) => obj[1]) : []
+      )
     );
+
+  useEffect(() => {
+    handleGetObjects();
     handleGetObjectsCount();
   }, []);
 
@@ -54,6 +59,10 @@ export const Objects = () => {
     setSelected([]);
     handleGetObjectsCount();
   };
+
+  useEffect(() => {
+    handleGetObjects();
+  }, [isFavorite]);
 
   return (
     <StyledObjects>

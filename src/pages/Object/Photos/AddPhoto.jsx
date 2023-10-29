@@ -2,6 +2,14 @@ import { styled } from "styled-components";
 import { ReactComponent as PlusIcon } from "../../../assets/images/plus.svg";
 
 export const AddPhoto = ({ small, onAdd }) => {
+  const handleAddPhotos = (photos) => {
+    let files = [];
+
+    for (let i = 0; i < photos.length; i++) {
+      files.push(photos[i]);
+    }
+    onAdd(files);
+  };
   return (
     <StyledAddPhoto
       className="flex flex-col items-center justify-center add-btn"
@@ -19,7 +27,8 @@ export const AddPhoto = ({ small, onAdd }) => {
         id=""
         accept="image/png, image/jpg, image/jpeg"
         value=""
-        onChange={(e) => onAdd(e.target.files[0])}
+        onChange={(e) => handleAddPhotos(e.target.files)}
+        multiple
       />
     </StyledAddPhoto>
   );

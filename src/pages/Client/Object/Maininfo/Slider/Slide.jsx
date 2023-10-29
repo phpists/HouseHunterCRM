@@ -1,9 +1,11 @@
 import { styled } from "styled-components";
 
-export const Slide = ({ photo }) => <StyledSlide photo={photo} />;
+export const Slide = ({ photo, isOnePhoto }) => (
+  <StyledSlide photo={photo} isOnePhoto={isOnePhoto} />
+);
 
 const StyledSlide = styled.div`
-  width: 267px;
+  width: ${({ isOnePhoto }) => (isOnePhoto ? "100%" : "267px")};
   height: 220px;
   flex-shrink: 0;
   border: 1px solid rgba(255, 255, 255, 0.1);

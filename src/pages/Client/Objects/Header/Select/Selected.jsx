@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 
-export const Selected = ({ value, onChnage }) => (
+export const Selected = ({ value, onChnage, selectedCount }) => (
   <StyledSelected className="flex items-center">
-    <div onClick={() => onChnage(1)} className={`${value === 1 && "active"}`}>
-      усі 263
+    <div className={`${value === 1 || (selectedCount > 0 && "active")}`}>
+      {selectedCount ? selectedCount : "0"}
     </div>
   </StyledSelected>
 );

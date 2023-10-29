@@ -1,14 +1,19 @@
 import { styled } from "styled-components";
 import megafoneIcon from "../assets/images/megafon-object.svg";
+import homeIcon from "../assets/images/home-gradient.svg";
 
-export const ObjectCard = ({ photo, className, date }) => (
+export const ObjectCard = ({ photo, className, date, isObject }) => (
   <StyledObjectCard
     photo={photo}
     className={`flex flex-col items-center justify-center ${className} openInfo`}
   >
     {!photo && (
       <>
-        <img src={megafoneIcon} alt="" className="0.5 openInfo" />
+        <img
+          src={isObject ? homeIcon : megafoneIcon}
+          alt=""
+          className="0.5 openInfo"
+        />
         <span className="openInfo">{date ?? "04.10"}</span>
       </>
     )}

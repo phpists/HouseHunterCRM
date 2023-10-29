@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 import { ReactComponent as CloseIcon } from "../../assets/images/close.svg";
 
-export const Tag = ({ title, isFirst, type, isHide, onRemove }) => (
+export const Tag = ({ title, isFirst, type, isHide, onRemove, viewOnly }) => (
   <StyledTag
     className="flex items-center justify-between"
     isFirst={isFirst}
@@ -16,7 +16,7 @@ export const Tag = ({ title, isFirst, type, isHide, onRemove }) => (
   >
     <span>{title?.length > 40 ? `${title.substring(0, 40)}...` : title}</span>
     <button className="flex items-center justify-center" onClick={onRemove}>
-      <CloseIcon />
+      {viewOnly ? null : <CloseIcon />}
     </button>
   </StyledTag>
 );

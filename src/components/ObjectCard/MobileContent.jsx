@@ -13,7 +13,7 @@ export const MobileContent = ({ data }) => (
   <StyledMobileContent>
     <Header />
     <CardTitle title={data?.title} />
-    <Slider />
+    <Slider photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)} />
     <CardDescription text={data?.description} />
     <Footer />
     <MainInfo className="mobile-main-info" data={data} />

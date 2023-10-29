@@ -1,10 +1,11 @@
 import { styled } from "styled-components";
 import expandIcon from "../../../../assets/images/expend.svg";
 
-export const Photo = ({ photo, active }) => (
+export const Photo = ({ photo, active, onSelect }) => (
   <StyledPhoto
     photo={photo}
     className={`flex items-center justify-center ${active && "active"}`}
+    onClick={onSelect}
   >
     <img src={expandIcon} alt="" />
   </StyledPhoto>

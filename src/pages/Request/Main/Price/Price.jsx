@@ -1,7 +1,12 @@
 import { styled } from "styled-components";
 import { Ranger } from "../../../../components/Ranger/Ranger";
 
-export const Price = ({ values, onChange }) => {
+export const Price = ({
+  values,
+  onChange,
+  currency,
+  onChangeCurrency = () => null,
+}) => {
   return (
     <StyledPrice>
       <Ranger
@@ -17,6 +22,8 @@ export const Price = ({ values, onChange }) => {
         max={1000000}
         values={values}
         onChange={onChange}
+        currencyValue={currency}
+        onChangeCurrency={(val) => onChangeCurrency(val)}
       />
     </StyledPrice>
   );

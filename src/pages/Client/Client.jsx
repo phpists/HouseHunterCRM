@@ -34,8 +34,8 @@ export const Client = () => {
           selected={selectedObject}
           onSelect={(value) => setSelectedObject(value)}
         />
-        {selectedObject ? (
-          <Object className="item-desktop" id={selectedObject} />
+        {selectedObject?.id ? (
+          <Object className="item-desktop" selectedObject={selectedObject} />
         ) : null}
       </div>
     </StyledClient>

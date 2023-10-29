@@ -4,18 +4,26 @@ import { ReactComponent as UserIcon } from "../../assets/images/card-user.svg";
 import { ReactComponent as RemoveIcon } from "../../assets/images/remove.svg";
 
 export const Dropdown = ({ onDelete, onFavorite, favorite }) => (
-  <StyledDropdown className="dropdown">
-    <div className="flex items-center justify-between" onClick={onFavorite}>
-      <span>{favorite ? "З улюбленого" : "В улюблене"}</span>
-      <StarIcon className={`star-icon ${favorite && "active"}`} />
+  <StyledDropdown className="dropdown noClickable">
+    <div
+      className="flex items-center justify-between noClickable"
+      onClick={onFavorite}
+    >
+      <span className="noClickable">
+        {favorite ? "З улюбленого" : "В улюблене"}
+      </span>
+      <StarIcon className={`star-icon ${favorite && "active"} noClickable`} />
     </div>
-    <div className="flex items-center justify-between">
-      <span>Передати</span>
-      <UserIcon className="user-icon" />
+    <div className="flex items-center justify-between noClickable">
+      <span className="noClickable">Передати</span>
+      <UserIcon className="user-icon noClickable" />
     </div>
-    <div className="flex items-center justify-between" onClick={onDelete}>
-      <span>Видалити</span>
-      <RemoveIcon className="remove-icon" />
+    <div
+      className="flex items-center justify-between noClickable"
+      onClick={onDelete}
+    >
+      <span className="noClickable">Видалити</span>
+      <RemoveIcon className="remove-icon noClickable" />
     </div>
   </StyledDropdown>
 );

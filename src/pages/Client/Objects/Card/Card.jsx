@@ -4,6 +4,7 @@ import { MobileContent } from "./MobileContent";
 import { useLazyAddToFavoriteQuery } from "../../../../store/requests/requests.api";
 import { handleResponse } from "../../../../utilits";
 import cogoToast from "cogo-toast";
+import { useLazyAddToFavoritesQuery } from "../../../../store/objects/objects.api";
 
 export const Card = ({
   selected,
@@ -17,22 +18,40 @@ export const Card = ({
   favorite,
   onChangeFavorite,
   onDelete,
+  isObject,
+  onSelectItem,
 }) => {
-  const [addToFavorites] = useLazyAddToFavoriteQuery();
+  const [addRequestToFavorites] = useLazyAddToFavoriteQuery();
+  const [addObjectToFavorites] = useLazyAddToFavoritesQuery();
 
-  const handleClick = (e) =>
-    e.target.classList.contains("openInfo") ? onOpenInfo() : onSelect();
+  const handleClick = (e) => {
+    if (e.target.classList.contains("openInfo")) {
+      window.innerWidth >= 1400 ? onSelect() : onOpenInfo();
+    } else if (!e.target.classList.contains("noClickable")) {
+      onSelectItem();
+    }
+  };
 
   const handleToggleFavorites = () => {
-    addToFavorites(id).then((resp) => {
-      handleResponse(resp, () => {
-        onChangeFavorite();
-        cogoToast.success("Статус успішно змінено!", {
-          hideAfter: 3,
-          position: "top-right",
+    isObject
+      ? addObjectToFavorites(id).then((resp) => {
+          handleResponse(resp, () => {
+            onChangeFavorite();
+            cogoToast.success("Статус успішно змінено!", {
+              hideAfter: 3,
+              position: "top-right",
+            });
+          });
+        })
+      : addRequestToFavorites(id).then((resp) => {
+          handleResponse(resp, () => {
+            onChangeFavorite();
+            cogoToast.success("Статус успішно змінено!", {
+              hideAfter: 3,
+              position: "top-right",
+            });
+          });
         });
-      });
-    });
   };
 
   return (
@@ -46,6 +65,7 @@ export const Card = ({
         onFavorite={handleToggleFavorites}
         favorite={favorite}
         onDelete={onDelete}
+        isObject={isObject}
       />
       <MobileContent
         date={date}
@@ -56,6 +76,7 @@ export const Card = ({
         onFavorite={handleToggleFavorites}
         favorite={favorite}
         onDelete={onDelete}
+        isObject={isObject}
       />
     </StyledCard>
   );

@@ -8,6 +8,7 @@ import { ReactComponent as DoorsIcon } from "../../.../../../../assets/images/do
 import { ReactComponent as ExpandedIcon } from "../../.../../../../assets/images/epanded.svg";
 import { ReactComponent as BoxSelectIcon } from "../../.../../../../assets/images/box-select.svg";
 import { ReactComponent as StairsIcon } from "../../.../../../../assets/images/stairs.svg";
+import noPhoto from "../../.../../../../assets/images/no-photo.svg";
 import { TagDivider } from "./Tag/TagDivider";
 import {
   useGetLocationsQuery,
@@ -18,7 +19,7 @@ import { useEffect } from "react";
 import { SelectTags } from "../../../../components/SelectTags/SelectTags";
 import { fortmatNumber, handleGetLocationAllPath } from "../../../../utilits";
 
-export const Maininfo = ({ data, onChangeField, requestData }) => {
+export const Maininfo = ({ data, onChangeField, requestData, isObject }) => {
   const { data: rubricsList } = useGetRubricsQuery();
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
@@ -44,8 +45,12 @@ export const Maininfo = ({ data, onChangeField, requestData }) => {
 
   return (
     <StyledMaininfo>
-      {/* <Slider /> */}
-      {/* <Divider /> */}
+      {isObject && (
+        <>
+          <Slider photos={data?.img?.length > 0 ? data?.img : [noPhoto]} />
+          <Divider />
+        </>
+      )}
       <SelectTags
         label="Категорія"
         notMultiSelect
@@ -99,11 +104,15 @@ export const Maininfo = ({ data, onChangeField, requestData }) => {
             </>
           }
         /> */}
-        <TagDivider />
-        <Tag
-          Icon={StairsIcon}
-          text={`${requestData?.address_storey} із ${requestData?.storey_count}`}
-        />
+        {requestData?.address_storey && (
+          <>
+            <TagDivider />
+            <Tag
+              Icon={StairsIcon}
+              text={`${requestData?.address_storey} із ${requestData?.storey_count}`}
+            />
+          </>
+        )}
       </div>
       <Divider />
 

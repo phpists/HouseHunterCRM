@@ -7,10 +7,15 @@ import { Photo } from "./Photo/Photo";
 import DraggableList from "react-draggable-lists";
 import noPhoto from "../../../assets/images/no-photo.svg";
 
-export const Photos = ({ photos, onChange }) => {
+export const Photos = ({ photos, onChange, onDeletePhoto }) => {
   const handleMakePhotoMain = (index, photo) => {
     const filteredPhotos = photos.filter((p, i) => i !== index);
     onChange([photo, ...filteredPhotos]);
+  };
+
+  const handleDeletePhoto = (index, photo) => {
+    onChange(photos.filter((p, j) => 1 + index !== j));
+    !photo?.type && onDeletePhoto(1 + index);
   };
 
   return (
@@ -28,14 +33,15 @@ export const Photos = ({ photos, onChange }) => {
                 <Photo
                   key={i}
                   photo={p}
-                  onRemove={() =>
-                    onChange(photos.filter((p, j) => 1 + i !== j))
-                  }
+                  onRemove={() => handleDeletePhoto(i, p)}
                   onMakeMain={() => handleMakePhotoMain(1 + i, p)}
                 />
               ))}
               {photos.length === 2 && (
-                <AddPhoto small onAdd={(file) => onChange([...photos, file])} />
+                <AddPhoto
+                  small
+                  onAdd={(files) => onChange([...photos, ...files])}
+                />
               )}
             </div>
           ) : (
@@ -45,15 +51,16 @@ export const Photos = ({ photos, onChange }) => {
                 <Photo
                   key={i}
                   photo={p}
-                  onRemove={() =>
-                    onChange(photos.filter((p, j) => 1 + i !== j))
-                  }
+                  onRemove={() => handleDeletePhoto(i, p)}
                   onMakeMain={() => handleMakePhotoMain(1 + i, p)}
                 />
               ))}
               {/* </DraggableList> */}
               {photos.length === 2 && (
-                <AddPhoto small onAdd={(file) => onChange([...photos, file])} />
+                <AddPhoto
+                  small
+                  onAdd={(files) => onChange([...photos, ...files])}
+                />
               )}
             </div>
           )}
@@ -61,7 +68,7 @@ export const Photos = ({ photos, onChange }) => {
       )}
 
       {photos.length !== 2 && (
-        <AddPhoto onAdd={(file) => onChange([...photos, file])} />
+        <AddPhoto onAdd={(files) => onChange([...photos, ...files])} />
       )}
     </StyledPhotos>
   );

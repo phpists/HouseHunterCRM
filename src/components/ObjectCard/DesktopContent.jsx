@@ -8,11 +8,11 @@ import { ShowMore } from "./ShowMore/ShowMore";
 
 export const DesktopContent = ({ data }) => (
   <StyledDesktopContent className="flex items-center justify-between">
-    <Slider />
+    <Slider photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)} />
     <MainInfo data={data} />
-    <Info className="desktop-item" />
+    <Info className="desktop-item" data={data} />
     <Tags data={data} />
-    <Contacts className="desktop-item" />
+    <Contacts className="desktop-item" data={data} />
     <ShowMore clientId={data?.id_client} id={data?.id} />
     <div className="mobile-footer w-full">
       <Info data={data} />

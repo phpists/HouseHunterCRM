@@ -5,10 +5,18 @@ import { useEffect, useState } from "react";
 import { Arrow } from "./Arrow";
 import { Dropdown } from "./Dropdown";
 import { ClosedButton } from "./ClosedButton";
+import { Confirm } from "../../../../../components/Confirm/Confirm";
 
-export const Select = ({ open, onOpen }) => {
+export const Select = ({
+  open,
+  onOpen,
+  selectedCount,
+  onDelete,
+  onToggleFavorite,
+}) => {
   const [type, setType] = useState(null);
   const [active, setActive] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   useEffect(() => {
     if (!open) {
@@ -17,26 +25,41 @@ export const Select = ({ open, onOpen }) => {
     }
   }, [open]);
 
+  const handleSelectOption = (opt) => {
+    setActive(false);
+    if (opt === "delete") {
+      setDeleteModal(true);
+    } else if (opt === "favorite") {
+      onToggleFavorite();
+    }
+  };
+
   return (
-    <div className="relative z-10">
-      {!open ? (
-        <ClosedButton onClick={onOpen} />
-      ) : (
-        <>
-          <StyledSelect className="flex items-center" active={active}>
-            <Title />
-            <Selected
-              value={type}
-              onChnage={(value) => setType(type === value ? null : value)}
-            />
-            {type && (
-              <Arrow open={active} onToggleOpen={() => setActive(!active)} />
-            )}
-          </StyledSelect>
-          {active && <Dropdown />}
-        </>
+    <>
+      {deleteModal && (
+        <Confirm
+          title="Видалити обрані заявку(ки)/ об'єкт(и)?"
+          onClose={() => setDeleteModal(false)}
+          onSubmit={onDelete}
+        />
       )}
-    </div>
+      <div className="relative z-10">
+        {!open ? (
+          <ClosedButton onClick={onOpen} />
+        ) : (
+          <>
+            <StyledSelect className="flex items-center" active={active}>
+              <Title />
+              <Selected value={type} selectedCount={selectedCount} />
+              {selectedCount > 0 && (
+                <Arrow open={active} onToggleOpen={() => setActive(!active)} />
+              )}
+            </StyledSelect>
+            {active && <Dropdown onSelect={handleSelectOption} />}
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

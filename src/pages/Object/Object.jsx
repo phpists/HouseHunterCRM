@@ -8,9 +8,11 @@ import { Price } from "./MainInfo/Price/Price";
 import { useEffect, useState } from "react";
 import {
   useLazyCreateObjectQuery,
+  useLazyDeleteObjectPhotoQuery,
   useLazyEditObjectQuery,
   useLazyGetObjectQuery,
   useLazyGetRubricFieldsQuery,
+  useLazySetCoverPhotoQuery,
 } from "../../store/objects/objects.api";
 import { useNavigate, useParams } from "react-router-dom";
 import { handleCheckIsField, handleResponse } from "../../utilits";
@@ -31,11 +33,14 @@ export const Object = () => {
   const [createObject] = useLazyCreateObjectQuery();
   const [editObject] = useLazyEditObjectQuery();
   const [getRubricFields] = useLazyGetRubricFieldsQuery();
-  const [getObject] = useLazyGetObjectQuery();
+  const [getObject, { data: objectData }] = useLazyGetObjectQuery();
+  const [deletePhoto] = useLazyDeleteObjectPhotoQuery();
+  const [setCoverPhoto] = useLazySetCoverPhotoQuery();
   const [data, setData] = useState(INIT_DATA);
   const [fields, setFields] = useState([]);
   const [favorite, setFavorite] = useState(false);
   const [photos, setPhotos] = useState([]);
+  const [deletedPhotos, setDeletedPhotos] = useState([]);
 
   const handleChangePhotos = (p) => setPhotos(p);
 
@@ -67,6 +72,25 @@ export const Object = () => {
     }
   };
 
+  const handleDeletePhotos = () => {
+    if (deletedPhotos?.length > 0) {
+      const photoIds = objectData.img
+        .filter((p, i) => !!deletedPhotos.find((index) => index === i))
+        ?.map(({ id }) => id);
+      Promise.all(
+        photoIds?.map((id_img) => deletePhoto({ id_object: id, id_img }))
+      );
+    }
+  };
+
+  const handleSetPhotoCover = () => {
+    const firstPhotoId = objectData.img.find((p) => p?.url === photos[0])?.id;
+
+    if (firstPhotoId || firstPhotoId === 0) {
+      setCoverPhoto({ id_object: id, id_img: firstPhotoId.toString() });
+    }
+  };
+
   const handleCreate = () => {
     createObject({ field: { ...data, id_client: clientId }, photos }).then(
       (resp) =>
@@ -91,6 +115,8 @@ export const Object = () => {
           hideAfter: 3,
           position: "top-right",
         });
+        handleDeletePhotos();
+        handleSetPhotoCover();
       })
     );
   };
@@ -100,6 +126,11 @@ export const Object = () => {
       getObject(id).then((resp) => {
         setData(resp?.data);
         handleGetRubricsFields(resp?.data?.id_rubric, resp?.data);
+        setPhotos(
+          [...resp?.data?.img]
+            ?.sort((a, b) => b.cover - a.cover)
+            .map((photo) => photo?.url) ?? []
+        );
       });
     }
   }, [id]);
@@ -124,7 +155,13 @@ export const Object = () => {
         onChangeField={handleChangeField}
       />
       <div className="object-wrappper">
-        <Photos photos={photos} onChange={handleChangePhotos} />
+        <Photos
+          photos={photos}
+          onChange={handleChangePhotos}
+          onDeletePhoto={(photoIndex) =>
+            setDeletedPhotos([...deletedPhotos, photoIndex])
+          }
+        />
         <MainInfo
           data={data}
           onChangeField={handleChangeField}

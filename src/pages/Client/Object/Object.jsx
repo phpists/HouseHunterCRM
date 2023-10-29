@@ -11,40 +11,65 @@ import {
 } from "../../../store/requests/requests.api";
 import { REQUEST_INIT } from "../../Request/Request";
 import { handleResponse } from "../../../utilits";
+import { useLazyGetObjectQuery } from "../../../store/objects/objects.api";
 
-export const Object = ({ className, id }) => {
+export const Object = ({ className, selectedObject }) => {
   const [started, setStarted] = useState(true);
   const [getRequest, { data: requestData }] = useLazyGetRequestQuery();
+  const [getObject] = useLazyGetObjectQuery();
   const [getRubricField] = useLazyGetRubricsFieldsQuery();
   const [data, setData] = useState(REQUEST_INIT);
   const [fields, setFields] = useState([]);
 
-  useEffect(() => {
-    if (id) {
-      getRequest(id).then((resp) => {
-        handleResponse(resp, () => {
-          setData({
-            id_client: resp?.data?.id_client,
-            id_rubric: resp?.data?.id_rubric,
-            id_location: resp?.data?.id_location,
-            type_obj_apartment: resp?.data?.type_obj_apartment,
-            price_min: resp?.data?.price_min,
-            price_max: resp?.data?.price_max,
-            room_min: resp?.data?.room_min,
-            room_max: resp?.data?.room_max,
-            address_storey: resp?.data?.address_storey,
-            storey_count: resp?.data?.storey_count,
-            area_total_min: resp?.data?.area_total_min,
-            area_total_max: resp?.data?.area_total_max,
-            comment: resp?.data?.comment,
-            not_actual: resp?.data?.not_actual,
-            dt_deadline: resp?.data?.dt_deadline,
-            deleted: resp?.data?.deleted,
-          });
+  const handleGetRequest = () => {
+    getRequest(selectedObject?.id).then((resp) => {
+      handleResponse(resp, () => {
+        setData({
+          id_client: resp?.data?.id_client,
+          id_rubric: resp?.data?.id_rubric,
+          id_location: resp?.data?.id_location,
+          type_obj_apartment: resp?.data?.type_obj_apartment,
+          price_min: resp?.data?.price_min,
+          price_max: resp?.data?.price_max,
+          room_min: resp?.data?.room_min,
+          room_max: resp?.data?.room_max,
+          address_storey: resp?.data?.address_storey,
+          storey_count: resp?.data?.storey_count,
+          area_total_min: resp?.data?.area_total_min,
+          area_total_max: resp?.data?.area_total_max,
+          comment: resp?.data?.comment,
+          not_actual: resp?.data?.not_actual,
+          dt_deadline: resp?.data?.dt_deadline,
+          deleted: resp?.data?.deleted,
         });
       });
+    });
+  };
+
+  const handleGetObject = () => {
+    getObject(selectedObject?.id).then((resp) => {
+      handleResponse(resp, () => {
+        setData({
+          img: [...resp?.data?.img]
+            ?.sort((a, b) => b?.order - a?.order)
+            ?.map(({ url }) => url),
+          id_client: resp?.data?.id_client,
+          id_rubric: resp?.data?.id_rubric,
+          id_location: resp?.data?.id_location,
+          price_min: resp?.data?.price,
+        });
+      });
+    });
+  };
+
+  useEffect(() => {
+    console.log(selectedObject);
+    if (selectedObject?.id) {
+      selectedObject?.type === "request"
+        ? handleGetRequest()
+        : handleGetObject();
     }
-  }, [id]);
+  }, [selectedObject]);
 
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => setFields(resp?.data));
@@ -65,6 +90,7 @@ export const Object = ({ className, id }) => {
         data={data}
         onChangeField={handleChangeField}
         requestData={requestData}
+        isObject={selectedObject?.type === "object"}
       />
       {started ? (
         <>

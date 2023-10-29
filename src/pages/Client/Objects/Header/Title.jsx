@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 
-export const Title = ({ requestsCount }) => (
+export const Title = ({ requestsCount, objectsCount }) => (
   <StyledTitle className="flex items-center">
-    <div className="number purple">0</div>
+    <div className="number purple">{objectsCount}</div>
     <span>/</span>
     Об’єкти
     <span className="end">та</span>

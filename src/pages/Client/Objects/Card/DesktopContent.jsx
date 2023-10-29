@@ -17,10 +17,11 @@ export const DesktopContent = ({
   onFavorite,
   favorite,
   onDelete,
+  isObject,
 }) => (
   <StyledDesktopContent className="flex items-center justify-between">
     <div className="flex items-center w-max">
-      <ObjectCard className="object-card" date={date} />
+      <ObjectCard className="object-card" date={date} isObject={isObject} />
       <div className="w-max mr-5">
         <div className="flex items-center w-max">
           <Title title={title} />

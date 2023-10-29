@@ -3,8 +3,14 @@ import { PositionCard } from "./PositionCard";
 import { SymbolSelect } from "./SymbolSelect";
 import { useState } from "react";
 
-export const Footer = ({ currency, values, mainType }) => {
-  const [activeCurrency, setActiveCurrency] = useState("$");
+export const Footer = ({
+  currency,
+  values,
+  mainType,
+  currencyValue = 1,
+  onChangeCurrency,
+}) => {
+  const currencies = ["₴", "$", "€"];
 
   return (
     <StyledFooter className="flex items-center">
@@ -12,18 +18,22 @@ export const Footer = ({ currency, values, mainType }) => {
         title="Від"
         value={values[0]}
         className="from-card"
-        mainType={mainType ? mainType : currency ? activeCurrency : null}
+        mainType={
+          mainType ? mainType : currency ? currencies[currencyValue - 1] : null
+        }
       />
       <PositionCard
         title="До"
         value={values[1]}
         className="to-card"
-        mainType={mainType ? mainType : currency ? activeCurrency : null}
+        mainType={
+          mainType ? mainType : currency ? currencies[currencyValue - 1] : null
+        }
       />
       {currency && (
         <SymbolSelect
-          active={activeCurrency}
-          onChange={(value) => setActiveCurrency(value)}
+          active={currencyValue}
+          onChange={(value) => onChangeCurrency(value)}
         />
       )}
     </StyledFooter>

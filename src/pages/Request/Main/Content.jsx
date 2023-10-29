@@ -34,6 +34,7 @@ export const Content = ({ data, onChangeField }) => {
     }
   }, [locationsList]);
 
+  console.log(data.price_currency);
   return (
     <StyledContent>
       <SelectTags
@@ -68,6 +69,8 @@ export const Content = ({ data, onChangeField }) => {
             onChangeField
           )
         }
+        currency={data?.price_currency}
+        onChangeCurrency={(val) => onChangeField("price_currency", val)}
       />
     </StyledContent>
   );

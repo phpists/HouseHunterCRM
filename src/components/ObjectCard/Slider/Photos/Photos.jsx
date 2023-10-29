@@ -1,10 +1,15 @@
 import { styled } from "styled-components";
 import { Photo } from "./Photo";
 
-export const Photos = ({ photos }) => (
+export const Photos = ({ photos, onSelect, active }) => (
   <StyledPhotos className="hide-scroll">
     {photos.map((photo, i) => (
-      <Photo key={i} photo={photo} />
+      <Photo
+        key={i}
+        photo={photo}
+        onSelect={() => onSelect(1 + i)}
+        active={active === 1 + i}
+      />
     ))}
   </StyledPhotos>
 );
@@ -16,6 +21,7 @@ const StyledPhotos = styled.div`
   gap: 6px;
   height: 200px;
   overflow: auto;
+  grid-auto-rows: max-content;
   @media (max-width: 1399.9px) {
     display: flex;
     width: 200px;

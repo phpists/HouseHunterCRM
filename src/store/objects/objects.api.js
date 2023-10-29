@@ -66,13 +66,14 @@ export const objects = createApi({
       }),
     }),
     getAllObjects: build.query({
-      query: () => ({
+      query: ({ only_favorite }) => ({
         url: "",
         method: "POST",
         headers: headers(),
         body: handleToFormData({
           action: "view",
           mod: "objects",
+          only_favorite,
         }),
       }),
     }),
@@ -110,6 +111,32 @@ export const objects = createApi({
         }),
       }),
     }),
+    deleteObjectPhoto: build.query({
+      query: ({ id_object, id_img }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "delete_image_object",
+          mod: "objects",
+          id_object,
+          id_img,
+        }),
+      }),
+    }),
+    setCoverPhoto: build.query({
+      query: ({ id_object, id_img }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "set_cover_img_obj",
+          mod: "objects",
+          id_object,
+          id_img,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -123,4 +150,6 @@ export const {
   useLazyGetObjectQuery,
   useLazyEditObjectQuery,
   useLazyGetObjectsCountQuery,
+  useLazyDeleteObjectPhotoQuery,
+  useLazySetCoverPhotoQuery,
 } = objects;

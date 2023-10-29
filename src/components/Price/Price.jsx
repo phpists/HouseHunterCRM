@@ -22,9 +22,12 @@ export const Price = ({ title, subtitle, className, prices, priceFor }) => {
         />
       ) : (
         <Closed
-          price={`${fortmatNumber(Number(prices[activeCurrency]) ?? 0)} ${
-            options[activeCurrency]
-          }`}
+          price={
+            title ??
+            `${fortmatNumber(Number(prices[activeCurrency]) ?? 0)} ${
+              options[activeCurrency]
+            }`
+          }
           onOpen={() => setOpen(true)}
           title={title}
           subtitle={subtitle}

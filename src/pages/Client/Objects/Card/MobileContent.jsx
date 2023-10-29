@@ -17,11 +17,12 @@ export const MobileContent = ({
   onFavorite,
   favorite,
   onDelete,
+  isObject,
 }) => (
   <StyledMobileContent className="flex items-center justify-between w-full">
     <div className="flex items-center w-full">
       <div className="cards-wrapper">
-        <ObjectCard className="object-card" date={date} />
+        <ObjectCard className="object-card" date={date} isObject={isObject} />
         {/* <StepNumber num={1} className="number" /> */}
       </div>
       <div className="w-full">

@@ -29,6 +29,8 @@ export const Ranger = ({
   big,
   values = [0, 0],
   onChange,
+  currencyValue,
+  onChangeCurrency,
 }) => {
   const { getTrackProps, handles, segments } = useRanger({
     values,
@@ -80,7 +82,13 @@ export const Ranger = ({
           <Segment {...getSegmentProps()} index={i} />
         ))}
       </div>
-      <Footer currency={currency} values={values} mainType={mainType} />
+      <Footer
+        currency={currency}
+        values={values}
+        mainType={mainType}
+        currencyValue={currencyValue}
+        onChangeCurrency={onChangeCurrency}
+      />
     </StyledRanger>
   );
 };
