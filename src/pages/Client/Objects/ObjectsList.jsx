@@ -112,7 +112,7 @@ export const ObjectsList = ({
         {objects && Object.entries(objects)?.length
           ? Object.entries(objects).map((c, i) => (
               <Card
-                key={1}
+                key={`object-${i}`}
                 selected={
                   active === c[1]?.id ||
                   !!selectedItems?.find((s) => s.id === c[1]?.id)
@@ -131,7 +131,7 @@ export const ObjectsList = ({
                 onChangeFavorite={() => handleToggleFavoriteStatus(c[1]?.id)}
                 onDelete={() => handleOnDeleteRequest(c[1]?.id)}
                 photo=""
-                isObject
+                isObject={true}
               />
             ))
           : null}

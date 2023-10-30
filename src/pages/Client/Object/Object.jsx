@@ -63,7 +63,6 @@ export const Object = ({ className, selectedObject }) => {
   };
 
   useEffect(() => {
-    console.log(selectedObject);
     if (selectedObject?.id) {
       selectedObject?.type === "request"
         ? handleGetRequest()

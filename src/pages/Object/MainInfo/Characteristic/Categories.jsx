@@ -27,6 +27,14 @@ export const Categories = ({ data, onChangeField, fields }) => {
 
   const Additional = fields
     ? [
+        ...(handleCheckIsField(fields, "label_fake")
+          ? [
+              {
+                title: "Фейк",
+                name: "label_fake",
+              },
+            ]
+          : []),
         ...(handleCheckIsField(fields, "label_without_animals")
           ? [
               {
@@ -134,9 +142,9 @@ export const Categories = ({ data, onChangeField, fields }) => {
             key={i}
             title={opt.title}
             className="opt"
-            active={data[opt.name] === 1}
+            active={data[opt.name] === "1"}
             onSelect={() =>
-              onChangeField(opt.name, data[opt.name] === 1 ? 0 : 1)
+              onChangeField(opt.name, data[opt.name] === "1" ? "0" : "1")
             }
           />
         ))}

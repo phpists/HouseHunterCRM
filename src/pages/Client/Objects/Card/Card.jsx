@@ -26,7 +26,10 @@ export const Card = ({
 
   const handleClick = (e) => {
     if (e.target.classList.contains("openInfo")) {
-      window.innerWidth >= 1400 ? onSelect() : onOpenInfo();
+      onSelect();
+      if (window.innerWidth <= 1400) {
+        onOpenInfo();
+      }
     } else if (!e.target.classList.contains("noClickable")) {
       onSelectItem();
     }

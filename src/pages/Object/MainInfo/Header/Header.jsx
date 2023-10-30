@@ -7,8 +7,8 @@ export const Header = ({ className, data, onChangeField }) => {
     <StyledHeader className={`flex items-center ${className}`}>
       <StatusButton
         type="actual"
-        active={data?.obj_is_actual === 1}
-        onChange={() => onChangeField("obj_is_actual", 1)}
+        active={data?.obj_is_actual === "1"}
+        onChange={() => onChangeField("obj_is_actual", "1")}
       />
       <StatusData
         value={data?.obj_is_actual_dt}
@@ -16,8 +16,8 @@ export const Header = ({ className, data, onChangeField }) => {
       />
       <StatusButton
         type="not_actual"
-        active={data?.obj_is_actual === 0}
-        onChange={() => onChangeField("obj_is_actual", 0)}
+        active={data?.obj_is_actual === "0"}
+        onChange={() => onChangeField("obj_is_actual", "0")}
       />
     </StyledHeader>
   );

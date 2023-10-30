@@ -30,6 +30,11 @@ export const Info = ({ fields, data, onChangeField }) => {
     "price_history_json",
     "price_for",
     "price_currency",
+    "label_fake",
+    "label_without_animals",
+    "label_without_children",
+    "label_without_foreigners",
+    "label_without_students",
   ];
 
   return (

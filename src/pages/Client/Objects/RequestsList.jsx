@@ -111,7 +111,7 @@ export const RequestsList = ({
         {requests && Object.entries(requests)?.length
           ? Object.entries(requests).map((c, i) => (
               <Card
-                key={1}
+                key={`request-${i}`}
                 selected={
                   active === c[1]?.id ||
                   !!selectedItems?.find((s) => s.id === c[1]?.id)
