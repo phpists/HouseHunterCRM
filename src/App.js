@@ -7,7 +7,7 @@ import { Company } from "./pages/Company/Company";
 import { Auth } from "./pages/Auth/Auth";
 import { Clients } from "./pages/Clients/Clients";
 import { Client } from "./pages/Client/Client";
-import { Object } from "./pages/Object/Object";
+import { ObjectPage } from "./pages/Object/Object";
 import { Request } from "./pages/Request/Request";
 import { Objects } from "./pages/Objects/Objects";
 import { Requests } from "./pages/Requests/Requests";
@@ -73,8 +73,11 @@ export const App = () => {
               <Route path="/empty" element={<Dashboard />} />
               <Route path="/clients" element={<Clients />} />
               <Route path="/client/:id" element={<Client />} />
-              <Route path="/create-object/:clientId" element={<Object />} />
-              <Route path="/edit-object/:clientId/:id" element={<Object />} />
+              <Route path="/create-object/:clientId" element={<ObjectPage />} />
+              <Route
+                path="/edit-object/:clientId/:id"
+                element={<ObjectPage />}
+              />
               <Route path="/objects" element={<Objects />} />
               <Route path="/create-request/:clientId" element={<Request />} />
               <Route path="/edit-request/:clientId/:id" element={<Request />} />

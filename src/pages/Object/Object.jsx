@@ -7,6 +7,7 @@ import { Header } from "./MainInfo/Header/Header";
 import { Price } from "./MainInfo/Price/Price";
 import { useEffect, useState } from "react";
 import {
+  useGetCommentsToFieldsQuery,
   useLazyCreateObjectQuery,
   useLazyDeleteObjectPhotoQuery,
   useLazyEditObjectQuery,
@@ -15,7 +16,12 @@ import {
   useLazySetCoverPhotoQuery,
 } from "../../store/objects/objects.api";
 import { useNavigate, useParams } from "react-router-dom";
-import { handleCheckIsField, handleResponse } from "../../utilits";
+import {
+  handleCheckFields,
+  handleCheckIsField,
+  handleFormatDate,
+  handleResponse,
+} from "../../utilits";
 import cogoToast from "cogo-toast";
 
 const INIT_DATA = {
@@ -25,14 +31,16 @@ const INIT_DATA = {
   obj_is_actual: 1,
   price_currency: 1,
   price_for: 1,
+  obj_is_actual_dt: new Date().getTime(),
 };
 
-export const Object = () => {
+export const ObjectPage = () => {
   const { clientId, id } = useParams();
   const navigate = useNavigate();
   const [createObject] = useLazyCreateObjectQuery();
   const [editObject] = useLazyEditObjectQuery();
   const [getRubricFields] = useLazyGetRubricFieldsQuery();
+  const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [getObject, { data: objectData }] = useLazyGetObjectQuery();
   const [deletePhoto] = useLazyDeleteObjectPhotoQuery();
   const [setCoverPhoto] = useLazySetCoverPhotoQuery();
@@ -44,15 +52,34 @@ export const Object = () => {
 
   const handleChangePhotos = (p) => setPhotos(p);
 
-  const handleGetRubricsFields = (id, lastData) => {
+  const handleFormatDatesToTimestamp = (data, fieldsData, isReverse) => {
+    const dateFields = fieldsData?.main_field
+      ? Object.entries(fieldsData?.main_field)
+          ?.filter((f) => f[1]?.type === "date")
+          ?.map((f) => f[0])
+      : [];
+
+    let updatedData = { ...data };
+
+    dateFields.forEach((f) => {
+      updatedData = {
+        ...updatedData,
+        [f]: !isReverse
+          ? new Date(updatedData[f]).getTime() / 1000
+          : handleFormatDate(
+              new Date(Number(updatedData[f] ?? 0) * 1000),
+              true
+            ),
+      };
+    });
+
+    return updatedData;
+  };
+
+  const handleGetRubricsFields = (id, lastData, isFormatdate) => {
     getRubricFields(id).then((resp) => {
-      const isDate = handleCheckIsField(resp?.data, "obj_is_actual_dt");
-      isDate &&
-        setData({
-          ...INIT_DATA,
-          ...lastData,
-          obj_is_actual_dt: new Date().getTime(),
-        });
+      isFormatdate &&
+        setData(handleFormatDatesToTimestamp(lastData, resp?.data, true));
       setFields(resp?.data);
     });
   };
@@ -92,40 +119,92 @@ export const Object = () => {
   };
 
   const handleCreate = () => {
-    createObject({ field: { ...data, id_client: clientId }, photos }).then(
-      (resp) =>
+    const isAllRequiredFieldsFilled = handleCheckFields({
+      data: { ...data, id_client: clientId },
+      requiredFields: Object.entries(fields?.main_field)
+        ?.filter((f) => f[1]?.required === 1)
+        ?.map((f) => f[0]),
+      additionalFields: ["title"],
+      titles: commentsToFields?.object,
+      additionalTitles: {
+        title: "Заголовок",
+        price: "Ціна",
+        id_location: "Розташування",
+      },
+    });
+
+    if (isAllRequiredFieldsFilled) {
+      createObject({
+        field: {
+          ...handleFormatDatesToTimestamp(data, fields),
+          id_client: clientId,
+          obj_is_actual_dt: data?.obj_is_actual_dt
+            ? Number(data?.obj_is_actual_dt) / 1000
+            : undefined,
+        },
+        photos,
+      }).then((resp) =>
         handleResponse(resp, () => {
-          cogoToast.success("Заявка успішно створена", {
+          cogoToast.success("Об'єкт успішно створено", {
             hideAfter: 3,
             position: "top-right",
           });
           navigate(`/client/${clientId}`);
         })
-    );
+      );
+    }
   };
 
   const handleEdit = () => {
-    editObject({
-      id_object: id,
-      field: { ...data, id_client: clientId },
-      photos,
-    }).then((resp) =>
-      handleResponse(resp, () => {
-        cogoToast.success("Зміни успішно збережено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-        handleDeletePhotos();
-        handleSetPhotoCover();
-      })
-    );
+    const isAllRequiredFieldsFilled = handleCheckFields({
+      data: { ...data, id_client: clientId },
+      requiredFields: Object.entries(fields?.main_field)
+        ?.filter((f) => f[1]?.required === 1)
+        ?.map((f) => f[0]),
+      additionalFields: ["title"],
+      titles: commentsToFields?.object,
+      additionalTitles: {
+        title: "Заголовок",
+        price: "Ціна",
+        id_location: "Розташування",
+      },
+    });
+
+    if (isAllRequiredFieldsFilled) {
+      editObject({
+        id_object: id,
+        field: {
+          ...handleFormatDatesToTimestamp(data, fields),
+          id_client: clientId,
+          obj_is_actual_dt: data?.obj_is_actual_dt
+            ? Number(data?.obj_is_actual_dt) / 1000
+            : undefined,
+        },
+        photos,
+      }).then((resp) =>
+        handleResponse(resp, () => {
+          cogoToast.success("Зміни успішно збережено", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          handleDeletePhotos();
+          handleSetPhotoCover();
+        })
+      );
+    }
   };
 
   useEffect(() => {
     if (id) {
       getObject(id).then((resp) => {
-        setData(resp?.data);
-        handleGetRubricsFields(resp?.data?.id_rubric, resp?.data);
+        const objectData = {
+          ...handleFormatDatesToTimestamp(resp?.data, true),
+          obj_is_actual_dt: resp?.data?.obj_is_actual_dt
+            ? Number(resp?.data?.obj_is_actual_dt) * 1000
+            : undefined,
+        };
+        setData(objectData);
+        handleGetRubricsFields(resp?.data?.id_rubric, objectData, true);
         setPhotos(
           [...resp?.data?.img]
             ?.sort((a, b) => b.cover - a.cover)

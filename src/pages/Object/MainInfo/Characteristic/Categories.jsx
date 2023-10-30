@@ -12,19 +12,6 @@ import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.a
 export const Categories = ({ data, onChangeField, fields }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
-  const Tech = [
-    { title: "Електрочайник", value: "" },
-    { title: "Кавомашина", value: "" },
-    { title: "Духова шафа", value: "" },
-    { title: "Мікрохвильова піч", value: "" },
-    { title: "Пральна машина", value: "" },
-    { title: "Сушильна машина", value: "" },
-    { title: "Мікрохвильова піч", value: "" },
-    { title: "Холодильник", value: "" },
-    { title: "Посудомийна машина", value: "" },
-    { title: "Холодильник", value: "Праска" },
-  ];
-
   const Additional = fields
     ? [
         ...(handleCheckIsField(fields, "label_fake")

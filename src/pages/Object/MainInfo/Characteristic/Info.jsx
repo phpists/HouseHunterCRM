@@ -70,6 +70,9 @@ export const Info = ({ fields, data, onChangeField }) => {
                       label={commentsToFields?.object[field[0]]}
                       className="field"
                       grey
+                      type={
+                        field[1]?.type === "int" ? "number" : field[1]?.type
+                      }
                     />
                   );
                 }

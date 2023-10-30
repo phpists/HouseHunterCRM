@@ -21,6 +21,7 @@ export const ProfileField = ({
   phoneCode,
   onChangePhoneCode,
   readOnly,
+  type,
 }) => {
   const [active, setActive] = useState(false);
   const textareaRef = useRef(null);
@@ -84,6 +85,7 @@ export const ProfileField = ({
               value={value}
               placeholder={placeholder}
               onChange={(e) => (onChange ? onChange(e.target.value) : null)}
+              type={type ?? "text"}
             />
           )}
         </>
@@ -154,6 +156,20 @@ const StyledProfileField = styled.div`
         line-height: 118%; /* 23.6px */
         letter-spacing: 0.4px;
     `};
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      /* display: none; <- Crashes Chrome on hover */
+      -webkit-appearance: none;
+      margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    }
+
+    &[type="number"] {
+      -moz-appearance: textfield; /* Firefox */
+    }
+    &[type="date"]::-webkit-calendar-picker-indicator {
+      display: none;
+      -webkit-appearance: none;
+    }
   }
   .label {
     color: #fff;

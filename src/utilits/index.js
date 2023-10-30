@@ -144,3 +144,47 @@ export const handleGetLocationAllPath = (locationsList, id, parentId, name) => {
     return { value: id, title: name };
   }
 };
+
+export const handleCheckFields = ({
+  data = {},
+  requiredFields = [],
+  additionalFields = [],
+  titles = [],
+  additionalTitles = {},
+}) => {
+  let emptyFields = [];
+
+  [...requiredFields, ...additionalFields].forEach((f) => {
+    if (!data[f] || data[f]?.length === 0) {
+      emptyFields.push(f);
+    }
+  });
+
+  if (emptyFields?.length === 0) {
+    return true;
+  } else {
+    const fieldsTitles = {
+      ...titles,
+      ...additionalTitles,
+    };
+
+    const handleTitles = emptyFields?.map(
+      (f, i) => `${1 + i}. ${fieldsTitles[f] ?? ""}`
+    );
+
+    cogoToast.error(
+      <>
+        Заповніть обов'язкові поля:
+        {handleTitles.map((t) => (
+          <div>{t}</div>
+        ))}
+      </>,
+      {
+        hideAfter: 5,
+        position: "top-right",
+      }
+    );
+
+    return false;
+  }
+};

@@ -13,7 +13,8 @@ import {
 import { useEffect, useState } from "react";
 import cogoToast from "cogo-toast";
 import { useNavigate, useParams } from "react-router-dom";
-import { handleResponse } from "../../utilits";
+import { handleCheckFields, handleResponse } from "../../utilits";
+import { useGetCommentsToFieldsQuery } from "../../store/objects/objects.api";
 
 export const REQUEST_INIT = {
   id_client: null,
@@ -45,6 +46,7 @@ export const Request = () => {
   const [data, setData] = useState(REQUEST_INIT);
   const [fields, setFields] = useState([]);
   const [favorite, setFavorite] = useState(false);
+  const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => setFields(resp?.data));
@@ -59,29 +61,61 @@ export const Request = () => {
   };
 
   const handleCreateRequest = () => {
-    createRequest({ ...data, id_client: clientId })?.then((resp) => {
-      handleResponse(resp, () => {
-        cogoToast.success("Заявка успішно створена", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-        navigate(`/client/${clientId}`);
-      });
+    const isAllRequiredFieldsFilled = handleCheckFields({
+      data: { ...data, id_client: clientId },
+      requiredFields: fields
+        ?.filter((f) => f?.required === 1)
+        ?.map((f) => f?.field),
+      additionalFields: [],
+      titles: commentsToFields?.request,
+      additionalTitles: {
+        id_location: "Локація",
+        price_min: "Ціна від",
+        price_max: "Ціна до",
+      },
     });
+
+    if (isAllRequiredFieldsFilled) {
+      createRequest({ ...data, id_client: clientId })?.then((resp) => {
+        handleResponse(resp, () => {
+          cogoToast.success("Заявка успішно створена", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          navigate(`/client/${clientId}`);
+        });
+      });
+    }
   };
 
   const handleEditRequest = () => {
-    editRequest({
-      field: { ...data, id_client: clientId },
-      id_request: id,
-    })?.then((resp) => {
-      handleResponse(resp, () => {
-        cogoToast.success("Заявка успішно збережена", {
-          hideAfter: 3,
-          position: "top-right",
+    const isAllRequiredFieldsFilled = handleCheckFields({
+      data: { ...data, id_client: clientId },
+      requiredFields: fields
+        ?.filter((f) => f?.required === 1)
+        ?.map((f) => f?.field),
+      additionalFields: [],
+      titles: commentsToFields?.request,
+      additionalTitles: {
+        id_location: "Локація",
+        price_min: "Ціна від",
+        price_max: "Ціна до",
+      },
+    });
+
+    if (isAllRequiredFieldsFilled) {
+      editRequest({
+        field: { ...data, id_client: clientId },
+        id_request: id,
+      })?.then((resp) => {
+        handleResponse(resp, () => {
+          cogoToast.success("Заявка успішно збережена", {
+            hideAfter: 3,
+            position: "top-right",
+          });
         });
       });
-    });
+    }
   };
 
   useEffect(() => {
