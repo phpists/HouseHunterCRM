@@ -6,6 +6,7 @@ import { useState } from "react";
 export const Footer = ({
   currency,
   values,
+  onChange,
   mainType,
   currencyValue = 1,
   onChangeCurrency,
@@ -16,6 +17,7 @@ export const Footer = ({
     <StyledFooter className="flex items-center">
       <PositionCard
         title="Від"
+        onChange={(val) => onChange([val, values[1]])}
         value={values[0]}
         className="from-card"
         mainType={
@@ -24,6 +26,7 @@ export const Footer = ({
       />
       <PositionCard
         title="До"
+        onChange={(val) => onChange([values[0], val])}
         value={values[1]}
         className="to-card"
         mainType={

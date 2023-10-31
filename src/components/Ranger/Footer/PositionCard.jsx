@@ -1,12 +1,22 @@
 import { styled } from "styled-components";
 
-export const PositionCard = ({ title, value, className, mainType }) => (
+export const PositionCard = ({
+  title,
+  value,
+  className,
+  mainType,
+  onChange,
+}) => (
   <StyledPositionCard
     className={` flex items-baseline justify-between select-none ${className}`}
   >
     <div className="title">{title}</div>
     <div className="value">
-      {value}
+      <input
+        value={value}
+        type="number"
+        onChange={(e) => onChange(Number(e.target.value))}
+      />
       {mainType ? <span>{mainType}</span> : null}
     </div>
   </StyledPositionCard>
@@ -41,6 +51,20 @@ const StyledPositionCard = styled.div`
     letter-spacing: 0.28px;
     opacity: 0.4;
     transition: all 0.3s;
+    input {
+      width: 60px;
+      margin-right: 10px;
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        /* display: none; <- Crashes Chrome on hover */
+        -webkit-appearance: none;
+        margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+      }
+
+      &[type="number"] {
+        -moz-appearance: textfield; /* Firefox */
+      }
+    }
   }
   &:hover {
     border: 1px solid rgba(255, 255, 255, 0.2);

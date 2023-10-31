@@ -85,6 +85,7 @@ export const Ranger = ({
       <Footer
         currency={currency}
         values={values}
+        onChange={onChange}
         mainType={mainType}
         currencyValue={currencyValue}
         onChangeCurrency={onChangeCurrency}

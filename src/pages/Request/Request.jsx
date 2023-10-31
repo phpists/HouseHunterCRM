@@ -13,7 +13,11 @@ import {
 import { useEffect, useState } from "react";
 import cogoToast from "cogo-toast";
 import { useNavigate, useParams } from "react-router-dom";
-import { handleCheckFields, handleResponse } from "../../utilits";
+import {
+  handleCheckFields,
+  handleFormatDate,
+  handleResponse,
+} from "../../utilits";
 import { useGetCommentsToFieldsQuery } from "../../store/objects/objects.api";
 
 export const REQUEST_INIT = {
@@ -90,7 +94,13 @@ export const Request = () => {
 
   const handleEditRequest = () => {
     const isAllRequiredFieldsFilled = handleCheckFields({
-      data: { ...data, id_client: clientId },
+      data: {
+        ...data,
+        id_client: clientId,
+        dt_deadline: data?.dt_deadline
+          ? new Date(data?.dt_deadline).getTime() / 1000
+          : undefined,
+      },
       requiredFields: fields
         ?.filter((f) => f?.required === 1)
         ?.map((f) => f?.field),
@@ -105,7 +115,13 @@ export const Request = () => {
 
     if (isAllRequiredFieldsFilled) {
       editRequest({
-        field: { ...data, id_client: clientId },
+        field: {
+          ...data,
+          id_client: clientId,
+          dt_deadline: data?.dt_deadline
+            ? new Date(data?.dt_deadline).getTime() / 1000
+            : undefined,
+        },
         id_request: id,
       })?.then((resp) => {
         handleResponse(resp, () => {
@@ -122,7 +138,15 @@ export const Request = () => {
     if (id) {
       getRequest(id).then((resp) => {
         handleResponse(resp, () => {
-          setData(resp?.data);
+          setData({
+            ...resp?.data,
+            dt_deadline: resp?.data?.dt_deadline
+              ? handleFormatDate(
+                  Number(resp?.data?.dt_deadline ?? 0) * 1000,
+                  true
+                )
+              : undefined,
+          });
           setFavorite(resp?.data?.favorite);
           handleGetRubricsFields(resp?.data?.id_rubric);
         });

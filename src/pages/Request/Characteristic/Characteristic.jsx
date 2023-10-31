@@ -3,7 +3,13 @@ import { Ranger } from "../../../components/Ranger/Ranger";
 import { Divider } from "../Divider";
 import { ToggleOption } from "../ToggleOption";
 import { SelectTags } from "../../../components/SelectTags/SelectTags";
-import { handleChangeRange, handleGetFieldsOptions } from "../../../utilits";
+import {
+  handleChangeRange,
+  handleCheckIsField,
+  handleFormatFields,
+  handleGetFieldsOptions,
+} from "../../../utilits";
+import { ProfileField } from "../../../components/ProfileField";
 
 export const Characteristic = ({ data, onChangeField, fields }) => {
   return (
@@ -104,7 +110,6 @@ export const Characteristic = ({ data, onChangeField, fields }) => {
       <Divider /> */}
       {/* <SelectTags label="Тип угоди" />
       <ToggleOption label="Все крім цього" className="toggle-opt" /> */}
-
       {fields &&
         handleGetFieldsOptions(fields, "type_obj_garage")?.length > 0 && (
           <>
@@ -119,7 +124,6 @@ export const Characteristic = ({ data, onChangeField, fields }) => {
             />
           </>
         )}
-
       {fields &&
         handleGetFieldsOptions(fields, "type_obj_apartment")?.length > 0 && (
           <>
@@ -134,7 +138,6 @@ export const Characteristic = ({ data, onChangeField, fields }) => {
             />
           </>
         )}
-
       {fields &&
         handleGetFieldsOptions(fields, "type_obj_commerce")?.length > 0 && (
           <>
@@ -149,7 +152,6 @@ export const Characteristic = ({ data, onChangeField, fields }) => {
             />
           </>
         )}
-
       {fields &&
         handleGetFieldsOptions(fields, "type_obj_house")?.length > 0 && (
           <>
@@ -164,7 +166,20 @@ export const Characteristic = ({ data, onChangeField, fields }) => {
             />
           </>
         )}
-
+      {fields &&
+        handleGetFieldsOptions(fields, "type_obj_hotel")?.length > 0 && (
+          <>
+            <Divider />
+            <SelectTags
+              label="Тип готелю"
+              placeholder="Оберіть тип готелю"
+              notMultiSelect
+              options={handleGetFieldsOptions(fields, "type_obj_hotel")}
+              value={data?.type_obj_hotel}
+              onChange={(val) => onChangeField("type_obj_hotel", val)}
+            />
+          </>
+        )}{" "}
       {fields &&
         handleGetFieldsOptions(fields, "type_obj_hotel")?.length > 0 && (
           <>
@@ -179,7 +194,19 @@ export const Characteristic = ({ data, onChangeField, fields }) => {
             />
           </>
         )}
-
+      {fields &&
+        !!handleFormatFields(fields).find((f) => f.field === "dt_deadline") && (
+          <>
+            <Divider />
+            <ProfileField
+              label="Дата дедлайну"
+              placeholder="Введіть дату дедлайну"
+              value={data?.dt_deadline}
+              onChange={(val) => onChangeField("dt_deadline", val)}
+              type="date"
+            />
+          </>
+        )}
       {/* <ToggleOption label="Все крім цього" className="toggle-opt" /> */}
       {/* <Divider />
       <SelectTags label="Тип стін" />
