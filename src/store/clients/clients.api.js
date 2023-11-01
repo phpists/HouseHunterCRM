@@ -77,7 +77,7 @@ export const clients = createApi({
         last_name,
         phones_json,
         comment,
-        photo,
+        photos,
       }) => ({
         url: "",
         method: "POST",
@@ -93,7 +93,7 @@ export const clients = createApi({
             phones_json,
             comment,
           },
-          { photo }
+          { photos }
         ),
       }),
     }),
@@ -110,7 +110,7 @@ export const clients = createApi({
       }),
     }),
     deleteClientPhoto: build.query({
-      query: (id_client) => ({
+      query: ({ id_client, id_img }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -118,6 +118,7 @@ export const clients = createApi({
           action: "delete_img",
           mod: "clients",
           id_client,
+          id_img,
         }),
       }),
     }),
@@ -149,6 +150,18 @@ export const clients = createApi({
         }),
       }),
     }),
+    getClientPhotos: build.query({
+      query: (id_client) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_client_documents",
+          mod: "clients",
+          id_client,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -163,4 +176,5 @@ export const {
   useLazyDeleteClientPhotoQuery,
   useLazyGetClientsRequestQuery,
   useLazyGetClientsObjectsQuery,
+  useLazyGetClientPhotosQuery,
 } = clients;

@@ -1,20 +1,62 @@
 import styled from "styled-components";
 import { Field } from "../../../../../components/Field";
 import { Divider } from "./Divider";
+import { useGetPhonesCodesQuery } from "../../../../../store/auth/auth.api";
 
-export const PersonalData = () => {
+export const PersonalData = ({ data, onChangeField }) => {
+  const { data: phonesCodes } = useGetPhonesCodesQuery();
+
   return (
     <StyledPersonalData>
       <div className="input-group">
-        <Field placeholder="Почніть писати" label="Ім’я" full />
-        <Field placeholder="Почніть писати" label="Призвище" full />
+        <Field
+          placeholder="Почніть писати"
+          label="Ім’я"
+          full
+          value={data?.first_name}
+          onChange={(val) => onChangeField("first_name", val)}
+        />
+        <Field
+          placeholder="Почніть писати"
+          label="Призвище"
+          full
+          value={data?.last_name}
+          onChange={(val) => onChangeField("last_name", val)}
+        />
       </div>
       <Divider />
-      <Field label="Телефон" full phone placeholder="+38 (___) ___-__- __" />
+      <Field
+        label="Телефон"
+        full
+        phone
+        placeholder="+38 (___) ___-__- __"
+        value={data?.phones[0]?.phone}
+        onChange={(val) =>
+          onChangeField("phones", [{ ...data?.phones[0], phone: val }])
+        }
+        phoneCode={data?.phones[0]?.code}
+        onChangePhoneCode={(cod) =>
+          onChangeField("phones", [{ ...data?.phones[0], code: cod }])
+        }
+        phonesCodes={phonesCodes}
+        noResetValueOnCodeChange
+      />
       <Divider />
-      <Field placeholder="Почніть писати" label="Пошта" full />
+      <Field
+        placeholder="Почніть писати"
+        label="Пошта"
+        full
+        value={data?.email}
+        onChange={(val) => onChangeField("email", val)}
+      />
       <Divider />
-      <Field placeholder="Почніть писати" label="Пароль" full />
+      <Field
+        placeholder="Почніть писати"
+        label="Пароль"
+        full
+        value={data?.password}
+        onChange={(val) => onChangeField("password", val)}
+      />
     </StyledPersonalData>
   );
 };
@@ -27,7 +69,7 @@ const StyledPersonalData = styled.div`
   text-align: left;
   .input-group {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 50% 50%;
     gap: 6px;
   }
 `;

@@ -23,8 +23,9 @@ export const Clients = () => {
   const [isAllPages, setIsAllPages] = useState(false);
 
   const handleGetClients = (isReset) => {
-    if (!isLoading.current && !isAllPages) {
+    if ((!isLoading.current && !isAllPages) || isReset) {
       isLoading.current = true;
+      isReset && setIsAllPages(false);
       getClients({ current_page: currentPage.current, item_on_page: 10 }).then(
         (resp) => {
           isLoading.current = false;

@@ -5,10 +5,10 @@ import { BossSelect } from "./BossSelect/BossSelect";
 import { LoginAllow } from "./LoginAllow";
 import { StatusCard } from "./StatusCard";
 
-export const MainInfo = () => {
+export const MainInfo = ({ data, onChangeField }) => {
   return (
     <StyledMainInfo>
-      <Profile />
+      <Profile data={data} onChangeField={onChangeField} />
       <Divider />
       <BossSelect />
       <Divider />

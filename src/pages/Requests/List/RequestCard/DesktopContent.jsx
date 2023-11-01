@@ -15,7 +15,11 @@ export const DesktopContent = ({ data, id, onDelete, onFavorite }) => (
       phones={data?.user_phones}
       avatar={data?.usr_img?.length > 0 ? data?.usr_img[0] : null}
     />
-    <Date category={data?.rubric_name} location={data?.location_name} />
+    <Date
+      category={data?.rubric_name}
+      location={data?.location_name}
+      date={data?.dt_deadline}
+    />
     <Info
       priceMax={data?.price_max}
       roomMin={data?.room_min}

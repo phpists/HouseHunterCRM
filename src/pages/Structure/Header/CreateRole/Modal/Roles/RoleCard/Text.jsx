@@ -8,6 +8,7 @@ export const Text = ({ title, subtitle }) => (
 );
 
 const StyledText = styled.div`
+  text-align: left;
   .title {
     color: #fff;
     font-family: Overpass;

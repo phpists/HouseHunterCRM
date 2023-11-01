@@ -37,12 +37,12 @@ export const Base = ({ data, onChangeField }) => {
         className="check-opt"
       />
       <CheckOption label="Клієнти передані" className="check-opt" /> */}
-      <CheckOption
+      {/* <CheckOption
         label="Об’єкти протерміновані"
         className="check-opt"
         value={data?.dt_deadline}
         onChange={(val) => onChangeField("dt_deadline", val ? 1 : 0)}
-      />
+      /> */}
       {/* <CheckOption label="Об’єкти (ліквідність)" className="check-opt" />
       <TitleDivider title="street base" />
       <Period />

@@ -8,7 +8,10 @@ import { Comment } from "./Comment";
 import { OtherInfo } from "./OtherInfo/OtherInfo";
 import maskBackground from "../../../assets/images/auth-shape-mask.svg";
 import { useEffect, useState } from "react";
-import { useLazyEditClientQuery } from "../../../store/clients/clients.api";
+import {
+  useLazyEditClientQuery,
+  useLazyGetClientPhotosQuery,
+} from "../../../store/clients/clients.api";
 import { useParams } from "react-router-dom";
 import cogoToast from "cogo-toast";
 import { handleRemovePhoneMask, handleResponse } from "../../../utilits";
@@ -21,6 +24,15 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
   const [editClient] = useLazyEditClientQuery();
   const [loading, setLoading] = useState(false);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
+  const [getClientPhotos] = useLazyGetClientPhotosQuery();
+  const [photos, setPhotos] = useState([]);
+
+  const handleRefreshData = () => {
+    getClientPhotos(id).then((resp) => {
+      setPhotos(resp?.data ?? []);
+    });
+    onRefreshClientData();
+  };
 
   useEffect(() => {
     setUpdatedData(
@@ -34,6 +46,9 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
           }
         : null
     );
+    getClientPhotos(id).then((resp) => {
+      setPhotos(resp?.data ?? []);
+    });
   }, [data]);
 
   const handleChangeField = (fieldName, value) => {
@@ -52,6 +67,7 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
           phone: handleRemovePhoneMask(phone.phone),
         }))
       ),
+      photos,
     }).then((resp) => {
       setLoading(false);
       handleResponse(resp, () => {
@@ -69,7 +85,6 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
   return (
     <StyledProfile maskBackground={maskBackground} className={className}>
       <Header
-        photo={updatedData?.photo}
         name={`${data?.first_name ?? ""} ${data?.last_name ?? ""}`}
         email={updatedData?.email}
       />
@@ -94,9 +109,9 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
         />
         <SectionTitle title="Фото / Додатково" />
         <OtherInfo
-          photo={updatedData?.photo}
-          onChange={(val) => handleChangeField("photo", val)}
-          onRefreshClientData={onRefreshClientData}
+          photos={photos}
+          onChange={(val) => setPhotos(val)}
+          onRefreshClientData={handleRefreshData}
         />
         <Footer
           onSave={handleSaveChanges}

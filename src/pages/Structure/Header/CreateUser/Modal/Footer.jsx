@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
-export const Footer = () => (
+export const Footer = ({ onSave, onCancel }) => (
   <StyledFooter>
-    <button className="submit-btn">Застосувати</button>
-    <button className="cancel-btn">Видалити</button>
+    <button className="submit-btn" onClick={onSave}>
+      Застосувати
+    </button>
+    <button className="cancel-btn" onClick={onCancel}>
+      Видалити
+    </button>
   </StyledFooter>
 );
 

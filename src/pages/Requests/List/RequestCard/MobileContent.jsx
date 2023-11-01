@@ -17,7 +17,11 @@ export const MobileContent = ({ data, id, onDelete, onFavorite }) => (
         avatar={data?.usr_img?.length > 0 ? data?.usr_img[0] : null}
       />
       <div className="mobile-content-wrapper">
-        <Date category={data?.rubric_name} location={data?.location_name} />
+        <Date
+          category={data?.rubric_name}
+          location={data?.location_name}
+          date={data?.dt_deadline}
+        />
         <Info
           priceMax={data?.price_max}
           roomMin={data?.room_min}

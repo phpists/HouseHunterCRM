@@ -5,15 +5,31 @@ import { ReactComponent as EditIcon } from "../../../../../../../../../assets/im
 import { ReactComponent as RemoveIcon } from "../../../../../../../../../assets/images/delete-access.svg";
 import { AccessButton } from "./AccessButton";
 
-export const AccessBlock = ({ title }) => {
+export const AccessBlock = ({ title, value, onChange }) => {
   return (
     <StyledAccessBlock className="flex items-center justify-between">
       <div className="title">{title}</div>
       <div className="btns">
-        <AccessButton Icon={EyeIcon} />
-        <AccessButton Icon={PlusIcon} />
-        <AccessButton Icon={EditIcon} />
-        <AccessButton Icon={RemoveIcon} />
+        <AccessButton
+          Icon={EyeIcon}
+          active={value?.view}
+          onToggle={(val) => onChange("view", val)}
+        />
+        <AccessButton
+          Icon={PlusIcon}
+          active={value?.add}
+          onToggle={(val) => onChange("add", val)}
+        />
+        <AccessButton
+          Icon={EditIcon}
+          active={value?.edit}
+          onToggle={(val) => onChange("edit", val)}
+        />
+        <AccessButton
+          Icon={RemoveIcon}
+          active={value?.delete}
+          onToggle={(val) => onChange("delete", val)}
+        />
       </div>
     </StyledAccessBlock>
   );

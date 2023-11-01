@@ -15,4 +15,5 @@ const StyledSectionTitle = styled.div`
   text-transform: uppercase;
   margin-bottom: 14px;
   opacity: 0.4;
+  text-align: left;
 `;

@@ -1,33 +1,38 @@
+import React from "react";
 import styled from "styled-components";
-import { Title } from "./Title";
-import { Clients } from "./Clients";
-import { Request } from "./Request";
-import { Biling } from "./Biling";
-import { Calls } from "./Calls";
-import { Structure } from "./Structure";
-import { Other } from "./Other";
-import { Objects } from "./Objects";
 import { Footer } from "./Footer";
+import { Divider } from "./Divider";
+import { AccessBlock } from "./AccessBlock/AccessBlock";
 
-export const Dropdown = ({ iconColor }) => (
-  <StyledDropdown iconColor={iconColor}>
-    <Title title="Клієнти" />
-    <Clients />
-    <Title title="запити" />
-    <Request />
-    <Title title="Об'єкти" />
-    <Objects />
-    <Title title="Дзвінки" />
-    <Calls />
-    <Title title="Структура" />
-    <Structure />
-    <Title title="Білінг" />
-    <Biling />
-    <Title title="Інше" />
-    <Other />
-    <Footer />
-  </StyledDropdown>
-);
+export const Dropdown = ({
+  iconColor,
+  permissionsList,
+  values,
+  onChangeValue,
+  onResetValues,
+  onSave,
+}) => {
+  return (
+    <StyledDropdown iconColor={iconColor}>
+      {permissionsList?.messege &&
+      Object.entries(permissionsList?.messege)?.length > 0
+        ? Object.entries(permissionsList?.messege)?.map((p, i) => (
+            <React.Fragment key={i}>
+              <AccessBlock
+                title={p[1]?.name}
+                value={values?.find((v) => v.id_module === p[1]?.id)}
+                onChange={(fieldName, value) =>
+                  onChangeValue(i, fieldName, value)
+                }
+              />
+              <Divider />
+            </React.Fragment>
+          ))
+        : null}
+      <Footer onReset={onResetValues} onSave={onSave} />
+    </StyledDropdown>
+  );
+};
 
 const StyledDropdown = styled.div`
   padding: 20px 10px;

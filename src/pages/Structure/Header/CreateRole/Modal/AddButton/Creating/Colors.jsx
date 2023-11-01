@@ -1,12 +1,15 @@
 import styled from "styled-components";
 
-export const Colors = () => (
+const COLORS_DATA = ["#1BBC9B", "#ADD5F7", "#EF5350", "#FF822E", "#FFF176"];
+
+export const Colors = ({ active, onChange }) => (
   <StyledColors>
-    <div style={{ background: "#1BBC9B" }} />
-    <div style={{ background: "#ADD5F7" }} />
-    <div style={{ background: "#EF5350" }} />
-    <div style={{ background: "#FF822E" }} />
-    <div style={{ background: "#FFF176" }} />
+    {COLORS_DATA?.map((color, i) => (
+      <div
+        style={{ background: color, opacity: active === color ? 1 : 0.3 }}
+        onClick={() => onChange(color)}
+      />
+    ))}
   </StyledColors>
 );
 

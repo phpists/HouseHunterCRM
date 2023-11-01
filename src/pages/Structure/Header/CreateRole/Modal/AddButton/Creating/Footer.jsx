@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
-export const Footer = ({ onClose }) => (
+export const Footer = ({ onClose, onSubmit, disabled }) => (
   <StyledFooter>
     <button onClick={onClose}>Відмінити</button>
-    <button>Створити</button>
+    <button onClick={onSubmit} disabled={disabled}>
+      Створити
+    </button>
   </StyledFooter>
 );
 
@@ -25,6 +27,10 @@ const StyledFooter = styled.div`
     &:hover {
       background: rgba(255, 255, 255, 0.2);
       color: rgba(255, 255, 255, 1);
+    }
+    &:disabled {
+      background: rgba(255, 255, 255, 0);
+      color: rgba(255, 255, 255, 0.4);
     }
   }
   button:nth-child(1) {

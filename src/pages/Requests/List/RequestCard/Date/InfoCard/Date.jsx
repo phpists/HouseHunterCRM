@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import clockIcon from "../../../../../../assets/images/clock-green.svg";
+import { handleFormatDate } from "../../../../../../utilits";
 
-export const Date = () => (
+export const Date = ({ date }) => (
   <StyledDate className="clickable">
     <div className="title flex items-cente clickabler">
       <img src={clockIcon} alt="" className="clickable" />
-      до --.--.----
+      до {date ? handleFormatDate(Number(date) * 1000, true) : "--.--.----"}
     </div>
     <div className="subtitle clickable">Термін запиту</div>
   </StyledDate>

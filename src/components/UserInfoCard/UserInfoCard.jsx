@@ -31,6 +31,7 @@ export const UserInfoCard = ({
     controls.start({ opacity: 1, translateX: 0 });
   }, []);
 
+  console.log("here");
   return (
     <StyledUserInfoCard
       initial={{ opacity: 0, translateX: "100%" }}

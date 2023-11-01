@@ -18,13 +18,14 @@ export const Field = ({
   phonesCodes,
   phoneCode,
   onChangePhoneCode,
+  noResetValueOnCodeChange,
   onChange = () => null,
 }) => {
   const [edit, setEdit] = useState(false);
 
   const handleChangePhoneCode = (cod) => {
     onChangePhoneCode(cod);
-    onChange("");
+    !noResetValueOnCodeChange && onChange("");
   };
 
   return (

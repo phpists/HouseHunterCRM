@@ -7,6 +7,7 @@ import { useGetPhonesCodesQuery } from "../../store/auth/auth.api";
 export const PersonalData = ({ data, onChangeField }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
 
+  console.log(phonesCodes, data?.phones[0]);
   return (
     <StyledPersonalData>
       <div className="input-group">
@@ -39,7 +40,9 @@ export const PersonalData = ({ data, onChangeField }) => {
         placeholder="+38 (___) ___-__- __"
         phoneCode={data?.phones[0]?.code}
         onChangePhoneCode={(cod) =>
-          onChangeField("phones", [{ ...data?.phones[0], code: cod }])
+          onChangeField("phones", [
+            { ...data?.phones[0], code: cod, phone: "" },
+          ])
         }
         phonesCodes={phonesCodes}
       />

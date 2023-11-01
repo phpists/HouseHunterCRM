@@ -4,6 +4,8 @@ import { StructureCard } from "./Header/StructureCard/StructureCard";
 import { useState } from "react";
 import { UserInfoCard } from "../../components/UserInfoCard/UserInfoCard";
 import { MobileHeader } from "./Header/StructureCard/MobileHeader";
+import { Empty } from "./Empty";
+import { WorkerModal } from "./WorkerModal";
 
 export const Structure = () => {
   const [infoOpen, setInfoOpen] = useState(false);
@@ -19,16 +21,10 @@ export const Structure = () => {
     <StyledStructure className="hide-scroll">
       <Header level={level} />
       <MobileHeader />
-      {infoOpen && (
-        <UserInfoCard
-          onClose={() => setInfoOpen(false)}
-          title="Детальніше"
-          isDelete
-        />
-      )}
+      {infoOpen && <WorkerModal onClose={() => setInfoOpen(false)} />}
       <div className="structure-content hide-scroll">
-        {/* <Empty /> */}
-        <div className="structure-cards hide-scroll">
+        <Empty />
+        {/* <div className="structure-cards hide-scroll">
           <StructureCard
             onOpenInfo={() => setInfoOpen(true)}
             onNextLevel={handleNextLevel}
@@ -45,7 +41,7 @@ export const Structure = () => {
             onOpenInfo={() => setInfoOpen(true)}
             onNextLevel={handleNextLevel}
           />
-        </div>
+        </div> */}
       </div>
     </StyledStructure>
   );

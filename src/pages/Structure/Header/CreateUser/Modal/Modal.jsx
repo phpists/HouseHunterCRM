@@ -6,8 +6,25 @@ import { SectionTitle } from "./SectionTitle";
 import { MainInfo } from "./MainInfo/MainInfo";
 import { PersonalData } from "./PersonalData";
 import { Footer } from "./Footer";
+import { useState } from "react";
+import { useLazyCreateStructureQuery, useLazyCreateWorkerQuery } from "../../../../../store/structure/structure.api";
+import { handleResponse } from "../../../../../utilits";
+import cogoToast from "cogo-toast";
+
+const INITIAL_DATA = {
+  email: "",
+  id_permision: "",
+  password: "",
+  first_name: "",
+  last_name: "",
+  phones: [{ code: "1", phone: "", telegram: "0", viber: "0" }],
+  photo: null,
+};
 
 export const Modal = ({ onClose }) => {
+  const [createWorker] = useLazyCreateWorkerQuery();
+  const [createStructure] = useLazyCreateStructureQuery()
+  const [data, setData] = useState(INITIAL_DATA);
   const controls = useAnimationControls();
 
   const handleClose = () => {
@@ -19,6 +36,25 @@ export const Modal = ({ onClose }) => {
     controls.start({ opacity: 1, translateX: 0 });
   }, []);
 
+  const handleChangeField = (fieldName, value) => {
+    const newData = { ...data, [fieldName]: value };
+    setData(newData);
+  };
+
+  const handleCreate = () => {
+    createWorker(data).then((resp) =>
+      handleResponse(resp, () => {
+        createStructure()
+        cogoToast.success("Працівника успішно створено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      })
+    );
+  };
+
+  const handleCancel = () => {};
+
   return (
     <StyledModal
       initial={{ opacity: 0, translateX: "100%" }}
@@ -29,10 +65,10 @@ export const Modal = ({ onClose }) => {
       <Header onClose={handleClose} />
       <div className="modal-content">
         <SectionTitle title="Загальна інформація" />
-        <MainInfo />
+        <MainInfo data={data} onChangeField={handleChangeField} />
         <SectionTitle title="Персональні дані" />
-        <PersonalData />
-        <Footer />
+        <PersonalData data={data} onChangeField={handleChangeField} />
+        <Footer onSave={handleCreate} onCancel={onClose} />
       </div>
     </StyledModal>
   );

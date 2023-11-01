@@ -1,12 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-export const AccessButton = ({ Icon }) => {
-  const [active, setActive] = useState(false);
-
+export const AccessButton = ({ Icon, active, onToggle }) => {
   return (
     <StyledAccessButton
-      onClick={() => setActive(!active)}
+      onClick={() => onToggle(!active)}
       className={` flex items-center justify-center ${active && "active"}`}
     >
       <Icon />
@@ -22,6 +20,9 @@ const StyledAccessButton = styled.button`
   cursor: pointer;
   transition: all 0.3s;
   border-radius: 5px;
+  svg {
+    flex-shrink: 0;
+  }
   g {
     opacity: 1;
   }

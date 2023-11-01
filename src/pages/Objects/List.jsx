@@ -19,7 +19,7 @@ export const List = ({ selected, onSelect, data }) => {
 const StyledList = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-auto-rows: auto;
+  grid-auto-rows: max-content;
   height: calc(100svh - 225px);
   overflow: auto;
   gap: 10px;

@@ -6,7 +6,10 @@ import { ProfileModal } from "./ProfileModal";
 import { UserCard } from "../Profile/Header/UserCard";
 import maskBackground from "../../../assets/images/auth-shape-mask.svg";
 import { useParams } from "react-router-dom";
-import { useLazyEditClientQuery } from "../../../store/clients/clients.api";
+import {
+  useLazyEditClientQuery,
+  useLazyGetClientPhotosQuery,
+} from "../../../store/clients/clients.api";
 import { useEffect } from "react";
 import cogoToast from "cogo-toast";
 import { handleRemovePhoneMask, handleResponse } from "../../../utilits";
@@ -21,6 +24,15 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
   const [editClient] = useLazyEditClientQuery();
   const [loading, setLoading] = useState(false);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
+  const [getClientPhotos] = useLazyGetClientPhotosQuery();
+  const [photos, setPhotos] = useState([]);
+
+  const handleRefreshData = () => {
+    getClientPhotos(id).then((resp) => {
+      setPhotos(resp?.data ?? []);
+    });
+    onRefreshClientData();
+  };
 
   useEffect(() => {
     setUpdatedData(
@@ -35,6 +47,9 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
         : null
     );
     lastData.current = data;
+    getClientPhotos(id).then((resp) => {
+      setPhotos(resp?.data ?? []);
+    });
   }, [data]);
 
   const handleSaveChanges = () => {
@@ -51,6 +66,7 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
           phone: handleRemovePhoneMask(phone.phone),
         }))
       ),
+      photos,
     }).then((resp) => {
       setLoading(false);
       handleResponse(resp, () => {
@@ -113,7 +129,9 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
           onSave={handleSaveChanges}
           onReset={handleReset}
           loading={loading}
-          onRefreshClientData={onRefreshClientData}
+          onRefreshClientData={handleRefreshData}
+          photos={photos}
+          onChangePhotos={(val) => setPhotos(val)}
         />
       )}
     </>

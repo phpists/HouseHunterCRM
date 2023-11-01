@@ -16,6 +16,8 @@ export const ProfileModal = ({
   onReset,
   loading,
   onRefreshClientData,
+  photos,
+  onChangePhotos,
 }) => {
   return (
     <StyledProfileModal>
@@ -46,8 +48,8 @@ export const ProfileModal = ({
             />
             <SectionTitle title="Фото / Додатково" />
             <OtherInfo
-              photo={data?.photo}
-              onChange={(val) => onChangeField("photo", val)}
+              photos={photos}
+              onChange={(val) => onChangePhotos(val)}
               onRefreshClientData={onRefreshClientData}
             />
           </div>

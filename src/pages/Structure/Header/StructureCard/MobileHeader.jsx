@@ -1,11 +1,27 @@
 import styled from "styled-components";
+import { Modal as CreateWorkerModal } from "../CreateUser/Modal/Modal";
+import { useState } from "react";
+import { Modal } from "../CreateRole/Modal/Modal";
 
-export const MobileHeader = () => (
-  <StyledMobileHeader>
-    <button>Створити працівника</button>
-    <button className="active">Налаштування ролей</button>
-  </StyledMobileHeader>
-);
+export const MobileHeader = () => {
+  const [openCreateWorker, setOpenCreateWorker] = useState(false);
+  const [openRoles, setOpenRoles] = useState(false);
+
+  return (
+    <StyledMobileHeader>
+      {openCreateWorker && (
+        <CreateWorkerModal onClose={() => setOpenCreateWorker(false)} />
+      )}
+      {openRoles && <Modal onClose={() => setOpenRoles(false)} />}
+      <button onClick={() => setOpenCreateWorker(true)}>
+        Створити працівника
+      </button>
+      <button className="active" onClick={() => setOpenRoles(true)}>
+        Налаштування ролей
+      </button>
+    </StyledMobileHeader>
+  );
+};
 
 const StyledMobileHeader = styled.div`
   margin-bottom: 20px;

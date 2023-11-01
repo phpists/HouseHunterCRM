@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { ReactComponent as PlusIcon } from "../../../../../../../../assets/images/plus.svg";
 import { ReactComponent as ArrowDownIcon } from "../../../../../../../../assets/images/arrow-down.svg";
 import { Dropdown } from "./Dropdown/Dropdown";
+import { useGetPerimissionsQuery } from "../../../../../../../../store/structure/structure.api";
 
 const ROLES = [
   {
@@ -27,18 +28,27 @@ const ROLES = [
   },
 ];
 
-export const RoleSelect = () => {
+export const RoleSelect = ({ value, onChange }) => {
+  const { data, refetch } = useGetPerimissionsQuery();
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState(null);
+  const roles = data?.map(({ name, id, color }) => ({
+    title: name,
+    value: id,
+    color,
+  }));
 
   return (
     <StyledRoleSelect
-      active={active}
+      active={roles?.find((role) => role?.value === value)?.color}
       onClick={() => setOpen(!open)}
       open={open}
     >
       <div className="title">
-        {active?.title ? active?.title : open ? "Оберіть роль" : "Немає ролі"}
+        {value && roles?.find((r) => r.value === value)
+          ? roles?.find((r) => r.value === value)?.title
+          : open
+          ? "Оберіть роль"
+          : "Немає ролі"}
       </div>
       <button className="select-btn flex items-center justify-center">
         <PlusIcon className="plus-icon-btn" />
@@ -46,8 +56,8 @@ export const RoleSelect = () => {
       </button>
       {open && (
         <Dropdown
-          roles={ROLES.filter((role) => role?.title !== active?.title)}
-          onChangeActiveRole={(value) => setActive(value)}
+          roles={roles.filter((role) => role?.value !== value)}
+          onChangeActiveRole={(value) => onChange(value)}
         />
       )}
     </StyledRoleSelect>
@@ -59,15 +69,18 @@ const StyledRoleSelect = styled.div`
   display: grid;
   grid-template-columns: 1fr 18px;
   gap: 3px;
-  background: ${({ active }) => active?.bg ?? "rgba(255, 255, 255, 0.30)"};
+  background: ${({ active }) =>
+    active ? `${active}40` : "rgba(255, 255, 255, 0.30)"};
   border-radius: ${({ open }) => (open ? "6px 6px 0 0" : "6px")};
   height: 22px;
   align-items: center;
   position: relative;
   transition: all 0.3s;
   width: 121px;
+  cursor: pointer;
+  text-align: left;
   .title {
-    color: ${({ active }) => active?.color ?? "#fff"};
+    color: ${({ active }) => active ?? "#fff"};
     leading-trim: both;
     text-edge: cap;
     font-family: Overpass;
@@ -108,7 +121,7 @@ const StyledRoleSelect = styled.div`
     transition: all 0.3s;
     transform: rotate(${({ open }) => (open ? 180 : 0)}deg);
     path {
-      fill: ${({ active }) => active?.color ?? "#fff"};
+      fill: ${({ active }) => active ?? "#fff"};
     }
   }
 

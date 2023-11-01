@@ -2,10 +2,15 @@ import styled from "styled-components";
 import { RoleCard } from "./RoleCard/RoleCard";
 import { ReactComponent as UserCheckIcon } from "../../../../../../assets/images/user-check.svg";
 import { ReactComponent as UserIcon } from "../../../../../../assets/images/user-icon.svg";
+import { useGetAllPerimissionsQuery } from "../../../../../../store/structure/structure.api";
+import { Empty } from "./Empty";
 
-export const Roles = () => {
+export const Roles = ({ data, onRefetchData }) => {
+  const { data: permissionsList } = useGetAllPerimissionsQuery();
+
   return (
     <StyledRoles>
+      {/* <Empty /> */}
       <RoleCard
         IconImg={UserCheckIcon}
         iconBg="rgba(88, 175, 255, 0.09)"
@@ -14,27 +19,22 @@ export const Roles = () => {
         subtitle="Повний доступ"
         noOpen
       />
-      <RoleCard
-        IconImg={UserCheckIcon}
-        iconBg="rgba(89, 216, 230, 0.09)"
-        iconColor="#7ECEFD"
-        title="Регіональний керівник"
-        subtitle="Доступ з налаштуваннями"
-      />
-      <RoleCard
-        IconImg={UserCheckIcon}
-        iconBg="rgba(208, 160, 255, 0.25)"
-        iconColor="#D0A0FF"
-        title="Структурний керівник"
-        subtitle="Доступ з налаштуваннями"
-      />
-      <RoleCard
-        IconImg={UserIcon}
-        iconBg="rgba(177, 255, 145, 0.25)"
-        iconColor="#B1FF91"
-        title="Агент"
-        subtitle="Доступ з налаштуваннями"
-      />
+      {data?.length > 0
+        ? data?.map(({ name, permission_list_json, id, color }, i) => (
+            <RoleCard
+              key={i}
+              IconImg={UserCheckIcon}
+              iconBg={`${color ?? "#7ECEFD"}17`}
+              iconColor={color ?? "#7ECEFD"}
+              title={name ?? "-"}
+              subtitle="Доступ з налаштуваннями"
+              permissionsList={permissionsList}
+              initValues={permission_list_json}
+              id={id}
+              onRefetchData={onRefetchData}
+            />
+          ))
+        : null}
     </StyledRoles>
   );
 };

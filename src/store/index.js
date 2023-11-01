@@ -8,6 +8,8 @@ import { requests } from "./requests/requests.api";
 import { requestsReducer } from "./requests/requests.slice";
 import { objects } from "./objects/objects.api";
 import { objectsReducer } from "./objects/objects.slice";
+import { structure } from "./structure/structure.api";
+import { structureReducer } from "./structure/structure.slice";
 
 export const store = configureStore({
   reducer: {
@@ -19,13 +21,16 @@ export const store = configureStore({
     requests: requestsReducer,
     [objects.reducerPath]: objects.reducer,
     objects: objectsReducer,
+    [structure.reducerPath]: structure.reducer,
+    structure: structureReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       auth.middleware,
       clients.middleware,
       requests.middleware,
-      objects.middleware
+      objects.middleware,
+      structure.middleware
     ),
 });
 
