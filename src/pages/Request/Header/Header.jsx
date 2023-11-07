@@ -87,8 +87,28 @@ export const Header = ({
       </div>
       <div className="flex items-center bts">
         <SaveButton onClick={onSave} />
-        <Button title="Призупинити показ" disabled={!id} />
-        <Button title="Пуста підбірка" disabled={!id} />
+        <Button
+          title="Призупинити показ"
+          active={data?.general_group?.stop_showing === "1"}
+          onClick={() =>
+            onChangeField("general_group", {
+              ...data.general_group,
+              stop_showing:
+                data?.general_group?.stop_showing === "0" ? "1" : "0",
+            })
+          }
+        />
+        <Button
+          title="Пуста підбірка"
+          active={data?.general_group?.folder_empty === "1"}
+          onClick={() =>
+            onChangeField("general_group", {
+              ...data.general_group,
+              folder_empty:
+                data?.general_group?.folder_empty === "0" ? "1" : "0",
+            })
+          }
+        />
         <Button
           title={
             Number(data?.general_group?.not_actual) === 0
@@ -101,7 +121,6 @@ export const Header = ({
               not_actual: Number(data?.not_actual) === 0 ? 1 : 0,
             })
           }
-          disabled={!id}
         />
         {id && (
           <div className="desktop-action-btns flex items-center">

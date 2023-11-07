@@ -8,8 +8,10 @@ export const CheckOption = ({ label, className, value, onChange }) => {
     >
       <span className="label">{label}</span>
       <button
-        className={`flex items-center justify-center ${value && "active"}`}
-        onClick={() => (onChange ? onChange(value === 1 ? 0 : 1) : null)}
+        className={`flex items-center justify-center ${
+          value === "1" && "active"
+        }`}
+        onClick={() => (onChange ? onChange(value === "1" ? "0" : "1") : null)}
       >
         <img src={checkboxIcon} alt="" />
       </button>

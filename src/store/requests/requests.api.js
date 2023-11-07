@@ -67,14 +67,14 @@ export const requests = createApi({
       }),
     }),
     deleteRequest: build.query({
-      query: (id_request) => ({
+      query: (id_groups) => ({
         url: "",
         method: "POST",
         headers: headers(),
         body: handleToFormData({
           action: "delete",
           mod: "requests",
-          id_request,
+          id_groups,
         }),
       }),
     }),

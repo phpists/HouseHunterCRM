@@ -26,10 +26,11 @@ export const handleToFormData = (data, files) => {
       field[1].forEach((f, i) => {
         if (typeof f === "object") {
           Object.entries(f).forEach((fField) => {
-            formData.append(`${field[0]}[${i}][${fField[0]}]`, fField[1]);
+            fField[1] &&
+              formData.append(`${field[0]}[${i}][${fField[0]}]`, fField[1]);
           });
         } else {
-          f && formData.append(`${field[0]}[${i}]`, f);
+          formData.append(`${field[0]}[${i}]`, f);
         }
       });
     } else if (typeof field[1] === "object") {
@@ -119,7 +120,12 @@ export const handleResponse = (
   onError,
   notShowErrorMessage
 ) => {
-  if (resp?.data?.error === 0 || !resp?.data?.messege) {
+  if (!resp?.data) {
+    cogoToast.error("Помилка", {
+      hideAfter: 3,
+      position: "top-right",
+    });
+  } else if ((resp?.data?.error === 0 || !resp?.data?.messege) && resp?.data) {
     onSuccess && onSuccess();
   } else if (resp?.data?.error || resp?.data?.messege) {
     onError && onError();

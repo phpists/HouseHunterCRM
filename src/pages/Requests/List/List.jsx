@@ -53,7 +53,6 @@ export const List = ({
         {data && Object.entries(data)?.length
           ? Object.entries(data)?.map((d, i) => {
               const id = Object.entries(d[1])[1][0];
-
               return (
                 <RequestCard
                   key={i}

@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 
-export const Button = ({ title, className, disabled, onClick }) => (
+export const Button = ({ title, className, disabled, onClick, active }) => (
   <StyledButton
-    className={`${className}`}
+    className={`${className} ${active && "active"}`}
     disabled={disabled}
     onClick={onClick}
   >
@@ -33,7 +33,8 @@ const StyledButton = styled.button`
   border: 1px solid rgba(255, 255, 255, 0.4);
   opacity: 0.4;
   white-space: nowrap;
-  &:hover {
+  &:hover,
+  &.active {
     opacity: 1;
     border: 1px solid rgba(255, 255, 255, 0);
     background: rgba(255, 255, 255, 0.2);

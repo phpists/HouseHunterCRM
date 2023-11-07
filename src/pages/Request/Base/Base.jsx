@@ -1,10 +1,6 @@
 import { styled } from "styled-components";
 import { TitleDivider } from "./TitleDivider";
-import { Divider } from "../Divider";
 import { CheckOption } from "../../../components/CheckOption";
-import { ToggleOption } from "../ToggleOption";
-import { Period } from "./Period/Period";
-import { SelectTags } from "../../../components/SelectTags/SelectTags";
 
 export const Base = ({ data, onChangeField }) => {
   return (
@@ -17,7 +13,7 @@ export const Base = ({ data, onChangeField }) => {
         onChange={(val) =>
           onChangeField("general_group", {
             ...data.general_group,
-            deleted: val ? 1 : 0,
+            deleted: val,
           })
         }
       />
@@ -28,7 +24,7 @@ export const Base = ({ data, onChangeField }) => {
         onChange={(val) =>
           onChangeField("general_group", {
             ...data.general_group,
-            only_company_obj: val ? 1 : 0,
+            only_company_obj: val,
           })
         }
       />
@@ -39,7 +35,7 @@ export const Base = ({ data, onChangeField }) => {
         onChange={(val) =>
           onChangeField("general_group", {
             ...data.general_group,
-            only_street_base_obj: val ? 1 : 0,
+            only_street_base_obj: val,
           })
         }
       />
@@ -50,7 +46,7 @@ export const Base = ({ data, onChangeField }) => {
         onChange={(val) =>
           onChangeField("general_group", {
             ...data.general_group,
-            mls: val ? 1 : 0,
+            mls: val,
           })
         }
       />
@@ -61,7 +57,7 @@ export const Base = ({ data, onChangeField }) => {
         onChange={(val) =>
           onChangeField("general_group", {
             ...data.structure,
-            structure: val ? 1 : 0,
+            structure: val,
           })
         }
       />
@@ -73,7 +69,7 @@ export const Base = ({ data, onChangeField }) => {
         onChange={(val) =>
           onChangeField("general_group", {
             ...data.general_group,
-            submited: val ? 1 : 0,
+            submited: val,
           })
         }
       />

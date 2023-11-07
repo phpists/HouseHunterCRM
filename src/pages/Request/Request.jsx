@@ -24,14 +24,16 @@ export const REQUEST_INIT = {
   fields: [],
   general_group: {
     dt_deadline: null,
-    not_actual: 0,
-    deleted: 0,
-    only_company_obj: 0,
-    only_street_base_obj: 0,
-    mls: 0,
-    structure: 0,
-    only_my_obj: 0,
-    submitted_objects: 0,
+    not_actual: "0",
+    deleted: "0",
+    only_company_obj: "0",
+    only_street_base_obj: "0",
+    mls: "0",
+    structure: "0",
+    only_my_obj: "0",
+    submitted_objects: "0",
+    folder_empty: "0",
+    stop_showing: "0",
   },
 };
 
@@ -128,6 +130,7 @@ export const Request = () => {
           dt_deadline: data?.general_group?.dt_deadline
             ? new Date(data?.general_group?.dt_deadline ?? 0).getTime() / 1000
             : undefined,
+          favorite: undefined,
         },
       })?.then((resp) => {
         handleResponse(resp, () => {
@@ -152,6 +155,7 @@ export const Request = () => {
           dt_deadline: data?.general_group?.dt_deadline
             ? new Date(data?.general_group?.dt_deadline ?? 0).getTime() / 1000
             : undefined,
+          favorite: undefined,
         },
       })?.then((resp) => {
         handleResponse(resp, () => {
@@ -197,23 +201,11 @@ export const Request = () => {
               .filter((f) => f[0] !== "General_field_group")
               .map((f) => f[1]),
           });
-          //   setData({
-          //     ...resp?.data,
-          //     dt_deadline: resp?.data?.general_group?.dt_deadline
-          //       ? handleFormatDate(
-          //           Number(resp?.data?.general_group?.dt_deadline ?? 0) * 1000,
-          //           true
-          //         )
-          //       : undefined,
-          //   });
-          //   setFavorite(resp?.data?.favorite);
-          //   handleGetRubricsFields(resp?.data?.id_rubric);
         });
       });
     }
   }, [id]);
 
-  console.log(data);
   return (
     <StyledRequest>
       <Header

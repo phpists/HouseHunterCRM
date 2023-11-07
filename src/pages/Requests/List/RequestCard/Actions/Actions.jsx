@@ -20,13 +20,13 @@ export const Actions = ({
   const [addToFavorites] = useLazyAddToFavoriteQuery();
 
   const handleToggleFavorites = () => {
-    addToFavorites(id).then((resp) => {
+    addToFavorites(idGroup).then((resp) => {
       handleResponse(resp, () => {
         cogoToast.success("Статус успішно змінено!", {
           hideAfter: 3,
           position: "top-right",
         });
-        onFavorite(id);
+        onFavorite(idGroup);
       });
     });
   };
