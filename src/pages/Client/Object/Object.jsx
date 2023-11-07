@@ -13,7 +13,7 @@ import { REQUEST_INIT } from "../../Request/Request";
 import { handleResponse } from "../../../utilits";
 import { useLazyGetObjectQuery } from "../../../store/objects/objects.api";
 
-export const Object = ({ className, selectedObject }) => {
+export const ObjectCard = ({ className, selectedObject }) => {
   const [started, setStarted] = useState(true);
   const [getRequest, { data: requestData }] = useLazyGetRequestQuery();
   const [getObject] = useLazyGetObjectQuery();
@@ -24,23 +24,29 @@ export const Object = ({ className, selectedObject }) => {
   const handleGetRequest = () => {
     getRequest(selectedObject?.id).then((resp) => {
       handleResponse(resp, () => {
+        // ! Object.entries(resp?.data)[0][1]
+        const infoField = Object.entries(
+          Object.entries(resp?.data)[0][1]
+        ).filter((f) => f[0] !== "General_field_group")[0][1];
+
+        console.log(infoField);
         setData({
-          id_client: resp?.data?.id_client,
-          id_rubric: resp?.data?.id_rubric,
-          id_location: resp?.data?.id_location,
-          type_obj_apartment: resp?.data?.type_obj_apartment,
-          price_min: resp?.data?.price_min,
-          price_max: resp?.data?.price_max,
-          room_min: resp?.data?.room_min,
-          room_max: resp?.data?.room_max,
-          address_storey: resp?.data?.address_storey,
-          storey_count: resp?.data?.storey_count,
-          area_total_min: resp?.data?.area_total_min,
-          area_total_max: resp?.data?.area_total_max,
-          comment: resp?.data?.comment,
-          not_actual: resp?.data?.not_actual,
-          dt_deadline: resp?.data?.dt_deadline,
-          deleted: resp?.data?.deleted,
+          id_client: infoField?.id_client,
+          id_rubric: infoField?.id_rubric,
+          id_location: infoField?.id_location,
+          type_obj_apartment: infoField?.type_obj_apartment,
+          price_min: infoField?.price_min,
+          price_max: infoField?.price_max,
+          room_min: infoField?.room_min,
+          room_max: infoField?.room_max,
+          address_storey: infoField?.address_storey,
+          storey_count: infoField?.storey_count,
+          area_total_min: infoField?.area_total_min,
+          area_total_max: infoField?.area_total_max,
+          comment: infoField?.comment,
+          not_actual: infoField?.not_actual,
+          dt_deadline: Object.entries(resp?.data)[0][1]?.dt_deadline,
+          deleted: infoField?.deleted,
         });
       });
     });

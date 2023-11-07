@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { Button } from "./Button";
 import { Dropdown } from "./Dropdown";
 import { Divider } from "./Divider";
+import { useState } from "react";
 
 export const MoreButton = ({
   className,
@@ -9,10 +10,15 @@ export const MoreButton = ({
   onFavorite = () => null,
   favorite,
 }) => {
+  const [isFocusedBtn, setIsFocusedBtn] = useState(false);
+
   return (
-    <StyledMoreButton className="flex items-center more noClickable">
+    <StyledMoreButton
+      className={`flex items-center more noClickable ${className}`}
+      isFocusedBtn={isFocusedBtn}
+    >
       <div className="btn-wrapper relative noClickable">
-        <Button />
+        <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />
         <Dropdown
           onDelete={onDelete}
           onFavorite={onFavorite}
@@ -24,16 +30,18 @@ export const MoreButton = ({
   );
 };
 
-const StyledMoreButton = styled.div`
+const StyledMoreButton = styled.button`
   position: relative;
   transition: all 0.3s;
   z-index: 2;
   opacity: 0;
   transform: translateX(-10px);
-  .btn-wrapper:hover {
-    .dropdown {
+  ${({ isFocusedBtn }) =>
+    isFocusedBtn &&
+    `
+   .dropdown {
       opacity: 1;
       visibility: visible;
     }
-  }
+`}
 `;

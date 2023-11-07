@@ -151,9 +151,11 @@ export const handleCheckFields = ({
   additionalFields = [],
   titles = [],
   additionalTitles = {},
+  title,
 }) => {
   let emptyFields = [];
 
+  console.log(requiredFields);
   [...requiredFields, ...additionalFields].forEach((f) => {
     if (!data[f] || data[f]?.length === 0) {
       emptyFields.push(f);
@@ -174,7 +176,7 @@ export const handleCheckFields = ({
 
     cogoToast.error(
       <>
-        Заповніть обов'язкові поля:
+        Заповніть обов'язкові поля ({title ?? ""}):
         {handleTitles.map((t) => (
           <div>{t}</div>
         ))}

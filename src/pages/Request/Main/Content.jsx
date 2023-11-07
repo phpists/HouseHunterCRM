@@ -9,8 +9,15 @@ import {
 } from "../../../store/requests/requests.api";
 import { handleChangeRange, handleGetLocationAllPath } from "../../../utilits";
 import { useEffect, useState } from "react";
+import { FieldCard } from "./FieldCard";
 
-export const Content = ({ data, onChangeField }) => {
+export const Content = ({
+  data,
+  onChangeField,
+  categories,
+  onChangeCategories,
+  fields,
+}) => {
   const { data: rubricsList } = useGetRubricsQuery();
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
@@ -34,43 +41,46 @@ export const Content = ({ data, onChangeField }) => {
     }
   }, [locationsList]);
 
+  const handleFormatCategoriesValues = () =>
+    categories.map((id) => {
+      const title = rubricsList?.find((r) => r.id === id)?.name ?? "-";
+      return { title, value: id };
+    });
+
+  const handleChangeValue = (rubricId, fieldName, value) => {
+    onChangeField(
+      "fields",
+      data?.fields.map((f) =>
+        f.id_rubric === rubricId ? { ...f, [fieldName]: value } : f
+      )
+    );
+  };
+
+  console.log(fields);
   return (
     <StyledContent>
       <SelectTags
         label="Категорія"
-        notMultiSelect
-        value={data.id_rubric}
-        onChange={(val) => onChangeField("id_rubric", val)}
+        tags={handleFormatCategoriesValues()}
+        showTags
+        onChange={(id, title) => onChangeCategories(id, title)}
         options={
           rubricsList
             ? rubricsList?.map(({ id, name }) => ({ title: name, value: id }))
             : []
         }
       />
-      <Divider />
-      <SelectTags
-        label="Локація"
-        notMultiSelect
-        value={data.id_location}
-        onChange={(val) => onChangeField("id_location", val)}
-        options={formatedLocations}
-      />
-      <Divider />
-      {/* <TagsFilter label="Вулиця" />
-      <Divider /> */}
-      <Price
-        values={[data?.price_min ?? 0, data?.price_max ?? 0]}
-        onChange={(values) =>
-          handleChangeRange(
-            values,
-            [data?.price_min ?? 0, data?.price_max ?? 0],
-            ["price_min", "price_max"],
-            onChangeField
-          )
-        }
-        currency={Number(data?.price_currency)}
-        onChangeCurrency={(val) => onChangeField("price_currency", val)}
-      />
+      {fields?.map((field, i) => (
+        <FieldCard
+          key={i}
+          title={rubricsList?.find((r) => r.id === field?.id)?.name}
+          data={data?.fields.find((f) => f.id_rubric === field.id)}
+          onChangeField={(fieldName, value) =>
+            handleChangeValue(field.id, fieldName, value)
+          }
+          formatedLocations={formatedLocations}
+        />
+      ))}
     </StyledContent>
   );
 };

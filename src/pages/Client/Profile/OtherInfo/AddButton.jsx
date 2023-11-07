@@ -11,7 +11,8 @@ export const AddButton = ({ onAdd }) => (
       id=""
       accept="image/png, image/jpg, image/jpeg"
       value=""
-      onChange={(e) => onAdd(e.target.files[0])}
+      onChange={(e) => onAdd(e.target.files)}
+      multiple
     />
   </StyledAddButton>
 );

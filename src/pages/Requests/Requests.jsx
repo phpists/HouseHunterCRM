@@ -107,7 +107,9 @@ export const Requests = () => {
   const handleDeleteRequestSuccess = (id) => {
     setRequests(
       Object.fromEntries(
-        Object.entries(requests).filter((req) => id !== req[0])
+        Object.entries(requests).filter(
+          (req) => id !== Object.entries(req[1])[1][0]
+        )
       )
     );
     handleGetRequestsCount();
@@ -117,10 +119,19 @@ export const Requests = () => {
     setRequests(
       Object.fromEntries(
         Object.entries(requests).map((req) => {
-          if (req[0] === id) {
+          const reqId = Object.entries(req[1])[1][0];
+          if (reqId === id) {
+            console.log(reqId, id);
             let request = [];
             request[0] = req[0];
-            request[1] = { ...req[1], favorite: !req[1]?.favorite };
+            request[1] = {
+              ...req[1],
+              General_field_group: {
+                ...req[1].General_field_group,
+                favorite: !req[1].General_field_group.favorite,
+              },
+            };
+            console.log(request);
             return request;
           }
           return req;
@@ -133,10 +144,18 @@ export const Requests = () => {
     setRequests(
       Object.fromEntries(
         Object.entries(requests).map((req) => {
-          if (!!selected.find((s) => s === req[0])) {
+          const reqId = Object.entries(req[1])[1][0];
+          if (!!selected.find((s) => s === reqId)) {
             let request = [];
             request[0] = req[0];
-            request[1] = { ...req[1], favorite: !req[1]?.favorite };
+            request[1] = {
+              ...req[1],
+              General_field_group: {
+                ...req[1].General_field_group,
+                favorite: !req[1].General_field_group.favorite,
+              },
+            };
+            console.log(request);
             return request;
           }
           return req;

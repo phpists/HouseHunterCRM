@@ -9,33 +9,34 @@ import { Actions } from "./Actions/Actions";
 export const DesktopContent = ({ data, id, onDelete, onFavorite }) => (
   <StyledDesktopContent>
     <Client
-      firstName={data?.usr_first_name}
-      lastName={data?.usr_last_name}
-      idClient={data?.id_client}
-      phones={data?.user_phones}
+      firstName={data[id]?.usr_first_name}
+      lastName={data[id]?.usr_last_name}
+      idClient={data[id]?.id_client}
+      phones={data?.General_field_group?.user_phones}
       avatar={data?.usr_img?.length > 0 ? data?.usr_img[0] : null}
     />
     <Date
-      category={data?.rubric_name}
-      location={data?.location_name}
-      date={data?.dt_deadline}
+      category={data[id]?.rubric_name}
+      location={data[id]?.location_name}
+      date={data?.General_field_group?.dt_deadline}
     />
     <Info
-      priceMax={data?.price_max}
-      roomMin={data?.room_min}
-      roomMax={data?.room_min}
-      areaMin={data?.area_total_min}
-      storeyMin={data?.address_storey}
-      storeyMax={data?.storey_count}
+      priceMax={data[id]?.price_max}
+      roomMin={data[id]?.room_min}
+      roomMax={data[id]?.room_min}
+      areaMin={data[id]?.area_total_min}
+      storeyMin={data[id]?.address_storey}
+      storeyMax={data[id]?.storey_count}
     />
-    <Comment />
+    <Comment comment={data[id]?.comment} />
     <Objects />
     <Actions
       id={id}
-      clientId={data?.id_user}
+      clientId={data?.General_field_group?.id_client}
       onDelete={onDelete}
-      favorite={data?.favorite}
+      favorite={data?.General_field_group?.favorite}
       onFavorite={onFavorite}
+      idGroup={data[id]?.id_group}
     />
   </StyledDesktopContent>
 );

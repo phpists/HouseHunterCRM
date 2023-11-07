@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Progress } from "./Progress";
-import logo from "../../assets/images/logo.svg";
+import logo from "../../assets/images/full-logo.svg";
 import bg from "../../assets/images/loading-bg.svg";
 
 export const Loading = ({ load }) => (

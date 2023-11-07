@@ -51,17 +51,21 @@ export const List = ({
       )}
       <StyledList className="hide-scroll" ref={innerRef}>
         {data && Object.entries(data)?.length
-          ? Object.entries(data)?.map((data, i) => (
-              <RequestCard
-                key={i}
-                selected={!!selected.find((j) => j === data[0])}
-                onSelect={() => onSelect(data[0])}
-                data={data[1]}
-                id={data[0]}
-                onDelete={() => handleOnDeleteRequest(data[0])}
-                onFavorite={onFavorite}
-              />
-            ))
+          ? Object.entries(data)?.map((d, i) => {
+              const id = Object.entries(d[1])[1][0];
+
+              return (
+                <RequestCard
+                  key={i}
+                  selected={!!selected.find((j) => j === d[0])}
+                  onSelect={() => onSelect(d[0])}
+                  data={d[1]}
+                  id={id}
+                  onDelete={() => handleOnDeleteRequest(d[0])}
+                  onFavorite={onFavorite}
+                />
+              );
+            })
           : null}
       </StyledList>
     </>

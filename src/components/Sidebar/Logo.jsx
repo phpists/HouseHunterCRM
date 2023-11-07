@@ -12,6 +12,6 @@ const StyledLogo = styled(Link)`
   img {
     width: 80%;
     margin: 0 auto;
-    max-width: 80px;
+    max-width: 50px;
   }
 `;

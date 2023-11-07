@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { ProfileField } from "../../../../components/ProfileField";
 
-export const Comment = () => (
+export const Comment = ({ comment = "" }) => (
   <StyledComment>
     <ProfileField
       label="Коментар"
-      value="Здам затишну, 2-к квартиру Оболонський проспект.м.Героїв Дніпра - 2 хвилини пішки!!Квартира у відмінному стані.Розглядаємо орендарів - без дітей та без домашніх тварин.Повністю укомплектована меблями та побутовою технікою.В комнаті ліжко, диван, стінка, шафа-купе. Домофон."
+      value={comment?.length === 0 ? "Пусто" : comment}
       textarea
       className="field"
       readOnly

@@ -8,14 +8,15 @@ export const requests = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (build) => ({
     createRequest: build.query({
-      query: (field) => ({
+      query: ({ general_group, fields }) => ({
         url: "",
         method: "POST",
         headers: headers(),
         body: handleToFormData({
           action: "add",
           mod: "requests",
-          field,
+          fields,
+          general_group,
         }),
       }),
     }),
@@ -92,27 +93,27 @@ export const requests = createApi({
       }),
     }),
     getRequest: build.query({
-      query: (id_request) => ({
+      query: (id_group) => ({
         url: "",
         method: "POST",
         headers: headers(),
         body: handleToFormData({
           action: "view_by_id",
           mod: "requests",
-          id_request,
+          id_group,
         }),
       }),
     }),
     editRequest: build.query({
-      query: ({ field, id_request }) => ({
+      query: ({ general_group, fields }) => ({
         url: "",
         method: "POST",
         headers: headers(),
         body: handleToFormData({
           action: "edit",
           mod: "requests",
-          field,
-          id_request,
+          fields,
+          general_group,
         }),
       }),
     }),

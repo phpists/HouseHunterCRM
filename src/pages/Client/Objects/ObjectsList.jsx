@@ -33,8 +33,13 @@ export const ObjectsList = ({
       id_client: id,
     }).then((resp) => {
       const data = resp?.data?.data;
-      onSelect({ id: Object.entries(data)[0][1]?.id ?? null, type: "object" });
-      setObjects(data);
+      if (data) {
+        onSelect({
+          id: Object.entries(data)[0][1]?.id ?? null,
+          type: "object",
+        });
+        setObjects(data);
+      }
     });
   };
 

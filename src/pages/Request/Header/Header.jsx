@@ -90,9 +90,16 @@ export const Header = ({
         <Button title="Призупинити показ" disabled={!id} />
         <Button title="Пуста підбірка" disabled={!id} />
         <Button
-          title={Number(data?.not_actual) === 0 ? "Актуально" : "Неактуально"}
+          title={
+            Number(data?.general_group?.not_actual) === 0
+              ? "Актуально"
+              : "Неактуально"
+          }
           onClick={() =>
-            onChangeField("not_actual", Number(data?.not_actual) === 0 ? 1 : 0)
+            onChangeField("general_group", {
+              ...data.general_group,
+              not_actual: Number(data?.not_actual) === 0 ? 1 : 0,
+            })
           }
           disabled={!id}
         />

@@ -5,7 +5,7 @@ import { Date } from "./Date";
 export const InfoCard = ({ category, date }) => (
   <StyledInfoCard className="flex items-center justify-between clickable">
     <InfoText category={category} />
-    <Date data={date} />
+    <Date date={date} />
   </StyledInfoCard>
 );
 

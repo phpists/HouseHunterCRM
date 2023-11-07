@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import dotsIcon from "../../../assets/images/options.svg";
 
-export const Button = () => (
-  <StyledButton className="flex items-center justify-center">
+export const Button = ({ onChangeFocus }) => (
+  <StyledButton
+    className="flex items-center justify-center"
+    onFocus={() => onChangeFocus(true)}
+    onBlur={() => onChangeFocus(false)}
+  >
     <img src={dotsIcon} alt="" />
   </StyledButton>
 );

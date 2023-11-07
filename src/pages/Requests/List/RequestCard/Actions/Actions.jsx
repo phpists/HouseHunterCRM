@@ -8,7 +8,14 @@ import { useLazyAddToFavoriteQuery } from "../../../../../store/requests/request
 import { handleResponse } from "../../../../../utilits";
 import cogoToast from "cogo-toast";
 
-export const Actions = ({ id, clientId, onDelete, favorite, onFavorite }) => {
+export const Actions = ({
+  id,
+  clientId,
+  onDelete,
+  favorite,
+  onFavorite,
+  idGroup,
+}) => {
   const navigate = useNavigate();
   const [addToFavorites] = useLazyAddToFavoriteQuery();
 
@@ -35,7 +42,7 @@ export const Actions = ({ id, clientId, onDelete, favorite, onFavorite }) => {
       <Button
         Icon={EditIcon}
         className="edit-btn mb-2.5"
-        onClick={() => navigate(`/edit-request/${clientId}/${id}`)}
+        onClick={() => navigate(`/edit-request/${clientId}/${idGroup}`)}
       />
       <Button Icon={RemoveIcon} className="remove-btn" onClick={onDelete} />
     </StyledActions>

@@ -1,8 +1,12 @@
 import { styled } from "styled-components";
 import { ReactComponent as OptionsIcon } from "../../assets/images/options.svg";
 
-export const Button = () => (
-  <StyledButton className="flex items-center justify-center">
+export const Button = ({ onChangeFocus }) => (
+  <StyledButton
+    className="flex items-center justify-center more-btn"
+    onFocus={() => onChangeFocus(true)}
+    onBlur={() => onChangeFocus(false)}
+  >
     <OptionsIcon />
   </StyledButton>
 );

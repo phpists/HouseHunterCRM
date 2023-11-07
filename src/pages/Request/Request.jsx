@@ -10,7 +10,7 @@ import {
   useLazyGetRequestQuery,
   useLazyGetRubricsFieldsQuery,
 } from "../../store/requests/requests.api";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import cogoToast from "cogo-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -21,23 +21,18 @@ import {
 import { useGetCommentsToFieldsQuery } from "../../store/objects/objects.api";
 
 export const REQUEST_INIT = {
-  id_client: null,
-  id_rubric: null,
-  id_location: null,
-  type_obj_apartment: null,
-  price_min: 0,
-  price_max: 0,
-  room_min: 0,
-  room_max: 0,
-  address_storey: 0,
-  storey_count: 0,
-  area_total_min: 0,
-  area_total_max: 0,
-  comment: "",
-  not_actual: 0,
-  dt_deadline: 0,
-  deleted: 0,
-  price_currency: "1",
+  fields: [],
+  general_group: {
+    dt_deadline: null,
+    not_actual: 0,
+    deleted: 0,
+    only_company_obj: 0,
+    only_street_base_obj: 0,
+    mls: 0,
+    structure: 0,
+    only_my_obj: 0,
+    submitted_objects: 0,
+  },
 };
 
 export const Request = () => {
@@ -48,12 +43,49 @@ export const Request = () => {
   const [getRubricField] = useLazyGetRubricsFieldsQuery();
   const [getRequest] = useLazyGetRequestQuery();
   const [data, setData] = useState(REQUEST_INIT);
-  const [fields, setFields] = useState([]);
   const [favorite, setFavorite] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const categoriesData = useRef([]);
+  const [fieldData, setFieldData] = useState([]);
+  const fieldsData = useRef([]);
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
-  const handleGetRubricsFields = (id) => {
-    getRubricField(id).then((resp) => setFields(resp?.data));
+  const handleGetRubricsFields = (id, title) => {
+    getRubricField(id).then((resp) => {
+      const updatedData = [
+        ...fieldsData.current,
+        { id, title, fields: resp?.data },
+      ];
+      if (!fieldsData.current.find((f) => f.id === id)) {
+        setFieldData(updatedData);
+        fieldsData.current = updatedData;
+      }
+    });
+  };
+
+  const handleChangeCategories = (id, title) => {
+    const isExist = !!categoriesData.current.find((c) => c === id);
+    if (isExist) {
+      const updatedCategories = categoriesData.current?.filter((c) => c !== id);
+      setCategories(updatedCategories);
+      categoriesData.current = updatedCategories;
+      const updatedData = fieldsData.current?.filter((f) => f.id !== id);
+      setFieldData(updatedData);
+      fieldsData.current = updatedData;
+      setData({
+        ...data,
+        fields: data.fields.filter((f) => f.id_rubric !== id),
+      });
+    } else {
+      const updatedCategories = [...categoriesData.current, id];
+      setCategories(updatedCategories);
+      categoriesData.current = updatedCategories;
+      handleGetRubricsFields(id, title);
+      setData({
+        ...data,
+        fields: [...data.fields, { id_rubric: id, price_currency: "1" }],
+      });
+    }
   };
 
   const handleChangeField = (fieldName, value) => {
@@ -64,23 +96,40 @@ export const Request = () => {
     }
   };
 
-  const handleCreateRequest = () => {
-    const isAllRequiredFieldsFilled = handleCheckFields({
-      data: { ...data, id_client: clientId },
-      requiredFields: fields
-        ?.filter((f) => f?.required === 1)
-        ?.map((f) => f?.field),
-      additionalFields: [],
-      titles: commentsToFields?.request,
-      additionalTitles: {
-        id_location: "Локація",
-        price_min: "Ціна від",
-        price_max: "Ціна до",
-      },
+  const handleCheckAllFields = () => {
+    const isNotEmptyField = data.fields.map((data) => {
+      const fieldFields = fieldData.find((f) => f.id === data.id_rubric);
+      return handleCheckFields({
+        title: fieldFields.title,
+        data,
+        requiredFields: fieldFields?.fields
+          ?.filter((f) => f?.required === 1)
+          ?.map((f) => f?.field),
+        additionalFields: [],
+        titles: commentsToFields?.request,
+        additionalTitles: {
+          id_location: "Локація",
+          price_min: "Ціна від",
+          price_max: "Ціна до",
+        },
+      });
     });
 
-    if (isAllRequiredFieldsFilled) {
-      createRequest({ ...data, id_client: clientId })?.then((resp) => {
+    return isNotEmptyField.find((e) => !e) === undefined;
+  };
+
+  const handleCreateRequest = () => {
+    if (handleCheckAllFields()) {
+      createRequest({
+        ...data,
+        general_group: {
+          ...data.general_group,
+          id_client: clientId,
+          dt_deadline: data?.general_group?.dt_deadline
+            ? new Date(data?.general_group?.dt_deadline ?? 0).getTime() / 1000
+            : undefined,
+        },
+      })?.then((resp) => {
         handleResponse(resp, () => {
           cogoToast.success("Заявка успішно створена", {
             hideAfter: 3,
@@ -93,39 +142,20 @@ export const Request = () => {
   };
 
   const handleEditRequest = () => {
-    const isAllRequiredFieldsFilled = handleCheckFields({
-      data: {
-        ...data,
-        id_client: clientId,
-        dt_deadline: data?.dt_deadline
-          ? new Date(data?.dt_deadline).getTime() / 1000
-          : undefined,
-      },
-      requiredFields: fields
-        ?.filter((f) => f?.required === 1)
-        ?.map((f) => f?.field),
-      additionalFields: [],
-      titles: commentsToFields?.request,
-      additionalTitles: {
-        id_location: "Локація",
-        price_min: "Ціна від",
-        price_max: "Ціна до",
-      },
-    });
-
-    if (isAllRequiredFieldsFilled) {
+    if (handleCheckAllFields()) {
       editRequest({
-        field: {
-          ...data,
+        ...data,
+        general_group: {
+          id_group: id,
+          ...data.general_group,
           id_client: clientId,
-          dt_deadline: data?.dt_deadline
-            ? new Date(data?.dt_deadline).getTime() / 1000
+          dt_deadline: data?.general_group?.dt_deadline
+            ? new Date(data?.general_group?.dt_deadline ?? 0).getTime() / 1000
             : undefined,
         },
-        id_request: id,
       })?.then((resp) => {
         handleResponse(resp, () => {
-          cogoToast.success("Заявка успішно збережена", {
+          cogoToast.success("Зміни успішно збережено", {
             hideAfter: 3,
             position: "top-right",
           });
@@ -134,26 +164,56 @@ export const Request = () => {
     }
   };
 
+  const handleGetCategories = (ids) => {
+    ids.forEach((id) => handleGetRubricsFields(id));
+    setCategories(ids);
+    categoriesData.current = ids;
+  };
+
   useEffect(() => {
     if (id) {
       getRequest(id).then((resp) => {
         handleResponse(resp, () => {
+          setCategories([]);
+          categoriesData.current = [];
+          const categories = Object.entries(resp?.data[id])
+            .filter((f) => f[0] !== "General_field_group")
+            .map((f) => f[1]?.id_rubric);
+
+          handleGetCategories(categories);
           setData({
-            ...resp?.data,
-            dt_deadline: resp?.data?.dt_deadline
-              ? handleFormatDate(
-                  Number(resp?.data?.dt_deadline ?? 0) * 1000,
-                  true
-                )
-              : undefined,
+            general_group: {
+              ...resp?.data[id]?.General_field_group,
+              dt_deadline: resp?.data[id]?.General_field_group?.dt_deadline
+                ? handleFormatDate(
+                    Number(
+                      resp?.data[id]?.General_field_group?.dt_deadline ?? 0
+                    ) * 1000,
+                    true
+                  )
+                : undefined,
+            },
+            fields: Object.entries(resp?.data[id])
+              .filter((f) => f[0] !== "General_field_group")
+              .map((f) => f[1]),
           });
-          setFavorite(resp?.data?.favorite);
-          handleGetRubricsFields(resp?.data?.id_rubric);
+          //   setData({
+          //     ...resp?.data,
+          //     dt_deadline: resp?.data?.general_group?.dt_deadline
+          //       ? handleFormatDate(
+          //           Number(resp?.data?.general_group?.dt_deadline ?? 0) * 1000,
+          //           true
+          //         )
+          //       : undefined,
+          //   });
+          //   setFavorite(resp?.data?.favorite);
+          //   handleGetRubricsFields(resp?.data?.id_rubric);
         });
       });
     }
   }, [id]);
 
+  console.log(data);
   return (
     <StyledRequest>
       <Header
@@ -166,14 +226,20 @@ export const Request = () => {
       <div className="request-content hide-scroll">
         <div>
           <CardTitle title="Головне" />
-          <Main data={data} onChangeField={handleChangeField} />
+          <Main
+            data={data}
+            onChangeField={handleChangeField}
+            categories={categories}
+            onChangeCategories={handleChangeCategories}
+            fields={fieldData}
+          />
         </div>
         <div>
           <CardTitle title="Технічні характеристики" />
           <Characteristic
             data={data}
             onChangeField={handleChangeField}
-            fields={fields}
+            fields={fieldData}
           />
         </div>
         <div className="base-wrapper">

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useLazyGetClientsRequestQuery } from "../../../store/clients/clients.api";
 import { useLazyDeleteRequestQuery } from "../../../store/requests/requests.api";
-import { handleResponse } from "../../../utilits";
+import { handleFormatDate, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
 import { Card } from "./Card/Card";
 import { Confirm } from "../../../components/Confirm/Confirm";
@@ -32,8 +32,9 @@ export const RequestsList = ({
       id_client: id,
     }).then((resp) => {
       const data = resp?.data?.data;
-      onSelect({ id: Object.entries(data)[0][1]?.id ?? null, type: "request" });
-      setRequests(isReset ? data : { ...requests, ...data });
+      if (data) {
+        setRequests(isReset ? data : { ...requests, ...data });
+      }
     });
   };
 
@@ -51,7 +52,9 @@ export const RequestsList = ({
   const handleDeleteRequestSuccess = (id) => {
     setRequests(
       Object.fromEntries(
-        Object.entries(requests).filter((req) => id !== req[1]?.id)
+        Object.entries(requests).filter(
+          (req) => id !== Object.entries(req[1])[1][0]
+        )
       )
     );
   };
@@ -60,10 +63,19 @@ export const RequestsList = ({
     setRequests(
       Object.fromEntries(
         Object.entries(requests).map((req) => {
-          if (req[1]?.id === id) {
+          const reqId = Object.entries(req[1])[1][0];
+          if (reqId === id) {
+            console.log(reqId, id);
             let request = [];
             request[0] = req[0];
-            request[1] = { ...req[1], favorite: !req[1]?.favorite };
+            request[1] = {
+              ...req[1],
+              General_field_group: {
+                ...req[1].General_field_group,
+                favorite: !req[1].General_field_group.favorite,
+              },
+            };
+            console.log(request);
             return request;
           }
           return req;
@@ -71,7 +83,6 @@ export const RequestsList = ({
       )
     );
   };
-
   const handleCancelDeleteRequest = () => {
     setDeleteModal(false);
   };
@@ -109,28 +120,35 @@ export const RequestsList = ({
       )}
       <div>
         {requests && Object.entries(requests)?.length
-          ? Object.entries(requests).map((c, i) => (
-              <Card
-                key={`request-${i}`}
-                selected={
-                  active === c[1]?.id ||
-                  !!selectedItems?.find((s) => s.id === c[1]?.id)
-                }
-                onSelect={() => onSelect({ id: c[1]?.id, type: "request" })}
-                onSelectItem={() =>
-                  onSelectItem({ id: c[1]?.id, type: "request" })
-                }
-                onOpenInfo={() => onOpenInfo(true)}
-                date={c[1]?.dt_add}
-                title={c[1]?.rubric}
-                location={c[1]?.location}
-                price={c[1]?.price_min}
-                id={c[1]?.id}
-                favorite={c[1]?.favorite}
-                onChangeFavorite={() => handleToggleFavoriteStatus(c[1]?.id)}
-                onDelete={() => handleOnDeleteRequest(c[1]?.id)}
-              />
-            ))
+          ? Object.entries(requests).map((c, i) => {
+              const id = c[0];
+              const infoField = Object.entries(c[1]).filter(
+                (f) => f[0] !== "General_field_group"
+              )[0][1];
+
+              return (
+                <Card
+                  key={`request-${i}`}
+                  selected={
+                    active === id || !!selectedItems?.find((s) => s.id === id)
+                  }
+                  onSelect={() => onSelect({ id: id, type: "request" })}
+                  onSelectItem={() => onSelectItem({ id: id, type: "request" })}
+                  onOpenInfo={() => onOpenInfo(true)}
+                  date={handleFormatDate(
+                    Number(c[1]?.General_field_group?.dt_deadline) * 1000,
+                    true
+                  )}
+                  title={infoField?.rubric}
+                  location={infoField?.location}
+                  price={infoField?.price_min}
+                  id={id}
+                  favorite={c[1]?.General_field_group?.favorite}
+                  onChangeFavorite={() => handleToggleFavoriteStatus(id)}
+                  onDelete={() => handleOnDeleteRequest(id)}
+                />
+              );
+            })
           : null}
       </div>
     </>

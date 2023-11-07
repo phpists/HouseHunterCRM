@@ -3,7 +3,7 @@ import { Header } from "./Header/Header";
 import { Profile } from "./Profile/Profile";
 import { Objects } from "./Objects/Objects";
 import { useState } from "react";
-import { Object } from "./Object/Object";
+import { ObjectCard } from "./Object/Object";
 import { ProfileMobile } from "./ProfileMobile/ProfileMobile";
 import { useParams } from "react-router-dom";
 import { useLazyGetClientQuery } from "../../store/clients/clients.api";
@@ -35,7 +35,10 @@ export const Client = () => {
           onSelect={(value) => setSelectedObject(value)}
         />
         {selectedObject?.id ? (
-          <Object className="item-desktop" selectedObject={selectedObject} />
+          <ObjectCard
+            className="item-desktop"
+            selectedObject={selectedObject}
+          />
         ) : null}
       </div>
     </StyledClient>

@@ -8,7 +8,7 @@ export const OtherInfo = ({ photos, onChange, onRefreshClientData }) => {
   const { id } = useParams();
   const [deletePhoto] = useLazyDeleteClientPhotoQuery();
 
-  const handleAddPhoto = (file) => onChange([...photos, file]);
+  const handleAddPhoto = (files) => onChange([...photos, ...files]);
 
   const handleDeletePhoto = (id_img) => {
     deletePhoto({ id_client: id, id_img }).then(() => onRefreshClientData());

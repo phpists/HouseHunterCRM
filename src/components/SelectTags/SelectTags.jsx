@@ -23,8 +23,8 @@ export const SelectTags = ({
   const [isActive, setIsActive] = useState(false);
   const [search, setSearch] = useState("");
 
-  const handleChangeValue = (val) => {
-    onChange(val);
+  const handleChangeValue = (val, title) => {
+    onChange(val, title);
     setSearch("");
     notMultiSelect && setOpen(false);
   };
@@ -55,6 +55,7 @@ export const SelectTags = ({
                 title={tag?.title}
                 isFirst={i === 0}
                 viewOnly={viewOnly}
+                onRemove={() => onChange(tag.value, tag.title)}
               />
             ))}
             {!isActive && tags.length - 3 > 0 && (
@@ -94,7 +95,7 @@ export const SelectTags = ({
         )}
         <div className="label">{label}</div>
       </div>
-      {(!value && showTags) || viewOnly ? null : (
+      {(notMultiSelect && !value && showTags) || viewOnly ? null : (
         <Arrow active={open} onClick={handleToggleOpen} />
       )}
       <Dropdown
@@ -105,6 +106,7 @@ export const SelectTags = ({
         onChange={handleChangeValue}
         activeValue={value}
         search={search}
+        tags={tags}
       />
     </StyledSelectTags>
   );

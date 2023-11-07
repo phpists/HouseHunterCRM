@@ -10,6 +10,7 @@ export const Dropdown = ({
   onChange,
   activeValue,
   search,
+  tags = [],
 }) => (
   <StyledDropdown
     animate={{ opacity: open ? 1 : 0, visibility: open ? "visible" : "hidden" }}
@@ -28,8 +29,10 @@ export const Dropdown = ({
               className="opt"
               noSelect={notMultiSelect}
               Component={Component}
-              onSelect={() => onChange(value)}
-              active={activeValue === value}
+              onSelect={() => onChange(value, title)}
+              active={
+                activeValue === value || tags?.find((t) => t.value === value)
+              }
             />
           ))
       : null}

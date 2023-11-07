@@ -10,51 +10,73 @@ export const Base = ({ data, onChangeField }) => {
   return (
     <StyledBase className="request-card hide-scroll">
       <TitleDivider title="X company" />
-      {/* <SelectTags label="Категорія" notMultiSelect /> */}
-      {/* <Divider /> */}
-      {/* <CheckOption
-        label="Неактуальні об’єкти"
-        className="check-opt"
-        value={data?.not_actual}
-        onChange={(val) => onChangeField("not_actual", val ? 1 : 0)}
-      /> */}
-      {/* <CheckOption label="Здані об’єкти" className="check-opt" /> */}
       <CheckOption
         label="Об’єкти до видалення"
         className="check-opt"
-        value={data?.deleted}
-        onChange={(val) => onChangeField("deleted", val ? 1 : 0)}
-      />
-      {/* <CheckOption label="Актуальні об’єкти" className="check-opt" />
-      <CheckOption label="Відновлені об’єкти після видалення" /> */}
-      <Divider />
-      {/* <CheckOption
-        label={
-          <>
-            Об’єкти <span className="xbase-title">xbase</span>
-          </>
+        value={data?.general_group?.deleted}
+        onChange={(val) =>
+          onChangeField("general_group", {
+            ...data.general_group,
+            deleted: val ? 1 : 0,
+          })
         }
-        className="check-opt"
       />
-      <CheckOption label="Клієнти передані" className="check-opt" /> */}
-      {/* <CheckOption
-        label="Об’єкти протерміновані"
+      <CheckOption
+        label="Об’єкти компанії"
         className="check-opt"
-        value={data?.dt_deadline}
-        onChange={(val) => onChangeField("dt_deadline", val ? 1 : 0)}
-      /> */}
-      {/* <CheckOption label="Об’єкти (ліквідність)" className="check-opt" />
-      <TitleDivider title="street base" />
-      <Period />
-      <CheckOption label="Вимкнути «Без співпраці»" className="check-opt" />
-      <TitleDivider title="mls base" />
-      <SelectTags
-        label="Компанія"
-        placeholder="Оберіть компанію"
-        notMultiSelect
+        value={data?.general_group?.only_company_obj}
+        onChange={(val) =>
+          onChangeField("general_group", {
+            ...data.general_group,
+            only_company_obj: val ? 1 : 0,
+          })
+        }
       />
-      <CheckOption label="Неактуальні об’єкти" className="check-opt-mls" />
-      <ToggleOption label="Все крім цього" /> */}
+      <CheckOption
+        label="Об’єкти XBASE"
+        className="check-opt"
+        value={data?.general_group?.only_street_base_obj}
+        onChange={(val) =>
+          onChangeField("general_group", {
+            ...data.general_group,
+            only_street_base_obj: val ? 1 : 0,
+          })
+        }
+      />
+      <CheckOption
+        label="МЛС"
+        className="check-opt"
+        value={data?.general_group?.mls}
+        onChange={(val) =>
+          onChangeField("general_group", {
+            ...data.general_group,
+            mls: val ? 1 : 0,
+          })
+        }
+      />
+      <CheckOption
+        label="Об'єкти моєї структури"
+        className="check-opt"
+        value={data?.general_group?.structure}
+        onChange={(val) =>
+          onChangeField("general_group", {
+            ...data.structure,
+            structure: val ? 1 : 0,
+          })
+        }
+      />
+
+      <CheckOption
+        label="Об’єкти XBASE"
+        className="check-opt"
+        value={data?.general_group?.submited}
+        onChange={(val) =>
+          onChangeField("general_group", {
+            ...data.general_group,
+            submited: val ? 1 : 0,
+          })
+        }
+      />
     </StyledBase>
   );
 };
