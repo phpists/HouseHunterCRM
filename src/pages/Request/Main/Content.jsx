@@ -8,7 +8,7 @@ import {
   useGetRubricsQuery,
 } from "../../../store/requests/requests.api";
 import { handleChangeRange, handleGetLocationAllPath } from "../../../utilits";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FieldCard } from "./FieldCard";
 
 export const Content = ({
@@ -17,6 +17,8 @@ export const Content = ({
   categories,
   onChangeCategories,
   fields,
+  errors,
+  onChangeErrors,
 }) => {
   const { data: rubricsList } = useGetRubricsQuery();
   const { data: locationsList } = useGetLocationsQuery();
@@ -54,9 +56,17 @@ export const Content = ({
         f.id_rubric === rubricId ? { ...f, [fieldName]: value } : f
       )
     );
+    onChangeErrors(
+      errors
+        .map((e) =>
+          e.id_rubric === rubricId
+            ? { ...e, errors: e.errors.filter((f) => f !== fieldName) }
+            : e
+        )
+        .filter((e) => e.id !== "updated")
+    );
   };
 
-  console.log(fields);
   return (
     <StyledContent>
       <SelectTags
@@ -79,6 +89,7 @@ export const Content = ({
             handleChangeValue(field.id, fieldName, value)
           }
           formatedLocations={formatedLocations}
+          errors={errors.find((e) => e.id_rubric === field?.id)?.errors ?? []}
         />
       ))}
     </StyledContent>

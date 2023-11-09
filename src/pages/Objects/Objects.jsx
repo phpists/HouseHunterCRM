@@ -5,16 +5,52 @@ import { useEffect, useState } from "react";
 import {
   useLazyGetAllObjectsQuery,
   useLazyGetObjectsCountQuery,
+  useLazyGetRubricFieldsQuery,
 } from "../../store/objects/objects.api";
 import { useActions } from "../../hooks/actions";
+import { useRef } from "react";
+
+const INIT_FILTERS = {
+  id_rubric: "",
+  id_location: "",
+  price_currency: "1",
+  price: "",
+  price_max: "",
+  price_min: "",
+  obj_is_actual: "",
+};
 
 export const Objects = () => {
   const [getAllObjects] = useLazyGetAllObjectsQuery();
   const [getObjectsCount] = useLazyGetObjectsCountQuery();
+  const [getRubricField] = useLazyGetRubricFieldsQuery();
   const { saveObjectsCount } = useActions();
   const [selected, setSelected] = useState([]);
   const [objects, setObjects] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [filters, setFilters] = useState(INIT_FILTERS);
+  const [filtersFields, setFilterFields] = useState([]);
+  const filterActive = useRef(false);
+
+  const handleGetRubricsFields = (id) => {
+    getRubricField(id).then((resp) => {
+      setFilterFields(resp?.data);
+    });
+  };
+
+  const handleChangeFilter = (field, value) => {
+    setFilters({ ...filters, [field]: value });
+    if (field === "id_rubric") {
+      handleGetRubricsFields(value);
+      setFilters({
+        id_rubric: value,
+        id_location: filters?.id_location,
+        price_currency: filters?.price_currency,
+        price_min: filters?.price_min,
+        price_max: filters?.price_max,
+      });
+    }
+  };
 
   const handleSelect = (index) =>
     setSelected(
@@ -27,12 +63,22 @@ export const Objects = () => {
     getObjectsCount().then((resp) => saveObjectsCount(resp?.data?.count ?? 0));
   };
 
-  const handleGetObjects = () =>
-    getAllObjects({ only_favorite: isFavorite ?? undefined }).then((resp) =>
+  const handleGetObjects = () => {
+    let data = { only_favorite: isFavorite ?? undefined };
+
+    if (filterActive.current) {
+      data = {
+        ...data,
+        ...filters,
+      };
+    }
+
+    getAllObjects(data).then((resp) =>
       setObjects(
         resp?.data ? Object.entries(resp?.data)?.map((obj) => obj[1]) : []
       )
     );
+  };
 
   useEffect(() => {
     handleGetObjects();
@@ -64,6 +110,15 @@ export const Objects = () => {
     handleGetObjects();
   }, [isFavorite]);
 
+  const handleApplyFilter = (isApply) => {
+    filterActive.current = isApply;
+    handleGetObjects();
+    if (!isApply) {
+      setFilters(INIT_FILTERS);
+      setFilterFields([]);
+    }
+  };
+
   return (
     <StyledObjects>
       <Header
@@ -73,6 +128,10 @@ export const Objects = () => {
         isFavorite={isFavorite}
         onIsFavotite={() => setIsFavorite(!isFavorite)}
         onDelete={handleDeleteSuccess}
+        filters={filters}
+        onChangeFilter={handleChangeFilter}
+        filtersFields={filtersFields}
+        onApplyFilter={handleApplyFilter}
       />
       <List selected={selected} onSelect={handleSelect} data={objects ?? []} />
     </StyledObjects>

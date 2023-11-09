@@ -2,10 +2,10 @@ import { styled } from "styled-components";
 import { Text } from "./Text";
 import { Contacts } from "./Contacts";
 
-export const Info = ({ data, onChangeField }) => {
+export const Info = ({ data, onChangeField, errors }) => {
   return (
     <StyledInfo className="hide-scroll">
-      <Text data={data} onChangeField={onChangeField} />
+      <Text data={data} onChangeField={onChangeField} errors={errors} />
       <Contacts />
     </StyledInfo>
   );

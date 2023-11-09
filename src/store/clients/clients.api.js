@@ -45,7 +45,13 @@ export const clients = createApi({
       }),
     }),
     getClients: build.query({
-      query: ({ current_page, item_on_page }) => ({
+      query: ({
+        current_page,
+        item_on_page,
+        search_key,
+        search_phone,
+        search_phone_code,
+      }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -54,6 +60,9 @@ export const clients = createApi({
           mod: "clients",
           current_page,
           item_on_page,
+          search_key,
+          search_phone,
+          search_phone_code,
         }),
       }),
     }),
@@ -177,4 +186,5 @@ export const {
   useLazyGetClientsRequestQuery,
   useLazyGetClientsObjectsQuery,
   useLazyGetClientPhotosQuery,
+  useGetClientsCountQuery,
 } = clients;

@@ -3,10 +3,10 @@ import { Client } from "./Client/Client";
 import { Price } from "./Price/Price";
 import { Objects } from "./Objects/Objects";
 
-export const RequestCard = () => (
+export const RequestCard = ({ data, id }) => (
   <StyledRequestCard>
-    <Client />
-    <Price />
+    <Client data={data} id={id} />
+    <Price data={data} id={id} />
     <Objects />
   </StyledRequestCard>
 );

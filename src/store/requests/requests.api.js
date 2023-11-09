@@ -79,7 +79,7 @@ export const requests = createApi({
       }),
     }),
     getRequests: build.query({
-      query: ({ current_page, item_on_page, only_favorite }) => ({
+      query: ({ current_page, item_on_page, only_favorite, ...filters }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -89,6 +89,7 @@ export const requests = createApi({
           current_page,
           item_on_page,
           only_favorite,
+          ...filters,
         }),
       }),
     }),
@@ -118,14 +119,36 @@ export const requests = createApi({
       }),
     }),
     addToFavorite: build.query({
-      query: (id_request) => ({
+      query: (id_group) => ({
         url: "",
         method: "POST",
         headers: headers(),
         body: handleToFormData({
           action: "add_edit_favorit",
           mod: "requests",
-          id_request,
+          id_group,
+        }),
+      }),
+    }),
+    getActualRequestCount: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_my_overdue_request",
+          mod: "requests",
+        }),
+      }),
+    }),
+    getOverdueRequestCount: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_my_overdue_request",
+          mod: "requests",
         }),
       }),
     }),
@@ -143,4 +166,7 @@ export const {
   useLazyGetRequestQuery,
   useLazyEditRequestQuery,
   useLazyAddToFavoriteQuery,
+  useGetRequestsCountQuery,
+  useGetActualRequestCountQuery,
+  useGetOverdueRequestCountQuery,
 } = requests;

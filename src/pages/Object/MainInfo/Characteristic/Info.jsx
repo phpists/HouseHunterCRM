@@ -4,7 +4,7 @@ import { ProfileField } from "../../../../components/ProfileField";
 import { Select } from "../../../../components/Select/Select";
 import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.api";
 
-export const Info = ({ fields, data, onChangeField }) => {
+export const Info = ({ fields, data, onChangeField, errors }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const notAllowedFields = [
     "comment",
@@ -59,6 +59,7 @@ export const Info = ({ fields, data, onChangeField }) => {
                       label={commentsToFields?.object[field[0]]}
                       labelActive={commentsToFields?.object[field[0]]}
                       hideArrowDefault
+                      error={!!errors.find((e) => e === field[0])}
                     />
                   );
                 } else {
@@ -73,6 +74,7 @@ export const Info = ({ fields, data, onChangeField }) => {
                       type={
                         field[1]?.type === "int" ? "number" : field[1]?.type
                       }
+                      error={!!errors.find((e) => e === field[0])}
                     />
                   );
                 }

@@ -26,7 +26,7 @@ export const REQUEST_INIT = {
     dt_deadline: null,
     not_actual: "0",
     deleted: "0",
-    only_company_obj: "0",
+    only_company_obj: "1",
     only_street_base_obj: "0",
     mls: "0",
     structure: "0",
@@ -51,6 +51,7 @@ export const Request = () => {
   const [fieldData, setFieldData] = useState([]);
   const fieldsData = useRef([]);
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
+  const [errors, setErrors] = useState([]);
 
   const handleGetRubricsFields = (id, title) => {
     getRubricField(id).then((resp) => {
@@ -99,9 +100,11 @@ export const Request = () => {
   };
 
   const handleCheckAllFields = () => {
+    const errorData = [];
+
     const isNotEmptyField = data.fields.map((data) => {
       const fieldFields = fieldData.find((f) => f.id === data.id_rubric);
-      return handleCheckFields({
+      const emptyFields = handleCheckFields({
         title: fieldFields.title,
         data,
         requiredFields: fieldFields?.fields
@@ -115,8 +118,13 @@ export const Request = () => {
           price_max: "Ціна до",
         },
       });
+
+      emptyFields?.length > 0 &&
+        errorData.push({ id_rubric: data.id_rubric, errors: emptyFields });
+      return emptyFields?.length === 0;
     });
 
+    setErrors([...errorData, { id: "updated" }]);
     return isNotEmptyField.find((e) => !e) === undefined;
   };
 
@@ -224,6 +232,8 @@ export const Request = () => {
             categories={categories}
             onChangeCategories={handleChangeCategories}
             fields={fieldData}
+            errors={errors}
+            onChangeErrors={(val) => setErrors(val)}
           />
         </div>
         <div>
@@ -232,6 +242,8 @@ export const Request = () => {
             data={data}
             onChangeField={handleChangeField}
             fields={fieldData}
+            errors={errors}
+            onChangeErrors={(val) => setErrors(val)}
           />
         </div>
         <div className="base-wrapper">

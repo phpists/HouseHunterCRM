@@ -8,7 +8,7 @@ export const Photos = ({ photos, onSelect, active }) => (
         key={i}
         photo={photo}
         active={i === active - 1}
-        onSelect={() => onSelect(1 + i)}
+        onSelect={() => onSelect(1 + i, true)}
       />
     ))}
   </StyledPhotos>

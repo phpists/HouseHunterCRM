@@ -35,18 +35,18 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
   };
 
   useEffect(() => {
-    setUpdatedData(
-      data
-        ? {
-            ...data,
-            phone: data?.phone.map(({ code, ...phoneData }) => ({
-              ...phoneData,
-              code: phonesCodes?.find((phone) => phone.code === code)?.id,
-            })),
-          }
-        : null
-    );
-    lastData.current = data;
+    const formatedDate = data
+      ? {
+          ...data,
+          phone: data?.phone.map(({ code, ...phoneData }) => ({
+            ...phoneData,
+            code: phonesCodes?.find((phone) => phone.code === code)?.id,
+          })),
+        }
+      : null;
+
+    setUpdatedData(formatedDate);
+    lastData.current = formatedDate;
     getClientPhotos(id).then((resp) => {
       setPhotos(resp?.data ?? []);
     });

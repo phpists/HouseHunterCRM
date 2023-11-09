@@ -21,28 +21,44 @@ export const Clients = () => {
   const isLoading = useRef(false);
   const listRef = useRef();
   const [isAllPages, setIsAllPages] = useState(false);
+  const [filter, setFilter] = useState({
+    search_key: "",
+    search_phone: "",
+  });
+  const [searchPhoneCode, setSearchPhoneCode] = useState("1");
+  const isFilters = useRef(false);
+
+  const handleChangeFilter = (field, value) =>
+    setFilter({ ...filter, [field]: value });
 
   const handleGetClients = (isReset) => {
     if ((!isLoading.current && !isAllPages) || isReset) {
       isLoading.current = true;
       isReset && setIsAllPages(false);
-      getClients({ current_page: currentPage.current, item_on_page: 10 }).then(
-        (resp) => {
-          isLoading.current = false;
-          handleResponse(
-            resp,
-            () => {
-              if (resp?.data?.error === 0 && resp?.data.data?.length) {
-                setClients(
-                  isReset ? resp?.data?.data : [...clients, ...resp?.data.data]
-                );
-              }
-            },
-            () => setIsAllPages(true),
-            true
-          );
-        }
-      );
+      getClients({
+        current_page: currentPage.current,
+        item_on_page: 10,
+        search_key: isFilters.current ? filter.search_key : undefined,
+        search_phone: isFilters.current ? filter.search_phone : undefined,
+        search_phone_code:
+          isFilters.current && filter.search_phone?.length > 0
+            ? searchPhoneCode
+            : undefined,
+      }).then((resp) => {
+        isLoading.current = false;
+        handleResponse(
+          resp,
+          () => {
+            if (resp?.data?.error === 0 && resp?.data.data?.length) {
+              setClients(
+                isReset ? resp?.data?.data : [...clients, ...resp?.data.data]
+              );
+            }
+          },
+          () => setIsAllPages(true),
+          true
+        );
+      });
     }
   };
 
@@ -83,6 +99,11 @@ export const Clients = () => {
     }
   }, [listRef, isLoading.current, isAllPages, clients]);
 
+  const handleApplyFilters = (isApply) => {
+    isFilters.current = isApply;
+    handleGetClients(true);
+  };
+
   return (
     <StyledClients>
       <Header
@@ -90,6 +111,11 @@ export const Clients = () => {
         onToggleFavoriteFilter={() => setFavoritesFilter(!favoritesFilter)}
         onRefreshData={() => handleGetClients(true)}
         selectedCount={10}
+        filter={filter}
+        onChangeFilter={handleChangeFilter}
+        searchPhoneCode={searchPhoneCode}
+        onChangeSearchCode={(val) => setSearchPhoneCode(val)}
+        onApplyFilters={handleApplyFilters}
       />
       <List
         selected={selected}

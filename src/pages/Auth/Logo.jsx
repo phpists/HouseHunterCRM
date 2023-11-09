@@ -14,4 +14,7 @@ const StyledLogo = styled.div`
   ${({ success }) => success && "transform: translateX(-50%);"}
   z-index: 100;
   transition: all 0.3s;
+  img {
+    width: 50px;
+  }
 `;

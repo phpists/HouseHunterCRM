@@ -8,7 +8,14 @@ import { Footer } from "./Footer";
 import { motion, useAnimationControls } from "framer-motion";
 import { useEffect } from "react";
 
-export const Filter = ({ onClose }) => {
+export const Filter = ({
+  onClose,
+  filter,
+  onChangeFilter,
+  searchPhoneCode,
+  onChangeSearchCode,
+  onApplyFilters,
+}) => {
   const controls = useAnimationControls();
 
   const handleClose = () => {
@@ -20,6 +27,14 @@ export const Filter = ({ onClose }) => {
     controls.start({ opacity: 1, translateX: 0 });
   }, []);
 
+  const handleResetFilters = () => {
+    onChangeFilter("search_key", "");
+    onChangeFilter("search_key", "");
+    onChangeSearchCode("1");
+    onApplyFilters(false);
+    handleClose();
+  };
+
   return (
     <StyledFilter
       initial={{ opacity: 0, translateX: "100%" }}
@@ -29,12 +44,20 @@ export const Filter = ({ onClose }) => {
       <Header onClose={handleClose} />
       <div className="content">
         <SectionTitle title="Головне" />
-        <General />
-        <SectionTitle title="Актуальність" />
+        <General
+          filter={filter}
+          onChangeFilter={onChangeFilter}
+          searchPhoneCode={searchPhoneCode}
+          onChangeSearchCode={onChangeSearchCode}
+        />
+        {/* <SectionTitle title="Актуальність" />
         <Topicality />
         <SectionTitle title="Характеристики" />
-        <Characteristics />
-        <Footer />
+        <Characteristics /> */}
+        <Footer
+          onReset={handleResetFilters}
+          onSubmit={() => onApplyFilters(true)}
+        />
       </div>
     </StyledFilter>
   );

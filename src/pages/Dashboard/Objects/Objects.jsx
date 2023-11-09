@@ -3,22 +3,42 @@ import { CardHeader } from "../CardHeader";
 import { Card } from "../Card/Card";
 import { ReactComponent as HomeIcon } from "../../../assets/images/home-gradient.svg";
 import { InfoList } from "../InfoList/InfoList";
+import {
+  useGetActualObjectsCountQuery,
+  useGetObjectsCountQuery,
+  useGetOverdueObjectsCountQuery,
+  useGetStreetBaseObjectsCountQuery,
+} from "../../../store/objects/objects.api";
 
-export const Objects = () => (
-  <StyledObjects>
-    <CardHeader title="До моїх об’єктів" />
-    <div className="content">
-      <Card IconImg={HomeIcon} title="423" subtitle="Всього об'єктів " />
-      <InfoList
-        items={[
-          { title: "Актуальні", value: "201" },
-          { title: "Протерміновані", value: "17" },
-          { title: "Об’єкти Street Base", value: "1 184" },
-        ]}
-      />
-    </div>
-  </StyledObjects>
-);
+export const Objects = () => {
+  const { data: objectCount } = useGetObjectsCountQuery();
+  const { data: actualObjectCount } = useGetActualObjectsCountQuery();
+  const { data: overdueObjectCount } = useGetOverdueObjectsCountQuery();
+  const { data: streetBaseObjectCount } = useGetStreetBaseObjectsCountQuery();
+
+  return (
+    <StyledObjects>
+      <CardHeader title="До моїх об’єктів" />
+      <div className="content">
+        <Card
+          IconImg={HomeIcon}
+          title={objectCount?.count}
+          subtitle="Всього об'єктів "
+        />
+        <InfoList
+          items={[
+            { title: "Актуальні", value: actualObjectCount?.count ?? 0 },
+            { title: "Протерміновані", value: overdueObjectCount?.count ?? 0 },
+            {
+              title: "Об’єкти Street Base",
+              value: streetBaseObjectCount?.count ?? 0,
+            },
+          ]}
+        />
+      </div>
+    </StyledObjects>
+  );
+};
 
 const StyledObjects = styled.div`
   padding: 20px;

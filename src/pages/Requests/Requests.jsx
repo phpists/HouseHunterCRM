@@ -5,15 +5,25 @@ import { useState } from "react";
 import {
   useLazyGetRequestsCountQuery,
   useLazyGetRequestsQuery,
+  useLazyGetRubricsFieldsQuery,
 } from "../../store/requests/requests.api";
 import { useEffect } from "react";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
 import { handleResponse } from "../../utilits";
 
+const INIT_FILTERS = {
+  id_rubric: "",
+  id_location: "",
+  price_currency: "1",
+  price_min: "",
+  price_max: "",
+};
+
 export const Requests = () => {
   const [getRequestsCount] = useLazyGetRequestsCountQuery();
   const [getRequests] = useLazyGetRequestsQuery();
+  const [getRubricField] = useLazyGetRubricsFieldsQuery();
   const { saveRequestsCount } = useActions();
   const [requests, setRequests] = useState([]);
   const currentPage = useRef(0);
@@ -22,6 +32,29 @@ export const Requests = () => {
   const [isAllPages, setIsAllPages] = useState(false);
   const [selected, setSelected] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [filters, setFilters] = useState(INIT_FILTERS);
+  const [filtersFields, setFilterFields] = useState([]);
+  const filterActive = useRef(false);
+
+  const handleGetRubricsFields = (id) => {
+    getRubricField(id).then((resp) => {
+      setFilterFields(resp?.data);
+    });
+  };
+
+  const handleChangeFilter = (field, value) => {
+    setFilters({ ...filters, [field]: value });
+    if (field === "id_rubric") {
+      handleGetRubricsFields(value);
+      setFilters({
+        id_rubric: value,
+        id_location: filters?.id_location,
+        price_currency: filters?.price_currency,
+        price_min: filters?.price_min,
+        price_max: filters?.price_max,
+      });
+    }
+  };
 
   const handleSelect = (index) =>
     setSelected(
@@ -42,11 +75,20 @@ export const Requests = () => {
   const handleGetRequests = (isReset) => {
     if ((!isLoading.current && !isAllPages) || isReset) {
       isLoading.current = true;
-      getRequests({
+      let data = {
         current_page: currentPage.current,
         item_on_page: 10,
         only_favorite: isFavorite ?? undefined,
-      }).then((resp) => {
+      };
+
+      if (filterActive.current) {
+        data = {
+          ...data,
+          ...filters,
+        };
+      }
+
+      getRequests(data).then((resp) => {
         isLoading.current = false;
         handleResponse(
           resp,
@@ -108,7 +150,7 @@ export const Requests = () => {
     setRequests(
       Object.fromEntries(
         Object.entries(requests).filter(
-          (req) => id !== Object.entries(req[1])[1][0]
+          (req) => id !== Object.entries(req[1])[1][1]?.id_group
         )
       )
     );
@@ -119,9 +161,8 @@ export const Requests = () => {
     setRequests(
       Object.fromEntries(
         Object.entries(requests).map((req) => {
-          const reqId = Object.entries(req[1])[1][0];
+          const reqId = Object.entries(req[1])[1][1]?.id_group;
           if (reqId === id) {
-            console.log(reqId, id);
             let request = [];
             request[0] = req[0];
             request[1] = {
@@ -131,7 +172,6 @@ export const Requests = () => {
                 favorite: !req[1].General_field_group.favorite,
               },
             };
-            console.log(request);
             return request;
           }
           return req;
@@ -144,7 +184,7 @@ export const Requests = () => {
     setRequests(
       Object.fromEntries(
         Object.entries(requests).map((req) => {
-          const reqId = Object.entries(req[1])[1][0];
+          const reqId = Object.entries(req[1])[1][1]?.id_group;
           if (!!selected.find((s) => s === reqId)) {
             let request = [];
             request[0] = req[0];
@@ -169,6 +209,15 @@ export const Requests = () => {
     handleGetRequests(true);
   }, [isFavorite]);
 
+  const handleApplyFilter = (isApply) => {
+    filterActive.current = isApply;
+    handleGetRequests(true);
+    if (!isApply) {
+      setFilters(INIT_FILTERS);
+      setFilterFields([]);
+    }
+  };
+
   return (
     <StyledRequests>
       <Header
@@ -178,6 +227,10 @@ export const Requests = () => {
         onFavorite={handleToggleFavoritesStatus}
         isFavorite={isFavorite}
         onIsFavotite={() => setIsFavorite(!isFavorite)}
+        filters={filters}
+        onChangeFilter={handleChangeFilter}
+        filtersFields={filtersFields}
+        onApplyFilter={handleApplyFilter}
       />
       <List
         selected={selected}

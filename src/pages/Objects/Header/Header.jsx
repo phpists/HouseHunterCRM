@@ -23,6 +23,10 @@ export const Header = ({
   isFavorite,
   onIsFavotite,
   onDelete,
+  filters,
+  onChangeFilter,
+  filtersFields,
+  onApplyFilter,
 }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClient, setAddClient] = useState(false);
@@ -107,7 +111,15 @@ export const Header = ({
           onDelete={handleDelete}
         />
       </div>
-      {filterOpen && <Filter onClose={() => setFilterOpen(false)} />}
+      {filterOpen && (
+        <Filter
+          onClose={() => setFilterOpen(false)}
+          filters={filters}
+          onChangeFilter={onChangeFilter}
+          filtersFields={filtersFields}
+          onApplyFilter={onApplyFilter}
+        />
+      )}
       {addClient && <AddClient onClose={() => setAddClient(false)} />}
     </StyledHeader>
   );

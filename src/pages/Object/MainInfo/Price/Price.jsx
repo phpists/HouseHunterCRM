@@ -4,7 +4,7 @@ import { Divider } from "./Divider";
 import { SymbolSelect } from "./SymbolSelect";
 import { TypeSelect } from "./TypeSelect";
 
-export const Price = ({ className, data, onChangeField }) => {
+export const Price = ({ className, data, onChangeField, errors }) => {
   return (
     <StyledPrice className={`flex items-center ${className}`}>
       <Field
@@ -14,6 +14,7 @@ export const Price = ({ className, data, onChangeField }) => {
         className="field"
         placeholder="Введіть ціну"
         full
+        error={errors.find((e) => e === "price")}
       />
       <Divider />
       <SymbolSelect

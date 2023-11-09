@@ -3,21 +3,39 @@ import { CardHeader } from "./CardHeader";
 import { Card } from "./Card/Card";
 import { ReactComponent as MegaphoneIcon } from "../../assets/images/megaphone-gradient.svg";
 import { InfoList } from "./InfoList/InfoList";
+import {
+  useGetActualRequestCountQuery,
+  useGetOverdueRequestCountQuery,
+  useGetRequestsCountQuery,
+} from "../../store/requests/requests.api";
 
-export const Requests = () => (
-  <StyledRequests>
-    <CardHeader title="До моїх запитів" />
-    <div className="content">
-      <Card IconImg={MegaphoneIcon} title="513" subtitle="Всього запитів " />
-      <InfoList
-        items={[
-          { title: "Актуальні", value: "201" },
-          { title: "Протерміновані", value: "17" },
-        ]}
-      />
-    </div>
-  </StyledRequests>
-);
+export const Requests = () => {
+  const { data: requestsCount } = useGetRequestsCountQuery();
+  const { data: actualRequestsCount } = useGetActualRequestCountQuery();
+  const { data: overdueRequestsCount } = useGetOverdueRequestCountQuery();
+
+  return (
+    <StyledRequests>
+      <CardHeader title="До моїх запитів" />
+      <div className="content">
+        <Card
+          IconImg={MegaphoneIcon}
+          title={requestsCount?.count ?? 0}
+          subtitle="Всього запитів "
+        />
+        <InfoList
+          items={[
+            { title: "Актуальні", value: actualRequestsCount?.count ?? 0 },
+            {
+              title: "Протерміновані",
+              value: overdueRequestsCount?.count ?? 0,
+            },
+          ]}
+        />
+      </div>
+    </StyledRequests>
+  );
+};
 
 const StyledRequests = styled.div`
   padding: 20px;

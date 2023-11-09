@@ -19,6 +19,7 @@ export const Field = ({
   phoneCode,
   onChangePhoneCode,
   noResetValueOnCodeChange,
+  error,
   onChange = () => null,
 }) => {
   const [edit, setEdit] = useState(false);
@@ -36,6 +37,7 @@ export const Field = ({
       edit={edit}
       hide={hide}
       full={full}
+      error={error}
     >
       <div className="field-content">
         {edit ? (
@@ -90,6 +92,7 @@ const StyleField = styled.div`
   border-radius: 9px;
   transition: all 0.3s;
   flex-shrink: 0;
+  ${({ error }) => error && "  border: 1px solid red;"}
   .field-content {
     width: 80%;
   }

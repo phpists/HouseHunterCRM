@@ -23,6 +23,10 @@ export const Header = ({
   onFavorite,
   isFavorite,
   onIsFavotite,
+  filters,
+  onChangeFilter,
+  filtersFields,
+  onApplyFilter,
 }) => {
   const [deleteRequest] = useLazyDeleteRequestQuery();
   const [filterOpen, setFilterOpen] = useState(false);
@@ -107,7 +111,15 @@ export const Header = ({
         deleteConfirmTitle="Видалити запит(и)?"
         onDelete={handleDelete}
       />
-      {filterOpen && <Filter onClose={() => setFilterOpen(false)} />}
+      {filterOpen && (
+        <Filter
+          onClose={() => setFilterOpen(false)}
+          filters={filters}
+          onChangeFilter={onChangeFilter}
+          filtersFields={filtersFields}
+          onApplyFilter={onApplyFilter}
+        />
+      )}
       {addClientOpen && <AddClient onClose={() => setAddClientOpen(false)} />}
     </StyledHeader>
   );

@@ -53,6 +53,8 @@ export const Header = ({
     });
   };
 
+  console.log(data?.general_group?.stop_showing);
+
   return (
     <StyledHeader className="flex items-center justify-between">
       {/* <BackButton /> */}
@@ -89,12 +91,12 @@ export const Header = ({
         <SaveButton onClick={onSave} />
         <Button
           title="Призупинити показ"
-          active={data?.general_group?.stop_showing === "1"}
+          active={Number(data?.general_group?.stop_showing) > 0}
           onClick={() =>
             onChangeField("general_group", {
               ...data.general_group,
               stop_showing:
-                data?.general_group?.stop_showing === "0" ? "1" : "0",
+                Number(data?.general_group?.stop_showing) <= 0 ? "1" : "0",
             })
           }
         />
@@ -111,20 +113,25 @@ export const Header = ({
         />
         <Button
           title={
-            Number(data?.general_group?.not_actual) === 0
+            data?.general_group?.not_actual === "0"
               ? "Актуально"
               : "Неактуально"
           }
           onClick={() =>
             onChangeField("general_group", {
               ...data.general_group,
-              not_actual: Number(data?.not_actual) === 0 ? 1 : 0,
+              not_actual: data?.general_group?.not_actual === "0" ? "1" : "0",
             })
           }
         />
         {id && (
           <div className="desktop-action-btns flex items-center">
-            <IconButton Icon={StarIcon} className="icon-btn" />
+            <IconButton
+              Icon={StarIcon}
+              className="icon-btn"
+              onClick={handleToggleFavorites}
+              active={favorite}
+            />
             <IconButton
               Icon={RemoveIcon}
               className="icon-btn remove-btn"

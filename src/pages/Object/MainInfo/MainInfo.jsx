@@ -4,7 +4,7 @@ import { Characteristic } from "./Characteristic/Characteristic";
 import { Price } from "./Price/Price";
 import { handleCheckIsField } from "../../../utilits";
 
-export const MainInfo = ({ data, onChangeField, fields }) => {
+export const MainInfo = ({ data, onChangeField, fields, errors }) => {
   return (
     <StyledMainInfo>
       {handleCheckIsField(fields, "obj_is_actual_dt") && (
@@ -19,11 +19,13 @@ export const MainInfo = ({ data, onChangeField, fields }) => {
         data={data}
         onChangeField={onChangeField}
         fields={fields}
+        errors={errors}
       />
       <Price
         className="desktop-price-wrapper"
         data={data}
         onChangeField={onChangeField}
+        errors={errors}
       />
     </StyledMainInfo>
   );

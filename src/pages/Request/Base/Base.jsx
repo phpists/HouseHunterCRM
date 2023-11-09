@@ -24,18 +24,35 @@ export const Base = ({ data, onChangeField }) => {
         onChange={(val) =>
           onChangeField("general_group", {
             ...data.general_group,
-            only_company_obj: val,
+            only_company_obj: "1",
+            only_street_base_obj: "0",
+            only_my_obj: "0",
           })
         }
       />
       <CheckOption
-        label="Об’єкти XBASE"
+        label="Мої об'єкти"
+        className="check-opt"
+        value={data?.general_group?.only_my_obj}
+        onChange={(val) =>
+          onChangeField("general_group", {
+            ...data.general_group,
+            only_company_obj: "0",
+            only_street_base_obj: "0",
+            only_my_obj: "1",
+          })
+        }
+      />
+      <CheckOption
+        label="Об’єкти STREET BASE"
         className="check-opt"
         value={data?.general_group?.only_street_base_obj}
         onChange={(val) =>
           onChangeField("general_group", {
             ...data.general_group,
-            only_street_base_obj: val,
+            only_company_obj: "0",
+            only_street_base_obj: "1",
+            only_my_obj: "0",
           })
         }
       />
@@ -56,14 +73,14 @@ export const Base = ({ data, onChangeField }) => {
         value={data?.general_group?.structure}
         onChange={(val) =>
           onChangeField("general_group", {
-            ...data.structure,
+            ...data.general_group,
             structure: val,
           })
         }
       />
 
       <CheckOption
-        label="Об’єкти XBASE"
+        label="Об’єкти відправлені"
         className="check-opt"
         value={data?.general_group?.submited}
         onChange={(val) =>

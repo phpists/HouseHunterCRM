@@ -4,18 +4,18 @@ import { Name } from "./Name";
 import { Subtitle } from "./Subtitle";
 import { Rent } from "./Rent";
 
-export const Client = () => (
+export const Client = ({ data, id }) => (
   <StyledClient className="flex items-center justify-between">
     <div className="flex items-center">
       <Avatar />
       <div>
-        <Name />
-        <Subtitle subtitle="ID клієнта: 1246" />
+        <Name name={`${data[id]?.usr_first_name} ${data[id]?.usr_last_name}`} />
+        <Subtitle subtitle={`ID: ${data?.General_field_group?.id_client}`} />
       </div>
     </div>
     <div>
-      <Rent />
-      <Subtitle subtitle="ID: 332" />
+      <Rent category={data[id]?.rubric_name} />
+      <Subtitle subtitle="Категорія" />
     </div>
   </StyledClient>
 );

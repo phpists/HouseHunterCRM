@@ -6,22 +6,16 @@ import { Requests } from "./Requests";
 import { LastRequests } from "./LastRequests/LastRequests";
 import { Steps } from "./Steps/Steps";
 import { Info } from "./Info";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { Header } from "./Header/Header";
 import { InfoButton } from "./InfoButton";
+import { useGetClientsCountQuery } from "../../store/clients/clients.api";
 
 export const Dashboard = () => {
-  const { pathname } = useLocation();
-  const [empty, setEmpty] = useState(pathname === "/empty");
-
-  useEffect(() => {
-    setEmpty(pathname === "/empty");
-  }, [pathname]);
+  const { data } = useGetClientsCountQuery();
 
   return (
     <StyledDashboard className="hide-scroll">
-      {empty ? (
+      {data?.count === 0 ? (
         <Empty />
       ) : (
         <div className="dashboard-content hide-scroll">

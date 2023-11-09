@@ -10,6 +10,8 @@ import object2 from "../../../../../assets/images/object2.png";
 import { Slide } from "./Slide";
 import { Counter } from "./Counter";
 import { Photos } from "./Photos/Photos";
+import { PhotoSlider } from "react-photo-view";
+import "react-photo-view/dist/react-photo-view.css";
 
 const settings = {
   dots: false,
@@ -24,54 +26,65 @@ const settings = {
 export const Slider = ({ photos }) => {
   const slickRef = useRef();
   const [currentSlide, setCurrentSlide] = useState(1);
+  const [openView, setOpenView] = useState(false);
 
-  const handleChangeSlide = (val) => {
+  const handleChangeSlide = (val, open) => {
     slickRef.current.slickGoTo(val - 1);
+    setOpenView(!!open);
   };
 
   return (
-    <StyledSlider
-      className="flex items-center"
-      isOnePhoto={photos?.length === 1}
-    >
-      <div className="relative slider">
-        {photos?.length > 1 ? (
-          <Counter current={currentSlide} total={photos.length} />
-        ) : null}
-        <SlickSlider
-          {...settings}
-          beforeChange={(currentSlide, nextSlide) =>
-            setCurrentSlide(1 + nextSlide)
-          }
-          currentSlide={currentSlide}
-          prevArrow={
-            <button>
-              <img src={prevIcon} alt="" />
-            </button>
-          }
-          nextArrow={
-            <button>
-              <img src={nextIcon} alt="" />
-            </button>
-          }
-          ref={slickRef}
-        >
-          {photos.map((photo, i) => (
-            <Slide
-              key={i}
-              photo={photo}
-              active={currentSlide === 1 + i}
-              isOnePhoto={photos?.length === 1}
-            />
-          ))}
-        </SlickSlider>
-      </div>
-      <Photos
-        photos={photos}
-        onSelect={handleChangeSlide}
-        active={currentSlide}
+    <>
+      <PhotoSlider
+        images={photos.map((photo) => ({ src: photo, key: photo }))}
+        visible={openView}
+        onClose={() => setOpenView(false)}
+        index={currentSlide - 1}
+        onIndexChange={(index) => handleChangeSlide(index + 1, true)}
       />
-    </StyledSlider>
+      <StyledSlider
+        className="flex items-center"
+        isOnePhoto={photos?.length === 1}
+      >
+        <div className="relative slider">
+          {photos?.length > 1 ? (
+            <Counter current={currentSlide} total={photos.length} />
+          ) : null}
+          <SlickSlider
+            {...settings}
+            beforeChange={(currentSlide, nextSlide) =>
+              setCurrentSlide(1 + nextSlide)
+            }
+            currentSlide={currentSlide}
+            prevArrow={
+              <button>
+                <img src={prevIcon} alt="" />
+              </button>
+            }
+            nextArrow={
+              <button>
+                <img src={nextIcon} alt="" />
+              </button>
+            }
+            ref={slickRef}
+          >
+            {photos.map((photo, i) => (
+              <Slide
+                key={i}
+                photo={photo}
+                active={currentSlide === 1 + i}
+                isOnePhoto={photos?.length === 1}
+              />
+            ))}
+          </SlickSlider>
+        </div>
+        <Photos
+          photos={photos}
+          onSelect={handleChangeSlide}
+          active={currentSlide}
+        />
+      </StyledSlider>
+    </>
   );
 };
 

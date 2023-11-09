@@ -161,7 +161,6 @@ export const handleCheckFields = ({
 }) => {
   let emptyFields = [];
 
-  console.log(requiredFields);
   [...requiredFields, ...additionalFields].forEach((f) => {
     if (!data[f] || data[f]?.length === 0) {
       emptyFields.push(f);
@@ -169,7 +168,7 @@ export const handleCheckFields = ({
   });
 
   if (emptyFields?.length === 0) {
-    return true;
+    return emptyFields;
   } else {
     const fieldsTitles = {
       ...titles,
@@ -193,6 +192,6 @@ export const handleCheckFields = ({
       }
     );
 
-    return false;
+    return emptyFields;
   }
 };

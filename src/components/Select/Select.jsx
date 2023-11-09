@@ -15,6 +15,7 @@ export const Select = ({
   className,
   onChange,
   options,
+  error,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -27,7 +28,8 @@ export const Select = ({
     <StyledSelect
       open={open}
       hideArrowDefault={hideArrowDefault}
-      className={`${className}`}
+      className={`${className} ${error && "error-field"}`}
+      error={error}
     >
       <div
         className="flex items-center justify-between"
@@ -54,6 +56,7 @@ const StyledSelect = styled.div`
   cursor: pointer;
   position: relative;
   color: #fff;
+  ${({ error }) => error && "border: 1px solid red;"}
   .arrow {
     ${({ hideArrowDefault }) => hideArrowDefault && "opacity: 0;"}
   }

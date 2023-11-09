@@ -66,7 +66,7 @@ export const objects = createApi({
       }),
     }),
     getAllObjects: build.query({
-      query: ({ only_favorite }) => ({
+      query: ({ only_favorite, ...filters }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -74,6 +74,7 @@ export const objects = createApi({
           action: "view",
           mod: "objects",
           only_favorite,
+          ...filters,
         }),
       }),
     }),
@@ -107,6 +108,39 @@ export const objects = createApi({
         headers: headers(),
         body: handleToFormData({
           action: "get_count_my_object",
+          mod: "objects",
+        }),
+      }),
+    }),
+    getActualObjectsCount: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_all_my_actual_object",
+          mod: "objects",
+        }),
+      }),
+    }),
+    getOverdueObjectsCount: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_all_my_object_overdue",
+          mod: "objects",
+        }),
+      }),
+    }),
+    getStreetBaseObjectsCount: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_all_my_obj_street_base",
           mod: "objects",
         }),
       }),
@@ -152,4 +186,8 @@ export const {
   useLazyGetObjectsCountQuery,
   useLazyDeleteObjectPhotoQuery,
   useLazySetCoverPhotoQuery,
+  useGetObjectsCountQuery,
+  useGetActualObjectsCountQuery,
+  useGetOverdueObjectsCountQuery,
+  useGetStreetBaseObjectsCountQuery,
 } = objects;

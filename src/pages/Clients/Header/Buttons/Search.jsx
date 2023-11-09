@@ -3,7 +3,13 @@ import { IconButton } from "../../../../components/IconButton";
 import { Filter } from "../Filter/Filter";
 import { useState } from "react";
 
-export const Search = () => {
+export const Search = ({
+  filter,
+  onChangeFilter,
+  searchPhoneCode,
+  onChangeSearchCode,
+  onApplyFilters,
+}) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -13,7 +19,16 @@ export const Search = () => {
         onClick={() => setOpen(true)}
         className="icon-btn icon-btn--last"
       />
-      {open && <Filter onClose={() => setOpen(false)} />}
+      {open && (
+        <Filter
+          onClose={() => setOpen(false)}
+          filter={filter}
+          onChangeFilter={onChangeFilter}
+          searchPhoneCode={searchPhoneCode}
+          onChangeSearchCode={onChangeSearchCode}
+          onApplyFilters={onApplyFilters}
+        />
+      )}
     </div>
   );
 };

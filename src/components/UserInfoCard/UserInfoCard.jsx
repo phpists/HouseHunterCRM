@@ -8,6 +8,7 @@ import { PersonalData } from "./PersonalData";
 import { Footer } from "./Footer";
 import { Workers } from "./Workers/Workers";
 import { FooterDelete } from "./FooterDelete";
+import { Logout } from "./Logout";
 
 export const UserInfoCard = ({
   onClose,
@@ -19,6 +20,7 @@ export const UserInfoCard = ({
   onRefreshData,
   onSave = () => null,
   onReset = () => null,
+  logout,
 }) => {
   const controls = useAnimationControls();
 
@@ -57,6 +59,7 @@ export const UserInfoCard = ({
         ) : (
           <Footer onSave={onSave} onReset={onReset} />
         )}
+        {logout && <Logout />}
       </div>
     </StyledUserInfoCard>
   );

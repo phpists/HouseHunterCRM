@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Rent = () => <StyledRent>Оренда квартир</StyledRent>;
+export const Rent = ({ category }) => <StyledRent>{category}</StyledRent>;
 
 const StyledRent = styled.div`
   margin-bottom: 2px;

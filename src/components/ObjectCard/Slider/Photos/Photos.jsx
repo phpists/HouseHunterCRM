@@ -7,7 +7,7 @@ export const Photos = ({ photos, onSelect, active }) => (
       <Photo
         key={i}
         photo={photo}
-        onSelect={() => onSelect(1 + i)}
+        onSelect={() => onSelect(1 + i, true)}
         active={active === 1 + i}
       />
     ))}

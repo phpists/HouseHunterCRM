@@ -6,9 +6,10 @@ export const Price = ({
   onChange,
   currency,
   onChangeCurrency = () => null,
+  error,
 }) => {
   return (
-    <StyledPrice>
+    <StyledPrice error={error} className={`${error && "error-field"}`}>
       <Ranger
         label="Ціновий діапазон"
         mainTypes={[
@@ -29,4 +30,7 @@ export const Price = ({
   );
 };
 
-const StyledPrice = styled.div``;
+const StyledPrice = styled.div`
+  border-radius: 9px;
+  ${({ error }) => error && "border: 1px solid red;"}
+`;

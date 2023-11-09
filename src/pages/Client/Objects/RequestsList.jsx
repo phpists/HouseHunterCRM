@@ -53,7 +53,7 @@ export const RequestsList = ({
     setRequests(
       Object.fromEntries(
         Object.entries(requests).filter(
-          (req) => id !== Object.entries(req[1])[1][0]
+          (req) => id !== Object.entries(req[1])[1][1]?.id_group
         )
       )
     );
@@ -63,7 +63,7 @@ export const RequestsList = ({
     setRequests(
       Object.fromEntries(
         Object.entries(requests).map((req) => {
-          const reqId = Object.entries(req[1])[1][0];
+          const reqId = Object.entries(req[1])[1][1]?.id_group;
           if (reqId === id) {
             console.log(reqId, id);
             let request = [];

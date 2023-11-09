@@ -14,6 +14,11 @@ export const Header = ({
   onToggleFavoriteFilter,
   onRefreshData,
   selectedCount,
+  filter,
+  onChangeFilter,
+  searchPhoneCode,
+  onChangeSearchCode,
+  onApplyFilters,
 }) => {
   const [getNewClientsCount] = useLazyGetNewClientsCountQuery();
   const { saveNewClientsCount } = useActions();
@@ -41,6 +46,11 @@ export const Header = ({
           favoritesFilter={favoritesFilter}
           onToggleFavoriteFilter={onToggleFavoriteFilter}
           onRefreshData={onRefreshData}
+          filter={filter}
+          onChangeFilter={onChangeFilter}
+          searchPhoneCode={searchPhoneCode}
+          onChangeSearchCode={onChangeSearchCode}
+          onApplyFilters={onApplyFilters}
         />
       </div>
       <SelectItems

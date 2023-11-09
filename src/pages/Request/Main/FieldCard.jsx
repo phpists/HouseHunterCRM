@@ -10,6 +10,7 @@ export const FieldCard = ({
   data,
   onChangeField,
   formatedLocations,
+  errors,
 }) => (
   <StyledFieldCard>
     <TitleDivider title={title} />
@@ -19,6 +20,7 @@ export const FieldCard = ({
       value={data?.id_location}
       onChange={(val) => onChangeField("id_location", val)}
       options={formatedLocations}
+      error={!!errors?.find((e) => e === "id_location")}
     />
     <Divider />
     <Price
@@ -33,6 +35,10 @@ export const FieldCard = ({
       }
       currency={Number(data?.price_currency)}
       onChangeCurrency={(val) => onChangeField("price_currency", val)}
+      error={
+        !!errors?.find((e) => e === "price_min") ||
+        !!errors?.find((e) => e === "price_max")
+      }
     />
   </StyledFieldCard>
 );

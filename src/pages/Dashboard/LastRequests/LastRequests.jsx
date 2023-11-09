@@ -1,23 +1,49 @@
 import styled from "styled-components";
 import { Title } from "./Title";
 import { RequestCard } from "./RequestCard/RequestCard";
+import { useEffect, useState } from "react";
+import { useLazyGetRequestsQuery } from "../../../store/requests/requests.api";
+import { handleResponse } from "../../../utilits";
 
-export const LastRequests = () => (
-  <StyledLastRequests>
-    <Title />
-    <div className="list hide-scroll">
-      <RequestCard />
-      <RequestCard />
-      <RequestCard />
-      <RequestCard />
-      <RequestCard />
-      <RequestCard />
-      <RequestCard />
-      <RequestCard />
-      <RequestCard />
-    </div>
-  </StyledLastRequests>
-);
+export const LastRequests = () => {
+  const [getRequests] = useLazyGetRequestsQuery();
+  const [requests, setRequests] = useState([]);
+
+  const handleGetRequests = () => {
+    getRequests({ current_page: 0, item_on_page: 15 }).then((resp) => {
+      handleResponse(
+        resp,
+        () => {
+          if (Object.entries(resp?.data)?.length) {
+            setRequests(resp?.data);
+          }
+        },
+        () => {
+          setRequests([]);
+        },
+        true
+      );
+    });
+  };
+
+  useEffect(() => {
+    handleGetRequests();
+  }, []);
+
+  return (
+    <StyledLastRequests>
+      <Title />
+      <div className="list hide-scroll">
+        {requests && Object.entries(requests)?.length
+          ? Object.entries(requests)?.map((d, i) => {
+              const id = Object.entries(d[1])[1][0];
+              return <RequestCard key={i} data={d[1]} id={id} />;
+            })
+          : null}
+      </div>
+    </StyledLastRequests>
+  );
+};
 
 const StyledLastRequests = styled.div`
   padding: 20px;

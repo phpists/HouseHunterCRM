@@ -3,11 +3,37 @@ import { Select } from "../../../../components/Select/Select";
 import { Divider } from "./Divider";
 import { ReactComponent as LocationIcon } from "../../../../assets/images/location-color.svg";
 import { Ranger } from "./Ranger/Ranger";
+import { ProfileField } from "../../../../components/ProfileField";
+import { useGetPhonesCodesQuery } from "../../../../store/auth/auth.api";
 
-export const General = () => {
+export const General = ({
+  filter,
+  onChangeFilter,
+  searchPhoneCode,
+  onChangeSearchCode,
+}) => {
+  const { data: phonesCodes } = useGetPhonesCodesQuery();
+
   return (
     <StyledGeneral>
-      <Select
+      <ProfileField
+        label="Пошук"
+        placeholder="Введіть значення..."
+        value={filter.search_key}
+        onChange={(val) => onChangeFilter("search_key", val)}
+      />
+      <Divider />
+      <ProfileField
+        label="Пошук по телефону"
+        placeholder="Введіть значення..."
+        value={filter.search_phone}
+        onChange={(val) => onChangeFilter("search_phone", val)}
+        phone
+        phonesCodes={phonesCodes}
+        phoneCode={searchPhoneCode}
+        onChangePhoneCode={(val) => onChangeSearchCode(val)}
+      />
+      {/* <Select
         label="Категорія"
         labelActive="Оберіть категорію"
         value="Оренда квартир"
@@ -32,7 +58,7 @@ export const General = () => {
         label="Кількість кімнат"
         labelActive="Оберіть кількість кімнат"
         value="2, 3, 4 – кімнатна"
-      />
+      /> */}
     </StyledGeneral>
   );
 };

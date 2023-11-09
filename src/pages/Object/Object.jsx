@@ -49,6 +49,7 @@ export const ObjectPage = () => {
   const [favorite, setFavorite] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [deletedPhotos, setDeletedPhotos] = useState([]);
+  const [errors, setErrors] = useState([]);
 
   const handleChangePhotos = (p) => setPhotos(p);
 
@@ -85,6 +86,9 @@ export const ObjectPage = () => {
   };
 
   const handleChangeField = (fieldName, value) => {
+    setErrors(
+      errors.filter((e) => e !== "updated").filter((e) => e !== fieldName)
+    );
     if (fieldName === "id_rubric") {
       const newData = {
         ...INIT_DATA,
@@ -119,11 +123,15 @@ export const ObjectPage = () => {
   };
 
   const handleCreate = () => {
-    const isAllRequiredFieldsFilled = handleCheckFields({
+    if (fields?.main_field) {
+    }
+    const isEmptyFields = handleCheckFields({
       data: { ...data, id_client: clientId },
-      requiredFields: Object.entries(fields?.main_field)
-        ?.filter((f) => f[1]?.required === 1)
-        ?.map((f) => f[0]),
+      requiredFields: !fields?.main_field
+        ? []
+        : Object.entries(fields?.main_field)
+            ?.filter((f) => f[1]?.required === 1)
+            ?.map((f) => f[0]),
       additionalFields: ["title"],
       titles: commentsToFields?.object,
       additionalTitles: {
@@ -133,7 +141,7 @@ export const ObjectPage = () => {
       },
     });
 
-    if (isAllRequiredFieldsFilled) {
+    if (isEmptyFields?.length === 0) {
       createObject({
         field: {
           ...handleFormatDatesToTimestamp(data, fields),
@@ -152,11 +160,13 @@ export const ObjectPage = () => {
           navigate(`/client/${clientId}`);
         })
       );
+    } else {
+      setErrors([...isEmptyFields, "updated"]);
     }
   };
 
   const handleEdit = () => {
-    const isAllRequiredFieldsFilled = handleCheckFields({
+    const isEmptyFields = handleCheckFields({
       data: { ...data, id_client: clientId },
       requiredFields: Object.entries(fields?.main_field)
         ?.filter((f) => f[1]?.required === 1)
@@ -170,7 +180,7 @@ export const ObjectPage = () => {
       },
     });
 
-    if (isAllRequiredFieldsFilled) {
+    if (isEmptyFields?.length === 0) {
       editObject({
         id_object: id,
         field: {
@@ -191,6 +201,9 @@ export const ObjectPage = () => {
           handleSetPhotoCover();
         })
       );
+    } else {
+      setErrors(isEmptyFields);
+      setErrors([...isEmptyFields, "updated"]);
     }
   };
 
@@ -232,6 +245,7 @@ export const ObjectPage = () => {
         className="mobile-price"
         data={data}
         onChangeField={handleChangeField}
+        errors={errors}
       />
       <div className="object-wrappper">
         <Photos
@@ -245,8 +259,9 @@ export const ObjectPage = () => {
           data={data}
           onChangeField={handleChangeField}
           fields={fields}
+          errors={errors}
         />
-        <Info data={data} onChangeField={handleChangeField} />
+        <Info data={data} onChangeField={handleChangeField} errors={errors} />
       </div>
     </StyledObject>
   );

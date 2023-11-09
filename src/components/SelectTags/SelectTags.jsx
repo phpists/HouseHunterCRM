@@ -18,6 +18,7 @@ export const SelectTags = ({
   onChange,
   viewOnly,
   tags,
+  error,
 }) => {
   const [open, setOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -38,10 +39,11 @@ export const SelectTags = ({
     <StyledSelectTags
       className={`flex items-center justify-between ${!value && "empty"} ${
         open && "open"
-      } ${isActive && "active"}`}
+      } ${isActive && "active"} ${error && "error-field"}`}
       showTags={showTags}
       onMouseEnter={() => setIsActive(true)}
       onMouseLeave={() => setIsActive(false)}
+      error={error}
     >
       <div>
         {!value && showTags && tags?.length === 0 && (
@@ -118,6 +120,7 @@ const StyledSelectTags = styled.div`
   transition: all 0.3s;
   position: relative;
   justify-content: space-between;
+  ${({ error }) => error && "border: 1px solid red;"}
   .value {
     color: #fff;
     font-family: Overpass;

@@ -10,7 +10,7 @@ import { ProfileField } from "../../../components/ProfileField";
 import { TitleDivider } from "./TitleDivider";
 import styled from "styled-components";
 
-export const Card = ({ title, fields, data, onChangeField }) => (
+export const Card = ({ title, fields, data, onChangeField, errors }) => (
   <StyledCard>
     <TitleDivider title={title} />
     {fields && handleGetFieldsOptions(fields, "room_min") && (
@@ -25,6 +25,10 @@ export const Card = ({ title, fields, data, onChangeField }) => (
             ["room_min", "room_max"],
             onChangeField
           )
+        }
+        error={
+          !!errors?.find((e) => e === "room_min") ||
+          !!errors?.find((e) => e === "room_max")
         }
       />
     )}
@@ -50,6 +54,10 @@ export const Card = ({ title, fields, data, onChangeField }) => (
               onChangeField
             )
           }
+          error={
+            !!errors?.find((e) => e === "area_total_min") ||
+            !!errors?.find((e) => e === "area_total_max")
+          }
         />
       </>
     )}
@@ -67,6 +75,10 @@ export const Card = ({ title, fields, data, onChangeField }) => (
               ["address_storey", "storey_count"],
               onChangeField
             )
+          }
+          error={
+            !!errors?.find((e) => e === "address_storey") ||
+            !!errors?.find((e) => e === "storey_count")
           }
         />
       </>
@@ -88,6 +100,10 @@ export const Card = ({ title, fields, data, onChangeField }) => (
               ["area_plot_sotka_min", "area_plot_sotka_max"],
               onChangeField
             )
+          }
+          error={
+            !!errors?.find((e) => e === "area_plot_sotka_min") ||
+            !!errors?.find((e) => e === "area_plot_sotka_max")
           }
         />
       </>
@@ -117,6 +133,7 @@ export const Card = ({ title, fields, data, onChangeField }) => (
             options={handleGetFieldsOptions(fields, "type_obj_garage")}
             value={data?.type_obj_garage}
             onChange={(val) => onChangeField("type_obj_garage", val)}
+            error={!!errors?.find((e) => e === "type_obj_garage")}
           />
         </>
       )}
@@ -131,6 +148,7 @@ export const Card = ({ title, fields, data, onChangeField }) => (
             options={handleGetFieldsOptions(fields, "type_obj_apartment")}
             value={data?.type_obj_apartment}
             onChange={(val) => onChangeField("type_obj_apartment", val)}
+            error={!!errors?.find((e) => e === "type_obj_apartment")}
           />
         </>
       )}
@@ -145,6 +163,7 @@ export const Card = ({ title, fields, data, onChangeField }) => (
             options={handleGetFieldsOptions(fields, "type_obj_commerce")}
             value={data?.type_obj_commerce}
             onChange={(val) => onChangeField("type_obj_commerce", val)}
+            error={!!errors?.find((e) => e === "type_obj_commerce")}
           />
         </>
       )}
@@ -158,6 +177,7 @@ export const Card = ({ title, fields, data, onChangeField }) => (
           options={handleGetFieldsOptions(fields, "type_obj_house")}
           value={data?.type_obj_house}
           onChange={(val) => onChangeField("type_obj_house", val)}
+          error={!!errors?.find((e) => e === "type_obj_house")}
         />
       </>
     )}
@@ -171,19 +191,7 @@ export const Card = ({ title, fields, data, onChangeField }) => (
           options={handleGetFieldsOptions(fields, "type_obj_hotel")}
           value={data?.type_obj_hotel}
           onChange={(val) => onChangeField("type_obj_hotel", val)}
-        />
-      </>
-    )}{" "}
-    {fields && handleGetFieldsOptions(fields, "type_obj_hotel")?.length > 0 && (
-      <>
-        <Divider />
-        <SelectTags
-          label="Тип готелю"
-          placeholder="Оберіть тип готелю"
-          notMultiSelect
-          options={handleGetFieldsOptions(fields, "type_obj_hotel")}
-          value={data?.type_obj_hotel}
-          onChange={(val) => onChangeField("type_obj_hotel", val)}
+          error={!!errors?.find((e) => e === "type_obj_hotel")}
         />
       </>
     )}

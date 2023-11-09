@@ -8,7 +8,13 @@ import { Main } from "./Main";
 import { Topicality } from "./Topicality";
 import { Characteristics } from "./Characteristics";
 
-export const Filter = ({ onClose }) => {
+export const Filter = ({
+  onClose,
+  filters,
+  onChangeFilter,
+  filtersFields,
+  onApplyFilter,
+}) => {
   const controls = useAnimationControls();
 
   const handleClose = () => {
@@ -29,12 +35,19 @@ export const Filter = ({ onClose }) => {
       <Header onClose={handleClose} />
       <div className="content">
         <SectionTitle title="Головне" />
-        <Main />
-        <SectionTitle title="Актуальність" />
+        <Main
+          filters={filters}
+          onChangeFilter={onChangeFilter}
+          filtersFields={filtersFields}
+        />
+        {/* <SectionTitle title="Актуальність" />
         <Topicality />
         <SectionTitle title="Характеристики" />
-        <Characteristics />
-        <Footer />
+        <Characteristics /> */}
+        <Footer
+          onCancel={() => onApplyFilter(false)}
+          onSubmit={() => onApplyFilter(true)}
+        />
       </div>
     </StyledFilter>
   );

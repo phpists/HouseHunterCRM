@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Title = () => <StyledTitle>до 20 000₴</StyledTitle>;
+export const Title = ({ price }) => <StyledTitle>до {price}$</StyledTitle>;
 
 const StyledTitle = styled.div`
   color: #81fb21;

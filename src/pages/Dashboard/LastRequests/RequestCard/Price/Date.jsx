@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { ReactComponent as Timer } from "../../../../../assets/images/time.svg";
 
-export const Date = () => (
+export const Date = ({ deadline }) => (
   <StyledDate className="flex items-center">
     <Timer />
-    до 25.09.2022{" "}
+    до {deadline}
   </StyledDate>
 );
 

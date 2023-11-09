@@ -31,6 +31,7 @@ export const Ranger = ({
   onChange,
   currencyValue,
   onChangeCurrency,
+  error,
 }) => {
   const { getTrackProps, handles, segments } = useRanger({
     values,
@@ -41,7 +42,11 @@ export const Ranger = ({
   });
 
   return (
-    <StyledRanger big={big}>
+    <StyledRanger
+      big={big}
+      error={error}
+      className={`${error && "error-field"}`}
+    >
       <Header label={label} mainTypes={mainTypes} />
       {big && (
         <Statistic
@@ -103,6 +108,7 @@ const StyledRanger = styled.div`
   /* background: rgba(255, 255, 255, 0.05); */
   position: relative;
   overflow: hidden;
+  ${({ error }) => error && "border: 1px solid red;"}
   .first-angle,
   .second-angle {
     opacity: 0;

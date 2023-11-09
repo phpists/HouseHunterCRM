@@ -1,13 +1,19 @@
 import { useLocation } from "react-router-dom";
 import { styled } from "styled-components";
+import { useAppSelect } from "../../hooks/redux";
 
 export const Title = () => {
   const { pathname } = useLocation();
+  const { user } = useAppSelect((state) => state.auth);
 
   const handleGetTitle = () => {
     switch (pathname) {
       case "/":
-        return "Доброго ранку, Юрію!";
+        return `Доброго ранку, ${
+          user?.first_name?.length > 25
+            ? `${user?.first_name?.subsring(0, 25)}...`
+            : user?.first_name
+        }!`;
       case "/clients":
         return "Клієнти";
       case "/requests":

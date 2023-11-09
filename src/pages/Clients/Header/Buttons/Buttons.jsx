@@ -11,6 +11,11 @@ export const Buttons = ({
   favoritesFilter,
   onToggleFavoriteFilter,
   onRefreshData,
+  filter,
+  onChangeFilter,
+  searchPhoneCode,
+  onChangeSearchCode,
+  onApplyFilters,
 }) => {
   const [addClient, setAddClient] = useState(false);
 
@@ -33,7 +38,13 @@ export const Buttons = ({
         className="icon-btn"
         active={favoritesFilter}
       />
-      <Search />
+      <Search
+        filter={filter}
+        onChangeFilter={onChangeFilter}
+        searchPhoneCode={searchPhoneCode}
+        onChangeSearchCode={onChangeSearchCode}
+        onApplyFilters={onApplyFilters}
+      />
       <SelectItems title="клієнтів" className="select-wrapper-desktop" />
     </StyledButtons>
   );

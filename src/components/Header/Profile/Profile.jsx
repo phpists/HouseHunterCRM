@@ -77,6 +77,7 @@ export const Profile = () => {
           onRefreshData={handleGetUserData}
           onSave={handleSave}
           onReset={handleReset}
+          logout
         />
       )}
       <StyledProfile

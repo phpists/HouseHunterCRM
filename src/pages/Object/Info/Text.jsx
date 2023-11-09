@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { ProfileField } from "../../../components/ProfileField";
 
-export const Text = ({ data, onChangeField }) => {
+export const Text = ({ data, onChangeField, errors }) => {
   return (
     <StyledText className="hide-scroll">
       <ProfileField
@@ -10,6 +10,7 @@ export const Text = ({ data, onChangeField }) => {
         onChange={(val) => onChangeField("title", val)}
         big
         className="title"
+        error={!!errors.find((e) => e === "title")}
       />
       <ProfileField
         value={data?.description}
@@ -19,6 +20,7 @@ export const Text = ({ data, onChangeField }) => {
         className="title"
         contentHeight
         label="Опис"
+        error={!!errors.find((e) => e === "description")}
       />
       <ProfileField
         value={data?.comment}

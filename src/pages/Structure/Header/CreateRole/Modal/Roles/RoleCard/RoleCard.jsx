@@ -43,6 +43,7 @@ export const RoleCard = ({
       permission_my_structure_list_json: JSON.stringify(values),
       module_name: title,
       id_permissions: id,
+      color: iconColor,
     }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Зміни успішно збережені", {
