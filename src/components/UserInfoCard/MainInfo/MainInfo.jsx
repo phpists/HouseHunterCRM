@@ -11,7 +11,9 @@ export const MainInfo = ({
   data,
   onChangeField,
   onRefreshData,
+  isProfile,
 }) => {
+  console.log(data?.structure_level);
   return (
     <StyledMainInfo>
       {avatarBanner && <AvatarBanner />}
@@ -19,21 +21,26 @@ export const MainInfo = ({
         data={data}
         onChangeField={onChangeField}
         onRefreshData={onRefreshData}
+        isProfile={isProfile}
       />
-      <Divider />
-      <BossSelect />
-      <Divider />
-      <LoginAllow />
-      <Divider />
-      <StatusCard
-        title={
-          <>
-            <span>Сплачено до</span> 28.07.2023
-          </>
-        }
-        status={true}
-        subtitle="Білінг"
-      />
+      {/* <BossSelect />
+      <Divider /> */}
+      {isProfile ? null : (
+        <>
+          <Divider />
+          <LoginAllow />
+          <Divider />
+          <StatusCard
+            title={
+              <>
+                <span>Сплачено до</span> 28.07.2023
+              </>
+            }
+            status={true}
+            subtitle="Білінг"
+          />
+        </>
+      )}
     </StyledMainInfo>
   );
 };

@@ -5,47 +5,80 @@ import gramaphonIcon from "../../../../../assets/images/statistic-gramophon.svg"
 import homeIcon from "../../../../../assets/images/statistic-home.svg";
 import { Divider } from "./Divider";
 
-export const Statistic = ({ onClick }) => (
+export const Statistic = ({ onClick, statisticData }) => (
   <StyledStatistic onClick={onClick}>
     <StatisticCard
-      title="1353"
+      title={statisticData?.count_clients ?? "0"}
       subtitle="Всього клієнтів "
       icon={userCheckIcon}
       iconBg="rgba(46, 245, 198, 0.10)"
       infoData={[
-        { title: "З запитами", value: "73" },
-        { title: "З об’єктами", value: "62" },
-        { title: "З запитами і об’єктами", value: "80" },
-        { title: "Без запитів і об’єктів", value: "100" },
-        { title: "Видалені", value: "4" },
+        {
+          title: "З запитами",
+          value: statisticData?.count_client_request ?? "0",
+        },
+        {
+          title: "З об’єктами",
+          value: statisticData?.count_client_object ?? "0",
+        },
+        {
+          title: "З запитами і об’єктами",
+          value: statisticData?.count_client_object_and_request ?? "0",
+        },
+        {
+          title: "Без запитів і об’єктів",
+          value: statisticData?.count_not_object_and_request ?? "0",
+        },
+        { title: "Видалені", value: "0" },
       ]}
     />
     <Divider />
     <StatisticCard
-      title="513"
+      title={statisticData?.count_request ?? "0"}
       subtitle="Всього запитів "
       icon={gramaphonIcon}
       iconBg="rgba(68, 172, 238, 0.10)"
       infoData={[
-        { title: "Актуальні", value: "201" },
-        { title: "Не актуальні", value: "9" },
+        {
+          title: "Актуальні",
+          value: statisticData?.count_request_actual ?? "0",
+        },
+        {
+          title: "Не актуальні",
+          value: statisticData?.count_request_not_actual ?? "0",
+        },
         { title: "", value: "" },
-        { title: "Протерміновані", value: "17" },
-        { title: "Видалені", value: "10" },
+        {
+          title: "Протерміновані",
+          value: statisticData?.count_request_overdue ?? "0",
+        },
+        { title: "Видалені", value: "0" },
       ]}
     />
     <Divider />
     <StatisticCard
-      title="423"
+      title={statisticData?.count_objects ?? "0"}
       subtitle="Всього об'єктів "
       icon={homeIcon}
       iconBg="gba(145, 111, 245, 0.10)"
       infoData={[
-        { title: "Актуальні", value: "200" },
-        { title: "Здані", value: "184" },
-        { title: "Об’єкти Street Base", value: "1 184" },
-        { title: "Протерміновані", value: "1" },
-        { title: "Видалені", value: "5" },
+        {
+          title: "Актуальні",
+          value: statisticData?.count_objects_actual ?? "0",
+        },
+        {
+          title: "Здані",
+          value: statisticData?.count_objects_surrendered ?? "0",
+        },
+        {
+          title: "Об’єкти Street Base",
+          value: statisticData?.count_objects_street_base ?? "0",
+        },
+        {
+          title: "Протерміновані",
+          value: statisticData?.count_objects_overdue ?? "0",
+        },
+        { title: "Видалені", value: "0" },
       ]}
     />
   </StyledStatistic>

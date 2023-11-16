@@ -9,12 +9,12 @@ export const MainInfo = ({ data, onChangeField }) => {
   return (
     <StyledMainInfo>
       <Profile data={data} onChangeField={onChangeField} />
+      {/* <Divider /> */}
+      {/* <BossSelect />
       <Divider />
-      <BossSelect />
-      <Divider />
-      <LoginAllow />
-      <Divider />
-      <StatusCard title="Потребує оплати" status={false} subtitle="Білінг" />
+      <LoginAllow /> */}
+      {/* <Divider />
+      <StatusCard title="Потребує оплати" status={false} subtitle="Білінг" /> */}
     </StyledMainInfo>
   );
 };

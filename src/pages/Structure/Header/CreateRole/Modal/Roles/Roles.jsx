@@ -2,38 +2,47 @@ import styled from "styled-components";
 import { RoleCard } from "./RoleCard/RoleCard";
 import { ReactComponent as UserCheckIcon } from "../../../../../../assets/images/user-check.svg";
 import { ReactComponent as UserIcon } from "../../../../../../assets/images/user-icon.svg";
-import { useGetAllPerimissionsQuery } from "../../../../../../store/structure/structure.api";
+import {
+  useGetAllPerimissionsQuery,
+  useGetPerimissionDirectorQuery,
+} from "../../../../../../store/structure/structure.api";
 import { Empty } from "./Empty";
 
-export const Roles = ({ data, onRefetchData }) => {
+export const Roles = ({ level, levelData, onRefetchData }) => {
+  const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
   const { data: permissionsList } = useGetAllPerimissionsQuery();
+  const { data: rolesPermission, refetch } = useGetPerimissionDirectorQuery();
+
+  if (!permissionsList) {
+    return null;
+  }
 
   return (
     <StyledRoles>
       {/* <Empty /> */}
-      <RoleCard
-        IconImg={UserCheckIcon}
-        iconBg="rgba(88, 175, 255, 0.09)"
-        iconColor="#58AFFF"
-        title="Керівник"
-        subtitle="Повний доступ"
-        noOpen
-      />
-      {data?.length > 0
-        ? data?.map(({ name, permission_list_json, id, color }, i) => (
-            <RoleCard
-              key={i}
-              IconImg={UserCheckIcon}
-              iconBg={`${color ?? "#7ECEFD"}17`}
-              iconColor={color ?? "#7ECEFD"}
-              title={name ?? "-"}
-              subtitle="Доступ з налаштуваннями"
-              permissionsList={permissionsList}
-              initValues={permission_list_json}
-              id={id}
-              onRefetchData={onRefetchData}
-            />
-          ))
+      {levelData[0]?.split(" - ")?.length > 0
+        ? levelData[0]
+            ?.split(" - ")
+            ?.map((name, i) => (
+              <RoleCard
+                key={i}
+                IconImg={UserCheckIcon}
+                iconBg={`${COLORS[i]}17`}
+                iconColor={COLORS[i]}
+                title={name ?? "-"}
+                subtitle={i === 0 ? "Повний доступ" : "Доступ з налаштуваннями"}
+                permissionsList={permissionsList}
+                initValues={
+                  !rolesPermission || i === 0
+                    ? []
+                    : rolesPermission[`permission_structure_level_${1 + i}`]
+                }
+                idPermision={rolesPermission?.id_permision}
+                level={1 + i}
+                onRefetchData={refetch}
+                noOpen={i === 0}
+              />
+            ))
         : null}
     </StyledRoles>
   );

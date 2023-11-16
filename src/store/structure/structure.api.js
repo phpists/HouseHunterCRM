@@ -39,6 +39,7 @@ export const structure = createApi({
         first_name,
         last_name,
         phones_json,
+        id_worker,
       }) => ({
         url: "",
         method: "POST",
@@ -52,6 +53,7 @@ export const structure = createApi({
           first_name,
           last_name,
           phones_json,
+          id_worker,
         }),
       }),
     }),
@@ -132,7 +134,7 @@ export const structure = createApi({
       query: ({
         module_name,
         permission_list_json,
-        permission_my_structure_list_json,
+        structure_level,
         color,
       }) => ({
         url: "",
@@ -143,30 +145,22 @@ export const structure = createApi({
           mod: "billing",
           module_name,
           permission_list_json,
-          permission_my_structure_list_json,
+          structure_level,
           color,
         }),
       }),
     }),
     editPerimission: build.query({
-      query: ({
-        module_name,
-        permission_list_json,
-        permission_my_structure_list_json,
-        id_permissions,
-        color,
-      }) => ({
+      query: ({ structure_level, id_permissions, permission_list_json }) => ({
         url: "",
         method: "POST",
         headers: headers(),
         body: handleToFormData({
           action: "edit_permision",
-          mod: "billing",
-          module_name,
+          mod: "structure",
           permission_list_json,
-          permission_my_structure_list_json,
           id_permissions,
-          color,
+          structure_level,
         }),
       }),
     }),
@@ -204,6 +198,122 @@ export const structure = createApi({
         }),
       }),
     }),
+    getAllPerimissionsLevels: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_structure_level",
+          mod: "structure",
+        }),
+      }),
+    }),
+    getCompanyStructureLevel: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_structure_level_company",
+          mod: "structure",
+        }),
+      }),
+    }),
+    changeCompanyStructureLevel: build.query({
+      query: (structure_level) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "change_structure_level_company",
+          mod: "structure",
+          structure_level,
+        }),
+      }),
+    }),
+    getPerimissionDirector: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_permision_director",
+          mod: "billing",
+        }),
+      }),
+    }),
+    changeWorkerLevel: build.query({
+      query: ({ id_user, structure_level }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "set_structure_worker",
+          mod: "structure",
+          id_user,
+          structure_level,
+        }),
+      }),
+    }),
+    getStructureWorkers: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_worker_structure_my_company",
+          mod: "structure",
+        }),
+      }),
+    }),
+    getStructureWorkerInfo: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_worker_structure_my_company",
+          mod: "structure",
+        }),
+      }),
+    }),
+    getWorkerById: build.query({
+      query: (id_worker) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_worker_by_id",
+          mod: "billing",
+          id_worker,
+        }),
+      }),
+    }),
+    getWorkerById: build.query({
+      query: (id_worker) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_worker_by_id",
+          mod: "billing",
+          id_worker,
+        }),
+      }),
+    }),
+    getStatisticWorker: build.query({
+      query: (id_user) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_statistic_worker",
+          mod: "structure",
+          id_user,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -222,4 +332,13 @@ export const {
   useLazyGetPerimissionsQuery,
   useGetPerimissionsQuery,
   useGetAllPerimissionsQuery,
+  useGetAllPerimissionsLevelsQuery,
+  useGetCompanyStructureLevelQuery,
+  useLazyChangeCompanyStructureLevelQuery,
+  useGetPerimissionDirectorQuery,
+  useLazyChangeWorkerLevelQuery,
+  useLazyGetStructureWorkersQuery,
+  useGetStructureWorkersQuery,
+  useLazyGetWorkerByIdQuery,
+  useLazyGetStatisticWorkerQuery,
 } = structure;

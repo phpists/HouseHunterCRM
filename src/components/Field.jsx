@@ -29,6 +29,7 @@ export const Field = ({
     !noResetValueOnCodeChange && onChange("");
   };
 
+  console.log(phonesCodes);
   return (
     <StyleField
       className={`flex items-center justify-between ${className} ${
@@ -70,7 +71,13 @@ export const Field = ({
             )}
           </>
         ) : (
-          <div className="value">{value?.length > 0 ? value : placeholder}</div>
+          <div className="value">
+            {value?.length > 0 && phone
+              ? `${phonesCodes.find((p) => p.id === phoneCode)?.code}${value}`
+              : value?.length > 0
+              ? value
+              : placeholder}
+          </div>
         )}
         <div className="label">{edit ? "Редагування" : label}</div>
       </div>

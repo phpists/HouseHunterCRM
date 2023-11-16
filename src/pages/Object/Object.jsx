@@ -228,7 +228,7 @@ export const ObjectPage = () => {
   }, [id]);
 
   return (
-    <StyledObject className="hide-scroll">
+    <StyledObject className="hide-scroll object-main-wrapper">
       <ObjectsHeader
         onSave={id ? handleEdit : handleCreate}
         favorite={favorite}

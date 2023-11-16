@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import emailIcon from "../../../../../assets/images/email.svg";
 
-export const Email = () => (
+export const Email = ({ email }) => (
   <StyledEmail className="notClickable">
     <div className="title flex items-center notClickable">
-      <img src={emailIcon} alt="" className="notClickable" /> x.email@gmail.com
+      <img src={emailIcon} alt="" className="notClickable" /> {email}
     </div>
     <div className="label notClickable">Email</div>
   </StyledEmail>

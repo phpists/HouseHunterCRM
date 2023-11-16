@@ -1,15 +1,21 @@
 import styled from "styled-components";
 
-export const FooterDelete = () => (
-  <StyledFooter>
-    <button className="submit-btn">Застосувати</button>
-    <button className="cancel-btn">Видалити</button>
+export const FooterDelete = ({ noDelete, onSave, onReset }) => (
+  <StyledFooter noDelete={noDelete}>
+    <button className="submit-btn" onClick={onSave}>
+      Застосувати
+    </button>
+    {!noDelete && (
+      <button className="cancel-btn" onClick={onReset}>
+        Видалити
+      </button>
+    )}
   </StyledFooter>
 );
 
 const StyledFooter = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: ${({ noDelete }) => (noDelete ? "1fr" : "1fr 1fr")};
   gap: 14px;
   button {
     padding: 7px 20px 6px 20px;

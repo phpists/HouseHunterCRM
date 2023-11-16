@@ -6,7 +6,7 @@ export const Dropdown = ({ roles, onChangeActiveRole }) => (
     {roles.map((role, i) => (
       <Role
         key={i}
-        onClick={() => onChangeActiveRole(role)}
+        onClick={() => onChangeActiveRole(role?.level)}
         title={role.title}
       />
     ))}

@@ -7,8 +7,14 @@ import { MainInfo } from "./MainInfo/MainInfo";
 import { PersonalData } from "./PersonalData";
 import { Footer } from "./Footer";
 import { useState } from "react";
-import { useLazyCreateStructureQuery, useLazyCreateWorkerQuery } from "../../../../../store/structure/structure.api";
-import { handleResponse } from "../../../../../utilits";
+import {
+  useGetAllPerimissionsLevelsQuery,
+  useGetPerimissionDirectorQuery,
+  useLazyChangeWorkerLevelQuery,
+  useLazyCreateStructureQuery,
+  useLazyCreateWorkerQuery,
+} from "../../../../../store/structure/structure.api";
+import { handleRemovePhoneMask, handleResponse } from "../../../../../utilits";
 import cogoToast from "cogo-toast";
 
 const INITIAL_DATA = {
@@ -21,10 +27,14 @@ const INITIAL_DATA = {
   photo: null,
 };
 
-export const Modal = ({ onClose }) => {
+export const Modal = ({ onClose, onRefetchData }) => {
   const [createWorker] = useLazyCreateWorkerQuery();
-  const [createStructure] = useLazyCreateStructureQuery()
+  const [createStructure] = useLazyCreateStructureQuery();
+  const [changeWorkerLevel] = useLazyChangeWorkerLevelQuery();
   const [data, setData] = useState(INITIAL_DATA);
+  const { data: rolesPermission } = useGetPerimissionDirectorQuery();
+  const [loading, setLoading] = useState(false);
+
   const controls = useAnimationControls();
 
   const handleClose = () => {
@@ -41,19 +51,45 @@ export const Modal = ({ onClose }) => {
     setData(newData);
   };
 
-  const handleCreate = () => {
-    createWorker(data).then((resp) =>
-      handleResponse(resp, () => {
-        createStructure()
-        cogoToast.success("Працівника успішно створено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-      })
-    );
+  const handleReset = () => {
+    setData(INITIAL_DATA);
+    handleClose();
   };
 
-  const handleCancel = () => {};
+  const handleCreate = () => {
+    setLoading(true);
+    createWorker({
+      ...data,
+      id_permision: rolesPermission?.id_permision,
+      phones_json: JSON.stringify(
+        data?.phones.map((phone) => ({
+          ...phone,
+          id_phone_code: phone?.code,
+          phone: handleRemovePhoneMask(phone.phone),
+        }))
+      ),
+    }).then((resp) => {
+      setLoading(false);
+      handleResponse(resp, () => {
+        const idUser = resp?.data?.id_worker;
+        if (idUser) {
+          changeWorkerLevel({
+            id_user: idUser,
+            structure_level: data?.id_permision,
+          }).then((resp) =>
+            handleResponse(resp, () => {
+              cogoToast.success("Працівника успішно створено", {
+                hideAfter: 3,
+                position: "top-right",
+              });
+              handleReset();
+              onRefetchData();
+            })
+          );
+        }
+      });
+    });
+  };
 
   return (
     <StyledModal
@@ -62,13 +98,16 @@ export const Modal = ({ onClose }) => {
       animate={controls}
       className="hide-scroll"
     >
-      <Header onClose={handleClose} />
+      <Header onClose={handleReset} />
       <div className="modal-content">
         <SectionTitle title="Загальна інформація" />
         <MainInfo data={data} onChangeField={handleChangeField} />
         <SectionTitle title="Персональні дані" />
         <PersonalData data={data} onChangeField={handleChangeField} />
-        <Footer onSave={handleCreate} onCancel={onClose} />
+        <Footer
+          onSave={() => (loading ? null : handleCreate())}
+          onCancel={handleReset}
+        />
       </div>
     </StyledModal>
   );

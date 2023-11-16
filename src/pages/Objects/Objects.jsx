@@ -69,7 +69,7 @@ export const Objects = () => {
     if (filterActive.current) {
       data = {
         ...data,
-        ...filters,
+        filters,
       };
     }
 

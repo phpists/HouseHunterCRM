@@ -9,11 +9,13 @@ export const DesktopContent = ({
   onOpenInfo,
   totalInfoOpened,
   onToggleOpen,
+  data,
+  statisticData,
 }) => (
   <StyledDesktopContent>
-    <ProfilleInfo onOpenInfo={onOpenInfo} />
+    <ProfilleInfo onOpenInfo={onOpenInfo} data={data} />
     <Biling open={!totalInfoOpened} />
-    <Statistic />
+    <Statistic statisticData={statisticData} />
     <TotalInfo open={totalInfoOpened} onToggleOpen={onToggleOpen} />
     <Arrow />
   </StyledDesktopContent>

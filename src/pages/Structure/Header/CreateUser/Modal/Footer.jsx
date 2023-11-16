@@ -6,7 +6,7 @@ export const Footer = ({ onSave, onCancel }) => (
       Застосувати
     </button>
     <button className="cancel-btn" onClick={onCancel}>
-      Видалити
+      Скасувати
     </button>
   </StyledFooter>
 );

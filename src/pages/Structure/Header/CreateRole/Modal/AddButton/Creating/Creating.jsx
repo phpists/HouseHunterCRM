@@ -4,6 +4,7 @@ import { Footer } from "./Footer";
 import { useState } from "react";
 import {
   useGetAllPerimissionsQuery,
+  useGetCompanyStructureLevelQuery,
   useLazyCreatePerimissionQuery,
 } from "../../../../../../../store/structure/structure.api";
 import { PERMISSION_INIT } from "../../Roles/initValue";
@@ -15,6 +16,7 @@ export const Creating = ({ onClose, onRefetchData }) => {
   const [name, setName] = useState("");
   const [color, setColor] = useState("#1BBC9B");
   const { data } = useGetAllPerimissionsQuery();
+  const { data: structureLevel } = useGetCompanyStructureLevelQuery();
 
   const handleGetInitPermissions = () => {
     return Object.entries(data.messege).map((p) => ({
@@ -28,9 +30,7 @@ export const Creating = ({ onClose, onRefetchData }) => {
       module_name: name,
       color,
       permission_list_json: JSON.stringify(handleGetInitPermissions()),
-      permission_my_structure_list_json: JSON.stringify(
-        handleGetInitPermissions()
-      ),
+      structure_level: structureLevel,
     }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Роль успішно створена", {

@@ -18,18 +18,35 @@ export const RoleCard = ({
   noOpen,
   permissionsList,
   initValues,
-  id,
+  idPermision,
   onRefetchData,
+  level,
 }) => {
   const [editPermission] = useLazyEditPerimissionQuery();
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState([]);
 
-  const handleSetInitialValues = () =>
-    setValues(initValues ? Object.entries(initValues).map((v) => v[1]) : []);
+  const handleSetInitialValues = () => {
+    if (
+      typeof initValues === "object" &&
+      Object.entries(initValues)?.length > 0
+    ) {
+      setValues(Object.entries(initValues)?.map((p) => p[1]));
+    } else {
+      setValues(
+        Object.entries(permissionsList?.messege).map((p) => ({
+          id_module: p[0],
+          view: false,
+          add: false,
+          edit: false,
+          delete: false,
+        }))
+      );
+    }
+  };
 
   useEffect(() => {
-    handleSetInitialValues();
+    permissionsList && handleSetInitialValues();
   }, [initValues]);
 
   const handleChangeValue = (index, field, value) =>
@@ -39,11 +56,10 @@ export const RoleCard = ({
 
   const handleSave = () => {
     editPermission({
-      permission_list_json: JSON.stringify(values),
-      permission_my_structure_list_json: JSON.stringify(values),
       module_name: title,
-      id_permissions: id,
-      color: iconColor,
+      id_permissions: idPermision,
+      structure_level: level,
+      permission_list_json: JSON.stringify(values),
     }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Зміни успішно збережені", {

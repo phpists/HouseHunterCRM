@@ -5,7 +5,7 @@ import { Title } from "./Title";
 import { Subtitle } from "./Subtitle";
 import { RoleSelect } from "./RoleSelect/RoleSelect";
 
-export const Profile = ({ data, onChangeField, onRefreshData }) => (
+export const Profile = ({ data, onChangeField, onRefreshData, isProfile }) => (
   <StyledProfile>
     <LastDate data={data?.last_active ?? ""} />
     <div className="flex items-center">
@@ -17,7 +17,13 @@ export const Profile = ({ data, onChangeField, onRefreshData }) => (
       <div className="w-full">
         <div className="flex items-center justify-between">
           <Title title={`${data?.first_name ?? ""} ${data?.last_name ?? ""}`} />
-          <RoleSelect />
+          <RoleSelect
+            isProfile={isProfile}
+            value={data?.structure_level}
+            onChange={(val) =>
+              isProfile ? null : onChangeField("structure_level", val)
+            }
+          />
         </div>
         <Subtitle />
       </div>

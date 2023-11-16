@@ -54,7 +54,7 @@ export const Profile = () => {
       photo,
     }).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Зміни успішно", {
+        cogoToast.success("Зміни успішно збережено", {
           hideAfter: 3,
           position: "top-right",
         });

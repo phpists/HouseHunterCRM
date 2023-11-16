@@ -1,42 +1,47 @@
 import React from "react";
 import styled from "styled-components";
+import {
+  useGetAllPerimissionsLevelsQuery,
+  useGetCompanyStructureLevelQuery,
+} from "../../../../store/structure/structure.api";
 
-export const Breadcrumbs = ({ level }) => {
-  const LEVELS = ["Структура", "Структурні керівники", "Агенти"];
-  const LEVELS2 = ["Структура", "Структурний керівник Юрій Мицавка", "Агенти"];
+export const Breadcrumbs = ({ level, onChangeLevel }) => {
+  const { data: companyLevel, refetch } = useGetCompanyStructureLevelQuery();
+  const { data: levels } = useGetAllPerimissionsLevelsQuery();
 
-  console.log(level);
+  const handleGetCurrentLevel = () =>
+    levels
+      ? Object.entries(levels)
+          ?.map((l) => l[1])
+          ?.find((l) => Number(l.level) === Number(companyLevel))
+      : [];
+
+  const handleGetPath = () =>
+    !handleGetCurrentLevel()
+      ? []
+      : handleGetCurrentLevel()["0"]
+      ? handleGetCurrentLevel()["0"]?.split(" - ")
+      : [];
+
   return (
     <StyledBreadcrumbs className="flex items-center" isSmall={level >= 3}>
-      {level < 3
-        ? LEVELS.slice(0, level).map((title, i) => (
-            <React.Fragment>
-              <div
-                className={`title ${
-                  i === LEVELS.slice(0, level).length - 1 && "active"
-                }`}
-              >
-                {title}
-              </div>
-              {i < LEVELS.slice(0, level).length - 1 && (
-                <div className="divider">/</div>
-              )}
-            </React.Fragment>
-          ))
-        : LEVELS2.map((title, i) => (
-            <React.Fragment>
-              <div
-                className={`title ${
-                  i === LEVELS.slice(0, level).length - 1 && "active"
-                }`}
-              >
-                {title}
-              </div>
-              {i < LEVELS.slice(0, level).length - 1 && (
-                <div className="divider">/</div>
-              )}
-            </React.Fragment>
-          ))}
+      {handleGetPath()
+        .slice(0, level)
+        .map((title, i) => (
+          <React.Fragment>
+            <div
+              className={`title ${
+                i === handleGetPath()?.slice(0, level).length - 1 && "active"
+              }`}
+              onClick={() => onChangeLevel(1 + i)}
+            >
+              {title}
+            </div>
+            {i < handleGetPath()?.slice(0, level).length - 1 && (
+              <div className="divider">/</div>
+            )}
+          </React.Fragment>
+        ))}
     </StyledBreadcrumbs>
   );
 };
@@ -50,6 +55,7 @@ const StyledBreadcrumbs = styled.div`
     font-weight: 100;
     line-height: normal;
     letter-spacing: 0.36px;
+    cursor: pointer;
     &.active {
       color: rgba(255, 255, 255, 0.9);
       font-family: Overpass;

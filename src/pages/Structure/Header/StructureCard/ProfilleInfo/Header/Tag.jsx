@@ -1,14 +1,16 @@
 import styled from "styled-components";
 
-export const Tag = () => (
-  <StyledTag className="notClickable">Регіональний керівник</StyledTag>
+export const Tag = ({ color, role }) => (
+  <StyledTag className="notClickable" color={color}>
+    {role}
+  </StyledTag>
 );
 
 const StyledTag = styled.div`
   padding: 4px 6px;
   border-radius: 4px;
-  background: rgba(37, 211, 222, 0.25);
-  color: #58dfe8;
+  background: ${({ color }) => `${color}40`};
+  color: ${({ color }) => color};
   text-align: center;
   leading-trim: both;
   text-edge: cap;
@@ -19,5 +21,8 @@ const StyledTag = styled.div`
   line-height: 1; /* 12.98px */
   letter-spacing: 0.22px;
   margin-bottom: 8px;
-  width: max-content;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 170px;
 `;

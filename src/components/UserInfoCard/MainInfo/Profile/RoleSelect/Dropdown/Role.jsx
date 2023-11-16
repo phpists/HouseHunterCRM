@@ -20,4 +20,9 @@ const StyledRole = styled.div`
   text-transform: uppercase;
   width: max-content;
   height: 16px;
+  width: 90px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  cursor: pointer;
 `;

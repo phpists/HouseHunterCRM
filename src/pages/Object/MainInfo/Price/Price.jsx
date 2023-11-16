@@ -3,10 +3,28 @@ import { Field } from "../../../../components/Field";
 import { Divider } from "./Divider";
 import { SymbolSelect } from "./SymbolSelect";
 import { TypeSelect } from "./TypeSelect";
+import { useEffect, useRef } from "react";
 
 export const Price = ({ className, data, onChangeField, errors }) => {
+  const priceRef = useRef(null);
+
+  useEffect(() => {
+    if (
+      !!errors?.find((e) => e === "updated") &&
+      errors.find((e) => e === "price")
+    ) {
+      const wrapper = document.querySelector(".object-main-wrapper");
+      if (wrapper) {
+        wrapper.scrollTo({
+          top: priceRef.current.offsetTop,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [errors]);
+
   return (
-    <StyledPrice className={`flex items-center ${className}`}>
+    <StyledPrice className={`flex items-center ${className}`} ref={priceRef}>
       <Field
         value={data?.price}
         onChange={(val) => onChangeField("price", val)}

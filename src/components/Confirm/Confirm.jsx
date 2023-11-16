@@ -55,7 +55,7 @@ const StyledConfirm = styled(motion.div)`
   left: 0;
   background: rgba(44, 44, 44, 0.4);
   backdrop-filter: blur(5px);
-  z-index: 102;
+  z-index: 1202 !important;
   .form {
     margin-top: 15px;
   }

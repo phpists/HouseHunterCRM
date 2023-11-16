@@ -1,9 +1,27 @@
 import { styled } from "styled-components";
 import { ProfileField } from "../../../components/ProfileField";
+import { useEffect, useRef } from "react";
 
 export const Text = ({ data, onChangeField, errors }) => {
+  const textRef = useRef(null);
+
+  useEffect(() => {
+    if (
+      !!errors?.find((e) => e === "updated") &&
+      errors.find((e) => e === "title")
+    ) {
+      const wrapper = document.querySelector(".object-main-wrapper");
+      if (wrapper) {
+        wrapper.scrollTo({
+          top: textRef.current.offsetTop,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [errors]);
+
   return (
-    <StyledText className="hide-scroll">
+    <StyledText className="hide-scroll" ref={textRef}>
       <ProfileField
         value={data?.title}
         placeholder="Введіть заголовок"

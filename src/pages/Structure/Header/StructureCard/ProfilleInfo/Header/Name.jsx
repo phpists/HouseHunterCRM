@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-export const Name = () => (
-  <StyledName className="notClickable">Віталій Дуда</StyledName>
+export const Name = ({ name }) => (
+  <StyledName className="notClickable">{name}</StyledName>
 );
 
 const StyledName = styled.div`
   color: #fff;
-  text-align: center;
+  text-align: left;
   font-family: Overpass;
   font-size: 14px;
   font-style: normal;
@@ -14,4 +14,8 @@ const StyledName = styled.div`
   line-height: 118%; /* 16.52px */
   letter-spacing: 0.28px;
   margin-right: 8px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100px;
 `;

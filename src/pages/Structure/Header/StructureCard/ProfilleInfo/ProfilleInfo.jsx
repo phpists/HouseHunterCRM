@@ -4,14 +4,27 @@ import { Divider } from "./Divider";
 import { Phones } from "../../../../../components/Phones/Phones";
 import { Email } from "./Email";
 import bg from "../../../../../assets/images/profile-bg.png";
+import { useGetPhonesCodesQuery } from "../../../../../store/auth/auth.api";
 
-export const ProfilleInfo = ({ onOpenInfo }) => {
+export const ProfilleInfo = ({ onOpenInfo, data }) => {
+  const { data: phonesCodes } = useGetPhonesCodesQuery();
+
   return (
     <StyledProfilleInfo bg={bg} className="notClickable">
-      <Header onOpenInfo={onOpenInfo} />
+      <Header onOpenInfo={onOpenInfo} data={data} />
       <Divider />
-      <Phones className="phones-wrapper notClickable" />
-      <Email />
+      <Phones
+        className="phones-wrapper notClickable"
+        phones={JSON.parse(data?.phone)?.map(
+          ({ id_phone_code, phone, code }) =>
+            `${
+              code ??
+              phonesCodes?.find(({ id }) => id === id_phone_code)?.code ??
+              ""
+            }${phone}`
+        )}
+      />
+      <Email email={data?.email ?? ""} />
     </StyledProfilleInfo>
   );
 };

@@ -3,7 +3,14 @@ import styled from "styled-components";
 import { ReactComponent as PlusIcon } from "../../../../../../../../assets/images/plus.svg";
 import { ReactComponent as ArrowDownIcon } from "../../../../../../../../assets/images/arrow-down.svg";
 import { Dropdown } from "./Dropdown/Dropdown";
-import { useGetPerimissionsQuery } from "../../../../../../../../store/structure/structure.api";
+import {
+  useGetAllPerimissionsLevelsQuery,
+  useGetAllPerimissionsQuery,
+  useGetCompanyStructureLevelQuery,
+  useGetPerimissionDirectorQuery,
+  useGetPerimissionsQuery,
+} from "../../../../../../../../store/structure/structure.api";
+import { useEffect } from "react";
 
 const ROLES = [
   {
@@ -29,23 +36,59 @@ const ROLES = [
 ];
 
 export const RoleSelect = ({ value, onChange }) => {
-  const { data, refetch } = useGetPerimissionsQuery();
+  const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
+  const { data: permissionsList } = useGetAllPerimissionsQuery();
+  const { data: level, refetch } = useGetCompanyStructureLevelQuery();
+  const { data: levels } = useGetAllPerimissionsLevelsQuery();
   const [open, setOpen] = useState(false);
-  const roles = data?.map(({ name, id, color }) => ({
-    title: name,
-    value: id,
-    color,
-  }));
+  const [roles, setRoles] = useState([]);
 
+  const handleGetCurrentLevel = () =>
+    levels
+      ? Object.entries(levels)
+          ?.map((l) => l[1])
+          ?.find((l) => Number(l.level) === Number(level))
+      : [];
+
+  const handleFormatLevelRoles = () => {
+    const levelRoles = handleGetCurrentLevel()["0"];
+    if (levelRoles) {
+      return levelRoles?.split(" - ")?.map((role, i) => ({
+        title: role,
+        color: `${COLORS[i]}`,
+        bg: `${COLORS[i]}17`,
+        level: 1 + i,
+      }));
+    } else {
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    if (level && levels) {
+      const formatedRoles = handleFormatLevelRoles();
+      setRoles(formatedRoles);
+    }
+  }, [level, levels]);
+
+  const handleToggleOpen = () => {
+    const filteredRoles = roles
+      .filter((role) => role?.level !== value)
+      .filter((role) => role?.level !== 1);
+
+    if (filteredRoles?.length > 0) {
+      setOpen(!open);
+    }
+  };
   return (
     <StyledRoleSelect
-      active={roles?.find((role) => role?.value === value)?.color}
-      onClick={() => setOpen(!open)}
+      active={roles?.find((role) => role?.level === value)?.color}
+      onClick={handleToggleOpen}
       open={open}
     >
       <div className="title">
-        {value && roles?.find((r) => r.value === value)
-          ? roles?.find((r) => r.value === value)?.title
+        {value && roles?.find((r) => r.level === value)
+          ? roles?.find((r) => r.level === value)?.title
           : open
           ? "Оберіть роль"
           : "Немає ролі"}
@@ -56,7 +99,9 @@ export const RoleSelect = ({ value, onChange }) => {
       </button>
       {open && (
         <Dropdown
-          roles={roles.filter((role) => role?.value !== value)}
+          roles={roles
+            .filter((role) => role?.level !== value)
+            .filter((role) => role?.level !== 1)}
           onChangeActiveRole={(value) => onChange(value)}
         />
       )}
@@ -93,6 +138,9 @@ const StyledRoleSelect = styled.div`
     padding: 4px 6px;
     text-align: center;
     height: 16px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     ${({ active, open }) =>
       !active &&
       !open &&

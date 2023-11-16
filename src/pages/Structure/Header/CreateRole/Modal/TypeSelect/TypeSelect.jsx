@@ -2,14 +2,47 @@ import styled from "styled-components";
 import { ReactComponent as ArrowDownIcon } from "../../../../../../assets/images/arrow-down.svg";
 import { useState } from "react";
 import { Dropdown } from "./Dropdown";
+import {
+  useGetAllPerimissionsLevelsQuery,
+  useGetCompanyStructureLevelQuery,
+  useLazyChangeCompanyStructureLevelQuery,
+} from "../../../../../../store/structure/structure.api";
+import { TypeCard } from "./TypeCard/TypeCard";
+import { handleResponse } from "../../../../../../utilits";
+import cogoToast from "cogo-toast";
 
 export const TypeSelect = () => {
   const [open, setOpen] = useState(false);
+  const { data, refetch } = useGetCompanyStructureLevelQuery();
+  const { data: levels } = useGetAllPerimissionsLevelsQuery();
+  const [changeCompanyLevel] = useLazyChangeCompanyStructureLevelQuery();
+
+  const handleGetCurrentLevel = (level) =>
+    levels
+      ? Object.entries(levels)
+          ?.map((l) => l[1])
+          ?.find((l) => Number(l.level) === Number(level))
+      : [];
+
+  const handleChangeLevel = (level) => {
+    setOpen(false);
+    changeCompanyLevel(level).then((resp) =>
+      handleResponse(resp, () => {
+        cogoToast.success("Рівень успішно змінено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        refetch();
+      })
+    );
+  };
 
   return (
     <StyledTypeSelect className="flex items-center justify-between" open={open}>
       <div>
-        <div className="title">Оберіть</div>
+        <div className="title">
+          {data ? handleGetCurrentLevel(data)["0"] : "Оберіть"}
+        </div>
         <div className="subtitle">Оберіть кількість рівнів компанії</div>
       </div>
       <button
@@ -18,7 +51,9 @@ export const TypeSelect = () => {
       >
         <ArrowDownIcon />
       </button>
-      {open && <Dropdown />}
+      {open && (
+        <Dropdown active={data} levels={levels} onChange={handleChangeLevel} />
+      )}
     </StyledTypeSelect>
   );
 };

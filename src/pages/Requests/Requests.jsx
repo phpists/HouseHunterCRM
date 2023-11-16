@@ -84,7 +84,7 @@ export const Requests = () => {
       if (filterActive.current) {
         data = {
           ...data,
-          ...filters,
+          filters,
         };
       }
 
@@ -195,7 +195,6 @@ export const Requests = () => {
                 favorite: !req[1].General_field_group.favorite,
               },
             };
-            console.log(request);
             return request;
           }
           return req;

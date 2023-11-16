@@ -1,22 +1,24 @@
 import styled from "styled-components";
 import { TypeCard } from "./TypeCard/TypeCard";
+import { useGetAllPerimissionsLevelsQuery } from "../../../../../../store/structure/structure.api";
 
-export const Dropdown = () => (
-  <StyledDropdown>
-    <TypeCard titles={["Керівник"]} type={1} />
-    <TypeCard titles={["Керівник", "Агент"]} type={2} />
-    <TypeCard titles={["Керівник", "Стуктурний Керівник", "Агент"]} type={3} />
-    <TypeCard
-      titles={[
-        "Керівник",
-        "Регіональний Керівник",
-        "Стуктурний Керівник",
-        "Агент",
-      ]}
-      type={4}
-    />
-  </StyledDropdown>
-);
+export const Dropdown = ({ levels, active, onChange }) => {
+  return (
+    <StyledDropdown>
+      {Object.entries(levels)
+        .map((l) => l[1])
+        ?.map((level, i) => (
+          <TypeCard
+            key={i}
+            titles={level["0"]?.split(" - ")}
+            type={level.level}
+            active={active === Number(level.level)}
+            onSelect={() => onChange(Number(level.level))}
+          />
+        ))}
+    </StyledDropdown>
+  );
+};
 
 const StyledDropdown = styled.div`
   position: absolute;

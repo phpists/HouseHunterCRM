@@ -6,11 +6,22 @@ import { Roles } from "./Roles/Roles";
 import { motion, useAnimationControls } from "framer-motion";
 import { useEffect } from "react";
 import { AddButton } from "./AddButton/AddButton";
-import { useGetPerimissionsQuery } from "../../../../../store/structure/structure.api";
+import {
+  useGetAllPerimissionsLevelsQuery,
+  useGetCompanyStructureLevelQuery,
+} from "../../../../../store/structure/structure.api";
 
 export const Modal = ({ onClose }) => {
   const controls = useAnimationControls();
-  const { data, refetch } = useGetPerimissionsQuery();
+  const { data: level, refetch } = useGetCompanyStructureLevelQuery();
+  const { data: levels } = useGetAllPerimissionsLevelsQuery();
+
+  const handleGetCurrentLevel = (level) =>
+    levels
+      ? Object.entries(levels)
+          ?.map((l) => l[1])
+          ?.find((l) => Number(l.level) === Number(level))
+      : [];
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
@@ -30,11 +41,17 @@ export const Modal = ({ onClose }) => {
     >
       <Header onClose={handleClose} />
       <div className="modal-content">
-        {/* <SectionTitle title="ФОрмат компанії" />
-        <TypeSelect /> */}
+        <SectionTitle title="ФОрмат компанії" />
+        <TypeSelect />
         <SectionTitle title="налаштування доступів" />
-        <Roles data={data} onRefetchData={refetch} />
-        <AddButton onRefetchData={refetch} />
+        {level && levels && (
+          <Roles
+            level={level}
+            levelData={handleGetCurrentLevel(level)}
+            onRefetchData={refetch}
+          />
+        )}
+        {/* <AddButton onRefetchData={refetch} /> */}
       </div>
     </StyledModal>
   );

@@ -4,9 +4,12 @@ import { ReactComponent as UserIcon } from "../../../../../../../assets/images/u
 import React from "react";
 import arrowBetween from "../../../../../../../assets/images/structure-arrow.svg";
 
-export const TypeCard = ({ titles, type }) => {
+export const TypeCard = ({ titles, type, active, onSelect }) => {
   return (
-    <StyledTypeCard className="flex items-center">
+    <StyledTypeCard
+      className={`flex items-center ${active && "active"}`}
+      onClick={onSelect}
+    >
       <div className="cards">
         <div>
           <UserCheckIcon />
@@ -120,7 +123,8 @@ const StyledTypeCard = styled.div`
     line-height: normal;
     letter-spacing: 0.22px;
   }
-  &:hover {
+  &:hover,
+  &.active {
     border: 1px solid rgba(255, 255, 255, 0.4);
     background: rgba(255, 255, 255, 0.04);
   }

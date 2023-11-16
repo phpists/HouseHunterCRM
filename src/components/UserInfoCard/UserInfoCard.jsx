@@ -21,6 +21,8 @@ export const UserInfoCard = ({
   onSave = () => null,
   onReset = () => null,
   logout,
+  noDelete,
+  isProfile,
 }) => {
   const controls = useAnimationControls();
 
@@ -33,7 +35,6 @@ export const UserInfoCard = ({
     controls.start({ opacity: 1, translateX: 0 });
   }, []);
 
-  console.log("here");
   return (
     <StyledUserInfoCard
       initial={{ opacity: 0, translateX: "100%" }}
@@ -49,13 +50,14 @@ export const UserInfoCard = ({
           data={data}
           onChangeField={onChangeField}
           onRefreshData={onRefreshData}
+          isProfile={isProfile}
         />
         <SectionTitle title="Працівники в підпорядкуванні" />
         <Workers />
         <SectionTitle title="Персональні дані" />
         <PersonalData data={data} onChangeField={onChangeField} />
         {isDelete ? (
-          <FooterDelete />
+          <FooterDelete noDelete={noDelete} onSave={onSave} onReset={onReset} />
         ) : (
           <Footer onSave={onSave} onReset={onReset} />
         )}

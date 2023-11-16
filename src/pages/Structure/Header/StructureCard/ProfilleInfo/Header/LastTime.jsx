@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import clockIcon from "../../../../../../assets/images/clock.svg";
 
-export const LastTime = () => (
+export const LastTime = ({ date }) => (
   <StyledLastTime className="flex items-center notClickable">
     <img src={clockIcon} alt="" className="notClickable" />
-    Остання активність 9 хв тому
+    Остання активність {date}
   </StyledLastTime>
 );
 

@@ -3,16 +3,16 @@ import { Breadcrumbs } from "./Breadcrumbs/Breadcrumbs";
 import { CreateRole } from "./CreateRole/CreateRole";
 import { CreateUser } from "./CreateUser/CreateUser";
 
-export const Header = ({ level }) => {
+export const Header = ({ level, onChangeLevel, onRefetchData }) => {
   return (
     <StyledHeader className="flex items-center justify-between">
-      <Breadcrumbs level={level} />
+      <Breadcrumbs level={level} onChangeLevel={onChangeLevel} />
       <div className="btns flex items-center">
         {level === 3 ? (
           <CreateUser small />
         ) : (
           <>
-            <CreateUser />
+            <CreateUser onRefetchData={onRefetchData} />
             <CreateRole />
           </>
         )}

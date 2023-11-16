@@ -1,9 +1,7 @@
 import styled from "styled-components";
 
-export const Date = () => (
-  <StyledDate className="notClickable">
-    Зареєстровано: 13.10.2022 13:19
-  </StyledDate>
+export const Date = ({ date }) => (
+  <StyledDate className="notClickable">Зареєстровано: {date}</StyledDate>
 );
 
 const StyledDate = styled.div`
