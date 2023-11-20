@@ -18,6 +18,9 @@ export const Buttons = ({
   onApplyFilters,
   selectedCount,
   allCount,
+  onSelectAll,
+  onDelete,
+  deleteConfirmTitle,
 }) => {
   const [addClient, setAddClient] = useState(false);
 
@@ -34,12 +37,12 @@ export const Buttons = ({
         className="icon-btn"
         onClick={() => setAddClient(true)}
       />
-      <IconButton
+      {/* <IconButton
         Icon={StarIcon}
         onClick={onToggleFavoriteFilter}
         className="icon-btn"
         active={favoritesFilter}
-      />
+      /> */}
       <Search
         filter={filter}
         onChangeFilter={onChangeFilter}
@@ -52,6 +55,10 @@ export const Buttons = ({
         className="select-wrapper-desktop"
         selectedCount={selectedCount}
         allCount={allCount}
+        onSelectAll={onSelectAll}
+        noFavorite
+        onDelete={onDelete}
+        deleteConfirmTitle={deleteConfirmTitle}
       />
     </StyledButtons>
   );

@@ -74,9 +74,11 @@ export const Requests = () => {
   }, []);
 
   const handleFormatRequests = (data) => {
+    console.log("here");
     return Object.fromEntries(
       Object.entries(data?.requests)
         ?.map((r) => {
+          console.log(r);
           const requestData = Object.entries(r[1])[0][1] ?? {};
           const generalData = data[r[0]];
           return { ...requestData, ...generalData };
@@ -107,7 +109,9 @@ export const Requests = () => {
           resp,
           () => {
             setAllCount(resp?.data.all_item ?? 0);
-            if (Object.entries(resp?.data)?.length) {
+            console.log(Object.entries(resp?.data?.requests));
+            if (Object.entries(resp?.data?.requests)?.length) {
+              console.log(resp?.data);
               setRequests(
                 isReset
                   ? handleFormatRequests(resp?.data)

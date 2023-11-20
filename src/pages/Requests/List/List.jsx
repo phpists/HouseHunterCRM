@@ -41,6 +41,7 @@ export const List = ({
     );
   };
 
+  console.log(data);
   return (
     <>
       {deleteModal && (

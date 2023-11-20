@@ -12,6 +12,7 @@ export const Card = ({
   requestsCount,
   objectsCount,
   comment,
+  onDelete,
 }) => {
   const handleClick = (e) => {
     e.target.classList.contains("card") && onSelect();
@@ -31,6 +32,7 @@ export const Card = ({
         requestsCount={requestsCount}
         objectsCount={objectsCount}
         comment={comment}
+        onDelete={onDelete}
       />
       <MobileContent
         name={name}
@@ -40,6 +42,7 @@ export const Card = ({
         requestsCount={requestsCount}
         objectsCount={objectsCount}
         comment={comment}
+        onDelete={onDelete}
       />
     </StyledCard>
   );

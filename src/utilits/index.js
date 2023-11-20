@@ -121,8 +121,7 @@ export const handleResponse = (
   onError,
   notShowErrorMessage
 ) => {
-  console.log(resp?.data);
-  if (resp?.data?.error === 0) {
+  if (resp?.data?.error === 0 || typeof resp?.data?.error === "undefined") {
     console.log("here1");
     onSuccess && onSuccess();
   } else if (resp?.data?.error === 0 && resp?.data) {
@@ -131,7 +130,7 @@ export const handleResponse = (
   } else if (resp?.data?.error || resp?.data?.messege) {
     console.log("here3", resp);
     onError && onError();
-    if (resp?.data?.status !== 77) {
+    if (resp?.data?.status !== 77 && resp?.data?.error !== 32) {
       !notShowErrorMessage &&
         cogoToast.error(resp?.data?.messege ?? "Помилка", {
           hideAfter: 3,

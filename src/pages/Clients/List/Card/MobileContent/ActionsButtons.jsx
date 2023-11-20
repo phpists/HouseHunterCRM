@@ -2,10 +2,10 @@ import styled from "styled-components";
 import { Arrow } from "../Arrow";
 import { MoreButton } from "../../../../../components/MoreButton/MoreButton";
 
-export const ActionsButtons = ({ className, id }) => (
+export const ActionsButtons = ({ className, id, onDelete }) => (
   <StyledActionsButtons className={`flex flex-col items-center ${className}`}>
     <Arrow id={id} />
-    <MoreButton className="more-btn" />
+    <MoreButton className="more-btn" noFavorite onDelete={onDelete} />
   </StyledActionsButtons>
 );
 

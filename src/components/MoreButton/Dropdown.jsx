@@ -4,17 +4,25 @@ import { ReactComponent as UserIcon } from "../../assets/images/card-user.svg";
 import { ReactComponent as RemoveIcon } from "../../assets/images/remove.svg";
 import { ReactComponent as EditIcon } from "../../assets/images/edit-company.svg";
 
-export const Dropdown = ({ onDelete, onFavorite, favorite, editLink }) => (
+export const Dropdown = ({
+  onDelete,
+  onFavorite,
+  favorite,
+  editLink,
+  noFavorite,
+}) => (
   <StyledDropdown className="dropdown noClickable">
-    <div
-      className="flex items-center justify-between noClickable"
-      onClick={onFavorite}
-    >
-      <span className="noClickable">
-        {favorite ? "З улюбленого" : "В улюблене"}
-      </span>
-      <StarIcon className={`star-icon ${favorite && "active"} noClickable`} />
-    </div>
+    {!noFavorite && (
+      <div
+        className="flex items-center justify-between noClickable"
+        onClick={onFavorite}
+      >
+        <span className="noClickable">
+          {favorite ? "З улюбленого" : "В улюблене"}
+        </span>
+        <StarIcon className={`star-icon ${favorite && "active"} noClickable`} />
+      </div>
+    )}
     <div className="flex items-center justify-between noClickable">
       <span className="noClickable">Передати</span>
       <UserIcon className="user-icon noClickable" />

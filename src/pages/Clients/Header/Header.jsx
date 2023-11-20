@@ -4,10 +4,15 @@ import { Buttons } from "./Buttons/Buttons";
 import { Subtitle } from "./Subtitle";
 import { BackButton } from "./BackButton";
 import { SelectItems } from "../../../components/SelectItems/SelectItems";
-import { useLazyGetNewClientsCountQuery } from "../../../store/clients/clients.api";
+import {
+  useLazyDeleteCientQuery,
+  useLazyGetNewClientsCountQuery,
+} from "../../../store/clients/clients.api";
 import { useEffect } from "react";
 import { useActions } from "../../../hooks/actions";
 import { useAppSelect } from "../../../hooks/redux";
+import cogoToast from "cogo-toast";
+import { handleResponse } from "../../../utilits";
 
 export const Header = ({
   favoritesFilter,
@@ -20,14 +25,30 @@ export const Header = ({
   onChangeSearchCode,
   onApplyFilters,
   allCount,
+  onSelectAll,
+  selected,
+  onDelete,
 }) => {
   const [getNewClientsCount] = useLazyGetNewClientsCountQuery();
   const { saveNewClientsCount } = useActions();
   const { newClientsCount } = useAppSelect((state) => state.clients);
+  const [deleteClient] = useLazyDeleteCientQuery();
 
   useEffect(() => {
     getNewClientsCount().then((resp) => saveNewClientsCount(resp?.data?.count));
   }, []);
+
+  const handleDeleteClients = () => {
+    deleteClient({ id_client: selected }).then((resp) => {
+      handleResponse(resp, () => {
+        cogoToast.success("Клієнтів успішно видалено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        onDelete();
+      });
+    });
+  };
 
   return (
     <StyledHeader>
@@ -54,13 +75,24 @@ export const Header = ({
           onApplyFilters={onApplyFilters}
           selectedCount={selectedCount}
           allCount={allCount}
+          onSelectAll={onSelectAll}
+          onDelete={handleDeleteClients}
+          deleteConfirmTitle={`Видалити клієнт${
+            selected?.length > 1 ? "ів" : "а"
+          }`}
         />
       </div>
       <SelectItems
+        deleteConfirmTitle={`Видалити клієнт${
+          selected?.length > 1 ? "ів" : "а"
+        }`}
         title="клієнтів"
         className="select-wrapper-mobile"
         selectedCount={selectedCount}
         allCount={allCount}
+        onSelectAll={onSelectAll}
+        noFavorite
+        onDelete={handleDeleteClients}
       />
     </StyledHeader>
   );

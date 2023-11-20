@@ -14,6 +14,7 @@ export const MobileContent = ({
   requestsCount,
   objectsCount,
   comment,
+  onDelete,
 }) => (
   <StyledMobileContent className="flex items-center hide-scroll card">
     <div className="w-full">
@@ -41,13 +42,13 @@ export const MobileContent = ({
         <Comment comment={comment} />
       </div>
     </div>
-    <ActionsButtons className="laptop-actions" id={id} />
+    <ActionsButtons className="laptop-actions" id={id} onDelete={onDelete} />
   </StyledMobileContent>
 );
 
 const StyledMobileContent = styled.div`
   width: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
   &:hover {
     .arrow svg {
       transform: rotate(0deg);

@@ -16,6 +16,7 @@ export const SelectItems = ({
   onDelete = () => null,
   allCount = 0,
   onSelectAll,
+  noFavorite,
 }) => {
   const [type, setType] = useState(null);
   const [open, setOpen] = useState(false);
@@ -75,7 +76,11 @@ export const SelectItems = ({
         </StyledSelectItems>
         {open && (
           <>
-            {dropdown ? dropdown : <Dropdown onSelect={handleSelectOption} />}
+            {dropdown ? (
+              dropdown
+            ) : (
+              <Dropdown onSelect={handleSelectOption} noFavorite={noFavorite} />
+            )}
           </>
         )}
       </div>

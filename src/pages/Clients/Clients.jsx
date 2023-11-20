@@ -3,12 +3,14 @@ import { Header } from "./Header/Header";
 import { List } from "./List/List";
 import { useEffect, useState } from "react";
 import {
+  useLazyDeleteCientQuery,
   useLazyGetClientsCountQuery,
   useLazyGetClientsQuery,
 } from "../../store/clients/clients.api";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
 import { handleResponse } from "../../utilits";
+import cogoToast from "cogo-toast";
 
 export const Clients = () => {
   const [favoritesFilter, setFavoritesFilter] = useState(false);
@@ -28,6 +30,7 @@ export const Clients = () => {
   const [searchPhoneCode, setSearchPhoneCode] = useState("1");
   const isFilters = useRef(false);
   const [allCount, setAllCount] = useState(0);
+  const [deleteClient] = useLazyDeleteCientQuery();
 
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
@@ -107,6 +110,28 @@ export const Clients = () => {
     handleGetClients(true);
   };
 
+  const handleSelectAll = (isReset) => {
+    const clientsIds = clients?.map((c) => c.id);
+    setSelected(isReset ? [] : clientsIds);
+  };
+
+  const handleDeleteClients = () => {
+    setClients(clients.filter((c) => !selected.find((sc) => sc === c.id)));
+    setSelected([]);
+  };
+
+  const handleDeleteClient = (clientId) => {
+    deleteClient({ id_client: [clientId] }).then((resp) => {
+      handleResponse(resp, () => {
+        cogoToast.success("Клієнта успішно видалено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        setClients(clients.filter((c) => c.id !== clientId));
+      });
+    });
+  };
+
   return (
     <StyledClients>
       <Header
@@ -120,12 +145,16 @@ export const Clients = () => {
         onChangeSearchCode={(val) => setSearchPhoneCode(val)}
         onApplyFilters={handleApplyFilters}
         allCount={allCount}
+        onSelectAll={handleSelectAll}
+        selected={selected}
+        onDelete={handleDeleteClients}
       />
       <List
         selected={selected}
         onSelect={handleSelectClient}
         clients={clients}
         innerRef={listRef}
+        onDelete={handleDeleteClient}
       />
     </StyledClients>
   );

@@ -30,6 +30,7 @@ export const LastRequests = () => {
     handleGetRequests();
   }, []);
 
+  console.log(requests?.requests);
   return (
     <StyledLastRequests>
       <Title />

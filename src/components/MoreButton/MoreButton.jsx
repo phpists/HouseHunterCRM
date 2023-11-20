@@ -10,6 +10,7 @@ export const MoreButton = ({
   onFavorite = () => null,
   favorite,
   editLink,
+  noFavorite,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
 
@@ -25,6 +26,7 @@ export const MoreButton = ({
           onFavorite={onFavorite}
           favorite={favorite}
           editLink={editLink}
+          noFavorite={noFavorite}
         />
       </div>
       <Divider />

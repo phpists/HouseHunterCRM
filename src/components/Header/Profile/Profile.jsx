@@ -39,7 +39,8 @@ export const Profile = () => {
     ];
 
     setErrors(emptyFields);
-    return emptyFields?.length === 0;
+    console.log(emptyFields);
+    return emptyFields?.filter((e) => e.length > 0)?.length === 1;
   };
 
   const handleGetUserData = () => {

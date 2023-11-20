@@ -6,9 +6,11 @@ const OPTIONS = [
   { title: "Видалити", value: "delete" },
 ];
 
-export const Dropdown = ({ onSelect }) => (
+export const Dropdown = ({ onSelect, noFavorite }) => (
   <StyledDropdown>
-    {OPTIONS.map((opt, i) => (
+    {OPTIONS.filter((opt) =>
+      noFavorite ? opt.value !== "favorite" : true
+    ).map((opt, i) => (
       <div key={i} onClick={() => onSelect(opt.value)}>
         {opt.title}
       </div>
