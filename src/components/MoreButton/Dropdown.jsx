@@ -2,8 +2,9 @@ import { styled } from "styled-components";
 import { ReactComponent as StarIcon } from "../../assets/images/card-star.svg";
 import { ReactComponent as UserIcon } from "../../assets/images/card-user.svg";
 import { ReactComponent as RemoveIcon } from "../../assets/images/remove.svg";
+import { ReactComponent as EditIcon } from "../../assets/images/edit-company.svg";
 
-export const Dropdown = ({ onDelete, onFavorite, favorite }) => (
+export const Dropdown = ({ onDelete, onFavorite, favorite, editLink }) => (
   <StyledDropdown className="dropdown noClickable">
     <div
       className="flex items-center justify-between noClickable"
@@ -18,6 +19,16 @@ export const Dropdown = ({ onDelete, onFavorite, favorite }) => (
       <span className="noClickable">Передати</span>
       <UserIcon className="user-icon noClickable" />
     </div>
+    {editLink && (
+      <a
+        className="flex items-center justify-between noClickable"
+        href={editLink}
+        rel="noreferrer"
+      >
+        <span className="noClickable">Редагувати</span>
+        <EditIcon className="noClickable" />
+      </a>
+    )}
     <div
       className="flex items-center justify-between noClickable"
       onClick={onDelete}
@@ -49,7 +60,8 @@ const StyledDropdown = styled.div`
   visibility: hidden;
   transition: all 0.3s;
   z-index: 3;
-  div {
+  div,
+  a {
     padding: 5px 5px 5px 6px;
     background: rgba(255, 255, 255, 0.7);
     transform: all 0.3s;

@@ -20,7 +20,7 @@ export const Roles = ({ level, levelData, onRefetchData }) => {
   return (
     <StyledRoles>
       {/* <Empty /> */}
-      {levelData[0]?.split(" - ")?.length > 0
+      {levelData?.length && levelData[0]?.split(" - ")?.length > 0
         ? levelData[0]
             ?.split(" - ")
             ?.map((name, i) => (

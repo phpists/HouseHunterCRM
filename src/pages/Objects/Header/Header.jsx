@@ -27,6 +27,8 @@ export const Header = ({
   onChangeFilter,
   filtersFields,
   onApplyFilter,
+  allCount,
+  onSelectAll,
 }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClient, setAddClient] = useState(false);
@@ -46,7 +48,7 @@ export const Header = ({
         })
       )
     ).then((resp) => {
-      handleResponse(resp, onFavorite);
+      onFavorite();
     });
   };
 
@@ -97,6 +99,8 @@ export const Header = ({
               onToggleFavorite={handleToggleFavorites}
               deleteConfirmTitle="Видалити об'єкт(и)?"
               onDelete={handleDelete}
+              allCount={allCount}
+              onSelectAll={onSelectAll}
             />
           </div>
         </div>
@@ -109,6 +113,8 @@ export const Header = ({
           onToggleFavorite={handleToggleFavorites}
           deleteConfirmTitle="Видалити об'єкт(и)?"
           onDelete={handleDelete}
+          allCount={allCount}
+          onSelectAll={onSelectAll}
         />
       </div>
       {filterOpen && (

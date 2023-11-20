@@ -68,7 +68,7 @@ export const Slider = ({ photos }) => {
             ref={slickRef}
           >
             {photos?.length === 0 ? (
-              <Slide photo={noPhoto} active empty />
+              <Slide photo={noPhoto} active empty onOpen={() => null} />
             ) : (
               photos
                 ?.map(({ name }) => name)
@@ -78,6 +78,7 @@ export const Slider = ({ photos }) => {
                     photo={photo}
                     active={currentSlide === 1 + i}
                     empty={photos?.length === 1}
+                    onOpen={() => setOpenView(true)}
                   />
                 ))
             )}

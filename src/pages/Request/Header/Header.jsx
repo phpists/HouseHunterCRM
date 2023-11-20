@@ -53,8 +53,6 @@ export const Header = ({
     });
   };
 
-  console.log(data?.general_group?.stop_showing);
-
   return (
     <StyledHeader className="flex items-center justify-between">
       {/* <BackButton /> */}

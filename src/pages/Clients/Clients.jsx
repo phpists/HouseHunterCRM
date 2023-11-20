@@ -27,6 +27,7 @@ export const Clients = () => {
   });
   const [searchPhoneCode, setSearchPhoneCode] = useState("1");
   const isFilters = useRef(false);
+  const [allCount, setAllCount] = useState(0);
 
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
@@ -49,14 +50,16 @@ export const Clients = () => {
         handleResponse(
           resp,
           () => {
-            if (resp?.data?.error === 0 && resp?.data.data?.length) {
+            if (resp?.data?.error === 0 && resp?.data.data?.clients?.length) {
+              setAllCount(resp?.data?.data?.all_item ?? 0);
               setClients(
-                isReset ? resp?.data?.data : [...clients, ...resp?.data.data]
+                isReset
+                  ? resp?.data?.data?.clients
+                  : [...clients, ...resp?.data.data?.clients]
               );
             }
           },
-          () => setIsAllPages(true),
-          true
+          () => setIsAllPages(true)
         );
       });
     }
@@ -110,12 +113,13 @@ export const Clients = () => {
         favoritesFilter={favoritesFilter}
         onToggleFavoriteFilter={() => setFavoritesFilter(!favoritesFilter)}
         onRefreshData={() => handleGetClients(true)}
-        selectedCount={10}
+        selectedCount={selected.length}
         filter={filter}
         onChangeFilter={handleChangeFilter}
         searchPhoneCode={searchPhoneCode}
         onChangeSearchCode={(val) => setSearchPhoneCode(val)}
         onApplyFilters={handleApplyFilters}
+        allCount={allCount}
       />
       <List
         selected={selected}

@@ -34,10 +34,23 @@ export const LastRequests = () => {
     <StyledLastRequests>
       <Title />
       <div className="list hide-scroll">
-        {requests && Object.entries(requests)?.length
-          ? Object.entries(requests)?.map((d, i) => {
-              const id = Object.entries(d[1])[1][0];
-              return <RequestCard key={i} data={d[1]} id={id} />;
+        {requests?.requests && Object.entries(requests?.requests)?.length
+          ? Object.entries(requests?.requests)?.map((d, i) => {
+              if (typeof d !== "object") {
+                return null;
+              }
+
+              const id = Object.entries(d[1])[0][0];
+              const generalFields = requests[d[0]] ?? {};
+              const requestData = d[1];
+
+              return (
+                <RequestCard
+                  key={i}
+                  data={{ ...requestData, ...generalFields }}
+                  id={id}
+                />
+              );
             })
           : null}
       </div>

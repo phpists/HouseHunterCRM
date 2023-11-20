@@ -65,7 +65,6 @@ export const RequestsList = ({
         Object.entries(requests).map((req) => {
           const reqId = Object.entries(req[1])[1][1]?.id_group;
           if (reqId === id) {
-            console.log(reqId, id);
             let request = [];
             request[0] = req[0];
             request[1] = {
@@ -75,7 +74,6 @@ export const RequestsList = ({
                 favorite: !req[1].General_field_group.favorite,
               },
             };
-            console.log(request);
             return request;
           }
           return req;

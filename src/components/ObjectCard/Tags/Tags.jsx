@@ -44,7 +44,6 @@ export const Tags = ({ className, data }) => {
     handleFormatTags();
   }, [data]);
 
-  console.log(tags);
   return (
     <StyledTags className={`flex flex-col hide-scroll clickable ${className}`}>
       <SelectTags label="Теги" showTags tags={tags} viewOnly />

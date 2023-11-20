@@ -9,6 +9,7 @@ import {
 } from "../../store/objects/objects.api";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
+import { handleResponse } from "../../utilits";
 
 const INIT_FILTERS = {
   id_rubric: "",
@@ -31,6 +32,7 @@ export const Objects = () => {
   const [filters, setFilters] = useState(INIT_FILTERS);
   const [filtersFields, setFilterFields] = useState([]);
   const filterActive = useRef(false);
+  const [allCount, setAllCount] = useState(0);
 
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => {
@@ -73,11 +75,16 @@ export const Objects = () => {
       };
     }
 
-    getAllObjects(data).then((resp) =>
-      setObjects(
-        resp?.data ? Object.entries(resp?.data)?.map((obj) => obj[1]) : []
-      )
-    );
+    getAllObjects(data).then((resp) => {
+      handleResponse(resp, () => {
+        setAllCount(resp?.data?.all_item ?? 0);
+        setObjects(
+          resp?.data?.objects
+            ? Object.entries(resp?.data?.objects)?.map((obj) => obj[1])
+            : []
+        );
+      });
+    });
   };
 
   useEffect(() => {
@@ -119,6 +126,12 @@ export const Objects = () => {
     }
   };
 
+  const handleSelectAll = (isReset) => {
+    const objIds = objects?.map((obj) => obj.id);
+
+    setSelected(isReset ? [] : objIds);
+  };
+
   return (
     <StyledObjects>
       <Header
@@ -132,6 +145,8 @@ export const Objects = () => {
         onChangeFilter={handleChangeFilter}
         filtersFields={filtersFields}
         onApplyFilter={handleApplyFilter}
+        allCount={allCount}
+        onSelectAll={handleSelectAll}
       />
       <List selected={selected} onSelect={handleSelect} data={objects ?? []} />
     </StyledObjects>

@@ -30,7 +30,7 @@ export const handleToFormData = (data, files) => {
               formData.append(`${field[0]}[${i}][${fField[0]}]`, fField[1]);
           });
         } else {
-          formData.append(`${field[0]}[${i}]`, f);
+          (f || f?.length > 0) && formData.append(`${field[0]}[${i}]`, f);
         }
       });
     } else if (typeof field[1] === "object") {
@@ -40,7 +40,8 @@ export const handleToFormData = (data, files) => {
             formData.append(`${field[0]}[${fField[0]}][]`, f);
           });
         } else {
-          formData.append(`${field[0]}[${fField[0]}]`, fField[1]);
+          (fField[1] || fField[1]?.length > 0) &&
+            formData.append(`${field[0]}[${fField[0]}]`, fField[1]);
         }
       });
     } else {
@@ -120,20 +121,26 @@ export const handleResponse = (
   onError,
   notShowErrorMessage
 ) => {
-  if (!resp?.data) {
-    cogoToast.error("Помилка", {
-      hideAfter: 3,
-      position: "top-right",
-    });
-  } else if ((resp?.data?.error === 0 || !resp?.data?.messege) && resp?.data) {
+  console.log(resp?.data);
+  if (resp?.data?.error === 0) {
+    console.log("here1");
+    onSuccess && onSuccess();
+  } else if (resp?.data?.error === 0 && resp?.data) {
+    console.log("here2");
     onSuccess && onSuccess();
   } else if (resp?.data?.error || resp?.data?.messege) {
+    console.log("here3", notShowErrorMessage);
     onError && onError();
     !notShowErrorMessage &&
       cogoToast.error(resp?.data?.messege ?? "Помилка", {
         hideAfter: 3,
         position: "top-right",
       });
+  } else {
+    cogoToast.error("Помилка", {
+      hideAfter: 3,
+      position: "top-right",
+    });
   }
 };
 

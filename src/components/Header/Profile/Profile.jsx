@@ -25,6 +25,22 @@ export const Profile = () => {
   const { loginUser } = useActions();
   const [getProfile] = useLazyGetUserQuery();
   const [editProfile] = useLazyEditProfileQuery();
+  const [errors, setErrors] = useState([]);
+
+  const handleCheckAllFields = () => {
+    const { first_name, last_name, email, phones, password } = profileData;
+    const emptyFields = [
+      ...[first_name?.length === 0 ? "first_name" : ""],
+      ...[last_name?.length === 0 ? "last_name" : ""],
+      ...[email?.length === 0 ? "email" : ""],
+      ...[phones[0]?.phone?.length === 0 ? "phones" : ""],
+      //   ...[password?.length === 0 ? "password" : []],
+      "updated",
+    ];
+
+    setErrors(emptyFields);
+    return emptyFields?.length === 0;
+  };
 
   const handleGetUserData = () => {
     getProfile().then((resp) => {
@@ -39,28 +55,32 @@ export const Profile = () => {
   const handleChangeField = (fieldName, value) => {
     const newData = { ...profileData, [fieldName]: value };
     setProfileData(newData);
+    setErrors(
+      errors?.filter((e) => e !== "updated")?.filter((e) => e !== fieldName)
+    );
   };
 
   const handleSave = () => {
     const { first_name, last_name, email, phones, password, photo } =
       profileData;
-
-    editProfile({
-      first_name,
-      last_name,
-      email,
-      phones_json: JSON.stringify(phones),
-      password: password?.length > 0 ? password : undefined,
-      photo,
-    }).then((resp) =>
-      handleResponse(resp, () => {
-        cogoToast.success("Зміни успішно збережено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-        handleGetUserData();
-      })
-    );
+    if (handleCheckAllFields()) {
+      editProfile({
+        first_name,
+        last_name,
+        email,
+        phones_json: JSON.stringify(phones),
+        password: password?.length > 0 ? password : undefined,
+        photo,
+      }).then((resp) =>
+        handleResponse(resp, () => {
+          cogoToast.success("Зміни успішно збережено", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          handleGetUserData();
+        })
+      );
+    }
   };
 
   const handleReset = () => setProfileData(user);
@@ -78,6 +98,9 @@ export const Profile = () => {
           onSave={handleSave}
           onReset={handleReset}
           logout
+          profile
+          billingTo={user?.billing_to}
+          errors={errors}
         />
       )}
       <StyledProfile

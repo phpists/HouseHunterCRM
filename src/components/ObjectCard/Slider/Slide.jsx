@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
-export const Slide = ({ photo, active, empty }) => (
-  <StyledSlide photo={active ? photo : ""} empty={empty} />
+export const Slide = ({ photo, active, empty, onOpen }) => (
+  <StyledSlide photo={active ? photo : ""} empty={empty} onClick={onOpen} />
 );
 
 const StyledSlide = styled.div`

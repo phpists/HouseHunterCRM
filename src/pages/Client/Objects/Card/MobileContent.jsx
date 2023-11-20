@@ -8,6 +8,7 @@ import { StepNumber } from "../../../../components/StepNumber";
 import { MoreButton } from "../../../../components/MoreButton/MoreButton";
 import { Label } from "./Label";
 import { Divider } from "./Divider";
+import { useParams } from "react-router-dom";
 
 export const MobileContent = ({
   date,
@@ -18,42 +19,52 @@ export const MobileContent = ({
   favorite,
   onDelete,
   isObject,
-}) => (
-  <StyledMobileContent className="flex items-center justify-between w-full">
-    <div className="flex items-center w-full">
-      <div className="cards-wrapper">
-        <ObjectCard className="object-card" date={date} isObject={isObject} />
-        {/* <StepNumber num={1} className="number" /> */}
-      </div>
-      <div className="w-full">
-        <div className="w-max mr-5">
-          <div className="flex items-center w-max">
-            <Title title={title} />
-            <Price price={price} />
-          </div>
-          <CreatedDate date={date} />
+  id,
+}) => {
+  const { id: clientId } = useParams();
+
+  return (
+    <StyledMobileContent className="flex items-center justify-between w-full">
+      <div className="flex items-center w-full">
+        <div className="cards-wrapper">
+          <ObjectCard className="object-card" date={date} isObject={isObject} />
+          {/* <StepNumber num={1} className="number" /> */}
         </div>
-        <Divider />
-        <div className="w-max mr-5">
-          <div className="flex items-center w-max">
-            <Title title={location} className="location" />
-            <Tag />
+        <div className="w-full">
+          <div className="w-max mr-5">
+            <div className="flex items-center w-max">
+              <Title title={title} />
+              <Price price={price} />
+            </div>
+            <CreatedDate date={date} />
           </div>
-          <Label label="Локація" />
+          <Divider />
+          <div className="w-max mr-5">
+            <div className="flex items-center w-max">
+              <Title title={location} className="location" />
+              <Tag />
+            </div>
+            <Label label="Локація" />
+          </div>
         </div>
       </div>
-    </div>
-    <div className="flex items-center more-btn-wrapper">
-      <div className="relative flex items-center">
-        <MoreButton
-          onFavorite={onFavorite}
-          favorite={favorite}
-          onDelete={onDelete}
-        />
+      <div className="flex items-center more-btn-wrapper">
+        <div className="relative flex items-center">
+          <MoreButton
+            onFavorite={onFavorite}
+            favorite={favorite}
+            onDelete={onDelete}
+            editLink={
+              isObject
+                ? `/#/edit-object/${clientId}/${id}`
+                : `/#/edit-request/${clientId}/${id}`
+            }
+          />
+        </div>
       </div>
-    </div>
-  </StyledMobileContent>
-);
+    </StyledMobileContent>
+  );
+};
 
 const StyledMobileContent = styled.div`
   .cards-wrapper {

@@ -47,7 +47,9 @@ export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
         label="Категорія"
         notMultiSelect
         value={filters?.id_rubric}
-        onChange={(val) => onChangeFilter("id_rubric", val)}
+        onChange={(val) =>
+          onChangeFilter("id_rubric", val === filters?.id_rubric ? null : val)
+        }
         options={
           rubricsList
             ? rubricsList?.map(({ id, name }) => ({ title: name, value: id }))
@@ -59,7 +61,12 @@ export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
         label="Локація"
         notMultiSelect
         value={filters?.id_location}
-        onChange={(val) => onChangeFilter("id_location", val)}
+        onChange={(val) =>
+          onChangeFilter(
+            "id_location",
+            val === filters?.id_location ? null : val
+          )
+        }
         options={formatedLocations}
       />
       <Divider />

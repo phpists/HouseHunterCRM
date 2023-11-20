@@ -22,13 +22,6 @@ export const Structure = () => {
     }
   };
 
-  data &&
-    console.log(
-      Object.entries(data)
-        ?.filter((l) => Number(l[0]) === level)
-        .map((l) => l[1][0])
-    );
-
   const handleGetLevelWorkers = () => {
     if (!data) {
       return [];

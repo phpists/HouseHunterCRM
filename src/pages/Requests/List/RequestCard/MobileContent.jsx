@@ -10,8 +10,8 @@ export const MobileContent = ({ data, id, onDelete, onFavorite }) => (
   <StyledMobileContent className="flex ">
     <div className="w-full">
       <Client
-        firstName={data[id]?.usr_first_name}
-        lastName={data[id]?.usr_last_name}
+        firstName={data?.usr_first_name}
+        lastName={data?.usr_last_name}
         idClient={data?.General_field_group?.id_client}
         phones={data?.General_field_group?.user_phones}
         avatar={
@@ -22,19 +22,19 @@ export const MobileContent = ({ data, id, onDelete, onFavorite }) => (
       />
       <div className="mobile-content-wrapper">
         <Date
-          category={data[id]?.rubric_name}
-          location={data[id]?.location_name}
+          category={data?.rubric_name}
+          location={data?.location_name}
           date={data?.General_field_group?.dt_deadline}
         />
         <Info
-          priceMax={data[id]?.price_max}
-          roomMin={data[id]?.room_min}
-          roomMax={data[id]?.room_min}
-          areaMin={data[id]?.area_total_min}
-          storeyMin={data[id]?.address_storey}
-          storeyMax={data[id]?.storey_count}
+          priceMax={data?.price_max}
+          roomMin={data?.room_min}
+          roomMax={data?.room_min}
+          areaMin={data?.area_total_min}
+          storeyMin={data?.address_storey}
+          storeyMax={data?.storey_count}
         />
-        <Comment comment={data[id]?.comment} />
+        <Comment comment={data?.comment} />
         <Objects />
       </div>
     </div>
@@ -44,7 +44,7 @@ export const MobileContent = ({ data, id, onDelete, onFavorite }) => (
       onDelete={onDelete}
       favorite={data?.General_field_group?.favorite}
       onFavorite={onFavorite}
-      idGroup={data[id]?.id_group}
+      idGroup={data?.id_group}
     />
   </StyledMobileContent>
 );

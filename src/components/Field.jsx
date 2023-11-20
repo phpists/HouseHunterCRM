@@ -20,6 +20,7 @@ export const Field = ({
   onChangePhoneCode,
   noResetValueOnCodeChange,
   error,
+  mobile,
   onChange = () => null,
 }) => {
   const [edit, setEdit] = useState(false);
@@ -29,7 +30,6 @@ export const Field = ({
     !noResetValueOnCodeChange && onChange("");
   };
 
-  console.log(phonesCodes);
   return (
     <StyleField
       className={`flex items-center justify-between ${className} ${
@@ -39,6 +39,7 @@ export const Field = ({
       hide={hide}
       full={full}
       error={error}
+      onClick={() => (mobile ? setEdit(true) : null)}
     >
       <div className="field-content">
         {edit ? (
@@ -67,13 +68,16 @@ export const Field = ({
                 value={value}
                 placeholder={placeholder}
                 onChange={(e) => onChange(e.target.value)}
+                onBlur={() => (mobile ? setEdit(false) : null)}
               />
             )}
           </>
         ) : (
           <div className="value">
             {value?.length > 0 && phone
-              ? `${phonesCodes.find((p) => p.id === phoneCode)?.code}${value}`
+              ? `${
+                  phonesCodes?.find((p) => p.id === phoneCode)?.code ?? ""
+                }${value}`
               : value?.length > 0
               ? value
               : placeholder}
@@ -99,7 +103,7 @@ const StyleField = styled.div`
   border-radius: 9px;
   transition: all 0.3s;
   flex-shrink: 0;
-  ${({ error }) => error && "  border: 1px solid red;"}
+  ${({ error }) => error && "  border: 1px solid red !important;"}
   .field-content {
     width: 80%;
   }

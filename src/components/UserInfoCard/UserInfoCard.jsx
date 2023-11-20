@@ -9,6 +9,7 @@ import { Footer } from "./Footer";
 import { Workers } from "./Workers/Workers";
 import { FooterDelete } from "./FooterDelete";
 import { Logout } from "./Logout";
+import { useRef } from "react";
 
 export const UserInfoCard = ({
   onClose,
@@ -23,8 +24,12 @@ export const UserInfoCard = ({
   logout,
   noDelete,
   isProfile,
+  profile,
+  billingTo,
+  errors,
 }) => {
   const controls = useAnimationControls();
+  const contentRef = useRef(null);
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
@@ -35,12 +40,26 @@ export const UserInfoCard = ({
     controls.start({ opacity: 1, translateX: 0 });
   }, []);
 
+  useEffect(() => {
+    if (!!errors?.find((e) => e === "updated")) {
+      const firstErrorField = document.querySelectorAll(
+        ".user-info-profile-card .error-field"
+      );
+      if (firstErrorField[0]) {
+        contentRef.current.scrollTo({
+          top: 0,
+        });
+      }
+    }
+  }, [errors]);
+
   return (
     <StyledUserInfoCard
       initial={{ opacity: 0, translateX: "100%" }}
       transition={{ duration: 0.4 }}
       animate={controls}
-      className="hide-scroll"
+      className="hide-scroll user-info-profile-card"
+      ref={contentRef}
     >
       <Header onClose={handleClose} title={title} />
       <div className="modal-content">
@@ -51,11 +70,17 @@ export const UserInfoCard = ({
           onChangeField={onChangeField}
           onRefreshData={onRefreshData}
           isProfile={isProfile}
+          profile={profile}
+          billingTo={billingTo}
         />
-        <SectionTitle title="Працівники в підпорядкуванні" />
-        <Workers />
+        {/* <SectionTitle title="Працівники в підпорядкуванні" />
+        <Workers /> */}
         <SectionTitle title="Персональні дані" />
-        <PersonalData data={data} onChangeField={onChangeField} />
+        <PersonalData
+          data={data}
+          onChangeField={onChangeField}
+          errors={errors}
+        />
         {isDelete ? (
           <FooterDelete noDelete={noDelete} onSave={onSave} onReset={onReset} />
         ) : (

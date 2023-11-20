@@ -5,7 +5,7 @@ import { SymbolSelect } from "./SymbolSelect";
 import { TypeSelect } from "./TypeSelect";
 import { useEffect, useRef } from "react";
 
-export const Price = ({ className, data, onChangeField, errors }) => {
+export const Price = ({ className, data, onChangeField, errors, mobile }) => {
   const priceRef = useRef(null);
 
   useEffect(() => {
@@ -33,6 +33,7 @@ export const Price = ({ className, data, onChangeField, errors }) => {
         placeholder="Введіть ціну"
         full
         error={errors.find((e) => e === "price")}
+        mobile={mobile}
       />
       <Divider />
       <SymbolSelect

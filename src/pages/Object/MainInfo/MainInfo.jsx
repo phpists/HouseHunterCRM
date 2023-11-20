@@ -6,7 +6,7 @@ import { handleCheckIsField } from "../../../utilits";
 
 export const MainInfo = ({ data, onChangeField, fields, errors }) => {
   return (
-    <StyledMainInfo>
+    <StyledMainInfo className="object-maininfo-wrapper">
       {handleCheckIsField(fields, "obj_is_actual_dt") && (
         <Header
           className="desktop-maininfo-header"

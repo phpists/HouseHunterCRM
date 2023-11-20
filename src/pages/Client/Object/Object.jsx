@@ -29,7 +29,6 @@ export const ObjectCard = ({ className, selectedObject }) => {
           Object.entries(resp?.data)[0][1]
         ).filter((f) => f[0] !== "General_field_group")[0][1];
 
-        console.log(infoField);
         setData({
           id_client: infoField?.id_client,
           id_rubric: infoField?.id_rubric,

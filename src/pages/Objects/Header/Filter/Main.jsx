@@ -7,10 +7,15 @@ import {
   useGetRubricsQuery,
 } from "../../../../store/requests/requests.api";
 import { useState } from "react";
-import { handleGetLocationAllPath } from "../../../../utilits";
+import {
+  handleChangeRange,
+  handleGetLocationAllPath,
+} from "../../../../utilits";
 import { useEffect } from "react";
 import { ProfileField } from "../../../../components/ProfileField";
 import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.api";
+import { Price } from "../../../Request/Main/Price/Price";
+import { ToggleOption } from "./ToggleOption";
 
 const notAllowedFields = [
   "comment",
@@ -74,7 +79,9 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         label="Категорія"
         notMultiSelect
         value={filters?.id_rubric}
-        onChange={(val) => onChangeFilter("id_rubric", val)}
+        onChange={(val) =>
+          onChangeFilter("id_rubric", val === filters?.id_rubric ? null : val)
+        }
         options={
           rubricsList
             ? rubricsList?.map(({ id, name }) => ({ title: name, value: id }))
@@ -86,10 +93,39 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         label="Локація"
         notMultiSelect
         value={filters?.id_location}
-        onChange={(val) => onChangeFilter("id_location", val)}
+        onChange={(val) =>
+          onChangeFilter(
+            "id_location",
+            val === filters?.id_location ? null : val
+          )
+        }
         options={formatedLocations}
       />
       <Divider />
+      <Price
+        values={[filters?.price_min ?? 0, filters?.price_max ?? 0]}
+        onChange={(values) =>
+          handleChangeRange(
+            values,
+            [filters?.price_min ?? 0, filters?.price_max ?? 0],
+            ["price_min", "price_max"],
+            onChangeFilter
+          )
+        }
+        currency={Number(filters?.price_currency)}
+        onChangeCurrency={(val) => onChangeFilter("price_currency", val)}
+      />
+      <Divider />
+      <ToggleOption
+        label="Актуальні"
+        value={filters?.obj_is_actual === "1"}
+        onChange={() =>
+          onChangeFilter(
+            "obj_is_actual",
+            filters?.obj_is_actual === "1" ? "0" : "1"
+          )
+        }
+      />
       {filtersFields?.main_field
         ? Object.entries(filtersFields?.main_field)
             .filter((field) => !notAllowedFields?.find((f) => f === field[0]))

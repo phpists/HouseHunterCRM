@@ -35,6 +35,7 @@ export const Requests = () => {
   const [filters, setFilters] = useState(INIT_FILTERS);
   const [filtersFields, setFilterFields] = useState([]);
   const filterActive = useRef(false);
+  const [allCount, setAllCount] = useState(0);
 
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => {
@@ -72,6 +73,18 @@ export const Requests = () => {
     handleGetRequestsCount();
   }, []);
 
+  const handleFormatRequests = (data) => {
+    return Object.fromEntries(
+      Object.entries(data?.requests)
+        ?.map((r) => {
+          const requestData = Object.entries(r[1])[0][1] ?? {};
+          const generalData = data[r[0]];
+          return { ...requestData, ...generalData };
+        })
+        .map((r) => [r?.id_group, r])
+    );
+  };
+
   const handleGetRequests = (isReset) => {
     if ((!isLoading.current && !isAllPages) || isReset) {
       isLoading.current = true;
@@ -93,17 +106,19 @@ export const Requests = () => {
         handleResponse(
           resp,
           () => {
+            setAllCount(resp?.data.all_item ?? 0);
             if (Object.entries(resp?.data)?.length) {
               setRequests(
-                isReset ? resp?.data : { ...requests, ...resp?.data }
+                isReset
+                  ? handleFormatRequests(resp?.data)
+                  : { ...requests, ...handleFormatRequests(resp?.data) }
               );
             }
           },
           () => {
             setIsAllPages(true);
             isReset && setRequests([]);
-          },
-          true
+          }
         );
       });
     }
@@ -142,6 +157,11 @@ export const Requests = () => {
         )
       )
     );
+
+    if (selected === Object.entries(requests)) {
+      handleGetRequests(true);
+    }
+
     setSelected([]);
     handleGetRequestsCount();
   };
@@ -149,9 +169,7 @@ export const Requests = () => {
   const handleDeleteRequestSuccess = (id) => {
     setRequests(
       Object.fromEntries(
-        Object.entries(requests).filter(
-          (req) => id !== Object.entries(req[1])[1][1]?.id_group
-        )
+        Object.entries(requests).filter((req) => id !== req[0])
       )
     );
     handleGetRequestsCount();
@@ -161,18 +179,18 @@ export const Requests = () => {
     setRequests(
       Object.fromEntries(
         Object.entries(requests).map((req) => {
-          const reqId = Object.entries(req[1])[1][1]?.id_group;
+          const reqId = req[0];
+
           if (reqId === id) {
-            let request = [];
-            request[0] = req[0];
-            request[1] = {
+            const request = {
               ...req[1],
               General_field_group: {
                 ...req[1].General_field_group,
                 favorite: !req[1].General_field_group.favorite,
               },
             };
-            return request;
+
+            return [reqId, request];
           }
           return req;
         })
@@ -184,18 +202,18 @@ export const Requests = () => {
     setRequests(
       Object.fromEntries(
         Object.entries(requests).map((req) => {
-          const reqId = Object.entries(req[1])[1][1]?.id_group;
+          const reqId = req[0];
+
           if (!!selected.find((s) => s === reqId)) {
-            let request = [];
-            request[0] = req[0];
-            request[1] = {
+            const request = {
               ...req[1],
               General_field_group: {
                 ...req[1].General_field_group,
                 favorite: !req[1].General_field_group.favorite,
               },
             };
-            return request;
+
+            return [reqId, request];
           }
           return req;
         })
@@ -217,6 +235,11 @@ export const Requests = () => {
     }
   };
 
+  const handleSelectAll = (isReset) => {
+    const requestsIds = Object.entries(requests)?.map((r) => r[0]);
+    setSelected(isReset ? [] : requestsIds);
+  };
+
   return (
     <StyledRequests>
       <Header
@@ -230,6 +253,8 @@ export const Requests = () => {
         onChangeFilter={handleChangeFilter}
         filtersFields={filtersFields}
         onApplyFilter={handleApplyFilter}
+        allCount={allCount}
+        onSelectAll={handleSelectAll}
       />
       <List
         selected={selected}

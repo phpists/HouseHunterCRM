@@ -16,6 +16,8 @@ export const Buttons = ({
   searchPhoneCode,
   onChangeSearchCode,
   onApplyFilters,
+  selectedCount,
+  allCount,
 }) => {
   const [addClient, setAddClient] = useState(false);
 
@@ -45,7 +47,12 @@ export const Buttons = ({
         onChangeSearchCode={onChangeSearchCode}
         onApplyFilters={onApplyFilters}
       />
-      <SelectItems title="клієнтів" className="select-wrapper-desktop" />
+      <SelectItems
+        title="клієнтів"
+        className="select-wrapper-desktop"
+        selectedCount={selectedCount}
+        allCount={allCount}
+      />
     </StyledButtons>
   );
 };

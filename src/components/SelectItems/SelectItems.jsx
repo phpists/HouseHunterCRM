@@ -14,6 +14,8 @@ export const SelectItems = ({
   deleteConfirmTitle,
   onToggleFavorite = () => null,
   onDelete = () => null,
+  allCount = 0,
+  onSelectAll,
 }) => {
   const [type, setType] = useState(null);
   const [open, setOpen] = useState(false);
@@ -21,7 +23,7 @@ export const SelectItems = ({
 
   useEffect(() => {
     if (selectedCount > 0) {
-      setType(1);
+      setType(selectedCount === allCount ? 2 : 1);
     } else {
       setType(null);
       setOpen(false);
@@ -34,6 +36,14 @@ export const SelectItems = ({
       setDeleteModal(true);
     } else if (opt === "favorite") {
       onToggleFavorite();
+    }
+  };
+
+  const handleChangeType = (val) => {
+    const isTheSame = type === val;
+    setType(isTheSame ? null : val);
+    if (val === 2) {
+      onSelectAll && onSelectAll(isTheSame);
     }
   };
 
@@ -55,9 +65,10 @@ export const SelectItems = ({
           <div className="flex items-center">
             <Selected
               value={type}
-              onChnage={(value) => setType(type === value ? null : value)}
+              onChnage={handleChangeType}
               title={title}
               selectedCount={selectedCount}
+              allCount={allCount}
             />
             {type && <Arrow open={open} onToggleOpen={() => setOpen(!open)} />}
           </div>

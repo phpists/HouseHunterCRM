@@ -52,6 +52,7 @@ export const Request = () => {
   const fieldsData = useRef([]);
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [errors, setErrors] = useState([]);
+  const contentRef = useRef();
 
   const handleGetRubricsFields = (id, title) => {
     getRubricField(id).then((resp) => {
@@ -214,6 +215,19 @@ export const Request = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    if (!!errors?.find((e) => e.id === "updated")) {
+      const firstErrorField = document.querySelectorAll(
+        ".request-content  .error-field"
+      );
+      if (firstErrorField[0]) {
+        contentRef.current.scrollTo({
+          top: firstErrorField[0].offsetTop - contentRef.current.offsetTop - 10,
+        });
+      }
+    }
+  }, [errors]);
+
   return (
     <StyledRequest>
       <Header
@@ -223,7 +237,7 @@ export const Request = () => {
         data={data}
         onChangeField={handleChangeField}
       />
-      <div className="request-content hide-scroll">
+      <div className="request-content hide-scroll" ref={contentRef}>
         <div>
           <CardTitle title="Головне" />
           <Main

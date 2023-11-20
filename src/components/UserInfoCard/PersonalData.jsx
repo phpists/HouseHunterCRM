@@ -4,10 +4,9 @@ import { Divider } from "./Divider";
 import { ProfileField } from "../ProfileField";
 import { useGetPhonesCodesQuery } from "../../store/auth/auth.api";
 
-export const PersonalData = ({ data, onChangeField }) => {
+export const PersonalData = ({ data, onChangeField, errors = [] }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
 
-  console.log(phonesCodes, data?.phones[0]);
   return (
     <StyledPersonalData>
       <div className="input-group">
@@ -18,6 +17,7 @@ export const PersonalData = ({ data, onChangeField }) => {
           label="Ім’я"
           full
           className="field-wrapper"
+          error={!!errors?.find((e) => e === "first_name")}
         />
         <Field
           placeholder="Почніть писати"
@@ -26,6 +26,7 @@ export const PersonalData = ({ data, onChangeField }) => {
           label="Прізвище"
           full
           className="field-wrapper"
+          error={!!errors?.find((e) => e === "last_name")}
         />
       </div>
       <Divider />
@@ -45,6 +46,7 @@ export const PersonalData = ({ data, onChangeField }) => {
           ])
         }
         phonesCodes={phonesCodes}
+        error={!!errors?.find((e) => e === "phones")}
       />
       <Divider />
       <Field
@@ -53,6 +55,7 @@ export const PersonalData = ({ data, onChangeField }) => {
         placeholder="Почніть писати"
         label="Пошта"
         full
+        error={!!errors?.find((e) => e === "email")}
       />
       <Divider />
       <Field

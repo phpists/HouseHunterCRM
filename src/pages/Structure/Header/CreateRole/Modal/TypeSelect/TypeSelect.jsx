@@ -41,7 +41,9 @@ export const TypeSelect = () => {
     <StyledTypeSelect className="flex items-center justify-between" open={open}>
       <div>
         <div className="title">
-          {data ? handleGetCurrentLevel(data)["0"] : "Оберіть"}
+          {data && handleGetCurrentLevel(data)
+            ? handleGetCurrentLevel(data)["0"]
+            : "Оберіть"}
         </div>
         <div className="subtitle">Оберіть кількість рівнів компанії</div>
       </div>

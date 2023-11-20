@@ -27,6 +27,8 @@ export const Header = ({
   onChangeFilter,
   filtersFields,
   onApplyFilter,
+  allCount,
+  onSelectAll,
 }) => {
   const [deleteRequest] = useLazyDeleteRequestQuery();
   const [filterOpen, setFilterOpen] = useState(false);
@@ -46,7 +48,7 @@ export const Header = ({
         })
       )
     ).then((resp) => {
-      handleResponse(resp, onFavorite);
+      onFavorite();
     });
   };
 
@@ -100,6 +102,8 @@ export const Header = ({
               deleteConfirmTitle="Видалити запит(и)?"
               onDelete={handleDelete}
               onToggleFavorite={handleToggleFavorites}
+              allCount={allCount}
+              onSelectAll={onSelectAll}
             />
           </div>
         </div>
@@ -110,6 +114,9 @@ export const Header = ({
         className="select-wrapper-mobile"
         deleteConfirmTitle="Видалити запит(и)?"
         onDelete={handleDelete}
+        allCount={allCount}
+        onSelectAll={onSelectAll}
+        onToggleFavorite={handleToggleFavorites}
       />
       {filterOpen && (
         <Filter

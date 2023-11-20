@@ -8,6 +8,7 @@ import { StepNumber } from "../../../../components/StepNumber";
 import { MoreButton } from "../../../../components/MoreButton/MoreButton";
 import { handleFormatDate } from "../../../../utilits";
 import { Label } from "./Label";
+import { useParams } from "react-router-dom";
 
 export const DesktopContent = ({
   date,
@@ -18,37 +19,47 @@ export const DesktopContent = ({
   favorite,
   onDelete,
   isObject,
-}) => (
-  <StyledDesktopContent className="flex items-center justify-between">
-    <div className="flex items-center w-max">
-      <ObjectCard className="object-card" date={date} isObject={isObject} />
-      <div className="w-max mr-5">
-        <div className="flex items-center w-max">
-          <Title title={title} />
-          <Price price={price} />
+  id,
+}) => {
+  const { id: clientId } = useParams();
+
+  return (
+    <StyledDesktopContent className="flex items-center justify-between">
+      <div className="flex items-center w-max">
+        <ObjectCard className="object-card" date={date} isObject={isObject} />
+        <div className="w-max mr-5">
+          <div className="flex items-center w-max">
+            <Title title={title} />
+            <Price price={price} />
+          </div>
+          <CreatedDate date={date} />
         </div>
-        <CreatedDate date={date} />
-      </div>
-      <div className="w-max mr-5">
-        <div className="flex items-center w-max">
-          <Title title={location} className="location" />
-          {/* <Tag /> */}
+        <div className="w-max mr-5">
+          <div className="flex items-center w-max">
+            <Title title={location} className="location" />
+            {/* <Tag /> */}
+          </div>
+          <Label label="Локація" />
         </div>
-        <Label label="Локація" />
       </div>
-    </div>
-    <div className="flex items-center">
-      <div className="relative flex items-center">
-        {/* <StepNumber num={1} className="number" /> */}
-        <MoreButton
-          onFavorite={onFavorite}
-          favorite={favorite}
-          onDelete={onDelete}
-        />
+      <div className="flex items-center">
+        <div className="relative flex items-center">
+          {/* <StepNumber num={1} className="number" /> */}
+          <MoreButton
+            onFavorite={onFavorite}
+            favorite={favorite}
+            onDelete={onDelete}
+            editLink={
+              isObject
+                ? `/#/edit-object/${clientId}/${id}`
+                : `/#/edit-request/${clientId}/${id}`
+            }
+          />
+        </div>
       </div>
-    </div>
-  </StyledDesktopContent>
-);
+    </StyledDesktopContent>
+  );
+};
 
 const StyledDesktopContent = styled.div`
   .object-card {

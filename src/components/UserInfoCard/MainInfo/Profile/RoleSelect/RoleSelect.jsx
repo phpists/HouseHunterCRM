@@ -49,16 +49,18 @@ export const RoleSelect = ({ value, onChange }) => {
       : [];
 
   const handleFormatLevelRoles = () => {
-    const levelRoles = handleGetCurrentLevel()["0"];
-    if (levelRoles) {
-      return levelRoles?.split(" - ")?.map((role, i) => ({
-        title: role,
-        color: `${COLORS[i]}`,
-        bg: `${COLORS[i]}17`,
-        level: 1 + i,
-      }));
-    } else {
-      return [];
+    if (handleGetCurrentLevel()) {
+      const levelRoles = handleGetCurrentLevel()["0"];
+      if (levelRoles) {
+        return levelRoles?.split(" - ")?.map((role, i) => ({
+          title: role,
+          color: `${COLORS[i]}`,
+          bg: `${COLORS[i]}17`,
+          level: 1 + i,
+        }));
+      } else {
+        return [];
+      }
     }
   };
 

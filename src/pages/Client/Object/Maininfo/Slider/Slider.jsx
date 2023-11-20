@@ -74,6 +74,7 @@ export const Slider = ({ photos }) => {
                 photo={photo}
                 active={currentSlide === 1 + i}
                 isOnePhoto={photos?.length === 1}
+                onOpen={() => setOpenView(true)}
               />
             ))}
           </SlickSlider>

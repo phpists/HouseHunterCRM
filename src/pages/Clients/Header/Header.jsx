@@ -19,6 +19,7 @@ export const Header = ({
   searchPhoneCode,
   onChangeSearchCode,
   onApplyFilters,
+  allCount,
 }) => {
   const [getNewClientsCount] = useLazyGetNewClientsCountQuery();
   const { saveNewClientsCount } = useActions();
@@ -51,12 +52,15 @@ export const Header = ({
           searchPhoneCode={searchPhoneCode}
           onChangeSearchCode={onChangeSearchCode}
           onApplyFilters={onApplyFilters}
+          selectedCount={selectedCount}
+          allCount={allCount}
         />
       </div>
       <SelectItems
         title="клієнтів"
         className="select-wrapper-mobile"
         selectedCount={selectedCount}
+        allCount={allCount}
       />
     </StyledHeader>
   );

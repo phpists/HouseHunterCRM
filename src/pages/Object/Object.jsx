@@ -5,7 +5,7 @@ import { MainInfo } from "./MainInfo/MainInfo";
 import { Info } from "./Info/Info";
 import { Header } from "./MainInfo/Header/Header";
 import { Price } from "./MainInfo/Price/Price";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   useGetCommentsToFieldsQuery,
   useLazyCreateObjectQuery,
@@ -50,6 +50,7 @@ export const ObjectPage = () => {
   const [photos, setPhotos] = useState([]);
   const [deletedPhotos, setDeletedPhotos] = useState([]);
   const [errors, setErrors] = useState([]);
+  const contentRef = useRef();
 
   const handleChangePhotos = (p) => setPhotos(p);
 
@@ -227,8 +228,29 @@ export const ObjectPage = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    if (!!errors?.find((e) => e === "updated")) {
+      const firstErrorField = document.querySelectorAll(
+        ".object-main-wrapper .error-field"
+      );
+      const isFullScroll =
+        firstErrorField[0]?.classList.contains("title") ||
+        firstErrorField[0]?.classList.contains("mobile-price");
+      const mainInfoWrapper = document.querySelector(
+        ".object-maininfo-wrapper"
+      );
+      if (firstErrorField[0]) {
+        contentRef.current.scrollTo({
+          top: isFullScroll
+            ? firstErrorField[0].offsetTop - contentRef.current.offsetTop - 10
+            : mainInfoWrapper.offsetTop - contentRef.current.offsetTop - 10,
+        });
+      }
+    }
+  }, [errors]);
+
   return (
-    <StyledObject className="hide-scroll object-main-wrapper">
+    <StyledObject className="object-main-wrapper" ref={contentRef}>
       <ObjectsHeader
         onSave={id ? handleEdit : handleCreate}
         favorite={favorite}
@@ -246,6 +268,7 @@ export const ObjectPage = () => {
         data={data}
         onChangeField={handleChangeField}
         errors={errors}
+        mobile
       />
       <div className="object-wrappper">
         <Photos

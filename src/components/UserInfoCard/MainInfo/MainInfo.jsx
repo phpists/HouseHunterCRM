@@ -5,6 +5,7 @@ import { BossSelect } from "./BossSelect/BossSelect";
 import { LoginAllow } from "./LoginAllow";
 import { StatusCard } from "./StatusCard";
 import { AvatarBanner } from "./AvatarBanner";
+import { handleFormatDate } from "../../../utilits";
 
 export const MainInfo = ({
   avatarBanner,
@@ -12,8 +13,9 @@ export const MainInfo = ({
   onChangeField,
   onRefreshData,
   isProfile,
+  profile,
+  billingTo,
 }) => {
-  console.log(data?.structure_level);
   return (
     <StyledMainInfo>
       {avatarBanner && <AvatarBanner />}
@@ -22,23 +24,32 @@ export const MainInfo = ({
         onChangeField={onChangeField}
         onRefreshData={onRefreshData}
         isProfile={isProfile}
+        profile={profile}
       />
       {/* <BossSelect />
       <Divider /> */}
       {isProfile ? null : (
         <>
-          <Divider />
-          <LoginAllow />
-          <Divider />
-          <StatusCard
-            title={
-              <>
-                <span>Сплачено до</span> 28.07.2023
-              </>
-            }
-            status={true}
-            subtitle="Білінг"
-          />
+          {!profile && (
+            <>
+              <Divider />
+              <LoginAllow />
+            </>
+          )}
+          {billingTo && (
+            <>
+              <Divider />
+              <StatusCard
+                title={
+                  <>
+                    <span>Сплачено до</span> {billingTo}
+                  </>
+                }
+                status={true}
+                subtitle="Білінг"
+              />
+            </>
+          )}
         </>
       )}
     </StyledMainInfo>
