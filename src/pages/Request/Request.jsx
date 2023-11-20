@@ -101,7 +101,7 @@ export const Request = () => {
   };
 
   const handleCheckAllFields = () => {
-    const errorData = [];
+    let errorData = [];
 
     const isNotEmptyField = data.fields.map((data) => {
       const fieldFields = fieldData.find((f) => f.id === data.id_rubric);
@@ -124,6 +124,18 @@ export const Request = () => {
         errorData.push({ id_rubric: data.id_rubric, errors: emptyFields });
       return emptyFields?.length === 0;
     });
+
+    console.log(data?.general_group?.dt_deadline, "HHHHHH");
+    if (
+      !data?.general_group?.dt_deadline ||
+      data?.general_group?.dt_deadline?.length === 0
+    ) {
+      errorData.push({ id: "general", errors: ["dt_deadline"] });
+    } else {
+      errorData.push({ id: "general", errors: [] });
+    }
+
+    console.log(errorData);
 
     setErrors([...errorData, { id: "updated" }]);
     return isNotEmptyField.find((e) => !e) === undefined;

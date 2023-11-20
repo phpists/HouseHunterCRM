@@ -1,36 +1,41 @@
 import { styled } from "styled-components";
 import { Card } from "./Card/Card";
+import { Empty } from "../../../components/Empty/Empty";
 
 export const List = ({ selected, onSelect, clients, innerRef }) => {
   return (
     <StyledList className="hide-scroll" ref={innerRef}>
-      {clients.map(
-        (
-          {
-            full_name,
-            id,
-            dt_add,
-            phones,
-            all_req,
-            all_obj,
-            comment,
-            first_name,
-            last_name,
-          },
-          i
-        ) => (
-          <Card
-            key={i}
-            selected={!!selected.find((s) => s === id)}
-            onSelect={() => onSelect(id)}
-            name={`${first_name} ${last_name}`}
-            id={id}
-            dateCreate={dt_add}
-            phones={phones}
-            requestsCount={all_req}
-            objectsCount={all_obj}
-            comment={comment}
-          />
+      {clients?.length === 0 ? (
+        <Empty />
+      ) : (
+        clients?.map(
+          (
+            {
+              full_name,
+              id,
+              dt_add,
+              phones,
+              all_req,
+              all_obj,
+              comment,
+              first_name,
+              last_name,
+            },
+            i
+          ) => (
+            <Card
+              key={i}
+              selected={!!selected.find((s) => s === id)}
+              onSelect={() => onSelect(id)}
+              name={`${first_name} ${last_name}`}
+              id={id}
+              dateCreate={dt_add}
+              phones={phones}
+              requestsCount={all_req}
+              objectsCount={all_obj}
+              comment={comment}
+            />
+          )
         )
       )}
     </StyledList>

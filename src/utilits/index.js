@@ -129,18 +129,15 @@ export const handleResponse = (
     console.log("here2");
     onSuccess && onSuccess();
   } else if (resp?.data?.error || resp?.data?.messege) {
-    console.log("here3", notShowErrorMessage);
+    console.log("here3", resp);
     onError && onError();
-    !notShowErrorMessage &&
-      cogoToast.error(resp?.data?.messege ?? "Помилка", {
-        hideAfter: 3,
-        position: "top-right",
-      });
-  } else {
-    cogoToast.error("Помилка", {
-      hideAfter: 3,
-      position: "top-right",
-    });
+    if (resp?.data?.status !== 77) {
+      !notShowErrorMessage &&
+        cogoToast.error(resp?.data?.messege ?? "Помилка", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+    }
   }
 };
 

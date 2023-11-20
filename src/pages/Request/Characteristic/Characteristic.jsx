@@ -47,6 +47,22 @@ export const Characteristic = ({
     );
   };
 
+  const handleChangeDeadline = (val) => {
+    onChangeField("general_group", {
+      ...data.general_group,
+      dt_deadline: val,
+    });
+    onChangeErrors(
+      errors
+        .map((e) =>
+          e.id === "general"
+            ? { ...e, errors: e.errors.filter((f) => f !== "dt_deadline") }
+            : e
+        )
+        .filter((e) => e.id !== "updated")
+    );
+  };
+
   return (
     <StyledCharacteristic
       className="request-card hide-scroll request-characteristic-wrapper"
@@ -56,13 +72,13 @@ export const Characteristic = ({
         label="Дата дедлайну"
         placeholder="Введіть дату дедлайну"
         value={data?.general_group?.dt_deadline}
-        onChange={(val) =>
-          onChangeField("general_group", {
-            ...data.general_group,
-            dt_deadline: val,
-          })
-        }
+        onChange={handleChangeDeadline}
         type="date"
+        error={
+          !!errors
+            .find((e) => e.id === "general")
+            ?.errors?.find((e) => e === "dt_deadline")
+        }
       />
       {fields.map((field, i) => (
         <Card

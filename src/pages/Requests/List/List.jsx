@@ -5,6 +5,7 @@ import { useState } from "react";
 import { handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
 import { Confirm } from "../../../components/Confirm/Confirm";
+import { Empty } from "../../../components/Empty/Empty";
 
 export const List = ({
   selected,
@@ -50,22 +51,24 @@ export const List = ({
         />
       )}
       <StyledList className="hide-scroll" ref={innerRef}>
-        {data && Object.entries(data)?.length
-          ? Object.entries(data)?.map((d, i) => {
-              const id = Object.entries(d[1])[1][0];
-              return (
-                <RequestCard
-                  key={i}
-                  selected={!!selected.find((j) => j === d[0])}
-                  onSelect={() => onSelect(d[0])}
-                  data={d[1]}
-                  id={id}
-                  onDelete={() => handleOnDeleteRequest(d[0])}
-                  onFavorite={onFavorite}
-                />
-              );
-            })
-          : null}
+        {data && Object.entries(data)?.length === 0 ? (
+          <Empty />
+        ) : Object.entries(data)?.length > 0 ? (
+          Object.entries(data)?.map((d, i) => {
+            const id = Object.entries(d[1])[1][0];
+            return (
+              <RequestCard
+                key={i}
+                selected={!!selected.find((j) => j === d[0])}
+                onSelect={() => onSelect(d[0])}
+                data={d[1]}
+                id={id}
+                onDelete={() => handleOnDeleteRequest(d[0])}
+                onFavorite={onFavorite}
+              />
+            );
+          })
+        ) : null}
       </StyledList>
     </>
   );
