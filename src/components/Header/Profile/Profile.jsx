@@ -3,7 +3,6 @@ import { Notification } from "./Notification";
 import { Status } from "../../Status";
 import { Info } from "./Info";
 import { Avatar } from "./Avatar";
-import { EditProfile } from "./EditProfile/EditProfile";
 import { useState } from "react";
 import { UserInfoCard } from "../../UserInfoCard/UserInfoCard";
 import { NotificationsDropdown } from "./NotificationsDropdown/NotificationsDropdown";
@@ -28,7 +27,7 @@ export const Profile = () => {
   const [errors, setErrors] = useState([]);
 
   const handleCheckAllFields = () => {
-    const { first_name, last_name, email, phones, password } = profileData;
+    const { first_name, last_name, email, phones } = profileData;
     const emptyFields = [
       ...[first_name?.length === 0 ? "first_name" : ""],
       ...[last_name?.length === 0 ? "last_name" : ""],
@@ -39,7 +38,6 @@ export const Profile = () => {
     ];
 
     setErrors(emptyFields);
-    console.log(emptyFields);
     return emptyFields?.filter((e) => e.length > 0)?.length === 1;
   };
 

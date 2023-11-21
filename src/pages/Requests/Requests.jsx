@@ -71,14 +71,13 @@ export const Requests = () => {
 
   useEffect(() => {
     handleGetRequestsCount();
+    // eslint-disable-next-line
   }, []);
 
   const handleFormatRequests = (data) => {
-    console.log("here");
     return Object.fromEntries(
       Object.entries(data?.requests)
         ?.map((r) => {
-          console.log(r);
           const requestData = Object.entries(r[1])[0][1] ?? {};
           const generalData = data[r[0]];
           return { ...requestData, ...generalData };
@@ -108,18 +107,21 @@ export const Requests = () => {
         handleResponse(
           resp,
           () => {
-            setAllCount(resp?.data.all_item ?? 0);
-            console.log(Object.entries(resp?.data?.requests));
-            if (Object.entries(resp?.data?.requests)?.length) {
-              console.log(resp?.data);
-              setRequests(
-                isReset
-                  ? handleFormatRequests(resp?.data)
-                  : { ...requests, ...handleFormatRequests(resp?.data) }
-              );
+            if (resp?.data?.requests) {
+              setAllCount(resp?.data.all_item ?? 0);
+              if (Object.entries(resp?.data?.requests)?.length) {
+                setRequests(
+                  isReset
+                    ? handleFormatRequests(resp?.data)
+                    : { ...requests, ...handleFormatRequests(resp?.data) }
+                );
+              }
+            } else if (isReset) {
+              setRequests([]);
             }
           },
           () => {
+            console.log("here");
             setIsAllPages(true);
             isReset && setRequests([]);
           }
@@ -145,12 +147,15 @@ export const Requests = () => {
       listRef.current.addEventListener("scroll", handleScroll);
       return () =>
         listRef.current &&
+        // eslint-disable-next-line
         listRef.current.removeEventListener("scroll", handleScroll);
     }
+    // eslint-disable-next-line
   }, [listRef, isLoading.current, isAllPages, requests]);
 
   useEffect(() => {
     handleGetRequests();
+    // eslint-disable-next-line
   }, []);
 
   const handleDeleteRequestsSuccess = () => {
@@ -228,6 +233,7 @@ export const Requests = () => {
 
   useEffect(() => {
     handleGetRequests(true);
+    // eslint-disable-next-line
   }, [isFavorite]);
 
   const handleApplyFilter = (isApply) => {

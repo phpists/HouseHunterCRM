@@ -18,7 +18,7 @@ const INIT_FILTERS = {
   price: "",
   price_max: "",
   price_min: "",
-  obj_is_actual: "",
+  obj_is_actual: "1",
 };
 
 export const Objects = () => {
@@ -90,6 +90,7 @@ export const Objects = () => {
   useEffect(() => {
     handleGetObjects();
     handleGetObjectsCount();
+    // eslint-disable-next-line
   }, []);
 
   const handleToggleFavoritesStatus = () => {
@@ -115,6 +116,7 @@ export const Objects = () => {
 
   useEffect(() => {
     handleGetObjects();
+    // eslint-disable-next-line
   }, [isFavorite]);
 
   const handleApplyFilter = (isApply) => {

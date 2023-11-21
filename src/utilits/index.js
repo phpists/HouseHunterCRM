@@ -12,6 +12,7 @@ export const fortmatNumber = (num) =>
 
 export const emailValidation = (value) => {
   if (value) {
+    // eslint-disable-next-line
     const isError = value?.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
     return isError && isError?.length > 0 ? false : true;
   }
@@ -122,13 +123,10 @@ export const handleResponse = (
   notShowErrorMessage
 ) => {
   if (resp?.data?.error === 0 || typeof resp?.data?.error === "undefined") {
-    console.log("here1");
     onSuccess && onSuccess();
   } else if (resp?.data?.error === 0 && resp?.data) {
-    console.log("here2");
     onSuccess && onSuccess();
   } else if (resp?.data?.error || resp?.data?.messege) {
-    console.log("here3", resp);
     onError && onError();
     if (resp?.data?.status !== 77 && resp?.data?.error !== 32) {
       !notShowErrorMessage &&

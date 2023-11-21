@@ -125,7 +125,6 @@ export const Request = () => {
       return emptyFields?.length === 0;
     });
 
-    console.log(data?.general_group?.dt_deadline, "HHHHHH");
     if (
       !data?.general_group?.dt_deadline ||
       data?.general_group?.dt_deadline?.length === 0
@@ -134,8 +133,6 @@ export const Request = () => {
     } else {
       errorData.push({ id: "general", errors: [] });
     }
-
-    console.log(errorData);
 
     setErrors([...errorData, { id: "updated" }]);
     return isNotEmptyField.find((e) => !e) === undefined;
@@ -225,6 +222,7 @@ export const Request = () => {
         });
       });
     }
+    // eslint-disable-next-line
   }, [id]);
 
   useEffect(() => {

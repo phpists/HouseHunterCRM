@@ -13,7 +13,6 @@ import { useGetClientsCountQuery } from "../../store/clients/clients.api";
 export const Dashboard = () => {
   const { data } = useGetClientsCountQuery();
 
-  console.log(data);
   return (
     <StyledDashboard className="hide-scroll">
       {data?.count === 0 || !data?.count ? (

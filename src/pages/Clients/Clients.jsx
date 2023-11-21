@@ -62,7 +62,10 @@ export const Clients = () => {
               );
             }
           },
-          () => setIsAllPages(true)
+          () => {
+            setIsAllPages(true);
+            isReset && setClients([]);
+          }
         );
       });
     }
@@ -82,6 +85,7 @@ export const Clients = () => {
   useEffect(() => {
     handleGetClientsCount();
     handleGetClients();
+    // eslint-disable-next-line
   }, []);
 
   const handleScroll = () => {
@@ -101,8 +105,10 @@ export const Clients = () => {
       listRef.current.addEventListener("scroll", handleScroll);
       return () =>
         listRef.current &&
+        // eslint-disable-next-line
         listRef.current.removeEventListener("scroll", handleScroll);
     }
+    // eslint-disable-next-line
   }, [listRef, isLoading.current, isAllPages, clients]);
 
   const handleApplyFilters = (isApply) => {

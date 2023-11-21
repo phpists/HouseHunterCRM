@@ -28,9 +28,9 @@ export const LastRequests = () => {
 
   useEffect(() => {
     handleGetRequests();
+    // eslint-disable-next-line
   }, []);
 
-  console.log(requests?.requests);
   return (
     <StyledLastRequests>
       <Title />
