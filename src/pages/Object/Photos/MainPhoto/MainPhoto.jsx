@@ -6,15 +6,15 @@ import noPhoto from "../../../../assets/images/no-photo.svg";
 export const MainPhoto = ({ photo, photosCount }) => (
   <StyledMainPhoto
     photo={
-      photo?.type
-        ? URL.createObjectURL(photo)
-        : photo?.length > 0
-        ? photo
+      photo?.file
+        ? URL.createObjectURL(photo?.file)
+        : photo?.url?.length > 0
+        ? photo?.url
         : noPhoto
     }
     photosCount={photosCount}
   >
-    {photosCount > 1 && <Counter photosCount={photosCount}/>}
+    {photosCount > 1 && <Counter photosCount={photosCount} />}
     <Tag />
   </StyledMainPhoto>
 );

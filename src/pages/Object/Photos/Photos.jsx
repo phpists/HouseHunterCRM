@@ -7,15 +7,17 @@ import { Photo } from "./Photo/Photo";
 import DraggableList from "react-draggable-lists";
 import noPhoto from "../../../assets/images/no-photo.svg";
 
-export const Photos = ({ photos, onChange, onDeletePhoto }) => {
+export const Photos = ({ photos, onChange, onDeletePhoto, onCoverChange }) => {
   const handleMakePhotoMain = (index, photo) => {
     const filteredPhotos = photos.filter((p, i) => i !== index);
     onChange([photo, ...filteredPhotos]);
+    onCoverChange();
   };
 
   const handleDeletePhoto = (index, photo) => {
     onChange(photos.filter((p, j) => 1 + index !== j));
-    !photo?.type && onDeletePhoto(1 + index);
+    console.log(photo);
+    !photo?.type && onDeletePhoto(photo?.id);
   };
 
   return (

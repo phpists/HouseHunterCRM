@@ -51,6 +51,7 @@ export const ObjectPage = () => {
   const [deletedPhotos, setDeletedPhotos] = useState([]);
   const [errors, setErrors] = useState([]);
   const contentRef = useRef();
+  const coverChanged = useRef(false);
 
   const handleChangePhotos = (p) => setPhotos(p);
 
@@ -106,9 +107,11 @@ export const ObjectPage = () => {
 
   const handleDeletePhotos = () => {
     if (deletedPhotos?.length > 0) {
-      const photoIds = objectData.img
+      const photoIds = Object.entries(objectData?.img)
+        .map((p) => p[1])
         .filter((p, i) => !!deletedPhotos.find((index) => index === i))
         ?.map(({ id }) => id);
+
       Promise.all(
         photoIds?.map((id_img) => deletePhoto({ id_object: id, id_img }))
       );
@@ -116,10 +119,16 @@ export const ObjectPage = () => {
   };
 
   const handleSetPhotoCover = () => {
-    const firstPhotoId = objectData.img.find((p) => p?.url === photos[0])?.id;
+    console.log(coverChanged);
+    if (coverChanged.current) {
+      const firstPhotoId = Object.entries(objectData?.img)
+        .map((p) => p[1])
+        .find((p) => p?.url === photos[0]?.url)?.id;
 
-    if (firstPhotoId || firstPhotoId === 0) {
-      setCoverPhoto({ id_object: id, id_img: firstPhotoId.toString() });
+      if (firstPhotoId || firstPhotoId === 0) {
+        setCoverPhoto({ id_object: id, id_img: firstPhotoId.toString() });
+      }
+      coverChanged.current = false;
     }
   };
 
@@ -151,7 +160,7 @@ export const ObjectPage = () => {
             ? Number(data?.obj_is_actual_dt) / 1000
             : undefined,
         },
-        photos,
+        photos: photos.map((p) => p.file),
       }).then((resp) =>
         handleResponse(resp, () => {
           cogoToast.success("Об'єкт успішно створено", {
@@ -190,8 +199,9 @@ export const ObjectPage = () => {
           obj_is_actual_dt: data?.obj_is_actual_dt
             ? Number(data?.obj_is_actual_dt) / 1000
             : undefined,
+          img: null,
         },
-        photos,
+        photos: photos.filter((p) => p?.status !== "old").map((p) => p.file),
       }).then((resp) =>
         handleResponse(resp, () => {
           cogoToast.success("Зміни успішно збережено", {
@@ -200,6 +210,7 @@ export const ObjectPage = () => {
           });
           handleDeletePhotos();
           handleSetPhotoCover();
+          setPhotos(photos.map((p) => (p?.file ? { ...p, status: "old" } : p)));
         })
       );
     } else {
@@ -220,9 +231,11 @@ export const ObjectPage = () => {
         setData(objectData);
         handleGetRubricsFields(resp?.data?.id_rubric, objectData, true);
         setPhotos(
-          [...resp?.data?.img]
+          Object.entries(resp?.data?.img)
+            .map((p) => p[1])
             ?.sort((a, b) => b.cover - a.cover)
-            .map((photo) => photo?.url) ?? []
+            .map((photo, i) => ({ url: photo?.url, status: "old", id: i })) ??
+            []
         );
       });
     }
@@ -274,9 +287,12 @@ export const ObjectPage = () => {
         <Photos
           photos={photos}
           onChange={handleChangePhotos}
-          onDeletePhoto={(photoIndex) =>
-            setDeletedPhotos([...deletedPhotos, photoIndex])
+          onDeletePhoto={(photoId) =>
+            setDeletedPhotos([...deletedPhotos, photoId])
           }
+          onCoverChange={() => {
+            coverChanged.current = true;
+          }}
         />
         <MainInfo
           data={data}

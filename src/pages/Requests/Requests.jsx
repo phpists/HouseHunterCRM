@@ -118,6 +118,8 @@ export const Requests = () => {
               }
             } else if (isReset) {
               setRequests([]);
+            } else {
+              setIsAllPages(true);
             }
           },
           () => {

@@ -6,10 +6,10 @@ import noPhoto from "../../../../assets/images/no-photo.svg";
 export const Photo = ({ photo, onRemove, onMakeMain }) => (
   <StyledPhoto
     photo={
-      photo?.type
-        ? URL.createObjectURL(photo)
-        : photo?.length > 0
-        ? photo
+      photo?.file
+        ? URL.createObjectURL(photo?.file)
+        : photo?.url?.length > 0
+        ? photo?.url
         : noPhoto
     }
     className="flex flex-col items-center justify-center"
