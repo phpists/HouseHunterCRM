@@ -15,9 +15,9 @@ export const Photos = ({ photos, onChange, onDeletePhoto, onCoverChange }) => {
   };
 
   const handleDeletePhoto = (index, photo) => {
-    onChange(photos.filter((p, j) => 1 + index !== j));
-    console.log(photo);
-    !photo?.type && onDeletePhoto(photo?.id);
+    photo?.type
+      ? onChange(photos.filter((p, j) => 1 + index !== j))
+      : onDeletePhoto(photo?.id);
   };
 
   return (
@@ -25,6 +25,8 @@ export const Photos = ({ photos, onChange, onDeletePhoto, onCoverChange }) => {
       <MainPhoto
         photo={photos[0] ?? noPhoto}
         photosCount={photos.length === 0 ? 1 : photos.length}
+        onRemove={() => handleDeletePhoto(0, photos[0])}
+        isPhoto={!!photos[0]}
       />
 
       {photos.length > 1 && (

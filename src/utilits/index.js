@@ -122,7 +122,10 @@ export const handleResponse = (
   onError,
   notShowErrorMessage
 ) => {
-  if (resp?.data?.error === 0 || typeof resp?.data?.error === "undefined") {
+  if (
+    (resp?.data?.error === 0 || typeof resp?.data?.error === "undefined") &&
+    !resp?.data?.messege
+  ) {
     onSuccess && onSuccess();
   } else if (resp?.data?.error === 0 && resp?.data) {
     onSuccess && onSuccess();

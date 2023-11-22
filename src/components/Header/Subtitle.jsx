@@ -21,7 +21,7 @@ export const Subtitle = () => {
       case "/requests":
         return `${requestsCount} запит${handleGetEnding(requestsCount)}`;
       case "/objects":
-        return `${objectsCount} об'єктів`;
+        return `${objectsCount ?? "0"} об'єктів`;
       case "/note":
         return "345 нових об'єктів із трьох темплейтів";
       case "/calendar":

@@ -55,7 +55,8 @@ export const ObjectCard = ({ className, selectedObject }) => {
     getObject(selectedObject?.id).then((resp) => {
       handleResponse(resp, () => {
         setData({
-          img: [...resp?.data?.img]
+          img: Object.entries(resp?.data?.img)
+            ?.map((p) => p[1])
             ?.sort((a, b) => b?.order - a?.order)
             ?.map(({ url }) => url),
           id_client: resp?.data?.id_client,

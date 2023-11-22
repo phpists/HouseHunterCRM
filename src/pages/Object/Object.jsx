@@ -118,8 +118,19 @@ export const ObjectPage = () => {
     }
   };
 
+  const handleDeletePhoto = (id_img) => {
+    deletePhoto({ id_object: id, id_img }).then((resp) =>
+      handleResponse(resp, () => {
+        setPhotos(photos.filter((p) => p?.id !== id_img));
+        cogoToast.success("Фото успішно видалено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      })
+    );
+  };
+
   const handleSetPhotoCover = () => {
-    console.log(coverChanged);
     if (coverChanged.current) {
       const firstPhotoId = Object.entries(objectData?.img)
         .map((p) => p[1])
@@ -200,6 +211,7 @@ export const ObjectPage = () => {
             ? Number(data?.obj_is_actual_dt) / 1000
             : undefined,
           img: null,
+          photos_json: null,
         },
         photos: photos.filter((p) => p?.status !== "old").map((p) => p.file),
       }).then((resp) =>
@@ -232,10 +244,13 @@ export const ObjectPage = () => {
         handleGetRubricsFields(resp?.data?.id_rubric, objectData, true);
         setPhotos(
           Object.entries(resp?.data?.img)
-            .map((p) => p[1])
+            .map((p) => ({ ...p[1], id: p[0] }))
             ?.sort((a, b) => b.cover - a.cover)
-            .map((photo, i) => ({ url: photo?.url, status: "old", id: i })) ??
-            []
+            .map((photo, i) => ({
+              url: photo?.url,
+              status: "old",
+              id: photo?.id,
+            })) ?? []
         );
       });
     }
@@ -287,12 +302,10 @@ export const ObjectPage = () => {
         <Photos
           photos={photos}
           onChange={handleChangePhotos}
-          onDeletePhoto={(photoId) =>
-            setDeletedPhotos([...deletedPhotos, photoId])
-          }
           onCoverChange={() => {
             coverChanged.current = true;
           }}
+          onDeletePhoto={handleDeletePhoto}
         />
         <MainInfo
           data={data}

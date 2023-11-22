@@ -14,8 +14,5 @@ const StyledTag = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(44, 44, 44, 0.5);
   backdrop-filter: blur(5px);
-  position: absolute;
-  top: 15px;
-  right: 15px;
   padding: 1px 6px 2px;
 `;

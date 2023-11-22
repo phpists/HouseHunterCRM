@@ -109,7 +109,8 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
                 updatedData?.phone?.map(
                   ({ code, phone }) =>
                     `${
-                      phonesCodes?.find((phone) => phone?.id === code)?.code
+                      phonesCodes?.find((phone) => phone?.id === code)?.code ??
+                      ""
                     }${phone}`
                 ) ?? []
               }
