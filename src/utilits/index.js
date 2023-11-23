@@ -123,11 +123,16 @@ export const handleResponse = (
   notShowErrorMessage
 ) => {
   if (
-    (resp?.data?.error === 0 || typeof resp?.data?.error === "undefined") &&
+    resp?.data?.error === 0 &&
+    typeof resp?.data?.error !== "undefined" &&
     !resp?.data?.messege
   ) {
     onSuccess && onSuccess();
-  } else if (resp?.data?.error === 0 && resp?.data) {
+  } else if (
+    resp?.data?.error === 0 &&
+    typeof resp?.data?.error !== "undefined" &&
+    resp?.data
+  ) {
     onSuccess && onSuccess();
   } else if (resp?.data?.error || resp?.data?.messege) {
     onError && onError();
@@ -138,6 +143,12 @@ export const handleResponse = (
           position: "top-right",
         });
     }
+  } else if (resp?.error?.data) {
+    !notShowErrorMessage &&
+      cogoToast.error("Помилка", {
+        hideAfter: 3,
+        position: "top-right",
+      });
   }
 };
 

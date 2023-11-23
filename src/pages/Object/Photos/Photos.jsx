@@ -1,19 +1,10 @@
 import { styled } from "styled-components";
 import { MainPhoto } from "./MainPhoto/MainPhoto";
 import { AddPhoto } from "./AddPhoto";
-import { useState } from "react";
-import photo from "../../../assets/images/object.png";
 import { Photo } from "./Photo/Photo";
-import DraggableList from "react-draggable-lists";
 import noPhoto from "../../../assets/images/no-photo.svg";
 
 export const Photos = ({ photos, onChange, onDeletePhoto, onCoverChange }) => {
-  const handleMakePhotoMain = (index, photo) => {
-    const filteredPhotos = photos.filter((p, i) => i !== index);
-    onChange([photo, ...filteredPhotos]);
-    onCoverChange();
-  };
-
   const handleDeletePhoto = (index, photo) => {
     photo?.type
       ? onChange(photos.filter((p, j) => 1 + index !== j))
@@ -38,7 +29,7 @@ export const Photos = ({ photos, onChange, onDeletePhoto, onCoverChange }) => {
                   key={i}
                   photo={p}
                   onRemove={() => handleDeletePhoto(i, p)}
-                  onMakeMain={() => handleMakePhotoMain(1 + i, p)}
+                  onMakeMain={() => onCoverChange(1 + i, p)}
                 />
               ))}
               {photos.length === 2 && (
@@ -56,7 +47,7 @@ export const Photos = ({ photos, onChange, onDeletePhoto, onCoverChange }) => {
                   key={i}
                   photo={p}
                   onRemove={() => handleDeletePhoto(i, p)}
-                  onMakeMain={() => handleMakePhotoMain(1 + i, p)}
+                  onMakeMain={() => onCoverChange(1 + i, p)}
                 />
               ))}
               {/* </DraggableList> */}

@@ -130,16 +130,37 @@ export const ObjectPage = () => {
     );
   };
 
-  const handleSetPhotoCover = () => {
-    if (coverChanged.current) {
-      const firstPhotoId = Object.entries(objectData?.img)
-        .map((p) => p[1])
-        .find((p) => p?.url === photos[0]?.url)?.id;
+  const handleSetPhotoCover = (index, photo) => {
+    setCoverPhoto({ id_object: id, id_img: photo?.id }).then((resp) =>
+      handleResponse(resp, () => {
+        const filteredPhotos = photos.filter((p, i) => i !== index);
+        handleChangePhotos([photo, ...filteredPhotos]);
+      })
+    );
+  };
 
-      if (firstPhotoId || firstPhotoId === 0) {
-        setCoverPhoto({ id_object: id, id_img: firstPhotoId.toString() });
-      }
-      coverChanged.current = false;
+  const handleGetObject = () => {
+    if (id) {
+      getObject(id).then((resp) => {
+        const objectData = {
+          ...handleFormatDatesToTimestamp(resp?.data, true),
+          obj_is_actual_dt: resp?.data?.obj_is_actual_dt
+            ? Number(resp?.data?.obj_is_actual_dt) * 1000
+            : undefined,
+        };
+        setData(objectData);
+        handleGetRubricsFields(resp?.data?.id_rubric, objectData, true);
+        setPhotos(
+          Object.entries(resp?.data?.img)
+            .map((p) => ({ ...p[1], id: p[0] }))
+            ?.sort((a, b) => b.cover - a.cover)
+            .map((photo, i) => ({
+              url: photo?.url,
+              status: "old",
+              id: photo?.id,
+            })) ?? []
+        );
+      });
     }
   };
 
@@ -220,9 +241,8 @@ export const ObjectPage = () => {
             hideAfter: 3,
             position: "top-right",
           });
-          handleDeletePhotos();
-          handleSetPhotoCover();
           setPhotos(photos.map((p) => (p?.file ? { ...p, status: "old" } : p)));
+          handleGetObject();
         })
       );
     } else {
@@ -232,28 +252,7 @@ export const ObjectPage = () => {
   };
 
   useEffect(() => {
-    if (id) {
-      getObject(id).then((resp) => {
-        const objectData = {
-          ...handleFormatDatesToTimestamp(resp?.data, true),
-          obj_is_actual_dt: resp?.data?.obj_is_actual_dt
-            ? Number(resp?.data?.obj_is_actual_dt) * 1000
-            : undefined,
-        };
-        setData(objectData);
-        handleGetRubricsFields(resp?.data?.id_rubric, objectData, true);
-        setPhotos(
-          Object.entries(resp?.data?.img)
-            .map((p) => ({ ...p[1], id: p[0] }))
-            ?.sort((a, b) => b.cover - a.cover)
-            .map((photo, i) => ({
-              url: photo?.url,
-              status: "old",
-              id: photo?.id,
-            })) ?? []
-        );
-      });
-    }
+    handleGetObject();
   }, [id]);
 
   useEffect(() => {
@@ -302,9 +301,7 @@ export const ObjectPage = () => {
         <Photos
           photos={photos}
           onChange={handleChangePhotos}
-          onCoverChange={() => {
-            coverChanged.current = true;
-          }}
+          onCoverChange={handleSetPhotoCover}
           onDeletePhoto={handleDeletePhoto}
         />
         <MainInfo
