@@ -196,6 +196,7 @@ export const Request = () => {
     if (id) {
       getRequest(id).then((resp) => {
         handleResponse(resp, () => {
+          setFavorite(!!!resp?.data[id].General_field_group?.favorite);
           setCategories([]);
           categoriesData.current = [];
           const categories = Object.entries(resp?.data[id])

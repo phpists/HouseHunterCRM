@@ -63,7 +63,7 @@ const StyledDropdown = styled.div`
   font-weight: 400;
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
-  z-index: 6;
+  z-index: 56;
   overflow: hidden;
   opacity: 0;
   visibility: hidden;

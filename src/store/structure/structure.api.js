@@ -197,6 +197,14 @@ export const structure = createApi({
           mod: "system_info",
         }),
       }),
+      transformResponse: (response) => {
+        const formatedResponse = response?.messege
+          ? Object.fromEntries(
+              Object.entries(response?.messege)?.filter((p) => p[0] !== "error")
+            )
+          : {};
+        return formatedResponse;
+      },
     }),
     getAllPerimissionsLevels: build.query({
       query: () => ({
@@ -208,6 +216,12 @@ export const structure = createApi({
           mod: "structure",
         }),
       }),
+      transformResponse: (response) => {
+        const transformedResponse = Object.fromEntries(
+          Object.entries(response)?.filter((e) => e[0] !== "error")
+        );
+        return transformedResponse;
+      },
     }),
     getCompanyStructureLevel: build.query({
       query: () => ({

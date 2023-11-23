@@ -34,7 +34,7 @@ export const RoleCard = ({
       setValues(Object.entries(initValues)?.map((p) => p[1]));
     } else {
       setValues(
-        Object.entries(permissionsList?.messege).map((p) => ({
+        Object.entries(permissionsList).map((p) => ({
           id_module: p[0],
           view: false,
           add: false,

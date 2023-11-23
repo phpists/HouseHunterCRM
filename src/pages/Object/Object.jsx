@@ -131,12 +131,17 @@ export const ObjectPage = () => {
   };
 
   const handleSetPhotoCover = (index, photo) => {
-    setCoverPhoto({ id_object: id, id_img: photo?.id }).then((resp) =>
-      handleResponse(resp, () => {
-        const filteredPhotos = photos.filter((p, i) => i !== index);
-        handleChangePhotos([photo, ...filteredPhotos]);
-      })
-    );
+    if (id) {
+      setCoverPhoto({ id_object: id, id_img: photo?.id }).then((resp) =>
+        handleResponse(resp, () => {
+          const filteredPhotos = photos.filter((p, i) => i !== index);
+          handleChangePhotos([photo, ...filteredPhotos]);
+        })
+      );
+    } else {
+      const filteredPhotos = photos.filter((p, i) => i !== index);
+      handleChangePhotos([photo, ...filteredPhotos]);
+    }
   };
 
   const handleGetObject = () => {

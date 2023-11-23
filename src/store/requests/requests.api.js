@@ -30,6 +30,14 @@ export const requests = createApi({
           mod: "system_info",
         }),
       }),
+      transformResponse: (response) => {
+        const formatedResponse = response
+          ? Object.entries(response)
+              .filter((f) => f[0] !== "error")
+              ?.map((f) => f[1])
+          : [];
+        return formatedResponse;
+      },
     }),
     getRubricsFields: build.query({
       query: (id_rubric) => ({
@@ -42,6 +50,14 @@ export const requests = createApi({
           id_rubric,
         }),
       }),
+      transformResponse: (response) => {
+        const formatedResponse = response
+          ? Object.entries(response)
+              .filter((f) => f[0] !== "error")
+              ?.map((f) => f[1])
+          : [];
+        return formatedResponse;
+      },
     }),
     getLocations: build.query({
       query: () => ({

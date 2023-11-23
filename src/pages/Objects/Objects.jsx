@@ -76,14 +76,19 @@ export const Objects = () => {
     }
 
     getAllObjects(data).then((resp) => {
-      handleResponse(resp, () => {
-        setAllCount(resp?.data?.all_item ?? 0);
-        setObjects(
-          resp?.data?.objects
-            ? Object.entries(resp?.data?.objects)?.map((obj) => obj[1])
-            : []
-        );
-      });
+      handleResponse(
+        resp,
+        () => {
+          setAllCount(resp?.data?.all_item ?? 0);
+          setObjects(
+            resp?.data?.objects
+              ? Object.entries(resp?.data?.objects)?.map((obj) => obj[1])
+              : []
+          );
+        },
+        () => setObjects([]),
+        true
+      );
     });
   };
 

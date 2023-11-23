@@ -75,6 +75,7 @@ const StyledTypeSelect = styled.div`
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     margin-bottom: 2px;
+    text-align: left;
   }
   .subtitle {
     color: #fff;
@@ -85,6 +86,7 @@ const StyledTypeSelect = styled.div`
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
+    text-align: left;
   }
   .arrow-btn {
     cursor: pointer;

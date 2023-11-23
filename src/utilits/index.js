@@ -122,33 +122,29 @@ export const handleResponse = (
   onError,
   notShowErrorMessage
 ) => {
-  if (
-    resp?.data?.error === 0 &&
-    typeof resp?.data?.error !== "undefined" &&
-    !resp?.data?.messege
-  ) {
+  if (resp?.error?.data) {
+    onError && onError();
+    !notShowErrorMessage &&
+      cogoToast.error("Помилка", {
+        hideAfter: 3,
+        position: "top-right",
+      });
+  } else if (resp?.data?.error === 0 && !resp?.data?.messege) {
     onSuccess && onSuccess();
   } else if (
-    resp?.data?.error === 0 &&
-    typeof resp?.data?.error !== "undefined" &&
+    (resp?.data?.error === 0 || resp?.data?.error === undefined) &&
     resp?.data
   ) {
     onSuccess && onSuccess();
   } else if (resp?.data?.error || resp?.data?.messege) {
     onError && onError();
-    if (resp?.data?.status !== 77 && resp?.data?.error !== 32) {
+    if (resp?.data?.error !== 77 && resp?.data?.error !== 32) {
       !notShowErrorMessage &&
         cogoToast.error(resp?.data?.messege ?? "Помилка", {
           hideAfter: 3,
           position: "top-right",
         });
     }
-  } else if (resp?.error?.data) {
-    !notShowErrorMessage &&
-      cogoToast.error("Помилка", {
-        hideAfter: 3,
-        position: "top-right",
-      });
   }
 };
 

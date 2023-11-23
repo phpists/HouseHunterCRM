@@ -43,6 +43,7 @@ export const Maininfo = ({ data, onChangeField, requestData, isObject }) => {
     }
   }, [locationsList]);
 
+  console.log(data);
   return (
     <StyledMaininfo>
       {isObject && (

@@ -25,7 +25,7 @@ export const Contacts = () => {
       <div className="flex items-center contacts-wrapper">
         <div className="client-info">
           <div className="name">
-            {data?.first_name} {data?.last_name}
+            {data?.data?.first_name} {data?.data?.last_name}
           </div>
           <div className="label">Клієнт</div>
         </div>
@@ -48,7 +48,9 @@ export const Contacts = () => {
           </div>
           <Phones
             top
-            phones={data?.phone?.map(({ code, phone }) => `${code}${phone}`)}
+            phones={data?.data?.phone?.map(
+              ({ code, phone }) => `${code}${phone}`
+            )}
           />
         </div>
       </div>

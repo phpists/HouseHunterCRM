@@ -3,6 +3,7 @@ import { Photo } from "./Photo";
 import { AddButton } from "./AddButton";
 import { useLazyDeleteClientPhotoQuery } from "../../../../store/clients/clients.api";
 import { useParams } from "react-router-dom";
+import { handleResponse } from "../../../../utilits";
 
 export const OtherInfo = ({ photos, onChange, onRefreshClientData }) => {
   const { id } = useParams();
@@ -11,7 +12,11 @@ export const OtherInfo = ({ photos, onChange, onRefreshClientData }) => {
   const handleAddPhoto = (files) => onChange([...photos, ...files]);
 
   const handleDeletePhoto = (id_img) => {
-    deletePhoto({ id_client: id, id_img }).then(() => onRefreshClientData());
+    deletePhoto({ id_client: id, id_img }).then((resp) =>
+      handleResponse(resp, () => {
+        onRefreshClientData();
+      })
+    );
   };
 
   return (

@@ -170,6 +170,12 @@ export const clients = createApi({
           id_client,
         }),
       }),
+      transformResponse: (response) => {
+        const formatedResponse = response
+          ? Object.entries(response)?.map((f) => f[1])
+          : [];
+        return formatedResponse;
+      },
     }),
   }),
 });

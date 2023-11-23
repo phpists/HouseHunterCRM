@@ -23,11 +23,14 @@ export const Client = () => {
   return (
     <StyledClient isEmpty={!selectedObject}>
       <Header />
-      <ProfileMobile data={clientData} onRefreshClientData={handleGetClient} />
+      <ProfileMobile
+        data={clientData?.data}
+        onRefreshClientData={handleGetClient}
+      />
       <div className="client-content hide-scroll">
         <Profile
           className="item-desktop"
-          data={clientData}
+          data={clientData?.data}
           onRefreshClientData={handleGetClient}
         />
         <Objects

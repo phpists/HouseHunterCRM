@@ -76,6 +76,14 @@ export const auth = createApi({
           action: "get_phone_codes",
         }),
       }),
+      transformResponse: (response) => {
+        const formatedResponse = response
+          ? Object.entries(response)
+              .filter((f) => f[0] !== "error")
+              ?.map((f) => f[1])
+          : [];
+        return formatedResponse;
+      },
     }),
     editProfile: build.query({
       query: ({ photo, ...data }) => ({

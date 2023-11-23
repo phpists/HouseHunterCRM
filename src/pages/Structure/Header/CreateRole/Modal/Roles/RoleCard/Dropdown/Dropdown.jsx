@@ -14,9 +14,8 @@ export const Dropdown = ({
 }) => {
   return (
     <StyledDropdown iconColor={iconColor}>
-      {permissionsList?.messege &&
-      Object.entries(permissionsList?.messege)?.length > 0
-        ? Object.entries(permissionsList?.messege)?.map((p, i) => (
+      {permissionsList && Object.entries(permissionsList)?.length > 0
+        ? Object.entries(permissionsList)?.map((p, i) => (
             <React.Fragment key={i}>
               <AccessBlock
                 title={p[1]?.name}
