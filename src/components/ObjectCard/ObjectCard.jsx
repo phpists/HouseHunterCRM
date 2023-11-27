@@ -2,7 +2,12 @@ import styled from "styled-components";
 import { DesktopContent } from "./DesktopContent";
 import { MobileContent } from "./MobileContent";
 
-export const ObjectCard = ({ selected, onSelect, data }) => {
+export const ObjectCard = ({
+  selected,
+  onSelect,
+  data,
+  onToggleFavoriteStatus,
+}) => {
   const handleClick = (e) =>
     e.target.classList.contains("clickable") && onSelect();
 
@@ -11,8 +16,14 @@ export const ObjectCard = ({ selected, onSelect, data }) => {
       className={` clickable ${selected && "selected"}`}
       onClick={handleClick}
     >
-      <DesktopContent data={data} />
-      <MobileContent data={data} />
+      <DesktopContent
+        data={data}
+        onToggleFavoriteStatus={onToggleFavoriteStatus}
+      />
+      <MobileContent
+        data={data}
+        onToggleFavoriteStatus={onToggleFavoriteStatus}
+      />
     </StyledObjectCard>
   );
 };

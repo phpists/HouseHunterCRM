@@ -131,7 +131,7 @@ export const handleResponse = (
         position: "top-right",
       });
   } else if (
-    resp?.data?.error === 0 ||
+    (resp?.data?.error === 0 && resp?.data?.error !== undefined) ||
     (resp?.error !== undefined && resp?.error === 0)
   ) {
     if (onSuccess && isReturnData) {
@@ -140,7 +140,8 @@ export const handleResponse = (
       onSuccess();
     }
   } else if (
-    (resp?.data?.error === 0 || resp?.data?.error === undefined) &&
+    resp?.data?.error === 0 &&
+    resp?.data?.error !== undefined &&
     resp?.data
   ) {
     if (onSuccess && isReturnData) {

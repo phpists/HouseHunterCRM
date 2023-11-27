@@ -3,13 +3,23 @@ import { Button } from "./Button";
 import { Dropdown } from "./Dropdown";
 import { useState } from "react";
 
-export const ShowMore = ({ clientId, id }) => {
+export const ShowMore = ({
+  clientId,
+  id,
+  onToggleFavoriteStatus,
+  isFavorite,
+}) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
 
   return (
     <StyledShowMore isFocusedBtn={isFocusedBtn}>
       <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />
-      <Dropdown clientId={clientId} id={id} />
+      <Dropdown
+        clientId={clientId}
+        id={id}
+        onToggleFavoriteStatus={onToggleFavoriteStatus}
+        isFavorite={isFavorite}
+      />
     </StyledShowMore>
   );
 };

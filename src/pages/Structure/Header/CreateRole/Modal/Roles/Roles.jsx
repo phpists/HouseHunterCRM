@@ -17,7 +17,6 @@ export const Roles = ({ level, levelData, onRefetchData }) => {
     return null;
   }
 
-  console.log(levelData[0]?.split(" - ")?.length);
   return (
     <StyledRoles>
       {/* <Empty /> */}

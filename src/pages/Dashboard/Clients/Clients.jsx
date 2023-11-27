@@ -12,7 +12,7 @@ export const Clients = () => {
       <CardHeader title="До моїх клієнтів" />
       <Card
         IconImg={Users}
-        title={data?.count ?? 0}
+        title={data?.count ?? "-"}
         subtitle="Всього клієнтів"
       />
     </StyledClients>

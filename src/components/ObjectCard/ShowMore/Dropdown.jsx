@@ -1,8 +1,19 @@
 import { NavLink } from "react-router-dom";
 import { styled } from "styled-components";
 
-export const Dropdown = ({ clientId, id }) => (
+export const Dropdown = ({
+  clientId,
+  id,
+  onToggleFavoriteStatus,
+  isFavorite,
+}) => (
   <StyledDropdown className="dropdown">
+    <div
+      className="flex items-center justify-between"
+      onClick={onToggleFavoriteStatus}
+    >
+      <span> {isFavorite ? "Із" : "До"} улюблених</span>
+    </div>
     <div className="flex items-center justify-between">
       <span>Знайти схожі</span>
     </div>

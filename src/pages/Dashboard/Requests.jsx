@@ -20,15 +20,15 @@ export const Requests = () => {
       <div className="content">
         <Card
           IconImg={MegaphoneIcon}
-          title={requestsCount?.count ?? 0}
+          title={requestsCount?.count ?? "-"}
           subtitle="Всього запитів "
         />
         <InfoList
           items={[
-            { title: "Актуальні", value: actualRequestsCount?.count ?? 0 },
+            { title: "Актуальні", value: actualRequestsCount?.count ?? "-" },
             {
               title: "Протерміновані",
-              value: overdueRequestsCount?.count ?? 0,
+              value: overdueRequestsCount?.count ?? "-",
             },
           ]}
         />

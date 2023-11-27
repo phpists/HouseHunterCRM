@@ -3,7 +3,6 @@ import { TypeCard } from "./TypeCard/TypeCard";
 import { useGetAllPerimissionsLevelsQuery } from "../../../../../../store/structure/structure.api";
 
 export const Dropdown = ({ levels, active, onChange }) => {
-  console.log(levels);
   return (
     <StyledDropdown>
       {Object.entries(levels)

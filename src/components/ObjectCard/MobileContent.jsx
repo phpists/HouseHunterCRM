@@ -9,7 +9,7 @@ import { Tags } from "./Tags/Tags";
 import { Contacts } from "./Contacts/Contacts";
 import { ShowMore } from "./ShowMore/ShowMore";
 
-export const MobileContent = ({ data }) => (
+export const MobileContent = ({ data, onToggleFavoriteStatus }) => (
   <StyledMobileContent>
     <Header />
     <CardTitle title={data?.title} />
@@ -19,7 +19,12 @@ export const MobileContent = ({ data }) => (
     <MainInfo className="mobile-main-info" data={data} />
     <Tags className="mobile-tags" data={data} />
     <Contacts data={data} />
-    <ShowMore clientId={data?.id_client} id={data?.id} />
+    <ShowMore
+      clientId={data?.id_client}
+      id={data?.id}
+      onToggleFavoriteStatus={onToggleFavoriteStatus}
+      isFavorite={data?.favorite}
+    />
   </StyledMobileContent>
 );
 

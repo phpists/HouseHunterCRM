@@ -3,6 +3,7 @@ import { Header } from "./Header/Header";
 import { List } from "./List";
 import { useEffect, useState } from "react";
 import {
+  useLazyAddToFavoritesQuery,
   useLazyGetAllObjectsQuery,
   useLazyGetObjectsCountQuery,
   useLazyGetRubricFieldsQuery,
@@ -10,6 +11,7 @@ import {
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
 import { handleResponse } from "../../utilits";
+import cogoToast from "cogo-toast";
 
 const INIT_FILTERS = {
   id_rubric: "",
@@ -25,6 +27,7 @@ export const Objects = () => {
   const [getAllObjects] = useLazyGetAllObjectsQuery();
   const [getObjectsCount] = useLazyGetObjectsCountQuery();
   const [getRubricField] = useLazyGetRubricFieldsQuery();
+  const [addObjectToFavorites] = useLazyAddToFavoritesQuery();
   const { saveObjectsCount } = useActions();
   const [selected, setSelected] = useState([]);
   const [objects, setObjects] = useState([]);
@@ -139,6 +142,22 @@ export const Objects = () => {
     setSelected(isReset ? [] : objIds);
   };
 
+  const handleToggleFavoriteStatus = (id) => {
+    addObjectToFavorites(id).then((resp) => {
+      handleResponse(resp, () => {
+        setObjects(
+          objects?.map((obj) =>
+            obj?.id === id ? { ...obj, favorite: !obj.favorite } : obj
+          )
+        );
+        cogoToast.success("Статус успішно змінено!", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      });
+    });
+  };
+
   return (
     <StyledObjects>
       <Header
@@ -155,7 +174,12 @@ export const Objects = () => {
         allCount={allCount}
         onSelectAll={handleSelectAll}
       />
-      <List selected={selected} onSelect={handleSelect} data={objects ?? []} />
+      <List
+        selected={selected}
+        onSelect={handleSelect}
+        data={objects ?? []}
+        toggleFavoriteStatus={handleToggleFavoriteStatus}
+      />
     </StyledObjects>
   );
 };

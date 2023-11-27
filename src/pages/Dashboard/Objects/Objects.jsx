@@ -27,11 +27,14 @@ export const Objects = () => {
         />
         <InfoList
           items={[
-            { title: "Актуальні", value: actualObjectCount?.count ?? 0 },
-            { title: "Протерміновані", value: overdueObjectCount?.count ?? 0 },
+            { title: "Актуальні", value: actualObjectCount?.count ?? "-" },
+            {
+              title: "Протерміновані",
+              value: overdueObjectCount?.count ?? "-",
+            },
             {
               title: "Об’єкти Street Base",
-              value: streetBaseObjectCount?.count ?? 0,
+              value: streetBaseObjectCount?.count ?? "-",
             },
           ]}
         />

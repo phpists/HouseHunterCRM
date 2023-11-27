@@ -123,7 +123,6 @@ export const Requests = () => {
             }
           },
           () => {
-            console.log("here");
             setIsAllPages(true);
             isReset && setRequests([]);
           }

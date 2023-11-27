@@ -11,7 +11,9 @@ export const Photo = ({ photo, onRemove, onShow }) => {
       className="flex items-center justify-center"
       onClick={handleClick}
     >
-      <RemoveIcon onClick={onRemove} className="noClickable" />
+      <div className="remove-btn noClickable">
+        <RemoveIcon onClick={onRemove} className="noClickable" />
+      </div>
     </StyledPhoto>
   );
 };
@@ -42,6 +44,13 @@ const StyledPhoto = styled.div`
   g {
     transition: all 0.3s;
     opacity: 0;
+  }
+  .remove-btn {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   &:hover {
     border: 1px solid rgba(255, 255, 255, 0.4);

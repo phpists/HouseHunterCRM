@@ -6,11 +6,11 @@ export const BackButton = () => {
   const navigate = useNavigate();
 
   return (
-    <StyledBackButton className="flex items-center">
-      <button
-        className="flex items-center justify-center"
-        onClick={() => navigate(-1)}
-      >
+    <StyledBackButton
+      className="flex items-center"
+      onClick={() => navigate(-1)}
+    >
+      <button className="flex items-center justify-center">
         <Arrow />
       </button>
       Назад
@@ -26,6 +26,7 @@ const StyledBackButton = styled.button`
   font-weight: 200;
   line-height: 118%; /* 23.6px */
   letter-spacing: 0.4px;
+  cursor: pointer;
   button {
     width: 26px;
     height: 26px;
