@@ -29,7 +29,9 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
 
   const handleRefreshData = () => {
     getClientPhotos(id).then((resp) => {
-      setPhotos(resp?.data ?? []);
+      setPhotos(
+        resp?.data ? resp?.data?.filter((p) => typeof p === "object") : []
+      );
     });
     onRefreshClientData();
   };
@@ -47,7 +49,9 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
         : null
     );
     getClientPhotos(id).then((resp) => {
-      setPhotos(resp?.data ?? []);
+      setPhotos(
+        resp?.data ? resp?.data?.filter((p) => typeof p === "object") : []
+      );
     });
   }, [data]);
 
@@ -67,11 +71,11 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
           phone: handleRemovePhoneMask(phone.phone),
         }))
       ),
-      photos,
+      photos: photos?.filter((p) => !!p?.type),
     }).then((resp) => {
       setLoading(false);
       handleResponse(resp, () => {
-        onRefreshClientData();
+        handleRefreshData();
         cogoToast.success("Зміни успішно збережено", {
           hideAfter: 3,
           position: "top-right",

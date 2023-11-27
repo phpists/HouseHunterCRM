@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../../api/baseUrl";
 import { headers } from "../../api/headers";
-import { handleToFormData } from "../../utilits";
+import { handleResponse, handleToFormData } from "../../utilits";
 
 export const requests = createApi({
   reducerPath: "requests/api",
@@ -31,12 +31,20 @@ export const requests = createApi({
         }),
       }),
       transformResponse: (response) => {
-        const formatedResponse = response
-          ? Object.entries(response)
-              .filter((f) => f[0] !== "error")
-              ?.map((f) => f[1])
-          : [];
-        return formatedResponse;
+        return handleResponse(
+          response,
+          () => {
+            const formatedResponse = response
+              ? Object.entries(response)
+                  .filter((f) => f[0] !== "error")
+                  ?.map((f) => f[1])
+              : [];
+            return formatedResponse;
+          },
+          () => null,
+          false,
+          true
+        );
       },
     }),
     getRubricsFields: build.query({
@@ -51,12 +59,20 @@ export const requests = createApi({
         }),
       }),
       transformResponse: (response) => {
-        const formatedResponse = response
-          ? Object.entries(response)
-              .filter((f) => f[0] !== "error")
-              ?.map((f) => f[1])
-          : [];
-        return formatedResponse;
+        return handleResponse(
+          response,
+          () => {
+            const formatedResponse = response
+              ? Object.entries(response)
+                  .filter((f) => f[0] !== "error")
+                  ?.map((f) => f[1])
+              : [];
+            return formatedResponse;
+          },
+          () => null,
+          false,
+          true
+        );
       },
     }),
     getLocations: build.query({
@@ -69,6 +85,15 @@ export const requests = createApi({
           mod: "system_info",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getRequestsCount: build.query({
       query: () => ({
@@ -81,6 +106,15 @@ export const requests = createApi({
           not_actual: "1",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     deleteRequest: build.query({
       query: (id_groups) => ({
@@ -108,6 +142,15 @@ export const requests = createApi({
           ...filters,
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getRequest: build.query({
       query: (id_group) => ({
@@ -120,6 +163,15 @@ export const requests = createApi({
           id_group,
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     editRequest: build.query({
       query: ({ general_group, fields }) => ({
@@ -156,6 +208,15 @@ export const requests = createApi({
           mod: "requests",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getOverdueRequestCount: build.query({
       query: () => ({
@@ -167,6 +228,35 @@ export const requests = createApi({
           mod: "requests",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
+    }),
+    getLastRequests: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_last_request",
+          mod: "requests",
+        }),
+      }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
   }),
 });
@@ -185,4 +275,5 @@ export const {
   useGetRequestsCountQuery,
   useGetActualRequestCountQuery,
   useGetOverdueRequestCountQuery,
+  useLazyGetLastRequestsQuery,
 } = requests;

@@ -7,15 +7,12 @@ import { fortmatNumber, handleFormatDate } from "../../../../../utilits";
 export const Price = ({ data, id }) => (
   <StyledPrice className="flex items-center justify-between">
     <div>
-      <Title price={fortmatNumber(Number(data[id]?.price_max_USD ?? "0"))} />
+      <Title price={fortmatNumber(Number(data?.price_max ?? "0"))} />
       <Subtitle subtitle="Бажана ціна" />
     </div>
     <div>
       <Date
-        deadline={handleFormatDate(
-          Number(data?.General_field_group?.dt_deadline * 1000),
-          true
-        )}
+        deadline={handleFormatDate(Number(data?.dt_deadline * 1000), true)}
       />
       <Subtitle subtitle="Термін запиту" />
     </div>

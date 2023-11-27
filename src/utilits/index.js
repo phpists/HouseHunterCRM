@@ -120,7 +120,8 @@ export const handleResponse = (
   resp,
   onSuccess,
   onError,
-  notShowErrorMessage
+  notShowErrorMessage,
+  isReturnData
 ) => {
   if (resp?.error?.data) {
     onError && onError();
@@ -129,21 +130,47 @@ export const handleResponse = (
         hideAfter: 3,
         position: "top-right",
       });
-  } else if (resp?.data?.error === 0 && !resp?.data?.messege) {
-    onSuccess && onSuccess();
+  } else if (
+    resp?.data?.error === 0 ||
+    (resp?.error !== undefined && resp?.error === 0)
+  ) {
+    if (onSuccess && isReturnData) {
+      return onSuccess();
+    } else if (onSuccess) {
+      onSuccess();
+    }
   } else if (
     (resp?.data?.error === 0 || resp?.data?.error === undefined) &&
     resp?.data
   ) {
-    onSuccess && onSuccess();
-  } else if (resp?.data?.error || resp?.data?.messege) {
+    if (onSuccess && isReturnData) {
+      return onSuccess();
+    } else if (onSuccess) {
+      onSuccess();
+    }
+  } else if (
+    resp?.data?.error ||
+    resp?.data?.messege ||
+    resp?.error ||
+    resp?.messege
+  ) {
     onError && onError();
-    if (resp?.data?.error !== 77 && resp?.data?.error !== 32) {
+    if (
+      resp?.data?.error !== 77 &&
+      resp?.data?.error !== 32 &&
+      resp?.error !== 32 &&
+      resp?.error !== 77
+    ) {
       !notShowErrorMessage &&
-        cogoToast.error(resp?.data?.messege ?? "Помилка", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        cogoToast.error(
+          resp?.data?.messege
+            ? resp?.data?.messege
+            : resp?.messege ?? "Помилка",
+          {
+            hideAfter: 3,
+            position: "top-right",
+          }
+        );
     }
   }
 };

@@ -1,11 +1,20 @@
 import { styled } from "styled-components";
 import { ReactComponent as RemoveIcon } from "../../../../assets/images/remove.svg";
 
-export const Photo = ({ photo, onRemove }) => (
-  <StyledPhoto photo={photo} className="flex items-center justify-center">
-    <RemoveIcon onClick={onRemove} />
-  </StyledPhoto>
-);
+export const Photo = ({ photo, onRemove, onShow }) => {
+  const handleClick = (e) =>
+    !e.target.classList.contains("noClickable") ? onShow() : null;
+
+  return (
+    <StyledPhoto
+      photo={photo}
+      className="flex items-center justify-center"
+      onClick={handleClick}
+    >
+      <RemoveIcon onClick={onRemove} className="noClickable" />
+    </StyledPhoto>
+  );
+};
 
 const StyledPhoto = styled.div`
   width: 70px;

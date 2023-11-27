@@ -9,12 +9,12 @@ export const Client = ({ data, id }) => (
     <div className="flex items-center">
       <Avatar />
       <div>
-        <Name name={`${data[id]?.usr_first_name} ${data[id]?.usr_last_name}`} />
+        <Name name={data?.cl_fullname ?? ""} />
         <Subtitle subtitle={`ID: ${data?.General_field_group?.id_client}`} />
       </div>
     </div>
     <div>
-      <Rent category={data[id]?.rubric_name} />
+      <Rent category={data?.rubric_name} />
       <Subtitle subtitle="Категорія" />
     </div>
   </StyledClient>

@@ -43,7 +43,6 @@ export const Maininfo = ({ data, onChangeField, requestData, isObject }) => {
     }
   }, [locationsList]);
 
-  console.log(data);
   return (
     <StyledMaininfo>
       {isObject && (
@@ -82,7 +81,7 @@ export const Maininfo = ({ data, onChangeField, requestData, isObject }) => {
           className="price-field"
           viewOnly
         />
-        <CreatedDate />
+        <CreatedDate date={data?.dt_add} />
       </div>
       <Divider />
       <div className="flex flex-wrap items-center tags">

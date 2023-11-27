@@ -32,6 +32,7 @@ export const App = () => {
 
   const handleGetUserData = () => {
     getProfile().then((resp) => {
+      console.log(resp);
       loginUser(resp?.data?.data);
       setLoad(true);
       setTimeout(() => setLoading(false), 1500);

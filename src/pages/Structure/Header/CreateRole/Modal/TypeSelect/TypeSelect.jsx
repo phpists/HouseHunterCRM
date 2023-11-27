@@ -37,6 +37,7 @@ export const TypeSelect = () => {
     );
   };
 
+  console.log(handleGetCurrentLevel(data), data);
   return (
     <StyledTypeSelect className="flex items-center justify-between" open={open}>
       <div>

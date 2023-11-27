@@ -2,24 +2,28 @@ import styled from "styled-components";
 import { Title } from "./Title";
 import { RequestCard } from "./RequestCard/RequestCard";
 import { useEffect, useState } from "react";
-import { useLazyGetRequestsQuery } from "../../../store/requests/requests.api";
+import {
+  useGetRubricsQuery,
+  useLazyGetLastRequestsQuery,
+} from "../../../store/requests/requests.api";
 import { handleResponse } from "../../../utilits";
 
 export const LastRequests = () => {
-  const [getRequests] = useLazyGetRequestsQuery();
-  const [requests, setRequests] = useState([]);
+  const [getRequests] = useLazyGetLastRequestsQuery();
+  const [requests, setRequests] = useState({});
+  const { data: rubricsList } = useGetRubricsQuery();
 
   const handleGetRequests = () => {
-    getRequests({ current_page: 0, item_on_page: 15 }).then((resp) => {
+    getRequests().then((resp) => {
       handleResponse(
         resp,
         () => {
-          if (Object.entries(resp?.data)?.length) {
-            setRequests(resp?.data);
+          if (Object.entries(resp?.data?.data)?.length) {
+            setRequests(resp?.data?.data);
           }
         },
         () => {
-          setRequests([]);
+          setRequests({});
         },
         true
       );
@@ -35,20 +39,30 @@ export const LastRequests = () => {
     <StyledLastRequests>
       <Title />
       <div className="list hide-scroll">
-        {requests?.requests && Object.entries(requests?.requests)?.length
-          ? Object.entries(requests?.requests)?.map((d, i) => {
+        {requests && Object.entries(requests)?.length
+          ? Object.entries(requests)?.map((d, i) => {
               if (typeof d !== "object") {
                 return null;
               }
 
-              const id = Object.entries(d[1])[0][0];
-              const generalFields = requests[d[0]] ?? {};
-              const requestData = d[1];
+              const id = Object.entries(d[1])?.filter(
+                (r) => r[0] !== "General_field_group"
+              )[0][0];
+              const generalFields = d[1]?.General_field_group ?? {};
+              const requestData = Object.entries(d[1])?.filter(
+                (r) => r[0] !== "General_field_group"
+              )[0][1];
 
               return (
                 <RequestCard
                   key={i}
-                  data={{ ...requestData, ...generalFields }}
+                  data={{
+                    ...requestData,
+                    ...generalFields,
+                    rubric_name:
+                      rubricsList?.find((r) => r.id === requestData?.id_rubric)
+                        ?.name ?? "-",
+                  }}
                   id={id}
                 />
               );

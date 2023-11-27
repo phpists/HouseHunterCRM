@@ -10,7 +10,7 @@ import {
   useLazyGetRubricsFieldsQuery,
 } from "../../../store/requests/requests.api";
 import { REQUEST_INIT } from "../../Request/Request";
-import { handleResponse } from "../../../utilits";
+import { handleFormatDate, handleResponse } from "../../../utilits";
 import { useLazyGetObjectQuery } from "../../../store/objects/objects.api";
 
 export const ObjectCard = ({ className, selectedObject }) => {
@@ -28,6 +28,9 @@ export const ObjectCard = ({ className, selectedObject }) => {
         const infoField = Object.entries(
           Object.entries(resp?.data)[0][1]
         ).filter((f) => f[0] !== "General_field_group")[0][1];
+        const generalInfo = Object.entries(
+          Object.entries(resp?.data)[0][1]
+        ).find((f) => f[0] === "General_field_group");
 
         setData({
           id_client: infoField?.id_client,
@@ -46,6 +49,10 @@ export const ObjectCard = ({ className, selectedObject }) => {
           not_actual: infoField?.not_actual,
           dt_deadline: Object.entries(resp?.data)[0][1]?.dt_deadline,
           deleted: infoField?.deleted,
+          dt_add:
+            generalInfo?.length > 0 && generalInfo[1]?.dt_add
+              ? handleFormatDate(Number(generalInfo[1]?.dt_add) * 1000, true)
+              : "-",
         });
       });
     });
@@ -63,6 +70,9 @@ export const ObjectCard = ({ className, selectedObject }) => {
           id_rubric: resp?.data?.id_rubric,
           id_location: resp?.data?.id_location,
           price_min: resp?.data?.price,
+          dt_add: resp?.data?.dt_add
+            ? handleFormatDate(Number(resp?.data?.dt_add) * 1000, true)
+            : "-",
         });
       });
     });

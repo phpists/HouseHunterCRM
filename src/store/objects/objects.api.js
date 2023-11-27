@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../../api/baseUrl";
-import { handleToFormData } from "../../utilits";
+import { handleResponse, handleToFormData } from "../../utilits";
 import { headers } from "../../api/headers";
 
 export const objects = createApi({
@@ -29,6 +29,15 @@ export const objects = createApi({
           id_rubric,
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getCommentsToFields: build.query({
       query: () => ({
@@ -40,6 +49,15 @@ export const objects = createApi({
           mod: "system_info",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     deleteObject: build.query({
       query: (id_objects) => ({
@@ -77,6 +95,15 @@ export const objects = createApi({
           ...filters,
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getObject: build.query({
       query: (id_object) => ({
@@ -89,6 +116,15 @@ export const objects = createApi({
           id_object,
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     editObject: build.query({
       query: ({ id_object, field, photos }) => ({
@@ -111,6 +147,15 @@ export const objects = createApi({
           mod: "objects",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getActualObjectsCount: build.query({
       query: () => ({
@@ -122,6 +167,15 @@ export const objects = createApi({
           mod: "objects",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getOverdueObjectsCount: build.query({
       query: () => ({
@@ -133,6 +187,15 @@ export const objects = createApi({
           mod: "objects",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getStreetBaseObjectsCount: build.query({
       query: () => ({
@@ -144,6 +207,15 @@ export const objects = createApi({
           mod: "objects",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     deleteObjectPhoto: build.query({
       query: ({ id_object, id_img }) => ({

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../../api/baseUrl";
 import { headers } from "../../api/headers";
-import { handleToFormData } from "../../utilits";
+import { handleResponse, handleToFormData } from "../../utilits";
 
 export const clients = createApi({
   reducerPath: "clients/api",
@@ -32,6 +32,15 @@ export const clients = createApi({
           mod: "clients",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getNewClientsCount: build.query({
       query: () => ({
@@ -43,6 +52,15 @@ export const clients = createApi({
           mod: "clients",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getClients: build.query({
       query: ({
@@ -65,6 +83,15 @@ export const clients = createApi({
           search_phone_code,
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getClient: build.query({
       query: (id_client) => ({
@@ -77,6 +104,15 @@ export const clients = createApi({
           id_client,
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     editClient: build.query({
       query: ({
@@ -144,6 +180,15 @@ export const clients = createApi({
           id_client,
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getClientsObjects: build.query({
       query: ({ current_page, item_on_page, id_client }) => ({
@@ -158,6 +203,15 @@ export const clients = createApi({
           id_client,
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getClientPhotos: build.query({
       query: (id_client) => ({
@@ -171,10 +225,18 @@ export const clients = createApi({
         }),
       }),
       transformResponse: (response) => {
-        const formatedResponse = response
-          ? Object.entries(response)?.map((f) => f[1])
-          : [];
-        return formatedResponse;
+        return handleResponse(
+          response,
+          () => {
+            const formatedResponse = response
+              ? Object.entries(response)?.map((f) => f[1])
+              : [];
+            return formatedResponse;
+          },
+          () => null,
+          false,
+          true
+        );
       },
     }),
   }),

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../../api/baseUrl";
 import { headers } from "../../api/headers";
-import { handleToFormData } from "../../utilits";
+import { handleResponse, handleToFormData } from "../../utilits";
 
 export const structure = createApi({
   reducerPath: "structure/api",
@@ -80,6 +80,15 @@ export const structure = createApi({
           id_worker,
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     createStructure: build.query({
       query: (id_user, id_parent) => ({
@@ -129,6 +138,15 @@ export const structure = createApi({
           mod: "structure",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     createPerimission: build.query({
       query: ({
@@ -186,6 +204,15 @@ export const structure = createApi({
           mod: "billing",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getAllPerimissions: build.query({
       query: () => ({
@@ -198,12 +225,22 @@ export const structure = createApi({
         }),
       }),
       transformResponse: (response) => {
-        const formatedResponse = response?.messege
-          ? Object.fromEntries(
-              Object.entries(response?.messege)?.filter((p) => p[0] !== "error")
-            )
-          : {};
-        return formatedResponse;
+        return handleResponse(
+          response,
+          () => {
+            const formatedResponse = response?.messege
+              ? Object.fromEntries(
+                  Object.entries(response?.messege)?.filter(
+                    (p) => p[0] !== "error"
+                  )
+                )
+              : {};
+            return formatedResponse;
+          },
+          () => null,
+          false,
+          true
+        );
       },
     }),
     getAllPerimissionsLevels: build.query({
@@ -217,10 +254,18 @@ export const structure = createApi({
         }),
       }),
       transformResponse: (response) => {
-        const transformedResponse = Object.fromEntries(
-          Object.entries(response)?.filter((e) => e[0] !== "error")
+        return handleResponse(
+          response,
+          () => {
+            const transformedResponse = Object.fromEntries(
+              Object.entries(response)?.filter((e) => e[0] !== "error")
+            );
+            return transformedResponse;
+          },
+          () => null,
+          false,
+          true
         );
-        return transformedResponse;
       },
     }),
     getCompanyStructureLevel: build.query({
@@ -256,6 +301,15 @@ export const structure = createApi({
           mod: "billing",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     changeWorkerLevel: build.query({
       query: ({ id_user, structure_level }) => ({
@@ -280,6 +334,15 @@ export const structure = createApi({
           mod: "structure",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getStructureWorkerInfo: build.query({
       query: () => ({
@@ -291,6 +354,15 @@ export const structure = createApi({
           mod: "structure",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getWorkerById: build.query({
       query: (id_worker) => ({
@@ -303,18 +375,15 @@ export const structure = createApi({
           id_worker,
         }),
       }),
-    }),
-    getWorkerById: build.query({
-      query: (id_worker) => ({
-        url: "",
-        method: "POST",
-        headers: headers(),
-        body: handleToFormData({
-          action: "get_worker_by_id",
-          mod: "billing",
-          id_worker,
-        }),
-      }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     getStatisticWorker: build.query({
       query: (id_user) => ({
@@ -327,6 +396,15 @@ export const structure = createApi({
           id_user,
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
   }),
 });

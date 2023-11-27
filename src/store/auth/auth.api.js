@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../../api/baseUrl";
 import { headers } from "../../api/headers";
-import { handleToFormData } from "../../utilits";
+import { handleResponse, handleToFormData } from "../../utilits";
 
 export const auth = createApi({
   reducerPath: "auth/api",
@@ -55,6 +55,15 @@ export const auth = createApi({
         }),
         headers: headers(),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     forgotPassword: build.query({
       query: ({ email }) => ({
@@ -77,12 +86,20 @@ export const auth = createApi({
         }),
       }),
       transformResponse: (response) => {
-        const formatedResponse = response
-          ? Object.entries(response)
-              .filter((f) => f[0] !== "error")
-              ?.map((f) => f[1])
-          : [];
-        return formatedResponse;
+        return handleResponse(
+          response,
+          () => {
+            const formatedResponse = response
+              ? Object.entries(response)
+                  .filter((f) => f[0] !== "error")
+                  ?.map((f) => f[1])
+              : [];
+            return formatedResponse;
+          },
+          () => null,
+          false,
+          true
+        );
       },
     }),
     editProfile: build.query({

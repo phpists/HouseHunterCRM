@@ -4,23 +4,42 @@ import { AddButton } from "./AddButton";
 import { useLazyDeleteClientPhotoQuery } from "../../../../store/clients/clients.api";
 import { useParams } from "react-router-dom";
 import { handleResponse } from "../../../../utilits";
+import { PhotoSlider } from "react-photo-view";
+import { useState } from "react";
 
 export const OtherInfo = ({ photos, onChange, onRefreshClientData }) => {
   const { id } = useParams();
   const [deletePhoto] = useLazyDeleteClientPhotoQuery();
+  const [openView, setOpenView] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const handleAddPhoto = (files) => onChange([...photos, ...files]);
 
-  const handleDeletePhoto = (id_img) => {
+  const handleDeletePhoto = (id_img, index) => {
     deletePhoto({ id_client: id, id_img }).then((resp) =>
       handleResponse(resp, () => {
-        onRefreshClientData();
+        onChange(photos.filter((p, i) => p?.id?.toString() !== id_img));
       })
     );
   };
 
+  const handleOpenSlider = (index) => {
+    setOpenView(true);
+    setCurrentSlide(index);
+  };
+
   return (
-    <StyledOtherInfo className="flex items-center hide-scroll">
+    <StyledOtherInfo className="flex items-center">
+      <PhotoSlider
+        images={photos.map((photo) => ({
+          src: photo?.type ? URL.createObjectURL(photo) : photo?.name,
+          key: photo?.type ? URL.createObjectURL(photo) : photo?.name,
+        }))}
+        visible={openView}
+        onClose={() => setOpenView(false)}
+        index={currentSlide}
+        onIndexChange={(index) => setCurrentSlide(index)}
+      />
       {photos?.length > 0
         ? photos?.map((photo, i) => (
             <Photo
@@ -29,8 +48,9 @@ export const OtherInfo = ({ photos, onChange, onRefreshClientData }) => {
               onRemove={() =>
                 photo?.type
                   ? onChange(photos.filter((p, j) => j !== i))
-                  : handleDeletePhoto(photo?.id?.toString())
+                  : handleDeletePhoto(photo?.id?.toString(), i)
               }
+              onShow={() => handleOpenSlider(i)}
             />
           ))
         : null}
@@ -46,4 +66,8 @@ const StyledOtherInfo = styled.div`
   overflow: auto;
   position: relative;
   z-index: 20;
+  max-width: 370px;
+  &::-webkit-scrollbar {
+    height: 10px;
+  }
 `;
