@@ -10,6 +10,7 @@ import { useAppSelect } from "../../../hooks/redux";
 import { useEffect } from "react";
 import { useActions } from "../../../hooks/actions";
 import {
+  useLazyDeleteAvatarQuery,
   useLazyEditProfileQuery,
   useLazyGetUserQuery,
 } from "../../../store/auth/auth.api";
@@ -24,6 +25,7 @@ export const Profile = () => {
   const { loginUser } = useActions();
   const [getProfile] = useLazyGetUserQuery();
   const [editProfile] = useLazyEditProfileQuery();
+  const [deleteAvatar] = useLazyDeleteAvatarQuery();
   const [errors, setErrors] = useState([]);
 
   const handleCheckAllFields = () => {
@@ -84,6 +86,16 @@ export const Profile = () => {
 
   const handleReset = () => setProfileData(user);
 
+  const handleRemoveAvatar = () => {
+    if (profileData?.photo?.type) {
+      handleChangeField("photo", null);
+    } else {
+      deleteAvatar().then((resp) =>
+        handleResponse(resp, () => handleChangeField("photo", null))
+      );
+    }
+  };
+
   return (
     <>
       {openEdit && (
@@ -100,6 +112,7 @@ export const Profile = () => {
           profile
           billingTo={user?.billing_to}
           errors={errors}
+          onRemoveAvatar={handleRemoveAvatar}
         />
       )}
       <StyledProfile

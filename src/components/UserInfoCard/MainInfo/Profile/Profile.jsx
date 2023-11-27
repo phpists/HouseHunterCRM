@@ -11,6 +11,7 @@ export const Profile = ({
   onRefreshData,
   isProfile,
   profile,
+  onRemoveAvatar,
 }) => (
   <StyledProfile>
     <LastDate data={data?.last_active ?? ""} />
@@ -19,6 +20,7 @@ export const Profile = ({
         photo={data?.photo}
         onChangeField={onChangeField}
         onRefreshData={onRefreshData}
+        onRemoveAvatar={onRemoveAvatar}
       />
       <div className="w-full">
         <div className="flex items-center justify-between">

@@ -15,6 +15,7 @@ export const MainInfo = ({
   isProfile,
   profile,
   billingTo,
+  onRemoveAvatar,
 }) => {
   return (
     <StyledMainInfo>
@@ -25,6 +26,7 @@ export const MainInfo = ({
         onRefreshData={onRefreshData}
         isProfile={isProfile}
         profile={profile}
+        onRemoveAvatar={onRemoveAvatar}
       />
       {/* <BossSelect />
       <Divider /> */}

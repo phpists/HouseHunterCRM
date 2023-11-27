@@ -27,6 +27,7 @@ export const UserInfoCard = ({
   profile,
   billingTo,
   errors,
+  onRemoveAvatar,
 }) => {
   const controls = useAnimationControls();
   const contentRef = useRef(null);
@@ -72,6 +73,7 @@ export const UserInfoCard = ({
           isProfile={isProfile}
           profile={profile}
           billingTo={billingTo}
+          onRemoveAvatar={onRemoveAvatar}
         />
         {/* <SectionTitle title="Працівники в підпорядкуванні" />
         <Workers /> */}

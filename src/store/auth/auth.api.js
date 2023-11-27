@@ -117,6 +117,16 @@ export const auth = createApi({
         ),
       }),
     }),
+    deleteAvatar: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        body: handleToFormData({
+          mod: "profile",
+          action: "delete_image",
+        }),
+      }),
+    }),
   }),
 });
 
@@ -128,4 +138,5 @@ export const {
   useLazyForgotPasswordQuery,
   useGetPhonesCodesQuery,
   useLazyEditProfileQuery,
+  useLazyDeleteAvatarQuery,
 } = auth;
