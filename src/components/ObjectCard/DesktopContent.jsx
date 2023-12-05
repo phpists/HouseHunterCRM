@@ -6,7 +6,11 @@ import { Tags } from "./Tags/Tags";
 import { Contacts } from "./Contacts/Contacts";
 import { ShowMore } from "./ShowMore/ShowMore";
 
-export const DesktopContent = ({ data, onToggleFavoriteStatus }) => (
+export const DesktopContent = ({
+  data,
+  onToggleFavoriteStatus,
+  onFindSimilar,
+}) => (
   <StyledDesktopContent className="flex items-center justify-between">
     <Slider photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)} />
     <MainInfo data={data} />
@@ -18,6 +22,7 @@ export const DesktopContent = ({ data, onToggleFavoriteStatus }) => (
       id={data?.id}
       onToggleFavoriteStatus={onToggleFavoriteStatus}
       isFavorite={data?.favorite}
+      onFindSimilar={onFindSimilar}
     />
     <div className="mobile-footer w-full">
       <Info data={data} />

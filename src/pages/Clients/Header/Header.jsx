@@ -59,7 +59,7 @@ export const Header = ({
             title={
               favoritesFilter
                 ? "Улюблене"
-                : `${newClientsCount ?? 0} нових клієнтів за сьогодні`
+                : `${newClientsCount ?? "-"} нових клієнтів за сьогодні`
             }
           />
           {favoritesFilter && <Subtitle subtitle="54 обрано" />}

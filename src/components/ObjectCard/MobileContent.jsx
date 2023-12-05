@@ -9,13 +9,17 @@ import { Tags } from "./Tags/Tags";
 import { Contacts } from "./Contacts/Contacts";
 import { ShowMore } from "./ShowMore/ShowMore";
 
-export const MobileContent = ({ data, onToggleFavoriteStatus }) => (
+export const MobileContent = ({
+  data,
+  onToggleFavoriteStatus,
+  onFindSimilar,
+}) => (
   <StyledMobileContent>
     <Header />
     <CardTitle title={data?.title} />
     <Slider photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)} />
     <CardDescription text={data?.description} />
-    <Footer />
+    <Footer createDate={data?.dt_add} />
     <MainInfo className="mobile-main-info" data={data} />
     <Tags className="mobile-tags" data={data} />
     <Contacts data={data} />
@@ -24,6 +28,7 @@ export const MobileContent = ({ data, onToggleFavoriteStatus }) => (
       id={data?.id}
       onToggleFavoriteStatus={onToggleFavoriteStatus}
       isFavorite={data?.favorite}
+      onFindSimilar={onFindSimilar}
     />
   </StyledMobileContent>
 );

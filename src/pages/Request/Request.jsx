@@ -23,7 +23,7 @@ import { useGetCommentsToFieldsQuery } from "../../store/objects/objects.api";
 export const REQUEST_INIT = {
   fields: [],
   general_group: {
-    dt_deadline: null,
+    dt_deadline: new Date(),
     not_actual: "0",
     deleted: "0",
     only_company_obj: "1",
@@ -90,6 +90,14 @@ export const Request = () => {
         fields: [...data.fields, { id_rubric: id, price_currency: "1" }],
       });
     }
+
+    setErrors(
+      errors?.map((er) =>
+        er.id === "general"
+          ? { ...er, errors: er.errors?.filter((e) => e !== "id_rubric") }
+          : er
+      )
+    );
   };
 
   const handleChangeField = (fieldName, value) => {
@@ -106,17 +114,18 @@ export const Request = () => {
     const isNotEmptyField = data.fields.map((data) => {
       const fieldFields = fieldData.find((f) => f.id === data.id_rubric);
       const emptyFields = handleCheckFields({
-        title: fieldFields.title,
+        title: fieldFields?.title,
         data,
         requiredFields: fieldFields?.fields
           ?.filter((f) => f?.required === 1)
           ?.map((f) => f?.field),
-        additionalFields: [],
+        additionalFields: ["id_rubric"],
         titles: commentsToFields?.request,
         additionalTitles: {
           id_location: "Локація",
           price_min: "Ціна від",
           price_max: "Ціна до",
+          id_rubric: "Категорія",
         },
       });
 
@@ -125,17 +134,32 @@ export const Request = () => {
       return emptyFields?.length === 0;
     });
 
-    if (
+    if (data?.fields?.length === 0) {
+      errorData.push({ id: "general", errors: ["id_rubric"] });
+      cogoToast.error("Оберіть категорію", {
+        hideAfter: 3,
+        position: "top-right",
+      });
+    } else if (
       !data?.general_group?.dt_deadline ||
       data?.general_group?.dt_deadline?.length === 0
     ) {
       errorData.push({ id: "general", errors: ["dt_deadline"] });
+      cogoToast.error("Вкажіть дату дедлайну", {
+        hideAfter: 3,
+        position: "top-right",
+      });
     } else {
       errorData.push({ id: "general", errors: [] });
     }
 
     setErrors([...errorData, { id: "updated" }]);
-    return isNotEmptyField.find((e) => !e) === undefined;
+
+    return (
+      errorData?.length === 1 &&
+      errorData?.find((e) => e.id === "general") &&
+      errorData?.find((e) => e.id === "general")?.errors?.length === 0
+    );
   };
 
   const handleCreateRequest = () => {
@@ -196,7 +220,7 @@ export const Request = () => {
     if (id) {
       getRequest(id).then((resp) => {
         handleResponse(resp, () => {
-          console.log(resp);
+          console.log(resp?.data[id]?.General_field_group?.dt_deadline);
           setFavorite(!!!resp?.data[id].General_field_group?.favorite);
           setCategories([]);
           categoriesData.current = [];
@@ -209,11 +233,10 @@ export const Request = () => {
             general_group: {
               ...resp?.data[id]?.General_field_group,
               dt_deadline: resp?.data[id]?.General_field_group?.dt_deadline
-                ? handleFormatDate(
+                ? new Date(
                     Number(
                       resp?.data[id]?.General_field_group?.dt_deadline ?? 0
-                    ) * 1000,
-                    true
+                    ) * 1000
                   )
                 : undefined,
             },

@@ -6,6 +6,7 @@ export const Dropdown = ({
   id,
   onToggleFavoriteStatus,
   isFavorite,
+  onFindSimilar,
 }) => (
   <StyledDropdown className="dropdown">
     <div
@@ -14,9 +15,14 @@ export const Dropdown = ({
     >
       <span> {isFavorite ? "Із" : "До"} улюблених</span>
     </div>
-    <div className="flex items-center justify-between">
-      <span>Знайти схожі</span>
-    </div>
+    {onFindSimilar ? (
+      <div
+        className="flex items-center justify-between"
+        onClick={onFindSimilar}
+      >
+        <span>Знайти схожі</span>
+      </div>
+    ) : null}
     <div className="flex items-center justify-between">
       <span>Завантажити</span>
     </div>

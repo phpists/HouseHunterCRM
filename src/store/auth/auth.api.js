@@ -121,6 +121,7 @@ export const auth = createApi({
       query: () => ({
         url: "",
         method: "POST",
+        headers: headers(),
         body: handleToFormData({
           mod: "profile",
           action: "delete_image",

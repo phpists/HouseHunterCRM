@@ -1,17 +1,14 @@
 import { styled } from "styled-components";
 import { ReactComponent as RemoveIcon } from "../../../../assets/images/remove.svg";
+import { ReactComponent as ShowIcon } from "../../../../assets/images/eye-access.svg";
 
 export const Photo = ({ photo, onRemove, onShow }) => {
-  const handleClick = (e) =>
-    !e.target.classList.contains("noClickable") ? onShow() : null;
-
   return (
-    <StyledPhoto
-      photo={photo}
-      className="flex items-center justify-center"
-      onClick={handleClick}
-    >
-      <div className="remove-btn noClickable">
+    <StyledPhoto photo={photo} className="flex items-center justify-center">
+      <div className="btn noClickable">
+        <ShowIcon onClick={onShow} className="noClickable" />
+      </div>
+      <div className="btn noClickable">
         <RemoveIcon onClick={onRemove} className="noClickable" />
       </div>
     </StyledPhoto>
@@ -19,6 +16,9 @@ export const Photo = ({ photo, onRemove, onShow }) => {
 };
 
 const StyledPhoto = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 70px;
   height: 70px;
   flex-shrink: 0;
@@ -45,7 +45,7 @@ const StyledPhoto = styled.div`
     transition: all 0.3s;
     opacity: 0;
   }
-  .remove-btn {
+  .btn {
     width: 30px;
     height: 30px;
     display: flex;

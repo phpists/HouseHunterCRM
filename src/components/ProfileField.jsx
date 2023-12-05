@@ -1,8 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 import { ReactComponent as CheckboxIcon } from "../assets/images/checkbox.svg";
-import { handleRemovePhoneMask } from "../utilits";
+import {
+  handleFormatDate,
+  handleReformatDate,
+  handleRemovePhoneMask,
+} from "../utilits";
 import { PhoneInput } from "./PhoneInput";
+import { Calendar } from "./Calendar/Calendar";
 
 export const ProfileField = ({
   value,
@@ -49,6 +54,10 @@ export const ProfileField = ({
     onChange("");
   };
 
+  const handleChangeValue = (val) => {
+    onChange(val);
+  };
+
   return (
     <StyledProfileField
       onClick={() => !active && !readOnly && setActive(true)}
@@ -59,6 +68,11 @@ export const ProfileField = ({
       big={big}
       error={error}
     >
+      {type === "date" && active && (
+        <div className="calendar_wrapper">
+          <Calendar value={value} onChange={handleChangeValue} />
+        </div>
+      )}
       {!readOnly && (
         <CheckboxIcon onClick={handleToggleActive} className="check-icon" />
       )}
@@ -84,10 +98,12 @@ export const ProfileField = ({
           ) : (
             <input
               className="value hide-scroll"
-              value={value}
+              value={type === "date" ? handleFormatDate(value, true) : value}
               placeholder={placeholder}
-              onChange={(e) => (onChange ? onChange(e.target.value) : null)}
-              type={type ?? "text"}
+              onChange={(e) =>
+                onChange && type !== "date" ? onChange(e.target.value) : null
+              }
+              type={type === "date" ? "text" : type ?? "text"}
             />
           )}
         </>
@@ -102,6 +118,8 @@ export const ProfileField = ({
               }${handleRemovePhoneMask(value)}`
             : value?.length > 0
             ? value
+            : type === "date"
+            ? handleFormatDate(value, true)
             : placeholder}
         </div>
       )}
@@ -261,5 +279,14 @@ const StyledProfileField = styled.div`
     .arrow path {
       fill: #2c2c2c;
     }
+  }
+
+  .calendar_wrapper {
+    position: absolute;
+    top: 100%;
+    background: #414141;
+    max-width: 320px;
+    left: 0;
+    z-index: 1000;
   }
 `;

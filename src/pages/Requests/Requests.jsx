@@ -107,6 +107,7 @@ export const Requests = () => {
         handleResponse(
           resp,
           () => {
+            console.log("here");
             if (resp?.data?.requests) {
               setAllCount(resp?.data.all_item ?? 0);
               if (Object.entries(resp?.data?.requests)?.length) {
@@ -123,6 +124,7 @@ export const Requests = () => {
             }
           },
           () => {
+            console.log("here");
             setIsAllPages(true);
             isReset && setRequests([]);
           }

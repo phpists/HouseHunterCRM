@@ -79,6 +79,11 @@ export const Content = ({
             ? rubricsList?.map(({ id, name }) => ({ title: name, value: id }))
             : []
         }
+        error={
+          !!errors
+            ?.find((er) => er?.id === "general")
+            ?.errors?.find((e) => e === "id_rubric")
+        }
       />
       {fields?.map((field, i) => (
         <FieldCard

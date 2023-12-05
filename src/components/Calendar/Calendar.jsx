@@ -13,11 +13,11 @@ export const Calendar = ({ value = null, onChange = () => null }) => {
 
   return (
     <StyledCalendar className="calendar-wrapper">
-      <Header value={value} onChangeMonth={handleChangeMonth} />
+      <Header value={value ?? new Date()} onChangeMonth={handleChangeMonth} />
       {!loading && (
         <ReactCalendar
           onChange={onChange}
-          value={value}
+          value={value ?? new Date()}
           maxDetail="month"
           defaultView="month"
           defaultActiveStartDate={new Date()}

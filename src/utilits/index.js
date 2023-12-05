@@ -70,7 +70,7 @@ export const handleRemovePhoneMask = (phone, removeFirstLetters = 3) =>
 export const handleFormatDate = (d, isShort) => {
   const date = new Date(d);
   const day = date.getDate();
-  const month = date.getMonth();
+  const month = 1 + date.getMonth();
   const year = date.getFullYear();
   const hours = date.getHours();
   const minutes = date.getMinutes();
@@ -78,6 +78,18 @@ export const handleFormatDate = (d, isShort) => {
   return isShort
     ? `${addZero(day)}.${addZero(month)}.${year}`
     : `${addZero(day)}.${addZero(month)}.${year} ${hours}:${minutes}`;
+};
+
+export const handleReformatDate = (d = "") => {
+  if (d?.split(".")?.length === 3) {
+    const day = d?.split(".")[0];
+    const month = d?.split(".")[1];
+    const year = d?.split(".")[2];
+
+    return `${month}/${day}/${year}`;
+  } else {
+    return null;
+  }
 };
 
 export const handleChangeRange = (
@@ -173,6 +185,8 @@ export const handleResponse = (
           }
         );
     }
+  } else {
+    onError && onError();
   }
 };
 
@@ -201,7 +215,10 @@ export const handleCheckFields = ({
   let emptyFields = [];
 
   [...requiredFields, ...additionalFields].forEach((f) => {
-    if (!data[f] || data[f]?.length === 0) {
+    if (
+      !data[f] ||
+      (data[f]?.length === 0 && !emptyFields?.find((eF) => eF === f))
+    ) {
       emptyFields.push(f);
     }
   });
@@ -218,9 +235,10 @@ export const handleCheckFields = ({
       (f, i) => `${1 + i}. ${fieldsTitles[f] ?? ""}`
     );
 
+    console.log(emptyFields, handleTitles);
     cogoToast.error(
       <>
-        Заповніть обов'язкові поля ({title ?? ""}):
+        Заповніть обов'язкові поля {title ? `(${title})` : ""}:
         {handleTitles.map((t) => (
           <div>{t}</div>
         ))}

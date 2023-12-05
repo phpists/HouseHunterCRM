@@ -179,12 +179,13 @@ export const ObjectPage = () => {
         : Object.entries(fields?.main_field)
             ?.filter((f) => f[1]?.required === 1)
             ?.map((f) => f[0]),
-      additionalFields: ["title"],
+      additionalFields: ["title", "id_rubric"],
       titles: commentsToFields?.object,
       additionalTitles: {
         title: "Заголовок",
         price: "Ціна",
         id_location: "Розташування",
+        id_rubric: "Категорія",
       },
     });
 
@@ -218,12 +219,13 @@ export const ObjectPage = () => {
       requiredFields: Object.entries(fields?.main_field)
         ?.filter((f) => f[1]?.required === 1)
         ?.map((f) => f[0]),
-      additionalFields: ["title"],
+      additionalFields: ["title", "id_rubric"],
       titles: commentsToFields?.object,
       additionalTitles: {
         title: "Заголовок",
         price: "Ціна",
         id_location: "Розташування",
+        id_rubric: "Категорія",
       },
     });
 

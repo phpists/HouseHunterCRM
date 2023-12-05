@@ -158,6 +158,70 @@ export const Objects = () => {
     });
   };
 
+  const handleGetRange = (num, isProcent) => {
+    let start = 0;
+    let end = isNaN(num) ? 0 : isProcent ? num + (num / 100) * 10 : num + 1;
+    const startCalc = isProcent ? num - (num / 100) * 10 : num - 1;
+
+    if (startCalc >= 0) {
+      start = startCalc;
+    }
+
+    return { start, end };
+  };
+
+  const handleFindSimilarTo = (obj) => {
+    const {
+      id_location,
+      id_rubric,
+      price_USD,
+      price_UAH,
+      rooms,
+      address_storey,
+      area_plot_sotka,
+      area_total,
+      storey_count,
+      price_for,
+    } = obj;
+
+    console.log(obj);
+    setFilters({
+      id_rubric,
+      id_location,
+      price_min: handleGetRange(Number(price_UAH), true)?.start.toFixed(0),
+      price_max: handleGetRange(Number(price_UAH), true)?.end.toFixed(0),
+      area_total_min: handleGetRange(Number(area_total), true)?.start.toFixed(
+        0
+      ),
+      area_total_max: handleGetRange(Number(area_total), true)?.end.toFixed(0),
+      area_plot_sotka_min: handleGetRange(
+        Number(area_plot_sotka),
+        true
+      )?.start.toFixed(0),
+      area_plot_sotka_max: handleGetRange(
+        Number(area_plot_sotka),
+        true
+      )?.end.toFixed(0),
+      room_min: handleGetRange(Number(rooms))?.start.toFixed(0),
+      room_max: handleGetRange(Number(rooms))?.end.toFixed(0),
+      storey_count_min: handleGetRange(Number(storey_count))?.start.toFixed(0),
+      storey_count_max: handleGetRange(Number(storey_count))?.end.toFixed(0),
+      address_storey_min: handleGetRange(Number(address_storey))?.start.toFixed(
+        0
+      ),
+      address_storey_max: handleGetRange(Number(address_storey))?.end.toFixed(
+        0
+      ),
+      price_currency: "1",
+    });
+    handleGetRubricsFields(id_rubric);
+    filterActive.current = true;
+  };
+
+  useEffect(() => {
+    filterActive.current && handleGetObjects();
+  }, [filterActive.current]);
+
   return (
     <StyledObjects>
       <Header
@@ -179,6 +243,7 @@ export const Objects = () => {
         onSelect={handleSelect}
         data={objects ?? []}
         toggleFavoriteStatus={handleToggleFavoriteStatus}
+        onFindSimilar={handleFindSimilarTo}
       />
     </StyledObjects>
   );

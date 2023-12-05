@@ -2,7 +2,13 @@ import styled from "styled-components";
 import { ObjectCard } from "../../components/ObjectCard/ObjectCard";
 import { Empty } from "../../components/Empty/Empty";
 
-export const List = ({ selected, onSelect, data, toggleFavoriteStatus }) => {
+export const List = ({
+  selected,
+  onSelect,
+  data,
+  toggleFavoriteStatus,
+  onFindSimilar,
+}) => {
   return (
     <StyledList className="hide-scroll">
       {data?.length === 0 ? (
@@ -15,6 +21,7 @@ export const List = ({ selected, onSelect, data, toggleFavoriteStatus }) => {
             onSelect={() => onSelect(d?.id)}
             data={d}
             onToggleFavoriteStatus={() => toggleFavoriteStatus(d?.id)}
+            onFindSimilar={() => onFindSimilar(d)}
           />
         ))
       )}

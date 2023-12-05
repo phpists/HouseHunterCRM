@@ -8,6 +8,7 @@ export const ShowMore = ({
   id,
   onToggleFavoriteStatus,
   isFavorite,
+  onFindSimilar,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
 
@@ -19,6 +20,7 @@ export const ShowMore = ({
         id={id}
         onToggleFavoriteStatus={onToggleFavoriteStatus}
         isFavorite={isFavorite}
+        onFindSimilar={onFindSimilar}
       />
     </StyledShowMore>
   );
