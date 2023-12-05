@@ -9,11 +9,9 @@ import { useEffect, useRef, useState } from "react";
 import {
   useGetCommentsToFieldsQuery,
   useLazyCreateObjectQuery,
-  useLazyDeleteObjectPhotoQuery,
   useLazyEditObjectQuery,
   useLazyGetObjectQuery,
   useLazyGetRubricFieldsQuery,
-  useLazySetCoverPhotoQuery,
 } from "../../store/objects/objects.api";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -41,17 +39,13 @@ export const ObjectPage = () => {
   const [editObject] = useLazyEditObjectQuery();
   const [getRubricFields] = useLazyGetRubricFieldsQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
-  const [getObject, { data: objectData }] = useLazyGetObjectQuery();
-  const [deletePhoto] = useLazyDeleteObjectPhotoQuery();
-  const [setCoverPhoto] = useLazySetCoverPhotoQuery();
+  const [getObject] = useLazyGetObjectQuery();
   const [data, setData] = useState(INIT_DATA);
   const [fields, setFields] = useState([]);
   const [favorite, setFavorite] = useState(false);
   const [photos, setPhotos] = useState([]);
-  const [deletedPhotos, setDeletedPhotos] = useState([]);
   const [errors, setErrors] = useState([]);
   const contentRef = useRef();
-  const coverChanged = useRef(false);
 
   const handleChangePhotos = (p) => setPhotos(p);
 
@@ -102,45 +96,6 @@ export const ObjectPage = () => {
     } else {
       const newData = { ...data, [fieldName]: value };
       setData(newData);
-    }
-  };
-
-  const handleDeletePhotos = () => {
-    if (deletedPhotos?.length > 0) {
-      const photoIds = Object.entries(objectData?.img)
-        .map((p) => p[1])
-        .filter((p, i) => !!deletedPhotos.find((index) => index === i))
-        ?.map(({ id }) => id);
-
-      Promise.all(
-        photoIds?.map((id_img) => deletePhoto({ id_object: id, id_img }))
-      );
-    }
-  };
-
-  const handleDeletePhoto = (id_img) => {
-    deletePhoto({ id_object: id, id_img }).then((resp) =>
-      handleResponse(resp, () => {
-        setPhotos(photos.filter((p) => p?.id !== id_img));
-        cogoToast.success("Фото успішно видалено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-      })
-    );
-  };
-
-  const handleSetPhotoCover = (index, photo) => {
-    if (id) {
-      setCoverPhoto({ id_object: id, id_img: photo?.id }).then((resp) =>
-        handleResponse(resp, () => {
-          const filteredPhotos = photos.filter((p, i) => i !== index);
-          handleChangePhotos([photo, ...filteredPhotos]);
-        })
-      );
-    } else {
-      const filteredPhotos = photos.filter((p, i) => i !== index);
-      handleChangePhotos([photo, ...filteredPhotos]);
     }
   };
 
@@ -305,12 +260,7 @@ export const ObjectPage = () => {
         mobile
       />
       <div className="object-wrappper">
-        <Photos
-          photos={photos}
-          onChange={handleChangePhotos}
-          onCoverChange={handleSetPhotoCover}
-          onDeletePhoto={handleDeletePhoto}
-        />
+        <Photos photos={photos} onChange={handleChangePhotos} />
         <MainInfo
           data={data}
           onChangeField={handleChangeField}

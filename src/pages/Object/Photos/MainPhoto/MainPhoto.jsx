@@ -3,16 +3,11 @@ import { Counter } from "./Counter";
 import { Tag } from "./Tag";
 import noPhoto from "../../../../assets/images/no-photo.svg";
 import { ReactComponent as Remove } from "../../../../assets/images/remove.svg";
+import { memo } from "react";
 
-export const MainPhoto = ({ photo, photosCount, onRemove, isPhoto }) => (
+export const MainPhoto = memo(({ photo, photosCount, onRemove, isPhoto }) => (
   <StyledMainPhoto
-    photo={
-      photo?.file
-        ? URL.createObjectURL(photo?.file)
-        : photo?.url?.length > 0
-        ? photo?.url
-        : noPhoto
-    }
+    photo={photo?.url?.length > 0 ? photo?.url : noPhoto}
     photosCount={photosCount}
   >
     {photosCount > 1 && <Counter photosCount={photosCount} />}
@@ -25,7 +20,7 @@ export const MainPhoto = ({ photo, photosCount, onRemove, isPhoto }) => (
       )}
     </div>
   </StyledMainPhoto>
-);
+));
 
 const StyledMainPhoto = styled.div`
   border-radius: 10px;

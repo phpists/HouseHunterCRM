@@ -2,24 +2,21 @@ import { styled } from "styled-components";
 import { Tag } from "./Tag";
 import { ReactComponent as Remove } from "../../../../assets/images/remove.svg";
 import noPhoto from "../../../../assets/images/no-photo.svg";
+import { memo } from "react";
 
-export const Photo = ({ photo, onRemove, onMakeMain }) => (
-  <StyledPhoto
-    photo={
-      photo?.file
-        ? URL.createObjectURL(photo?.file)
-        : photo?.url?.length > 0
-        ? photo?.url
-        : noPhoto
-    }
-    className="flex flex-col items-center justify-center"
-  >
-    <div className="photo-content flex flex-col items-center justify-center">
-      <Tag onClick={onMakeMain} />
-      <Remove onClick={onRemove} />
-    </div>
-  </StyledPhoto>
-);
+export const Photo = memo(({ photo, onRemove, onMakeMain }) => {
+  return (
+    <StyledPhoto
+      photo={photo?.url?.length > 0 ? photo?.url : noPhoto}
+      className="flex flex-col items-center justify-center"
+    >
+      <div className="photo-content flex flex-col items-center justify-center">
+        <Tag onClick={onMakeMain} />
+        <Remove onClick={onRemove} />
+      </div>
+    </StyledPhoto>
+  );
+});
 
 const StyledPhoto = styled.div`
   width: 193px;

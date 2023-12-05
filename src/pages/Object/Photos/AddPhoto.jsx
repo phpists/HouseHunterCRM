@@ -6,7 +6,7 @@ export const AddPhoto = ({ small, onAdd }) => {
     let files = [];
 
     for (let i = 0; i < photos.length; i++) {
-      files.push({ file: photos[i] });
+      files.push({ file: photos[i], url: URL.createObjectURL(photos[i]) });
     }
     onAdd(files);
   };

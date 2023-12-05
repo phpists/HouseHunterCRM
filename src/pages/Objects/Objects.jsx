@@ -174,14 +174,12 @@ export const Objects = () => {
     const {
       id_location,
       id_rubric,
-      price_USD,
       price_UAH,
       rooms,
       address_storey,
       area_plot_sotka,
       area_total,
       storey_count,
-      price_for,
     } = obj;
 
     console.log(obj);
