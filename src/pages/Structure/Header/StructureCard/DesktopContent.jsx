@@ -14,7 +14,7 @@ export const DesktopContent = ({
 }) => (
   <StyledDesktopContent>
     <ProfilleInfo onOpenInfo={onOpenInfo} data={data} />
-    <Biling open={!totalInfoOpened} />
+    <Biling open={!totalInfoOpened} data={data} />
     <Statistic statisticData={statisticData} />
     <TotalInfo open={totalInfoOpened} onToggleOpen={onToggleOpen} />
     <Arrow />

@@ -4,17 +4,25 @@ import { Divider } from "./Divider";
 import { BossCard } from "./BossCard/BossCard";
 import { Structure } from "./Structure/Structure";
 
-export const Biling = ({ open, onClick }) => (
+export const Biling = ({ open, onClick, data }) => (
   <StyledBiling open={open} onClick={onClick}>
-    <StatusCard status={true} title="Дозволено" subtitle="Вхід" />
-    <Divider />
     <StatusCard
-      status={true}
-      title="Сплачено до 28.07.2023"
-      subtitle="Білінг"
+      status={data?.active === "1"}
+      title={data?.active === "1" ? "Дозволено" : "Заборонено"}
+      subtitle="Вхід"
     />
     <Divider />
-    <BossCard />
+    <StatusCard
+      status={data?.active === "1"}
+      title={`Сплачено до ${data?.billing_to}`}
+      subtitle="Білінг"
+    />
+    {data?.name_parent?.length > 0 ? (
+      <>
+        <Divider />
+        <BossCard data={data} />
+      </>
+    ) : null}
     <Divider />
     <Structure />
   </StyledBiling>

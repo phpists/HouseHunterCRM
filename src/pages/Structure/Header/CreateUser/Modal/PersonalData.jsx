@@ -3,7 +3,7 @@ import { Field } from "../../../../../components/Field";
 import { Divider } from "./Divider";
 import { useGetPhonesCodesQuery } from "../../../../../store/auth/auth.api";
 
-export const PersonalData = ({ data, onChangeField }) => {
+export const PersonalData = ({ data, onChangeField, errors }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
 
   return (
@@ -15,6 +15,7 @@ export const PersonalData = ({ data, onChangeField }) => {
           full
           value={data?.first_name}
           onChange={(val) => onChangeField("first_name", val)}
+          error={!!errors?.find((e) => e === "first_name")}
         />
         <Field
           placeholder="Почніть писати"
@@ -22,6 +23,7 @@ export const PersonalData = ({ data, onChangeField }) => {
           full
           value={data?.last_name}
           onChange={(val) => onChangeField("last_name", val)}
+          error={!!errors?.find((e) => e === "last_name")}
         />
       </div>
       <Divider />
@@ -40,6 +42,7 @@ export const PersonalData = ({ data, onChangeField }) => {
         }
         phonesCodes={phonesCodes}
         noResetValueOnCodeChange
+        error={!!errors?.find((e) => e === "phones")}
       />
       <Divider />
       <Field
@@ -48,6 +51,7 @@ export const PersonalData = ({ data, onChangeField }) => {
         full
         value={data?.email}
         onChange={(val) => onChangeField("email", val)}
+        error={!!errors?.find((e) => e === "email")}
       />
       <Divider />
       <Field
@@ -56,6 +60,7 @@ export const PersonalData = ({ data, onChangeField }) => {
         full
         value={data?.password}
         onChange={(val) => onChangeField("password", val)}
+        error={!!errors?.find((e) => e === "password")}
       />
     </StyledPersonalData>
   );

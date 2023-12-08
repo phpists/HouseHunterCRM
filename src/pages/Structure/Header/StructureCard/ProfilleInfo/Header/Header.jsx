@@ -6,17 +6,21 @@ import { Id } from "./Id";
 import { Tag } from "./Tag";
 import { Date } from "./Date";
 import { Divider } from "../Divider";
-import { useGetAllPerimissionsLevelsQuery } from "../../../../../../store/structure/structure.api";
+import {
+  useGetAllPerimissionsLevelsQuery,
+  useGetCompanyStructureLevelQuery,
+} from "../../../../../../store/structure/structure.api";
 
 export const Header = ({ onOpenInfo, data }) => {
   const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
+  const { data: level, refetch } = useGetCompanyStructureLevelQuery();
 
   const handleGetCurrentLevel = () =>
     levels
       ? Object.entries(levels)
           ?.map((l) => l[1])
-          ?.find((l) => Number(l.level) === Number(data?.structure_level))
+          ?.find((l) => Number(l.level) === Number(level)) ?? []
       : [];
 
   return (
@@ -35,8 +39,12 @@ export const Header = ({ onOpenInfo, data }) => {
           <Id id={data?.id_user} />
         </div>
         <Tag
-          color={COLORS[handleGetCurrentLevel()?.level ?? "1"]}
-          role={handleGetCurrentLevel()[0] ?? "-"}
+          color={COLORS[data?.structure_level - 1]}
+          role={
+            handleGetCurrentLevel()[0]?.split(" - ")[
+              data?.structure_level - 1
+            ] ?? "-"
+          }
         />
         <Date date={data?.dt_reg} />
       </div>

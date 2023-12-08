@@ -10,11 +10,17 @@ import { useState } from "react";
 import {
   useGetAllPerimissionsLevelsQuery,
   useGetPerimissionDirectorQuery,
+  useGetStructureUsersCompanyQuery,
   useLazyChangeWorkerLevelQuery,
   useLazyCreateStructureQuery,
   useLazyCreateWorkerQuery,
+  useLazyGetStructureUsersCompanyQuery,
 } from "../../../../../store/structure/structure.api";
-import { handleRemovePhoneMask, handleResponse } from "../../../../../utilits";
+import {
+  emailValidation,
+  handleRemovePhoneMask,
+  handleResponse,
+} from "../../../../../utilits";
 import cogoToast from "cogo-toast";
 
 const INITIAL_DATA = {
@@ -24,16 +30,20 @@ const INITIAL_DATA = {
   first_name: "",
   last_name: "",
   phones: [{ code: "1", phone: "", telegram: "0", viber: "0" }],
-  photo: null,
+  photo: { file: null, url: null },
+  structure_parent: null,
 };
 
 export const Modal = ({ onClose, onRefetchData }) => {
   const [createWorker] = useLazyCreateWorkerQuery();
   const [createStructure] = useLazyCreateStructureQuery();
   const [changeWorkerLevel] = useLazyChangeWorkerLevelQuery();
+  const [getStructureUsers, { data: structureUsersCompany }] =
+    useLazyGetStructureUsersCompanyQuery();
   const [data, setData] = useState(INITIAL_DATA);
   const { data: rolesPermission } = useGetPerimissionDirectorQuery();
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const controls = useAnimationControls();
 
@@ -49,6 +59,12 @@ export const Modal = ({ onClose, onRefetchData }) => {
   const handleChangeField = (fieldName, value) => {
     const newData = { ...data, [fieldName]: value };
     setData(newData);
+    let updatedErrors = errors?.filter((e) => e !== fieldName);
+
+    if (fieldName === "email" && emailValidation(value)) {
+      updatedErrors.push("email");
+    }
+    setErrors(updatedErrors);
   };
 
   const handleReset = () => {
@@ -56,40 +72,61 @@ export const Modal = ({ onClose, onRefetchData }) => {
     handleClose();
   };
 
-  const handleCreate = () => {
-    setLoading(true);
-    createWorker({
-      ...data,
-      id_permision: rolesPermission?.id_permision,
-      phones_json: JSON.stringify(
-        data?.phones.map((phone) => ({
-          ...phone,
-          id_phone_code: phone?.code,
-          phone: handleRemovePhoneMask(phone.phone),
-        }))
-      ),
-    }).then((resp) => {
-      setLoading(false);
-      handleResponse(resp, () => {
-        const idUser = resp?.data?.id_worker;
-        if (idUser) {
-          changeWorkerLevel({
-            id_user: idUser,
-            structure_level: data?.id_permision,
-          }).then((resp) =>
-            handleResponse(resp, () => {
-              cogoToast.success("Працівника успішно створено", {
-                hideAfter: 3,
-                position: "top-right",
-              });
-              handleReset();
-              onRefetchData();
-            })
-          );
-        }
+  const handleCheckFields = () => {
+    let errorsData = [];
+
+    !data?.id_permision && errorsData.push("id_permision");
+    !data?.structure_parent && errorsData.push("structure_parent");
+    data?.email?.length === 0 && errorsData.push("email");
+    data?.first_name?.length === 0 && errorsData.push("first_name");
+    data?.last_name?.length === 0 && errorsData.push("last_name");
+    data?.password?.length === 0 && errorsData.push("password");
+    data?.phones[0]?.phone?.length === 0 && errorsData.push("phones");
+
+    if (errorsData?.length > 0) {
+      setErrors(errorsData);
+      cogoToast.error("Заповніть обов'язкові поля", {
+        hideAfter: 3,
+        position: "top-right",
       });
-    });
+    } else {
+      return true;
+    }
   };
+
+  const handleCreate = () => {
+    if (handleCheckFields()) {
+      setLoading(true);
+      createWorker({
+        ...data,
+        photo: data?.photo?.file,
+        id_permision: rolesPermission?.id_permision,
+        phones_json: JSON.stringify(
+          data?.phones.map((phone) => ({
+            ...phone,
+            id_phone_code: phone?.code,
+            phone: handleRemovePhoneMask(phone.phone),
+          }))
+        ),
+      }).then((resp) => {
+        setLoading(false);
+        handleResponse(resp, () => {
+          cogoToast.success("Працівника успішно створено", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          handleReset();
+          onRefetchData && onRefetchData();
+        });
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (data?.id_permision) {
+      getStructureUsers({ structure_level: data?.id_permision, id_user: "0" });
+    }
+  }, [, data?.id_permision]);
 
   return (
     <StyledModal
@@ -101,9 +138,18 @@ export const Modal = ({ onClose, onRefetchData }) => {
       <Header onClose={handleReset} />
       <div className="modal-content">
         <SectionTitle title="Загальна інформація" />
-        <MainInfo data={data} onChangeField={handleChangeField} />
+        <MainInfo
+          data={data}
+          onChangeField={handleChangeField}
+          users={structureUsersCompany?.data ?? []}
+          errors={errors}
+        />
         <SectionTitle title="Персональні дані" />
-        <PersonalData data={data} onChangeField={handleChangeField} />
+        <PersonalData
+          data={data}
+          onChangeField={handleChangeField}
+          errors={errors}
+        />
         <Footer
           onSave={() => (loading ? null : handleCreate())}
           onCancel={handleReset}

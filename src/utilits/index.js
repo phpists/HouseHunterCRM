@@ -215,10 +215,8 @@ export const handleCheckFields = ({
   let emptyFields = [];
 
   [...requiredFields, ...additionalFields].forEach((f) => {
-    if (
-      !data[f] ||
-      (data[f]?.length === 0 && !emptyFields?.find((eF) => eF === f))
-    ) {
+    if (emptyFields?.find((eF) => eF === f)) {
+    } else if (!data[f] || data[f]?.length === 0) {
       emptyFields.push(f);
     }
   });
@@ -235,7 +233,6 @@ export const handleCheckFields = ({
       (f, i) => `${1 + i}. ${fieldsTitles[f] ?? ""}`
     );
 
-    console.log(emptyFields, handleTitles);
     cogoToast.error(
       <>
         Заповніть обов'язкові поля {title ? `(${title})` : ""}:

@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
-export const Tag = () => <StyledTag>Керівник</StyledTag>;
+export const Tag = ({ color, role }) => (
+  <StyledTag color={color}>{role}</StyledTag>
+);
 
 const StyledTag = styled.div`
   padding: 4px 6px;
   border-radius: 4px;
-  background: rgba(126, 206, 253, 0.25);
-  color: #7ecefd;
+  background: ${({ color }) => `${color}40`};
+  color: ${({ color }) => color};
   text-align: center;
   leading-trim: both;
   text-edge: cap;

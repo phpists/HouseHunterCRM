@@ -17,7 +17,7 @@ export const Profile = ({
     <LastDate data={data?.last_active ?? ""} />
     <div className="flex items-center">
       <Avatar
-        photo={data?.photo}
+        photo={data?.photo?.url ?? data?.photo}
         onChangeField={onChangeField}
         onRefreshData={onRefreshData}
         onRemoveAvatar={onRemoveAvatar}

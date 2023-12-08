@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { Profile } from "./Profile/Profile";
 import { Divider } from "../Divider";
-import { BossSelect } from "./BossSelect/BossSelect";
 import { LoginAllow } from "./LoginAllow";
 import { StatusCard } from "./StatusCard";
 import { AvatarBanner } from "./AvatarBanner";
-import { handleFormatDate } from "../../../utilits";
+import { BossSelect } from "../../../components/BossSelect/BossSelect";
 
 export const MainInfo = ({
   avatarBanner,
@@ -16,6 +15,8 @@ export const MainInfo = ({
   profile,
   billingTo,
   onRemoveAvatar,
+  bosses = [],
+  errors = [],
 }) => {
   return (
     <StyledMainInfo>
@@ -28,14 +29,29 @@ export const MainInfo = ({
         profile={profile}
         onRemoveAvatar={onRemoveAvatar}
       />
-      {/* <BossSelect />
-      <Divider /> */}
+      {bosses?.length > 0 ? (
+        <>
+          <Divider />
+          <BossSelect
+            users={bosses}
+            value={data?.structure_parent}
+            onChange={(val) => onChangeField("structure_parent", val)}
+            error={!!errors?.find((e) => e === "structure_parent")}
+          />
+        </>
+      ) : null}
+
       {isProfile ? null : (
         <>
           {!profile && (
             <>
               <Divider />
-              <LoginAllow />
+              <LoginAllow
+                active={data?.active === "1"}
+                onChange={() =>
+                  onChangeField("active", data?.active === "1" ? "0" : "1")
+                }
+              />
             </>
           )}
           {billingTo && (

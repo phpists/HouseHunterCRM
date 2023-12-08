@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Name = () => <StyledName>Юрій Мицавка</StyledName>;
+export const Name = ({ name }) => <StyledName>{name}</StyledName>;
 
 const StyledName = styled.div`
   color: #fff;

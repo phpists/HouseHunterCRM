@@ -15,6 +15,7 @@ export const structure = createApi({
         first_name,
         last_name,
         phones_json,
+        structure_parent,
       }) => ({
         url: "",
         method: "POST",
@@ -28,6 +29,7 @@ export const structure = createApi({
           first_name,
           last_name,
           phones_json,
+          structure_parent,
         }),
       }),
     }),
@@ -40,21 +42,29 @@ export const structure = createApi({
         last_name,
         phones_json,
         id_worker,
+        structure_parent,
+        active,
+        photo,
       }) => ({
         url: "",
         method: "POST",
         headers: headers(),
-        body: handleToFormData({
-          action: "edit_worker",
-          mod: "billing",
-          email,
-          id_permision,
-          password,
-          first_name,
-          last_name,
-          phones_json,
-          id_worker,
-        }),
+        body: handleToFormData(
+          {
+            action: "edit_worker",
+            mod: "billing",
+            email,
+            id_permision,
+            id_worker,
+            structure_parent,
+            password,
+            active,
+            first_name,
+            last_name,
+            phones_json,
+          },
+          { photo }
+        ),
       }),
     }),
     deleteWorker: build.query({
@@ -406,6 +416,61 @@ export const structure = createApi({
         );
       },
     }),
+    getStructureUsersCompany: build.query({
+      query: ({ structure_level, id_user }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_user_structure_company",
+          mod: "structure",
+          structure_level,
+          id_user,
+        }),
+      }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
+    }),
+    getRecurseStructure: build.query({
+      query: (id_worker) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_structure_company_list",
+          mod: "structure",
+          id_worker,
+        }),
+      }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
+    }),
+    deleteWorkerImg: build.query({
+      query: (id_worker) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "delete_worker_img",
+          mod: "structure",
+          id_worker,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -433,4 +498,8 @@ export const {
   useGetStructureWorkersQuery,
   useLazyGetWorkerByIdQuery,
   useLazyGetStatisticWorkerQuery,
+  useLazyGetStructureUsersCompanyQuery,
+  useGetStructureUsersCompanyQuery,
+  useGetRecurseStructureQuery,
+  useLazyDeleteWorkerImgQuery,
 } = structure;

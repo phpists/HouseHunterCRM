@@ -2,22 +2,20 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import { Toggle } from "../../Toggle";
 
-export const LoginAllow = () => {
-  const [isAllowed, setIsAllowed] = useState(true);
-
+export const LoginAllow = ({ active, onChange }) => {
   return (
     <StyledLoginAllow
-      isAllowed={isAllowed}
+      isAllowed={active}
       className="flex items-center justify-between"
     >
       <div>
-        <div className="title">{isAllowed ? "Дозволено" : "Заборонено"}</div>
+        <div className="title">{active ? "Дозволено" : "Заборонено"}</div>
         <div className="subtitle">Вхід</div>
       </div>
       <Toggle
-        value={isAllowed}
-        onChange={() => setIsAllowed(!isAllowed)}
-        className={isAllowed ? "toggle-active" : "toggle"}
+        value={active}
+        onChange={() => (onChange ? onChange() : null)}
+        className={active ? "toggle-active" : "toggle"}
       />
     </StyledLoginAllow>
   );

@@ -76,7 +76,7 @@ export const RoleSelect = ({ value, onChange }) => {
       .filter((role) => role?.level !== value)
       .filter((role) => role?.level !== 1);
 
-    if (filteredRoles?.length > 0) {
+    if (filteredRoles?.length > 0 && value !== 1) {
       setOpen(!open);
     }
   };
@@ -96,7 +96,7 @@ export const RoleSelect = ({ value, onChange }) => {
       </div>
       <button className="select-btn flex items-center justify-center">
         <PlusIcon className="plus-icon-btn" />
-        <ArrowDownIcon className="arrow" />
+        {value !== 1 && <ArrowDownIcon className="arrow" />}
       </button>
       {open && (
         <Dropdown

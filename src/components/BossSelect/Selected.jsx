@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import img from "../../../../assets/images/profile-avatar.svg";
+import img from "../../assets/images/profile-avatar.svg";
 
-export const Selected = ({ onClick }) => (
+export const Selected = ({ onClick, selected, levels }) => (
   <StyledSelected className="flex items-center" img={img} onClick={onClick}>
-    <div className="avatar" />
+    {/* <div className="avatar" /> */}
     <div>
-      <div className="name">Юрій Мицавка</div>
-      <div className="role">Структурний керівник</div>
+      <div className="name">{selected?.full_name ?? "-"}</div>
+      <div className="role">{levels[selected?.structure_level - 1] ?? "-"}</div>
     </div>
   </StyledSelected>
 );
@@ -14,6 +14,7 @@ export const Selected = ({ onClick }) => (
 const StyledSelected = styled.div`
   text-align: left;
   padding: 8px 10px;
+  cursor: pointer;
   .avatar {
     width: 34px;
     height: 34px;

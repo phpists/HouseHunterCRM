@@ -6,15 +6,18 @@ import { Empty } from "./Empty";
 import { WorkerModal } from "./WorkerModal";
 import {
   useGetCompanyStructureLevelQuery,
+  useGetRecurseStructureQuery,
   useGetStructureWorkersQuery,
 } from "../../store/structure/structure.api";
 import { StructureCard } from "./Header/StructureCard/StructureCard";
+import { useAppSelect } from "../../hooks/redux";
 
 export const Structure = () => {
+  const { user } = useAppSelect((state) => state.auth);
   const [infoOpen, setInfoOpen] = useState(false);
   const [level, setLevel] = useState(1);
-  const { data, refetch } = useGetStructureWorkersQuery();
   const { data: currentLevel } = useGetCompanyStructureLevelQuery();
+  const { data: recurseData, refetch } = useGetRecurseStructureQuery();
 
   const handleNextLevel = () => {
     if (level < currentLevel && !infoOpen) {
@@ -23,13 +26,11 @@ export const Structure = () => {
   };
 
   const handleGetLevelWorkers = () => {
-    if (!data) {
+    if (!recurseData) {
       return [];
     }
 
-    return Object.entries(data)
-      ?.filter((l) => Number(l[0]) === level)
-      .map((l) => l[1][0]);
+    return recurseData[`struct_level_${level}`] ?? [];
   };
 
   return (
@@ -50,15 +51,27 @@ export const Structure = () => {
       )}
       <div className="structure-content hide-scroll">
         <div className="structure-cards hide-scroll">
-          {handleGetLevelWorkers()?.length === 0 ? (
+          {level === 1 ? (
+            <StructureCard
+              onOpenInfo={() => setInfoOpen(user?.id)}
+              onNextLevel={handleNextLevel}
+              id={1}
+              data={{
+                ...user,
+                phone: JSON.stringify(user?.phones),
+                name: `${user?.first_name ?? ""} ${user?.last_name ?? ""}`,
+                id_user: user?.id,
+              }}
+            />
+          ) : handleGetLevelWorkers()?.length === 0 ? (
             <Empty />
           ) : (
             handleGetLevelWorkers().map((worker, i) => (
               <StructureCard
                 key={i}
-                onOpenInfo={() => setInfoOpen(worker?.id_user)}
+                onOpenInfo={() => setInfoOpen(user?.id)}
                 onNextLevel={handleNextLevel}
-                id={worker?.id_user}
+                id={user?.id}
                 data={worker}
               />
             ))

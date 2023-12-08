@@ -4,7 +4,7 @@ import clockIcon from "../../../../../../assets/images/clock.svg";
 export const LastTime = ({ date }) => (
   <StyledLastTime className="flex items-center notClickable">
     <img src={clockIcon} alt="" className="notClickable" />
-    Остання активність {date}
+    Остання активність {date?.substring(0, 10)}
   </StyledLastTime>
 );
 
@@ -20,6 +20,9 @@ const StyledLastTime = styled.div`
   letter-spacing: 0.22px;
   opacity: 0.4;
   margin-bottom: 8px;
+  width: max-content;
+  width: max-content;
+  white-space: nowrap;
   img {
     margin-right: 4px;
     height: 12px;

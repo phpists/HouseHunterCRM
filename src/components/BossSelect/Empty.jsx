@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ReactComponent as ArrowIcon } from "../../../../../../../assets/images/arrow-down.svg";
+import { ReactComponent as ArrowIcon } from "../../assets/images/arrow-down.svg";
 
 export const Empty = ({ open, onClick }) => (
   <StyledEmpty

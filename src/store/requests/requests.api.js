@@ -258,6 +258,31 @@ export const requests = createApi({
         );
       },
     }),
+    deleteRequestInGroup: build.query({
+      query: (id_request) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "delete_request_in_group",
+          mod: "requests",
+          id_request,
+        }),
+      }),
+    }),
+    addEmptyRequestInGroup: build.query({
+      query: ({ id_group, id_rubric }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "add_empty_request_in_group",
+          mod: "requests",
+          id_group,
+          id_rubric,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -276,4 +301,6 @@ export const {
   useGetActualRequestCountQuery,
   useGetOverdueRequestCountQuery,
   useLazyGetLastRequestsQuery,
+  useLazyDeleteRequestInGroupQuery,
+  useLazyAddEmptyRequestInGroupQuery,
 } = requests;

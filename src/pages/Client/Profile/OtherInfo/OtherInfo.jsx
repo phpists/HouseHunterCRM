@@ -13,7 +13,17 @@ export const OtherInfo = ({ photos, onChange, onRefreshClientData }) => {
   const [openView, setOpenView] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const handleAddPhoto = (files) => onChange([...photos, ...files]);
+  const handleAddPhoto = (files) => {
+    const formatedFiles = [];
+
+    for (let i = 0; i < files?.length; i++) {
+      formatedFiles.push({
+        file: files[i],
+        name: URL.createObjectURL(files[i]),
+      });
+    }
+    onChange([...photos, ...formatedFiles]);
+  };
 
   const handleDeletePhoto = (id_img, index) => {
     deletePhoto({ id_client: id, id_img }).then((resp) =>
@@ -32,8 +42,8 @@ export const OtherInfo = ({ photos, onChange, onRefreshClientData }) => {
     <StyledOtherInfo className="flex items-center">
       <PhotoSlider
         images={photos.map((photo) => ({
-          src: photo?.type ? URL.createObjectURL(photo) : photo?.name,
-          key: photo?.type ? URL.createObjectURL(photo) : photo?.name,
+          src: photo?.name,
+          key: photo?.name,
         }))}
         visible={openView}
         onClose={() => setOpenView(false)}
@@ -44,7 +54,7 @@ export const OtherInfo = ({ photos, onChange, onRefreshClientData }) => {
         ? photos?.map((photo, i) => (
             <Photo
               key={i}
-              photo={photo?.type ? URL.createObjectURL(photo) : photo?.name}
+              photo={photo?.name}
               onRemove={() =>
                 photo?.type
                   ? onChange(photos.filter((p, j) => j !== i))

@@ -35,7 +35,7 @@ const ROLES = [
   },
 ];
 
-export const RoleSelect = ({ value, onChange }) => {
+export const RoleSelect = ({ value, onChange, error }) => {
   const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
   const { data: permissionsList } = useGetAllPerimissionsQuery();
   const { data: level, refetch } = useGetCompanyStructureLevelQuery();
@@ -43,6 +43,7 @@ export const RoleSelect = ({ value, onChange }) => {
   const [open, setOpen] = useState(false);
   const [roles, setRoles] = useState([]);
 
+  console.log(error);
   const handleGetCurrentLevel = () =>
     levels
       ? Object.entries(levels)
@@ -80,11 +81,13 @@ export const RoleSelect = ({ value, onChange }) => {
       setOpen(!open);
     }
   };
+
   return (
     <StyledRoleSelect
       active={roles?.find((role) => role?.level === value)?.color}
       onClick={handleToggleOpen}
       open={open}
+      error={error}
     >
       <div className="title">
         {value && roles?.find((r) => r.level === value)
@@ -124,6 +127,7 @@ const StyledRoleSelect = styled.div`
   width: 121px;
   cursor: pointer;
   text-align: left;
+  ${({ error }) => error && "border: 1px solid red;"}
   .title {
     color: ${({ active }) => active ?? "#fff"};
     leading-trim: both;

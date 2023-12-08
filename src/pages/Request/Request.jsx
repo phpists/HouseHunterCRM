@@ -5,7 +5,9 @@ import { Main } from "./Main/Main";
 import { Characteristic } from "./Characteristic/Characteristic";
 import { Base } from "./Base/Base";
 import {
+  useLazyAddEmptyRequestInGroupQuery,
   useLazyCreateRequestQuery,
+  useLazyDeleteRequestInGroupQuery,
   useLazyEditRequestQuery,
   useLazyGetRequestQuery,
   useLazyGetRubricsFieldsQuery,
@@ -13,11 +15,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import cogoToast from "cogo-toast";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  handleCheckFields,
-  handleFormatDate,
-  handleResponse,
-} from "../../utilits";
+import { handleCheckFields, handleResponse } from "../../utilits";
 import { useGetCommentsToFieldsQuery } from "../../store/objects/objects.api";
 
 export const REQUEST_INIT = {
@@ -44,6 +42,8 @@ export const Request = () => {
   const [editRequest] = useLazyEditRequestQuery();
   const [getRubricField] = useLazyGetRubricsFieldsQuery();
   const [getRequest] = useLazyGetRequestQuery();
+  const [deleteRequestInGroup] = useLazyDeleteRequestInGroupQuery();
+  const [addEmptyRequestInGroup] = useLazyAddEmptyRequestInGroupQuery();
   const [data, setData] = useState(REQUEST_INIT);
   const [favorite, setFavorite] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -67,28 +67,81 @@ export const Request = () => {
     });
   };
 
-  const handleChangeCategories = (id, title) => {
-    const isExist = !!categoriesData.current.find((c) => c === id);
-    if (isExist) {
-      const updatedCategories = categoriesData.current?.filter((c) => c !== id);
-      setCategories(updatedCategories);
-      categoriesData.current = updatedCategories;
-      const updatedData = fieldsData.current?.filter((f) => f.id !== id);
-      setFieldData(updatedData);
-      fieldsData.current = updatedData;
-      setData({
-        ...data,
-        fields: data.fields.filter((f) => f.id_rubric !== id),
-      });
+  const handleChangeCategories = (rubricId, title) => {
+    const isExist = categoriesData.current.find((c) => c === rubricId);
+    if (!!isExist) {
+      if (id) {
+        const request = data?.fields?.find(
+          ({ id_rubric }) => id_rubric === rubricId
+        );
+        deleteRequestInGroup(request?.id_request).then((resp) =>
+          handleResponse(resp, () => {
+            const updatedCategories = categoriesData.current?.filter(
+              (c) => c !== rubricId
+            );
+            setCategories(updatedCategories);
+            categoriesData.current = updatedCategories;
+            const updatedData = fieldsData.current?.filter(
+              (f) => f.id !== rubricId
+            );
+            fieldsData.current = updatedData;
+            setFieldData(updatedData);
+            setData({
+              ...data,
+              fields: data.fields.filter((f) => f.id_rubric !== rubricId),
+            });
+          })
+        );
+      } else {
+        const updatedCategories = categoriesData.current?.filter(
+          (c) => c !== rubricId
+        );
+        setCategories(updatedCategories);
+        categoriesData.current = updatedCategories;
+        const updatedData = fieldsData.current?.filter(
+          (f) => f.id !== rubricId
+        );
+        fieldsData.current = updatedData;
+        setFieldData(updatedData);
+        setData({
+          ...data,
+          fields: data.fields.filter((f) => f.id_rubric !== rubricId),
+        });
+      }
     } else {
-      const updatedCategories = [...categoriesData.current, id];
-      setCategories(updatedCategories);
-      categoriesData.current = updatedCategories;
-      handleGetRubricsFields(id, title);
-      setData({
-        ...data,
-        fields: [...data.fields, { id_rubric: id, price_currency: "1" }],
-      });
+      if (id) {
+        addEmptyRequestInGroup({
+          id_group: id,
+          id_rubric: rubricId,
+        }).then((resp) =>
+          handleResponse(resp, () => {
+            const id_request = resp?.data?.id_request;
+            const updatedCategories = [...categoriesData.current, rubricId];
+            setCategories(updatedCategories);
+            categoriesData.current = updatedCategories;
+            handleGetRubricsFields(rubricId, title);
+            setData({
+              ...data,
+              fields: [
+                ...data.fields,
+                { id_rubric: rubricId, price_currency: "1", id_request },
+              ],
+            });
+          })
+        );
+      } else {
+        const updatedCategories = [...categoriesData.current, rubricId];
+        setCategories(updatedCategories);
+        categoriesData.current = updatedCategories;
+        handleGetRubricsFields(rubricId, title);
+        setData({
+          ...data,
+          fields: [
+            ...data.fields,
+            { id_rubric: rubricId, price_currency: "1" },
+          ],
+        });
+      }
     }
 
     setErrors(

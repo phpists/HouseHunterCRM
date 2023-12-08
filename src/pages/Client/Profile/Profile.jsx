@@ -71,7 +71,7 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
           phone: handleRemovePhoneMask(phone.phone),
         }))
       ),
-      photos: photos?.filter((p) => !!p?.type),
+      photos: photos?.filter((p) => !!p?.file)?.map((p) => p?.file),
     }).then((resp) => {
       setLoading(false);
       handleResponse(resp, () => {

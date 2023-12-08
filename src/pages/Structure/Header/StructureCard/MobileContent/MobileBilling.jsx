@@ -1,10 +1,18 @@
 import styled from "styled-components";
 import { StatusCard } from "../Biling/StatusCard";
 
-export const MobileBilling = () => (
+export const MobileBilling = ({ data }) => (
   <StyledMobileBilling>
-    <StatusCard status={1} title="Дозволено" subtitle="Вхід" />
-    <StatusCard status={1} title="Сплачено до 28.07.2023" subtitle="Білінг" />
+    <StatusCard
+      status={data?.active === "1"}
+      title={data?.active === "1" ? "Дозволено" : "Заборонено"}
+      subtitle="Вхід"
+    />
+    <StatusCard
+      status={data?.active === "1"}
+      title={`Сплачено до ${data?.billing_to}`}
+      subtitle="Білінг"
+    />
   </StyledMobileBilling>
 );
 

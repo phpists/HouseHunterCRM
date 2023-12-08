@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import img from "../../../../../../../../assets/images/profile-avatar.svg";
+import img from "../../../assets/images/profile-avatar.svg";
 import { Role } from "./Role";
-import { ReactComponent as CheckIcon } from "../../../../../../../../assets/images/circle-green-check.svg";
+import { ReactComponent as CheckIcon } from "../../../assets/images/circle-green-check.svg";
 
 export const Option = ({
   name,
@@ -18,8 +18,9 @@ export const Option = ({
     last={last}
     className="flex items-center"
     onClick={onClick}
+    active={active}
   >
-    <div className="avatar" />
+    {/* <div className="avatar" /> */}
     <div className="name">{name}</div>
     <Role role={role} roleColor={roleColor} roleBg={roleBg} />
     <CheckIcon />
@@ -29,6 +30,7 @@ export const Option = ({
 const StyledOption = styled.div`
   padding: 8px;
   transition: all 0.3s;
+  cursor: pointer;
   ${({ last }) => !last && "border-bottom: 1px solid rgba(255, 255, 255, 0.1);"}
   .avatar {
     width: 24px;

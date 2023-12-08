@@ -3,17 +3,24 @@ import { UserInfoCard } from "../../components/UserInfoCard/UserInfoCard";
 import {
   useGetPerimissionDirectorQuery,
   useLazyChangeWorkerLevelQuery,
+  useLazyDeleteWorkerImgQuery,
   useLazyDeleteWorkerQuery,
   useLazyEditWorkerQuery,
+  useLazyGetStructureUsersCompanyQuery,
   useLazyGetWorkerByIdQuery,
 } from "../../store/structure/structure.api";
 import { useAppSelect } from "../../hooks/redux";
 import { useActions } from "../../hooks/actions";
 import {
+  useLazyDeleteAvatarQuery,
   useLazyEditProfileQuery,
   useLazyGetUserQuery,
 } from "../../store/auth/auth.api";
-import { handleRemovePhoneMask, handleResponse } from "../../utilits";
+import {
+  emailValidation,
+  handleRemovePhoneMask,
+  handleResponse,
+} from "../../utilits";
 import cogoToast from "cogo-toast";
 import { Confirm } from "../../components/Confirm/Confirm";
 
@@ -25,6 +32,7 @@ const INITIAL_DATA = {
   last_name: "",
   phones: [{ code: 1, phone: "", telegram: "0", viber: "0" }],
   photos: [],
+  active: "1",
 };
 
 export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
@@ -39,19 +47,60 @@ export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
   const [deleteWorker] = useLazyDeleteWorkerQuery();
   const [changeWorkerLevel] = useLazyChangeWorkerLevelQuery();
   const [deleteModal, setDeleteModal] = useState(false);
+  const [getStructureUsers, { data: structureUsersCompany }] =
+    useLazyGetStructureUsersCompanyQuery();
+  const [errors, setErrors] = useState([]);
+  const [deleteUserAvatar] = useLazyDeleteAvatarQuery();
+  const [deleteWorkerImg] = useLazyDeleteWorkerImgQuery();
 
   const handleChangeField = (fieldName, value) => {
     const newData = { ...profileData, [fieldName]: value };
     setProfileData(newData);
+
+    let updatedErrors = errors?.filter((e) => e !== fieldName);
+
+    if (fieldName === "email" && emailValidation(value)) {
+      updatedErrors.push("email");
+    }
+    setErrors(updatedErrors);
+  };
+
+  const handleCheckFields = () => {
+    let errorsData = [];
+
+    // !profileData?.id_permision && errorsData.push("id_permision");
+    // !profileData?.structure_parent && errorsData.push("structure_parent");
+    profileData?.email?.length === 0 && errorsData.push("email");
+    profileData?.first_name?.length === 0 && errorsData.push("first_name");
+    profileData?.last_name?.length === 0 && errorsData.push("last_name");
+    profileData?.password?.length === 0 && errorsData.push("password");
+    profileData?.phones[0]?.phone?.length === 0 && errorsData.push("phones");
+
+    if (errorsData?.length > 0) {
+      setErrors(errorsData);
+      cogoToast.error("Заповніть обов'язкові поля", {
+        hideAfter: 3,
+        position: "top-right",
+      });
+    } else {
+      return true;
+    }
   };
 
   useEffect(() => {
     if (level === 1) {
-      setProfileData({ ...user, structure_level: level });
+      setProfileData({
+        ...user,
+        structure_level: level,
+        phones: user.phones.map((p) => ({
+          ...p,
+          code: p.id_phone_code,
+        })),
+      });
     } else if (workerId) {
       getWorker(workerId).then((resp) => {
         setProfileData(
-          resp?.data?.length
+          resp?.data[0]
             ? {
                 ...resp?.data[0],
                 phones: resp?.data[0].phones.map((p) => ({
@@ -59,9 +108,14 @@ export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
                   code: p.id_phone_code,
                 })),
                 structure_level: level,
+                structure_parent: resp?.data[0]?.structure_parent_id ?? null,
               }
-            : {}
+            : INITIAL_DATA
         );
+        getStructureUsers({
+          structure_level: level,
+          id_user: resp?.data[0]?.id ?? 0,
+        });
       });
     }
   }, [workerId]);
@@ -73,65 +127,64 @@ export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
   };
 
   const handleSaveUser = () => {
-    const { first_name, last_name, email, phones, password, photo } =
-      profileData;
+    if (handleCheckFields()) {
+      const { first_name, last_name, email, phones, password, photo } =
+        profileData;
 
-    editProfile({
-      first_name,
-      last_name,
-      email,
-      phones_json: JSON.stringify(
-        phones.map((phone) => ({
-          ...phone,
-          viber: phone.viber === "1",
-          telegram: phone.telegram === "1",
-          id_phone_code: phone?.code,
-          phone: handleRemovePhoneMask(phone.phone),
-        }))
-      ),
-      password: password?.length > 0 ? password : undefined,
-      photo,
-    }).then((resp) =>
-      handleResponse(resp, () => {
-        cogoToast.success("Зміни успішно збережено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-        handleGetUserData();
-      })
-    );
+      editProfile({
+        profileData,
+        first_name,
+        last_name,
+        email,
+        phones_json: JSON.stringify(
+          phones.map((phone) => ({
+            ...phone,
+            viber: phone.viber === "1",
+            telegram: phone.telegram === "1",
+            id_phone_code: phone?.code,
+            phone: handleRemovePhoneMask(phone.phone),
+          }))
+        ),
+        password: password?.length > 0 ? password : undefined,
+        photo: profileData?.photo.file ?? undefined,
+      }).then((resp) =>
+        handleResponse(resp, () => {
+          cogoToast.success("Зміни успішно збережено", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          handleGetUserData();
+        })
+      );
+    }
   };
 
   const handleSaveWorker = () => {
-    editWorker({
-      ...profileData,
-      id_permision: rolesPermission?.id_permision,
-      id_worker: profileData?.id,
-      phones_json: JSON.stringify(
-        profileData?.phones.map((phone) => ({
-          ...phone,
-          viber: phone.viber === "1",
-          telegram: phone.telegram === "1",
-          id_phone_code: phone?.code,
-          phone: handleRemovePhoneMask(phone.phone),
-        }))
-      ),
-    }).then((resp) =>
-      handleResponse(resp, () => {
-        changeWorkerLevel({
-          id_user: profileData?.id,
-          structure_level: profileData?.structure_level,
-        }).then((resp) =>
-          handleResponse(resp, () => {
-            cogoToast.success("Зміни успішно збережено", {
-              hideAfter: 3,
-              position: "top-right",
-            });
-            onRefetchData();
-          })
-        );
-      })
-    );
+    if (handleCheckFields()) {
+      editWorker({
+        ...profileData,
+        id_permision: rolesPermission?.id_permision,
+        id_worker: profileData?.id,
+        photo: profileData?.photo.file ?? undefined,
+        phones_json: JSON.stringify(
+          profileData?.phones.map((phone) => ({
+            ...phone,
+            viber: phone.viber === "1",
+            telegram: phone.telegram === "1",
+            id_phone_code: phone?.code,
+            phone: handleRemovePhoneMask(phone.phone),
+          }))
+        ),
+      }).then((resp) =>
+        handleResponse(resp, () => {
+          cogoToast.success("Зміни успішно збережено", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          onRefetchData();
+        })
+      );
+    }
   };
 
   const handleDeleteWorker = () => {
@@ -145,6 +198,26 @@ export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
         onClose();
       })
     );
+  };
+
+  const handleDeletePhoto = () => {
+    if (profileData?.photo?.file) {
+      handleChangeField("photo", null);
+    } else if (level === 1) {
+      deleteUserAvatar().then((resp) =>
+        handleResponse(resp, () => {
+          handleChangeField("photo", null);
+          handleGetUserData();
+        })
+      );
+    } else {
+      deleteWorkerImg(workerId).then((resp) =>
+        handleResponse(resp, () => {
+          handleChangeField("photo", null);
+          handleGetUserData();
+        })
+      );
+    }
   };
 
   return (
@@ -166,6 +239,9 @@ export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
         noDelete={level === 1}
         isProfile={level === 1}
         onReset={() => setDeleteModal(true)}
+        bosses={structureUsersCompany?.data ?? []}
+        errors={errors}
+        onRemoveAvatar={handleDeletePhoto}
       />
     </>
   );

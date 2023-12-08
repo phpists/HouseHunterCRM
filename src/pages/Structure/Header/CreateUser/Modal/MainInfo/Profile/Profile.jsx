@@ -5,13 +5,15 @@ import { Title } from "./Title";
 import { Subtitle } from "./Subtitle";
 import { RoleSelect } from "./RoleSelect/RoleSelect";
 
-export const Profile = ({ data, onChangeField }) => (
+export const Profile = ({ data, onChangeField, errors }) => (
   <StyledProfile>
     <LastDate />
     <div className="flex items-center">
       <Avatar
-        photo={data?.photo}
-        onChange={(val) => onChangeField("photo", val)}
+        photo={data?.photo?.url}
+        onChange={(val) =>
+          onChangeField("photo", { file: val, url: URL.createObjectURL(val) })
+        }
       />
       <div className="w-full">
         <div className="flex items-center justify-between">
@@ -19,6 +21,7 @@ export const Profile = ({ data, onChangeField }) => (
           <RoleSelect
             value={data?.id_permision}
             onChange={(val) => onChangeField("id_permision", val)}
+            error={!!errors?.find((e) => e === "id_permision")}
           />
         </div>
         {/* <Subtitle /> */}

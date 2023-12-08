@@ -7,7 +7,8 @@ import { useRef } from "react";
 export const Avatar = ({ photo, onChangeField, onRemoveAvatar }) => {
   const inputRef = useRef(null);
 
-  const handleAddPhoto = (file) => onChangeField("photo", file);
+  const handleAddPhoto = (file) =>
+    onChangeField("photo", { file, url: URL.createObjectURL(file) });
   const handleDeletePhoto = () => {
     // deletePhoto(id).then(() => onRefreshData());
   };
@@ -15,13 +16,7 @@ export const Avatar = ({ photo, onChangeField, onRemoveAvatar }) => {
   return (
     <StyledAvatarWrapper>
       <StyledAvatar
-        avatar={
-          photo?.type
-            ? URL.createObjectURL(photo)
-            : photo?.length > 0
-            ? photo
-            : img
-        }
+        avatar={photo?.length > 0 ? photo : img}
         isRemove={photo && onRemoveAvatar}
       >
         {photo && onRemoveAvatar && (

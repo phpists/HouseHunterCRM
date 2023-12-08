@@ -8,7 +8,7 @@ export const Header = ({ level, onChangeLevel, onRefetchData }) => {
     <StyledHeader className="flex items-center justify-between">
       <Breadcrumbs level={level} onChangeLevel={onChangeLevel} />
       <div className="btns flex items-center">
-        {level === 3 ? (
+        {level >= 3 ? (
           <CreateUser small />
         ) : (
           <>

@@ -34,12 +34,16 @@ export const MobileContent = ({ onOpenInfo, data, statisticData }) => {
     <StyledMobileContent open={open}>
       <div className="main-info-wrapper">
         <ProfilleInfo onOpenInfo={onOpenInfo} data={data} />
-        <Biling open={true} />
+        <Biling open={true} data={data} />
       </div>
-      <MobileBilling />
+      <MobileBilling data={data} />
       <div className="more-billing-wrapper more-content-wrapper">
-        <Divider />
-        <BossCard />
+        {data?.name_parent?.length > 0 ? (
+          <>
+            <Divider />
+            <BossCard data={data} />
+          </>
+        ) : null}
         <Divider />
         <Structure />
       </div>

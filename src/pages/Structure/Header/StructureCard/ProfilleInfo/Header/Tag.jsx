@@ -25,4 +25,5 @@ const StyledTag = styled.div`
   overflow: hidden;
   white-space: nowrap;
   max-width: 170px;
+  width: max-content;
 `;
