@@ -24,6 +24,7 @@ export const BossCard = ({ data }) => {
       <Avatar
         photo={data?.photo_parent}
         color={COLORS[data?.structure_level - 2]}
+        level={data?.structure_level - 1}
       />
       <div>
         <Name name={data?.name_parent ?? "-"} />

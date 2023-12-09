@@ -5,7 +5,7 @@ import { BossCard } from "./BossCard/BossCard";
 import { Structure } from "./Structure/Structure";
 
 export const Biling = ({ open, onClick, data }) => (
-  <StyledBiling open={open} onClick={onClick}>
+  <StyledBiling open={open} onClick={onClick} className="hide-scroll">
     <StatusCard
       status={data?.active === "1"}
       title={data?.active === "1" ? "Дозволено" : "Заборонено"}
@@ -24,7 +24,7 @@ export const Biling = ({ open, onClick, data }) => (
       </>
     ) : null}
     <Divider />
-    <Structure />
+    <Structure data={data?.structure_worker} />
   </StyledBiling>
 );
 

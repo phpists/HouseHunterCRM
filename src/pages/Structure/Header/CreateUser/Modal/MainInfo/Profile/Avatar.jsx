@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import img from "../../../../../../../assets/images/small-avatar-green.svg";
 import addAvatar from "../../../../../../../assets/images/add-avatar.svg";
+import { handleGetRoleAvatar } from "../../../../../../../utilits";
 
-export const Avatar = ({ photo, onChange }) => (
-  <StyledAvatar avatar={photo?.length > 0 ? photo : img}>
+export const Avatar = ({ photo, onChange, level }) => (
+  <StyledAvatar
+    avatar={photo?.length > 0 ? photo : handleGetRoleAvatar(Number(level))}
+  >
     <img src={addAvatar} alt="" />
     <input
       type="file"

@@ -69,9 +69,9 @@ export const Structure = () => {
             handleGetLevelWorkers().map((worker, i) => (
               <StructureCard
                 key={i}
-                onOpenInfo={() => setInfoOpen(user?.id)}
+                onOpenInfo={() => setInfoOpen(worker?.id_user)}
                 onNextLevel={handleNextLevel}
-                id={user?.id}
+                id={worker?.id_user}
                 data={worker}
               />
             ))

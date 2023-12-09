@@ -14,6 +14,7 @@ export const Profile = ({ data, onChangeField, errors }) => (
         onChange={(val) =>
           onChangeField("photo", { file: val, url: URL.createObjectURL(val) })
         }
+        level={data?.id_permision}
       />
       <div className="w-full">
         <div className="flex items-center justify-between">

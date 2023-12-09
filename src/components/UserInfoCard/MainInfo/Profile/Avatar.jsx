@@ -1,10 +1,16 @@
 import styled from "styled-components";
-import img from "../../../../assets/images/small-avatar-green.svg";
 import addAvatar from "../../../../assets/images/add-avatar.svg";
 import remove from "../../../../assets/images/remove.svg";
 import { useRef } from "react";
+import { handleGetRoleAvatar } from "../../../../utilits";
 
-export const Avatar = ({ photo, onChangeField, onRemoveAvatar }) => {
+export const Avatar = ({
+  photo,
+  onChangeField,
+  onRemoveAvatar,
+  data,
+  level,
+}) => {
   const inputRef = useRef(null);
 
   const handleAddPhoto = (file) =>
@@ -16,7 +22,7 @@ export const Avatar = ({ photo, onChangeField, onRemoveAvatar }) => {
   return (
     <StyledAvatarWrapper>
       <StyledAvatar
-        avatar={photo?.length > 0 ? photo : img}
+        avatar={photo?.length > 0 ? photo : handleGetRoleAvatar(level)}
         isRemove={photo && onRemoveAvatar}
       >
         {photo && onRemoveAvatar && (

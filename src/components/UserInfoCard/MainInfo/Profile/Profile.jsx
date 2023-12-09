@@ -21,6 +21,7 @@ export const Profile = ({
         onChangeField={onChangeField}
         onRefreshData={onRefreshData}
         onRemoveAvatar={onRemoveAvatar}
+        level={data?.structure_level}
       />
       <div className="w-full">
         <div className="flex items-center justify-between">

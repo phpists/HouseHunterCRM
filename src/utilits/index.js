@@ -1,4 +1,8 @@
 import cogoToast from "cogo-toast";
+import avatar1 from "../assets/images/avatars/1.svg";
+import avatar2 from "../assets/images/avatars/2.svg";
+import avatar3 from "../assets/images/avatars/3.svg";
+import avatar4 from "../assets/images/avatars/4.svg";
 
 export const addZero = (num) => (num < 10 ? `0${num}` : num);
 
@@ -248,4 +252,10 @@ export const handleCheckFields = ({
 
     return emptyFields;
   }
+};
+
+export const handleGetRoleAvatar = (level) => {
+  const avatars = [avatar1, avatar2, avatar3, avatar4];
+
+  return avatars[level - 1] ?? avatar1;
 };

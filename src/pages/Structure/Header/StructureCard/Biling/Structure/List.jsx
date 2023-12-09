@@ -1,14 +1,16 @@
 import { styled } from "styled-components";
 import { Avatar } from "./Avatar";
-import team1 from "../../../../../../assets/images/team-1.png";
-import team2 from "../../../../../../assets/images/team-2.png";
+import empty from "../../../../../../assets/images/small-avatar-green.svg";
+import { handleGetRoleAvatar } from "../../../../../../utilits";
 
-const data = [team1, team2];
-
-export const List = () => (
+export const List = ({ photos, level }) => (
   <StyledList className="flex items-center">
-    {data.map((photo, i) => (
-      <Avatar key={i} photo={photo} zIndex={data.length - i} />
+    {photos.map((photo, i) => (
+      <Avatar
+        key={i}
+        photo={photo?.length > 0 ? photo : handleGetRoleAvatar(level)}
+        zIndex={photos.length - i}
+      />
     ))}
   </StyledList>
 );

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export const Text = () => (
+export const Text = ({ count, level }) => (
   <StyledText>
-    <div className="title">2</div>
-    <div className="subtitle">Структурний</div>
+    <div className="title">{count}</div>
+    <div className="subtitle">{level}</div>
   </StyledText>
 );
 

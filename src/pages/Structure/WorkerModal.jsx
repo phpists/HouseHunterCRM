@@ -109,6 +109,7 @@ export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
                 })),
                 structure_level: level,
                 structure_parent: resp?.data[0]?.structure_parent_id ?? null,
+                photo: { url: resp?.data[0]?.photo },
               }
             : INITIAL_DATA
         );

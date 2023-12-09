@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import avatar from "../../../../../../assets/images/small-avatar-green.svg";
+import { handleGetRoleAvatar } from "../../../../../../utilits";
 
-export const Avatar = ({ onOpenInfo, color }) => (
+export const Avatar = ({ onOpenInfo, color, level, photo }) => (
   <StyledAvatar
-    avatar={avatar}
+    avatar={photo?.length > 0 ? photo : handleGetRoleAvatar(level)}
     className="notClickable"
     onClick={onOpenInfo}
     color={color}

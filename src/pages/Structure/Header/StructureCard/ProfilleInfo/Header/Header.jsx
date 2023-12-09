@@ -28,6 +28,8 @@ export const Header = ({ onOpenInfo, data }) => {
       <Avatar
         onOpenInfo={onOpenInfo}
         color={COLORS[handleGetCurrentLevel()?.level ?? "1"]}
+        level={data?.structure_level}
+        photo={data?.photo}
       />
       <div>
         <LastTime date={data?.last_active} />

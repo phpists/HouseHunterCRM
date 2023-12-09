@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import img from "../../../../../../assets/images/small-avatar-green.svg";
+import { handleGetRoleAvatar } from "../../../../../../utilits";
 
-export const Avatar = ({ photo, color }) => (
-  <StyledAvatar img={photo?.length > 0 ? photo : img} color={color} />
+export const Avatar = ({ photo, color, level }) => (
+  <StyledAvatar
+    img={photo?.length > 0 ? photo : handleGetRoleAvatar(level)}
+    color={color}
+  />
 );
 
 const StyledAvatar = styled.div`

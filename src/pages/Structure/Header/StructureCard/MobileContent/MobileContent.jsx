@@ -45,7 +45,7 @@ export const MobileContent = ({ onOpenInfo, data, statisticData }) => {
           </>
         ) : null}
         <Divider />
-        <Structure />
+        <Structure data={data?.structure_worker} />
       </div>
       <div className="footer-info-wrapper  more-content-wrapper">
         <Statistic statisticData={statisticData} />
