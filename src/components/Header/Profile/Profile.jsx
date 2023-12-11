@@ -71,7 +71,7 @@ export const Profile = () => {
         email,
         phones_json: JSON.stringify(phones),
         password: password?.length > 0 ? password : undefined,
-        photo,
+        photo: photo?.file,
       }).then((resp) =>
         handleResponse(resp, () => {
           cogoToast.success("Зміни успішно збережено", {
@@ -151,6 +151,8 @@ const StyledProfile = styled.div`
   &:hover {
     background-position: right;
   }
+  ${({ openNotifications }) =>
+    openNotifications && "background-position: right;"}
   @media (max-width: 1200px) {
     .status-tag {
       display: none;

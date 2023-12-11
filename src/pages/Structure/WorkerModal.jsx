@@ -87,6 +87,29 @@ export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
     }
   };
 
+  const handleGetWorker = () => {
+    getWorker(workerId).then((resp) => {
+      setProfileData(
+        resp?.data[0]
+          ? {
+              ...resp?.data[0],
+              phones: resp?.data[0].phones.map((p) => ({
+                ...p,
+                code: p.id_phone_code,
+              })),
+              structure_level: level,
+              structure_parent: resp?.data[0]?.structure_parent_id ?? null,
+              photo: { url: resp?.data[0]?.photo },
+            }
+          : INITIAL_DATA
+      );
+      getStructureUsers({
+        structure_level: level,
+        id_user: resp?.data[0]?.id ?? 0,
+      });
+    });
+  };
+
   useEffect(() => {
     if (level === 1) {
       setProfileData({
@@ -98,26 +121,7 @@ export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
         })),
       });
     } else if (workerId) {
-      getWorker(workerId).then((resp) => {
-        setProfileData(
-          resp?.data[0]
-            ? {
-                ...resp?.data[0],
-                phones: resp?.data[0].phones.map((p) => ({
-                  ...p,
-                  code: p.id_phone_code,
-                })),
-                structure_level: level,
-                structure_parent: resp?.data[0]?.structure_parent_id ?? null,
-                photo: { url: resp?.data[0]?.photo },
-              }
-            : INITIAL_DATA
-        );
-        getStructureUsers({
-          structure_level: level,
-          id_user: resp?.data[0]?.id ?? 0,
-        });
-      });
+      handleGetWorker();
     }
   }, [workerId]);
 
@@ -183,6 +187,7 @@ export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
             position: "top-right",
           });
           onRefetchData();
+          handleGetWorker();
         })
       );
     }
@@ -216,6 +221,8 @@ export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
         handleResponse(resp, () => {
           handleChangeField("photo", null);
           handleGetUserData();
+          onRefetchData();
+          handleGetWorker();
         })
       );
     }

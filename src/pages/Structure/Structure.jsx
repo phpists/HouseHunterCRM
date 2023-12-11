@@ -55,7 +55,7 @@ export const Structure = () => {
             <StructureCard
               onOpenInfo={() => setInfoOpen(user?.id)}
               onNextLevel={handleNextLevel}
-              id={1}
+              id={user?.id}
               data={{
                 ...user,
                 phone: JSON.stringify(user?.phones),

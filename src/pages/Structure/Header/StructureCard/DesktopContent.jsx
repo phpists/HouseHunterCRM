@@ -11,13 +11,14 @@ export const DesktopContent = ({
   onToggleOpen,
   data,
   statisticData,
+  onNextLevel,
 }) => (
   <StyledDesktopContent>
     <ProfilleInfo onOpenInfo={onOpenInfo} data={data} />
     <Biling open={!totalInfoOpened} data={data} />
     <Statistic statisticData={statisticData} />
     <TotalInfo open={totalInfoOpened} onToggleOpen={onToggleOpen} />
-    <Arrow />
+    <Arrow onClick={onNextLevel} />
   </StyledDesktopContent>
 );
 

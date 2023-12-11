@@ -1,15 +1,27 @@
 import styled from "styled-components";
-import imgArrow from "../../../../assets/images/structure-arrow-card.svg";
+import { ReactComponent as ArrowIcon } from "../../../../assets/images/structure-arrow-card.svg";
 
 export const Arrow = ({ onClick }) => (
-  <StyledArrow onClick={onClick}>
-    <img src={imgArrow} alt="" />
+  <StyledArrow onClick={onClick} className="nextLevel">
+    <ArrowIcon />
   </StyledArrow>
 );
 
 const StyledArrow = styled.div`
   display: flex;
   align-items: center;
+  svg,
+  g {
+    transition: all 0.3s;
+  }
+  &:hover {
+    svg g {
+      opacity: 1;
+    }
+    svg {
+      transform: rotate(50deg);
+    }
+  }
   @media (max-width: 1399.9px) {
     position: absolute;
     top: 11px;

@@ -34,7 +34,7 @@ const StyledNotificationsDropdown = styled.div`
   gap: 2px;
   max-height: 273px;
   overflow: auto;
-  @media (max-width: 800px) {
+  @media (max-width: 1200px) {
     width: 320px;
     right: 0;
     left: unset;

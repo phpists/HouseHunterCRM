@@ -9,21 +9,19 @@ export const StructureCard = ({ onOpenInfo, onNextLevel, id, data }) => {
     useLazyGetStatisticWorkerQuery();
   const [totalInfoOpened, settotalInfoOpened] = useState(false);
 
-  const handleNextLevel = (e) =>
-    !e.target.classList.contains("notClickable") && onNextLevel();
-
   useEffect(() => {
     getWorkerStatistic(id);
   }, [id]);
 
   return (
-    <StyledStructureCard onClick={handleNextLevel}>
+    <StyledStructureCard>
       <DesktopContent
         onOpenInfo={onOpenInfo}
         totalInfoOpened={totalInfoOpened}
         onToggleOpen={() => settotalInfoOpened(!totalInfoOpened)}
         data={data}
         statisticData={statisticData}
+        onNextLevel={onNextLevel}
       />
       <MobileContent
         onOpenInfo={onOpenInfo}
@@ -31,6 +29,7 @@ export const StructureCard = ({ onOpenInfo, onNextLevel, id, data }) => {
         onToggleOpen={() => settotalInfoOpened(!totalInfoOpened)}
         data={data}
         statisticData={statisticData}
+        onNextLevel={onNextLevel}
       />
     </StyledStructureCard>
   );
@@ -44,7 +43,7 @@ const StyledStructureCard = styled.div`
   border: 1px solid transparent;
   cursor: pointer;
   position: relative;
-  &:hover {
+  /* &:hover {
     border: 1px solid #fff;
-  }
+  } */
 `;

@@ -466,7 +466,7 @@ export const structure = createApi({
         headers: headers(),
         body: handleToFormData({
           action: "delete_worker_img",
-          mod: "structure",
+          mod: "billing",
           id_worker,
         }),
       }),

@@ -11,7 +11,12 @@ import { BossCard } from "../Biling/BossCard/BossCard";
 import { Structure } from "../Biling/Structure/Structure";
 import { MoreButton } from "./MoreButton";
 
-export const MobileContent = ({ onOpenInfo, data, statisticData }) => {
+export const MobileContent = ({
+  onOpenInfo,
+  data,
+  statisticData,
+  onNextLevel,
+}) => {
   const [totalInfoOpened, setTotalInfoOpened] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -52,7 +57,7 @@ export const MobileContent = ({ onOpenInfo, data, statisticData }) => {
         <TotalInfo open={totalInfoOpened} onToggleOpen={() => null} />
       </div>
       <MoreButton open={open} onToggle={() => setOpen(!open)} />
-      <Arrow />
+      <Arrow onClick={onNextLevel} />
     </StyledMobileContent>
   );
 };
