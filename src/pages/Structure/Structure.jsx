@@ -107,6 +107,7 @@ export const Structure = () => {
                 phone: JSON.stringify(user?.phones),
                 name: `${user?.first_name ?? ""} ${user?.last_name ?? ""}`,
                 id_user: user?.id,
+                level,
               }}
               isMore
             />

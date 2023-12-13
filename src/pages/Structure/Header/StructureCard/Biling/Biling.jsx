@@ -6,20 +6,25 @@ import { Structure } from "./Structure/Structure";
 
 export const Biling = ({ open, onClick, data }) => (
   <StyledBiling open={open} onClick={onClick} className="hide-scroll">
-    <StatusCard
-      status={data?.active === "1"}
-      title={data?.active === "1" ? "Дозволено" : "Заборонено"}
-      subtitle="Вхід"
-    />
-    <Divider />
-    <StatusCard
-      status={data?.active === "1"}
-      title={`Сплачено до ${data?.billing_to}`}
-      subtitle="Білінг"
-    />
+    {data?.level !== 1 && (
+      <>
+        <StatusCard
+          status={data?.active === "1"}
+          title={data?.active === "1" ? "Дозволено" : "Заборонено"}
+          subtitle="Вхід"
+        />
+        <Divider />
+        <StatusCard
+          status={data?.active === "1"}
+          title={`Сплачено до ${data?.billing_to}`}
+          subtitle="Білінг"
+        />
+      </>
+    )}
+
     {data?.name_parent?.length > 0 ? (
       <>
-        <Divider />
+        {data?.level !== 1 && <Divider />}
         <BossCard data={data} />
       </>
     ) : null}

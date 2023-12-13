@@ -8,7 +8,7 @@ export const TypeCard = ({ titles, type, active, onSelect }) => {
   return (
     <StyledTypeCard
       className={`flex items-center ${active && "active"}`}
-      onClick={onSelect}
+      onClick={active ? null : onSelect}
     >
       <div className="cards">
         <div>

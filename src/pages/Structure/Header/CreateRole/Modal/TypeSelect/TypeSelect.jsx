@@ -10,8 +10,9 @@ import {
 import { TypeCard } from "./TypeCard/TypeCard";
 import { handleResponse } from "../../../../../../utilits";
 import cogoToast from "cogo-toast";
+import { Confirm } from "../../../../../../components/Confirm/Confirm";
 
-export const TypeSelect = () => {
+export const TypeSelect = ({ onConfirm }) => {
   const [open, setOpen] = useState(false);
   const { data, refetch } = useGetCompanyStructureLevelQuery();
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
@@ -38,25 +39,36 @@ export const TypeSelect = () => {
   };
 
   return (
-    <StyledTypeSelect className="flex items-center justify-between" open={open}>
-      <div>
-        <div className="title">
-          {data && handleGetCurrentLevel(data)
-            ? handleGetCurrentLevel(data)["0"]
-            : "Оберіть"}
-        </div>
-        <div className="subtitle">Оберіть кількість рівнів компанії</div>
-      </div>
-      <button
-        className="arrow-btn flex items-center justify-center"
-        onClick={() => setOpen(!open)}
+    <>
+      <StyledTypeSelect
+        className="flex items-center justify-between"
+        open={open}
       >
-        <ArrowDownIcon />
-      </button>
-      {open && (
-        <Dropdown active={data} levels={levels} onChange={handleChangeLevel} />
-      )}
-    </StyledTypeSelect>
+        <div>
+          <div className="title">
+            {data && handleGetCurrentLevel(data)
+              ? handleGetCurrentLevel(data)["0"]
+              : "Оберіть"}
+          </div>
+          <div className="subtitle">Оберіть кількість рівнів компанії</div>
+        </div>
+        <button
+          className="arrow-btn flex items-center justify-center"
+          onClick={() => setOpen(!open)}
+        >
+          <ArrowDownIcon />
+        </button>
+        {open && (
+          <Dropdown
+            active={data}
+            levels={levels}
+            onChange={(lvl) => {
+              onConfirm(() => handleChangeLevel(lvl));
+            }}
+          />
+        )}
+      </StyledTypeSelect>
+    </>
   );
 };
 

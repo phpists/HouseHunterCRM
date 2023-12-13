@@ -32,6 +32,10 @@ export const REQUEST_INIT = {
     submitted_objects: "0",
     folder_empty: "0",
     stop_showing: "0",
+    tags_children: "0",
+    tags_animal: "0",
+    tags_student: "0",
+    tags_foreigners: "0",
   },
 };
 
@@ -292,6 +296,14 @@ export const Request = () => {
                     ) * 1000
                   )
                 : undefined,
+              tags_children:
+                resp?.data[id]?.General_field_group?.tags_children ?? "0",
+              tags_animal:
+                resp?.data[id]?.General_field_group?.tags_animal ?? "0",
+              tags_student:
+                resp?.data[id]?.General_field_group?.tags_student ?? "0",
+              tags_foreigners:
+                resp?.data[id]?.General_field_group?.tags_foreigners ?? "0",
             },
             fields: Object.entries(resp?.data[id])
               .filter((f) => f[0] !== "General_field_group")

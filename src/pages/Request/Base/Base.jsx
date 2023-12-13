@@ -90,6 +90,50 @@ export const Base = ({ data, onChangeField }) => {
           })
         }
       />
+      <CheckOption
+        label="Діти"
+        className="check-opt"
+        value={data?.general_group?.tags_children}
+        onChange={(val) =>
+          onChangeField("general_group", {
+            ...data.general_group,
+            tags_children: val,
+          })
+        }
+      />
+      <CheckOption
+        label="Тварини"
+        className="check-opt"
+        value={data?.general_group?.tags_animal}
+        onChange={(val) =>
+          onChangeField("general_group", {
+            ...data.general_group,
+            tags_animal: val,
+          })
+        }
+      />
+      <CheckOption
+        label="Cтуденти"
+        className="check-opt"
+        value={data?.general_group?.tags_student}
+        onChange={(val) =>
+          onChangeField("general_group", {
+            ...data.general_group,
+            tags_student: val,
+          })
+        }
+      />
+      <CheckOption
+        label="Іноземці"
+        className="check-opt"
+        value={data?.general_group?.tags_foreigners}
+        onChange={(val) =>
+          onChangeField("general_group", {
+            ...data.general_group,
+            tags_foreigners: val,
+          })
+        }
+      />
     </StyledBase>
   );
 };

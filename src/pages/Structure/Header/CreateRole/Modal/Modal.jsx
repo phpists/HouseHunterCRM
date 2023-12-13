@@ -4,17 +4,20 @@ import { SectionTitle } from "./SectionTitle";
 import { TypeSelect } from "./TypeSelect/TypeSelect";
 import { Roles } from "./Roles/Roles";
 import { motion, useAnimationControls } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AddButton } from "./AddButton/AddButton";
 import {
   useGetAllPerimissionsLevelsQuery,
   useGetCompanyStructureLevelQuery,
 } from "../../../../../store/structure/structure.api";
+import { Confirm } from "../../../../../components/Confirm/Confirm";
 
 export const Modal = ({ onClose }) => {
   const controls = useAnimationControls();
   const { data: level, refetch } = useGetCompanyStructureLevelQuery();
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
+  const [confirm, setConfirm] = useState();
+  const [confirmFunc, setConfirmFunc] = useState(null);
 
   const handleGetCurrentLevel = (level) =>
     levels
@@ -32,28 +35,44 @@ export const Modal = ({ onClose }) => {
     controls.start({ opacity: 1, translateX: 0 });
   }, []);
 
+  const handleConfrim = (func) => {
+    setConfirm(true);
+    setConfirmFunc(() => func);
+  };
+
   return (
-    <StyledModal
-      initial={{ opacity: 0, translateX: "100%" }}
-      transition={{ duration: 0.4 }}
-      animate={controls}
-      className="hide-scroll"
-    >
-      <Header onClose={handleClose} />
-      <div className="modal-content">
-        <SectionTitle title="ФОрмат компанії" />
-        <TypeSelect />
-        <SectionTitle title="налаштування доступів" />
-        {level && levels && (
-          <Roles
-            level={level}
-            levelData={handleGetCurrentLevel(level)}
-            onRefetchData={refetch}
-          />
-        )}
-        {/* <AddButton onRefetchData={refetch} /> */}
-      </div>
-    </StyledModal>
+    <>
+      {confirm && (
+        <Confirm
+          title={
+            "Ви точно хочете змінити формат компанії? (при зміні формату вся структура видалиться)"
+          }
+          onClose={() => setConfirm(false)}
+          onSubmit={() => confirmFunc && confirmFunc()}
+        />
+      )}
+      <StyledModal
+        initial={{ opacity: 0, translateX: "100%" }}
+        transition={{ duration: 0.4 }}
+        animate={controls}
+        className="hide-scroll"
+      >
+        <Header onClose={handleClose} />
+        <div className="modal-content">
+          <SectionTitle title="ФОрмат компанії" />
+          <TypeSelect onConfirm={handleConfrim} />
+          <SectionTitle title="налаштування доступів" />
+          {level && levels && (
+            <Roles
+              level={level}
+              levelData={handleGetCurrentLevel(level)}
+              onRefetchData={refetch}
+            />
+          )}
+          {/* <AddButton onRefetchData={refetch} /> */}
+        </div>
+      </StyledModal>
+    </>
   );
 };
 
