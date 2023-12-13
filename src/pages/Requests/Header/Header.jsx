@@ -12,9 +12,10 @@ import {
   useLazyAddToFavoriteQuery,
   useLazyDeleteRequestQuery,
 } from "../../../store/requests/requests.api";
-import { handleResponse } from "../../../utilits";
+import { handleCheckAccess, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
 import { BackButton } from "../../Clients/Header/BackButton";
+import { useGetAccessQuery } from "../../../store/auth/auth.api";
 
 export const Header = ({
   selectedCount,
@@ -34,6 +35,7 @@ export const Header = ({
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClientOpen, setAddClientOpen] = useState(false);
   const [addToFavorites] = useLazyAddToFavoriteQuery();
+  const { data } = useGetAccessQuery();
 
   const handleToggleFavorites = () => {
     Promise.all(
@@ -84,11 +86,13 @@ export const Header = ({
             active={filterOpen}
             onClick={() => setFilterOpen(true)}
           />
-          <IconButton
-            Icon={PlusIcon}
-            className="icon-btn"
-            onClick={() => setAddClientOpen(true)}
-          />
+          {handleCheckAccess(data, "clients", "add") ? (
+            <IconButton
+              Icon={PlusIcon}
+              className="icon-btn"
+              onClick={() => setAddClientOpen(true)}
+            />
+          ) : null}
           <IconButton
             Icon={StarIcon}
             className="icon-btn icon-btn-last"
@@ -100,7 +104,11 @@ export const Header = ({
               title="об'єктів"
               selectedCount={selectedCount}
               deleteConfirmTitle="Видалити запит(и)?"
-              onDelete={handleDelete}
+              onDelete={
+                handleCheckAccess(data, "requests", "delete")
+                  ? handleDelete
+                  : null
+              }
               onToggleFavorite={handleToggleFavorites}
               allCount={allCount}
               onSelectAll={onSelectAll}
@@ -113,7 +121,9 @@ export const Header = ({
         selectedCount={selectedCount}
         className="select-wrapper-mobile"
         deleteConfirmTitle="Видалити запит(и)?"
-        onDelete={handleDelete}
+        onDelete={
+          handleCheckAccess(data, "requests", "delete") ? handleDelete : null
+        }
         allCount={allCount}
         onSelectAll={onSelectAll}
         onToggleFavorite={handleToggleFavorites}

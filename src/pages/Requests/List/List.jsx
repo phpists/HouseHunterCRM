@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { RequestCard } from "./RequestCard/RequestCard";
 import { useLazyDeleteRequestQuery } from "../../../store/requests/requests.api";
 import { useState } from "react";
-import { handleResponse } from "../../../utilits";
+import { handleCheckAccess, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
 import { Confirm } from "../../../components/Confirm/Confirm";
 import { Empty } from "../../../components/Empty/Empty";
+import { useGetAccessQuery } from "../../../store/auth/auth.api";
 
 export const List = ({
   selected,
@@ -18,6 +19,7 @@ export const List = ({
   const [deleteRequest] = useLazyDeleteRequestQuery();
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
+  const { data: accessData } = useGetAccessQuery();
 
   const handleCancelDeleteRequest = () => {
     setDeleteModal(false);
@@ -65,6 +67,8 @@ export const List = ({
                 id={id}
                 onDelete={() => handleOnDeleteRequest(d[0])}
                 onFavorite={onFavorite}
+                isEdit={handleCheckAccess(accessData, "requests", "edit")}
+                isDelete={handleCheckAccess(accessData, "requests", "delete")}
               />
             );
           })

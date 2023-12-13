@@ -9,13 +9,21 @@ const TYPES = {
   telegram: { icon: telegramIcon, color: "#3D8ECC" },
 };
 
-export const Socmedia = ({ type, active, onClick, className, open }) => (
+export const Socmedia = ({
+  type,
+  active,
+  onClick,
+  className,
+  open,
+  readOnly,
+}) => (
   <StyledSocmedia
     className={`flex items-center justify-between ${className} ${
       active && "active"
     }`}
     onClick={onClick}
     color={TYPES[type].color}
+    readOnly={readOnly}
   >
     <img src={TYPES[type].icon} alt="" />
     <div className="divider" />
@@ -52,7 +60,9 @@ const StyledSocmedia = styled.div`
   }
   &:hover,
   &.active {
-    background: rgba(255, 255, 255, 0.3);
+    ${({ readOnly }) =>
+      !readOnly &&
+      ` background: rgba(255, 255, 255, 0.3);
     .divider,
     path {
       opacity: 1;
@@ -60,6 +70,7 @@ const StyledSocmedia = styled.div`
     img {
       transform: translateX(0);
     }
+    `}
   }
   &.active {
     background: ${({ color }) => color} !important;

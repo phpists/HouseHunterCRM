@@ -12,9 +12,16 @@ import {
 } from "../../../store/clients/clients.api";
 import { useEffect } from "react";
 import cogoToast from "cogo-toast";
-import { handleRemovePhoneMask, handleResponse } from "../../../utilits";
+import {
+  handleCheckAccess,
+  handleRemovePhoneMask,
+  handleResponse,
+} from "../../../utilits";
 import { useRef } from "react";
-import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
+import {
+  useGetAccessQuery,
+  useGetPhonesCodesQuery,
+} from "../../../store/auth/auth.api";
 
 export const ProfileMobile = ({ data, onRefreshClientData }) => {
   const [open, setOpen] = useState(false);
@@ -26,6 +33,12 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
   const [getClientPhotos] = useLazyGetClientPhotosQuery();
   const [photos, setPhotos] = useState([]);
+  const [isAccess, setIsAccess] = useState(false);
+  const { data: accessData } = useGetAccessQuery();
+
+  useEffect(() => {
+    setIsAccess(handleCheckAccess(accessData, "clients", "edit"));
+  }, [accessData]);
 
   const handleRefreshData = () => {
     getClientPhotos(id).then((resp) => {
@@ -137,6 +150,7 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
           onRefreshClientData={handleRefreshData}
           photos={photos}
           onChangePhotos={(val) => setPhotos(val)}
+          isAccess={isAccess}
         />
       )}
     </>

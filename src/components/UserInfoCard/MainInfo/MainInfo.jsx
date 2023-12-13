@@ -29,7 +29,7 @@ export const MainInfo = ({
         profile={profile}
         onRemoveAvatar={onRemoveAvatar}
       />
-      {bosses?.length > 0 ? (
+      {bosses?.length > 0 && data?.structure_level ? (
         <>
           <Divider />
           <BossSelect

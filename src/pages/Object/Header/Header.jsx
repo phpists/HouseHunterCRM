@@ -8,12 +8,13 @@ import { ReactComponent as RemoveIcon } from "../../../assets/images/remove.svg"
 import { Confirm } from "../../../components/Confirm/Confirm";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { handleResponse } from "../../../utilits";
+import { handleCheckAccess, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
 import {
   useLazyAddToFavoritesQuery,
   useLazyDeleteObjectQuery,
 } from "../../../store/objects/objects.api";
+import { useGetAccessQuery } from "../../../store/auth/auth.api";
 
 export const Header = ({ onSave, favorite, onToggleFavorite }) => {
   const { id } = useParams();
@@ -21,6 +22,7 @@ export const Header = ({ onSave, favorite, onToggleFavorite }) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteObject] = useLazyDeleteObjectQuery();
   const [addToFavorites] = useLazyAddToFavoritesQuery();
+  const { accessData } = useGetAccessQuery();
 
   const handleDeleteRequest = () => {
     deleteObject([id]).then((resp) =>
@@ -67,11 +69,13 @@ export const Header = ({ onSave, favorite, onToggleFavorite }) => {
             onClick={handleToggleFavorites}
             active={favorite}
           />
-          <IconButton
-            Icon={RemoveIcon}
-            className="icon-btn remove-btn"
-            onClick={() => setDeleteModal(true)}
-          />
+          {handleCheckAccess(accessData, "objects", "delete") && (
+            <IconButton
+              Icon={RemoveIcon}
+              className="icon-btn remove-btn"
+              onClick={() => setDeleteModal(true)}
+            />
+          )}
         </div>
       </StyledHeader>
     </>

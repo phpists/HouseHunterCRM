@@ -13,7 +13,7 @@ export const SelectItems = ({
   className,
   deleteConfirmTitle,
   onToggleFavorite = () => null,
-  onDelete = () => null,
+  onDelete,
   allCount = 0,
   onSelectAll,
   noFavorite,
@@ -54,7 +54,7 @@ export const SelectItems = ({
         <Confirm
           title={deleteConfirmTitle}
           onClose={() => setDeleteModal(false)}
-          onSubmit={onDelete}
+          onSubmit={() => (onDelete ? onDelete() : null)}
         />
       )}
       <div className="relative z-300">
@@ -79,7 +79,11 @@ export const SelectItems = ({
             {dropdown ? (
               dropdown
             ) : (
-              <Dropdown onSelect={handleSelectOption} noFavorite={noFavorite} />
+              <Dropdown
+                onSelect={handleSelectOption}
+                noFavorite={noFavorite}
+                onDelete={onDelete}
+              />
             )}
           </>
         )}

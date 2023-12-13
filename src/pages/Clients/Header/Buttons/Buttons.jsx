@@ -6,6 +6,8 @@ import { styled } from "styled-components";
 import { SelectItems } from "../../../../components/SelectItems/SelectItems";
 import { useState } from "react";
 import { AddClient } from "../../../../components/AddClient/AddClient";
+import { useGetAccessQuery } from "../../../../store/auth/auth.api";
+import { handleCheckAccess } from "../../../../utilits";
 
 export const Buttons = ({
   favoritesFilter,
@@ -23,6 +25,7 @@ export const Buttons = ({
   deleteConfirmTitle,
 }) => {
   const [addClient, setAddClient] = useState(false);
+  const { data } = useGetAccessQuery();
 
   return (
     <StyledButtons className="flex items-center">
@@ -32,11 +35,14 @@ export const Buttons = ({
           onAdded={onRefreshData}
         />
       )}
-      <IconButton
-        Icon={PlusIcon}
-        className="icon-btn"
-        onClick={() => setAddClient(true)}
-      />
+      {handleCheckAccess(data, "clients", "add") ? (
+        <IconButton
+          Icon={PlusIcon}
+          className="icon-btn"
+          onClick={() => setAddClient(true)}
+        />
+      ) : null}
+
       {/* <IconButton
         Icon={StarIcon}
         onClick={onToggleFavoriteFilter}

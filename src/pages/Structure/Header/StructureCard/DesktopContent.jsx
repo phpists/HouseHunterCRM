@@ -12,13 +12,14 @@ export const DesktopContent = ({
   data,
   statisticData,
   onNextLevel,
+  isMore,
 }) => (
   <StyledDesktopContent>
     <ProfilleInfo onOpenInfo={onOpenInfo} data={data} />
     <Biling open={!totalInfoOpened} data={data} />
     <Statistic statisticData={statisticData} />
     <TotalInfo open={totalInfoOpened} onToggleOpen={onToggleOpen} />
-    <Arrow onClick={onNextLevel} />
+    {isMore ? <Arrow onClick={onNextLevel} /> : null}
   </StyledDesktopContent>
 );
 

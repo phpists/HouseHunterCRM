@@ -6,7 +6,14 @@ import { Comment } from "./Comment";
 import { Objects } from "./Objects/Objects";
 import { Actions } from "./Actions/Actions";
 
-export const DesktopContent = ({ data, id, onDelete, onFavorite }) => (
+export const DesktopContent = ({
+  data,
+  id,
+  onDelete,
+  onFavorite,
+  isEdit,
+  isDelete,
+}) => (
   <StyledDesktopContent>
     <Client
       firstName={data?.usr_first_name}
@@ -37,6 +44,8 @@ export const DesktopContent = ({ data, id, onDelete, onFavorite }) => (
       favorite={data?.General_field_group?.favorite}
       onFavorite={onFavorite}
       idGroup={data?.id_group}
+      isEdit={isEdit}
+      isDelete={isDelete}
     />
   </StyledDesktopContent>
 );

@@ -16,6 +16,7 @@ export const Phone = ({
   onSave,
   code,
   phonesCodes,
+  readOnly,
 }) => {
   return (
     <StyledPhone className="flex items-center">
@@ -25,11 +26,13 @@ export const Phone = ({
           active={viber === "1"}
           onClick={() => onChange("viber", viber === "1" ? "0" : "1")}
           className="viber-card"
+          readOnly={readOnly}
         />
         <Socmedia
           type="telegram"
           active={telegram === "1"}
           onClick={() => onChange("telegram", telegram === "1" ? "0" : "1")}
+          readOnly={readOnly}
         />
       </div>
       <ProfileField
@@ -43,8 +46,9 @@ export const Phone = ({
         phoneCode={code}
         onChangePhoneCode={(cod) => onChange("code", cod)}
         phonesCodes={phonesCodes}
+        readOnly={readOnly}
       />
-      {isFirst ? (
+      {readOnly ? null : isFirst ? (
         <AddButton onClick={onAdd} />
       ) : (
         <RemoveBtn onClick={onRemove} />

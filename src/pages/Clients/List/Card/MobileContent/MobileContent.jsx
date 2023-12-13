@@ -15,6 +15,7 @@ export const MobileContent = ({
   objectsCount,
   comment,
   onDelete,
+  isDelete,
 }) => (
   <StyledMobileContent className="flex items-center hide-scroll card">
     <div className="w-full">
@@ -42,7 +43,12 @@ export const MobileContent = ({
         <Comment comment={comment} />
       </div>
     </div>
-    <ActionsButtons className="laptop-actions" id={id} onDelete={onDelete} />
+    <ActionsButtons
+      className="laptop-actions"
+      id={id}
+      onDelete={onDelete}
+      noDelete={!isDelete}
+    />
   </StyledMobileContent>
 );
 

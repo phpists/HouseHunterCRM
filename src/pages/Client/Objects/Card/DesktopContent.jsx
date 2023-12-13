@@ -20,6 +20,8 @@ export const DesktopContent = ({
   onDelete,
   isObject,
   id,
+  isEdit,
+  isDelete,
 }) => {
   const { id: clientId } = useParams();
 
@@ -50,10 +52,13 @@ export const DesktopContent = ({
             favorite={favorite}
             onDelete={onDelete}
             editLink={
-              isObject
+              !isEdit
+                ? null
+                : isObject
                 ? `/#/edit-object/${clientId}/${id}`
                 : `/#/edit-request/${clientId}/${id}`
             }
+            noDelete={!isDelete}
           />
         </div>
       </div>

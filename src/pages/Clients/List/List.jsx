@@ -3,9 +3,12 @@ import { Card } from "./Card/Card";
 import { Empty } from "../../../components/Empty/Empty";
 import { useState } from "react";
 import { Confirm } from "../../../components/Confirm/Confirm";
+import { useGetAccessQuery } from "../../../store/auth/auth.api";
+import { handleCheckAccess } from "../../../utilits";
 
 export const List = ({ selected, onSelect, clients, innerRef, onDelete }) => {
   const [deleteModal, setDeleteModal] = useState(null);
+  const { data: accessData } = useGetAccessQuery();
 
   const handleOpenDeleteModal = (id) => setDeleteModal(id);
 
@@ -53,6 +56,7 @@ export const List = ({ selected, onSelect, clients, innerRef, onDelete }) => {
                 objectsCount={all_obj}
                 comment={comment}
                 onDelete={() => handleOpenDeleteModal(id)}
+                isDelete={handleCheckAccess(accessData, "clients", "delete")}
               />
             )
           )

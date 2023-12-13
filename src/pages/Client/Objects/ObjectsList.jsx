@@ -17,6 +17,8 @@ export const ObjectsList = ({
   onSelectItem,
   isRefresh,
   onRefreshed,
+  isEdit,
+  isDelete,
 }) => {
   const { id } = useParams();
   const [objects, setObjects] = useState([]);
@@ -137,6 +139,8 @@ export const ObjectsList = ({
                 onDelete={() => handleOnDeleteRequest(c[1]?.id)}
                 photo=""
                 isObject={true}
+                isDelete={isDelete}
+                isEdit={isEdit}
               />
             ))
           : null}

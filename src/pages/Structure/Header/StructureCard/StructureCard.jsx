@@ -4,7 +4,13 @@ import { DesktopContent } from "./DesktopContent";
 import { MobileContent } from "./MobileContent/MobileContent";
 import { useLazyGetStatisticWorkerQuery } from "../../../../store/structure/structure.api";
 
-export const StructureCard = ({ onOpenInfo, onNextLevel, id, data }) => {
+export const StructureCard = ({
+  onOpenInfo,
+  onNextLevel,
+  id,
+  data,
+  isMore,
+}) => {
   const [getWorkerStatistic, { data: statisticData }] =
     useLazyGetStatisticWorkerQuery();
   const [totalInfoOpened, settotalInfoOpened] = useState(false);
@@ -22,6 +28,7 @@ export const StructureCard = ({ onOpenInfo, onNextLevel, id, data }) => {
         data={data}
         statisticData={statisticData}
         onNextLevel={onNextLevel}
+        isMore={isMore}
       />
       <MobileContent
         onOpenInfo={onOpenInfo}
@@ -30,6 +37,7 @@ export const StructureCard = ({ onOpenInfo, onNextLevel, id, data }) => {
         data={data}
         statisticData={statisticData}
         onNextLevel={onNextLevel}
+        isMore={isMore}
       />
     </StyledStructureCard>
   );

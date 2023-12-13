@@ -5,7 +5,7 @@ import { Divider } from "./Divider";
 import { ProfileField } from "../../../../components/ProfileField";
 import { useGetPhonesCodesQuery } from "../../../../store/auth/auth.api";
 
-export const Contact = ({ phones, email, onChangeField }) => {
+export const Contact = ({ phones, email, onChangeField, readOnly }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
 
   const INIT_PHONE = {
@@ -43,13 +43,14 @@ export const Contact = ({ phones, email, onChangeField }) => {
             viber={viber}
             telegram={telegram}
             onChange={(fieldName, value) =>
-              handleChangePhone(i, fieldName, value)
+              readOnly ? null : handleChangePhone(i, fieldName, value)
             }
             onRemove={() => handleRemovePhone(i)}
             onAdd={handleAddPhone}
             isFirst={i === 0}
             code={code}
             phonesCodes={phonesCodes}
+            readOnly={readOnly}
           />
           <Divider />
         </React.Fragment>
@@ -58,6 +59,7 @@ export const Contact = ({ phones, email, onChangeField }) => {
         value={email}
         label="Пошта"
         onChange={(val) => onChangeField("email", val)}
+        readOnly={readOnly}
       />
     </StyledContact>
   );

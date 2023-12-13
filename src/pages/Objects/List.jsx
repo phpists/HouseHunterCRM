@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { ObjectCard } from "../../components/ObjectCard/ObjectCard";
 import { Empty } from "../../components/Empty/Empty";
+import { useGetAccessQuery } from "../../store/auth/auth.api";
+import { handleCheckAccess } from "../../utilits";
 
 export const List = ({
   selected,
@@ -9,6 +11,8 @@ export const List = ({
   toggleFavoriteStatus,
   onFindSimilar,
 }) => {
+  const { data: accessData } = useGetAccessQuery();
+
   return (
     <StyledList className="hide-scroll">
       {data?.length === 0 ? (
@@ -22,6 +26,7 @@ export const List = ({
             data={d}
             onToggleFavoriteStatus={() => toggleFavoriteStatus(d?.id)}
             onFindSimilar={() => onFindSimilar(d)}
+            isEdit={handleCheckAccess(accessData, "objects", "edit")}
           />
         ))
       )}

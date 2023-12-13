@@ -12,7 +12,8 @@ import { useEffect } from "react";
 import { useActions } from "../../../hooks/actions";
 import { useAppSelect } from "../../../hooks/redux";
 import cogoToast from "cogo-toast";
-import { handleResponse } from "../../../utilits";
+import { handleCheckAccess, handleResponse } from "../../../utilits";
+import { useGetAccessQuery } from "../../../store/auth/auth.api";
 
 export const Header = ({
   favoritesFilter,
@@ -33,6 +34,7 @@ export const Header = ({
   const { saveNewClientsCount } = useActions();
   const { newClientsCount } = useAppSelect((state) => state.clients);
   const [deleteClient] = useLazyDeleteCientQuery();
+  const { data: accessData } = useGetAccessQuery();
 
   useEffect(() => {
     getNewClientsCount().then((resp) => saveNewClientsCount(resp?.data?.count));
@@ -76,7 +78,11 @@ export const Header = ({
           selectedCount={selectedCount}
           allCount={allCount}
           onSelectAll={onSelectAll}
-          onDelete={handleDeleteClients}
+          onDelete={
+            handleCheckAccess(accessData, "clients", "delete")
+              ? handleDeleteClients
+              : null
+          }
           deleteConfirmTitle={`Видалити клієнт${
             selected?.length > 1 ? "ів" : "а"
           }`}
@@ -92,7 +98,11 @@ export const Header = ({
         allCount={allCount}
         onSelectAll={onSelectAll}
         noFavorite
-        onDelete={handleDeleteClients}
+        onDelete={
+          handleCheckAccess(accessData, "clients", "delete")
+            ? handleDeleteClients
+            : null
+        }
       />
     </StyledHeader>
   );

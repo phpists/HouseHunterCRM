@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { UserInfoCard } from "../../components/UserInfoCard/UserInfoCard";
 import {
   useGetPerimissionDirectorQuery,
+  useLazyAddWorkerToStructureQuery,
   useLazyChangeWorkerLevelQuery,
   useLazyDeleteWorkerImgQuery,
   useLazyDeleteWorkerQuery,
@@ -35,7 +36,13 @@ const INITIAL_DATA = {
   active: "1",
 };
 
-export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
+export const WorkerModal = ({
+  onClose,
+  workerId,
+  level,
+  onRefetchData,
+  showNotStructureWorkers,
+}) => {
   const [getWorker] = useLazyGetWorkerByIdQuery();
   const { user } = useAppSelect((state) => state.auth);
   const [profileData, setProfileData] = useState(INITIAL_DATA);
@@ -54,7 +61,12 @@ export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
   const [deleteWorkerImg] = useLazyDeleteWorkerImgQuery();
 
   const handleChangeField = (fieldName, value) => {
-    const newData = { ...profileData, [fieldName]: value };
+    let newData = { ...profileData, [fieldName]: value };
+
+    if (fieldName === "structure_level") {
+      newData = { ...newData, structure_parent: undefined };
+    }
+
     setProfileData(newData);
 
     let updatedErrors = errors?.filter((e) => e !== fieldName);
@@ -63,6 +75,13 @@ export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
       updatedErrors.push("email");
     }
     setErrors(updatedErrors);
+
+    if (fieldName === "structure_level") {
+      getStructureUsers({
+        structure_level: value,
+        id_user: workerId ?? 0,
+      });
+    }
   };
 
   const handleCheckFields = () => {
@@ -97,21 +116,22 @@ export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
                 ...p,
                 code: p.id_phone_code,
               })),
-              structure_level: level,
+              structure_level: !showNotStructureWorkers ? level : undefined,
               structure_parent: resp?.data[0]?.structure_parent_id ?? null,
               photo: { url: resp?.data[0]?.photo },
             }
           : INITIAL_DATA
       );
-      getStructureUsers({
-        structure_level: level,
-        id_user: resp?.data[0]?.id ?? 0,
-      });
+      !showNotStructureWorkers &&
+        getStructureUsers({
+          structure_level: level,
+          id_user: resp?.data[0]?.id ?? 0,
+        });
     });
   };
 
   useEffect(() => {
-    if (level === 1) {
+    if (level === 1 && !showNotStructureWorkers) {
       setProfileData({
         ...user,
         structure_level: level,
@@ -188,6 +208,7 @@ export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
           });
           onRefetchData();
           handleGetWorker();
+          onClose();
         })
       );
     }
@@ -209,7 +230,7 @@ export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
   const handleDeletePhoto = () => {
     if (profileData?.photo?.file) {
       handleChangeField("photo", null);
-    } else if (level === 1) {
+    } else if (level === 1 && !showNotStructureWorkers) {
       deleteUserAvatar().then((resp) =>
         handleResponse(resp, () => {
           handleChangeField("photo", null);
@@ -243,9 +264,13 @@ export const WorkerModal = ({ onClose, workerId, level, onRefetchData }) => {
         isDelete
         data={profileData}
         onChangeField={handleChangeField}
-        onSave={() => (level === 1 ? handleSaveUser() : handleSaveWorker())}
-        noDelete={level === 1}
-        isProfile={level === 1}
+        onSave={() =>
+          level === 1 && !showNotStructureWorkers
+            ? handleSaveUser()
+            : handleSaveWorker()
+        }
+        noDelete={level === 1 && !showNotStructureWorkers}
+        isProfile={level === 1 && !showNotStructureWorkers}
         onReset={() => setDeleteModal(true)}
         bosses={structureUsersCompany?.data ?? []}
         errors={errors}

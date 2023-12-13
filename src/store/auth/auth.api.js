@@ -128,6 +128,33 @@ export const auth = createApi({
         }),
       }),
     }),
+    getAccess: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        body: handleToFormData({
+          mod: "system_info",
+          action: "get_available_tabs",
+        }),
+        headers: headers(),
+      }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => {
+            const formatedResponse = response
+              ? Object.entries(response?.permision)
+                  .filter((f) => f[0] !== "error")
+                  ?.map((f) => f[1])
+              : [];
+            return formatedResponse;
+          },
+          () => null,
+          false,
+          true
+        );
+      },
+    }),
   }),
 });
 
@@ -140,4 +167,5 @@ export const {
   useGetPhonesCodesQuery,
   useLazyEditProfileQuery,
   useLazyDeleteAvatarQuery,
+  useGetAccessQuery,
 } = auth;

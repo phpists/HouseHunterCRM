@@ -13,8 +13,9 @@ import {
 import { useState } from "react";
 import { Confirm } from "../../../components/Confirm/Confirm";
 import { useNavigate, useParams } from "react-router-dom";
-import { handleResponse } from "../../../utilits";
+import { handleCheckAccess, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
+import { useGetAccessQuery } from "../../../store/auth/auth.api";
 
 export const Header = ({
   onSave,
@@ -28,6 +29,7 @@ export const Header = ({
   const [addToFavorites] = useLazyAddToFavoriteQuery();
   const [deleteRequest] = useLazyDeleteRequestQuery();
   const [deleteModal, setDeleteModal] = useState(false);
+  const { data: accessData } = useGetAccessQuery();
 
   const handleDeleteRequest = () => {
     deleteRequest([id]).then((resp) =>
@@ -75,11 +77,13 @@ export const Header = ({
                 onClick={handleToggleFavorites}
                 active={favorite}
               />
-              <IconButton
-                Icon={RemoveIcon}
-                className="icon-btn remove-btn"
-                onClick={() => setDeleteModal(true)}
-              />
+              {handleCheckAccess(accessData, "requests", "delete") && (
+                <IconButton
+                  Icon={RemoveIcon}
+                  className="icon-btn remove-btn"
+                  onClick={() => setDeleteModal(true)}
+                />
+              )}
               <MoreButton />
             </>
           )}
@@ -130,11 +134,13 @@ export const Header = ({
               onClick={handleToggleFavorites}
               active={favorite}
             />
-            <IconButton
-              Icon={RemoveIcon}
-              className="icon-btn remove-btn"
-              onClick={() => setDeleteModal(true)}
-            />
+            {handleCheckAccess(accessData, "requests", "delete") && (
+              <IconButton
+                Icon={RemoveIcon}
+                className="icon-btn remove-btn"
+                onClick={() => setDeleteModal(true)}
+              />
+            )}
           </div>
         )}
       </div>

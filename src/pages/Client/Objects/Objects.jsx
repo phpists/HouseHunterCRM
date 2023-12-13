@@ -17,8 +17,9 @@ import {
   useLazyAddToFavoriteQuery,
   useLazyDeleteRequestQuery,
 } from "../../../store/requests/requests.api";
-import { handleResponse } from "../../../utilits";
+import { handleCheckAccess, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
+import { useGetAccessQuery } from "../../../store/auth/auth.api";
 
 export const Objects = ({ selected, onSelect }) => {
   const [openInfo, setOpenInfo] = useState(false);
@@ -31,6 +32,7 @@ export const Objects = ({ selected, onSelect }) => {
   const [addRequestsToFavorites] = useLazyAddToFavoriteQuery();
   const [refreshObjects, setRefreshObjects] = useState(false);
   const [refreshRequests, setRefreshRequests] = useState(false);
+  const { data: accessData } = useGetAccessQuery();
 
   const handleRefreshObjects = (val) => setRefreshObjects(val);
   const handleRefreshRequests = (val) => setRefreshRequests(val);
@@ -150,7 +152,7 @@ export const Objects = ({ selected, onSelect }) => {
         onToggleFavorite={handleToggleItemsFavoriteStatus}
       />
       <div className="objects-content hide-scroll">
-        <Actions />
+        <Actions accessData={accessData} />
         <MobileHeader />
         <SelectItems
           title="запитів"
@@ -160,26 +162,34 @@ export const Objects = ({ selected, onSelect }) => {
           onDelete={handleDeleteItems}
           onToggleFavorite={handleToggleItemsFavoriteStatus}
         />
-        <ObjectsList
-          onSelect={onSelect}
-          onOpenInfo={(val) => setOpenInfo(val)}
-          active={selected?.id}
-          onChangeObjectsCount={(val) => setObjectsCount(val)}
-          selectedItems={selectedItems}
-          onSelectItem={handleSelectItem}
-          isRefresh={refreshObjects}
-          onRefreshed={() => handleRefreshObjects(false)}
-        />
-        <RequestsList
-          onSelect={onSelect}
-          onOpenInfo={(val) => setOpenInfo(val)}
-          active={selected}
-          onChangeRequestsCount={(val) => setRequestCount(val)}
-          selectedItems={selectedItems}
-          onSelectItem={handleSelectItem}
-          isRefresh={refreshRequests}
-          onRefreshed={() => handleRefreshRequests(false)}
-        />
+        {handleCheckAccess(accessData, "objects", "view") && (
+          <ObjectsList
+            onSelect={onSelect}
+            onOpenInfo={(val) => setOpenInfo(val)}
+            active={selected?.id}
+            onChangeObjectsCount={(val) => setObjectsCount(val)}
+            selectedItems={selectedItems}
+            onSelectItem={handleSelectItem}
+            isRefresh={refreshObjects}
+            onRefreshed={() => handleRefreshObjects(false)}
+            isEdit={handleCheckAccess(accessData, "objects", "edit")}
+            isDelete={handleCheckAccess(accessData, "objects", "delete")}
+          />
+        )}
+        {handleCheckAccess(accessData, "requests", "view") && (
+          <RequestsList
+            onSelect={onSelect}
+            onOpenInfo={(val) => setOpenInfo(val)}
+            active={selected}
+            onChangeRequestsCount={(val) => setRequestCount(val)}
+            selectedItems={selectedItems}
+            onSelectItem={handleSelectItem}
+            isRefresh={refreshRequests}
+            onRefreshed={() => handleRefreshRequests(false)}
+            isEdit={handleCheckAccess(accessData, "requests", "edit")}
+            isDelete={handleCheckAccess(accessData, "requests", "delete")}
+          />
+        )}
       </div>
     </StyledObjects>
   );

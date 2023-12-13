@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import { Role } from "./Role";
 
-export const Dropdown = ({ roles, onChangeActiveRole }) => (
+export const Dropdown = ({ roles, onChangeActiveRole, isValue }) => (
   <StyledDropdown>
+    {isValue && (
+      <Role onClick={() => onChangeActiveRole(null)} title="Без ролі" />
+    )}
     {roles.map((role, i) => (
       <Role
         key={i}

@@ -2,18 +2,39 @@ import styled from "styled-components";
 import { Breadcrumbs } from "./Breadcrumbs/Breadcrumbs";
 import { CreateRole } from "./CreateRole/CreateRole";
 import { CreateUser } from "./CreateUser/CreateUser";
+import { ToggleShowButton } from "./ToggleButton";
+import { useGetAccessQuery } from "../../../store/auth/auth.api";
+import { handleCheckAccess } from "../../../utilits";
 
-export const Header = ({ level, onChangeLevel, onRefetchData }) => {
+export const Header = ({
+  level,
+  onChangeLevel,
+  onRefetchData,
+  onToggleShowNotStructureWorkers,
+  showNotStructureWorkers,
+}) => {
+  const { data: accessData } = useGetAccessQuery();
+
   return (
     <StyledHeader className="flex items-center justify-between">
       <Breadcrumbs level={level} onChangeLevel={onChangeLevel} />
       <div className="btns flex items-center">
-        {level >= 3 ? (
+        {level >= 3 && handleCheckAccess(accessData, "structure", "add") ? (
           <CreateUser small />
         ) : (
           <>
-            <CreateUser onRefetchData={onRefetchData} />
-            <CreateRole />
+            {handleCheckAccess(accessData, "structure", "add") && (
+              <CreateUser onRefetchData={onRefetchData} />
+            )}
+            {handleCheckAccess(accessData, "structure", "edit") && (
+              <CreateRole />
+            )}
+            {level === 1 && (
+              <ToggleShowButton
+                active={showNotStructureWorkers}
+                onClick={onToggleShowNotStructureWorkers}
+              />
+            )}
           </>
         )}
       </div>

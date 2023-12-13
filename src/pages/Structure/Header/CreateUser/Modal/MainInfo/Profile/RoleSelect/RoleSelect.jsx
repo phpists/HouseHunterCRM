@@ -43,7 +43,6 @@ export const RoleSelect = ({ value, onChange, error }) => {
   const [open, setOpen] = useState(false);
   const [roles, setRoles] = useState([]);
 
-  console.log(error);
   const handleGetCurrentLevel = () =>
     levels
       ? Object.entries(levels)

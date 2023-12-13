@@ -14,9 +14,16 @@ import {
 } from "../../../store/clients/clients.api";
 import { useParams } from "react-router-dom";
 import cogoToast from "cogo-toast";
-import { handleRemovePhoneMask, handleResponse } from "../../../utilits";
+import {
+  handleCheckAccess,
+  handleRemovePhoneMask,
+  handleResponse,
+} from "../../../utilits";
 import { Footer } from "./Footer";
-import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
+import {
+  useGetAccessQuery,
+  useGetPhonesCodesQuery,
+} from "../../../store/auth/auth.api";
 
 export const Profile = ({ className, data, onRefreshClientData }) => {
   const { id } = useParams();
@@ -26,6 +33,12 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
   const [getClientPhotos] = useLazyGetClientPhotosQuery();
   const [photos, setPhotos] = useState([]);
+  const [isAccess, setIsAccess] = useState(false);
+  const { data: accessData } = useGetAccessQuery();
+
+  useEffect(() => {
+    setIsAccess(handleCheckAccess(accessData, "clients", "edit"));
+  }, [accessData]);
 
   const handleRefreshData = () => {
     getClientPhotos(id).then((resp) => {
@@ -99,29 +112,62 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
           firstName={updatedData?.first_name}
           lastName={updatedData?.last_name}
           onChangeField={handleChangeField}
+          readOnly={!isAccess}
         />
         <SectionTitle title="Контакти" />
         <Contact
           phones={updatedData?.phone ?? []}
           email={updatedData?.email}
           onChangeField={handleChangeField}
+          readOnly={!isAccess}
         />
-        <SectionTitle title="Коментар" />
-        <Comment
-          comment={updatedData?.comment}
-          onChange={(val) => handleChangeField("comment", val)}
-        />
-        <SectionTitle title="Фото / Додатково" />
-        <OtherInfo
-          photos={photos}
-          onChange={(val) => setPhotos(val)}
-          onRefreshClientData={handleRefreshData}
-        />
-        <Footer
-          onSave={handleSaveChanges}
-          onReset={handleReset}
-          loading={loading}
-        />
+        {isAccess ? (
+          <>
+            <SectionTitle title="Коментар" />
+            <Comment
+              comment={updatedData?.comment}
+              onChange={(val) => handleChangeField("comment", val)}
+              readOnly={!isAccess}
+            />
+          </>
+        ) : data?.comment?.length > 0 ? (
+          <>
+            <SectionTitle title="Коментар" />
+            <Comment
+              comment={updatedData?.comment}
+              onChange={(val) => handleChangeField("comment", val)}
+              readOnly={!isAccess}
+            />
+          </>
+        ) : null}
+        {isAccess ? (
+          <>
+            <SectionTitle title="Фото / Додатково" />
+            <OtherInfo
+              photos={photos}
+              onChange={(val) => setPhotos(val)}
+              onRefreshClientData={handleRefreshData}
+              readOnly={!isAccess}
+            />
+          </>
+        ) : photos?.length > 0 ? (
+          <>
+            <SectionTitle title="Фото / Додатково" />
+            <OtherInfo
+              photos={photos}
+              onChange={(val) => setPhotos(val)}
+              onRefreshClientData={handleRefreshData}
+              readOnly={!isAccess}
+            />
+          </>
+        ) : null}
+        {isAccess && (
+          <Footer
+            onSave={handleSaveChanges}
+            onReset={handleReset}
+            loading={loading}
+          />
+        )}
       </div>
     </StyledProfile>
   );

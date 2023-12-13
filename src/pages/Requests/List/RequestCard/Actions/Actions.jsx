@@ -15,6 +15,8 @@ export const Actions = ({
   favorite,
   onFavorite,
   idGroup,
+  isEdit,
+  isDelete,
 }) => {
   const navigate = useNavigate();
   const [addToFavorites] = useLazyAddToFavoriteQuery();
@@ -39,12 +41,16 @@ export const Actions = ({
         onClick={handleToggleFavorites}
         active={favorite}
       />
-      <Button
-        Icon={EditIcon}
-        className="edit-btn mb-2.5"
-        onClick={() => navigate(`/edit-request/${clientId}/${idGroup}`)}
-      />
-      <Button Icon={RemoveIcon} className="remove-btn" onClick={onDelete} />
+      {isEdit && (
+        <Button
+          Icon={EditIcon}
+          className="edit-btn mb-2.5"
+          onClick={() => navigate(`/edit-request/${clientId}/${idGroup}`)}
+        />
+      )}
+      {isDelete && (
+        <Button Icon={RemoveIcon} className="remove-btn" onClick={onDelete} />
+      )}
     </StyledActions>
   );
 };

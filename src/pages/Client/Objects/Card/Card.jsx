@@ -20,6 +20,8 @@ export const Card = ({
   onDelete,
   isObject,
   onSelectItem,
+  isEdit,
+  isDelete,
 }) => {
   const [addRequestToFavorites] = useLazyAddToFavoriteQuery();
   const [addObjectToFavorites] = useLazyAddToFavoritesQuery();
@@ -69,6 +71,8 @@ export const Card = ({
         favorite={favorite}
         onDelete={onDelete}
         isObject={isObject}
+        isEdit={isEdit}
+        isDelete={isDelete}
       />
       <MobileContent
         date={date}
@@ -80,6 +84,8 @@ export const Card = ({
         favorite={favorite}
         onDelete={onDelete}
         isObject={isObject}
+        isEdit={isEdit}
+        isDelete={isDelete}
       />
     </StyledCard>
   );

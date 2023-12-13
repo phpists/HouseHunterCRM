@@ -25,13 +25,11 @@ import cogoToast from "cogo-toast";
 
 const INITIAL_DATA = {
   email: "",
-  id_permision: "",
   password: "",
   first_name: "",
   last_name: "",
   phones: [{ code: "1", phone: "", telegram: "0", viber: "0" }],
   photo: { file: null, url: null },
-  structure_parent: null,
 };
 
 export const Modal = ({ onClose, onRefetchData }) => {
@@ -75,8 +73,6 @@ export const Modal = ({ onClose, onRefetchData }) => {
   const handleCheckFields = () => {
     let errorsData = [];
 
-    !data?.id_permision && errorsData.push("id_permision");
-    !data?.structure_parent && errorsData.push("structure_parent");
     data?.email?.length === 0 && errorsData.push("email");
     data?.first_name?.length === 0 && errorsData.push("first_name");
     data?.last_name?.length === 0 && errorsData.push("last_name");

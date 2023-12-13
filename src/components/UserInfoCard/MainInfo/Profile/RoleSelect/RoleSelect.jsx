@@ -104,6 +104,7 @@ export const RoleSelect = ({ value, onChange }) => {
             .filter((role) => role?.level !== value)
             .filter((role) => role?.level !== 1)}
           onChangeActiveRole={(value) => onChange(value)}
+          isValue={value && roles?.find((r) => r.level === value)}
         />
       )}
     </StyledRoleSelect>

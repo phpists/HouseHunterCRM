@@ -10,6 +10,7 @@ export const Dropdown = ({
   favorite,
   editLink,
   noFavorite,
+  noDelete,
 }) => (
   <StyledDropdown className="dropdown noClickable">
     {!noFavorite && (
@@ -37,13 +38,15 @@ export const Dropdown = ({
         <EditIcon className="noClickable" />
       </a>
     )}
-    <div
-      className="flex items-center justify-between noClickable"
-      onClick={onDelete}
-    >
-      <span className="noClickable">Видалити</span>
-      <RemoveIcon className="remove-icon noClickable" />
-    </div>
+    {!noDelete && (
+      <div
+        className="flex items-center justify-between noClickable"
+        onClick={onDelete}
+      >
+        <span className="noClickable">Видалити</span>
+        <RemoveIcon className="remove-icon noClickable" />
+      </div>
+    )}
   </StyledDropdown>
 );
 

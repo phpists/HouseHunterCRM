@@ -2,15 +2,19 @@ import { styled } from "styled-components";
 import { ReactComponent as RemoveIcon } from "../../../../assets/images/remove.svg";
 import { ReactComponent as ShowIcon } from "../../../../assets/images/eye-access.svg";
 
-export const Photo = ({ photo, onRemove, onShow }) => {
+export const Photo = ({ photo, onRemove, onShow, readOnly }) => {
   return (
     <StyledPhoto photo={photo} className="flex items-center justify-center">
-      <div className="btn noClickable">
-        <ShowIcon onClick={onShow} className="noClickable" />
-      </div>
-      <div className="btn noClickable">
-        <RemoveIcon onClick={onRemove} className="noClickable" />
-      </div>
+      {!readOnly ? (
+        <>
+          <div className="btn noClickable">
+            <ShowIcon onClick={onShow} className="noClickable" />
+          </div>
+          <div className="btn noClickable">
+            <RemoveIcon onClick={onRemove} className="noClickable" />
+          </div>
+        </>
+      ) : null}
     </StyledPhoto>
   );
 };

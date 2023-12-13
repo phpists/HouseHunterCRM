@@ -2,10 +2,13 @@ import styled from "styled-components";
 import { Modal as CreateWorkerModal } from "../CreateUser/Modal/Modal";
 import { useState } from "react";
 import { Modal } from "../CreateRole/Modal/Modal";
+import { useGetAccessQuery } from "../../../../store/auth/auth.api";
+import { handleCheckAccess } from "../../../../utilits";
 
 export const MobileHeader = () => {
   const [openCreateWorker, setOpenCreateWorker] = useState(false);
   const [openRoles, setOpenRoles] = useState(false);
+  const { data: accessData } = useGetAccessQuery();
 
   return (
     <StyledMobileHeader>
@@ -13,12 +16,16 @@ export const MobileHeader = () => {
         <CreateWorkerModal onClose={() => setOpenCreateWorker(false)} />
       )}
       {openRoles && <Modal onClose={() => setOpenRoles(false)} />}
-      <button onClick={() => setOpenCreateWorker(true)}>
-        Створити працівника
-      </button>
-      <button className="active" onClick={() => setOpenRoles(true)}>
-        Налаштування ролей
-      </button>
+      {handleCheckAccess(accessData, "structure", "add") && (
+        <button onClick={() => setOpenCreateWorker(true)}>
+          Створити працівника
+        </button>
+      )}
+      {handleCheckAccess(accessData, "structure", "edit") && (
+        <button className="active" onClick={() => setOpenRoles(true)}>
+          Налаштування ролей
+        </button>
+      )}
     </StyledMobileHeader>
   );
 };

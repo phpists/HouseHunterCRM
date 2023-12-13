@@ -8,13 +8,14 @@ import { SelectItems } from "../../../components/SelectItems/SelectItems";
 import { Filter } from "./Filter/Filter";
 import { useState } from "react";
 import { AddClient } from "../../../components/AddClient/AddClient";
-import { handleResponse } from "../../../utilits";
+import { handleCheckAccess, handleResponse } from "../../../utilits";
 import {
   useLazyAddToFavoritesQuery,
   useLazyDeleteObjectQuery,
 } from "../../../store/objects/objects.api";
 import cogoToast from "cogo-toast";
 import { BackButton } from "../../Clients/Header/BackButton";
+import { useGetAccessQuery } from "../../../store/auth/auth.api";
 
 export const Header = ({
   selectedCount,
@@ -34,6 +35,7 @@ export const Header = ({
   const [addClient, setAddClient] = useState(false);
   const [addToFavorites] = useLazyAddToFavoritesQuery();
   const [deleteObject] = useLazyDeleteObjectQuery();
+  const { data } = useGetAccessQuery();
 
   const handleToggleFavorites = () => {
     Promise.all(
@@ -81,11 +83,13 @@ export const Header = ({
             active={filterOpen}
             onClick={() => setFilterOpen(true)}
           />
-          <IconButton
-            Icon={PlusIcon}
-            className="icon-btn"
-            onClick={() => setAddClient(true)}
-          />
+          {handleCheckAccess(data, "clients", "add") ? (
+            <IconButton
+              Icon={PlusIcon}
+              className="icon-btn"
+              onClick={() => setAddClient(true)}
+            />
+          ) : null}
           <IconButton
             Icon={StarIcon}
             className="icon-btn icon-btn-last"
@@ -98,7 +102,11 @@ export const Header = ({
               selectedCount={selectedCount}
               onToggleFavorite={handleToggleFavorites}
               deleteConfirmTitle="Видалити об'єкт(и)?"
-              onDelete={handleDelete}
+              onDelete={
+                handleCheckAccess(data, "objects", "delete")
+                  ? handleDelete
+                  : null
+              }
               allCount={allCount}
               onSelectAll={onSelectAll}
             />
@@ -112,7 +120,9 @@ export const Header = ({
           className="mobile-select"
           onToggleFavorite={handleToggleFavorites}
           deleteConfirmTitle="Видалити об'єкт(и)?"
-          onDelete={handleDelete}
+          onDelete={
+            handleCheckAccess(data, "objects", "delete") ? handleDelete : null
+          }
           allCount={allCount}
           onSelectAll={onSelectAll}
         />

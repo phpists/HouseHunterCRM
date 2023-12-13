@@ -14,10 +14,11 @@ import { Requests } from "./pages/Requests/Requests";
 import { Structure } from "./pages/Structure/Structure";
 import { Calls } from "./pages/Calls/Calls";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
-import { useLazyGetUserQuery } from "./store/auth/auth.api";
+import { useGetAccessQuery, useLazyGetUserQuery } from "./store/auth/auth.api";
 import { useActions } from "./hooks/actions";
 import { useAppSelect } from "./hooks/redux";
 import { Loading } from "./components/Loading/Loading";
+import { handleCheckAccess } from "./utilits";
 
 export const App = () => {
   const [getProfile] = useLazyGetUserQuery();
@@ -29,6 +30,7 @@ export const App = () => {
   const { user } = useAppSelect((state) => state.auth);
   const [loading, setLoading] = useState(true);
   const [load, setLoad] = useState(false);
+  const { data } = useGetAccessQuery();
 
   const handleGetUserData = () => {
     getProfile().then((resp) => {
@@ -71,20 +73,52 @@ export const App = () => {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/empty" element={<Dashboard />} />
-              <Route path="/clients" element={<Clients />} />
-              <Route path="/client/:id" element={<Client />} />
-              <Route path="/create-object/:clientId" element={<ObjectPage />} />
-              <Route
-                path="/edit-object/:clientId/:id"
-                element={<ObjectPage />}
-              />
-              <Route path="/objects" element={<Objects />} />
-              <Route path="/create-request/:clientId" element={<Request />} />
-              <Route path="/edit-request/:clientId/:id" element={<Request />} />
-              <Route path="/requests" element={<Requests />} />
-              <Route path="/structure" element={<Structure />} />
+              {handleCheckAccess(data, "clients", "view") && (
+                <Route path="/clients" element={<Clients />} />
+              )}
+              {handleCheckAccess(data, "clients", "view") && (
+                <Route path="/client/:id" element={<Client />} />
+              )}
+              {handleCheckAccess(data, "objects", "view") &&
+                handleCheckAccess(data, "objects", "add") && (
+                  <Route
+                    path="/create-object/:clientId"
+                    element={<ObjectPage />}
+                  />
+                )}
+              {handleCheckAccess(data, "objects", "view") &&
+                handleCheckAccess(data, "objects", "edit") && (
+                  <Route
+                    path="/edit-object/:clientId/:id"
+                    element={<ObjectPage />}
+                  />
+                )}
+              {handleCheckAccess(data, "objects", "view") && (
+                <Route path="/objects" element={<Objects />} />
+              )}
+              {handleCheckAccess(data, "requests", "view") &&
+                handleCheckAccess(data, "requests", "create") && (
+                  <Route
+                    path="/create-request/:clientId"
+                    element={<Request />}
+                  />
+                )}
+              {handleCheckAccess(data, "requests", "view") &&
+                handleCheckAccess(data, "requests", "edit") && (
+                  <Route
+                    path="/edit-request/:clientId/:id"
+                    element={<Request />}
+                  />
+                )}
+              {handleCheckAccess(data, "requests", "view") && (
+                <Route path="/requests" element={<Requests />} />
+              )}
+              {handleCheckAccess(data, "structure", "view") && (
+                <Route path="/structure" element={<Structure />} />
+              )}
+              {/* ! test */}
+              {true && <Route path="/calls" element={<Calls />} />}
               <Route path="/company" element={<Company />} />
-              <Route path="/calls" element={<Calls />} />
               <Route path="*" element={<Dashboard />} />
             </Routes>
           </div>

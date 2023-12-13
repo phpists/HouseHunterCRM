@@ -6,7 +6,14 @@ import { Comment } from "./Comment";
 import { Objects } from "./Objects/Objects";
 import { Actions } from "./Actions/Actions";
 
-export const MobileContent = ({ data, id, onDelete, onFavorite }) => (
+export const MobileContent = ({
+  data,
+  id,
+  onDelete,
+  onFavorite,
+  isDelete,
+  isEdit,
+}) => (
   <StyledMobileContent className="flex ">
     <div className="w-full">
       <Client
@@ -45,6 +52,8 @@ export const MobileContent = ({ data, id, onDelete, onFavorite }) => (
       favorite={data?.General_field_group?.favorite}
       onFavorite={onFavorite}
       idGroup={data?.id_group}
+      isDelete={isDelete}
+      isEdit={isEdit}
     />
   </StyledMobileContent>
 );

@@ -13,6 +13,7 @@ export const MobileContent = ({
   data,
   onToggleFavoriteStatus,
   onFindSimilar,
+  isEdit,
 }) => (
   <StyledMobileContent>
     <Header />
@@ -29,6 +30,7 @@ export const MobileContent = ({
       onToggleFavoriteStatus={onToggleFavoriteStatus}
       isFavorite={data?.favorite}
       onFindSimilar={onFindSimilar}
+      isEdit={isEdit}
     />
   </StyledMobileContent>
 );

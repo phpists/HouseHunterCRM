@@ -7,7 +7,12 @@ import { handleResponse } from "../../../../utilits";
 import { PhotoSlider } from "react-photo-view";
 import { useState } from "react";
 
-export const OtherInfo = ({ photos, onChange, onRefreshClientData }) => {
+export const OtherInfo = ({
+  photos,
+  onChange,
+  onRefreshClientData,
+  readOnly,
+}) => {
   const { id } = useParams();
   const [deletePhoto] = useLazyDeleteClientPhotoQuery();
   const [openView, setOpenView] = useState(false);
@@ -61,10 +66,11 @@ export const OtherInfo = ({ photos, onChange, onRefreshClientData }) => {
                   : handleDeletePhoto(photo?.id?.toString(), i)
               }
               onShow={() => handleOpenSlider(i)}
+              readOnly={readOnly}
             />
           ))
         : null}
-      <AddButton onAdd={handleAddPhoto} />
+      {!readOnly && <AddButton onAdd={handleAddPhoto} />}
     </StyledOtherInfo>
   );
 };

@@ -11,13 +11,15 @@ import { Confirm } from "../../../components/Confirm/Confirm";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import cogoToast from "cogo-toast";
-import { handleResponse } from "../../../utilits";
+import { handleCheckAccess, handleResponse } from "../../../utilits";
+import { useGetAccessQuery } from "../../../store/auth/auth.api";
 
 export const Header = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [deleteClient] = useLazyDeleteCientQuery();
   const [deleteModal, setDeleteModal] = useState();
+  const { data: accessData } = useGetAccessQuery();
 
   const handleDeleteClient = () => {
     deleteClient({ id_client: [id] }).then((resp) => {
@@ -62,11 +64,13 @@ export const Header = () => {
           className="mr-2.5 icon-btn"
           onClick={null}
         />
-        <IconButton
-          Icon={RemoveIcon}
-          className="remove-btn icon-btn"
-          onClick={() => setDeleteModal(true)}
-        />
+        {handleCheckAccess(accessData, "clients", "delete") ? (
+          <IconButton
+            Icon={RemoveIcon}
+            className="remove-btn icon-btn"
+            onClick={() => setDeleteModal(true)}
+          />
+        ) : null}
       </div>
     </StyledHeader>
   );

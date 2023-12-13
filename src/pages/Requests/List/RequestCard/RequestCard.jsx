@@ -9,6 +9,8 @@ export const RequestCard = ({
   id,
   onDelete,
   onFavorite,
+  isEdit,
+  isDelete,
 }) => {
   const handleClick = (e) =>
     e.target.classList.contains("clickable") && onSelect();
@@ -24,12 +26,16 @@ export const RequestCard = ({
         id={id}
         onDelete={onDelete}
         onFavorite={onFavorite}
+        isEdit={isEdit}
+        isDelete={isDelete}
       />
       <MobileContent
         data={data}
         id={id}
         onDelete={onDelete}
         onFavorite={onFavorite}
+        isEdit={isEdit}
+        isDelete={isDelete}
       />
     </StyledRequestCard>
   );

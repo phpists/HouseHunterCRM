@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { ProfileField } from "../../../components/ProfileField";
 
-export const BasicInfo = ({ firstName, lastName, onChangeField }) => {
+export const BasicInfo = ({ firstName, lastName, onChangeField, readOnly }) => {
   return (
     <StyledBasicInfo>
       <ProfileField
@@ -9,12 +9,14 @@ export const BasicInfo = ({ firstName, lastName, onChangeField }) => {
         label="Ім'я"
         placeholder="Введіть ім'я"
         onChange={(val) => onChangeField("first_name", val)}
+        readOnly={readOnly}
       />
       <ProfileField
         value={lastName}
         label="Прізвище"
         placeholder="Введіть прізвище"
         onChange={(val) => onChangeField("last_name", val)}
+        readOnly={readOnly}
       />
     </StyledBasicInfo>
   );

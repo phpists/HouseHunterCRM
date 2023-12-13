@@ -471,6 +471,42 @@ export const structure = createApi({
         }),
       }),
     }),
+    deleteWorkerImg: build.query({
+      query: (id_worker) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "delete_worker_img",
+          mod: "billing",
+          id_worker,
+        }),
+      }),
+    }),
+    getNotStructureWorkers: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_worker_not_structure",
+          mod: "structure",
+        }),
+      }),
+    }),
+    addWorkerToStructure: build.query({
+      query: ({ id_users, id_strcture_parent }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "add_worker_to_structure",
+          mod: "structure",
+          id_users,
+          id_strcture_parent,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -502,4 +538,6 @@ export const {
   useGetStructureUsersCompanyQuery,
   useGetRecurseStructureQuery,
   useLazyDeleteWorkerImgQuery,
+  useLazyGetNotStructureWorkersQuery,
+  useLazyAddWorkerToStructureQuery,
 } = structure;

@@ -20,6 +20,8 @@ export const MobileContent = ({
   onDelete,
   isObject,
   id,
+  isDelete,
+  isEdit,
 }) => {
   const { id: clientId } = useParams();
 
@@ -55,10 +57,13 @@ export const MobileContent = ({
             favorite={favorite}
             onDelete={onDelete}
             editLink={
-              isObject
+              !isEdit
+                ? null
+                : isObject
                 ? `/#/edit-object/${clientId}/${id}`
                 : `/#/edit-request/${clientId}/${id}`
             }
+            noDelete={!isDelete}
           />
         </div>
       </div>

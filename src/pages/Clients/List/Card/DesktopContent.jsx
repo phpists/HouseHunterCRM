@@ -17,6 +17,7 @@ export const DesktopContent = ({
   objectsCount,
   comment,
   onDelete,
+  isDelete,
 }) => (
   <StyledDesktopContent className="flex items-center justify-between hide-scroll card">
     <MainInfo name={name} id={id} dateCreate={dateCreate} />
@@ -31,7 +32,7 @@ export const DesktopContent = ({
     <Divider />
     <Objects requestsCount={requestsCount} objectsCount={objectsCount} />
     <div className="flex items-center">
-      <MoreButton onDelete={onDelete} />
+      <MoreButton onDelete={onDelete} noDelete={!isDelete} />
       <Arrow id={id} />
     </div>
   </StyledDesktopContent>

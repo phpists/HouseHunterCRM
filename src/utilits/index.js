@@ -259,3 +259,13 @@ export const handleGetRoleAvatar = (level) => {
 
   return avatars[level - 1] ?? avatar1;
 };
+
+export const handleCheckAccess = (modules, moduleName, accessType) => {
+  if (Array.isArray(modules)) {
+    const module = modules.find((m) => m?.module_name === moduleName);
+
+    return module && module[accessType];
+  }
+
+  return false;
+};

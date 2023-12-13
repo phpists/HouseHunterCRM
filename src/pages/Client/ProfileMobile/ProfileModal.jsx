@@ -18,6 +18,7 @@ export const ProfileModal = ({
   onRefreshClientData,
   photos,
   onChangePhotos,
+  isAccess,
 }) => {
   return (
     <StyledProfileModal>
@@ -34,26 +35,59 @@ export const ProfileModal = ({
               firstName={data?.first_name}
               lastName={data?.last_name}
               onChangeField={onChangeField}
+              readOnly={!isAccess}
             />
             <SectionTitle title="Контакти" />
             <Contact
               phones={data?.phone ?? []}
               email={data?.email}
               onChangeField={onChangeField}
+              readOnly={!isAccess}
             />
-            <SectionTitle title="Коментар" />
-            <Comment
-              comment={data?.comment}
-              onChange={(val) => onChangeField("comment", val)}
-            />
-            <SectionTitle title="Фото / Додатково" />
-            <OtherInfo
-              photos={photos}
-              onChange={(val) => onChangePhotos(val)}
-              onRefreshClientData={onRefreshClientData}
-            />
+            {isAccess ? (
+              <>
+                <SectionTitle title="Коментар" />
+                <Comment
+                  comment={data?.comment}
+                  onChange={(val) => onChangeField("comment", val)}
+                  readOnly={!isAccess}
+                />
+              </>
+            ) : data?.comment?.length > 0 ? (
+              <>
+                <SectionTitle title="Коментар" />
+                <Comment
+                  comment={data?.comment}
+                  onChange={(val) => onChangeField("comment", val)}
+                  readOnly={!isAccess}
+                />
+              </>
+            ) : null}
+            {isAccess ? (
+              <>
+                <SectionTitle title="Фото / Додатково" />
+                <OtherInfo
+                  photos={photos}
+                  onChange={(val) => onChangePhotos(val)}
+                  onRefreshClientData={onRefreshClientData}
+                  readOnly={!isAccess}
+                />
+              </>
+            ) : photos?.length > 0 ? (
+              <>
+                <SectionTitle title="Фото / Додатково" />
+                <OtherInfo
+                  photos={photos}
+                  onChange={(val) => onChangePhotos(val)}
+                  onRefreshClientData={onRefreshClientData}
+                  readOnly={!isAccess}
+                />
+              </>
+            ) : null}
           </div>
-          <Footer onSave={onSave} onReset={onReset} loading={loading} />
+          {isAccess ? (
+            <Footer onSave={onSave} onReset={onReset} loading={loading} />
+          ) : null}
         </div>
       </Modal>
     </StyledProfileModal>

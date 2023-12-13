@@ -16,6 +16,8 @@ export const RequestsList = ({
   onSelectItem,
   isRefresh,
   onRefreshed,
+  isDelete,
+  isEdit,
 }) => {
   const { id } = useParams();
   const [requests, setRequests] = useState([]);
@@ -144,6 +146,8 @@ export const RequestsList = ({
                   favorite={c[1]?.General_field_group?.favorite}
                   onChangeFavorite={() => handleToggleFavoriteStatus(id)}
                   onDelete={() => handleOnDeleteRequest(id)}
+                  isDelete={isDelete}
+                  isEdit={isEdit}
                 />
               );
             })

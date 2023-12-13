@@ -16,6 +16,7 @@ export const MobileContent = ({
   data,
   statisticData,
   onNextLevel,
+  isMore,
 }) => {
   const [totalInfoOpened, setTotalInfoOpened] = useState(false);
   const [open, setOpen] = useState(false);
@@ -57,7 +58,7 @@ export const MobileContent = ({
         <TotalInfo open={totalInfoOpened} onToggleOpen={() => null} />
       </div>
       <MoreButton open={open} onToggle={() => setOpen(!open)} />
-      <Arrow onClick={onNextLevel} />
+      {isMore ? <Arrow onClick={onNextLevel} /> : null}
     </StyledMobileContent>
   );
 };

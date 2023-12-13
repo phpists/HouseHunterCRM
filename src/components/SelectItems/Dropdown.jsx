@@ -1,22 +1,26 @@
 import { styled } from "styled-components";
 
-const OPTIONS = [
-  { title: "Додати в улюблене", value: "favorite" },
-  { title: "Передати", value: "send" },
-  { title: "Видалити", value: "delete" },
-];
+export const Dropdown = ({ onSelect, noFavorite, onDelete }) => {
+  const OPTIONS = [
+    { title: "Додати в улюблене", value: "favorite" },
+    { title: "Передати", value: "send" },
+    ...(onDelete ? [{ title: "Видалити", value: "delete" }] : []),
+  ];
 
-export const Dropdown = ({ onSelect, noFavorite }) => (
-  <StyledDropdown>
-    {OPTIONS.filter((opt) =>
-      noFavorite ? opt.value !== "favorite" : true
-    ).map((opt, i) => (
-      <div key={i} onClick={() => onSelect(opt.value)}>
-        {opt.title}
-      </div>
-    ))}
-  </StyledDropdown>
-);
+  console.log(onDelete);
+
+  return (
+    <StyledDropdown>
+      {OPTIONS.filter((opt) =>
+        noFavorite ? opt.value !== "favorite" : true
+      ).map((opt, i) => (
+        <div key={i} onClick={() => onSelect(opt.value)}>
+          {opt.title}
+        </div>
+      ))}
+    </StyledDropdown>
+  );
+};
 
 const StyledDropdown = styled.div`
   position: absolute;
