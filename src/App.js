@@ -30,12 +30,13 @@ export const App = () => {
   const { user } = useAppSelect((state) => state.auth);
   const [loading, setLoading] = useState(true);
   const [load, setLoad] = useState(false);
-  const { data } = useGetAccessQuery();
+  const { data, refetch } = useGetAccessQuery();
 
   const handleGetUserData = () => {
     getProfile().then((resp) => {
       loginUser(resp?.data?.data);
       setLoad(true);
+      refetch();
       setTimeout(() => setLoading(false), 1500);
     });
   };
@@ -79,13 +80,12 @@ export const App = () => {
               {handleCheckAccess(data, "clients", "view") && (
                 <Route path="/client/:id" element={<Client />} />
               )}
-              {handleCheckAccess(data, "objects", "view") &&
-                handleCheckAccess(data, "objects", "add") && (
-                  <Route
-                    path="/create-object/:clientId"
-                    element={<ObjectPage />}
-                  />
-                )}
+              {handleCheckAccess(data, "objects", "view") && (
+                <Route
+                  path="/create-object/:clientId"
+                  element={<ObjectPage />}
+                />
+              )}
               {handleCheckAccess(data, "objects", "view") &&
                 handleCheckAccess(data, "objects", "edit") && (
                   <Route
@@ -96,20 +96,15 @@ export const App = () => {
               {handleCheckAccess(data, "objects", "view") && (
                 <Route path="/objects" element={<Objects />} />
               )}
-              {handleCheckAccess(data, "requests", "view") &&
-                handleCheckAccess(data, "requests", "create") && (
-                  <Route
-                    path="/create-request/:clientId"
-                    element={<Request />}
-                  />
-                )}
-              {handleCheckAccess(data, "requests", "view") &&
-                handleCheckAccess(data, "requests", "edit") && (
-                  <Route
-                    path="/edit-request/:clientId/:id"
-                    element={<Request />}
-                  />
-                )}
+              {handleCheckAccess(data, "requests", "view") && (
+                <Route path="/create-request/:clientId" element={<Request />} />
+              )}
+              {handleCheckAccess(data, "requests", "view") && (
+                <Route
+                  path="/edit-request/:clientId/:id"
+                  element={<Request />}
+                />
+              )}
               {handleCheckAccess(data, "requests", "view") && (
                 <Route path="/requests" element={<Requests />} />
               )}

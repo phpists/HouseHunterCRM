@@ -167,6 +167,7 @@ const StyledSelectTags = styled.div`
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
+    text-transform: capitalize;
   }
 
   &.empty {
