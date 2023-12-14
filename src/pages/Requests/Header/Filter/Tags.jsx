@@ -11,7 +11,6 @@ import {
   handleGetLocationAllPath,
 } from "../../../../utilits";
 import { useEffect } from "react";
-import { FieldCard } from "../../../Request/Main/FieldCard";
 import { SelectTags } from "../../../../components/SelectTags/SelectTags";
 import { Divider } from "./Divider";
 import { Price } from "../../../Request/Main/Price/Price";
@@ -267,6 +266,78 @@ export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
             />
           </>
         )}
+      <CheckOption
+        label="Об’єкти компанії"
+        className="check-opt"
+        value={filters?.only_company_obj}
+        onChange={(val) =>
+          onChangeFilter(
+            "only_company_obj",
+            {
+              ...filters,
+              only_company_obj: "1",
+              only_street_base_obj: "0",
+              only_my_obj: "0",
+              only_my_structure: "0",
+            },
+            true
+          )
+        }
+      />
+      <CheckOption
+        label="Мої об'єкти"
+        className="check-opt"
+        value={filters?.only_my_obj}
+        onChange={(val) =>
+          onChangeFilter(
+            "only_my_obj",
+            {
+              ...filters,
+              only_company_obj: "0",
+              only_street_base_obj: "0",
+              only_my_obj: "1",
+              only_my_structure: "0",
+            },
+            true
+          )
+        }
+      />
+      <CheckOption
+        label="Об’єкти STREET BASE"
+        className="check-opt"
+        value={filters?.only_street_base_obj}
+        onChange={(val) =>
+          onChangeFilter(
+            "only_street_base_obj",
+            {
+              ...filters,
+              only_company_obj: "0",
+              only_street_base_obj: "1",
+              only_my_obj: "0",
+              only_my_structure: "0",
+            },
+            true
+          )
+        }
+      />
+      <CheckOption
+        label="Об'єкти моєї структури"
+        className="check-opt"
+        value={filters?.only_my_structure}
+        onChange={(val) =>
+          onChangeFilter(
+            "only_my_structure",
+            {
+              ...filters,
+              only_company_obj: "0",
+              only_street_base_obj: "0",
+              only_my_obj: "0",
+              only_my_structure: "1",
+            },
+            true
+          )
+        }
+      />
     </StyledTags>
   );
 };

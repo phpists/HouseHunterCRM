@@ -27,6 +27,7 @@ export const Base = ({ data, onChangeField }) => {
             only_company_obj: "1",
             only_street_base_obj: "0",
             only_my_obj: "0",
+            only_my_structure: "0",
           })
         }
       />
@@ -40,6 +41,7 @@ export const Base = ({ data, onChangeField }) => {
             only_company_obj: "0",
             only_street_base_obj: "0",
             only_my_obj: "1",
+            only_my_structure: "0",
           })
         }
       />
@@ -53,6 +55,21 @@ export const Base = ({ data, onChangeField }) => {
             only_company_obj: "0",
             only_street_base_obj: "1",
             only_my_obj: "0",
+            only_my_structure: "0",
+          })
+        }
+      />
+      <CheckOption
+        label="Об'єкти моєї структури"
+        className="check-opt"
+        value={data?.general_group?.only_my_structure}
+        onChange={(val) =>
+          onChangeField("general_group", {
+            ...data.general_group,
+            only_company_obj: "0",
+            only_street_base_obj: "0",
+            only_my_obj: "0",
+            only_my_structure: "1",
           })
         }
       />
@@ -64,17 +81,6 @@ export const Base = ({ data, onChangeField }) => {
           onChangeField("general_group", {
             ...data.general_group,
             mls: val,
-          })
-        }
-      />
-      <CheckOption
-        label="Об'єкти моєї структури"
-        className="check-opt"
-        value={data?.general_group?.structure}
-        onChange={(val) =>
-          onChangeField("general_group", {
-            ...data.general_group,
-            structure: val,
           })
         }
       />

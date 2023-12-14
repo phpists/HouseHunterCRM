@@ -15,7 +15,7 @@ export const Auth = () => {
 
   const handleSuccess = (isLogin) => {
     if (isLogin) {
-      navigate("/");
+      window.location = "/";
     } else {
       setSuccess(true);
     }

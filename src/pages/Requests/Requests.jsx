@@ -18,6 +18,10 @@ const INIT_FILTERS = {
   price_currency: "1",
   price_min: "",
   price_max: "",
+  only_company_obj: "0",
+  only_street_base_obj: "0",
+  only_my_obj: "0",
+  only_my_structure: "0",
 };
 
 export const Requests = () => {
@@ -43,17 +47,21 @@ export const Requests = () => {
     });
   };
 
-  const handleChangeFilter = (field, value) => {
-    setFilters({ ...filters, [field]: value });
-    if (field === "id_rubric") {
-      handleGetRubricsFields(value);
-      setFilters({
-        id_rubric: value,
-        id_location: filters?.id_location,
-        price_currency: filters?.price_currency,
-        price_min: filters?.price_min,
-        price_max: filters?.price_max,
-      });
+  const handleChangeFilter = (field, value, isChangeData) => {
+    if (isChangeData) {
+      setFilters(value);
+    } else {
+      setFilters({ ...filters, [field]: value });
+      if (field === "id_rubric") {
+        handleGetRubricsFields(value);
+        setFilters({
+          id_rubric: value,
+          id_location: filters?.id_location,
+          price_currency: filters?.price_currency,
+          price_min: filters?.price_min,
+          price_max: filters?.price_max,
+        });
+      }
     }
   };
 

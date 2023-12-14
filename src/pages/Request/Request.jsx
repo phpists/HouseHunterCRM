@@ -27,7 +27,7 @@ export const REQUEST_INIT = {
     only_company_obj: "1",
     only_street_base_obj: "0",
     mls: "0",
-    structure: "0",
+    only_my_structure: "0",
     only_my_obj: "0",
     submitted_objects: "0",
     folder_empty: "0",
