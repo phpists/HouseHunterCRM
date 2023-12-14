@@ -16,6 +16,7 @@ import { ProfileField } from "../../../../components/ProfileField";
 import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.api";
 import { Price } from "../../../Request/Main/Price/Price";
 import { ToggleOption } from "./ToggleOption";
+import { CheckOption } from "../../../../components/CheckOption";
 
 const notAllowedFields = [
   "comment",
@@ -126,6 +127,82 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
           )
         }
       />
+      {/* <Divider />
+      <CheckOption
+        label="Об’єкти компанії"
+        className="check-opt"
+        value={filters?.only_company_obj}
+        onChange={(val) =>
+          onChangeFilter(
+            "only_company_obj",
+            {
+              ...filters,
+              only_company_obj: "1",
+              only_street_base_obj: "0",
+              only_my_obj: "0",
+              only_my_structure: "0",
+            },
+            true
+          )
+        }
+      /> */}
+      <CheckOption
+        label="Мої об'єкти"
+        className="check-opt"
+        value={filters?.show_only === "only_my" ? "1" : "0"}
+        onChange={(val) =>
+          onChangeFilter(
+            "only_my_obj",
+            {
+              ...filters,
+              //   only_company_obj: "0",
+              //   only_street_base_obj: "0",
+              //   only_my_obj: "1",
+              //   only_my_structure: "0",
+              show_only: "only_my",
+            },
+            true
+          )
+        }
+      />
+      {/* <CheckOption
+        label="Об’єкти STREET BASE"
+        className="check-opt"
+        value={filters?.only_street_base_obj}
+        onChange={(val) =>
+          onChangeFilter(
+            "only_street_base_obj",
+            {
+              ...filters,
+              only_company_obj: "0",
+              only_street_base_obj: "1",
+              only_my_obj: "0",
+              only_my_structure: "0",
+            },
+            true
+          )
+        }
+      /> */}
+      <CheckOption
+        label="Об'єкти моєї структури"
+        className="check-opt"
+        value={filters?.show_only === "my_structure" ? "1" : "0"}
+        onChange={(val) =>
+          onChangeFilter(
+            "only_my_structure",
+            {
+              ...filters,
+              //   only_company_obj: "0",
+              //   only_street_base_obj: "0",
+              //   only_my_obj: "0",
+              //   only_my_structure: "1",
+              show_only: "my_structure",
+            },
+            true
+          )
+        }
+      />
+      <Divider />
       {filtersFields?.main_field
         ? Object.entries(filtersFields?.main_field)
             .filter((field) => !notAllowedFields?.find((f) => f === field[0]))
