@@ -32,8 +32,8 @@ export const DesktopContent = ({
       roomMin={data?.room_min}
       roomMax={data?.room_min}
       areaMin={data?.area_total_min}
-      storeyMin={data?.address_storey}
-      storeyMax={data?.storey_count}
+      storeyMin={data?.address_storey_min}
+      storeyMax={data?.address_storey_max}
     />
     <Comment comment={data?.comment} />
     <Objects />

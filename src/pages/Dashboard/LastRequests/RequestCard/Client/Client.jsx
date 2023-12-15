@@ -10,7 +10,7 @@ export const Client = ({ data, id }) => (
       <Avatar />
       <div>
         <Name name={data?.cl_fullname ?? ""} />
-        <Subtitle subtitle={`ID: ${data?.General_field_group?.id_client}`} />
+        <Subtitle subtitle={`ID: ${id}`} />
       </div>
     </div>
     <div>

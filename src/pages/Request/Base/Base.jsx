@@ -1,13 +1,16 @@
 import { styled } from "styled-components";
 import { TitleDivider } from "./TitleDivider";
 import { CheckOption } from "../../../components/CheckOption";
+import { useGetCommentsToFieldsQuery } from "../../../store/objects/objects.api";
 
 export const Base = ({ data, onChangeField }) => {
+  const { data: commentsToFields } = useGetCommentsToFieldsQuery();
+
   return (
     <StyledBase className="request-card hide-scroll">
       <TitleDivider title="X company" />
       <CheckOption
-        label="Об’єкти до видалення"
+        label={commentsToFields?.request_groups["deleted"] ?? ""}
         className="check-opt"
         value={data?.general_group?.deleted}
         onChange={(val) =>
@@ -18,7 +21,7 @@ export const Base = ({ data, onChangeField }) => {
         }
       />
       <CheckOption
-        label="Об’єкти компанії"
+        label={commentsToFields?.request_groups["only_company_obj"] ?? ""}
         className="check-opt"
         value={data?.general_group?.only_company_obj}
         onChange={(val) =>
@@ -32,7 +35,7 @@ export const Base = ({ data, onChangeField }) => {
         }
       />
       <CheckOption
-        label="Мої об'єкти"
+        label={commentsToFields?.request_groups["only_my_obj"] ?? ""}
         className="check-opt"
         value={data?.general_group?.only_my_obj}
         onChange={(val) =>
@@ -46,7 +49,7 @@ export const Base = ({ data, onChangeField }) => {
         }
       />
       <CheckOption
-        label="Об’єкти STREET BASE"
+        label={commentsToFields?.request_groups["only_street_base_obj"] ?? ""}
         className="check-opt"
         value={data?.general_group?.only_street_base_obj}
         onChange={(val) =>
@@ -60,7 +63,10 @@ export const Base = ({ data, onChangeField }) => {
         }
       />
       <CheckOption
-        label="Об'єкти моєї структури"
+        label={
+          commentsToFields?.request_groups["only_my_structure"] ??
+          "Моя структура"
+        }
         className="check-opt"
         value={data?.general_group?.only_my_structure}
         onChange={(val) =>
@@ -74,7 +80,7 @@ export const Base = ({ data, onChangeField }) => {
         }
       />
       <CheckOption
-        label="МЛС"
+        label={commentsToFields?.request_groups["mls"] ?? ""}
         className="check-opt"
         value={data?.general_group?.mls}
         onChange={(val) =>
@@ -85,8 +91,8 @@ export const Base = ({ data, onChangeField }) => {
         }
       />
 
-      <CheckOption
-        label="Об’єкти відправлені"
+      {/* <CheckOption
+        label={commentsToFields?.request_groups["submited"] ?? ""}
         className="check-opt"
         value={data?.general_group?.submited}
         onChange={(val) =>
@@ -95,9 +101,9 @@ export const Base = ({ data, onChangeField }) => {
             submited: val,
           })
         }
-      />
+      /> */}
       <CheckOption
-        label="Діти"
+        label={commentsToFields?.request_groups["tags_children"] ?? ""}
         className="check-opt"
         value={data?.general_group?.tags_children}
         onChange={(val) =>
@@ -108,7 +114,7 @@ export const Base = ({ data, onChangeField }) => {
         }
       />
       <CheckOption
-        label="Тварини"
+        label={commentsToFields?.request_groups["tags_animal"] ?? ""}
         className="check-opt"
         value={data?.general_group?.tags_animal}
         onChange={(val) =>
@@ -119,7 +125,7 @@ export const Base = ({ data, onChangeField }) => {
         }
       />
       <CheckOption
-        label="Cтуденти"
+        label={commentsToFields?.request_groups["tags_student"] ?? ""}
         className="check-opt"
         value={data?.general_group?.tags_student}
         onChange={(val) =>
@@ -130,7 +136,7 @@ export const Base = ({ data, onChangeField }) => {
         }
       />
       <CheckOption
-        label="Іноземці"
+        label={commentsToFields?.request_groups["tags_foreigners"] ?? ""}
         className="check-opt"
         value={data?.general_group?.tags_foreigners}
         onChange={(val) =>

@@ -40,7 +40,7 @@ export const MobileContent = ({
     <StyledMobileContent open={open}>
       <div className="main-info-wrapper">
         <ProfilleInfo onOpenInfo={onOpenInfo} data={data} />
-        {data?.level !== 1 && <Biling open={true} data={data} />}
+        <Biling open={true} data={data} />
       </div>
       {data?.level !== 1 && <MobileBilling data={data} />}
       <div className="more-billing-wrapper more-content-wrapper">

@@ -14,13 +14,14 @@ export const Biling = ({ open, onClick, data }) => (
           subtitle="Вхід"
         />
         <Divider />
-        <StatusCard
-          status={data?.active === "1"}
-          title={`Сплачено до ${data?.billing_to}`}
-          subtitle="Білінг"
-        />
       </>
     )}
+
+    <StatusCard
+      status={data?.active === "1"}
+      title={`Сплачено до ${data?.billing_to}`}
+      subtitle="Білінг"
+    />
 
     {data?.name_parent?.length > 0 ? (
       <>

@@ -48,6 +48,7 @@ export const Clients = () => {
           isFilters.current && filter.search_phone?.length > 0
             ? searchPhoneCode
             : undefined,
+        my_struct: isFilters.current ? filter?.my_struct : undefined,
       }).then((resp) => {
         isLoading.current = false;
         handleResponse(

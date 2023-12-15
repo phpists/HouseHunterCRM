@@ -5,6 +5,7 @@ import { ReactComponent as LocationIcon } from "../../../../assets/images/locati
 import { Ranger } from "./Ranger/Ranger";
 import { ProfileField } from "../../../../components/ProfileField";
 import { useGetPhonesCodesQuery } from "../../../../store/auth/auth.api";
+import { ToggleOption } from "./ToggleOption";
 
 export const General = ({
   filter,
@@ -32,6 +33,14 @@ export const General = ({
         phonesCodes={phonesCodes}
         phoneCode={searchPhoneCode}
         onChangePhoneCode={(val) => onChangeSearchCode(val)}
+      />
+      <Divider />
+      <ToggleOption
+        label="Моя структура"
+        value={filter?.my_struct === "1"}
+        onChange={() =>
+          onChangeFilter("my_struct", filter?.my_struct === "1" ? "0" : "1")
+        }
       />
       {/* <Select
         label="Категорія"

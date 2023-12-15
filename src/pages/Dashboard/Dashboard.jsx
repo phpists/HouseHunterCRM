@@ -10,8 +10,8 @@ import { Header } from "./Header/Header";
 import { InfoButton } from "./InfoButton";
 import { useGetClientsCountQuery } from "../../store/clients/clients.api";
 
-export const Dashboard = () => {
-  const { data } = useGetClientsCountQuery();
+export const Dashboard = ({ isClientsAccess }) => {
+  const { data } = useGetClientsCountQuery(null, { skip: !isClientsAccess });
 
   return (
     <StyledDashboard className="hide-scroll">

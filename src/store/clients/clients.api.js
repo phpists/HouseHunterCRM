@@ -69,6 +69,7 @@ export const clients = createApi({
         search_key,
         search_phone,
         search_phone_code,
+        my_struct,
       }) => ({
         url: "",
         method: "POST",
@@ -81,6 +82,7 @@ export const clients = createApi({
           search_key,
           search_phone,
           search_phone_code,
+          my_struct,
         }),
       }),
       transformResponse: (response) => {

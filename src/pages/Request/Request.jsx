@@ -36,6 +36,7 @@ export const REQUEST_INIT = {
     tags_animal: "0",
     tags_student: "0",
     tags_foreigners: "0",
+    structure: "0",
   },
 };
 

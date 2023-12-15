@@ -17,7 +17,7 @@ export const DesktopContent = ({
   <StyledDesktopContent>
     <ProfilleInfo onOpenInfo={onOpenInfo} data={data} />
 
-    {data?.level !== 1 && <Biling open={!totalInfoOpened} data={data} />}
+    <Biling open={!totalInfoOpened} data={data} />
     <Statistic statisticData={statisticData} />
     <TotalInfo open={totalInfoOpened} onToggleOpen={onToggleOpen} />
     {isMore ? <Arrow onClick={onNextLevel} /> : null}

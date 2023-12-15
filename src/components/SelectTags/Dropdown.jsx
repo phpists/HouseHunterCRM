@@ -19,7 +19,7 @@ export const Dropdown = ({
       ? options
           .filter(({ title }) =>
             search?.length > 0
-              ? title.toLowerCase().includes(search.toLowerCase())
+              ? title?.toLowerCase()?.includes(search.toLowerCase())
               : true
           )
           .map(({ title, value }, i) => (

@@ -30,13 +30,13 @@ export const App = () => {
   const { user } = useAppSelect((state) => state.auth);
   const [loading, setLoading] = useState(true);
   const [load, setLoad] = useState(false);
-  const { data, refetch } = useGetAccessQuery();
+  const { data, refetch } = useGetAccessQuery(null, { skip: !user });
 
   const handleGetUserData = () => {
     getProfile().then((resp) => {
       loginUser(resp?.data?.data);
       setLoad(true);
-      refetch();
+      data && refetch();
       setTimeout(() => setLoading(false), 1500);
     });
   };
@@ -72,7 +72,14 @@ export const App = () => {
           <Header onOpenSidebar={() => setSideBarOpen(true)} />
           <div className="app-content">
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+              <Route
+                path="/"
+                element={
+                  <Dashboard
+                    isClientsAccess={handleCheckAccess(data, "clients", "view")}
+                  />
+                }
+              />
               <Route path="/empty" element={<Dashboard />} />
               {handleCheckAccess(data, "clients", "view") && (
                 <Route path="/clients" element={<Clients />} />
