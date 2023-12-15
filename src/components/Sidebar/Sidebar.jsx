@@ -3,14 +3,14 @@ import { Logo } from "./Logo";
 import { CompanyLogo } from "../CompanyLogo";
 import { NavBar } from "./Navbar";
 
-export const Sidebar = ({ sidebarOpen, onClose }) => {
+export const Sidebar = ({ sidebarOpen, onClose, accessData }) => {
   return (
     <StyledSidebar
       className="flex flex-col justify-between items-center"
       sidebarOpen={sidebarOpen}
     >
       <Logo onClose={onClose} />
-      <NavBar />
+      <NavBar accessData={accessData} />
       <CompanyLogo />
     </StyledSidebar>
   );

@@ -115,6 +115,13 @@ export const Structure = () => {
                 id_user: user?.id,
                 struct_level: user?.struct_level,
                 isCurrentUser: true,
+                structure_worker: recurseData
+                  ? Object.fromEntries(
+                      Object.entries(recurseData)?.filter(
+                        (w) => w[0] !== "error"
+                      )
+                    ) ?? {}
+                  : {},
               }}
               isMore
             />

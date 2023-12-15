@@ -8,27 +8,24 @@ import { ReactComponent as CalendarIcon } from "../../assets/images/calendar.svg
 import { ReactComponent as CopyIcon } from "../../assets/images/copy.svg";
 import { ReactComponent as PhoneIcon } from "../../assets/images/phone-menu.svg";
 import { NavBarItem } from "./NavBarItem";
-import { useGetAccessQuery } from "../../store/auth/auth.api";
 import { handleCheckAccess } from "../../utilits";
 
-export const NavBar = () => {
-  const { data } = useGetAccessQuery();
-
+export const NavBar = ({ accessData }) => {
   const LINKS = [
     { icon: GridIcon, link: "/" },
-    ...(handleCheckAccess(data, "clients", "view")
+    ...(handleCheckAccess(accessData, "clients", "view")
       ? [{ icon: UsersIcon, link: "/clients" }]
       : []),
-    ...(handleCheckAccess(data, "requests", "view")
+    ...(handleCheckAccess(accessData, "requests", "view")
       ? [{ icon: MegaphoneIcon, link: "/requests" }]
       : []),
-    ...(handleCheckAccess(data, "objects", "view")
+    ...(handleCheckAccess(accessData, "objects", "view")
       ? [{ icon: HomeIcon, link: "/objects" }]
       : []),
-    ...(handleCheckAccess(data, "structure", "view")
+    ...(handleCheckAccess(accessData, "structure", "view")
       ? [{ icon: CopyIcon, link: "/structure" }]
       : []),
-    ...(handleCheckAccess(data, "calls", "view")
+    ...(handleCheckAccess(accessData, "calls", "view")
       ? [{ icon: PhoneIcon, link: "/calls" }]
       : []),
     //   { icon: XbaseIcon, link: "/note" },

@@ -68,6 +68,7 @@ export const App = () => {
           <Sidebar
             sidebarOpen={sidebarOpen}
             onClose={() => setSideBarOpen(false)}
+            accessData={data}
           />
           <Header onOpenSidebar={() => setSideBarOpen(true)} />
           <div className="app-content">
