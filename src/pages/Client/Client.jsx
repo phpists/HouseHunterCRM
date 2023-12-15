@@ -5,7 +5,7 @@ import { Objects } from "./Objects/Objects";
 import { useState } from "react";
 import { ObjectCard } from "./Object/Object";
 import { ProfileMobile } from "./ProfileMobile/ProfileMobile";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useLazyGetClientQuery } from "../../store/clients/clients.api";
 import { useEffect } from "react";
 
@@ -13,12 +13,21 @@ export const Client = () => {
   const { id } = useParams();
   const [getClient, { data: clientData }] = useLazyGetClientQuery(id);
   const [selectedObject, setSelectedObject] = useState(null);
+  const navigate = useNavigate();
 
   const handleGetClient = () => getClient(id);
 
   useEffect(() => {
-    handleGetClient();
+    handleGetClient().then((resp) => {
+      if (!resp?.data) {
+        navigate("/clients");
+      }
+    });
   }, [id]);
+
+  if (!clientData?.data) {
+    return null;
+  }
 
   return (
     <StyledClient isEmpty={!selectedObject}>

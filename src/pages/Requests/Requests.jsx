@@ -20,7 +20,7 @@ const INIT_FILTERS = {
   price_max: "",
   only_company_obj: "0",
   only_street_base_obj: "0",
-  only_my_obj: "0",
+  only_my_obj: "1",
   only_my_structure: "0",
 };
 

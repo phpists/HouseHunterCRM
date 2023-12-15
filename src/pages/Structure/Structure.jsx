@@ -36,7 +36,7 @@ export const Structure = () => {
     if (level < currentLevel && !infoOpen) {
       const newLevel = 1 + level;
       setLevel(newLevel);
-      if (newLevel > 2) {
+      if (newLevel > user?.struct_level + 1) {
         const childrens =
           Object.entries(children)
             ?.find((c) => c[0] === `struct_level_${newLevel}`)[1]
@@ -57,11 +57,17 @@ export const Structure = () => {
     return recurseData[`struct_level_${level}`] ?? [];
   };
 
+  useEffect(() => {
+    setLevel(user?.struct_level);
+  }, []);
+
   return (
     <StyledStructure className="hide-scroll">
       <Header
         level={level}
-        onChangeLevel={(lvl) => (infoOpen ? null : setLevel(lvl))}
+        onChangeLevel={(lvl) =>
+          infoOpen ? null : lvl >= user?.struct_level ? setLevel(lvl) : null
+        }
         onRefetchData={refetch}
         showNotStructureWorkers={showNotStructureWorkers}
         onToggleShowNotStructureWorkers={() =>
@@ -97,7 +103,7 @@ export const Structure = () => {
                   isMore={false}
                 />
               ))
-          ) : level === 1 ? (
+          ) : level === user?.struct_level ? (
             <StructureCard
               onOpenInfo={() => setInfoOpen(user?.id)}
               onNextLevel={handleNextLevel}
@@ -107,7 +113,8 @@ export const Structure = () => {
                 phone: JSON.stringify(user?.phones),
                 name: `${user?.first_name ?? ""} ${user?.last_name ?? ""}`,
                 id_user: user?.id,
-                level,
+                struct_level: user?.struct_level,
+                isCurrentUser: true,
               }}
               isMore
             />
@@ -116,7 +123,7 @@ export const Structure = () => {
           ) : (
             handleGetLevelWorkers()
               ?.filter((w) =>
-                level > 2
+                level > user?.struct_level + 1
                   ? !!parents[level]?.find((p) => p === w?.id_user)
                   : true
               )

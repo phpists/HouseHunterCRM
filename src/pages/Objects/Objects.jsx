@@ -21,6 +21,7 @@ const INIT_FILTERS = {
   price_max: "",
   price_min: "",
   obj_is_actual: "1",
+  show_only: "only_my",
   //   only_company_obj: "0",
   //   only_street_base_obj: "0",
   //   only_my_obj: "0",
@@ -190,7 +191,6 @@ export const Objects = () => {
       storey_count,
     } = obj;
 
-    console.log(obj);
     setFilters({
       id_rubric,
       id_location,

@@ -3,11 +3,13 @@ import { StatusCard } from "../Biling/StatusCard";
 
 export const MobileBilling = ({ data }) => (
   <StyledMobileBilling>
-    <StatusCard
-      status={data?.active === "1"}
-      title={data?.active === "1" ? "Дозволено" : "Заборонено"}
-      subtitle="Вхід"
-    />
+    {!data?.isCurrentUser && (
+      <StatusCard
+        status={data?.active === "1"}
+        title={data?.active === "1" ? "Дозволено" : "Заборонено"}
+        subtitle="Вхід"
+      />
+    )}
     <StatusCard
       status={data?.active === "1"}
       title={`Сплачено до ${data?.billing_to}`}

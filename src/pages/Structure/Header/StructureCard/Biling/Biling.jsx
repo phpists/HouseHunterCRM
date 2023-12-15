@@ -6,7 +6,7 @@ import { Structure } from "./Structure/Structure";
 
 export const Biling = ({ open, onClick, data }) => (
   <StyledBiling open={open} onClick={onClick} className="hide-scroll">
-    {data?.level !== 1 && (
+    {!data?.isCurrentUser && (
       <>
         <StatusCard
           status={data?.active === "1"}
