@@ -10,7 +10,13 @@ import { useState } from "react";
 import { AddClient } from "../../../components/AddClient/AddClient";
 import { SelectItemsDropdown } from "./SelectItemsDropdown/SelectItemsDropdown";
 
-export const Header = ({ selectedCount }) => {
+export const Header = ({
+  selectedCount,
+  filters,
+  onChangeFilter,
+  onApplyFilter,
+  onSetCallsStatus,
+}) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClientOpen, setAddClientOpen] = useState(false);
 
@@ -29,7 +35,12 @@ export const Header = ({ selectedCount }) => {
             <SelectItems
               title="об'єктів"
               selectedCount={selectedCount}
-              dropdown={<SelectItemsDropdown />}
+              dropdown={
+                <SelectItemsDropdown
+                  onSetCallsStatus={onSetCallsStatus}
+                  status={filters?.status}
+                />
+              }
             />
           </div>
         </div>
@@ -37,10 +48,22 @@ export const Header = ({ selectedCount }) => {
       <SelectItems
         title="об'єктів"
         selectedCount={selectedCount}
-        dropdown={<SelectItemsDropdown />}
+        dropdown={
+          <SelectItemsDropdown
+            onSetCallsStatus={onSetCallsStatus}
+            status={filters?.status}
+          />
+        }
         className="select-wrapper-mobile"
       />
-      {filterOpen && <Filter onClose={() => setFilterOpen(false)} />}
+      {filterOpen && (
+        <Filter
+          onClose={() => setFilterOpen(false)}
+          filters={filters}
+          onChangeFilter={onChangeFilter}
+          onApplyFilter={onApplyFilter}
+        />
+      )}
       {addClientOpen && <AddClient onClose={() => setAddClientOpen(false)} />}
     </StyledHeader>
   );

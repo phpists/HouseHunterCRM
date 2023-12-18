@@ -3,7 +3,7 @@ import phoneIcon from "../../../../../../assets/images/small-phone.svg";
 
 export const Count = () => (
   <StyledCount>
-    <div>10</div>
+    <div>-</div>
     <img src={phoneIcon} alt="" />
   </StyledCount>
 );

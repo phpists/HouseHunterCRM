@@ -67,7 +67,7 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
         resp?.data ? resp?.data?.filter((p) => typeof p === "object") : []
       );
     });
-  }, [data]);
+  }, [data, phonesCodes]);
 
   const handleSaveChanges = () => {
     setLoading(true);

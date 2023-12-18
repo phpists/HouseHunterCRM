@@ -77,7 +77,7 @@ export const SelectItems = ({
         {open && (
           <>
             {dropdown ? (
-              dropdown
+              <div onClick={() => setOpen(false)}>{dropdown}</div>
             ) : (
               <Dropdown
                 onSelect={handleSelectOption}

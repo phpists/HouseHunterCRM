@@ -12,23 +12,42 @@ export const DesktopContent = ({
   onToggleOpen,
   openMore,
   onOpenMore,
+  callType,
+  phone,
+  date,
+  name,
+  photo,
+  comment,
+  onChangeComment,
+  status,
+  onSetStatus,
+  onSubmitComment,
+  level,
 }) => (
   <StyledDesktopContent className="flex items-start clickable">
-    <Type />
+    <Type callType={callType} />
     <Divider />
-    <Phones open={open} onToggleOpen={onToggleOpen} />
+    <Phones open={open} onToggleOpen={onToggleOpen} phone={phone} date={date} />
     <Divider />
-    <Agent />
+    <Agent name={name} photo={photo} level={level} />
     <Divider />
     <Field
       placeholder="Почніть писати"
       label="Коментар"
       className="comment"
       full
+      value={comment}
+      onChange={onChangeComment}
+      onSubmit={onSubmitComment}
     />
     <Divider />
-    <Status />
-    <MoreButton openMore={openMore} onOpenMore={onOpenMore} />
+    <Status status={status} />
+    <MoreButton
+      openMore={openMore}
+      onOpenMore={onOpenMore}
+      status={status}
+      onSetStatus={onSetStatus}
+    />
   </StyledDesktopContent>
 );
 

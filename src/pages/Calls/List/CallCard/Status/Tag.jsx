@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 const STATUS = {
-  1: {
-    title: "Не переглянуті",
+  0: {
+    title: "Не опрацьований",
     color: "#F93A3A",
     bg: "rgba(249, 58, 58, 0.20)",
   },
-  2: {
-    title: "Опрацьовані",
+  1: {
+    title: "Опрацьований",
     color: "#81FB21",
     bg: "rgba(129, 251, 33, 0.20)",
   },

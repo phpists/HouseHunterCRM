@@ -1,13 +1,38 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DesktopContent } from "./DesktopContent";
 import { MobileContent } from "./MobileContent";
 
-export const CallCard = ({ selected, onSelect, openMore, onOpenMore }) => {
+export const CallCard = ({
+  selected,
+  onSelect,
+  openMore,
+  onOpenMore,
+  callType,
+  phone,
+  date,
+  name,
+  photo,
+  comment,
+  status,
+  onSetStatus,
+  onAddComment,
+  level,
+}) => {
   const [open, setOpen] = useState();
+  const [commentEdit, setCommentEdit] = useState(comment);
 
   const handleClick = (e) =>
     e.target.classList.contains("clickable") && onSelect();
+
+  const handleSubmitComment = () => {
+    onAddComment(commentEdit);
+    setCommentEdit(comment);
+  };
+
+  useEffect(() => {
+    setCommentEdit(comment);
+  }, [comment]);
 
   return (
     <StyledCallCard
@@ -20,12 +45,34 @@ export const CallCard = ({ selected, onSelect, openMore, onOpenMore }) => {
         onToggleOpen={() => setOpen(!open)}
         openMore={openMore}
         onOpenMore={onOpenMore}
+        callType={callType}
+        phone={phone}
+        date={date}
+        name={name}
+        photo={photo}
+        comment={commentEdit}
+        onChangeComment={(val) => setCommentEdit(val)}
+        onSubmitComment={handleSubmitComment}
+        status={status}
+        onSetStatus={onSetStatus}
+        level={level}
       />
       <MobileContent
         open={open}
         onToggleOpen={() => setOpen(!open)}
         openMore={openMore}
         onOpenMore={onOpenMore}
+        callType={callType}
+        phone={phone}
+        date={date}
+        name={name}
+        photo={photo}
+        comment={commentEdit}
+        onChangeComment={(val) => setCommentEdit(val)}
+        onSubmitComment={handleSubmitComment}
+        status={status}
+        onSetStatus={onSetStatus}
+        level={level}
       />
     </StyledCallCard>
   );

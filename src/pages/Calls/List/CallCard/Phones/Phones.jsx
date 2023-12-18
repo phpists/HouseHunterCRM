@@ -3,10 +3,10 @@ import { Phone } from "./Phone/Phone";
 import { PhoneCalls } from "./PhoneCalls";
 import { ReactComponent as Arrow } from "../../../../../assets/images/call-arrow.svg";
 
-export const Phones = ({ open, onToggleOpen }) => {
+export const Phones = ({ open, onToggleOpen, phone, date }) => {
   return (
     <StyledPhones onClick={onToggleOpen} open={open}>
-      <Phone open={open} />
+      <Phone open={open} phone={phone} date={date} />
       <PhoneCalls />
       <Arrow className="arrow-card" />
     </StyledPhones>

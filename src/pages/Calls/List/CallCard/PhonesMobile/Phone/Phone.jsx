@@ -4,15 +4,15 @@ import { LastDate } from "./LastDate";
 import { Dropdown } from "./Dropdown";
 import { Count } from "./Count";
 
-export const Phone = ({ open, onToggleOpen }) => (
+export const Phone = ({ open, onToggleOpen, phone, date }) => (
   <div>
     <StyledPhone
       className="flex items-center justify-between"
       open={open}
       onClick={onToggleOpen}
     >
-      <PhoneText />
-      <LastDate />
+      <PhoneText phone={phone} />
+      <LastDate date={date} />
       <Count />
     </StyledPhone>
     {open && <Dropdown />}

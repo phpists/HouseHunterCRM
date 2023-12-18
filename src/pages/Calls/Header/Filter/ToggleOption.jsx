@@ -1,25 +1,20 @@
-import { useState } from "react";
 import { styled } from "styled-components";
 import { Toggle } from "../../../../components/Toggle";
 
-export const ToggleOption = ({ label, className }) => {
-  const [active, setActive] = useState(false);
-
-  return (
-    <StyledToggleOption
-      className={`flex items-center justify-between ${className} ${
-        active && "active"
-      }`}
-    >
-      <span>{label}</span>
-      <Toggle
-        value={active}
-        onChange={() => setActive(!active)}
-        className={active ? "toggle-active" : ""}
-      />
-    </StyledToggleOption>
-  );
-};
+export const ToggleOption = ({ label, className, value, onChange }) => (
+  <StyledToggleOption
+    className={`flex items-center justify-between ${className} ${
+      value && "active"
+    }`}
+  >
+    <span>{label}</span>
+    <Toggle
+      value={value}
+      onChange={onChange}
+      className={value ? "toggle-active" : ""}
+    />
+  </StyledToggleOption>
+);
 
 const StyledToggleOption = styled.div`
   padding: 7px 7px 7px 11px;

@@ -8,23 +8,57 @@ import { Status } from "./Status/Status";
 import { MoreButton } from "./MoreButton/MoreButton";
 import { PhonesMobile } from "./PhonesMobile/PhonesMobile";
 
-export const MobileContent = ({ open, onToggleOpen, openMore, onOpenMore }) => (
+export const MobileContent = ({
+  open,
+  onToggleOpen,
+  openMore,
+  onOpenMore,
+  callType,
+  phone,
+  date,
+  name,
+  photo,
+  comment,
+  onChangeComment,
+  status,
+  onSetStatus,
+  onSubmitComment,
+  level,
+}) => (
   <StyledMobileContent className="flex flex-col items-start clickable">
-    <Type />
+    <Type callType={callType} />
     <div className="phones-mobile-wrapper w-full">
-      <Phones open={open} onToggleOpen={onToggleOpen} />
-      <PhonesMobile open={open} onToggleOpen={onToggleOpen} />
+      <Phones
+        open={open}
+        onToggleOpen={onToggleOpen}
+        phone={phone}
+        date={date}
+      />
+      <PhonesMobile
+        open={open}
+        onToggleOpen={onToggleOpen}
+        phone={phone}
+        date={date}
+      />
     </div>
     <div className="footer-mobile-content">
-      <Agent />
+      <Agent name={name} photo={photo} level={level} />
       <Field
         placeholder="Почніть писати"
         label="Коментар"
         className="comment"
         full
+        value={comment}
+        onChange={onChangeComment}
+        onSubmit={onSubmitComment}
       />
     </div>
-    <MoreButton openMore={openMore} onOpenMore={onOpenMore} />
+    <MoreButton
+      openMore={openMore}
+      onOpenMore={onOpenMore}
+      status={status}
+      onSetStatus={onSetStatus}
+    />
   </StyledMobileContent>
 );
 

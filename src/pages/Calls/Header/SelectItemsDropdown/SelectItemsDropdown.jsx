@@ -4,13 +4,13 @@ import { Divider } from "./Divider";
 import { SeachInput } from "./SeachInput";
 import { List } from "./List/List";
 
-export const SelectItemsDropdown = () => {
+export const SelectItemsDropdown = ({ onSetCallsStatus, status }) => {
   return (
     <StyledSelectItemsDropdown>
-      <ToggleOption label="Опрацьовано" />
-      <Divider />
+      <ToggleOption onSetCallsStatus={onSetCallsStatus} status={status} />
+      {/* <Divider />
       <SeachInput />
-      <List />
+      <List /> */}
     </StyledSelectItemsDropdown>
   );
 };
@@ -25,6 +25,5 @@ const StyledSelectItemsDropdown = styled.div`
   overflow: hidden;
   backdrop-filter: blur(18.5px);
   border-top: 1px solid rgba(255, 255, 255, 0.4);
-  padding: 6px;
   z-index: 100;
 `;

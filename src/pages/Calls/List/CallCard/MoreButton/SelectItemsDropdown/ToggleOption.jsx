@@ -2,20 +2,18 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import { Toggle } from "../../../../../../components/Toggle";
 
-export const ToggleOption = ({ label, className }) => {
-  const [active, setActive] = useState(false);
-
+export const ToggleOption = ({ className, status, onSetStatus }) => {
   return (
     <StyledToggleOption
       className={`flex items-center justify-between ${className} ${
-        active && "active"
+        status === "1" && "active"
       }`}
     >
-      <span>{label}</span>
+      <span>{status === "1" ? "Опрацьований " : "Не опрацьований"}</span>
       <Toggle
-        value={active}
-        onChange={() => setActive(!active)}
-        className={active ? "toggle-active" : ""}
+        value={status === "1"}
+        onChange={onSetStatus}
+        className={status === "1" ? "toggle-active" : ""}
       />
     </StyledToggleOption>
   );

@@ -2,10 +2,10 @@ import styled from "styled-components";
 import { Tag } from "./Tag";
 import { Title } from "./Title";
 
-export const Status = () => {
+export const Status = ({ status }) => {
   return (
     <StyledStatus className="clickable">
-      <Tag status={2} />
+      <Tag status={status} />
       <Title />
     </StyledStatus>
   );

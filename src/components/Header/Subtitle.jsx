@@ -9,6 +9,7 @@ export const Subtitle = () => {
   const { clientsCount } = useAppSelect((state) => state.clients);
   const { requestsCount } = useAppSelect((state) => state.requests);
   const { objectsCount } = useAppSelect((state) => state.objects);
+  const { callsCount } = useAppSelect((state) => state.calls);
 
   const handleGetEnding = (val) => (val > 0 && val < 8 ? "а" : "ів");
 
@@ -33,7 +34,7 @@ export const Subtitle = () => {
       case "/request":
         return "Запит об'єкта";
       case "/calls":
-        return "Всього 1 782 дзвінків";
+        return `Всього ${callsCount} дзвінків`;
       default:
         return pathname.split("/")[1] === "client"
           ? "Створенний  03.10.2022  13:19"

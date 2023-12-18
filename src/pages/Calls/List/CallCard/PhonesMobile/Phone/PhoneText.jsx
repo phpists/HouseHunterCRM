@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export const PhoneText = () => (
+export const PhoneText = ({ phone = "-" }) => (
   <StyledPhoneText>
-    <div className="phone">+38 (097) 707 62 58 </div>
+    <div className="phone">{phone} </div>
     <div className="subtitle">Новий клієнт</div>
   </StyledPhoneText>
 );

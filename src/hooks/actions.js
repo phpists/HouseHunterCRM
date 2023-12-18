@@ -5,6 +5,7 @@ import { clientsActions } from "../store/clients/clients.slice";
 import { requestsActions } from "../store/requests/requests.slice";
 import { objectsActions } from "../store/objects/objects.slice";
 import { structureActions } from "../store/structure/structure.slice";
+import { callsActions } from "../store/calls/calls.slice";
 
 const actions = {
   ...authActions,
@@ -12,6 +13,7 @@ const actions = {
   ...requestsActions,
   ...objectsActions,
   ...structureActions,
+  ...callsActions,
 };
 
 export const useActions = () => {

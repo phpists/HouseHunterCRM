@@ -17,10 +17,9 @@ export const Calendar = ({ value = null, onChange = () => null }) => {
       {!loading && (
         <ReactCalendar
           onChange={onChange}
-          value={value ?? new Date()}
+          value={value}
           maxDetail="month"
           defaultView="month"
-          defaultActiveStartDate={new Date()}
         />
       )}
     </StyledCalendar>

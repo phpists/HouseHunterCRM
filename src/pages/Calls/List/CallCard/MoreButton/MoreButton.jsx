@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { ReactComponent as Dots } from "../../../../../assets/images/options.svg";
 import { Dropdown } from "./SelectItemsDropdown/Dropdown";
 
-export const MoreButton = ({ openMore, onOpenMore }) => (
+export const MoreButton = ({ openMore, onOpenMore, status, onSetStatus }) => (
   <StyledMoreButton
     className={`flex items-center justify-center ${openMore && "open"}`}
     onClick={onOpenMore}
   >
     <Dots />
-    {openMore && <Dropdown />}
+    {openMore && <Dropdown status={status} onSetStatus={onSetStatus} />}
   </StyledMoreButton>
 );
 

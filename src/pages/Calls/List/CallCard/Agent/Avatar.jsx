@@ -1,8 +1,13 @@
 import styled from "styled-components";
 import avatar from "../../../../../assets/images/avatar.png";
+import { handleGetRoleAvatar } from "../../../../../utilits";
 
-export const Avatar = () => (
-  <StyledAvatar avatar={avatar} className="clickable" />
+export const Avatar = ({ photo, level }) => (
+  <StyledAvatar
+    avatar={photo?.length > 0 ? photo : handleGetRoleAvatar(level?.level)}
+    className="clickable"
+    color={level?.color}
+  />
 );
 
 const StyledAvatar = styled.div`
@@ -10,7 +15,7 @@ const StyledAvatar = styled.div`
   height: 34px;
   flex-shrink: 0;
   border-radius: 34px;
-  border: 1px solid #b1ff91;
+  border: 1px solid ${({ color }) => color ?? "#b1ff91"};
   background: url(${({ avatar }) => avatar}) center/cover no-repeat;
   margin-right: 8px;
 `;

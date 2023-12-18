@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const Tag = () => <StyledTag className="clickable">Оренда</StyledTag>;
+export const Tag = ({ callType = "-" }) => (
+  <StyledTag className="clickable">{callType}</StyledTag>
+);
 
 const StyledTag = styled.div`
   border-radius: 5px;

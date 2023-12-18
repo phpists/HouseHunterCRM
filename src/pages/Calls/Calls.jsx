@@ -1,10 +1,38 @@
 import styled from "styled-components";
 import { Header } from "./Header/Header";
 import { List } from "./List/List";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  useLazyAddCommentToCallQuery,
+  useLazyGetCallsQuery,
+  useLazySetStatusCallQuery,
+} from "../../store/calls/calls.api";
+import { handleResponse } from "../../utilits";
+import { useActions } from "../../hooks/actions";
+import cogoToast from "cogo-toast";
+
+const INIT_FILTERS = {
+  search_key: "",
+  //   id_worker_Search: "",
+  type_call: [],
+  call_my_struct: undefined,
+  status: "0",
+  date_from: new Date().getTime() / 1000,
+  date_to: new Date().getTime() / 1000,
+};
 
 export const Calls = () => {
+  const [getCalls] = useLazyGetCallsQuery();
+  const [setCallStatus] = useLazySetStatusCallQuery();
+  const [addComment] = useLazyAddCommentToCallQuery();
+  const { saveCallsCount } = useActions();
   const [selected, setSelected] = useState([]);
+  const [data, setData] = useState(null);
+  const [filters, setFilters] = useState(INIT_FILTERS);
+
+  const handleChangeFilter = (fieldName, value) => {
+    setFilters({ ...filters, [fieldName]: value });
+  };
 
   const handleSelect = (index) =>
     setSelected(
@@ -13,10 +41,83 @@ export const Calls = () => {
         : [...selected, index]
     );
 
+  const handleGetCalls = (isApplyFilter) => {
+    getCalls({ filters: isApplyFilter ? filters : undefined }).then((resp) => {
+      setData(resp?.data?.data ?? null);
+      saveCallsCount(resp?.data?.all_item ?? 0);
+    });
+  };
+
+  useEffect(() => {
+    handleGetCalls(false);
+  }, []);
+
+  const handleUpdateCall = (id, field, value) =>
+    setData(
+      data?.map((call) => (call.id === id ? { ...call, [field]: value } : call))
+    );
+
+  const handleSetCallStatus = (id_call, status) => {
+    setCallStatus({ id_call, status }).then((resp) =>
+      handleResponse(resp, () => {
+        handleUpdateCall(id_call, "status", status);
+      })
+    );
+  };
+
+  const handleAddComment = (id_call, comment) => {
+    addComment({ id_call, comment }).then((resp) =>
+      handleResponse(resp, () => {
+        handleUpdateCall(id_call, "coment", comment);
+      })
+    );
+  };
+
+  const handleApplyFilter = (isApply) => {
+    handleGetCalls(isApply);
+    !isApply && setFilters(INIT_FILTERS);
+  };
+
+  const handleSetCallsStatus = (status) => {
+    Promise.all(
+      selected?.map((id_call) =>
+        setCallStatus({
+          id_call,
+          status,
+        }).then((resp) => {
+          handleResponse(resp, () => {
+            cogoToast.success("Статус успішно змінено!", {
+              hideAfter: 3,
+              position: "top-right",
+            });
+          });
+        })
+      )
+    ).then((resp) => {
+      setData(
+        data?.map((call) =>
+          selected.find((s) => s === call?.id) ? { ...call, status } : call
+        )
+      );
+    });
+  };
+
   return (
     <StyledCalls>
-      <Header selectedCount={selected.length} />
-      <List selected={selected} onSelect={handleSelect} />
+      <Header
+        selectedCount={selected.length}
+        filters={filters}
+        onChangeFilter={handleChangeFilter}
+        onApplyFilter={handleApplyFilter}
+        onSetCallsStatus={handleSetCallsStatus}
+      />
+      <List
+        selected={selected}
+        onSelect={handleSelect}
+        data={data ?? []}
+        onSetStatus={handleSetCallStatus}
+        onAddComment={handleAddComment}
+      />
     </StyledCalls>
   );
 };

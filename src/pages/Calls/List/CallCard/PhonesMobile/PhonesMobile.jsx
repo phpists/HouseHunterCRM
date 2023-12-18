@@ -1,10 +1,15 @@
 import styled from "styled-components";
 import { Phone } from "./Phone/Phone";
 
-export const PhonesMobile = ({ open, onToggleOpen }) => {
+export const PhonesMobile = ({ open, onToggleOpen, phone, date }) => {
   return (
     <StyledPhonesMobile>
-      <Phone open={open} onToggleOpen={onToggleOpen} />
+      <Phone
+        open={open}
+        onToggleOpen={onToggleOpen}
+        phone={phone}
+        date={date}
+      />
     </StyledPhonesMobile>
   );
 };

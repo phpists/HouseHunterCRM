@@ -66,7 +66,7 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
         resp?.data ? resp?.data?.filter((p) => typeof p === "object") : []
       );
     });
-  }, [data]);
+  }, [data, phonesCodes]);
 
   const handleChangeField = (fieldName, value) => {
     setUpdatedData({ ...updatedData, [fieldName]: value });

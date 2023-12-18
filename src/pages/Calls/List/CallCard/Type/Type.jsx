@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { Tag } from "./Tag";
 
-export const Type = () => {
+export const Type = ({ callType }) => {
   return (
     <StyledType className="clickable">
-      <Tag />
+      <Tag callType={callType} />
       <div className="title clickable">Назва потоку</div>
     </StyledType>
   );

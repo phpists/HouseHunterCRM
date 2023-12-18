@@ -3,19 +3,66 @@ import { SelectTags } from "../../../../../components/SelectTags/SelectTags";
 import { Divider } from "../Divider";
 import { Field } from "../../../../../components/Field";
 import { Avatar } from "./Avatar";
+import { useGetCallsTypeQuery } from "../../../../../store/calls/calls.api";
+import { ToggleOption } from "../ToggleOption";
 
-export const Search = () => (
-  <StyledSearch>
-    <SelectTags label="По потоку" notMultiSelect tagValue initValue="Оренда" />
-    <Divider />
-    <Field label="По ключу" placeholder="Почніть писати" />
-    <Divider />
-    <SelectTags label="По номеру телефона" />
-    <Divider />
-    <SelectTags label="По агентах" Component={<Avatar />} search />
-  </StyledSearch>
-);
+export const Search = ({ filters, onChangeFilter }) => {
+  const { data: callsType } = useGetCallsTypeQuery();
 
+  console.log(filters?.call_my_struct);
+  return (
+    <StyledSearch>
+      <SelectTags
+        label="По потоку"
+        tags={filters?.type_call?.map((t) => ({
+          title: callsType[t]?.name ?? "",
+          value: t,
+        }))}
+        onChange={(val) =>
+          onChangeFilter(
+            "type_call",
+            filters?.type_call?.find((t) => t === val)
+              ? filters?.type_call?.filter((t) => t !== val)
+              : [...filters?.type_call, val]
+          )
+        }
+        options={
+          callsType
+            ? Object.entries(callsType)
+                ?.filter((t) => t[0] !== "error")
+                ?.map((t) => ({
+                  title: t[1]?.name,
+                  value: t[1]?.id,
+                }))
+            : []
+        }
+        showTags
+      />
+      <Divider />
+      <Field
+        label="По ключу"
+        placeholder="Почніть писати"
+        value={filters?.search_key}
+        onChange={(val) => onChangeFilter("search_key", val)}
+      />
+      <Divider />
+      <ToggleOption
+        label="Моя структура"
+        value={filters?.call_my_struct?.length >= 0}
+        onChange={() =>
+          onChangeFilter(
+            "call_my_struct",
+            filters?.call_my_struct?.length >= 0 ? undefined : "1"
+          )
+        }
+      />
+      {/* <Divider />
+      <SelectTags label="По номеру телефона" />
+      <Divider />
+      <SelectTags label="По агентах" Component={<Avatar />} search /> */}
+    </StyledSearch>
+  );
+};
 const StyledSearch = styled.div`
   padding: 6px;
   border-radius: 14px;

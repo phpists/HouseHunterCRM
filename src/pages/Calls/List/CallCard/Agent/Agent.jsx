@@ -3,12 +3,12 @@ import { Avatar } from "./Avatar";
 import { Name } from "./Name";
 import { Tag } from "./Tag";
 
-export const Agent = () => (
+export const Agent = ({ name, photo, level }) => (
   <StyledAgent className="flex items-center clickable">
-    <Avatar />
+    <Avatar photo={photo} level={level} />
     <div className="clickable">
-      <Name />
-      <Tag />
+      <Name name={name} />
+      <Tag level={level} />
     </div>
   </StyledAgent>
 );

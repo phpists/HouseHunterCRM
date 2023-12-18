@@ -4,13 +4,13 @@ import { Divider } from "./Divider";
 import { SeachInput } from "./SeachInput";
 import { List } from "./List/List";
 
-export const Dropdown = () => {
+export const Dropdown = ({ status, onSetStatus }) => {
   return (
     <StyledDropdown>
-      <ToggleOption label="Опрацьовано" />
-      <Divider />
+      <ToggleOption status={status} onSetStatus={onSetStatus} />
+      {/* <Divider />
       <SeachInput />
-      <List />
+      <List /> */}
     </StyledDropdown>
   );
 };

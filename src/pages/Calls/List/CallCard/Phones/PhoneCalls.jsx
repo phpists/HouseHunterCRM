@@ -6,8 +6,7 @@ export const PhoneCalls = () => (
   <StyledPhoneCalls className="flex items-center">
     <div>
       <div className="flex items-center title">
-        <img src={phoneIcon} alt="" />
-        10
+        <img src={phoneIcon} alt="" />-
       </div>
       <div className="subtitle">Викликів</div>
     </div>

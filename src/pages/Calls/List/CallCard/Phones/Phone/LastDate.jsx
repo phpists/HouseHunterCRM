@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export const LastDate = () => (
+export const LastDate = ({ date }) => (
   <StyledLastDate>
-    <div className="date">18.09.2023 13:10</div>
+    <div className="date">{date}</div>
     <div className="subtitle">Остання активність</div>
   </StyledLastDate>
 );

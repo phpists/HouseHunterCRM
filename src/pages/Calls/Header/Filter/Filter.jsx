@@ -8,7 +8,7 @@ import { Status } from "./Status";
 import { Search } from "./Search/Search";
 import { Period } from "./Period/Period";
 
-export const Filter = ({ onClose }) => {
+export const Filter = ({ onClose, filters, onChangeFilter, onApplyFilter }) => {
   const controls = useAnimationControls();
 
   const handleClose = () => {
@@ -29,12 +29,15 @@ export const Filter = ({ onClose }) => {
       <Header onClose={handleClose} />
       <div className="content hide-scroll">
         <SectionTitle title="Статус" />
-        <Status />
+        <Status
+          value={filters?.status}
+          onChange={(val) => onChangeFilter("status", val)}
+        />
         <SectionTitle title="Період " />
-        <Period />
+        <Period filters={filters} onChangeFilter={onChangeFilter} />
         <SectionTitle title="Пошук по " />
-        <Search />
-        <Footer />
+        <Search filters={filters} onChangeFilter={onChangeFilter} />
+        <Footer onApplyFilter={onApplyFilter} />
       </div>
     </StyledFilter>
   );

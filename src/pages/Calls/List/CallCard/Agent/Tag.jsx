@@ -1,13 +1,17 @@
 import styled from "styled-components";
 
-export const Tag = () => <StyledTag className="clickable">Агент</StyledTag>;
+export const Tag = ({ level }) => (
+  <StyledTag className="clickable" color={level?.color}>
+    {level?.title}
+  </StyledTag>
+);
 
 const StyledTag = styled.div`
   padding: 4px 6px;
   height: 20px;
   border-radius: 4px;
-  background: rgba(177, 255, 145, 0.25);
-  color: #b1ff91;
+  background: ${({ color }) => color}40;
+  color: ${({ color }) => color};
   text-align: center;
   leading-trim: both;
   text-edge: cap;
@@ -18,4 +22,8 @@ const StyledTag = styled.div`
   line-height: 1; /* 12.98px */
   letter-spacing: 0.22px;
   width: max-content;
+  width: 100px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;

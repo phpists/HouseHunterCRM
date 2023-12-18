@@ -22,12 +22,20 @@ export const Field = ({
   error,
   mobile,
   onChange = () => null,
+  onSubmit,
 }) => {
   const [edit, setEdit] = useState(false);
 
   const handleChangePhoneCode = (cod) => {
     onChangePhoneCode(cod);
     !noResetValueOnCodeChange && onChange("");
+  };
+
+  const handleToggleEdit = () => {
+    if (edit && onSubmit) {
+      onSubmit();
+    }
+    setEdit(!edit);
   };
 
   return (
@@ -88,7 +96,7 @@ export const Field = ({
       {viewOnly ? null : (
         <div
           className="edit-btn flex items-center justify-center"
-          onClick={() => setEdit(!edit)}
+          onClick={handleToggleEdit}
         >
           {edit ? <CheckIcon /> : <EditIcon className="edit-icon" />}
         </div>
