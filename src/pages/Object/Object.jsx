@@ -59,14 +59,10 @@ export const ObjectPage = () => {
     let updatedData = { ...data };
 
     dateFields.forEach((f) => {
+      console.log(updatedData[f]);
       updatedData = {
         ...updatedData,
-        [f]: !isReverse
-          ? new Date(updatedData[f]).getTime() / 1000
-          : handleFormatDate(
-              new Date(Number(updatedData[f] ?? 0) * 1000),
-              true
-            ),
+        [f]: updatedData[f] ?? new Date()?.getTime(),
       };
     });
 
@@ -92,7 +88,7 @@ export const ObjectPage = () => {
         id_location: data?.id_location ?? "",
       };
       setData(newData);
-      handleGetRubricsFields(value, newData);
+      handleGetRubricsFields(value, newData, true);
     } else {
       const newData = { ...data, [fieldName]: value };
       setData(newData);
