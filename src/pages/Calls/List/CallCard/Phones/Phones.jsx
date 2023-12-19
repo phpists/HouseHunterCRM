@@ -3,10 +3,10 @@ import { Phone } from "./Phone/Phone";
 import { PhoneCalls } from "./PhoneCalls";
 import { ReactComponent as Arrow } from "../../../../../assets/images/call-arrow.svg";
 
-export const Phones = ({ open, onToggleOpen, phone, date }) => {
+export const Phones = ({ open, onToggleOpen, phone, date, callsData }) => {
   return (
     <StyledPhones onClick={onToggleOpen} open={open}>
-      <Phone open={open} phone={phone} date={date} />
+      <Phone open={open} phone={phone} date={date} callsData={callsData} />
       <PhoneCalls />
       <Arrow className="arrow-card" />
     </StyledPhones>
@@ -22,6 +22,7 @@ const StyledPhones = styled.div`
     margin-top: 18px;
     transition: all 0.3s;
     transform: rotate(${({ open }) => (open ? 180 : 0)}deg);
+    display: none;
     ${({ open }) =>
       open &&
       `
@@ -29,6 +30,9 @@ const StyledPhones = styled.div`
             opacity: 1;
         }
     `}
+    @media(min-width: 1400px) {
+      display: block;
+    }
   }
   &:hover {
     g {
@@ -38,9 +42,6 @@ const StyledPhones = styled.div`
   @media (max-width: 1399.9px) {
     width: 100%;
     grid-template-columns: 1fr max-content;
-    .arrow-card {
-      display: none;
-    }
   }
   @media (max-width: 600px) {
     display: none;

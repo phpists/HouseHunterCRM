@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { DesktopContent } from "./DesktopContent";
 import { MobileContent } from "./MobileContent";
+import { useLazyGetAllCallsPhonesQuery } from "../../../../store/calls/calls.api";
+import { handleResponse } from "../../../../utilits";
 
 export const CallCard = ({
   selected,
@@ -21,6 +23,7 @@ export const CallCard = ({
 }) => {
   const [open, setOpen] = useState();
   const [commentEdit, setCommentEdit] = useState(comment);
+  const [getCalls, { data: callsData }] = useLazyGetAllCallsPhonesQuery();
 
   const handleClick = (e) =>
     e.target.classList.contains("clickable") && onSelect();
@@ -34,6 +37,18 @@ export const CallCard = ({
     setCommentEdit(comment);
   }, [comment]);
 
+  const handleToggleOpen = () => {
+    if (!open) {
+      getCalls(phone).then((resp) =>
+        handleResponse(resp, () => {
+          setOpen(true);
+        })
+      );
+    } else {
+      setOpen(!open);
+    }
+  };
+
   return (
     <StyledCallCard
       className=" clickable"
@@ -42,7 +57,7 @@ export const CallCard = ({
     >
       <DesktopContent
         open={open}
-        onToggleOpen={() => setOpen(!open)}
+        onToggleOpen={handleToggleOpen}
         openMore={openMore}
         onOpenMore={onOpenMore}
         callType={callType}
@@ -56,10 +71,11 @@ export const CallCard = ({
         status={status}
         onSetStatus={onSetStatus}
         level={level}
+        callsData={callsData?.data ?? []}
       />
       <MobileContent
         open={open}
-        onToggleOpen={() => setOpen(!open)}
+        onToggleOpen={handleToggleOpen}
         openMore={openMore}
         onOpenMore={onOpenMore}
         callType={callType}
@@ -73,6 +89,7 @@ export const CallCard = ({
         status={status}
         onSetStatus={onSetStatus}
         level={level}
+        callsData={callsData?.data ?? []}
       />
     </StyledCallCard>
   );

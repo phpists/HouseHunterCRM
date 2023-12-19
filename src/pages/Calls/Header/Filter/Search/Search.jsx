@@ -9,30 +9,32 @@ import { ToggleOption } from "../ToggleOption";
 export const Search = ({ filters, onChangeFilter }) => {
   const { data: callsType } = useGetCallsTypeQuery();
 
-  console.log(filters?.call_my_struct);
   return (
     <StyledSearch>
       <SelectTags
         label="По потоку"
         tags={filters?.type_call?.map((t) => ({
           title: callsType[t]?.name ?? "",
-          value: t,
+          value: t?.toString(),
         }))}
-        onChange={(val) =>
+        onChange={(val, title) => {
           onChangeFilter(
             "type_call",
-            filters?.type_call?.find((t) => t === val)
-              ? filters?.type_call?.filter((t) => t !== val)
-              : [...filters?.type_call, val]
-          )
-        }
+            filters?.type_call?.find((t) => t === val?.toString())
+              ? filters?.type_call?.filter(
+                  (t) => t?.toString() !== val?.toString()
+                )
+              : [...filters?.type_call, val?.toString()]
+          );
+          console.log(val, title);
+        }}
         options={
           callsType
             ? Object.entries(callsType)
                 ?.filter((t) => t[0] !== "error")
                 ?.map((t) => ({
                   title: t[1]?.name,
-                  value: t[1]?.id,
+                  value: t[1]?.id?.toString(),
                 }))
             : []
         }
@@ -54,6 +56,14 @@ export const Search = ({ filters, onChangeFilter }) => {
             "call_my_struct",
             filters?.call_my_struct?.length >= 0 ? undefined : "1"
           )
+        }
+      />
+      <Divider />
+      <ToggleOption
+        label="Переглянуті"
+        value={filters?.view === "1"}
+        onChange={() =>
+          onChangeFilter("view", filters?.view === "1" ? "0" : "1")
         }
       />
       {/* <Divider />

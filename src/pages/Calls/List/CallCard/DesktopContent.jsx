@@ -23,11 +23,18 @@ export const DesktopContent = ({
   onSetStatus,
   onSubmitComment,
   level,
+  callsData,
 }) => (
   <StyledDesktopContent className="flex items-start clickable">
     <Type callType={callType} />
     <Divider />
-    <Phones open={open} onToggleOpen={onToggleOpen} phone={phone} date={date} />
+    <Phones
+      open={open}
+      onToggleOpen={onToggleOpen}
+      phone={phone}
+      date={date}
+      callsData={callsData}
+    />
     <Divider />
     <Agent name={name} photo={photo} level={level} />
     <Divider />

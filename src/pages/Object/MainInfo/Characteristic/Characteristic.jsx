@@ -103,6 +103,7 @@ export const Characteristic = ({ data, onChangeField, fields, errors }) => {
             data={data}
             onChangeField={onChangeField}
             fields={fields}
+            errors={errors}
           />
         )}
       </div>

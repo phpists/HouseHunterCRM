@@ -56,6 +56,18 @@ export const calls = createApi({
         }),
       }),
     }),
+    getAllCallsPhones: build.query({
+      query: (call_number) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_all_calls_about_phone",
+          mod: "calls",
+          call_number,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -64,4 +76,5 @@ export const {
   useLazySetStatusCallQuery,
   useLazyAddCommentToCallQuery,
   useGetCallsTypeQuery,
+  useLazyGetAllCallsPhonesQuery,
 } = calls;

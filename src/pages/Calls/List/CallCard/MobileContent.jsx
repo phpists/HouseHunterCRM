@@ -24,6 +24,7 @@ export const MobileContent = ({
   onSetStatus,
   onSubmitComment,
   level,
+  callsData,
 }) => (
   <StyledMobileContent className="flex flex-col items-start clickable">
     <Type callType={callType} />
@@ -33,6 +34,7 @@ export const MobileContent = ({
         onToggleOpen={onToggleOpen}
         phone={phone}
         date={date}
+        callsData={callsData}
       />
       <PhonesMobile
         open={open}

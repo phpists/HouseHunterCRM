@@ -9,7 +9,7 @@ import {
 import React from "react";
 import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.api";
 
-export const Categories = ({ data, onChangeField, fields }) => {
+export const Categories = ({ data, onChangeField, fields, errors }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
   const Additional = fields
@@ -92,7 +92,10 @@ export const Categories = ({ data, onChangeField, fields }) => {
             )
             ?.map((category, i) => (
               <React.Fragment key={i}>
-                <Divider title={commentsToFields?.object[category[0]]} />
+                <Divider
+                  title={commentsToFields?.object[category[0]]}
+                  error={!!errors.find((e) => e === category[0])}
+                />
                 <div className="options">
                   {Object.entries(category[1]?.field_option)?.map((opt, j) => (
                     <Option
@@ -114,7 +117,10 @@ export const Categories = ({ data, onChangeField, fields }) => {
                       onSelect={() =>
                         handleGetFieldType(category[0]) === "json"
                           ? handleToggleOption(opt[0], category[0])
-                          : onChangeField(category[0], opt[0])
+                          : onChangeField(
+                              category[0],
+                              data[category[0]] === opt[0] ? null : opt[0]
+                            )
                       }
                     />
                   ))}

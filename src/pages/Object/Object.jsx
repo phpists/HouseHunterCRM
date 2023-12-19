@@ -129,11 +129,18 @@ export const ObjectPage = () => {
     }
     const isEmptyFields = handleCheckFields({
       data: { ...data, id_client: clientId },
-      requiredFields: !fields?.main_field
-        ? []
-        : Object.entries(fields?.main_field)
-            ?.filter((f) => f[1]?.required === 1)
-            ?.map((f) => f[0]),
+      requiredFields: [
+        ...(fields?.main_field
+          ? Object.entries(fields?.main_field)
+              ?.filter((f) => f[1]?.required === 1)
+              ?.map((f) => f[0])
+          : []),
+        ...(fields?.other_field
+          ? Object.entries(fields?.other_field)
+              ?.filter((f) => f[1]?.required === 1)
+              ?.map((f) => f[0])
+          : []),
+      ],
       additionalFields: ["title", "id_rubric"],
       titles: commentsToFields?.object,
       additionalTitles: {
@@ -169,11 +176,21 @@ export const ObjectPage = () => {
   };
 
   const handleEdit = () => {
+    console.log(data);
     const isEmptyFields = handleCheckFields({
       data: { ...data, id_client: clientId },
-      requiredFields: Object.entries(fields?.main_field)
-        ?.filter((f) => f[1]?.required === 1)
-        ?.map((f) => f[0]),
+      requiredFields: [
+        ...(fields?.main_field
+          ? Object.entries(fields?.main_field)
+              ?.filter((f) => f[1]?.required === 1)
+              ?.map((f) => f[0])
+          : []),
+        ...(fields?.other_field
+          ? Object.entries(fields?.other_field)
+              ?.filter((f) => f[1]?.required === 1)
+              ?.map((f) => f[0])
+          : []),
+      ],
       additionalFields: ["title", "id_rubric"],
       titles: commentsToFields?.object,
       additionalTitles: {

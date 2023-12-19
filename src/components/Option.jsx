@@ -9,11 +9,13 @@ export const Option = ({
   className,
   noSelect,
   Component,
-  
+  error,
 }) => {
   return (
     <StyledOption
-      className={`flex items-center justify-between hover-effect-to-right ${className}`}
+      className={`flex items-center justify-between hover-effect-to-right ${className} ${
+        error && "error-field"
+      }`}
       onClick={onSelect}
       active={active}
     >

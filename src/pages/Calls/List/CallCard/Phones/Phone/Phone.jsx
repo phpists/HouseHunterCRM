@@ -4,14 +4,14 @@ import { PhoneText } from "./PhoneText";
 import { LastDate } from "./LastDate";
 import { Dropdown } from "./Dropdown";
 
-export const Phone = ({ open, phone, date }) => (
+export const Phone = ({ open, phone, date, callsData }) => (
   <div>
     <StyledPhone className="flex items-center" open={open}>
       <Avatar />
       <PhoneText phone={phone} />
       <LastDate date={date} />
     </StyledPhone>
-    {open && <Dropdown />}
+    {open && <Dropdown callsData={callsData} />}
   </div>
 );
 

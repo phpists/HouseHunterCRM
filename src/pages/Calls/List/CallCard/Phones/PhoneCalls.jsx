@@ -52,7 +52,7 @@ const StyledPhoneCalls = styled.div`
     margin-left: 10px;
   }
 
-  @media (min-width: 1600px) {
+  @media (min-width: 1400px) {
     .arrow-down {
       display: none;
     }

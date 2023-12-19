@@ -1,19 +1,13 @@
 import styled from "styled-components";
 
-export const Dropdown = () => (
+export const Dropdown = ({ callsData }) => (
   <StyledDropdown>
-    <div>
-      <span>18.09.2023 </span>
-      <span>13:10</span>
-    </div>
-    <div>
-      <span>18.09.2023 </span>
-      <span>13:10</span>
-    </div>
-    <div>
-      <span>18.09.2023 </span>
-      <span>13:10</span>
-    </div>
+    {callsData?.map(({ dt_incoming }, i) => (
+      <div key={i}>
+        <span>{dt_incoming?.split(" ")[0] ?? "-"}</span>
+        <span>{dt_incoming?.split(" ")[1] ?? "-"}</span>
+      </div>
+    ))}
   </StyledDropdown>
 );
 

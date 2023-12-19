@@ -17,8 +17,9 @@ const INIT_FILTERS = {
   type_call: [],
   call_my_struct: undefined,
   status: "0",
-  date_from: new Date().getTime() / 1000,
+  date_from: new Date().getTime() / 1000 - 2629743,
   date_to: new Date().getTime() / 1000,
+  view: "0",
 };
 
 export const Calls = () => {
@@ -61,6 +62,10 @@ export const Calls = () => {
     setCallStatus({ id_call, status }).then((resp) =>
       handleResponse(resp, () => {
         handleUpdateCall(id_call, "status", status);
+        cogoToast.success("Статус успішно змінено!", {
+          hideAfter: 3,
+          position: "top-right",
+        });
       })
     );
   };
