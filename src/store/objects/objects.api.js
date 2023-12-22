@@ -253,6 +253,7 @@ export const {
   useLazyDeleteObjectQuery,
   useLazyAddToFavoritesQuery,
   useLazyGetAllObjectsQuery,
+  useGetAllObjectsQuery,
   useLazyGetObjectQuery,
   useLazyEditObjectQuery,
   useLazyGetObjectsCountQuery,

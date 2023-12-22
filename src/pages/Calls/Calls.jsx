@@ -54,9 +54,7 @@ export const Calls = () => {
   }, []);
 
   const handleUpdateCall = (id, field, value) =>
-    setData(
-      data?.map((call) => (call.id === id ? { ...call, [field]: value } : call))
-    );
+    setData(data?.filter((call) => call.id !== id));
 
   const handleSetCallStatus = (id_call, status) => {
     setCallStatus({ id_call, status }).then((resp) =>
@@ -99,11 +97,7 @@ export const Calls = () => {
         })
       )
     ).then((resp) => {
-      setData(
-        data?.map((call) =>
-          selected.find((s) => s === call?.id) ? { ...call, status } : call
-        )
-      );
+      setData(data?.filter((call) => !selected.find((s) => s === call?.id)));
     });
   };
 

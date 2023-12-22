@@ -10,7 +10,7 @@ import {
 } from "../../store/objects/objects.api";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
-import { handleResponse } from "../../utilits";
+import { handleGetRange, handleResponse } from "../../utilits";
 import cogoToast from "cogo-toast";
 
 const INIT_FILTERS = {
@@ -165,18 +165,6 @@ export const Objects = () => {
         });
       });
     });
-  };
-
-  const handleGetRange = (num, isProcent) => {
-    let start = 0;
-    let end = isNaN(num) ? 0 : isProcent ? num + (num / 100) * 10 : num + 1;
-    const startCalc = isProcent ? num - (num / 100) * 10 : num - 1;
-
-    if (startCalc >= 0) {
-      start = startCalc;
-    }
-
-    return { start, end };
   };
 
   const handleFindSimilarTo = (obj) => {

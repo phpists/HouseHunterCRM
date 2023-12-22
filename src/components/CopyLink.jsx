@@ -3,7 +3,7 @@ import linkIcon from "../assets/images/link.svg";
 import checkIcon from "../assets/images/circle-green-check.svg";
 import { useState } from "react";
 
-export const CopyLink = () => {
+export const CopyLink = ({ className }) => {
   const [active, setActive] = useState(false);
 
   const handleCopy = () => {
@@ -13,7 +13,7 @@ export const CopyLink = () => {
 
   return (
     <StyledCopyLink
-      className={`flex flex-col items-center justify-center ${
+      className={`flex flex-col items-center justify-center ${className} ${
         active && "active"
       }`}
       onClick={() => (active ? null : handleCopy())}

@@ -8,6 +8,7 @@ import {
 } from "../../../../utilits";
 import React from "react";
 import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.api";
+import { ProfileField } from "../../../../components/ProfileField";
 
 export const Categories = ({ data, onChangeField, fields, errors }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
@@ -84,47 +85,71 @@ export const Categories = ({ data, onChangeField, fields, errors }) => {
       {fields?.other_field && Object.entries(fields?.other_field)?.length > 0
         ? Object.entries(fields?.other_field)
             ?.filter(
-              (category) =>
-                Object.entries(category[1]?.field_option)?.length > 0
-            )
-            ?.filter(
               (category) => commentsToFields?.object[category[0]]?.length > 0
             )
             ?.map((category, i) => (
               <React.Fragment key={i}>
-                <Divider
-                  title={commentsToFields?.object[category[0]]}
-                  error={!!errors.find((e) => e === category[0])}
-                />
-                <div className="options">
-                  {Object.entries(category[1]?.field_option)?.map((opt, j) => (
-                    <Option
-                      key={j}
-                      title={opt[1]}
-                      className="opt"
-                      active={
-                        handleGetFieldType(category[0]) === "int"
-                          ? data[category[0]] === opt[0]
-                          : data[category[0]]?.length > 0 &&
-                            data[category[0]] !== "0"
-                          ? !!JSON.parse(
-                              typeof data[category[0]] === "string"
-                                ? data[category[0]]
-                                : JSON.stringify(data[category[0]])
-                            )?.find((o) => o === opt[0])
-                          : false
-                      }
-                      onSelect={() =>
-                        handleGetFieldType(category[0]) === "json"
-                          ? handleToggleOption(opt[0], category[0])
-                          : onChangeField(
-                              category[0],
-                              data[category[0]] === opt[0] ? null : opt[0]
-                            )
-                      }
-                    />
-                  ))}
-                </div>
+                <>
+                  {Object.entries(category[1]?.field_option)?.length > 0 ? (
+                    <>
+                      <Divider
+                        title={commentsToFields?.object[category[0]]}
+                        error={!!errors.find((e) => e === category[0])}
+                      />
+                      <div className="options">
+                        {Object.entries(category[1]?.field_option)?.map(
+                          (opt, j) => (
+                            <Option
+                              key={j}
+                              title={opt[1]}
+                              className="opt"
+                              active={
+                                handleGetFieldType(category[0]) === "int"
+                                  ? data[category[0]] === opt[0]
+                                  : data[category[0]]?.length > 0 &&
+                                    data[category[0]] !== "0"
+                                  ? !!JSON.parse(
+                                      typeof data[category[0]] === "string"
+                                        ? data[category[0]]
+                                        : JSON.stringify(data[category[0]])
+                                    )?.find((o) => o === opt[0])
+                                  : false
+                              }
+                              onSelect={() =>
+                                handleGetFieldType(category[0]) === "json"
+                                  ? handleToggleOption(opt[0], category[0])
+                                  : onChangeField(
+                                      category[0],
+                                      data[category[0]] === opt[0]
+                                        ? null
+                                        : opt[0]
+                                    )
+                              }
+                            />
+                          )
+                        )}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <Divider />
+                      <ProfileField
+                        placeholder="Введіть значення"
+                        value={data[category[0]]}
+                        onChange={(val) => onChangeField(category[0], val)}
+                        label={commentsToFields?.object[category[0]]}
+                        className="field"
+                        grey
+                        type={
+                          category[1]?.type === "int"
+                            ? "number"
+                            : category[1]?.type
+                        }
+                        error={!!errors.find((e) => e === category[0])}
+                      />
+                    </>
+                  )}
+                </>
               </React.Fragment>
             ))
         : null}

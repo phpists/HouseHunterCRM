@@ -46,6 +46,8 @@ export const Subtitle = () => {
           ? "Створення об'єкта"
           : pathname.split("/")[1] === "edit-object"
           ? `Редагування об'єкта`
+          : pathname.split("/")[1] === "selections"
+          ? "Понад 1 000 нових"
           : "";
     }
   };

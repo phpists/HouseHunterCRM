@@ -212,6 +212,7 @@ export const handleCheckFields = ({
   data = {},
   requiredFields = [],
   additionalFields = [],
+  requiredFieldsNumber = [],
   titles = [],
   additionalTitles = {},
   title,
@@ -220,7 +221,11 @@ export const handleCheckFields = ({
 
   [...requiredFields, ...additionalFields].forEach((f) => {
     if (emptyFields?.find((eF) => eF === f)) {
-    } else if (!data[f] || data[f]?.length === 0) {
+    } else if (
+      !data[f] ||
+      data[f]?.length === 0 ||
+      (!!requiredFields.find((fN) => fN === f) && Number(data[f]) === 0)
+    ) {
       emptyFields.push(f);
     }
   });
@@ -268,4 +273,42 @@ export const handleCheckAccess = (modules, moduleName, accessType) => {
   }
 
   return false;
+};
+
+export const getHours = (timestamp) => {
+  const date = new Date(timestamp * 1000);
+  const hours = addZero(date.getHours());
+  const minutes = addZero(date.getMinutes());
+
+  return `${hours}:${minutes}`;
+};
+
+export const handleDownload = (fileLink) => {
+  var link = document.createElement("a");
+  link.setAttribute("download", "file");
+  link.href = fileLink;
+  link.target = "_blank";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+};
+
+export const formatNumber = (num) =>
+  typeof num === "number"
+    ? num
+        ?.toFixed(2)
+        ?.replace(/\d(?=(\d{3})+\.)/g, "$&,")
+        ?.split(".")[0]
+    : "0";
+
+export const handleGetRange = (num, isProcent) => {
+  let start = 0;
+  let end = isNaN(num) ? 0 : isProcent ? num + (num / 100) * 10 : num + 1;
+  const startCalc = isProcent ? num - (num / 100) * 10 : num - 1;
+
+  if (startCalc >= 0) {
+    start = startCalc;
+  }
+
+  return { start, end };
 };

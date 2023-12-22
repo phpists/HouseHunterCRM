@@ -19,6 +19,7 @@ import { useActions } from "./hooks/actions";
 import { useAppSelect } from "./hooks/redux";
 import { Loading } from "./components/Loading/Loading";
 import { handleCheckAccess } from "./utilits";
+import { Selections } from "./pages/Selections/Selections";
 
 export const App = () => {
   const [getProfile] = useLazyGetUserQuery();
@@ -123,6 +124,7 @@ export const App = () => {
               {/* ! test */}
               {true && <Route path="/calls" element={<Calls />} />}
               <Route path="/company" element={<Company />} />
+              <Route path="/selections/:id" element={<Selections />} />
               <Route path="*" element={<Dashboard />} />
             </Routes>
           </div>

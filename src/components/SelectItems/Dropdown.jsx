@@ -1,13 +1,12 @@
 import { styled } from "styled-components";
 
-export const Dropdown = ({ onSelect, noFavorite, onDelete }) => {
+export const Dropdown = ({ onSelect, noFavorite, onDelete, onHide }) => {
   const OPTIONS = [
     { title: "Додати в улюблене", value: "favorite" },
-    { title: "Передати", value: "send" },
+    // { title: "Передати", value: "send" },
     ...(onDelete ? [{ title: "Видалити", value: "delete" }] : []),
+    ...(onHide ? [{ title: "Приховати", value: "hide" }] : []),
   ];
-
-  console.log(onDelete);
 
   return (
     <StyledDropdown>

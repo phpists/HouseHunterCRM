@@ -11,6 +11,7 @@ export const DesktopContent = ({
   onToggleFavoriteStatus,
   onFindSimilar,
   isEdit,
+  onHide,
 }) => (
   <StyledDesktopContent className="flex items-center justify-between">
     <Slider photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)} />
@@ -25,6 +26,7 @@ export const DesktopContent = ({
       isFavorite={data?.favorite}
       onFindSimilar={onFindSimilar}
       isEdit={isEdit}
+      onHide={onHide}
     />
     <div className="mobile-footer w-full">
       <Info data={data} />

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export const OpenButton = () => (
-  <StyledOpenButton>Перейти в добірку</StyledOpenButton>
+export const OpenButton = ({ onClick }) => (
+  <StyledOpenButton onClick={onClick}>Перейти в добірку</StyledOpenButton>
 );
 
 const StyledOpenButton = styled.button`

@@ -12,6 +12,8 @@ import { structure } from "./structure/structure.api";
 import { structureReducer } from "./structure/structure.slice";
 import { calls } from "./calls/calls.api";
 import { callsReducer } from "./calls/calls.slice";
+import { selections } from "./selections/selections.api";
+import { selectionsReducer } from "./selections/selections.slice";
 
 export const store = configureStore({
   reducer: {
@@ -27,6 +29,8 @@ export const store = configureStore({
     structure: structureReducer,
     [calls.reducerPath]: calls.reducer,
     calls: callsReducer,
+    [selections.reducerPath]: selections.reducer,
+    selections: selectionsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -35,7 +39,8 @@ export const store = configureStore({
       requests.middleware,
       objects.middleware,
       structure.middleware,
-      calls.middleware
+      calls.middleware,
+      selections.middleware
     ),
 });
 

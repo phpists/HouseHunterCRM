@@ -33,8 +33,10 @@ export const Main = ({
       ref={contentRef}
     >
       <Comment
-        value={data?.comment}
-        onChange={(val) => onChangeField("comment", val)}
+        value={data?.general_group?.comment}
+        onChange={(comment) =>
+          onChangeField("general_group", { ...data?.general_group, comment })
+        }
       />
       <Content
         data={data}

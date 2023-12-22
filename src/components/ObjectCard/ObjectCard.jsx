@@ -9,6 +9,7 @@ export const ObjectCard = ({
   onToggleFavoriteStatus,
   onFindSimilar,
   isEdit,
+  onHide,
 }) => {
   const handleClick = (e) =>
     e.target.classList.contains("clickable") && onSelect();
@@ -23,12 +24,14 @@ export const ObjectCard = ({
         onToggleFavoriteStatus={onToggleFavoriteStatus}
         onFindSimilar={onFindSimilar}
         isEdit={isEdit}
+        onHide={onHide}
       />
       <MobileContent
         data={data}
         onToggleFavoriteStatus={onToggleFavoriteStatus}
         onFindSimilar={onFindSimilar}
         isEdit={isEdit}
+        onHide={onHide}
       />
     </StyledObjectCard>
   );

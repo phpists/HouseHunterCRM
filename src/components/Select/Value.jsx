@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
-export const Value = ({ value }) => (
-  <StyledValue>{value?.length > 0 ? value : "Оберіть"}</StyledValue>
+export const Value = ({ value, placeholder = "Оберіть" }) => (
+  <StyledValue>{value?.length > 0 ? value : placeholder}</StyledValue>
 );
 
 const StyledValue = styled.div`

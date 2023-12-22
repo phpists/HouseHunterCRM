@@ -59,10 +59,14 @@ export const ObjectPage = () => {
     let updatedData = { ...data };
 
     dateFields.forEach((f) => {
-      console.log(updatedData[f]);
       updatedData = {
         ...updatedData,
-        [f]: updatedData[f] ?? new Date()?.getTime(),
+        [f]:
+          Number(updatedData[f]) === 0
+            ? new Date()
+            : updatedData[f]
+            ? new Date(updatedData[f] * 1000)
+            : new Date(),
       };
     });
 
@@ -102,7 +106,7 @@ export const ObjectPage = () => {
           ...handleFormatDatesToTimestamp(resp?.data, true),
           obj_is_actual_dt: resp?.data?.obj_is_actual_dt
             ? Number(resp?.data?.obj_is_actual_dt) * 1000
-            : undefined,
+            : Number(new Date()?.getTime()).toFixed(0),
         };
         setData(objectData);
         handleGetRubricsFields(resp?.data?.id_rubric, objectData, true);
@@ -134,6 +138,18 @@ export const ObjectPage = () => {
         ...(fields?.other_field
           ? Object.entries(fields?.other_field)
               ?.filter((f) => f[1]?.required === 1)
+              ?.map((f) => f[0])
+          : []),
+      ],
+      requiredFieldsNumber: [
+        ...(fields?.main_field
+          ? Object.entries(fields?.main_field)
+              ?.filter((f) => f[1]?.required === 1 && f[1]?.type === "int")
+              ?.map((f) => f[0])
+          : []),
+        ...(fields?.other_field
+          ? Object.entries(fields?.other_field)
+              ?.filter((f) => f[1]?.required === 1 && f[1]?.type === "int")
               ?.map((f) => f[0])
           : []),
       ],
@@ -172,7 +188,6 @@ export const ObjectPage = () => {
   };
 
   const handleEdit = () => {
-    console.log(data);
     const isEmptyFields = handleCheckFields({
       data: { ...data, id_client: clientId },
       requiredFields: [
@@ -184,6 +199,18 @@ export const ObjectPage = () => {
         ...(fields?.other_field
           ? Object.entries(fields?.other_field)
               ?.filter((f) => f[1]?.required === 1)
+              ?.map((f) => f[0])
+          : []),
+      ],
+      requiredFieldsNumber: [
+        ...(fields?.main_field
+          ? Object.entries(fields?.main_field)
+              ?.filter((f) => f[1]?.required === 1 && f[1]?.type === "int")
+              ?.map((f) => f[0])
+          : []),
+        ...(fields?.other_field
+          ? Object.entries(fields?.other_field)
+              ?.filter((f) => f[1]?.required === 1 && f[1]?.type === "int")
               ?.map((f) => f[0])
           : []),
       ],

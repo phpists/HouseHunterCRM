@@ -55,7 +55,10 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
                 />
               </>
             );
-          } else if (field?.includes("_min")) {
+          } else if (
+            field?.includes("_min") &&
+            fields?.find((f) => f.field === field?.replace("_min", "_max"))
+          ) {
             const labels = {
               room_min: "Кількість кімнат/Приміщень",
               storey_count_min: "Поверховість",
@@ -87,6 +90,11 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
                 />
               </>
             );
+          } else if (
+            field?.includes("_max") &&
+            !fields?.find((f) => f.field === field?.replace("_max", "_min"))
+          ) {
+            return <div></div>;
           }
         })}
     </StyledCard>

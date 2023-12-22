@@ -1,0 +1,39 @@
+import styled from "styled-components";
+import { ReactComponent as EyeIcon } from "../../../assets/images/eye.svg";
+import { ReactComponent as EyeCloseIcon } from "../../../assets/images/eye-close.svg";
+import { useState } from "react";
+
+export const ShowButton = () => {
+  const [active, setActive] = useState(false);
+
+  return (
+    <StyledShowButton onClick={() => setActive(!active)}>
+      {active ? <EyeIcon /> : <EyeCloseIcon />}
+    </StyledShowButton>
+  );
+};
+
+const StyledShowButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1.4px solid rgba(255, 255, 255, 0.2);
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  margin-right: 15px;
+  svg {
+    opacity: 0.4;
+    transition: all 0.3s;
+  }
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    svg {
+      opacity: 1;
+    }
+  }
+  &:active {
+    border: 1.2px solid #fff;
+  }
+`;

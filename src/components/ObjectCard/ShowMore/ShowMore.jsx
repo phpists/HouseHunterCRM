@@ -10,6 +10,7 @@ export const ShowMore = ({
   isFavorite,
   onFindSimilar,
   isEdit,
+  onHide,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
 
@@ -23,6 +24,7 @@ export const ShowMore = ({
         isFavorite={isFavorite}
         onFindSimilar={onFindSimilar}
         isEdit={isEdit}
+        onHide={onHide}
       />
     </StyledShowMore>
   );

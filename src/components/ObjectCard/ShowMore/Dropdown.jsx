@@ -8,14 +8,17 @@ export const Dropdown = ({
   isFavorite,
   onFindSimilar,
   isEdit,
+  onHide,
 }) => (
   <StyledDropdown className="dropdown">
-    <div
-      className="flex items-center justify-between"
-      onClick={onToggleFavoriteStatus}
-    >
-      <span> {isFavorite ? "Із" : "До"} улюблених</span>
-    </div>
+    {onToggleFavoriteStatus && (
+      <div
+        className="flex items-center justify-between"
+        onClick={onToggleFavoriteStatus}
+      >
+        <span> {isFavorite ? "Із" : "До"} улюблених</span>
+      </div>
+    )}
     {onFindSimilar ? (
       <div
         className="flex items-center justify-between"
@@ -30,6 +33,11 @@ export const Dropdown = ({
     <div className="flex items-center justify-between">
       <span>Історія тегів</span>
     </div>
+    {onHide && (
+      <div className="flex items-center justify-between" onClick={onHide}>
+        <span>Приховати</span>
+      </div>
+    )}
     {isEdit && (
       <NavLink
         to={`/edit-object/${clientId}/${id}`}

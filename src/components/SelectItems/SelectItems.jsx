@@ -17,6 +17,7 @@ export const SelectItems = ({
   allCount = 0,
   onSelectAll,
   noFavorite,
+  onHide,
 }) => {
   const [type, setType] = useState(null);
   const [open, setOpen] = useState(false);
@@ -37,6 +38,8 @@ export const SelectItems = ({
       setDeleteModal(true);
     } else if (opt === "favorite") {
       onToggleFavorite();
+    } else if ("hide") {
+      onHide();
     }
   };
 
@@ -83,6 +86,7 @@ export const SelectItems = ({
                 onSelect={handleSelectOption}
                 noFavorite={noFavorite}
                 onDelete={onDelete}
+                onHide={onHide}
               />
             )}
           </>

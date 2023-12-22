@@ -36,7 +36,7 @@ export const DesktopContent = ({
       storeyMax={data?.address_storey_max}
     />
     <Comment comment={data?.comment} />
-    <Objects />
+    <Objects idGroup={data?.id_group} />
     <Actions
       id={id}
       clientId={data?.General_field_group?.id_client}

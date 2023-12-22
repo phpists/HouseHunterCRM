@@ -42,7 +42,7 @@ export const MobileContent = ({
           storeyMax={data?.address_storey_max}
         />
         <Comment comment={data?.comment} />
-        <Objects />
+        <Objects idGroup={data?.id_group} />
       </div>
     </div>
     <Actions

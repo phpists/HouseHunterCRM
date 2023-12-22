@@ -16,6 +16,7 @@ export const Select = ({
   onChange,
   options,
   error,
+  placeholder,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -38,7 +39,10 @@ export const Select = ({
         <div className="flex items-center">
           {Icon && <SelectIcon Icon={Icon} />}
           <div>
-            <Value value={options?.find((opt) => opt.value === value)?.title} />
+            <Value
+              value={options?.find((opt) => opt.value === value)?.title}
+              placeholder={placeholder}
+            />
             <Label label={open ? labelActive : label} />
           </div>
         </div>
@@ -90,7 +94,7 @@ const StyledSelect = styled.div`
     open &&
     `
     background: #FFF !important;
-    border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0 !important;
     color: #2C2C2C;
     .arrow path {
         fill: #2C2C2C;

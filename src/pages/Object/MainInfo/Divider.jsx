@@ -6,7 +6,7 @@ export const Divider = ({ title, className, error }) => (
     error={error}
   >
     <div />
-    <span className="title">{title}</span>
+    {title?.length > 0 ? <span className="title">{title}</span> : null}
     <div />
   </StyledDivider>
 );
