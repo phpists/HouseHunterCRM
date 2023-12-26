@@ -56,7 +56,7 @@ export const selections = createApi({
       }),
     }),
     showChat: build.query({
-      query: ({ id_request_group }) => ({
+      query: (id_request_group) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -68,7 +68,7 @@ export const selections = createApi({
       }),
     }),
     showChatClient: build.query({
-      query: ({ id_request_group }) => ({
+      query: (id_request_group) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -142,4 +142,8 @@ export const {
   useLazyAddObjectToSelectionsQuery,
   useLazyHideObjectFromSelectionsQuery,
   useGetFoldersListQuery,
+  useLazyShowChatQuery,
+  useLazyShowChatClientQuery,
+  useLazyAddMessageQuery,
+  useLazyAddMessageClientQuery,
 } = selections;

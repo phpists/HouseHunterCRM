@@ -1,15 +1,29 @@
 import styled from "styled-components";
 import { Contact } from "./Contact/Contact";
 import { Divider } from "./Divider";
+import { useLazyGetClientQuery } from "../../../store/clients/clients.api";
+import { useEffect } from "react";
 
 export const Contacts = ({ className, data }) => {
+  const [getClient, { data: clientData }] = useLazyGetClientQuery();
+
+  useEffect(() => {
+    if (data?.id_client) {
+      getClient(data?.id_client);
+    }
+  }, [data?.id_client]);
+
   return (
     <StyledContacts className={`hide-scroll clickable ${className}`}>
       {/* <Contact type="owner" />
       <Divider /> */}
-      {data?.cl_phones?.length > 0 ? (
+      {clientData ? (
         <>
-          <Contact type="owner" name={data?.cl_name} phones={data?.cl_phones} />
+          <Contact
+            type="owner"
+            name={`${clientData?.data?.first_name} ${clientData?.data?.last_name}`}
+            phones={clientData?.data?.phone}
+          />
           <Divider />
         </>
       ) : null}

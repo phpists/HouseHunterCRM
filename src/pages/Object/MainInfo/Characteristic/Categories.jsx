@@ -83,7 +83,7 @@ export const Categories = ({ data, onChangeField, fields, errors }) => {
   return (
     <StyledCategories>
       {fields?.other_field && Object.entries(fields?.other_field)?.length > 0
-        ? Object.entries(fields?.other_field)
+        ? [...Object.entries(fields?.other_field)]
             ?.filter(
               (category) => commentsToFields?.object[category[0]]?.length > 0
             )
@@ -164,6 +164,7 @@ export const Categories = ({ data, onChangeField, fields, errors }) => {
             onSelect={() =>
               onChangeField(opt.name, data[opt.name] === "1" ? "0" : "1")
             }
+            error={!!errors.find((e) => e === opt.name)}
           />
         ))}
       </div>

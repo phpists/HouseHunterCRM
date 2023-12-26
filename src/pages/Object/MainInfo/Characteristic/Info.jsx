@@ -44,9 +44,6 @@ export const Info = ({ fields, data, onChangeField, errors }) => {
         {fields?.main_field
           ? Object.entries(fields?.main_field)
               .filter((field) => !notAllowedFields?.find((f) => f === field[0]))
-              ?.filter(
-                (field) => commentsToFields?.object[field[0]]?.length > 0
-              )
               .map((field) => {
                 if (typeof field[1]?.field_option === "object") {
                   return (
@@ -56,8 +53,8 @@ export const Info = ({ fields, data, onChangeField, errors }) => {
                         (opt) => ({ value: opt[0], title: opt[1] })
                       )}
                       onChange={(val) => onChangeField(field[0], val)}
-                      label={commentsToFields?.object[field[0]]}
-                      labelActive={commentsToFields?.object[field[0]]}
+                      label={commentsToFields?.object[field[0]] ?? "-"}
+                      labelActive={commentsToFields?.object[field[0]] ?? "-"}
                       hideArrowDefault
                       error={!!errors.find((e) => e === field[0])}
                     />
@@ -68,7 +65,7 @@ export const Info = ({ fields, data, onChangeField, errors }) => {
                       placeholder="Введіть значення"
                       value={data[field[0]]}
                       onChange={(val) => onChangeField(field[0], val)}
-                      label={commentsToFields?.object[field[0]]}
+                      label={commentsToFields?.object[field[0]] ?? "-"}
                       className="field"
                       grey
                       type={

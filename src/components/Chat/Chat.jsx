@@ -1,15 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Header } from "./Header";
 import { Content } from "./Content";
 import { Footer } from "./Footer/Footer";
+import { useLazyShowChatQuery } from "../../store/selections/selections.api";
+import { handleResponse } from "../../utilits";
 
-export const Chat = ({ onClose, rieltor, onOpenObject, loadingInfoMore }) => {
+export const Chat = ({
+  onClose,
+  rieltor,
+  onOpenObject,
+  loadingInfoMore,
+  requestObjectId,
+}) => {
+  const [showChat] = useLazyShowChatQuery();
   const [data, setData] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
 
   const handleSelectMessage = (msg) =>
     setSelectedMessage(msg === selectedMessage ? null : msg);
+
+  useEffect(() => {
+    showChat(requestObjectId).then((resp) =>
+      handleResponse(resp, () => {
+        console.log(resp);
+      })
+    );
+  }, []);
 
   return (
     <StyledChat>

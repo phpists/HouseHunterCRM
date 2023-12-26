@@ -2,13 +2,15 @@ import styled from "styled-components";
 import { ReactComponent as ChatIcon } from "../../../../assets/images/chat.svg";
 import { useState } from "react";
 import { Chat } from "../../../../components/Chat/Chat";
+import { useParams } from "react-router-dom";
 
 export const ChatButton = () => {
+  const { id } = useParams();
   const [active, setActive] = useState(false);
 
   return (
     <StyledChatButton onClick={() => setActive(!active)} active={active}>
-      {active && <Chat onClose={() => setActive(false)} />}
+      {active && <Chat onClose={() => setActive(false)} requestObjectId={id} />}
       <ChatIcon className="chat-btn-icon" />
     </StyledChatButton>
   );
