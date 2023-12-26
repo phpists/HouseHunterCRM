@@ -27,6 +27,17 @@ export const Main = ({
     }
   }, [errors]);
 
+  const handleChangeComment = (comment) => {
+    onChangeField("general_group", { ...data?.general_group, comment });
+    onChangeErrors(
+      errors?.map((er) =>
+        er.id === "general"
+          ? { ...er, errors: er.errors?.filter((e) => e !== "comment") }
+          : er
+      )
+    );
+  };
+
   return (
     <div
       className="request-card hide-scroll request-main-wrapper"
@@ -34,8 +45,11 @@ export const Main = ({
     >
       <Comment
         value={data?.general_group?.comment}
-        onChange={(comment) =>
-          onChangeField("general_group", { ...data?.general_group, comment })
+        onChange={handleChangeComment}
+        error={
+          !!errors
+            ?.find((er) => er?.id === "general")
+            ?.errors?.find((e) => e === "comment")
         }
       />
       <Content

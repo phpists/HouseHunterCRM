@@ -1,17 +1,12 @@
 import styled from "styled-components";
 import { ReactComponent as EyeIcon } from "../../../assets/images/eye.svg";
 import { ReactComponent as EyeCloseIcon } from "../../../assets/images/eye-close.svg";
-import { useState } from "react";
 
-export const ShowButton = () => {
-  const [active, setActive] = useState(false);
-
-  return (
-    <StyledShowButton onClick={() => setActive(!active)}>
-      {active ? <EyeIcon /> : <EyeCloseIcon />}
-    </StyledShowButton>
-  );
-};
+export const ShowButton = ({ active, onClick }) => (
+  <StyledShowButton onClick={onClick}>
+    {active ? <EyeIcon /> : <EyeCloseIcon />}
+  </StyledShowButton>
+);
 
 const StyledShowButton = styled.button`
   display: flex;

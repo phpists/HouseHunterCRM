@@ -55,6 +55,85 @@ export const selections = createApi({
         }),
       }),
     }),
+    showChat: build.query({
+      query: ({ id_request_group }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "show_chat",
+          mod: "requests",
+          id_request_group,
+        }),
+      }),
+    }),
+    showChatClient: build.query({
+      query: ({ id_request_group }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "show_chat",
+          mod: "notepad_chat_client",
+          id_request_group,
+        }),
+      }),
+    }),
+    addMessage: build.query({
+      query: ({
+        id_request_group,
+        messege,
+        show_object,
+        id_parent,
+        files,
+      }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "add_messege_to_chat",
+          mod: "requests",
+          id_request_group,
+          messege,
+          show_object,
+          id_parent,
+          files,
+        }),
+      }),
+    }),
+    addMessageClient: build.query({
+      query: ({
+        id_request_group,
+        messege,
+        show_object,
+        id_parent,
+        files,
+      }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "add_messege_to_chat_client",
+          mod: "notepad_chat_client",
+          id_request_group,
+          messege,
+          show_object,
+          id_parent,
+          files,
+        }),
+      }),
+    }),
+    getFoldersList: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_list_my_folder",
+          mod: "requests",
+        }),
+      }),
+    }),
   }),
 });
 
@@ -62,4 +141,5 @@ export const {
   useLazyGetSelectionsQuery,
   useLazyAddObjectToSelectionsQuery,
   useLazyHideObjectFromSelectionsQuery,
+  useGetFoldersListQuery,
 } = selections;

@@ -10,6 +10,8 @@ export const ObjectCard = ({
   onFindSimilar,
   isEdit,
   onHide,
+  onAddToSelection,
+  onOpenTagsHistory,
 }) => {
   const handleClick = (e) =>
     e.target.classList.contains("clickable") && onSelect();
@@ -25,6 +27,8 @@ export const ObjectCard = ({
         onFindSimilar={onFindSimilar}
         isEdit={isEdit}
         onHide={onHide}
+        onAddToSelection={onAddToSelection}
+        onOpenTagsHistory={onOpenTagsHistory}
       />
       <MobileContent
         data={data}
@@ -32,6 +36,8 @@ export const ObjectCard = ({
         onFindSimilar={onFindSimilar}
         isEdit={isEdit}
         onHide={onHide}
+        onAddToSelection={onAddToSelection}
+        onOpenTagsHistory={onOpenTagsHistory}
       />
     </StyledObjectCard>
   );

@@ -13,8 +13,10 @@ import {
 } from "../../store/objects/objects.api";
 import { handleGetRange, handleResponse } from "../../utilits";
 import cogoToast from "cogo-toast";
+import { useActions } from "../../hooks/actions";
 
 const INIT_FILTERS = {
+  show_object_hide: "0",
   id_rubric: "",
   id_location: "",
   price_currency: "1",
@@ -41,6 +43,8 @@ export const Selections = () => {
   const [filtersFields, setFilterFields] = useState([]);
   const filterActive = useRef(false);
   const [allCount, setAllCount] = useState(0);
+  const { saveSelectionsCount } = useActions();
+  const [showObjectHide, setShowObjectHide] = useState(undefined);
 
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => {
@@ -76,10 +80,14 @@ export const Selections = () => {
   const handleGetSelections = () =>
     getSelections({
       id_requst_group: id,
-      filters: filterActive.current ? filters : undefined,
+      filters: {
+        ...(filterActive.current ? filters : {}),
+        show_object_hide: showObjectHide,
+      },
     }).then((resp) => {
       setObjects(resp.data?.data ?? []);
       setAllCount(resp.data?.data?.length);
+      saveSelectionsCount(resp?.data?.all_item ?? "0");
     });
 
   useEffect(() => {
@@ -196,6 +204,13 @@ export const Selections = () => {
     setSelected([]);
   };
 
+  const handleToggleHidden = () => {
+    setShowObjectHide(showObjectHide === "1" ? undefined : "1");
+    setFilters(INIT_FILTERS);
+    filterActive.current = false;
+    handleGetSelections();
+  };
+
   return (
     <StyledSelections>
       <Header
@@ -210,6 +225,8 @@ export const Selections = () => {
         onSelectAll={handleSelectAll}
         objectsIds={objects?.map((obj) => obj.id)}
         onHide={handleHideObjects}
+        onToggleHidden={handleToggleHidden}
+        showObjectHide={showObjectHide}
       />
       <List
         data={objects}

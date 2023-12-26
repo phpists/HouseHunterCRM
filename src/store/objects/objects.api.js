@@ -243,6 +243,43 @@ export const objects = createApi({
         }),
       }),
     }),
+    getTagsList: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_tags_label",
+          mod: "system_info",
+        }),
+      }),
+    }),
+    addTagsToObjects: build.query({
+      query: ({ actions, tags, id_object }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "add_tags_to_object",
+          mod: "objects",
+          actions,
+          tags,
+          id_object,
+        }),
+      }),
+    }),
+    showHistoryTags: build.query({
+      query: (id_object) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "show_history_tags",
+          mod: "objects",
+          id_object,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -263,4 +300,7 @@ export const {
   useGetActualObjectsCountQuery,
   useGetOverdueObjectsCountQuery,
   useGetStreetBaseObjectsCountQuery,
+  useGetTagsListQuery,
+  useLazyAddTagsToObjectsQuery,
+  useLazyShowHistoryTagsQuery,
 } = objects;

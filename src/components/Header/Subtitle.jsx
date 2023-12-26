@@ -10,6 +10,7 @@ export const Subtitle = () => {
   const { requestsCount } = useAppSelect((state) => state.requests);
   const { objectsCount } = useAppSelect((state) => state.objects);
   const { callsCount } = useAppSelect((state) => state.calls);
+  const { selectionsCount } = useAppSelect((state) => state.selections);
 
   const handleGetEnding = (val) => (val > 0 && val < 8 ? "а" : "ів");
 
@@ -47,7 +48,7 @@ export const Subtitle = () => {
           : pathname.split("/")[1] === "edit-object"
           ? `Редагування об'єкта`
           : pathname.split("/")[1] === "selections"
-          ? "Понад 1 000 нових"
+          ? `Всього ${selectionsCount} об'єктів`
           : "";
     }
   };

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ProfileField } from "../../../components/ProfileField";
 
-export const Comment = ({ value, onChange }) => {
+export const Comment = ({ value, onChange, error }) => {
   return (
     <StlyedComment>
       <ProfileField
@@ -10,6 +10,7 @@ export const Comment = ({ value, onChange }) => {
         label="Коментар"
         placeholder={"Введіть коментар"}
         textarea
+        error={error}
       />
     </StlyedComment>
   );

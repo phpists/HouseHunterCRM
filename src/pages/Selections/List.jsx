@@ -3,6 +3,8 @@ import { ObjectCard } from "../../components/ObjectCard/ObjectCard";
 import { useGetAccessQuery } from "../../store/auth/auth.api";
 import { handleCheckAccess } from "../../utilits";
 import { Empty } from "../../components/Empty/Empty";
+import { ObjectHistory } from "../../components/ObjectHistory/ObjectHistory";
+import { useState } from "react";
 
 export const List = ({
   data,
@@ -13,26 +15,38 @@ export const List = ({
   onFavorite,
 }) => {
   const { data: accessData } = useGetAccessQuery();
+  const [openHistoryModal, setOpenHistoryModal] = useState(null);
 
   return (
-    <StyledList className="hide-scroll">
-      {data?.length === 0 ? (
-        <Empty />
-      ) : (
-        data.map((d, i) => (
-          <ObjectCard
-            key={i}
-            selected={!!selected.find((j) => j === d?.id)}
-            onSelect={() => onSelect(d?.id)}
-            data={d}
-            onToggleFavoriteStatus={onFavorite ? () => onFavorite(d?.id) : null}
-            onFindSimilar={() => onFindSimilar(d)}
-            isEdit={handleCheckAccess(accessData, "objects", "edit")}
-            onHide={() => onHide(d?.id)}
-          />
-        ))
+    <>
+      {openHistoryModal && (
+        <ObjectHistory
+          onClose={() => setOpenHistoryModal(null)}
+          idObject={openHistoryModal}
+        />
       )}
-    </StyledList>
+      <StyledList className="hide-scroll">
+        {data?.length === 0 ? (
+          <Empty />
+        ) : (
+          data.map((d, i) => (
+            <ObjectCard
+              key={i}
+              selected={!!selected.find((j) => j === d?.id)}
+              onSelect={() => onSelect(d?.id)}
+              data={d}
+              onToggleFavoriteStatus={
+                onFavorite ? () => onFavorite(d?.id) : null
+              }
+              // onFindSimilar={() => onFindSimilar(d)}
+              isEdit={handleCheckAccess(accessData, "objects", "edit")}
+              onHide={() => onHide(d?.id)}
+              onOpenTagsHistory={() => setOpenHistoryModal(d?.id)}
+            />
+          ))
+        )}
+      </StyledList>
+    </>
   );
 };
 

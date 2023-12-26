@@ -10,6 +10,7 @@ import {
 import { handleChangeRange, handleGetLocationAllPath } from "../../../utilits";
 import { useEffect, useRef, useState } from "react";
 import { FieldCard } from "./FieldCard";
+import { ProfileField } from "../../../components/ProfileField";
 
 export const Content = ({
   data,
@@ -69,6 +70,15 @@ export const Content = ({
 
   return (
     <StyledContent>
+      <ProfileField
+        value={data?.general_group?.name}
+        onChange={(name) =>
+          onChangeField("general_group", { ...data?.general_group, name })
+        }
+        label="Назва"
+        placeholder={"Введіть коментар"}
+        className="name-field"
+      />
       <SelectTags
         label="Категорія"
         tags={handleFormatCategoriesValues()}
@@ -106,4 +116,7 @@ const StyledContent = styled.div`
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.1);
   margin-bottom: 15px;
+  .name-field {
+    margin-bottom: 15px;
+  }
 `;

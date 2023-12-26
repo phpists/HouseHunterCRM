@@ -3,6 +3,9 @@ import { ObjectCard } from "../../components/ObjectCard/ObjectCard";
 import { Empty } from "../../components/Empty/Empty";
 import { useGetAccessQuery } from "../../store/auth/auth.api";
 import { handleCheckAccess } from "../../utilits";
+import { useState } from "react";
+import { AddToSelections } from "./AddToSelections";
+import { ObjectHistory } from "../../components/ObjectHistory/ObjectHistory";
 
 export const List = ({
   selected,
@@ -12,25 +15,43 @@ export const List = ({
   onFindSimilar,
 }) => {
   const { data: accessData } = useGetAccessQuery();
+  const [openAddModal, setOpenAddModal] = useState(null);
+  const [openHistoryModal, setOpenHistoryModal] = useState(null);
 
   return (
-    <StyledList className="hide-scroll">
-      {data?.length === 0 ? (
-        <Empty />
-      ) : (
-        data.map((d, i) => (
-          <ObjectCard
-            key={i}
-            selected={!!selected.find((j) => j === d?.id)}
-            onSelect={() => onSelect(d?.id)}
-            data={d}
-            onToggleFavoriteStatus={() => toggleFavoriteStatus(d?.id)}
-            onFindSimilar={() => onFindSimilar(d)}
-            isEdit={handleCheckAccess(accessData, "objects", "edit")}
-          />
-        ))
+    <>
+      {openHistoryModal && (
+        <ObjectHistory
+          onClose={() => setOpenHistoryModal(null)}
+          idObject={openHistoryModal}
+        />
       )}
-    </StyledList>
+      {openAddModal && (
+        <AddToSelections
+          onClose={() => setOpenAddModal(false)}
+          idObject={openAddModal}
+        />
+      )}
+      <StyledList className="hide-scroll">
+        {data?.length === 0 ? (
+          <Empty />
+        ) : (
+          data.map((d, i) => (
+            <ObjectCard
+              key={i}
+              selected={!!selected.find((j) => j === d?.id)}
+              onSelect={() => onSelect(d?.id)}
+              data={d}
+              onToggleFavoriteStatus={() => toggleFavoriteStatus(d?.id)}
+              onFindSimilar={() => onFindSimilar(d)}
+              isEdit={handleCheckAccess(accessData, "objects", "edit")}
+              onAddToSelection={() => setOpenAddModal(d?.id)}
+              onOpenTagsHistory={() => setOpenHistoryModal(d?.id)}
+            />
+          ))
+        )}
+      </StyledList>
+    </>
   );
 };
 

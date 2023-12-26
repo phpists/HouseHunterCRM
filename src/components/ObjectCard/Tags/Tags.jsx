@@ -3,50 +3,73 @@ import { SelectTags } from "../../SelectTags/SelectTags";
 import { ProfileField } from "../../ProfileField";
 import { useState } from "react";
 import { useEffect } from "react";
+import {
+  useGetCommentsToFieldsQuery,
+  useGetTagsListQuery,
+  useLazyAddTagsToObjectsQuery,
+} from "../../../store/objects/objects.api";
+import { handleResponse } from "../../../utilits";
 
 export const Tags = ({ className, data }) => {
+  const { data: tagsList } = useGetTagsListQuery();
+  const { data: commentsToFields } = useGetCommentsToFieldsQuery();
+  const [addTag] = useLazyAddTagsToObjectsQuery();
   const [tags, setTags] = useState([]);
 
-  //   label_without_animals
-  // :
-  // "0"
-  // label_without_children
-  // :
-  // "0"
-  // label_without_foreigners
-  // :
-  // "0"
-  // label_without_students
-  // :
+  const handleSelect = (val) => {
+    const isExist = !!tags?.find((t) => t.value === val);
 
-  const handleFormatTags = () => {
-    const formatedData = data
-      ? [
-          ...(data?.label_without_animals === "1"
-            ? [{ title: "Без тварин", value: "" }]
-            : []),
-          ...(data?.label_without_children === "1"
-            ? [{ title: "Без дітей", value: "" }]
-            : []),
-          ...(data?.label_without_foreigners === "1"
-            ? [{ title: "Без іноземців", value: "" }]
-            : []),
-          ...(data?.label_without_students === "1"
-            ? [{ title: "Без студентів", value: "" }]
-            : []),
-        ]
-      : [];
+    addTag({
+      actions: isExist ? "0" : "1",
+      tags: val,
+      id_object: data?.id,
+    }).then((resp) =>
+      handleResponse(resp, () => {
+        setTags(
+          isExist
+            ? tags?.filter((t) => t.value !== val)
+            : [
+                ...tags,
+                { title: commentsToFields?.object[val] ?? "-", value: val },
+              ]
+        );
+      })
+    );
+  };
 
-    setTags(formatedData);
+  const handleGetInitTags = () => {
+    let initTags = [];
+
+    tagsList?.data?.forEach((tag) => {
+      if (data[tag] === "1") {
+        initTags.push({
+          title: commentsToFields?.object[tag] ?? "-",
+          value: tag,
+        });
+      }
+    });
+
+    setTags(initTags);
   };
 
   useEffect(() => {
-    handleFormatTags();
-  }, [data]);
+    if (data && tagsList && commentsToFields) {
+      handleGetInitTags();
+    }
+  }, [data, tagsList, commentsToFields]);
 
   return (
     <StyledTags className={`flex flex-col hide-scroll clickable ${className}`}>
-      <SelectTags label="Теги" showTags tags={tags} viewOnly />
+      <SelectTags
+        label="Теги"
+        showTags
+        tags={tags}
+        options={tagsList?.data?.map((value) => ({
+          title: commentsToFields?.object[value] ?? "-",
+          value,
+        }))}
+        onChange={handleSelect}
+      />
       {data?.comment && (
         <ProfileField
           label="Коментар"

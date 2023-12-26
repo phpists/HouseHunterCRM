@@ -24,6 +24,8 @@ export const Header = ({
   onSelectAll,
   objectsIds,
   onHide,
+  onToggleHidden,
+  showObjectHide,
 }) => {
   const { id } = useParams();
   const [addToFavorites] = useLazyAddToFavoritesQuery();
@@ -52,8 +54,11 @@ export const Header = ({
         <Selected selectedCount={selectedCount} />
         <div className="main-header-content-btns flex items-center">
           <div className="btns flex items-center">
-            <ShowButton />
-            <AddButton onRefresh={onRefresh} objectsIds={objectsIds} />
+            <ShowButton
+              active={showObjectHide === "1"}
+              onClick={onToggleHidden}
+            />
+            {/* <AddButton onRefresh={onRefresh} objectsIds={objectsIds} /> */}
             <CopyLink className="copy-btn" />
           </div>
           <div className="action-btns flex items-center">

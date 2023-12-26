@@ -9,6 +9,8 @@ export const Dropdown = ({
   onFindSimilar,
   isEdit,
   onHide,
+  onAddToSelection,
+  onOpenTagsHistory,
 }) => (
   <StyledDropdown className="dropdown">
     {onToggleFavoriteStatus && (
@@ -27,12 +29,22 @@ export const Dropdown = ({
         <span>Знайти схожі</span>
       </div>
     ) : null}
-    <div className="flex items-center justify-between">
-      <span>Завантажити</span>
-    </div>
-    <div className="flex items-center justify-between">
-      <span>Історія тегів</span>
-    </div>
+    {onOpenTagsHistory && (
+      <div
+        className="flex items-center justify-between"
+        onClick={onOpenTagsHistory}
+      >
+        <span>Історія тегів</span>
+      </div>
+    )}
+    {onAddToSelection && (
+      <div
+        className="flex items-center justify-between"
+        onClick={onAddToSelection}
+      >
+        <span>Добавити в підбірку</span>
+      </div>
+    )}
     {onHide && (
       <div className="flex items-center justify-between" onClick={onHide}>
         <span>Приховати</span>

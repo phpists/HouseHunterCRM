@@ -15,6 +15,8 @@ export const MobileContent = ({
   onFindSimilar,
   isEdit,
   onHide,
+  onAddToSelection,
+  onOpenTagsHistory,
 }) => (
   <StyledMobileContent>
     <Header />
@@ -33,6 +35,8 @@ export const MobileContent = ({
       onFindSimilar={onFindSimilar}
       isEdit={isEdit}
       onHide={onHide}
+      onAddToSelection={onAddToSelection}
+      onOpenTagsHistory={onOpenTagsHistory}
     />
   </StyledMobileContent>
 );

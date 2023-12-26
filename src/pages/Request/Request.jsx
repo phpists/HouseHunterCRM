@@ -37,6 +37,7 @@ export const REQUEST_INIT = {
     tags_student: "0",
     tags_foreigners: "0",
     structure: "0",
+    comment: "",
   },
 };
 
@@ -204,6 +205,12 @@ export const Request = () => {
     ) {
       errorData.push({ id: "general", errors: ["dt_deadline"] });
       cogoToast.error("Вкажіть дату дедлайну", {
+        hideAfter: 3,
+        position: "top-right",
+      });
+    } else if (data?.general_group?.comment?.length === 0) {
+      errorData.push({ id: "general", errors: ["comment"] });
+      cogoToast.error("Введіть коментар", {
         hideAfter: 3,
         position: "top-right",
       });

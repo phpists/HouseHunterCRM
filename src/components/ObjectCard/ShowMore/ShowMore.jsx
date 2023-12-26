@@ -11,6 +11,8 @@ export const ShowMore = ({
   onFindSimilar,
   isEdit,
   onHide,
+  onAddToSelection,
+  onOpenTagsHistory,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
 
@@ -25,6 +27,8 @@ export const ShowMore = ({
         onFindSimilar={onFindSimilar}
         isEdit={isEdit}
         onHide={onHide}
+        onAddToSelection={onAddToSelection}
+        onOpenTagsHistory={onOpenTagsHistory}
       />
     </StyledShowMore>
   );
