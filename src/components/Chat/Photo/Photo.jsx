@@ -49,7 +49,7 @@ export const Photo = ({
           isSelected={isSelected}
         />
       )}
-      {!text && <Time time={getHours(date)} />}
+      {!text && <Time time={date} />}
     </StyledPhoto>
   );
 };

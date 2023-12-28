@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const Tag = () => <StyledTag>+15 нових</StyledTag>;
+export const Tag = ({ count }) => (
+  <StyledTag> {Number(count) > 99 ? "+99" : count} нових</StyledTag>
+);
 
 const StyledTag = styled.div`
   border-radius: 5px;

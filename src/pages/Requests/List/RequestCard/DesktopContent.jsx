@@ -13,6 +13,7 @@ export const DesktopContent = ({
   onFavorite,
   isEdit,
   isDelete,
+  onOpenChat,
 }) => (
   <StyledDesktopContent>
     <Client
@@ -36,7 +37,7 @@ export const DesktopContent = ({
       storeyMax={data?.address_storey_max}
     />
     <Comment comment={data?.comment} />
-    <Objects idGroup={data?.id_group} />
+    <Objects data={data} idGroup={data?.id_group} onOpenChat={onOpenChat} />
     <Actions
       id={id}
       clientId={data?.General_field_group?.id_client}

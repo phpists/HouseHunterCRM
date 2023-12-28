@@ -2,36 +2,38 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import { Input } from "./Input";
 import { SendButton } from "./SendButton";
+import { useLazyAddMessageQuery } from "../../../store/selections/selections.api";
+import { handleResponse } from "../../../utilits";
 
 export const Footer = ({
   onRefreshData,
   selectedMessage,
   onCloseSelectedMessage,
   rieltorName,
+  requestObjectId,
 }) => {
+  const [addMessage] = useLazyAddMessageQuery();
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSendMessage = () => {
-    if (!loading && value.length > 0) {
+  const handleSendMessage = (img) => {
+    if (!loading && (value.length > 0 || img)) {
       setLoading(true);
-      const parentId = selectedMessage?.id.toString();
-      //   if (parentId?.length > 0) {
-      //     sendMessage(value, undefined, undefined, undefined, parentId).then(
-      //       (resp) => {
-      //         setValue("");
-      //         onRefreshData();
-      //         setLoading(false);
-      //         onCloseSelectedMessage();
-      //       }
-      //     );
-      //   } else {
-      //     sendMessage(value).then((resp) => {
-      //       setValue("");
-      //       onRefreshData();
-      //       setLoading(false);
-      //     });
-      //   }
+      const id_parent = selectedMessage?.id.toString();
+
+      addMessage({
+        id_request_group: requestObjectId,
+        messege: value,
+        show_object: "",
+        id_parent,
+        img,
+      }).then((resp) =>
+        handleResponse(resp, () => {
+          onRefreshData();
+          setLoading(false);
+          setValue("");
+        })
+      );
     }
   };
 
@@ -48,6 +50,7 @@ export const Footer = ({
         selectedMessage={selectedMessage}
         onCloseSelectedMessage={onCloseSelectedMessage}
         rieltorName={rieltorName}
+        onSendFile={handleSendMessage}
       />
       <SendButton onSend={handleSendMessage} loading={loading} />
     </StyledFooter>

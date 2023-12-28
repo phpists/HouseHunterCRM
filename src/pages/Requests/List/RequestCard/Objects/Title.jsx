@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
-export const Title = () => (
-  <StyledTitle className="clickable">645 об'єктів</StyledTitle>
+export const Title = ({ count = 0 }) => (
+  <StyledTitle className="clickable">
+    {Number(count) > 99 ? "+99" : count} об'єктів
+  </StyledTitle>
 );
 
 const StyledTitle = styled.div`

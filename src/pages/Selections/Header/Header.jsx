@@ -59,7 +59,7 @@ export const Header = ({
               onClick={onToggleHidden}
             />
             {/* <AddButton onRefresh={onRefresh} objectsIds={objectsIds} /> */}
-            <CopyLink className="copy-btn" />
+            <CopyLink className="copy-btn" link={window.location.href} />
           </div>
           <div className="action-btns flex items-center">
             <ChatButton />
@@ -102,13 +102,6 @@ export const Header = ({
 const StyledHeader = styled.div`
   margin-bottom: 20px;
 
-  .copy-btn {
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.18);
-    width: 32px;
-    height: 32px;
-    flex-shrink: 0;
-  }
   .action-btns {
     margin: 0 0px 0 40px;
   }

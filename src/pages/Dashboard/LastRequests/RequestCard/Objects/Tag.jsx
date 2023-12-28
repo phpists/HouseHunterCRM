@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
-export const Tag = () => (
-  <StyledTag className="flex items-center ">+15 нових</StyledTag>
+export const Tag = ({ count }) => (
+  <StyledTag className="flex items-center ">
+    {Number(count) > 99 ? "+99" : count} нових
+  </StyledTag>
 );
 
 const StyledTag = styled.div`

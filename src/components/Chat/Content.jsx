@@ -3,18 +3,12 @@ import { Message } from "./Message/Message";
 import { Photo } from "./Photo/Photo";
 import { useEffect, useRef } from "react";
 import noPhoto from "../../assets/images/no-photo.svg";
-import { formatNumber } from "../../utilits";
+import { formatNumber, handleFormatDate } from "../../utilits";
+import { useAppSelect } from "../../hooks/redux";
 
-export const Content = ({
-  open,
-  data,
-  onOpenObject,
-  loadingInfoMore,
-  selected,
-  onSelect,
-  rieltorName,
-}) => {
+export const Content = ({ open, data, selected, onSelect, rieltorName }) => {
   const contentRef = useRef(null);
+  const { user } = useAppSelect((state) => state.auth);
 
   const handleScrollToMessage = (id, toBottom) => {
     if (contentRef.current) {
@@ -65,7 +59,7 @@ export const Content = ({
     >
       {data?.length > 0
         ? data.map((msg, i) => {
-            if (msg?.messege?.title || msg?.messege?.img) {
+            if (msg?.messege?.title || msg?.messege?.img?.img) {
               const text =
                 msg?.messege?.title || msg?.messege?.price
                   ? `${msg?.messege?.title ?? "-"}, ${formatNumber(
@@ -76,31 +70,20 @@ export const Content = ({
                 <Photo
                   key={i}
                   photo={
-                    msg?.messege?.img?.length > 0 ? msg?.messege?.img : noPhoto
+                    msg?.messege?.img?.img?.length > 0
+                      ? msg?.messege?.img?.img
+                      : noPhoto
                   }
                   text={text}
-                  date={msg?.date}
-                  isOwner={msg?.user === 0}
-                  onOpenObject={
-                    msg?.messege?.id_object_hash &&
-                    msg?.messege?.type &&
-                    !loadingInfoMore
-                      ? () =>
-                          onOpenObject(
-                            msg?.messege?.id_object_hash,
-                            msg?.messege?.type,
-                            msg?.messege?.state
-                          )
-                      : null
-                  }
-                  loading={loadingInfoMore === msg?.messege?.id_object_hash}
+                  date={handleFormatDate(msg?.time * 1000)}
+                  isOwner={msg?.id_user === user?.id}
                   onSelect={() =>
                     msg.id === selected?.id
                       ? onSelect(null)
-                      : onSelect({ ...msg, text })
+                      : onSelect({ ...msg, text, id: i })
                   }
-                  isSelected={selected?.id === msg.id}
-                  id={msg.id}
+                  isSelected={selected?.id === i}
+                  id={i}
                   idParent={msg?.id_parent}
                   onScrollToResponseMessage={() =>
                     handleScrollToMessage(msg?.id_parent)
@@ -112,8 +95,8 @@ export const Content = ({
                 <Message
                   key={i}
                   text={msg?.messege ?? ""}
-                  date={msg?.date}
-                  isOwner={msg?.user === 0}
+                  date={handleFormatDate(msg?.time * 1000)}
+                  isOwner={msg?.id_user === user?.id}
                   first={
                     (!data[i - 1]?.messege?.image &&
                       !data[1 + i]?.messege?.image &&
@@ -138,20 +121,20 @@ export const Content = ({
                     !data[i - 1]?.messege?.image &&
                     !data[1 + i]?.messege?.image
                   }
-                  isSelected={selected?.id === msg.id}
+                  isSelected={selected?.id === i}
                   onSelect={() =>
-                    msg.id === selected?.id
+                    i === selected?.id
                       ? onSelect(null)
-                      : onSelect({ ...msg, text: msg?.messege ?? "" })
+                      : onSelect({ ...msg, text: msg?.messege ?? "", id: i })
                   }
                   idParent={msg?.id_parent}
                   parentMsg={data.find(
-                    (m) => m.id.toString() === msg?.id_parent?.toString()
+                    (m, j) => j.toString() === msg?.id_parent?.toString()
                   )}
                   onScrollToResponseMessage={() =>
                     handleScrollToMessage(msg?.id_parent)
                   }
-                  id={msg.id}
+                  id={i}
                   rieltorName={rieltorName}
                 />
               );
@@ -173,7 +156,7 @@ const StyledContent = styled.div`
   ${({ selected }) => selected && "padding-bottom: 61px;"}
   div {
     &::after {
-      background: #454545;
+      background: #3d3d3d;
     }
   }
 

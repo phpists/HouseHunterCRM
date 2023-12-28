@@ -11,6 +11,7 @@ export const RequestCard = ({
   onFavorite,
   isEdit,
   isDelete,
+  onOpenChat,
 }) => {
   const handleClick = (e) =>
     e.target.classList.contains("clickable") && onSelect();
@@ -28,6 +29,7 @@ export const RequestCard = ({
         onFavorite={onFavorite}
         isEdit={isEdit}
         isDelete={isDelete}
+        onOpenChat={onOpenChat}
       />
       <MobileContent
         data={data}
@@ -36,6 +38,7 @@ export const RequestCard = ({
         onFavorite={onFavorite}
         isEdit={isEdit}
         isDelete={isDelete}
+        onOpenChat={onOpenChat}
       />
     </StyledRequestCard>
   );

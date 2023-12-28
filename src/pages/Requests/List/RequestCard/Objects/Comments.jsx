@@ -1,10 +1,13 @@
 import styled from "styled-components";
 import chatIcon from "../../../../../assets/images/chat.svg";
 
-export const Comments = () => (
-  <StyledComments className="flex items-center justify-center">
+export const Comments = ({ onClick }) => (
+  <StyledComments
+    className="flex items-center justify-center"
+    onClick={onClick}
+  >
     <img src={chatIcon} alt="" />
-    <div className="flex align-center justify-center">9</div>
+    {/* <div className="flex align-center justify-center">9</div> */}
   </StyledComments>
 );
 

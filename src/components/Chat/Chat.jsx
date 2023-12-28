@@ -6,13 +6,7 @@ import { Footer } from "./Footer/Footer";
 import { useLazyShowChatQuery } from "../../store/selections/selections.api";
 import { handleResponse } from "../../utilits";
 
-export const Chat = ({
-  onClose,
-  rieltor,
-  onOpenObject,
-  loadingInfoMore,
-  requestObjectId,
-}) => {
+export const Chat = ({ onClose, rieltor, requestObjectId }) => {
   const [showChat] = useLazyShowChatQuery();
   const [data, setData] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
@@ -20,12 +14,17 @@ export const Chat = ({
   const handleSelectMessage = (msg) =>
     setSelectedMessage(msg === selectedMessage ? null : msg);
 
-  useEffect(() => {
+  const handleGetChat = () => {
     showChat(requestObjectId).then((resp) =>
       handleResponse(resp, () => {
-        console.log(resp);
+        setData(resp?.data?.data);
+        setSelectedMessage(null);
       })
     );
+  };
+
+  useEffect(() => {
+    handleGetChat();
   }, []);
 
   return (
@@ -33,17 +32,16 @@ export const Chat = ({
       <Header onCloseChat={onClose} rieltor={rieltor} />
       <Content
         data={data}
-        onOpenObject={onOpenObject}
-        loadingInfoMore={loadingInfoMore}
         selected={selectedMessage}
         onSelect={handleSelectMessage}
         rieltorName={rieltor?.name ?? "Рієлтор"}
       />
       <Footer
-        onRefreshData={() => null}
+        onRefreshData={handleGetChat}
         selectedMessage={selectedMessage}
         onCloseSelectedMessage={() => setSelectedMessage(null)}
         rieltorName={rieltor?.name ?? "Рієлтор"}
+        requestObjectId={requestObjectId}
       />
     </StyledChat>
   );

@@ -7,7 +7,7 @@ import { OpenButton } from "./OpenButton";
 import { Buttons } from "./Buttons";
 import { useNavigate } from "react-router-dom";
 
-export const Objects = ({ idGroup }) => {
+export const Objects = ({ idGroup, onOpenChat, data }) => {
   const navigate = useNavigate();
 
   return (
@@ -18,10 +18,10 @@ export const Objects = ({ idGroup }) => {
         <div className="clickable objects-info-wrapper">
           <div className="flex items-center justify-between clickable">
             <div className="clickable">
-              <Title />
-              <Tag />
+              <Title count={data?.General_field_group?.count_object} />
+              <Tag count={data?.General_field_group?.count_new_object} />
             </div>
-            <Buttons />
+            <Buttons onOpenChat={onOpenChat} idGroup={idGroup} />
           </div>
           <OpenButton onClick={() => navigate(`/selections/${idGroup}`)} />
         </div>

@@ -3,11 +3,17 @@ import linkIcon from "../assets/images/link.svg";
 import checkIcon from "../assets/images/circle-green-check.svg";
 import { useState } from "react";
 
-export const CopyLink = ({ className }) => {
+export const CopyLink = ({ className, link }) => {
   const [active, setActive] = useState(false);
 
   const handleCopy = () => {
     setActive(true);
+    const linkElem = document.createElement("input");
+    linkElem.value = link;
+    document.body.appendChild(linkElem);
+    linkElem.select();
+    document.execCommand("copy");
+    document.body.removeChild(linkElem);
     setTimeout(() => setActive(false), 1500);
   };
 

@@ -80,47 +80,39 @@ export const selections = createApi({
       }),
     }),
     addMessage: build.query({
-      query: ({
-        id_request_group,
-        messege,
-        show_object,
-        id_parent,
-        files,
-      }) => ({
+      query: ({ id_request_group, messege, show_object, id_parent, img }) => ({
         url: "",
         method: "POST",
         headers: headers(),
-        body: handleToFormData({
-          action: "add_messege_to_chat",
-          mod: "requests",
-          id_request_group,
-          messege,
-          show_object,
-          id_parent,
-          files,
-        }),
+        body: handleToFormData(
+          {
+            action: "add_messege_to_chat",
+            mod: "requests",
+            id_request_group,
+            messege,
+            show_object,
+            id_parent,
+          },
+          { img }
+        ),
       }),
     }),
     addMessageClient: build.query({
-      query: ({
-        id_request_group,
-        messege,
-        show_object,
-        id_parent,
-        files,
-      }) => ({
+      query: ({ id_request_group, messege, show_object, id_parent, img }) => ({
         url: "",
         method: "POST",
         headers: headers(),
-        body: handleToFormData({
-          action: "add_messege_to_chat_client",
-          mod: "notepad_chat_client",
-          id_request_group,
-          messege,
-          show_object,
-          id_parent,
-          files,
-        }),
+        body: handleToFormData(
+          {
+            action: "add_messege_to_chat_client",
+            mod: "notepad_chat_client",
+            id_request_group,
+            messege,
+            show_object,
+            id_parent,
+          },
+          { img }
+        ),
       }),
     }),
     getFoldersList: build.query({

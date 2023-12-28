@@ -1,14 +1,13 @@
 import { styled } from "styled-components";
 import { ReactComponent as CheckIcon } from "../../assets/images/check-check.svg";
 import replyIcon from "../../assets/images/reply.svg";
-import { getHours } from "../../utilits";
 
 export const MessageFooter = ({ date, isOwner, isSelected }) => (
   <StyledMessageFooter
     className="flex items-center justify-end message"
     isOwner={isOwner}
   >
-    {getHours(date)}
+    {date}
     {isSelected ? (
       <img src={replyIcon} alt="" className="message" />
     ) : (

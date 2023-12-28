@@ -7,6 +7,7 @@ import cogoToast from "cogo-toast";
 import { Confirm } from "../../../components/Confirm/Confirm";
 import { Empty } from "../../../components/Empty/Empty";
 import { useGetAccessQuery } from "../../../store/auth/auth.api";
+import { Chat } from "../../../components/Chat/Chat";
 
 export const List = ({
   selected,
@@ -19,6 +20,8 @@ export const List = ({
   const [deleteRequest] = useLazyDeleteRequestQuery();
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedChat, setSelectedChat] = useState(null);
+
   const { data: accessData } = useGetAccessQuery();
 
   const handleCancelDeleteRequest = () => {
@@ -52,6 +55,13 @@ export const List = ({
           onSubmit={handleDeleteRequest}
         />
       )}
+      {selectedChat && (
+        <Chat
+          onClose={() => setSelectedChat(false)}
+          requestObjectId={selectedChat}
+        />
+      )}
+
       <StyledList className="hide-scroll" ref={innerRef}>
         {data && Object.entries(data)?.length === 0 ? (
           <Empty />
@@ -69,6 +79,7 @@ export const List = ({
                 onFavorite={onFavorite}
                 isEdit={handleCheckAccess(accessData, "requests", "edit")}
                 isDelete={handleCheckAccess(accessData, "requests", "delete")}
+                onOpenChat={() => setSelectedChat(d[0])}
               />
             );
           })

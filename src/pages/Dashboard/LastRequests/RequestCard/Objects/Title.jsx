@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const Title = () => <StyledTitle>645 об'єктів</StyledTitle>;
+export const Title = ({ count }) => (
+  <StyledTitle>{Number(count) > 99 ? "+99" : count} об'єктів</StyledTitle>
+);
 
 const StyledTitle = styled.div`
   color: #fff;

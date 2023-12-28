@@ -9,10 +9,12 @@ export const ChatButton = () => {
   const [active, setActive] = useState(false);
 
   return (
-    <StyledChatButton onClick={() => setActive(!active)} active={active}>
+    <>
       {active && <Chat onClose={() => setActive(false)} requestObjectId={id} />}
-      <ChatIcon className="chat-btn-icon" />
-    </StyledChatButton>
+      <StyledChatButton onClick={() => setActive(!active)} active={active}>
+        <ChatIcon className="chat-btn-icon" />
+      </StyledChatButton>
+    </>
   );
 };
 

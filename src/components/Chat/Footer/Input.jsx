@@ -12,6 +12,7 @@ export const Input = ({
   selectedMessage,
   onCloseSelectedMessage,
   rieltorName,
+  onSendFile,
 }) => {
   const fileInputRef = useRef(null);
 
@@ -25,6 +26,7 @@ export const Input = ({
     const file = e?.target?.files[0];
 
     if (file) {
+      onSendFile(file);
     }
   };
 

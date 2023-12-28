@@ -13,6 +13,7 @@ export const MobileContent = ({
   onFavorite,
   isDelete,
   isEdit,
+  onOpenChat,
 }) => (
   <StyledMobileContent className="flex ">
     <div className="w-full">
@@ -42,7 +43,7 @@ export const MobileContent = ({
           storeyMax={data?.address_storey_max}
         />
         <Comment comment={data?.comment} />
-        <Objects idGroup={data?.id_group} />
+        <Objects data={data} idGroup={data?.id_group} onOpenChat={onOpenChat} />
       </div>
     </div>
     <Actions

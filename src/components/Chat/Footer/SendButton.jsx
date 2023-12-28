@@ -6,7 +6,7 @@ export const SendButton = ({ onSend, loading }) => (
     className={`flex items-center justify-center ${
       loading && "cursor-not-allowed opacity-90"
     }`}
-    onClick={onSend}
+    onClick={() => onSend()}
   >
     <img src={sendIcon} alt="" />
   </StyledSendButton>
