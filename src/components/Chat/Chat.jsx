@@ -35,6 +35,7 @@ export const Chat = ({ onClose, rieltor, requestObjectId }) => {
         selected={selectedMessage}
         onSelect={handleSelectMessage}
         rieltorName={rieltor?.name ?? "Рієлтор"}
+        requestObjectId={requestObjectId}
       />
       <Footer
         onRefreshData={handleGetChat}

@@ -93,7 +93,7 @@ export const selections = createApi({
             show_object,
             id_parent,
           },
-          { img }
+          img ? { img } : null
         ),
       }),
     }),

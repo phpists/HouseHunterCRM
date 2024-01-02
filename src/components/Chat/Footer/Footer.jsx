@@ -2,7 +2,10 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import { Input } from "./Input";
 import { SendButton } from "./SendButton";
-import { useLazyAddMessageQuery } from "../../../store/selections/selections.api";
+import {
+  useLazyAddMessageClientQuery,
+  useLazyAddMessageQuery,
+} from "../../../store/selections/selections.api";
 import { handleResponse } from "../../../utilits";
 
 export const Footer = ({
@@ -13,6 +16,7 @@ export const Footer = ({
   requestObjectId,
 }) => {
   const [addMessage] = useLazyAddMessageQuery();
+  //   const [addMessage] = useLazyAddMessageClientQuery();
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -23,10 +27,10 @@ export const Footer = ({
 
       addMessage({
         id_request_group: requestObjectId,
-        messege: value,
+        ...(img ? { img } : { messege: value }),
         show_object: "",
         id_parent,
-        img,
+        ...(img ? { img } : {}),
       }).then((resp) =>
         handleResponse(resp, () => {
           onRefreshData();

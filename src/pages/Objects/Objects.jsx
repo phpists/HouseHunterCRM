@@ -12,6 +12,7 @@ import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
 import { handleGetRange, handleResponse } from "../../utilits";
 import cogoToast from "cogo-toast";
+import { useParams } from "react-router-dom";
 
 const INIT_FILTERS = {
   id_rubric: "",
@@ -29,6 +30,7 @@ const INIT_FILTERS = {
 };
 
 export const Objects = () => {
+  const { id } = useParams();
   const [getAllObjects] = useLazyGetAllObjectsQuery();
   const [getObjectsCount] = useLazyGetObjectsCountQuery();
   const [getRubricField] = useLazyGetRubricFieldsQuery();
@@ -73,17 +75,18 @@ export const Objects = () => {
         : [...selected, index]
     );
 
-  const handleGetObjectsCount = () => {
-    getObjectsCount().then((resp) => saveObjectsCount(resp?.data?.count ?? 0));
-  };
-
   const handleGetObjects = () => {
     let data = { only_favorite: isFavorite ?? undefined };
 
     if (filterActive.current) {
       data = {
         ...data,
-        filters,
+        filters: { ...(id ? { id_hash: id } : {}), ...filters },
+      };
+    } else if (id) {
+      data = {
+        ...data,
+        filters: { ...(id ? { id_hash: id } : {}) },
       };
     }
 
@@ -97,6 +100,7 @@ export const Objects = () => {
               ? Object.entries(resp?.data?.objects)?.map((obj) => obj[1])
               : []
           );
+          saveObjectsCount(resp?.data?.all_item);
         },
         () => setObjects([]),
         true
@@ -106,7 +110,6 @@ export const Objects = () => {
 
   useEffect(() => {
     handleGetObjects();
-    handleGetObjectsCount();
     // eslint-disable-next-line
   }, []);
 
@@ -128,7 +131,7 @@ export const Objects = () => {
   const handleDeleteSuccess = () => {
     setObjects(objects.filter((obj) => !selected.find((s) => s === obj.id)));
     setSelected([]);
-    handleGetObjectsCount();
+    handleGetObjects();
   };
 
   useEffect(() => {

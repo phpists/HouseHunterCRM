@@ -70,15 +70,6 @@ export const Content = ({
 
   return (
     <StyledContent>
-      <ProfileField
-        value={data?.general_group?.name}
-        onChange={(name) =>
-          onChangeField("general_group", { ...data?.general_group, name })
-        }
-        label="Назва"
-        placeholder={"Введіть коментар"}
-        className="name-field"
-      />
       <SelectTags
         label="Категорія"
         tags={handleFormatCategoriesValues()}

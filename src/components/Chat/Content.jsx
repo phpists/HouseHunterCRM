@@ -59,7 +59,11 @@ export const Content = ({ open, data, selected, onSelect, rieltorName }) => {
     >
       {data?.length > 0
         ? data.map((msg, i) => {
-            if (msg?.messege?.title || msg?.messege?.img?.img) {
+            if (
+              msg?.messege?.title ||
+              msg?.messege?.img?.img ||
+              msg?.messege?.object
+            ) {
               const text =
                 msg?.messege?.title || msg?.messege?.price
                   ? `${msg?.messege?.title ?? "-"}, ${formatNumber(
@@ -70,7 +74,9 @@ export const Content = ({ open, data, selected, onSelect, rieltorName }) => {
                 <Photo
                   key={i}
                   photo={
-                    msg?.messege?.img?.img?.length > 0
+                    msg?.messege?.object?.photo?.length > 0
+                      ? msg?.messege?.object?.photo
+                      : msg?.messege?.img?.img?.length > 0
                       ? msg?.messege?.img?.img
                       : noPhoto
                   }
@@ -87,6 +93,12 @@ export const Content = ({ open, data, selected, onSelect, rieltorName }) => {
                   idParent={msg?.id_parent}
                   onScrollToResponseMessage={() =>
                     handleScrollToMessage(msg?.id_parent)
+                  }
+                  isObject={!!msg?.messege?.object?.id}
+                  onOpenObject={() =>
+                    msg?.messege?.object?.id
+                      ? window.open(`/#/objects/${msg?.messege?.object?.id}`)
+                      : null
                   }
                 />
               );

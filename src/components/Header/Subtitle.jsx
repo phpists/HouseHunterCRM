@@ -49,6 +49,8 @@ export const Subtitle = () => {
           ? `Редагування об'єкта`
           : pathname.split("/")[1] === "selections"
           ? `Всього ${selectionsCount} об'єктів`
+          : pathname.split("/")[1] === "objects"
+          ? ""
           : "";
     }
   };

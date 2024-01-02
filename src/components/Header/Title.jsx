@@ -43,6 +43,8 @@ export const Title = () => {
           ? "Картка об’єкта"
           : pathname.split("/")[1] === "selections"
           ? "Підбірки"
+          : pathname.split("/")[1] === "objects"
+          ? "Об'єкти"
           : "";
     }
   };

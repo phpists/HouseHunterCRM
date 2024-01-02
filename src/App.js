@@ -106,6 +106,9 @@ export const App = () => {
               {handleCheckAccess(data, "objects", "view") && (
                 <Route path="/objects" element={<Objects />} />
               )}
+              {handleCheckAccess(data, "objects", "view") && (
+                <Route path="/objects/:id" element={<Objects />} />
+              )}
               {handleCheckAccess(data, "requests", "view") && (
                 <Route path="/create-request/:clientId" element={<Request />} />
               )}

@@ -18,6 +18,7 @@ export const Photo = ({
   isSelected,
   onSelect,
   id,
+  isObject,
 }) => {
   const handleOpen = (e) => {
     if (!e.target.classList.contains("image") || !onOpenObject) {
@@ -30,17 +31,17 @@ export const Photo = ({
       photo={photo ?? noPhoto}
       text={text}
       isOwner={isOwner}
-      className={`${!!onOpenObject && "cursor-pointer"}`}
+      className={`${!!isObject && "cursor-pointer"}`}
       loading={loading}
       onClick={handleOpen}
       onTouchEnd={handleOpen}
       isSelected={isSelected}
       data-id={id}
     >
-      {text && <Tag />}
+      {isObject && <Tag />}
       {loading && <Spinner className="loading-spinner" />}
       {photo && <Download photo={photo} />}
-      <div className="image" onClick={onOpenObject ?? null} />
+      <div className="image" onClick={isObject ? onOpenObject : null} />
       {text && (
         <Text
           text={text}
