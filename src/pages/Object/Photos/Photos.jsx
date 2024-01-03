@@ -31,7 +31,7 @@ export const Photos = ({ photos, onChange }) => {
   };
 
   const handleDeletePhoto = (index, photo) => {
-    photo?.type
+    photo?.file
       ? onChange(photos.filter((p, j) => 1 + index !== j))
       : handleDelete(photo?.id);
   };
@@ -41,12 +41,18 @@ export const Photos = ({ photos, onChange }) => {
       setCoverPhoto({ id_object: id, id_img: photo?.id }).then((resp) =>
         handleResponse(resp, () => {
           const filteredPhotos = photos.filter((p, i) => i !== index);
-          onChange([photo, ...filteredPhotos]);
+          onChange([
+            { ...photo, cover: 1 },
+            ...filteredPhotos?.map((p) => ({ ...p, cover: 0 })),
+          ]);
         })
       );
     } else {
       const filteredPhotos = photos.filter((p, i) => i !== index);
-      onChange([photo, ...filteredPhotos]);
+      onChange([
+        { ...photo, cover: 1 },
+        ...filteredPhotos?.map((p) => ({ ...p, cover: 0 })),
+      ]);
     }
   };
 
@@ -57,6 +63,8 @@ export const Photos = ({ photos, onChange }) => {
         photosCount={photos.length === 0 ? 1 : photos.length}
         onRemove={() => handleDeletePhoto(0, photos[0])}
         isPhoto={!!photos[0]}
+        isCover={photos[0]?.cover ?? 0}
+        onMakeMain={() => handleSetPhotoCover(0, photos[0])}
       />
 
       {photos.length > 1 && (
@@ -69,6 +77,7 @@ export const Photos = ({ photos, onChange }) => {
                   photo={p}
                   onRemove={() => handleDeletePhoto(i, p)}
                   onMakeMain={() => handleSetPhotoCover(1 + i, p)}
+                  isFile={!!p?.file}
                 />
               ))}
               {photos.length === 2 && (
@@ -87,6 +96,7 @@ export const Photos = ({ photos, onChange }) => {
                   photo={p}
                   onRemove={() => handleDeletePhoto(i, p)}
                   onMakeMain={() => handleSetPhotoCover(1 + i, p)}
+                  isFile={!!p?.file}
                 />
               ))}
               {/* </DraggableList> */}

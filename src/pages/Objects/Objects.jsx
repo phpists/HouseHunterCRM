@@ -14,36 +14,34 @@ import { handleGetRange, handleResponse } from "../../utilits";
 import cogoToast from "cogo-toast";
 import { useParams } from "react-router-dom";
 
-const INIT_FILTERS = {
-  id_rubric: "",
-  id_location: "",
-  price_currency: "1",
-  price: "",
-  price_max: "",
-  price_min: "",
-  obj_is_actual: "1",
-  show_only: "only_my",
-  //   only_company_obj: "0",
-  //   only_street_base_obj: "0",
-  //   only_my_obj: "0",
-  //   only_my_structure: "0",
-};
-
 export const Objects = () => {
   const { id } = useParams();
   const [getAllObjects] = useLazyGetAllObjectsQuery();
-  const [getObjectsCount] = useLazyGetObjectsCountQuery();
   const [getRubricField] = useLazyGetRubricFieldsQuery();
   const [addObjectToFavorites] = useLazyAddToFavoritesQuery();
   const { saveObjectsCount } = useActions();
   const [selected, setSelected] = useState([]);
   const [objects, setObjects] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
+  const INIT_FILTERS = {
+    id_rubric: "",
+    id_location: "",
+    price_currency: "1",
+    price: "",
+    price_max: "",
+    price_min: "",
+    obj_is_actual: "1",
+    show_only: "only_my",
+    id_hash: id ?? "",
+    //   only_company_obj: "0",
+    //   only_street_base_obj: "0",
+    //   only_my_obj: "0",
+    //   only_my_structure: "0",
+  };
   const [filters, setFilters] = useState(INIT_FILTERS);
   const [filtersFields, setFilterFields] = useState([]);
-  const filterActive = useRef(false);
+  const filterActive = useRef(!!id);
   const [allCount, setAllCount] = useState(0);
-
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => {
       setFilterFields(resp?.data);
@@ -81,12 +79,7 @@ export const Objects = () => {
     if (filterActive.current) {
       data = {
         ...data,
-        filters: { ...(id ? { id_hash: id } : {}), ...filters },
-      };
-    } else if (id) {
-      data = {
-        ...data,
-        filters: { ...(id ? { id_hash: id } : {}) },
+        filters,
       };
     }
 
@@ -143,7 +136,7 @@ export const Objects = () => {
     filterActive.current = isApply;
     handleGetObjects();
     if (!isApply) {
-      setFilters(INIT_FILTERS);
+      setFilters({ ...INIT_FILTERS, id_hash: "" });
       setFilterFields([]);
     }
   };

@@ -65,7 +65,7 @@ export const Info = ({ fields, data, onChangeField, errors }) => {
                       placeholder="Введіть значення"
                       value={data[field[0]]}
                       onChange={(val) => onChangeField(field[0], val)}
-                      label={commentsToFields?.object[field[0]] ?? "-"}
+                      label={commentsToFields?.object[field[0]] ?? field[0]}
                       className="field"
                       grey
                       type={

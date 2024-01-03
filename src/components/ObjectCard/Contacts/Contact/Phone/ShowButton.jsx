@@ -1,9 +1,13 @@
 import styled from "styled-components";
 import { Button } from "../../../../Button";
 
-export const ShowButton = ({ onClick, className }) => (
+export const ShowButton = ({
+  onClick,
+  className,
+  title = "Показати телефон",
+}) => (
   <StyledShowButton onClick={onClick} className={`${className}`}>
-    <span>Показати телефон</span>
+    <span>{title}</span>
   </StyledShowButton>
 );
 

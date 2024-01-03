@@ -507,6 +507,17 @@ export const structure = createApi({
         }),
       }),
     }),
+    getWorkerCount: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_count_worker_company",
+          mod: "billing",
+        }),
+      }),
+    }),
   }),
 });
 
@@ -540,4 +551,5 @@ export const {
   useLazyDeleteWorkerImgQuery,
   useLazyGetNotStructureWorkersQuery,
   useLazyAddWorkerToStructureQuery,
+  useLazyGetWorkerCountQuery,
 } = structure;

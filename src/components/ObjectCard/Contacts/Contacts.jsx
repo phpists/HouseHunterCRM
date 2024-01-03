@@ -3,21 +3,24 @@ import { Contact } from "./Contact/Contact";
 import { Divider } from "./Divider";
 import { useLazyGetClientQuery } from "../../../store/clients/clients.api";
 import { useEffect } from "react";
+import { ShowButton } from "./Contact/Phone/ShowButton";
 
 export const Contacts = ({ className, data }) => {
   const [getClient, { data: clientData }] = useLazyGetClientQuery();
 
-  useEffect(() => {
-    if (data?.id_client) {
-      getClient(data?.id_client);
-    }
-  }, [data?.id_client]);
+  const handleShowClient = () => getClient(data?.id_client);
 
   return (
     <StyledContacts className={`hide-scroll clickable ${className}`}>
       {/* <Contact type="owner" />
       <Divider /> */}
-      {clientData ? (
+      {data?.id_client && !clientData ? (
+        <ShowButton
+          title="Переглянути клієнта"
+          className="show-client"
+          onClick={handleShowClient}
+        />
+      ) : clientData ? (
         <>
           <Contact
             type="owner"
@@ -40,6 +43,9 @@ const StyledContacts = styled.div`
   height: max-content;
   width: 200px;
   overflow: auto;
+  .show-client {
+    margin-bottom: 10px;
+  }
   @media (min-width: 1400px) {
     height: 200px;
   }

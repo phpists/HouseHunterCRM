@@ -5,22 +5,26 @@ import noPhoto from "../../../../assets/images/no-photo.svg";
 import { ReactComponent as Remove } from "../../../../assets/images/remove.svg";
 import { memo } from "react";
 
-export const MainPhoto = memo(({ photo, photosCount, onRemove, isPhoto }) => (
-  <StyledMainPhoto
-    photo={photo?.url?.length > 0 ? photo?.url : noPhoto}
-    photosCount={photosCount}
-  >
-    {photosCount > 1 && <Counter photosCount={photosCount} />}
-    <div className="btns-wrapper flex items-center">
-      <Tag />
-      {isPhoto && (
-        <div className="remove-btn" onClick={onRemove}>
-          <Remove />
-        </div>
-      )}
-    </div>
-  </StyledMainPhoto>
-));
+export const MainPhoto = memo(
+  ({ photo, photosCount, onRemove, isPhoto, isCover, onMakeMain }) => (
+    <StyledMainPhoto
+      photo={photo?.url?.length > 0 ? photo?.url : noPhoto}
+      photosCount={photosCount}
+    >
+      {photosCount > 1 && <Counter photosCount={photosCount} />}
+      <div className="btns-wrapper flex items-center">
+        {isPhoto && (
+          <>
+            <Tag isCover={isCover} onMakeMain={onMakeMain} />
+            <div className="remove-btn" onClick={onRemove}>
+              <Remove />
+            </div>
+          </>
+        )}
+      </div>
+    </StyledMainPhoto>
+  )
+);
 
 const StyledMainPhoto = styled.div`
   border-radius: 10px;

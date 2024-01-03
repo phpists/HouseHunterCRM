@@ -9,10 +9,12 @@ import {
   useGetRecurseStructureQuery,
   useGetStructureWorkersQuery,
   useLazyGetNotStructureWorkersQuery,
+  useLazyGetWorkerCountQuery,
 } from "../../store/structure/structure.api";
 import { StructureCard } from "./Header/StructureCard/StructureCard";
 import { useAppSelect } from "../../hooks/redux";
 import { useGetAccessQuery } from "../../store/auth/auth.api";
+import { useActions } from "../../hooks/actions";
 
 export const Structure = () => {
   const { user } = useAppSelect((state) => state.auth);
@@ -27,6 +29,11 @@ export const Structure = () => {
     { data, refetch: refetchNotStructureWorkers },
   ] = useLazyGetNotStructureWorkersQuery();
   const { data: accessData } = useGetAccessQuery();
+  const [getWorkerCount] = useLazyGetWorkerCountQuery();
+  const { saveWorkersCount } = useActions();
+
+  const handleGetWorkerCount = () =>
+    getWorkerCount().then((resp) => saveWorkersCount(resp?.data?.count ?? "-"));
 
   useEffect(() => {
     showNotStructureWorkers && getNotStructureWorkers();
@@ -61,6 +68,10 @@ export const Structure = () => {
     setLevel(user?.struct_level);
   }, []);
 
+  useEffect(() => {
+    handleGetWorkerCount();
+  }, [recurseData]);
+
   return (
     <StyledStructure className="hide-scroll">
       <Header
@@ -90,19 +101,28 @@ export const Structure = () => {
       <div className="structure-content hide-scroll">
         <div className="structure-cards hide-scroll">
           {showNotStructureWorkers && data && Object.entries(data) ? (
-            Object.entries(data)
-              ?.filter((w) => w[0] !== "error")
-              ?.map((w) => w[1])
-              ?.map((worker, i) => (
-                <StructureCard
-                  key={i}
-                  onOpenInfo={() => setInfoOpen(worker?.id_user)}
-                  onNextLevel={() => handleNextLevel(worker?.structure_worker)}
-                  id={worker?.id_user}
-                  data={worker}
-                  isMore={false}
-                />
-              ))
+            <>
+              {Object.entries(data)?.filter((w) => w[0] !== "error")?.length >
+              0 ? (
+                Object.entries(data)
+                  ?.filter((w) => w[0] !== "error")
+                  ?.map((w) => w[1])
+                  ?.map((worker, i) => (
+                    <StructureCard
+                      key={i}
+                      onOpenInfo={() => setInfoOpen(worker?.id_user)}
+                      onNextLevel={() =>
+                        handleNextLevel(worker?.structure_worker)
+                      }
+                      id={worker?.id_user}
+                      data={worker}
+                      isMore={false}
+                    />
+                  ))
+              ) : (
+                <Empty noSubtitle className="no-structure-empty" />
+              )}
+            </>
           ) : level === user?.struct_level ? (
             <StructureCard
               onOpenInfo={() => setInfoOpen(user?.id)}
@@ -165,6 +185,9 @@ const StyledStructure = styled.div`
     grid-template-columns: 1fr;
     grid-auto-rows: max-content;
     gap: 20px;
+  }
+  .no-structure-empty {
+    margin-top: 40px;
   }
   @media (max-width: 850px) {
     width: 100svw;

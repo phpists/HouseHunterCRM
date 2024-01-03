@@ -1,6 +1,10 @@
 import { styled } from "styled-components";
 
-export const Tag = () => <StyledTag>Головне фото</StyledTag>;
+export const Tag = ({ isCover, onMakeMain }) => (
+  <StyledTag isCover={isCover} onClick={() => (isCover ? null : onMakeMain())}>
+    {isCover ? "Головне фото" : "Зробити головним"}
+  </StyledTag>
+);
 
 const StyledTag = styled.div`
   color: #fff;
@@ -15,4 +19,5 @@ const StyledTag = styled.div`
   background: rgba(44, 44, 44, 0.5);
   backdrop-filter: blur(5px);
   padding: 1px 6px 2px;
+  ${({ isCover }) => !isCover && "cursor: pointer;"}
 `;

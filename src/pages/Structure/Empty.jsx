@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import activityIcon from "../../assets/images/activity.svg";
 
-export const Empty = () => (
-  <StyledEmpty>
+export const Empty = ({ noSubtitle, className }) => (
+  <StyledEmpty className={className}>
     <img src={activityIcon} alt="icon" />
     <div className="title">Упс, тут пусто!</div>
-    <div className="subtitle">Почни з розподілу ролей</div>
+    {!noSubtitle && <div className="subtitle">Почни з розподілу ролей</div>}
   </StyledEmpty>
 );
 

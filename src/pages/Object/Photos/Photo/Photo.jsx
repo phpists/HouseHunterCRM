@@ -4,14 +4,14 @@ import { ReactComponent as Remove } from "../../../../assets/images/remove.svg";
 import noPhoto from "../../../../assets/images/no-photo.svg";
 import { memo } from "react";
 
-export const Photo = memo(({ photo, onRemove, onMakeMain }) => {
+export const Photo = memo(({ photo, onRemove, onMakeMain, isFile }) => {
   return (
     <StyledPhoto
       photo={photo?.url?.length > 0 ? photo?.url : noPhoto}
       className="flex flex-col items-center justify-center"
     >
       <div className="photo-content flex flex-col items-center justify-center">
-        <Tag onClick={onMakeMain} />
+        {!isFile && <Tag onClick={onMakeMain} />}
         <Remove onClick={onRemove} />
       </div>
     </StyledPhoto>

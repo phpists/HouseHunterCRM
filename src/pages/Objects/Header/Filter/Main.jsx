@@ -203,6 +203,35 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         }
       />
       <Divider />
+      <CheckOption
+        label="Об’єкти STREET BASE"
+        className="check-opt"
+        value={filters?.show_only === "obj_street_base" ? "1" : "0"}
+        onChange={(val) =>
+          onChangeFilter(
+            "obj_street_base",
+            {
+              ...filters,
+              //   only_company_obj: "0",
+              //   only_street_base_obj: "0",
+              //   only_my_obj: "0",
+              //   only_my_structure: "1",
+              show_only: "obj_street_base",
+            },
+            true
+          )
+        }
+      />
+      <Divider />
+      <ProfileField
+        placeholder="Введіть значення"
+        value={filters?.id_hash}
+        onChange={(val) => onChangeFilter("id_hash", val)}
+        label="Пошук по id"
+        className="field"
+        grey
+      />
+      <Divider />
       {filtersFields?.main_field
         ? Object.entries(filtersFields?.main_field)
             .filter((field) => !notAllowedFields?.find((f) => f === field[0]))

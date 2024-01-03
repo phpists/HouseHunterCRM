@@ -118,6 +118,7 @@ export const ObjectPage = () => {
               url: photo?.url,
               status: "old",
               id: photo?.id,
+              cover: photo?.cover,
             })) ?? []
         );
       });
