@@ -14,7 +14,7 @@ import {
   useLazyEditProfileQuery,
   useLazyGetUserQuery,
 } from "../../../store/auth/auth.api";
-import { handleResponse } from "../../../utilits";
+import { handleRemovePhoneMask, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
 
 export const Profile = () => {
@@ -50,7 +50,13 @@ export const Profile = () => {
   };
 
   useEffect(() => {
-    setProfileData(user);
+    setProfileData({
+      ...user,
+      phones: user.phones.map((p) => ({
+        ...p,
+        code: p.id_phone_code,
+      })),
+    });
   }, [user]);
 
   const handleChangeField = (fieldName, value) => {
@@ -69,7 +75,15 @@ export const Profile = () => {
         first_name,
         last_name,
         email,
-        phones_json: JSON.stringify(phones),
+        phones_json: JSON.stringify(
+          phones.map((phone) => ({
+            ...phone,
+            viber: phone.viber === "1",
+            telegram: phone.telegram === "1",
+            id_phone_code: phone?.code,
+            phone: handleRemovePhoneMask(phone.phone),
+          }))
+        ),
         password: password?.length > 0 ? password : undefined,
         photo: photo?.file,
       }).then((resp) =>
@@ -113,6 +127,7 @@ export const Profile = () => {
           billingTo={user?.billing_to}
           errors={errors}
           onRemoveAvatar={handleRemoveAvatar}
+          noResetValueOnCodeChange
         />
       )}
       <StyledProfile

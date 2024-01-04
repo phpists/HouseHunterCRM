@@ -61,7 +61,7 @@ export const OtherInfo = ({
               key={i}
               photo={photo?.name}
               onRemove={() =>
-                photo?.type
+                photo?.file
                   ? onChange(photos.filter((p, j) => j !== i))
                   : handleDeletePhoto(photo?.id?.toString(), i)
               }

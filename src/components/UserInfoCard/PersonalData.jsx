@@ -4,7 +4,12 @@ import { Divider } from "./Divider";
 import { ProfileField } from "../ProfileField";
 import { useGetPhonesCodesQuery } from "../../store/auth/auth.api";
 
-export const PersonalData = ({ data, onChangeField, errors = [] }) => {
+export const PersonalData = ({
+  data,
+  onChangeField,
+  errors = [],
+  noResetValueOnCodeChange,
+}) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
 
   return (
@@ -47,6 +52,7 @@ export const PersonalData = ({ data, onChangeField, errors = [] }) => {
         }
         phonesCodes={phonesCodes}
         error={!!errors?.find((e) => e === "phones")}
+        noResetValueOnCodeChange={noResetValueOnCodeChange}
       />
       <Divider />
       <Field

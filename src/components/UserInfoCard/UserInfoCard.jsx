@@ -29,6 +29,7 @@ export const UserInfoCard = ({
   errors,
   onRemoveAvatar,
   bosses,
+  noResetValueOnCodeChange,
 }) => {
   const controls = useAnimationControls();
   const contentRef = useRef(null);
@@ -85,6 +86,7 @@ export const UserInfoCard = ({
           data={data}
           onChangeField={onChangeField}
           errors={errors}
+          noResetValueOnCodeChange={noResetValueOnCodeChange}
         />
         {isDelete ? (
           <FooterDelete noDelete={noDelete} onSave={onSave} onReset={onReset} />
