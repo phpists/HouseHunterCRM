@@ -41,15 +41,17 @@ export const Header = ({
   }, []);
 
   const handleDeleteClients = () => {
-    deleteClient({ id_client: selected }).then((resp) => {
-      handleResponse(resp, () => {
-        cogoToast.success("Клієнтів успішно видалено", {
-          hideAfter: 3,
-          position: "top-right",
+    if (selected?.length > 0) {
+      deleteClient({ id_client: selected }).then((resp) => {
+        handleResponse(resp, () => {
+          cogoToast.success("Клієнтів успішно видалено", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          onDelete();
         });
-        onDelete();
       });
-    });
+    }
   };
 
   return (

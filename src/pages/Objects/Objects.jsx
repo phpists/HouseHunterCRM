@@ -95,7 +95,11 @@ export const Objects = () => {
           );
           saveObjectsCount(resp?.data?.all_item);
         },
-        () => setObjects([]),
+        () => {
+          setObjects([]);
+          setAllCount(0);
+          saveObjectsCount(0);
+        },
         true
       );
     });

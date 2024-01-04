@@ -55,18 +55,20 @@ export const Header = ({
   };
 
   const handleDelete = () => {
-    deleteObject(selected).then((resp) =>
-      handleResponse(resp, () => {
-        cogoToast.success(
-          `Обєкт${selectedCount === 1 ? "" : "и"} успішно видалено!`,
-          {
-            hideAfter: 3,
-            position: "top-right",
-          }
-        );
-        onDelete();
-      })
-    );
+    if (selected?.length > 0) {
+      deleteObject(selected).then((resp) =>
+        handleResponse(resp, () => {
+          cogoToast.success(
+            `Обєкт${selectedCount === 1 ? "" : "и"} успішно видалено!`,
+            {
+              hideAfter: 3,
+              position: "top-right",
+            }
+          );
+          onDelete();
+        })
+      );
+    }
   };
 
   return (

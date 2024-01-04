@@ -15,7 +15,6 @@ import cogoToast from "cogo-toast";
 export const Clients = () => {
   const [favoritesFilter, setFavoritesFilter] = useState(false);
   const [selected, setSelected] = useState([]);
-  const [getClientCount] = useLazyGetClientsCountQuery();
   const { saveClientsCount } = useActions();
   const [clients, setClients] = useState([]);
   const [getClients] = useLazyGetClientsQuery();
@@ -56,6 +55,7 @@ export const Clients = () => {
           () => {
             if (resp?.data?.error === 0 && resp?.data.data?.clients?.length) {
               setAllCount(resp?.data?.data?.all_item ?? 0);
+              saveClientsCount(resp?.data?.data?.all_item ?? 0);
               setClients(
                 isReset
                   ? resp?.data?.data?.clients
@@ -65,7 +65,11 @@ export const Clients = () => {
           },
           () => {
             setIsAllPages(true);
-            isReset && setClients([]);
+            if (isReset) {
+              setAllCount(0);
+              saveClientsCount(0);
+              setClients([]);
+            }
           }
         );
       });
@@ -79,12 +83,7 @@ export const Clients = () => {
     );
   };
 
-  const handleGetClientsCount = () => {
-    getClientCount().then((resp) => saveClientsCount(resp?.data?.count ?? 0));
-  };
-
   useEffect(() => {
-    handleGetClientsCount();
     handleGetClients();
     // eslint-disable-next-line
   }, []);

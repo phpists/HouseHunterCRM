@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
 import { handleResponse } from "../../utilits";
+import { useAppSelect } from "../../hooks/redux";
 
 const INIT_FILTERS = {
   id_rubric: "",
@@ -25,10 +26,10 @@ const INIT_FILTERS = {
 };
 
 export const Requests = () => {
-  const [getRequestsCount] = useLazyGetRequestsCountQuery();
   const [getRequests] = useLazyGetRequestsQuery();
   const [getRubricField] = useLazyGetRubricsFieldsQuery();
   const { saveRequestsCount } = useActions();
+  const { requestsCount } = useAppSelect((state) => state.requests);
   const [requests, setRequests] = useState([]);
   const currentPage = useRef(0);
   const isLoading = useRef(false);
@@ -72,16 +73,6 @@ export const Requests = () => {
         : [...selected, index]
     );
 
-  const handleGetRequestsCount = () =>
-    getRequestsCount().then((resp) =>
-      saveRequestsCount(resp?.data?.count ?? 0)
-    );
-
-  useEffect(() => {
-    handleGetRequestsCount();
-    // eslint-disable-next-line
-  }, []);
-
   const handleFormatRequests = (data) => {
     return Object.fromEntries(
       Object.entries(data?.requests)
@@ -117,6 +108,7 @@ export const Requests = () => {
           () => {
             if (resp?.data?.requests) {
               setAllCount(resp?.data.all_item ?? 0);
+              saveRequestsCount(resp?.data.all_item ?? 0);
               if (Object.entries(resp?.data?.requests)?.length) {
                 setRequests(
                   isReset
@@ -132,7 +124,11 @@ export const Requests = () => {
           },
           () => {
             setIsAllPages(true);
-            isReset && setRequests([]);
+            if (isReset) {
+              setRequests([]);
+              setAllCount(0);
+              saveRequestsCount(0);
+            }
           }
         );
       });
@@ -180,8 +176,8 @@ export const Requests = () => {
       handleGetRequests(true);
     }
 
+    saveRequestsCount(requestsCount - selected?.length);
     setSelected([]);
-    handleGetRequestsCount();
   };
 
   const handleDeleteRequestSuccess = (id) => {
@@ -190,7 +186,7 @@ export const Requests = () => {
         Object.entries(requests).filter((req) => id !== req[0])
       )
     );
-    handleGetRequestsCount();
+    saveRequestsCount(requestsCount - 1);
   };
 
   const handleToggleFavoriteStatus = (id) => {
