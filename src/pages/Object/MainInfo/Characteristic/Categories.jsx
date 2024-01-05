@@ -59,7 +59,7 @@ export const Categories = ({ data, onChangeField, fields, errors }) => {
     : [];
 
   const handleToggleOption = (opt, categoryName) => {
-    const categoryData =
+    let categoryData =
       data[categoryName]?.length > 0 && data[categoryName] !== "0"
         ? JSON.parse(
             typeof data[categoryName] === "string"
@@ -67,6 +67,8 @@ export const Categories = ({ data, onChangeField, fields, errors }) => {
               : JSON.stringify(data[categoryName])
           )
         : [];
+
+    categoryData = Array.isArray(categoryData) ? categoryData : [];
     const isActive = !!categoryData?.find((o) => o === opt);
     const updatedValue = isActive
       ? categoryData.filter((o) => o !== opt)
@@ -108,11 +110,17 @@ export const Categories = ({ data, onChangeField, fields, errors }) => {
                                   ? data[category[0]] === opt[0]
                                   : data[category[0]]?.length > 0 &&
                                     data[category[0]] !== "0"
-                                  ? !!JSON.parse(
+                                  ? JSON.parse(
                                       typeof data[category[0]] === "string"
                                         ? data[category[0]]
                                         : JSON.stringify(data[category[0]])
-                                    )?.find((o) => o === opt[0])
+                                    )?.length
+                                    ? !!JSON.parse(
+                                        typeof data[category[0]] === "string"
+                                          ? data[category[0]]
+                                          : JSON.stringify(data[category[0]])
+                                      )?.find((o) => o === opt[0])
+                                    : false
                                   : false
                               }
                               onSelect={() =>
