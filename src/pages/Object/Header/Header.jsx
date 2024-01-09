@@ -37,15 +37,17 @@ export const Header = ({ onSave, favorite, onToggleFavorite }) => {
   };
 
   const handleToggleFavorites = () => {
-    addToFavorites(id).then((resp) => {
-      handleResponse(resp, () => {
-        onToggleFavorite();
-        cogoToast.success("Статус успішно змінено!", {
-          hideAfter: 3,
-          position: "top-right",
+    if (id) {
+      addToFavorites(id).then((resp) => {
+        handleResponse(resp, () => {
+          onToggleFavorite();
+          cogoToast.success("Статус успішно змінено!", {
+            hideAfter: 3,
+            position: "top-right",
+          });
         });
       });
-    });
+    }
   };
 
   return (

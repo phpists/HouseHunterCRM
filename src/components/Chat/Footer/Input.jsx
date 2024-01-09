@@ -25,9 +25,7 @@ export const Input = ({
   const handleUploadPhoto = (e) => {
     const file = e?.target?.files[0];
 
-    if (file) {
-      onSendFile(file);
-    }
+    file && onSendFile(file);
   };
 
   return (

@@ -208,8 +208,11 @@ export const Selections = () => {
     setShowObjectHide(showObjectHide === "1" ? undefined : "1");
     setFilters(INIT_FILTERS);
     filterActive.current = false;
-    handleGetSelections();
   };
+
+  useEffect(() => {
+    handleGetSelections();
+  }, [showObjectHide]);
 
   return (
     <StyledSelections>

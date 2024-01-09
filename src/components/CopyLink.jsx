@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import linkIcon from "../assets/images/link.svg";
 import checkIcon from "../assets/images/circle-green-check.svg";
 import { useState } from "react";
+import cogoToast from "cogo-toast";
 
 export const CopyLink = ({ className, link }) => {
   const [active, setActive] = useState(false);
@@ -15,6 +16,10 @@ export const CopyLink = ({ className, link }) => {
     document.execCommand("copy");
     document.body.removeChild(linkElem);
     setTimeout(() => setActive(false), 1500);
+    cogoToast.success("Посилання на підбірку скопійовано", {
+      hideAfter: 3,
+      position: "top-right",
+    });
   };
 
   return (

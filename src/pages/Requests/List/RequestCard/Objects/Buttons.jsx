@@ -6,7 +6,7 @@ export const Buttons = ({ onOpenChat, idGroup }) => (
   <StyledButtons className="flex item-center bts">
     <CopyLink
       className="copy-btn"
-      link={`${window.location.origin}/#/selections/${idGroup}`}
+      link={`https://xhouse-web.netlify.app/?id=${idGroup}`}
     />
     <Comments onClick={onOpenChat} />
   </StyledButtons>

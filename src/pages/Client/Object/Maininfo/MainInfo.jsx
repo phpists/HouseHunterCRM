@@ -19,7 +19,13 @@ import { useEffect } from "react";
 import { SelectTags } from "../../../../components/SelectTags/SelectTags";
 import { fortmatNumber, handleGetLocationAllPath } from "../../../../utilits";
 
-export const Maininfo = ({ data, onChangeField, requestData, isObject }) => {
+export const Maininfo = ({
+  data,
+  onChangeField,
+  requestData,
+  isObject,
+  objectFields,
+}) => {
   const { data: rubricsList } = useGetRubricsQuery();
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
@@ -85,16 +91,30 @@ export const Maininfo = ({ data, onChangeField, requestData, isObject }) => {
       </div>
       <Divider />
       <div className="flex flex-wrap items-center tags">
-        <Tag Icon={DoorsIcon} text={`${data?.room_min ?? 0}к`} />
-        <TagDivider />
-        <Tag
-          Icon={ExpandedIcon}
-          text={
-            <>
-              {requestData?.area_total_max ?? 0} м<sup>2</sup>
-            </>
-          }
-        />
+        {(isObject
+          ? objectFields?.main_field?.rooms?.required === 1
+          : true) && (
+          <>
+            <Tag Icon={DoorsIcon} text={`${data?.room_min ?? 0}к`} />
+            <TagDivider />
+          </>
+        )}
+        {(isObject
+          ? objectFields?.main_field?.area_total?.required === 1 ||
+            objectFields?.main_field?.area_plot_sotka?.required === 1
+          : true) && (
+          <Tag
+            Icon={ExpandedIcon}
+            text={
+              <>
+                {requestData?.area_total_max
+                  ? requestData?.area_total_max
+                  : requestData?.area_plot_sotka ?? 0}{" "}
+                м<sup>2</sup>
+              </>
+            }
+          />
+        )}
         {/* <TagDivider />
         <Tag
           Icon={BoxSelectIcon}
@@ -104,17 +124,20 @@ export const Maininfo = ({ data, onChangeField, requestData, isObject }) => {
             </>
           }
         /> */}
-        {requestData?.address_storey && (
-          <>
-            <TagDivider />
-            <Tag
-              Icon={StairsIcon}
-              text={`${requestData?.address_storey} із ${requestData?.storey_count}`}
-            />
-          </>
-        )}
+        {requestData?.address_storey &&
+          (isObject
+            ? objectFields?.main_field?.address_storey?.required === 1
+            : true) && (
+            <>
+              <TagDivider />
+              <Tag
+                Icon={StairsIcon}
+                text={`${requestData?.address_storey} із ${requestData?.storey_count}`}
+              />
+              <Divider />
+            </>
+          )}
       </div>
-      <Divider />
 
       {data?.comment?.length > 0 ? (
         <>

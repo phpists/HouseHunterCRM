@@ -32,11 +32,18 @@ export const Footer = ({
         id_parent,
         ...(img ? { img } : {}),
       }).then((resp) =>
-        handleResponse(resp, () => {
-          onRefreshData();
-          setLoading(false);
-          setValue("");
-        })
+        handleResponse(
+          resp,
+          () => {
+            onRefreshData();
+            setLoading(false);
+            setValue("");
+          },
+          () => {
+            setLoading(false);
+            setValue("");
+          }
+        )
       );
     }
   };

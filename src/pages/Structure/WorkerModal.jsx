@@ -63,6 +63,7 @@ export const WorkerModal = ({
   const handleChangeField = (fieldName, value) => {
     let newData = { ...profileData, [fieldName]: value };
 
+    console.log(fieldName, value);
     if (fieldName === "structure_level") {
       newData = { ...newData, structure_parent: undefined };
     }
@@ -275,6 +276,7 @@ export const WorkerModal = ({
         bosses={structureUsersCompany?.data ?? []}
         errors={errors}
         onRemoveAvatar={handleDeletePhoto}
+        noResetValueOnCodeChange
       />
     </>
   );

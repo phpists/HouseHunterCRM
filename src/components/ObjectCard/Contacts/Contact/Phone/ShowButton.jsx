@@ -5,8 +5,9 @@ export const ShowButton = ({
   onClick,
   className,
   title = "Показати телефон",
+  error,
 }) => (
-  <StyledShowButton onClick={onClick} className={`${className}`}>
+  <StyledShowButton onClick={onClick} className={`${className}`} error={error}>
     <span>{title}</span>
   </StyledShowButton>
 );
@@ -31,4 +32,11 @@ const StyledShowButton = styled.button`
     background: rgba(255, 255, 255, 0.38);
     color: rgba(255, 255, 255, 1);
   }
+  ${({ error }) =>
+    error &&
+    `
+    color: #ff4343 !important;
+    background: rgba(255, 67, 67, 0.3) !important;
+    cursor: not-allowed;
+  `}
 `;

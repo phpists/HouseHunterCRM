@@ -11,7 +11,10 @@ import {
 } from "../../../store/requests/requests.api";
 import { REQUEST_INIT } from "../../Request/Request";
 import { handleFormatDate, handleResponse } from "../../../utilits";
-import { useLazyGetObjectQuery } from "../../../store/objects/objects.api";
+import {
+  useLazyGetObjectQuery,
+  useLazyGetRubricFieldsQuery,
+} from "../../../store/objects/objects.api";
 
 export const ObjectCard = ({ className, selectedObject }) => {
   const [started, setStarted] = useState(true);
@@ -20,6 +23,8 @@ export const ObjectCard = ({ className, selectedObject }) => {
   const [getRubricField] = useLazyGetRubricsFieldsQuery();
   const [data, setData] = useState(REQUEST_INIT);
   const [fields, setFields] = useState([]);
+  const [getRubricFields, { data: objectFields }] =
+    useLazyGetRubricFieldsQuery();
 
   const handleGetRequest = () => {
     getRequest(selectedObject?.id).then((resp) => {
@@ -61,7 +66,9 @@ export const ObjectCard = ({ className, selectedObject }) => {
   const handleGetObject = () => {
     getObject(selectedObject?.id).then((resp) => {
       handleResponse(resp, () => {
+        getRubricFields(resp?.data?.id_rubric);
         setData({
+          ...resp?.data,
           img: Object.entries(resp?.data?.img)
             ?.map((p) => p[1])
             ?.sort((a, b) => b?.order - a?.order)
@@ -106,6 +113,7 @@ export const ObjectCard = ({ className, selectedObject }) => {
         onChangeField={handleChangeField}
         requestData={requestData}
         isObject={selectedObject?.type === "object"}
+        objectFields={objectFields}
       />
       {started ? (
         <>

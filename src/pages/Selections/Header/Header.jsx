@@ -59,7 +59,10 @@ export const Header = ({
               onClick={onToggleHidden}
             />
             {/* <AddButton onRefresh={onRefresh} objectsIds={objectsIds} /> */}
-            <CopyLink className="copy-btn" link={window.location.href} />
+            <CopyLink
+              className="copy-btn"
+              link={`https://xhouse-web.netlify.app/?id=${id}`}
+            />
           </div>
           <div className="action-btns flex items-center">
             <ChatButton />

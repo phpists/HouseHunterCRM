@@ -14,7 +14,7 @@ export const SelectedMessage = ({
   const controls = useAnimationControls();
   const isOwner = selectedMessage.user === 0;
   const isPhoto =
-    selectedMessage?.messege?.title || selectedMessage?.messege?.img;
+    selectedMessage?.messege?.img || selectedMessage?.messege?.title;
 
   useEffect(() => {
     controls.start({ opacity: 1, translateY: 0 });

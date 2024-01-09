@@ -22,7 +22,7 @@ export const Objects = ({ data, id, onOpenChat }) => (
       <div className="bts flex items-center">
         <CopyLink
           className="copy-btn"
-          link={`${window.location.origin}/#/selections/${id}`}
+          link={`https://xhouse-web.netlify.app/?id=${id}`}
         />
         <Comments onOpenChat={onOpenChat} />
       </div>
