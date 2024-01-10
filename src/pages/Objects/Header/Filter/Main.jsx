@@ -127,6 +127,30 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
           )
         }
       />
+      <Divider />
+      <ToggleOption
+        label="Протерміновані об`єкти"
+        value={filters?.showDeadline === "1"}
+        onChange={() =>
+          onChangeFilter(
+            "showDeadline",
+            filters?.showDeadline === "1" ? "0" : "1"
+          )
+        }
+      />
+      <Divider />
+      <ToggleOption
+        label="Об`єкти ліквідність"
+        value={filters?.showLiquidity === "1"}
+        onChange={() =>
+          onChangeFilter(
+            "showLiquidity",
+            filters?.showLiquidity === "1" ? "0" : "1"
+          )
+        }
+      />
+      <Divider />
+
       {/* <Divider />
       <CheckOption
         label="Об’єкти компанії"

@@ -15,6 +15,7 @@ import { SelectTags } from "../../../../components/SelectTags/SelectTags";
 import { Divider } from "./Divider";
 import { Price } from "../../../Request/Main/Price/Price";
 import { Ranger } from "../../../../components/Ranger/Ranger";
+import { ToggleOption } from "./ToggleOption";
 
 export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
   const { data: rubricsList } = useGetRubricsQuery();
@@ -335,6 +336,28 @@ export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
               only_my_structure: "1",
             },
             true
+          )
+        }
+      />
+      <Divider />
+      <ToggleOption
+        label="Протерміновані запити"
+        active={filters?.showDeadline === "1"}
+        onChange={() =>
+          onChangeFilter(
+            "showDeadline",
+            filters?.showDeadline === "1" ? "0" : "1"
+          )
+        }
+      />
+      <Divider />
+      <ToggleOption
+        label="Не переглянуті повідомлення із підбірок"
+        active={filters?.showUnreadMessege === "1"}
+        onChange={() =>
+          onChangeFilter(
+            "showUnreadMessege",
+            filters?.showUnreadMessege === "1" ? "0" : "1"
           )
         }
       />
