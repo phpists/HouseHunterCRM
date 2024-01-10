@@ -4,6 +4,8 @@ import { ReactComponent as EditIcon } from "../assets/images/edit-company.svg";
 import { ReactComponent as CheckIcon } from "../assets/images/check.svg";
 import ReactInputMask from "react-input-mask";
 import { PhoneInput } from "./PhoneInput";
+import { handleFormatDate } from "../utilits";
+import { Calendar } from "./Calendar/Calendar";
 
 export const Field = ({
   value,
@@ -23,6 +25,7 @@ export const Field = ({
   mobile,
   onChange = () => null,
   onSubmit,
+  type,
 }) => {
   const [edit, setEdit] = useState(false);
 
@@ -50,6 +53,11 @@ export const Field = ({
       onClick={() => (mobile ? setEdit(true) : null)}
     >
       <div className="field-content">
+        {type === "date" && edit && (
+          <div className="calendar_wrapper">
+            <Calendar value={value} onChange={onChange} />
+          </div>
+        )}
         {edit ? (
           <>
             {phone ? (
@@ -71,11 +79,13 @@ export const Field = ({
               />
             ) : (
               <input
-                type="text"
                 className="value"
-                value={value}
+                value={type === "date" ? handleFormatDate(value, true) : value}
                 placeholder={placeholder}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) =>
+                  onChange && type !== "date" ? onChange(e.target.value) : null
+                }
+                type={type === "date" ? "text" : type ?? "text"}
                 onBlur={() => (mobile ? setEdit(false) : null)}
               />
             )}
@@ -86,6 +96,8 @@ export const Field = ({
               ? `${
                   phonesCodes?.find((p) => p.id === phoneCode)?.code ?? ""
                 }${value}`
+              : type === "date"
+              ? handleFormatDate(value, true)
               : value?.length > 0
               ? value
               : placeholder}
@@ -111,6 +123,7 @@ const StyleField = styled.div`
   border-radius: 9px;
   transition: all 0.3s;
   flex-shrink: 0;
+  position: relative;
   ${({ error }) => error && "  border: 1px solid red !important;"}
   .field-content {
     width: 80%;
@@ -196,4 +209,12 @@ const StyleField = styled.div`
             filter: blur(0px);
         }
   `}
+  .calendar_wrapper {
+    position: absolute;
+    top: 100%;
+    background: #414141;
+    max-width: 320px;
+    left: 0;
+    z-index: 1000;
+  }
 `;

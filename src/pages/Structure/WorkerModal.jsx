@@ -34,6 +34,7 @@ const INITIAL_DATA = {
   phones: [{ code: 1, phone: "", telegram: "0", viber: "0" }],
   photos: [],
   active: "1",
+  dt_birthday: new Date(),
 };
 
 export const WorkerModal = ({
@@ -120,6 +121,10 @@ export const WorkerModal = ({
               structure_level: !showNotStructureWorkers ? level : undefined,
               structure_parent: resp?.data[0]?.structure_parent_id ?? null,
               photo: { url: resp?.data[0]?.photo },
+              dt_birthday:
+                resp?.data[0]?.dt_birthday === "0"
+                  ? new Date()
+                  : new Date(Number(resp?.data[0]?.dt_birthday) * 1000),
             }
           : INITIAL_DATA
       );
@@ -136,6 +141,10 @@ export const WorkerModal = ({
       setProfileData({
         ...user,
         structure_level: level,
+        dt_birthday:
+          user?.dt_birthday === "0"
+            ? new Date()
+            : new Date(Number(user?.dt_birthday) * 1000),
         phones: user.phones.map((p) => ({
           ...p,
           code: p.id_phone_code,
@@ -173,6 +182,10 @@ export const WorkerModal = ({
         ),
         password: password?.length > 0 ? password : undefined,
         photo: profileData?.photo.file ?? undefined,
+        dt_birthday:
+          profileData?.dt_birthday === "0"
+            ? new Date()?.getTime() / 1000
+            : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000,
       }).then((resp) =>
         handleResponse(resp, () => {
           cogoToast.success("Зміни успішно збережено", {
@@ -192,6 +205,10 @@ export const WorkerModal = ({
         id_permision: rolesPermission?.id_permision,
         id_worker: profileData?.id,
         photo: profileData?.photo.file ?? undefined,
+        dt_birthday:
+          profileData?.dt_birthday === "0"
+            ? new Date()?.getTime() / 1000
+            : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000,
         phones_json: JSON.stringify(
           profileData?.phones.map((phone) => ({
             ...phone,

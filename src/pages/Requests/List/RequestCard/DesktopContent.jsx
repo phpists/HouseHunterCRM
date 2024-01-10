@@ -31,7 +31,7 @@ export const DesktopContent = ({
     <Info
       priceMax={data?.price_max}
       roomMin={data?.room_min}
-      roomMax={data?.room_min}
+      roomMax={data?.room_max}
       areaMin={data?.area_total_min}
       storeyMin={data?.address_storey_min}
       storeyMax={data?.address_storey_max}

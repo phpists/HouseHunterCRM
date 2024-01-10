@@ -50,12 +50,21 @@ export const Profile = () => {
   };
 
   useEffect(() => {
+    console.log(
+      user?.dt_birthday === "0"
+        ? new Date()
+        : new Date(Number(user?.dt_birthday) * 1000)
+    );
     setProfileData({
       ...user,
       phones: user.phones.map((p) => ({
         ...p,
         code: p.id_phone_code,
       })),
+      dt_birthday:
+        user?.dt_birthday === "0"
+          ? new Date()
+          : new Date(Number(user?.dt_birthday) * 1000),
     });
   }, [user]);
 
@@ -86,6 +95,10 @@ export const Profile = () => {
         ),
         password: password?.length > 0 ? password : undefined,
         photo: photo?.file,
+        dt_birthday:
+          profileData?.dt_birthday === "0"
+            ? new Date()?.getTime() / 1000
+            : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000,
       }).then((resp) =>
         handleResponse(resp, () => {
           cogoToast.success("Зміни успішно збережено", {
@@ -110,6 +123,7 @@ export const Profile = () => {
     }
   };
 
+  console.log(profileData);
   return (
     <>
       {openEdit && (
