@@ -28,6 +28,16 @@ export const PersonalData = ({ data, onChangeField, errors }) => {
       </div>
       <Divider />
       <Field
+        placeholder="Дата народження"
+        value={data?.dt_birthday}
+        onChange={(val) => onChangeField("dt_birthday", val)}
+        label="Дата народження"
+        className="field-wrapper"
+        error={!!errors?.find((e) => e === "dt_birthday")}
+        type="date"
+      />
+      <Divider />
+      <Field
         label="Телефон"
         full
         phone
