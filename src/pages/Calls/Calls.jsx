@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Header } from "./Header/Header";
 import { List } from "./List/List";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   useLazyAddCommentToCallQuery,
   useLazyGetCallsQuery,
@@ -10,6 +10,7 @@ import {
 import { handleResponse } from "../../utilits";
 import { useActions } from "../../hooks/actions";
 import cogoToast from "cogo-toast";
+import { useLocation } from "react-router-dom";
 
 const INIT_FILTERS = {
   search_key: "",
@@ -23,6 +24,7 @@ const INIT_FILTERS = {
 };
 
 export const Calls = () => {
+  const location = useLocation();
   const [getCalls] = useLazyGetCallsQuery();
   const [setCallStatus] = useLazySetStatusCallQuery();
   const [addComment] = useLazyAddCommentToCallQuery();
@@ -30,6 +32,7 @@ export const Calls = () => {
   const [selected, setSelected] = useState([]);
   const [data, setData] = useState(null);
   const [filters, setFilters] = useState(INIT_FILTERS);
+  const isFirstLoad = useRef(true);
 
   const handleChangeFilter = (fieldName, value) => {
     setFilters({ ...filters, [fieldName]: value });
@@ -48,10 +51,6 @@ export const Calls = () => {
       saveCallsCount(resp?.data?.all_item ?? 0);
     });
   };
-
-  useEffect(() => {
-    handleGetCalls(false);
-  }, []);
 
   const handleUpdateCall = (id, field, value) =>
     setData(data?.filter((call) => call.id !== id));
@@ -100,6 +99,23 @@ export const Calls = () => {
       setData(data?.filter((call) => !selected.find((s) => s === call?.id)));
     });
   };
+
+  useEffect(() => {
+    const filterApply = location?.search?.split("=")[0];
+    if (filterApply === "?view") {
+      setFilters({ ...INIT_FILTERS, view: "1" });
+    } else {
+      handleGetCalls(false);
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    if (isFirstLoad.current) {
+      const filterApply = location?.search?.split("=")[0];
+      isFirstLoad.current = false;
+      handleGetCalls(!!filterApply);
+    }
+  }, [filters]);
 
   return (
     <StyledCalls>

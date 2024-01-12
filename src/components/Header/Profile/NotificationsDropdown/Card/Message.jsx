@@ -1,14 +1,15 @@
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../../../../../assets/images/welcome-step-arrow.svg";
+import { NavLink } from "react-router-dom";
 
-export const Message = ({ message }) => (
-  <StyledMessage className="flex items-center justify-between">
+export const Message = ({ message, info, link }) => (
+  <StyledMessage className="flex items-center justify-between" to={link}>
     <div>{message}</div>
-    <Arrow />
+    {!info && <Arrow />}
   </StyledMessage>
 );
 
-const StyledMessage = styled.div`
+const StyledMessage = styled(NavLink)`
   color: #fff;
   font-feature-settings: "clig" off, "liga" off;
   font-family: Overpass;

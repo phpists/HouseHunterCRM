@@ -12,10 +12,11 @@ import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
 import { handleGetRange, handleResponse } from "../../utilits";
 import cogoToast from "cogo-toast";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 export const Objects = () => {
   const { id } = useParams();
+  const location = useLocation();
   const [getAllObjects] = useLazyGetAllObjectsQuery();
   const [getRubricField] = useLazyGetRubricFieldsQuery();
   const [addObjectToFavorites] = useLazyAddToFavoritesQuery();
@@ -214,7 +215,19 @@ export const Objects = () => {
 
   useEffect(() => {
     filterActive.current && handleGetObjects();
-  }, [filterActive.current]);
+  }, [filters]);
+
+  useEffect(() => {
+    filterActive.current = false;
+    const filterApply = location?.search?.split("=")[0];
+    if (filterApply === "?showDeadline") {
+      setFilters({ showDeadline: "1" });
+      filterActive.current = true;
+    } else if (filterApply === "?showLiquidity") {
+      setFilters({ showLiquidity: "1" });
+      filterActive.current = true;
+    }
+  }, [location.search]);
 
   return (
     <StyledObjects>

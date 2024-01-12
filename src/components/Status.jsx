@@ -14,7 +14,7 @@ export const Status = ({ status, className }) => (
     status={STATUSES[status]}
     className={`flex items-center justify-center ${className}`}
   >
-    {STATUSES[status].title}
+    {STATUSES[status]?.title}
   </StyledStatus>
 );
 
@@ -22,8 +22,8 @@ const StyledStatus = styled.div`
   width: 68px;
   height: 18px;
   padding: 4px 0 1px;
-  color: ${({ status }) => status.color};
-  background: ${({ status }) => status.background};
+  color: ${({ status }) => status?.color};
+  background: ${({ status }) => status?.background};
   text-align: center;
   font-family: Overpass;
   font-size: 11px;

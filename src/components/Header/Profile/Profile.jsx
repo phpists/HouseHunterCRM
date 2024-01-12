@@ -10,14 +10,17 @@ import { useAppSelect } from "../../../hooks/redux";
 import { useEffect } from "react";
 import { useActions } from "../../../hooks/actions";
 import {
+  useGetNotificationsQuery,
   useLazyDeleteAvatarQuery,
   useLazyEditProfileQuery,
   useLazyGetUserQuery,
 } from "../../../store/auth/auth.api";
 import { handleRemovePhoneMask, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
+import { useLocation } from "react-router-dom";
 
 export const Profile = () => {
+  const { pathname } = useLocation();
   const [openEdit, setOpenEdit] = useState(false);
   const [openNotifications, setOpenNotifications] = useState(false);
   const { user } = useAppSelect((state) => state.auth);
@@ -27,6 +30,7 @@ export const Profile = () => {
   const [editProfile] = useLazyEditProfileQuery();
   const [deleteAvatar] = useLazyDeleteAvatarQuery();
   const [errors, setErrors] = useState([]);
+  const { data } = useGetNotificationsQuery();
 
   const handleCheckAllFields = () => {
     const { first_name, last_name, email, phones } = profileData;
@@ -123,7 +127,10 @@ export const Profile = () => {
     }
   };
 
-  console.log(profileData);
+  useEffect(() => {
+    setOpenNotifications(false);
+  }, [pathname]);
+
   return (
     <>
       {openEdit && (
@@ -154,9 +161,9 @@ export const Profile = () => {
         <Notification
           active={openNotifications}
           onToggle={() => setOpenNotifications(!openNotifications)}
-          count={4}
+          count={data?.count_notify}
         />
-        {openNotifications && <NotificationsDropdown />}
+        {openNotifications && <NotificationsDropdown data={data} />}
         <div className="flex items-start clickable">
           <Status status={1} className="clickable status-tag" />
           <Info />

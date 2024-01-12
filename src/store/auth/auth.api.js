@@ -155,6 +155,17 @@ export const auth = createApi({
         );
       },
     }),
+    getNotifications: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "notification",
+          action: "view",
+        }),
+      }),
+    }),
   }),
 });
 
@@ -168,4 +179,5 @@ export const {
   useLazyEditProfileQuery,
   useLazyDeleteAvatarQuery,
   useGetAccessQuery,
+  useGetNotificationsQuery,
 } = auth;

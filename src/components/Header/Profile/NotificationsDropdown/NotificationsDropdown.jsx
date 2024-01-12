@@ -1,20 +1,43 @@
 import styled from "styled-components";
 import { Card } from "./Card/Card";
 
-export const NotificationsDropdown = () => {
+export const NotificationsDropdown = ({ data }) => {
   return (
     <StyledNotificationsDropdown className="hide-scroll">
-      <Card type="calls" messages={["У вас є пропущені дзвінки"]} />
-      <Card type="clients" messages={["Вам передано клієнта "]} />
-      <Card type="requests" messages={["У вас є протермінований запит"]} />
-      <Card
-        type="objects"
-        messages={[
-          "Вам делеговано об'єкт",
-          "У вас є протермінований об'єкт",
-          "У вас є об'єкти з Streat Base",
-        ]}
-      />
+      {data?.birthday?.length > 0 && (
+        <Card type="clients" messages={[data?.birthday[0]]} info />
+      )}
+      {data?.objectDeadline && (
+        <Card
+          type="objects"
+          messages={[data?.objectDeadline]}
+          link="/objects?showDeadline=true"
+        />
+      )}
+      {data?.objectLiquidity && (
+        <Card
+          type="objects"
+          messages={[data?.objectLiquidity]}
+          link="/objects?showLiquidity=true"
+        />
+      )}
+      {data?.requestDtDeadline && (
+        <Card
+          type="requests"
+          messages={[data?.requestDtDeadline]}
+          link="/requests?showDeadline=true"
+        />
+      )}
+      {data?.calls && (
+        <Card type="calls" messages={[data?.calls]} link="/calls?view=true" />
+      )}
+      {data?.chatMessege && (
+        <Card
+          type="requests"
+          messages={[data?.chatMessege]}
+          link="/requests?showUnreadMessege=true"
+        />
+      )}
     </StyledNotificationsDropdown>
   );
 };

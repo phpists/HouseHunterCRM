@@ -7,7 +7,7 @@ export const Notification = ({ active, onToggle, count }) => (
     onClick={onToggle}
   >
     <NotificationIcon />
-    <div>{count}</div>
+    {count > 0 ? <div>{count}</div> : null}
   </StyledNotification>
 );
 

@@ -12,6 +12,7 @@ import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
 import { handleResponse } from "../../utilits";
 import { useAppSelect } from "../../hooks/redux";
+import { useLocation } from "react-router-dom";
 
 const INIT_FILTERS = {
   id_rubric: "",
@@ -23,9 +24,11 @@ const INIT_FILTERS = {
   only_street_base_obj: "0",
   only_my_obj: "1",
   only_my_structure: "0",
+  showUnreadMessege: "0",
 };
 
 export const Requests = () => {
+  const location = useLocation();
   const [getRequests] = useLazyGetRequestsQuery();
   const [getRubricField] = useLazyGetRubricsFieldsQuery();
   const { saveRequestsCount } = useActions();
@@ -41,6 +44,8 @@ export const Requests = () => {
   const [filtersFields, setFilterFields] = useState([]);
   const filterActive = useRef(false);
   const [allCount, setAllCount] = useState(0);
+  const isFirstRender = useRef(true);
+  const [isDefaultFiltersSet, setIsDefaultFiltersSet] = useState(false);
 
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => {
@@ -158,11 +163,6 @@ export const Requests = () => {
     // eslint-disable-next-line
   }, [listRef, isLoading.current, isAllPages, requests]);
 
-  useEffect(() => {
-    handleGetRequests();
-    // eslint-disable-next-line
-  }, []);
-
   const handleDeleteRequestsSuccess = () => {
     setRequests(
       Object.fromEntries(
@@ -237,8 +237,10 @@ export const Requests = () => {
   };
 
   useEffect(() => {
-    handleGetRequests(true);
-    // eslint-disable-next-line
+    if (!isFirstRender.current) {
+      handleGetRequests(true);
+      // eslint-disable-next-line
+    }
   }, [isFavorite]);
 
   const handleApplyFilter = (isApply) => {
@@ -254,6 +256,30 @@ export const Requests = () => {
     const requestsIds = Object.entries(requests)?.map((r) => r[0]);
     setSelected(isReset ? [] : requestsIds);
   };
+
+  useEffect(() => {
+    filterActive.current = false;
+    const filterApply = location?.search?.split("=")[0];
+    if (filterApply === "?showDeadline") {
+      setFilters({ showDeadline: "1" });
+      isDefaultFiltersSet.current = true;
+      setIsDefaultFiltersSet(true);
+    } else if (filterApply === "?showUnreadMessege") {
+      setFilters({ showUnreadMessege: "1" });
+      filterActive.current = true;
+      setIsDefaultFiltersSet(true);
+    } else {
+      isFirstRender.current = false;
+      handleGetRequests(true);
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    if (isFirstRender.current && isDefaultFiltersSet) {
+      isFirstRender.current = false;
+      handleGetRequests(true);
+    }
+  }, [filters, isDefaultFiltersSet]);
 
   return (
     <StyledRequests>

@@ -24,16 +24,16 @@ const TYPES = {
   },
 };
 
-export const Header = ({ type }) => (
+export const Header = ({ type, info }) => (
   <StyledHeader className="flex items-center justify-between">
     <div className="flex items-center">
       <img src={TYPES[type].icon} alt="" />
-      <div className="title">{TYPES[type].title}</div>
+      <div className="title">{info ? "" : TYPES[type].title}</div>
     </div>
     <div className="flex items-center">
       {/* <div className="subtitle">18.09.2023</div> */}
-      <div className="subtitle">11 хв тому</div>
-      <CloseIcon />
+      {/* <div className="subtitle">11 хв тому</div> */}
+      {/* <CloseIcon /> */}
     </div>
   </StyledHeader>
 );
