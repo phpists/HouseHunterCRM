@@ -34,7 +34,7 @@ export const ShowMore = ({
   );
 };
 
-const StyledShowMore = styled.div`
+const StyledShowMore = styled.button`
   position: absolute;
   top: 10px;
   right: 10px;
@@ -46,4 +46,8 @@ const StyledShowMore = styled.div`
       visibility: visible;
     }
 `}
+  &:focus  .dropdown {
+    opacity: 1;
+    visibility: visible;
+  }
 `;

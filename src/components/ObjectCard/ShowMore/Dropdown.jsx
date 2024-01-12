@@ -81,7 +81,7 @@ const StyledDropdown = styled.div`
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s;
-  z-index: 3;
+  z-index: 333;
   div,
   a {
     padding: 5px 5px 5px 6px;
