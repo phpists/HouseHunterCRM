@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const Size = ({ totalSize, loadedSize }) => (
   <StyledSize className="flex items-center">
-    {loadedSize} <div className="divider">/</div> <span>{totalSize} МБ</span>
+    {loadedSize} <div className="divider">/</div> <span>{totalSize}</span>
   </StyledSize>
 );
 
@@ -15,6 +15,9 @@ const StyledSize = styled.div`
   font-weight: 600;
   line-height: normal;
   letter-spacing: 0.22px;
+  width: max-content;
+  word-wrap: now;
+  flex-shrink: 0;
   .divider {
     color: rgba(93, 99, 255, 0.2);
   }

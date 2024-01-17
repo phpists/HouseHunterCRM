@@ -1,9 +1,10 @@
 import { styled } from "styled-components";
 
 export const Dropzone = ({ onDownload }) => (
-  <StyledDropzone onClick={() => onDownload(true)}>
+  <StyledDropzone>
     Перетягніть або завантажте будь-який <br />
     файл розміром не більше 30 МБ
+    <input type="file" onChange={(e) => onDownload(e.target.files[0])} />
   </StyledDropzone>
 );
 
@@ -21,9 +22,20 @@ const StyledDropzone = styled.div`
   line-height: normal;
   letter-spacing: 0.22px;
   transition: all 0.3s;
+  position: relative;
   &:hover {
     background: #313241;
     color: #5d63ff;
+  }
+
+  input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    cursor: pointer;
+    opacity: 0;
   }
 
   @media (max-width: 600px) {

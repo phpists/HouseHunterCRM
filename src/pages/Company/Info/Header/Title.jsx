@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import editIcon from "../../../../assets/images/edit-company.svg";
 import { useState } from "react";
 
-export const Title = () => {
+export const Title = ({ title }) => {
   const [edit, setEdit] = useState(false);
 
   return (
@@ -14,12 +14,12 @@ export const Title = () => {
       {edit ? (
         <input
           type="text"
-          defaultValue="Назва компанії"
+          defaultValue={title}
           autoFocus
           onBlur={() => setEdit(false)}
         />
       ) : (
-        "Назва компанії"
+        title
       )}
       <img src={editIcon} alt="" />
     </StyledTitle>

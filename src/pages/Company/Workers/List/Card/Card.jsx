@@ -5,13 +5,30 @@ import { PayStatus } from "./PayStatus";
 import { ReactComponent as Arrow } from "../../../../../assets/images/arrow-right-tarif.svg";
 import { Selected } from "./Selected";
 
-export const Card = ({ onOpenEdit, tarifSelected, onSelect, isSelected }) => (
+export const Card = ({
+  onOpenEdit,
+  tarifSelected,
+  onSelect,
+  isSelected,
+  name,
+  photo,
+  phone,
+  active,
+  billingTo,
+  level,
+}) => (
   <StyledCard
     onClick={() => (tarifSelected ? onSelect() : onOpenEdit())}
     isSelected={isSelected}
   >
     <div className="flex items-center info-wrapper">
-      <Info isSelected={isSelected} />
+      <Info
+        isSelected={isSelected}
+        name={name}
+        photo={photo}
+        phone={phone}
+        level={level}
+      />
       <Arrow className="more-arrow-mobile" />
     </div>
     {tarifSelected && isSelected ? (
@@ -19,9 +36,12 @@ export const Card = ({ onOpenEdit, tarifSelected, onSelect, isSelected }) => (
     ) : tarifSelected ? (
       <div />
     ) : (
-      <EnterStatus />
+      <EnterStatus status={active} />
     )}
-    <PayStatus />
+    <PayStatus
+      status={Number(billingTo) * 1000 > new Date()?.getTime()}
+      billingTo={billingTo}
+    />
     <div className="flex items-center justify-center h-full more-arrow-desktop">
       <Arrow />
     </div>

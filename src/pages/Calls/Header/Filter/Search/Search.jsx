@@ -26,7 +26,6 @@ export const Search = ({ filters, onChangeFilter }) => {
                 )
               : [...filters?.type_call, val?.toString()]
           );
-          console.log(val, title);
         }}
         options={
           callsType

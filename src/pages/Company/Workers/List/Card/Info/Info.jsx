@@ -4,15 +4,15 @@ import { Name } from "./Name";
 import { Status } from "../../../../../../components/Status";
 import { Subtitle } from "./Subtitle";
 
-export const Info = ({ isSelected }) => (
+export const Info = ({ isSelected, name, photo, phone, level }) => (
   <StyledInfo className="flex items-center">
-    <Avatar />
+    <Avatar photo={photo} level={level} />
     <div className="flex flex-col items-start">
       <div className="flex items-start">
-        <Name isSelected={isSelected} />
-        <Status status={2} />
+        <Name isSelected={isSelected} name={name} />
+        {/* <Status status={2} /> */}
       </div>
-      <Subtitle />
+      <Subtitle phone={phone} />
     </div>
   </StyledInfo>
 );

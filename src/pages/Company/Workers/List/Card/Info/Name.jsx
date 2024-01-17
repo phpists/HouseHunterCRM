@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
-export const Name = ({ isSelected }) => (
-  <StyledName isSelected={isSelected}>Віталій Дуда</StyledName>
+export const Name = ({ isSelected, name }) => (
+  <StyledName isSelected={isSelected}>{name}</StyledName>
 );
 
 const StyledName = styled.div`

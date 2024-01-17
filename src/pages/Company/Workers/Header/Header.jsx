@@ -5,7 +5,12 @@ import { Search } from "./Search";
 import { Selected } from "./Selected";
 import { Filter } from "../../../../components/Filter/Filter";
 
-export const Header = ({ tarifSelected, selectedWorkers }) => (
+export const Header = ({
+  tarifSelected,
+  selectedWorkers,
+  filter,
+  onFilterChange,
+}) => (
   <StyledHeader className="flex items-center justify-between">
     <div className="flex items-center">
       <Title />
@@ -17,9 +22,16 @@ export const Header = ({ tarifSelected, selectedWorkers }) => (
       ) : null}
     </div>
     <div className="flex items-center">
-      <CreateButton />
-      <Filter className="mr-4 filter-wrapper" />
-      <Search />
+      {/* <CreateButton /> */}
+      <Filter
+        className="mr-4 filter-wrapper"
+        filter={filter}
+        onFilterChange={onFilterChange}
+      />
+      <Search
+        value={filter?.search}
+        onChange={(val) => onFilterChange("search", val)}
+      />
     </div>
   </StyledHeader>
 );

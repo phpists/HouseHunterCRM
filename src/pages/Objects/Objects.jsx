@@ -48,6 +48,10 @@ export const Objects = () => {
       setFilterFields(resp?.data);
     });
   };
+  const currentPage = useRef(0);
+  const isLoading = useRef(false);
+  const listRef = useRef();
+  const [isAllPages, setIsAllPages] = useState(false);
 
   const handleChangeFilter = (field, value, isDataUpdate) => {
     if (isDataUpdate) {
@@ -74,36 +78,49 @@ export const Objects = () => {
         : [...selected, index]
     );
 
-  const handleGetObjects = () => {
-    let data = { only_favorite: isFavorite ?? undefined };
+  const handleGetObjects = (isReset) => {
+    if ((!isLoading.current && !isAllPages) || isReset) {
+      isLoading.current = true;
 
-    if (filterActive.current) {
-      data = {
-        ...data,
-        filters,
+      let data = {
+        only_favorite: isFavorite ?? undefined,
+        current_page: currentPage.current,
+        item_on_page: 10,
       };
-    }
 
-    getAllObjects(data).then((resp) => {
-      handleResponse(
-        resp,
-        () => {
-          setAllCount(resp?.data?.all_item ?? 0);
-          setObjects(
-            resp?.data?.objects
+      if (filterActive.current) {
+        data = {
+          ...data,
+          filters,
+        };
+      }
+
+      getAllObjects(data).then((resp) => {
+        isLoading.current = false;
+
+        handleResponse(
+          resp,
+          () => {
+            const objectsResp = resp?.data?.objects
               ? Object.entries(resp?.data?.objects)?.map((obj) => obj[1])
-              : []
-          );
-          saveObjectsCount(resp?.data?.all_item);
-        },
-        () => {
-          setObjects([]);
-          setAllCount(0);
-          saveObjectsCount(0);
-        },
-        true
-      );
-    });
+              : [];
+
+            setAllCount(resp?.data?.all_item ?? 0);
+            setObjects(isReset ? objectsResp : [...objects, ...objectsResp]);
+            saveObjectsCount(resp?.data?.all_item);
+          },
+          () => {
+            setIsAllPages(true);
+            if (isReset) {
+              setObjects([]);
+              setAllCount(0);
+              saveObjectsCount(0);
+            }
+          },
+          true
+        );
+      });
+    }
   };
 
   useEffect(() => {
@@ -133,13 +150,13 @@ export const Objects = () => {
   };
 
   useEffect(() => {
-    handleGetObjects();
+    handleGetObjects(true);
     // eslint-disable-next-line
   }, [isFavorite]);
 
   const handleApplyFilter = (isApply) => {
     filterActive.current = isApply;
-    handleGetObjects();
+    handleGetObjects(true);
     if (!isApply) {
       setFilters({ ...INIT_FILTERS, id_hash: "" });
       setFilterFields([]);
@@ -214,7 +231,7 @@ export const Objects = () => {
   };
 
   useEffect(() => {
-    filterActive.current && handleGetObjects();
+    filterActive.current && handleGetObjects(true);
   }, [filters]);
 
   useEffect(() => {
@@ -228,6 +245,29 @@ export const Objects = () => {
       filterActive.current = true;
     }
   }, [location.search]);
+
+  const handleScroll = () => {
+    if (
+      listRef.current.offsetHeight + listRef.current.scrollTop <=
+        listRef.current.scrollHeight - 200 ||
+      isLoading.current
+    ) {
+      return;
+    }
+    currentPage.current += 1;
+    handleGetObjects();
+  };
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.addEventListener("scroll", handleScroll);
+      return () =>
+        listRef.current &&
+        // eslint-disable-next-line
+        listRef.current.removeEventListener("scroll", handleScroll);
+    }
+    // eslint-disable-next-line
+  }, [listRef, isLoading.current, isAllPages, objects]);
 
   return (
     <StyledObjects>
@@ -251,6 +291,7 @@ export const Objects = () => {
         data={objects ?? []}
         toggleFavoriteStatus={handleToggleFavoriteStatus}
         onFindSimilar={handleFindSimilarTo}
+        innerRef={listRef}
       />
     </StyledObjects>
   );

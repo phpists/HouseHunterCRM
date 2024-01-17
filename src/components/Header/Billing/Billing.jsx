@@ -2,20 +2,37 @@ import { styled } from "styled-components";
 import { Title } from "./Title";
 import { Subtitle } from "./Subtitle";
 import { BillButton } from "./BillButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Paying } from "./Paying/Paying";
 import { Download } from "./Download/Download";
 import { Divider } from "./Divider";
+import { useViewCompanyBalanceQuery } from "../../../store/billing/billing.api";
+import { useActions } from "../../../hooks/actions";
+import { useAppSelect } from "../../../hooks/redux";
 
 export const Billing = ({ open, onToggleOpen, onToggleHover }) => {
+  const { data: balanceData, refetch } = useViewCompanyBalanceQuery();
   const [attach, setAttach] = useState(false);
   const [download, setDownload] = useState(false);
   const [downloading, setDownloading] = useState(false);
+  const [value, setValue] = useState(0.0);
+  const { saveBalance } = useActions();
+  const { balance } = useAppSelect((state) => state.billing);
 
   const handleToggleAttach = (value) => {
     setAttach(value);
     setDownload(false);
   };
+
+  const handleClose = () => {
+    onToggleOpen(false);
+    setValue(0);
+    setAttach(false);
+  };
+
+  useEffect(() => {
+    saveBalance(balanceData?.total?.toFixed(2));
+  }, [balanceData]);
 
   return (
     <StyledBilling
@@ -38,18 +55,28 @@ export const Billing = ({ open, onToggleOpen, onToggleHover }) => {
             setDownloading(true);
             setDownload(true);
           }}
+          value={value}
+          refetchBalance={refetch}
+          onClose={handleClose}
         />
       )}
       <div className="main-text">
-        <Title open={open} />
+        <Title
+          open={open}
+          balance={balance ?? "0.00"}
+          value={value}
+          onChange={(val) => setValue(val)}
+        />
         <Subtitle subtitle={open ? "Сума поповнення" : null} />
       </div>
       {open ? (
         <Paying
-          onClose={() => onToggleOpen(false)}
+          onClose={handleClose}
           attach={attach}
           onChangeAttach={handleToggleAttach}
           downloading={downloading}
+          value={value}
+          refetchBalance={refetch}
         />
       ) : (
         <BillButton onClick={() => onToggleOpen(true)} />
@@ -81,12 +108,12 @@ const StyledBilling = styled.div`
   ${({ open }) =>
     open &&
     `
-    padding: 11px 245px 11px 14px !important;
+    padding: 11px 165px 11px 14px !important;
     border-radius: 12px;
     background: #474747;
     border: none;
     .main-text {
-        margin: 0 123px 0 0;
+        margin: 0 10px 0 0;
     }
     .divider {
       opacity: 0;
@@ -95,7 +122,7 @@ const StyledBilling = styled.div`
   ${({ attach }) =>
     attach &&
     `
-    padding: 4px 90px 4px 4px !important;
+    padding: 4px 20px 4px 4px !important;
     .main-text {
         margin: 0 0 0 0;
     }
@@ -125,7 +152,7 @@ const StyledBilling = styled.div`
     ${({ attach }) =>
       attach &&
       `
-    padding: 4px 54px 4px 4px !important;
+    padding: 4px 20px 4px 4px !important;
   `}
   }
 `;

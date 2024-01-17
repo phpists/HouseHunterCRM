@@ -13,6 +13,7 @@ export const List = ({
   data,
   toggleFavoriteStatus,
   onFindSimilar,
+  innerRef,
 }) => {
   const { data: accessData } = useGetAccessQuery();
   const [openAddModal, setOpenAddModal] = useState(null);
@@ -32,7 +33,7 @@ export const List = ({
           idObject={openAddModal}
         />
       )}
-      <StyledList className="hide-scroll">
+      <StyledList className="hide-scroll" ref={innerRef}>
         {data?.length === 0 ? (
           <Empty />
         ) : (

@@ -10,6 +10,7 @@ import { Workers } from "./Workers/Workers";
 import { FooterDelete } from "./FooterDelete";
 import { Logout } from "./Logout";
 import { useRef } from "react";
+import { PersonalBills } from "./PesonalBills/PersonalBills";
 
 export const UserInfoCard = ({
   onClose,
@@ -30,6 +31,9 @@ export const UserInfoCard = ({
   onRemoveAvatar,
   bosses,
   noResetValueOnCodeChange,
+  noStructure,
+  showPayHistory,
+  workerId,
 }) => {
   const controls = useAnimationControls();
   const contentRef = useRef(null);
@@ -74,10 +78,11 @@ export const UserInfoCard = ({
           onRefreshData={onRefreshData}
           isProfile={isProfile}
           profile={profile}
-          billingTo={billingTo}
+          billingTo={data?.billing_to}
           onRemoveAvatar={onRemoveAvatar}
           bosses={bosses}
           errors={errors}
+          noStructure={noStructure}
         />
         {/* <SectionTitle title="Працівники в підпорядкуванні" />
         <Workers /> */}
@@ -88,6 +93,7 @@ export const UserInfoCard = ({
           errors={errors}
           noResetValueOnCodeChange={noResetValueOnCodeChange}
         />
+        {showPayHistory && <PersonalBills workerId={workerId} />}
         {isDelete ? (
           <FooterDelete noDelete={noDelete} onSave={onSave} onReset={onReset} />
         ) : (

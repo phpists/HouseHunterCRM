@@ -3,12 +3,12 @@ import { LoginAllow } from "./LoginAllow";
 import { PaidToDate } from "./PaidToDate";
 import { Profile } from "./Profile/Profile";
 
-export const Info = () => {
+export const Info = ({ formData }) => {
   return (
     <StyledInfo>
       <Profile />
       <div className="divider" />
-      <LoginAllow />
+      <LoginAllow active={formData?.active === 1} />
       <div className="divider" />
       <PaidToDate />
     </StyledInfo>

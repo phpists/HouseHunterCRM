@@ -54,11 +54,6 @@ export const Profile = () => {
   };
 
   useEffect(() => {
-    console.log(
-      user?.dt_birthday === "0"
-        ? new Date()
-        : new Date(Number(user?.dt_birthday) * 1000)
-    );
     setProfileData({
       ...user,
       phones: user.phones.map((p) => ({

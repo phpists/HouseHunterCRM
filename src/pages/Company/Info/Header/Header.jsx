@@ -4,7 +4,7 @@ import { Title } from "./Title";
 import { Date } from "./Date";
 import { Owner } from "./Owner/Owner";
 
-export const Header = ({ tarifOpen }) => {
+export const Header = ({ tarifOpen, data }) => {
   return (
     <StyledHeader
       className="flex items-center justify-between hover-effect-to-right"
@@ -13,11 +13,11 @@ export const Header = ({ tarifOpen }) => {
       <div className="flex items-center">
         <CompanyLogo />
         <div className="flex flex-col items-start ml-2.5">
-          <Title />
+          <Title title={data?.company_name ?? "-"} />
           <Date />
         </div>
       </div>
-      <Owner />
+      <Owner data={data} />
     </StyledHeader>
   );
 };

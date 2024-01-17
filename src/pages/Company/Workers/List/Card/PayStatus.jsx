@@ -1,13 +1,15 @@
 import { styled } from "styled-components";
+import { handleFormatDate } from "../../../../../utilits";
 
-export const PayStatus = ({ status }) => (
+export const PayStatus = ({ status, billingTo }) => (
   <StyledPayStatus status={status}>
     <div className="title">
       {!status ? (
         "Потребує оплати"
       ) : (
         <>
-          <span>Сплачено до</span> 28.07.2023
+          <span>Сплачено до</span>{" "}
+          {handleFormatDate(Number(billingTo) * 1000, true)}
         </>
       )}
     </div>

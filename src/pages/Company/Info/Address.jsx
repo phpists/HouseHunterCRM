@@ -2,10 +2,10 @@ import { styled } from "styled-components";
 import { ReactComponent as LocationIcon } from "../../../assets/images/location.svg";
 import editIcon from "../../../assets/images/edit-company.svg";
 
-export const Address = () => (
+export const Address = ({ address }) => (
   <StyledAddress className="flex items-end">
     <LocationIcon />
-    <span>Сілець, Львівська область, Україна</span>
+    <span>{address?.length > 0 ? address : "-"}</span>
     <img src={editIcon} alt="" />
   </StyledAddress>
 );

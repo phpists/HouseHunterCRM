@@ -7,14 +7,27 @@ import { ReactComponent as CloseIcon } from "../../../../assets/images/close.svg
 import { Divider } from "./Divider";
 import { styled } from "styled-components";
 import { Info } from "./Info";
+import { Liqpay } from "./Liqpay";
 
-export const Paying = ({ onClose, attach, onChangeAttach, downloading }) => {
+export const Paying = ({
+  onClose,
+  attach,
+  onChangeAttach,
+  downloading,
+  value,
+  refetchBalance,
+}) => {
   return (
     <StyledPaying className="flex items-center">
       {!attach && (
         <>
-          <GooglePay />
-          <ApplePay />
+          {/* <GooglePay />
+          <ApplePay /> */}
+          <Liqpay
+            value={value}
+            onClose={onClose}
+            refetchBalance={refetchBalance}
+          />
           <Button
             Icon={AttachIcon}
             hoverColor="#5D63FF"

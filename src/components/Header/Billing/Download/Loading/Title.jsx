@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
-export const Title = ({ isLoaded }) => (
-  <StyledTitle isLoaded={isLoaded}>Рахунок №2981753</StyledTitle>
+export const Title = ({ isLoaded, fileName }) => (
+  <StyledTitle isLoaded={isLoaded}>{fileName}</StyledTitle>
 );
 
 const StyledTitle = styled.div`
@@ -13,6 +13,8 @@ const StyledTitle = styled.div`
   font-weight: 600;
   line-height: normal;
   letter-spacing: 0.22px;
+  text-overflow: ellipsis;
+  overflow: hidden;
   @media (max-width: 600px) {
     font-size: 8px;
   }

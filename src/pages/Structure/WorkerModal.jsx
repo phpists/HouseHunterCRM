@@ -43,6 +43,9 @@ export const WorkerModal = ({
   level,
   onRefetchData,
   showNotStructureWorkers,
+  noStructure,
+  showPayHistory,
+  worker,
 }) => {
   const [getWorker] = useLazyGetWorkerByIdQuery();
   const { user } = useAppSelect((state) => state.auth);
@@ -64,7 +67,6 @@ export const WorkerModal = ({
   const handleChangeField = (fieldName, value) => {
     let newData = { ...profileData, [fieldName]: value };
 
-    console.log(fieldName, value);
     if (fieldName === "structure_level") {
       newData = { ...newData, structure_parent: undefined };
     }
@@ -129,6 +131,7 @@ export const WorkerModal = ({
           : INITIAL_DATA
       );
       !showNotStructureWorkers &&
+        !noStructure &&
         getStructureUsers({
           structure_level: level,
           id_user: resp?.data[0]?.id ?? 0,
@@ -137,7 +140,7 @@ export const WorkerModal = ({
   };
 
   useEffect(() => {
-    if (level === 1 && !showNotStructureWorkers) {
+    if (level === 1 && !showNotStructureWorkers && !worker) {
       setProfileData({
         ...user,
         structure_level: level,
@@ -283,7 +286,7 @@ export const WorkerModal = ({
         data={profileData}
         onChangeField={handleChangeField}
         onSave={() =>
-          level === 1 && !showNotStructureWorkers
+          level === 1 && !showNotStructureWorkers && !noStructure
             ? handleSaveUser()
             : handleSaveWorker()
         }
@@ -294,6 +297,9 @@ export const WorkerModal = ({
         errors={errors}
         onRemoveAvatar={handleDeletePhoto}
         noResetValueOnCodeChange
+        noStructure={noStructure}
+        showPayHistory={showPayHistory}
+        workerId={workerId}
       />
     </>
   );

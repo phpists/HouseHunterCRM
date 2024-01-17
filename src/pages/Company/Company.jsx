@@ -2,18 +2,30 @@ import { styled } from "styled-components";
 import { Info } from "./Info/Info";
 import { Tarif } from "./Tarif/Tarif";
 import { Workers } from "./Workers/Workers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  useLazyContinueBillingQuery,
+  useViewCompanyBalanceQuery,
+} from "../../store/billing/billing.api";
+import { handleResponse } from "../../utilits";
+import { useActions } from "../../hooks/actions";
 
 export const Company = () => {
   const [tarifOpen, setTarifOpen] = useState(false);
   const [tarifSelected, setTarifSelected] = useState(null);
   const [selectedWorkers, setSelectedWorkers] = useState([]);
   const [paying, setPaying] = useState(false);
+  const [continueBilling] = useLazyContinueBillingQuery();
+  const [loading, setLoading] = useState(false);
+  const { data: balanceData, refetch } = useViewCompanyBalanceQuery();
+  const { saveBalance } = useActions();
 
   const handleCloseTarif = () => {
-    setTarifOpen(false);
-    setTarifSelected(null);
-    setSelectedWorkers([]);
+    if (!loading) {
+      setTarifOpen(false);
+      setTarifSelected(null);
+      setSelectedWorkers([]);
+    }
   };
 
   const handleSelectTarif = (value) => {
@@ -31,13 +43,38 @@ export const Company = () => {
   };
 
   const handlePay = () => {
-    setPaying(true);
-    setTimeout(() => {
-      setPaying(false);
-      setTarifSelected(null);
-      setSelectedWorkers([]);
-    }, 2500);
+    if (selectedWorkers?.length > 0) {
+      setLoading(true);
+      continueBilling({
+        period: 1,
+        workers_json: JSON.stringify(selectedWorkers),
+      }).then((resp) =>
+        handleResponse(
+          resp,
+          () => {
+            setLoading(false);
+            setPaying(true);
+            refetch();
+            setTimeout(() => {
+              setPaying(false);
+              setTarifSelected(null);
+              setSelectedWorkers([]);
+            }, 2500);
+          },
+          () => {
+            setLoading(false);
+            setPaying(false);
+            setTarifSelected(null);
+            setSelectedWorkers([]);
+          }
+        )
+      );
+    }
   };
+
+  useEffect(() => {
+    saveBalance(balanceData?.total?.toFixed(2));
+  }, [balanceData]);
 
   return (
     <StyledCompany className="hide-scroll">
@@ -50,6 +87,7 @@ export const Company = () => {
           onSelectTarif={handleSelectTarif}
           onPay={handlePay}
           paying={paying}
+          loading={loading}
         />
       </div>
       <Workers

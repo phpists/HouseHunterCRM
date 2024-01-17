@@ -5,36 +5,17 @@ import { LoadingBar } from "./LoadingBar/LoadingBar";
 import { useEffect, useState } from "react";
 import { LoadedMessage } from "./LoadedMessage";
 
-export const Loading = ({ onLoaded }) => {
-  const totalSize = 27;
-  const [loadedSize, setLoadedSize] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  const handleDownloading = () => {
-    setTimeout(() => {
-      setLoadedSize(2);
-    }, 400);
-    setTimeout(() => {
-      setLoadedSize(17);
-    }, 1200);
-    setTimeout(() => {
-      setLoadedSize(27);
-      setTimeout(() => {
-        setIsLoaded(true);
-        onLoaded(false);
-      }, 200);
-    }, 1800);
-  };
-
-  useEffect(() => {
-    handleDownloading();
-  }, []);
-
+export const Loading = ({
+  totalSize = 100,
+  loadedSize,
+  isLoaded,
+  fileName,
+}) => {
   return (
     <StyledLoading className="flex items-center">
       <File isLoaded={isLoaded} />
-      <div className="flex flex-col items-start">
-        <Title isLoaded={isLoaded} />
+      <div className="flex flex-col items-start loading-content">
+        <Title isLoaded={isLoaded} fileName={fileName} />
         {isLoaded ? (
           <LoadedMessage />
         ) : (
@@ -51,6 +32,9 @@ const StyledLoading = styled.div`
   padding: 3px 11px 3px 3px;
   margin-right: 7px;
   width: 275px;
+  .loading-content {
+    overflow: hidden;
+  }
   @media (max-width: 600px) {
     padding: 8px 21px;
     width: auto;

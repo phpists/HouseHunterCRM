@@ -54,6 +54,7 @@ export const ObjectPage = () => {
       ? Object.entries(fieldsData?.main_field)
           ?.filter((f) => f[1]?.type === "date")
           ?.map((f) => f[0])
+          ?.map((f) => f !== "obj_is_actual_dt")
       : [];
 
     let updatedData = { ...data };
@@ -64,9 +65,7 @@ export const ObjectPage = () => {
         [f]:
           Number(updatedData[f]) === 0
             ? new Date()
-            : updatedData[f]
-            ? new Date(updatedData[f] * 1000)
-            : new Date(),
+            : new Date(updatedData[f] * 1000),
       };
     });
 
@@ -104,9 +103,14 @@ export const ObjectPage = () => {
       getObject(id).then((resp) => {
         const objectData = {
           ...handleFormatDatesToTimestamp(resp?.data, true),
-          obj_is_actual_dt: resp?.data?.obj_is_actual_dt
-            ? Number(resp?.data?.obj_is_actual_dt) * 1000
-            : Number(new Date()?.getTime()).toFixed(0),
+          obj_is_actual_dt:
+            Number(resp?.data?.obj_is_actual_dt) === 0
+              ? new Date()
+              : new Date(Number(resp?.data?.obj_is_actual_dt) * 1000),
+          dt_end_agreement:
+            Number(resp?.data?.dt_end_agreement) === 0
+              ? new Date()
+              : new Date(Number(resp?.data?.dt_end_agreement) * 1000),
         };
         setData(objectData);
         handleGetRubricsFields(resp?.data?.id_rubric, objectData, true);
@@ -170,7 +174,10 @@ export const ObjectPage = () => {
           ...handleFormatDatesToTimestamp(data, fields),
           id_client: clientId,
           obj_is_actual_dt: data?.obj_is_actual_dt
-            ? Number(data?.obj_is_actual_dt) / 1000
+            ? new Date(data?.obj_is_actual_dt)?.getTime() / 1000
+            : undefined,
+          dt_end_agreement: data?.dt_end_agreement
+            ? new Date(data?.dt_end_agreement)?.getTime() / 1000
             : undefined,
         },
         photos: photos.map((p) => p.file),
@@ -232,9 +239,13 @@ export const ObjectPage = () => {
           ...handleFormatDatesToTimestamp(data, fields),
           id_client: clientId,
           obj_is_actual_dt: data?.obj_is_actual_dt
-            ? Number(data?.obj_is_actual_dt) / 1000
+            ? new Date(data?.obj_is_actual_dt)?.getTime() / 1000
+            : undefined,
+          dt_end_agreement: data?.dt_end_agreement
+            ? new Date(data?.dt_end_agreement)?.getTime() / 1000
             : undefined,
           img: null,
+
           photos_json: null,
         },
         photos: photos.filter((p) => p?.status !== "old").map((p) => p.file),

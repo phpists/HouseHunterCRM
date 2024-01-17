@@ -14,6 +14,8 @@ import { calls } from "./calls/calls.api";
 import { callsReducer } from "./calls/calls.slice";
 import { selections } from "./selections/selections.api";
 import { selectionsReducer } from "./selections/selections.slice";
+import { billing } from "./billing/billing.api";
+import { billingReducer } from "./billing/billing.slice";
 
 export const store = configureStore({
   reducer: {
@@ -31,6 +33,8 @@ export const store = configureStore({
     calls: callsReducer,
     [selections.reducerPath]: selections.reducer,
     selections: selectionsReducer,
+    [billing.reducerPath]: billing.reducer,
+    billing: billingReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -40,7 +44,8 @@ export const store = configureStore({
       objects.middleware,
       structure.middleware,
       calls.middleware,
-      selections.middleware
+      selections.middleware,
+      billing.middleware
     ),
 });
 

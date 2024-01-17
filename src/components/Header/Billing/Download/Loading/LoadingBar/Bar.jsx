@@ -7,7 +7,7 @@ export const Bar = ({ procent }) => (
 );
 
 const StyledBar = styled.div`
-  width: 144px;
+  width: 140px;
   height: 6px;
   flex-shrink: 0;
   background: rgba(93, 99, 255, 0.1);

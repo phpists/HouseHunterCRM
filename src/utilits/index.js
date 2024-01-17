@@ -79,7 +79,9 @@ export const handleFormatDate = (d, isShort) => {
   const hours = date.getHours();
   const minutes = date.getMinutes();
 
-  return isShort
+  return isNaN(day)
+    ? "--.--.----"
+    : isShort
     ? `${addZero(day)}.${addZero(month)}.${year}`
     : `${addZero(day)}.${addZero(month)}.${year} ${hours}:${minutes}`;
 };
@@ -311,4 +313,13 @@ export const handleGetRange = (num, isProcent) => {
   }
 
   return { start, end };
+};
+
+export const formatBytes = (bytes, decimals) => {
+  if (bytes === 0) return "0 Bytes";
+  var k = 1024,
+    dm = decimals || 2,
+    sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
+    i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 };

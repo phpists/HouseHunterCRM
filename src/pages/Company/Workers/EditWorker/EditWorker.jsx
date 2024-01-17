@@ -7,9 +7,13 @@ import { PersonalData } from "./PerfonalData/PersonalData";
 import { PersonalBills } from "./PesonalBills/PersonalBills";
 import { useEffect, useState } from "react";
 import { motion, useAnimationControls } from "framer-motion";
+import { useLazyGetWorkerByIdQuery } from "../../../../store/structure/structure.api";
+import { handleResponse } from "../../../../utilits";
 
-export const EditWorker = ({ onClose }) => {
+export const EditWorker = ({ onClose, id }) => {
   const controls = useAnimationControls();
+  const [formData, setFormData] = useState({});
+  const [getWorker] = useLazyGetWorkerByIdQuery();
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
@@ -19,6 +23,18 @@ export const EditWorker = ({ onClose }) => {
   useEffect(() => {
     controls.start({ opacity: 1, translateX: 0 });
   }, []);
+
+  useEffect(() => {
+    getWorker(id).then((resp) =>
+      handleResponse(
+        resp,
+        () => {
+          setFormData(resp?.data[0]);
+        },
+        onClose
+      )
+    );
+  }, [id]);
 
   return (
     <StyledEditWorker
@@ -30,7 +46,7 @@ export const EditWorker = ({ onClose }) => {
       <Header onClose={handleClose} />
       <div className="content hide-scroll">
         <SectorTitle title="Загальна інформація" />
-        <Info />
+        <Info formData={formData} />
         <SectorTitle title="Персональні дані" />
         <PersonalData />
         <SectorTitle title="Персональні Рахунки" />

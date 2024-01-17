@@ -1,12 +1,12 @@
 import { styled } from "styled-components";
 
-export const Text = ({ title, paying }) => (
+export const Text = ({ title, paying, dayCount }) => (
   <StyledText paying={paying}>
     <div className="title-wrapper">
       <div className="title">{title}</div>
       <div className="title success">Кошти успішно списані!</div>
     </div>
-    <div className="subtitle">+30 календарних днів</div>
+    <div className="subtitle">+{dayCount} календарних днів</div>
   </StyledText>
 );
 

@@ -1,7 +1,10 @@
 import { styled } from "styled-components";
 
-export const Subtitle = () => (
-  <StyledSubtitle>+38 (097) 707-62-58 • ID:1254</StyledSubtitle>
+export const Subtitle = ({ phone }) => (
+  <StyledSubtitle>
+    {phone}
+    {/* • ID:1254 */}
+  </StyledSubtitle>
 );
 
 const StyledSubtitle = styled.div`

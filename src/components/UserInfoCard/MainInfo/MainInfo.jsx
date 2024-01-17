@@ -5,6 +5,7 @@ import { LoginAllow } from "./LoginAllow";
 import { StatusCard } from "./StatusCard";
 import { AvatarBanner } from "./AvatarBanner";
 import { BossSelect } from "../../../components/BossSelect/BossSelect";
+import { handleFormatDate } from "../../../utilits";
 
 export const MainInfo = ({
   avatarBanner,
@@ -17,6 +18,7 @@ export const MainInfo = ({
   onRemoveAvatar,
   bosses = [],
   errors = [],
+  noStructure,
 }) => {
   return (
     <StyledMainInfo>
@@ -28,8 +30,9 @@ export const MainInfo = ({
         isProfile={isProfile}
         profile={profile}
         onRemoveAvatar={onRemoveAvatar}
+        noStructure={noStructure}
       />
-      {bosses?.length > 0 && data?.structure_level ? (
+      {bosses?.length > 0 && data?.structure_level && !noStructure ? (
         <>
           <Divider />
           <BossSelect
@@ -60,10 +63,11 @@ export const MainInfo = ({
               <StatusCard
                 title={
                   <>
-                    <span>Сплачено до</span> {billingTo}
+                    <span>Сплачено до</span>{" "}
+                    {handleFormatDate(Number(billingTo) * 1000, true)}
                   </>
                 }
-                status={true}
+                status={new Date()?.getTime() < Number(billingTo) * 1000}
                 subtitle="Білінг"
               />
             </>

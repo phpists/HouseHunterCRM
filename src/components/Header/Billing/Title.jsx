@@ -1,7 +1,17 @@
 import { styled } from "styled-components";
 
-export const Title = ({ open }) => (
-  <StyledTitle open={open}>28 320₴</StyledTitle>
+export const Title = ({ open, balance, value, onChange }) => (
+  <StyledTitle open={open}>
+    {open ? (
+      <input
+        type="number"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    ) : (
+      `${balance}₴`
+    )}
+  </StyledTitle>
 );
 
 const StyledTitle = styled.div`

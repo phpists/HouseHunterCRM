@@ -5,24 +5,27 @@ import { Cards } from "./Cards/Cards";
 import { Address } from "./Address";
 import { WebSite } from "./WebSite";
 import { TarifHeader } from "./TarifHeader/TarifHeader";
+import { useGetCompanyInfoQuery } from "../../../store/billing/billing.api";
 
 export const Info = ({ tarifOpen, onCloseTarif }) => {
+  const { data } = useGetCompanyInfoQuery();
+
   return (
     <StyledInfo>
       <TarifHeader onCloseTarif={onCloseTarif} tarifOpen={tarifOpen} />
       <div className="info-content">
-        <Header tarifOpen={tarifOpen} />
+        <Header tarifOpen={tarifOpen} data={data?.data} />
         {!tarifOpen && (
           <>
             <About />
-            <Cards />
+            <Cards data={data?.data} />
           </>
         )}
       </div>
       {!tarifOpen && (
         <div className="flex items-center info-footer">
-          <Address />
-          <WebSite />
+          <Address address={data?.data?.registration_adress} />
+          <WebSite webSite={data?.data?.web_site_copmany ?? "-"} />
         </div>
       )}
     </StyledInfo>

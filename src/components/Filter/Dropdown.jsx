@@ -1,49 +1,56 @@
 import { styled } from "styled-components";
 import { Toggle } from "../Toggle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Option } from "../Option";
+import { useGetAllPerimissionsLevelsQuery } from "../../store/structure/structure.api";
 
-export const Dropdown = ({ open }) => {
-  const [loginAllow, setLoginAllow] = useState(false);
-  const [paid, setPaid] = useState(false);
-  const [rieltor, setRieltor] = useState(false);
-  const [manager, setManager] = useState(false);
-  const [boss, setBoss] = useState(false);
+export const Dropdown = ({ open, filter, onFilterChange }) => {
+  const { data: levels } = useGetAllPerimissionsLevelsQuery();
+  const [roles, setRoles] = useState([]);
+
+  useEffect(() => {
+    if (levels) {
+      setRoles(
+        Object.entries(levels)[Object.entries(levels)?.length - 1][1][0]?.split(
+          " - "
+        ) ?? []
+      );
+    }
+  }, [levels]);
 
   return (
     <StyledDropdown open={open}>
       <div className="flex items-center justify-between toggle-wrapper">
         <span>Вхід дозволено</span>
         <Toggle
-          value={loginAllow}
-          onChange={() => setLoginAllow(!loginAllow)}
-          className={loginAllow ? "toggle--active " : "toggle"}
+          value={filter?.active}
+          onChange={() => onFilterChange("active", !filter?.active)}
+          className={filter?.active ? "toggle--active " : "toggle"}
         />
       </div>
       <div className="flex items-center justify-between toggle-wrapper">
         <span>Доступ оплачено</span>
         <Toggle
-          value={paid}
-          onChange={() => setPaid(!paid)}
-          className={paid ? "toggle--active " : "toggle"}
+          value={filter?.billing}
+          onChange={() => onFilterChange("billing", !filter?.billing)}
+          className={filter?.billing ? "toggle--active " : "toggle"}
         />
       </div>
-      <Option
-        title="Ріелтор"
-        active={rieltor}
-        onChange={() => setRieltor(!rieltor)}
-      />
-      <Option
-        title="Менеджер"
-        active={manager}
-        onChange={() => setManager(!rieltor)}
-      />
-      <Option
-        title="Керівник"
-        active={boss}
-        onChange={() => setBoss(!boss)}
-        className="last-option"
-      />
+      {roles?.map((role, i) => (
+        <Option
+          key={i}
+          title={role}
+          active={filter.roles?.find((r) => r === i.toString())}
+          onSelect={() =>
+            onFilterChange(
+              "roles",
+              filter.roles?.find((r) => r === i.toString())
+                ? filter.roles?.filter((r) => r !== i.toString())
+                : [...filter.roles, i.toString()]
+            )
+          }
+        />
+      ))}
     </StyledDropdown>
   );
 };

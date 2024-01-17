@@ -7,10 +7,10 @@ import { ReactComponent as StarIcon } from "../../../../assets/images/card-star.
 import backgrondBlue from "../../../../assets/images/blue-card-mask.svg";
 import backgrondPink from "../../../../assets/images/pink-card-mask.svg";
 
-export const Cards = () => (
+export const Cards = ({ data }) => (
   <StyledCards>
     <Card
-      title="15"
+      title={data?.years_the_market ?? "-"}
       subtitle={
         <>
           Років <br /> на ринку
@@ -20,7 +20,7 @@ export const Cards = () => (
       hoverBackground={backgrondBlue}
     />
     <Card
-      title="5"
+      title={data?.year_on_site ?? "-"}
       subtitle={
         <>
           Років <br />
@@ -31,7 +31,7 @@ export const Cards = () => (
       hoverBackground={backgrondBlue}
     />
     <Card
-      title="12"
+      title={data?.all_users_in_copmany ?? "-"}
       subtitle={
         <>
           Агентів <br />в компанії
@@ -41,7 +41,7 @@ export const Cards = () => (
       hoverBackground={backgrondBlue}
     />
     <Card
-      title="527"
+      title={data?.all_obj_copmany ?? "-"}
       subtitle={
         <>
           Кількість <br /> оголошень
@@ -51,7 +51,7 @@ export const Cards = () => (
       hoverBackground={backgrondBlue}
     />
     <Card
-      title="4.86"
+      title={data?.XXXX ?? "-"}
       subtitle={
         <>
           Рейтинг <br />
@@ -68,7 +68,7 @@ export const Cards = () => (
       }
     />
     <Card
-      title="3.25"
+      title={data?.XXXX ?? "-"}
       subtitle={
         <>
           Рейтинг <br />

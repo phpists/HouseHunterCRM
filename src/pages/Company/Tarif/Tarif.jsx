@@ -11,6 +11,7 @@ export const Tarif = ({
   onSelectTarif,
   onPay,
   paying,
+  loading,
 }) => {
   return (
     <StyledTarif
@@ -25,6 +26,7 @@ export const Tarif = ({
             onSelectTarif={onSelectTarif}
             onPay={onPay}
             paying={paying}
+            loading={loading}
           />
           <Divider />
         </>

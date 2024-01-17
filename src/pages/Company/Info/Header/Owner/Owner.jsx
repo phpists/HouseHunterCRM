@@ -2,11 +2,11 @@ import { styled } from "styled-components";
 import { Status } from "../../../../../components/Status";
 import { Avatar } from "./Avatar";
 
-export const Owner = () => (
+export const Owner = ({ data }) => (
   <StyledOwner className="flex items-center">
-    <Status status={1} className="status-badge" />
-    <div className="name">Юрій О.</div>
-    <Avatar />
+    {/* <Status status={1} className="status-badge" /> */}
+    <div className="name">{data?.full_name ?? "-"}</div>
+    <Avatar photo={data?.photo} />
   </StyledOwner>
 );
 

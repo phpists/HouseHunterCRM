@@ -1,25 +1,60 @@
 import { styled } from "styled-components";
 import { Card } from "./Card/Card";
-
-const data = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+import { useGetPhonesCodesQuery } from "../../../../store/auth/auth.api";
+import { Empty } from "./Empty";
 
 export const List = ({
   onOpenEdit,
   tarifSelected,
   selectedWorkers,
   onSelect,
+  workers,
 }) => {
+  const { data: phonesCodes } = useGetPhonesCodesQuery();
+
   return (
     <StyledList className="hide-scroll">
-      {data.map((card, i) => (
-        <Card
-          key={i}
-          onOpenEdit={onOpenEdit}
-          onSelect={() => onSelect(1 + i)}
-          tarifSelected={tarifSelected}
-          isSelected={!!selectedWorkers.find((w) => w === 1 + i)}
-        />
-      ))}
+      {workers?.length > 0 ? (
+        workers.map(
+          (
+            {
+              first_name,
+              id,
+              last_name,
+              phones,
+              billing_to,
+              active,
+              photo,
+              struct_level,
+            },
+            i
+          ) => (
+            <Card
+              key={i}
+              onOpenEdit={() => onOpenEdit({ id, struct_level })}
+              onSelect={() => onSelect(id)}
+              tarifSelected={tarifSelected}
+              isSelected={!!selectedWorkers.find((w) => w === id)}
+              name={`${first_name ?? ""} ${last_name ?? ""}`}
+              photo={photo}
+              phone={
+                phones?.length > 0
+                  ? `${
+                      phonesCodes?.find(
+                        (c) => c.id === phones[0]?.id_phone_code
+                      )?.code ?? ""
+                    }${phones[0]?.phone}`
+                  : ""
+              }
+              active={active === "1"}
+              billingTo={billing_to}
+              level={struct_level}
+            />
+          )
+        )
+      ) : (
+        <Empty />
+      )}
     </StyledList>
   );
 };

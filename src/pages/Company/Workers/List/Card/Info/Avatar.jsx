@@ -1,7 +1,12 @@
 import { styled } from "styled-components";
-import avatarIcon from "../../../../../../assets/images/avatar.png";
+import empty from "../../../../../../assets/images/small-avatar-green.svg";
+import { handleGetRoleAvatar } from "../../../../../../utilits";
 
-export const Avatar = () => <StyledAvatar avatarIcon={avatarIcon} />;
+export const Avatar = ({ photo, level }) => (
+  <StyledAvatar
+    avatarIcon={photo?.length > 0 ? photo : handleGetRoleAvatar(level)}
+  />
+);
 
 const StyledAvatar = styled.div`
   width: 50px;

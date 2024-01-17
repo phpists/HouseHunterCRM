@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { ReactComponent as SearchIcon } from "../../../../assets/images/search.svg";
 import { useState } from "react";
 
-export const Search = () => {
+export const Search = ({ value, onChange }) => {
   const [focused, setFocused] = useState(false);
   return (
     <StyledSearch focused={focused}>
@@ -11,6 +11,8 @@ export const Search = () => {
         placeholder="Пошук"
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
       />
       <SearchIcon />
     </StyledSearch>

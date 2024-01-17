@@ -14,6 +14,8 @@ export const Card = ({
   onSelect,
   onPay,
   paying,
+  dayCount,
+  loading,
 }) => {
   return (
     <StyledCard open={open} paying={selected && paying}>
@@ -27,9 +29,14 @@ export const Card = ({
         className="footer flex items-center justify-between"
         onClick={() => (open ? null : onOpen())}
       >
-        <Text title={title} paying={selected && paying} />
-        {selected && paying ? null : open ? (
-          <Buttons selected={selected} onSelect={onSelect} onPay={onPay} />
+        <Text title={title} paying={selected && paying} dayCount={dayCount} />
+        {selected && paying ? null : loading ? null : open ? (
+          <Buttons
+            selected={selected}
+            onSelect={onSelect}
+            onPay={onPay}
+            loading
+          />
         ) : (
           <Price price={price} color={color} />
         )}

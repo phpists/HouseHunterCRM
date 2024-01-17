@@ -2,10 +2,10 @@ import { styled } from "styled-components";
 import { ReactComponent as WebsiteIcon } from "../../../assets/images/website.svg";
 import editIcon from "../../../assets/images/edit-company.svg";
 
-export const WebSite = () => (
+export const WebSite = ({ webSite }) => (
   <StyledWebSite className="flex items-end">
     <WebsiteIcon />
-    <span>apple.company.com</span>
+    <span>{webSite?.length > 0 ? webSite : "-"}</span>
     <img src={editIcon} alt="" />
   </StyledWebSite>
 );

@@ -285,7 +285,6 @@ export const Request = () => {
     if (id) {
       getRequest(id).then((resp) => {
         handleResponse(resp, () => {
-          console.log(resp?.data[id]?.General_field_group?.dt_deadline);
           setFavorite(!!!resp?.data[id].General_field_group?.favorite);
           setCategories([]);
           categoriesData.current = [];
