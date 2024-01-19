@@ -3,6 +3,7 @@ import { Header } from "./Header/Header";
 import { List } from "./List/List";
 import { useEffect, useRef, useState } from "react";
 import {
+  calls,
   useLazyAddCommentToCallQuery,
   useLazyGetCallsQuery,
   useLazySetStatusCallQuery,
@@ -18,8 +19,8 @@ const INIT_FILTERS = {
   type_call: [],
   call_my_struct: undefined,
   status: "0",
-  date_from: new Date().getTime() / 1000 - 2629743,
-  date_to: new Date().getTime() / 1000,
+  date_from: Math.floor(new Date().getTime() / 1000 - 2629743),
+  date_to: Math.floor(new Date().getTime() / 1000),
   view: "0",
 };
 
@@ -33,6 +34,7 @@ export const Calls = () => {
   const [data, setData] = useState(null);
   const [filters, setFilters] = useState(INIT_FILTERS);
   const isFirstLoad = useRef(true);
+  const [isDefaultFilterSet, setIsDefaultFilterSet] = useState(false);
 
   const handleChangeFilter = (fieldName, value) => {
     setFilters({ ...filters, [fieldName]: value });
@@ -103,19 +105,27 @@ export const Calls = () => {
   useEffect(() => {
     const filterApply = location?.search?.split("=")[0];
     if (filterApply === "?view") {
-      setFilters({ ...INIT_FILTERS, view: "1" });
+      setFilters({ view: "1" });
+      setIsDefaultFilterSet(true);
     } else {
       handleGetCalls(false);
+      setIsDefaultFilterSet(true);
     }
   }, [location.search]);
 
   useEffect(() => {
-    if (isFirstLoad.current) {
+    if (isFirstLoad.current && isDefaultFilterSet) {
       const filterApply = location?.search?.split("=")[0];
       isFirstLoad.current = false;
       handleGetCalls(!!filterApply);
     }
-  }, [filters]);
+  }, [filters, isDefaultFilterSet]);
+
+  const handleSelectAll = (isReset, count) => {
+    const callsIds = data?.map((call) => call.id)?.slice(0, count ?? undefined);
+
+    setSelected(isReset ? [] : callsIds);
+  };
 
   return (
     <StyledCalls>
@@ -125,6 +135,8 @@ export const Calls = () => {
         onChangeFilter={handleChangeFilter}
         onApplyFilter={handleApplyFilter}
         onSetCallsStatus={handleSetCallsStatus}
+        onSelectAll={handleSelectAll}
+        allCount={data?.length}
       />
       <List
         selected={selected}

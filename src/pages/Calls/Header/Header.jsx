@@ -16,6 +16,8 @@ export const Header = ({
   onChangeFilter,
   onApplyFilter,
   onSetCallsStatus,
+  onSelectAll,
+  allCount,
 }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClientOpen, setAddClientOpen] = useState(false);
@@ -33,8 +35,10 @@ export const Header = ({
           />
           <div className="select-wrapper-desktop flex items-center justify-end">
             <SelectItems
-              title="об'єктів"
+              title="дзвінків"
               selectedCount={selectedCount}
+              allCount={allCount}
+              onSelectAll={onSelectAll}
               dropdown={
                 <SelectItemsDropdown
                   onSetCallsStatus={onSetCallsStatus}
@@ -46,8 +50,10 @@ export const Header = ({
         </div>
       </div>
       <SelectItems
-        title="об'єктів"
+        title="дзвінків"
         selectedCount={selectedCount}
+        allCount={allCount}
+        onSelectAll={onSelectAll}
         dropdown={
           <SelectItemsDropdown
             onSetCallsStatus={onSetCallsStatus}

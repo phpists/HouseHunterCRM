@@ -235,7 +235,9 @@ export const Request = () => {
           ...data.general_group,
           id_client: clientId,
           dt_deadline: data?.general_group?.dt_deadline
-            ? new Date(data?.general_group?.dt_deadline ?? 0).getTime() / 1000
+            ? Math.floor(
+                new Date(data?.general_group?.dt_deadline ?? 0).getTime() / 1000
+              )
             : undefined,
           favorite: undefined,
         },
@@ -260,7 +262,9 @@ export const Request = () => {
           ...data.general_group,
           id_client: clientId,
           dt_deadline: data?.general_group?.dt_deadline
-            ? new Date(data?.general_group?.dt_deadline ?? 0).getTime() / 1000
+            ? Math.floor(
+                new Date(data?.general_group?.dt_deadline ?? 0).getTime() / 1000
+              )
             : undefined,
           favorite: undefined,
         },

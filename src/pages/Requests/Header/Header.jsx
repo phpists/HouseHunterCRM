@@ -103,7 +103,7 @@ export const Header = ({
           />
           <div className="select-wrapper select-wrapper-desktop flex items-center justify-end">
             <SelectItems
-              title="об'єктів"
+              title="запитів"
               selectedCount={selectedCount}
               deleteConfirmTitle="Видалити запит(и)?"
               onDelete={

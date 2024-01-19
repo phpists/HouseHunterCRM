@@ -5,15 +5,26 @@ import { Header } from "./Header";
 
 export const Calendar = ({ value = null, onChange = () => null }) => {
   const [loading, setLoading] = useState(false);
+
   const handleChangeMonth = (count) => {
     setLoading(true);
     onChange(new Date(value.setMonth(value.getMonth() + count)));
     setTimeout(() => setLoading(false), 100);
   };
 
+  const handleChangeYear = (year) => {
+    setLoading(true);
+    onChange(new Date(value.setYear(year)));
+    setTimeout(() => setLoading(false), 100);
+  };
+
   return (
     <StyledCalendar className="calendar-wrapper">
-      <Header value={value ?? new Date()} onChangeMonth={handleChangeMonth} />
+      <Header
+        value={value ?? new Date()}
+        onChangeMonth={handleChangeMonth}
+        onChangeYear={handleChangeYear}
+      />
       {!loading && (
         <ReactCalendar
           onChange={onChange}

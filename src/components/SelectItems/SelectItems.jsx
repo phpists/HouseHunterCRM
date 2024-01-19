@@ -48,6 +48,8 @@ export const SelectItems = ({
     setType(isTheSame ? null : val);
     if (val === 2) {
       onSelectAll && onSelectAll(isTheSame);
+    } else if (val === 1 && onSelectAll) {
+      onSelectAll(isTheSame, selectedCount === 0 ? 10 : undefined);
     }
   };
 

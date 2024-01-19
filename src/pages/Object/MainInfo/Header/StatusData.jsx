@@ -17,7 +17,7 @@ export const StatusData = ({ value, onChange }) => {
         <div className="title">{handleFormatDate(new Date(value), true)}</div>
         <div className="subtitle">звільняється з </div>
       </div>
-      <CalendarIcon onClick={() => setOpen(!open)} />
+      <CalendarIcon onClick={() => setOpen(!open)} className="calendar-icon" />
       <div className="dropdown">
         <Calendar value={new Date(value)} onChange={handleChangeDate} />
       </div>
@@ -78,7 +78,7 @@ const StyledDate = styled.button`
     overflow: hidden;
   }
 
-  svg {
+  .calendar-icon {
     &:hover {
       g {
         opacity: 1;
@@ -96,13 +96,13 @@ const StyledDate = styled.button`
     }
     border-radius: 9px;
     background: rgba(255, 255, 255, 0.05);
-    g {
+    .calendar-icon g {
       opacity: 1;
     }
   }
   @media (max-width: 1300px) {
     justify-content: center;
-    svg {
+    .calendar-icon {
       display: none;
     }
   }

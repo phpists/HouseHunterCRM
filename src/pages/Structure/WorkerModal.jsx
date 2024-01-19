@@ -185,10 +185,11 @@ export const WorkerModal = ({
         ),
         password: password?.length > 0 ? password : undefined,
         photo: profileData?.photo.file ?? undefined,
-        dt_birthday:
+        dt_birthday: Math.floor(
           profileData?.dt_birthday === "0"
             ? new Date()?.getTime() / 1000
-            : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000,
+            : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000
+        ),
       }).then((resp) =>
         handleResponse(resp, () => {
           cogoToast.success("Зміни успішно збережено", {
@@ -208,10 +209,11 @@ export const WorkerModal = ({
         id_permision: rolesPermission?.id_permision,
         id_worker: profileData?.id,
         photo: profileData?.photo.file ?? undefined,
-        dt_birthday:
+        dt_birthday: Math.floor(
           profileData?.dt_birthday === "0"
             ? new Date()?.getTime() / 1000
-            : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000,
+            : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000
+        ),
         phones_json: JSON.stringify(
           profileData?.phones.map((phone) => ({
             ...phone,

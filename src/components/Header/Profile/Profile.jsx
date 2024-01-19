@@ -94,10 +94,11 @@ export const Profile = () => {
         ),
         password: password?.length > 0 ? password : undefined,
         photo: photo?.file,
-        dt_birthday:
+        dt_birthday: Math.floor(
           profileData?.dt_birthday === "0"
             ? new Date()?.getTime() / 1000
-            : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000,
+            : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000
+        ),
       }).then((resp) =>
         handleResponse(resp, () => {
           cogoToast.success("Зміни успішно збережено", {
@@ -126,6 +127,18 @@ export const Profile = () => {
     setOpenNotifications(false);
   }, [pathname]);
 
+  const handleFormat = (date) => {
+    const formated = date.split(" ");
+    const hours = formated[1];
+    const dateSplited = formated[0]?.split(".");
+
+    return Math.floor(
+      new Date(
+        `${dateSplited[1]}.${dateSplited[0]}.${dateSplited[2]} ${hours}`
+      )?.getTime() / 1000
+    );
+  };
+
   return (
     <>
       {openEdit && (
@@ -133,14 +146,17 @@ export const Profile = () => {
           onClose={() => setOpenEdit(false)}
           title="Особистий профіль"
           avatarBanner
-          data={profileData}
+          data={{
+            ...profileData,
+            billing_to: user?.billing_to ? handleFormat(user?.billing_to) : "",
+          }}
           onChangeField={handleChangeField}
           onRefreshData={handleGetUserData}
           onSave={handleSave}
           onReset={handleReset}
           logout
           profile
-          billingTo={user?.billing_to}
+          billingTo={user?.billing_to ? handleFormat(user?.billing_to) : ""}
           errors={errors}
           onRemoveAvatar={handleRemoveAvatar}
           noResetValueOnCodeChange

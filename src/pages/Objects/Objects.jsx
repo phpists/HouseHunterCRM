@@ -105,7 +105,7 @@ export const Objects = () => {
               ? Object.entries(resp?.data?.objects)?.map((obj) => obj[1])
               : [];
 
-            setAllCount(resp?.data?.all_item ?? 0);
+            setAllCount(allCount + (resp?.data?.all_item ?? 0));
             setObjects(isReset ? objectsResp : [...objects, ...objectsResp]);
             saveObjectsCount(resp?.data?.all_item);
           },
@@ -163,8 +163,8 @@ export const Objects = () => {
     }
   };
 
-  const handleSelectAll = (isReset) => {
-    const objIds = objects?.map((obj) => obj.id);
+  const handleSelectAll = (isReset, count) => {
+    const objIds = objects?.map((obj) => obj.id)?.slice(0, count ?? undefined);
 
     setSelected(isReset ? [] : objIds);
   };

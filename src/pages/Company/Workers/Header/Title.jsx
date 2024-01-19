@@ -1,6 +1,8 @@
 import { styled } from "styled-components";
 
-export const Title = () => <StyledTitle>12 Працівників</StyledTitle>;
+export const Title = ({ count }) => (
+  <StyledTitle>{count} Працівників</StyledTitle>
+);
 
 const StyledTitle = styled.h3`
   color: #fff;

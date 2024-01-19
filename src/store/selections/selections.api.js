@@ -8,7 +8,7 @@ export const selections = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (build) => ({
     getSelections: build.query({
-      query: ({ id_requst_group, filters }) => ({
+      query: ({ id_requst_group, filters, current_page, item_on_page }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -17,6 +17,8 @@ export const selections = createApi({
           mod: "requests",
           id_requst_group,
           filters,
+          current_page,
+          item_on_page,
         }),
       }),
       transformResponse: (response) => {

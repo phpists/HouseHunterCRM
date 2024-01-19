@@ -10,10 +10,11 @@ export const Header = ({
   selectedWorkers,
   filter,
   onFilterChange,
+  count,
 }) => (
   <StyledHeader className="flex items-center justify-between">
     <div className="flex items-center">
-      <Title />
+      <Title count={count} />
       {tarifSelected ? (
         <Selected
           price={tarifSelected?.price ?? 0}

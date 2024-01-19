@@ -2,22 +2,17 @@ import styled from "styled-components";
 import { CardHeader } from "../CardHeader";
 import { Card } from "../Card/Card";
 import { ReactComponent as Users } from "../../../assets/images/users.svg";
-import { useGetClientsCountQuery } from "../../../store/clients/clients.api";
 
-export const Clients = () => {
-  const { data } = useGetClientsCountQuery();
-
-  return (
-    <StyledClients>
-      <CardHeader title="До моїх клієнтів" />
-      <Card
-        IconImg={Users}
-        title={data?.count ?? "-"}
-        subtitle="Всього клієнтів"
-      />
-    </StyledClients>
-  );
-};
+export const Clients = ({ data }) => (
+  <StyledClients>
+    <CardHeader title="До моїх клієнтів" />
+    <Card
+      IconImg={Users}
+      title={data?.count ?? "-"}
+      subtitle="Всього клієнтів"
+    />
+  </StyledClients>
+);
 
 const StyledClients = styled.div`
   padding: 20px;

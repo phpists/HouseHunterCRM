@@ -252,8 +252,11 @@ export const Requests = () => {
     }
   };
 
-  const handleSelectAll = (isReset) => {
-    const requestsIds = Object.entries(requests)?.map((r) => r[0]);
+  const handleSelectAll = (isReset, count) => {
+    const requestsIds = Object.entries(requests)
+      ?.map((r) => r[0])
+      .slice(0, count ?? undefined);
+
     setSelected(isReset ? [] : requestsIds);
   };
 
@@ -261,8 +264,8 @@ export const Requests = () => {
     filterActive.current = false;
     const filterApply = location?.search?.split("=")[0];
     if (filterApply === "?showDeadline") {
+      filterActive.current = true;
       setFilters({ showDeadline: "1" });
-      isDefaultFiltersSet.current = true;
       setIsDefaultFiltersSet(true);
     } else if (filterApply === "?showUnreadMessege") {
       setFilters({ showUnreadMessege: "1" });

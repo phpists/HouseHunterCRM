@@ -13,6 +13,7 @@ export const List = ({
   onSelect,
   onHide,
   onFavorite,
+  innerRef,
 }) => {
   const { data: accessData } = useGetAccessQuery();
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
@@ -25,7 +26,7 @@ export const List = ({
           idObject={openHistoryModal}
         />
       )}
-      <StyledList className="hide-scroll">
+      <StyledList className="hide-scroll" ref={innerRef}>
         {data?.length === 0 ? (
           <Empty />
         ) : (

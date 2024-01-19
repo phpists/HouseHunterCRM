@@ -174,10 +174,10 @@ export const ObjectPage = () => {
           ...handleFormatDatesToTimestamp(data, fields),
           id_client: clientId,
           obj_is_actual_dt: data?.obj_is_actual_dt
-            ? new Date(data?.obj_is_actual_dt)?.getTime() / 1000
+            ? Math.floor(new Date(data?.obj_is_actual_dt)?.getTime() / 1000)
             : undefined,
           dt_end_agreement: data?.dt_end_agreement
-            ? new Date(data?.dt_end_agreement)?.getTime() / 1000
+            ? Math.floor(new Date(data?.dt_end_agreement)?.getTime() / 1000)
             : undefined,
         },
         photos: photos.map((p) => p.file),
@@ -239,10 +239,10 @@ export const ObjectPage = () => {
           ...handleFormatDatesToTimestamp(data, fields),
           id_client: clientId,
           obj_is_actual_dt: data?.obj_is_actual_dt
-            ? new Date(data?.obj_is_actual_dt)?.getTime() / 1000
+            ? Math.floor(new Date(data?.obj_is_actual_dt)?.getTime() / 1000)
             : undefined,
           dt_end_agreement: data?.dt_end_agreement
-            ? new Date(data?.dt_end_agreement)?.getTime() / 1000
+            ? Math.floor(new Date(data?.dt_end_agreement)?.getTime() / 1000)
             : undefined,
           img: null,
 

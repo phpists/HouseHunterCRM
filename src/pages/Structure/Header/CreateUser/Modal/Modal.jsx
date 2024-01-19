@@ -98,10 +98,13 @@ export const Modal = ({ onClose, onRefetchData }) => {
         ...data,
         photo: data?.photo?.file,
         id_permision: rolesPermission?.id_permision,
-        dt_birthday:
-          data?.dt_birthday === "0"
-            ? new Date()?.getTime() / 1000
-            : new Date(Number(data?.dt_birthday))?.getTime() / 1000,
+        dt_birthday: Math.floor(
+          Math.floor(
+            data?.dt_birthday === "0"
+              ? new Date()?.getTime() / 1000
+              : new Date(Number(data?.dt_birthday))?.getTime() / 1000
+          )
+        ),
         phones_json: JSON.stringify(
           data?.phones.map((phone) => ({
             ...phone,

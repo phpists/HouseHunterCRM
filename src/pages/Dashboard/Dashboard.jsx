@@ -21,7 +21,7 @@ export const Dashboard = ({ isClientsAccess }) => {
         <div className="dashboard-content hide-scroll">
           <Header />
           <div className="dashboard-col hide-scroll">
-            <Clients />
+            <Clients data={data} />
             <Objects />
             <Requests />
           </div>

@@ -8,7 +8,7 @@ export const Period = ({ filters, onChangeFilter }) => {
   const [changeDate, setChangeDate] = useState(false);
 
   const handleChangeValue = (val) => {
-    const date = new Date(val).getTime() / 1000;
+    const date = Math.floor(new Date(val).getTime() / 1000);
     onChangeFilter(changeDate === 1 ? "date_from" : "date_to", date);
   };
 

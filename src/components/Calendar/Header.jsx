@@ -1,8 +1,9 @@
 import { styled } from "styled-components";
 import { ReactComponent as ArrowBack } from "../../assets/images/calendar-back.svg";
 import { ReactComponent as ArrowNext } from "../../assets/images/calendar-next.svg";
+import ReactInputMask from "react-input-mask";
 
-export const Header = ({ value, onChangeMonth }) => {
+export const Header = ({ value, onChangeMonth, onChangeYear }) => {
   const handleGetTitle = (date) => {
     const MONTHS = [
       "Січень",
@@ -21,12 +22,26 @@ export const Header = ({ value, onChangeMonth }) => {
 
     const month = date.getMonth();
     const year = date.getFullYear();
-    return `${MONTHS[month]} ${year}`;
+    return `${MONTHS[month]}`;
+  };
+
+  const handleChangeYear = (val) => {
+    if (!isNaN(val)) {
+      onChangeYear(val);
+    }
   };
 
   return (
     <StyledHeader className="flex items-center justify-between calendar-header">
-      <span>{handleGetTitle(value)}</span>
+      <span className="flex items-center">
+        {handleGetTitle(value)}{" "}
+        <ReactInputMask
+          className="ml-1"
+          mask={"9999"}
+          defaultValue={value?.getFullYear()}
+          onChange={(e) => handleChangeYear(e.target.value)}
+        />
+      </span>
       <div className="flex items-center">
         <ArrowBack className="mr-6" onClick={() => onChangeMonth(-1)} />
         <ArrowNext onClick={() => onChangeMonth(1)} />
@@ -57,5 +72,13 @@ const StyledHeader = styled.div`
         stroke-opacity: 1;
       }
     }
+  }
+  input {
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    width: 60px;
+    height: 24px;
   }
 `;

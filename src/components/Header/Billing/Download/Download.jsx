@@ -21,31 +21,43 @@ export const Download = ({
   const [fileName, setFileName] = useState("");
 
   const handleDownloadFile = (file) => {
-    if (file?.size < 30000000) {
-      onDownloading();
-      setTotalSize(formatBytes(file?.size));
-      setFileName(file?.name ?? "file");
-      setLoadedSize(file?.size / 4);
-      payByBank({ ammount: value, payment: file }).then((resp) =>
-        handleResponse(
-          resp,
-          () => {
-            setIsLoaded(file?.size);
-            setIsLoaded(true);
-            setTimeout(() => {
-              refetchBalance();
+    if (value > 0) {
+      if (file?.size < 30000000) {
+        onDownloading();
+        setTotalSize(formatBytes(file?.size));
+        setFileName(file?.name ?? "file");
+        setLoadedSize(file?.size / 4);
+        payByBank({ ammount: value, payment: file }).then((resp) =>
+          handleResponse(
+            resp,
+            () => {
+              setIsLoaded(file?.size);
+              setIsLoaded(true);
+              setTimeout(() => {
+                refetchBalance();
+                onClose();
+                cogoToast.success("Успішно поповнено", {
+                  hideAfter: 3,
+                  position: "top-right",
+                });
+              }, 2000);
+            },
+            () => {
               onClose();
-              cogoToast.success("Успішно поповнено", {
-                hideAfter: 3,
-                position: "top-right",
-              });
-            }, 2000);
-          },
-          () => {
-            onClose();
-          }
-        )
-      );
+            }
+          )
+        );
+      } else {
+        cogoToast.error("Файл розміром більше 30 МБ", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      }
+    } else {
+      cogoToast.error("Введіть суму поповнення", {
+        hideAfter: 3,
+        position: "top-right",
+      });
     }
   };
 

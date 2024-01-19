@@ -116,8 +116,8 @@ export const Clients = () => {
     handleGetClients(true);
   };
 
-  const handleSelectAll = (isReset) => {
-    const clientsIds = clients?.map((c) => c.id);
+  const handleSelectAll = (isReset, count) => {
+    const clientsIds = clients?.slice(0, count ?? undefined)?.map((c) => c.id);
     setSelected(isReset ? [] : clientsIds);
   };
 

@@ -18,8 +18,8 @@ export const Header = ({
     <StyledHeader className="flex items-center justify-between">
       <Title requestsCount={requestsCount} objectsCount={objectsCount} />
       <div className="flex items-center header-btns">
-        <Filter className="header-btn" />
-        <Search open={isSearch} onOpen={() => setIsSearch(true)} />
+        {/* <Filter className="header-btn" /> */}
+        {/* <Search open={isSearch} onOpen={() => setIsSearch(true)} /> */}
         <Select
           open={!isSearch}
           onOpen={() => setIsSearch(false)}

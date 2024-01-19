@@ -45,6 +45,10 @@ export const Selections = () => {
   const [allCount, setAllCount] = useState(0);
   const { saveSelectionsCount } = useActions();
   const [showObjectHide, setShowObjectHide] = useState(undefined);
+  const currentPage = useRef(0);
+  const isLoading = useRef(false);
+  const listRef = useRef();
+  const [isAllPages, setIsAllPages] = useState(false);
 
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => {
@@ -77,22 +81,45 @@ export const Selections = () => {
         : [...selected, index]
     );
 
-  const handleGetSelections = () =>
-    getSelections({
-      id_requst_group: id,
-      filters: {
-        ...(filterActive.current ? filters : {}),
-        show_object_hide: showObjectHide,
-      },
-    }).then((resp) => {
-      setObjects(resp.data?.data ?? []);
-      setAllCount(resp.data?.data?.length);
-      saveSelectionsCount(resp?.data?.all_item ?? "0");
-    });
+  const handleGetSelections = (isReset) => {
+    if ((!isLoading.current && !isAllPages) || isReset) {
+      isLoading.current = true;
+
+      getSelections({
+        id_requst_group: id,
+        filters: {
+          ...(filterActive.current ? filters : {}),
+          show_object_hide: showObjectHide,
+        },
+        current_page: currentPage.current,
+        item_on_page: 10,
+      }).then((resp) =>
+        handleResponse(
+          resp,
+          () => {
+            isLoading.current = false;
+            const objectsResp = resp.data?.data ?? [];
+            setObjects(isReset ? objectsResp : [...objects, ...objectsResp]);
+            setAllCount(allCount + resp.data?.data?.length);
+            saveSelectionsCount(resp?.data?.all_item ?? "0");
+          },
+          () => {
+            isLoading.current = false;
+            setIsAllPages(true);
+            if (isReset) {
+              setObjects([]);
+              setAllCount(0);
+              saveSelectionsCount(0);
+            }
+          }
+        )
+      );
+    }
+  };
 
   useEffect(() => {
     if (id) {
-      handleGetSelections();
+      handleGetSelections(true);
     }
   }, [id]);
 
@@ -143,15 +170,17 @@ export const Selections = () => {
 
   const handleApplyFilter = (isApply) => {
     filterActive.current = isApply;
-    handleGetSelections();
+    handleGetSelections(true);
     if (!isApply) {
       setFilters(INIT_FILTERS);
       setFilterFields([]);
     }
   };
 
-  const handleSelectAll = (isReset) => {
-    const objIds = objects?.map((obj) => obj.id);
+  const handleSelectAll = (isReset, count) => {
+    const objIds = objects
+      ?.map((obj) => obj.id)
+      ?.slice(0, count ? count : undefined);
 
     setSelected(isReset ? [] : objIds);
   };
@@ -189,21 +218,6 @@ export const Selections = () => {
     });
   };
 
-  const handleToggleFavoritesStatus = () => {
-    // setObjects(
-    //   objects.map((obj) => {
-    //     if (!!selected.find((s) => s === req[0])) {
-    //       let request = [];
-    //       request[0] = req[0];
-    //       request[1] = { ...req[1], favorite: !req[1]?.favorite };
-    //       return request;
-    //     }
-    //     return req;
-    //   })
-    // );
-    setSelected([]);
-  };
-
   const handleToggleHidden = () => {
     setShowObjectHide(showObjectHide === "1" ? undefined : "1");
     setFilters(INIT_FILTERS);
@@ -213,6 +227,29 @@ export const Selections = () => {
   useEffect(() => {
     handleGetSelections();
   }, [showObjectHide]);
+
+  const handleScroll = () => {
+    if (
+      listRef.current.offsetHeight + listRef.current.scrollTop <=
+        listRef.current.scrollHeight - 200 ||
+      isLoading.current
+    ) {
+      return;
+    }
+    currentPage.current += 1;
+    handleGetSelections();
+  };
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.addEventListener("scroll", handleScroll);
+      return () =>
+        listRef.current &&
+        // eslint-disable-next-line
+        listRef.current.removeEventListener("scroll", handleScroll);
+    }
+    // eslint-disable-next-line
+  }, [listRef, isLoading.current, isAllPages, objects]);
 
   return (
     <StyledSelections>
@@ -237,6 +274,7 @@ export const Selections = () => {
         onSelect={handleSelect}
         onFindSimilar={handleFindSimilarTo}
         onHide={handleHideObject}
+        innerRef={listRef}
         // onFavorite={handleToggleFavoriteStatus}
       />
     </StyledSelections>

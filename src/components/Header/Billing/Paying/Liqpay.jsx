@@ -9,16 +9,23 @@ export const Liqpay = ({ value, onClose, refetchBalance }) => {
   const [pay] = useLazyPayByLiqpayQuery();
 
   const handlePay = () => {
-    pay({ ammount: value }).then((resp) =>
-      handleResponse(resp, () => {
-        cogoToast.success("Успішно поповнено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-        onClose();
-        refetchBalance();
-      })
-    );
+    if (value > 0) {
+      pay({ ammount: value }).then((resp) =>
+        handleResponse(resp, () => {
+          cogoToast.success("Успішно поповнено", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          onClose();
+          refetchBalance();
+        })
+      );
+    } else {
+      cogoToast.error("Введіть суму поповнення", {
+        hideAfter: 3,
+        position: "top-right",
+      });
+    }
   };
 
   return (

@@ -67,6 +67,7 @@ export const Workers = ({ tarifSelected, selectedWorkers, onSelect }) => {
         selectedWorkers={selectedWorkers}
         filter={filter}
         onFilterChange={handleChangeFilter}
+        count={handleFilter()?.length}
       />
       <List
         onOpenEdit={setEditOpen}
@@ -80,7 +81,7 @@ export const Workers = ({ tarifSelected, selectedWorkers, onSelect }) => {
         <WorkerModal
           workerId={editOpen?.id}
           onClose={() => setEditOpen(false)}
-          level={1}
+          level={editOpen?.struct_level}
           onRefetchData={refetch}
           noStructure
           showPayHistory
