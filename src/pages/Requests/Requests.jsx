@@ -13,6 +13,7 @@ import { useRef } from "react";
 import { handleResponse } from "../../utilits";
 import { useAppSelect } from "../../hooks/redux";
 import { useLocation } from "react-router-dom";
+import { Objects } from "./List/RequestCard/Objects/Objects";
 
 const INIT_FILTERS = {
   id_rubric: "",
@@ -102,7 +103,9 @@ export const Requests = () => {
       if (filterActive.current) {
         data = {
           ...data,
-          filters,
+          filters: Object.fromEntries(
+            Object.entries(filters)?.filter((f) => f[1] !== "0")
+          ),
         };
       }
 

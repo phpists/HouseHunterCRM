@@ -105,7 +105,7 @@ export const Calls = () => {
   useEffect(() => {
     const filterApply = location?.search?.split("=")[0];
     if (filterApply === "?view") {
-      setFilters({ view: "1" });
+      setFilters({ view: "0" });
       setIsDefaultFilterSet(true);
     } else {
       handleGetCalls(false);

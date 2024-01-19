@@ -57,7 +57,7 @@ export const MainInfo = ({
               />
             </>
           )}
-          {billingTo && (
+          {billingTo && !isNaN(billingTo) ? (
             <>
               <Divider />
               <StatusCard
@@ -71,7 +71,7 @@ export const MainInfo = ({
                 subtitle="Білінг"
               />
             </>
-          )}
+          ) : null}
         </>
       )}
     </StyledMainInfo>

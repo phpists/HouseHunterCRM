@@ -113,7 +113,7 @@ export const auth = createApi({
             action: "edit",
             ...data,
           },
-          { photo }
+          photo ? { photo } : null
         ),
       }),
     }),

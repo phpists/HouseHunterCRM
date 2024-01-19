@@ -111,7 +111,18 @@ export const Profile = () => {
     }
   };
 
-  const handleReset = () => setProfileData(user);
+  const handleReset = () =>
+    setProfileData({
+      ...user,
+      phones: user.phones.map((p) => ({
+        ...p,
+        code: p.id_phone_code,
+      })),
+      dt_birthday:
+        user?.dt_birthday === "0"
+          ? new Date()
+          : new Date(Number(user?.dt_birthday) * 1000),
+    });
 
   const handleRemoveAvatar = () => {
     if (profileData?.photo?.type) {

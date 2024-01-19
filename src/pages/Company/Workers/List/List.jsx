@@ -32,7 +32,7 @@ export const List = ({
             <Card
               key={i}
               onOpenEdit={() => onOpenEdit({ id, struct_level })}
-              onSelect={() => onSelect({ id, struct_level })}
+              onSelect={() => onSelect(id)}
               tarifSelected={tarifSelected}
               isSelected={!!selectedWorkers.find((w) => w === id)}
               name={`${first_name ?? ""} ${last_name ?? ""}`}
