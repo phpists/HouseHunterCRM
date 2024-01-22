@@ -123,6 +123,14 @@ export const billing = createApi({
         }),
       }),
     }),
+    editCompanyInfo: build.query({
+      query: (data) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -136,4 +144,5 @@ export const {
   useViewCompanyBalanceHistoryQuery,
   useGetDirectorWorkersQuery,
   useGetCompanyInfoQuery,
+  useLazyEditCompanyInfoQuery,
 } = billing;

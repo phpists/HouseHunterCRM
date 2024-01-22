@@ -5,27 +5,79 @@ import { Cards } from "./Cards/Cards";
 import { Address } from "./Address";
 import { WebSite } from "./WebSite";
 import { TarifHeader } from "./TarifHeader/TarifHeader";
-import { useGetCompanyInfoQuery } from "../../../store/billing/billing.api";
+import {
+  useGetCompanyInfoQuery,
+  useLazyEditCompanyInfoQuery,
+} from "../../../store/billing/billing.api";
+import { handleResponse } from "../../../utilits";
+import cogoToast from "cogo-toast";
 
 export const Info = ({ tarifOpen, onCloseTarif }) => {
-  const { data } = useGetCompanyInfoQuery();
+  const [editCompany] = useLazyEditCompanyInfoQuery();
+  const { data, refetch } = useGetCompanyInfoQuery();
+
+  const handleEditCompanyField = (fieldName, value) => {
+    const formData = new FormData();
+    const updatedData = {
+      action: "update_company_info",
+      mod: "profile",
+      company_name: data?.data?.company_name ?? "",
+      web_site_copmany: data?.data?.web_site_copmany ?? " ",
+      registration_adress: data?.data?.registration_adress ?? " ",
+      years_the_market: data?.data?.years_the_market ?? " ",
+      [fieldName]: value,
+    };
+
+    Object.entries(updatedData).forEach((field) =>
+      formData.append(field[0], field[1])
+    );
+
+    editCompany(formData).then((resp) =>
+      handleResponse(
+        resp,
+        () => {
+          cogoToast.success("Зміни успішно збережено", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          refetch();
+        },
+        () => {
+          cogoToast.error("Помилка", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+        }
+      )
+    );
+  };
 
   return (
     <StyledInfo>
       <TarifHeader onCloseTarif={onCloseTarif} tarifOpen={tarifOpen} />
       <div className="info-content">
-        <Header tarifOpen={tarifOpen} data={data?.data} />
+        <Header
+          tarifOpen={tarifOpen}
+          data={data?.data}
+          onEdit={handleEditCompanyField}
+        />
         {!tarifOpen && (
           <>
             <About />
-            <Cards data={data?.data} />
+            <Cards data={data?.data} onEdit={handleEditCompanyField} />
           </>
         )}
       </div>
       {!tarifOpen && (
         <div className="flex items-center info-footer">
-          <Address address={data?.data?.registration_adress} />
-          <WebSite webSite={data?.data?.web_site_copmany ?? "-"} />
+          <Address
+            address={data?.data?.registration_adress}
+            onEdit={(val) => handleEditCompanyField("registration_adress", val)}
+          />
+          <WebSite
+            webSite={data?.data?.web_site_copmany ?? "-"}
+            onEdit={(val) => handleEditCompanyField("web_site_copmany", val)}
+          />
         </div>
       )}
     </StyledInfo>

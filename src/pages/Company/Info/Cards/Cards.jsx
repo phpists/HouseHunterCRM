@@ -7,7 +7,7 @@ import { ReactComponent as StarIcon } from "../../../../assets/images/card-star.
 import backgrondBlue from "../../../../assets/images/blue-card-mask.svg";
 import backgrondPink from "../../../../assets/images/pink-card-mask.svg";
 
-export const Cards = ({ data }) => (
+export const Cards = ({ data, onEdit }) => (
   <StyledCards>
     <Card
       title={data?.years_the_market ?? "-"}
@@ -18,6 +18,8 @@ export const Cards = ({ data }) => (
       }
       Icon={CalendarIcon}
       hoverBackground={backgrondBlue}
+      editable
+      onEdit={(val) => onEdit("years_the_market", val)}
     />
     <Card
       title={data?.year_on_site ?? "-"}

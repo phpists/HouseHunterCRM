@@ -1,14 +1,36 @@
 import { styled } from "styled-components";
 import { ReactComponent as LocationIcon } from "../../../assets/images/location.svg";
 import editIcon from "../../../assets/images/edit-company.svg";
+import { useState } from "react";
 
-export const Address = ({ address }) => (
-  <StyledAddress className="flex items-end">
-    <LocationIcon />
-    <span>{address?.length > 0 ? address : "-"}</span>
-    <img src={editIcon} alt="" />
-  </StyledAddress>
-);
+export const Address = ({ address, onEdit }) => {
+  const [edit, setEdit] = useState(false);
+
+  const handleSave = (e) => {
+    const value = e.target.value;
+    if (address !== value && value?.length > 0) {
+      onEdit(value);
+    }
+    setEdit(false);
+  };
+
+  return (
+    <StyledAddress className="flex items-end">
+      <LocationIcon />
+      {edit ? (
+        <input
+          type="text"
+          defaultValue={address}
+          placeholder="Введіть значення"
+          onBlur={handleSave}
+        />
+      ) : (
+        <span>{address?.length > 0 ? address : "-"}</span>
+      )}
+      <img src={editIcon} alt="" onClick={() => setEdit(true)} />
+    </StyledAddress>
+  );
+};
 
 const StyledAddress = styled.div`
   padding: 10px 11px 9px;

@@ -127,6 +127,18 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
           )
         }
       />
+      <Divider />
+      <ToggleOption
+        label="Обрані клієнтом "
+        value={filters?.only_choise_obj === "1"}
+        onChange={() =>
+          onChangeFilter(
+            "only_choise_obj",
+            filters?.only_choise_obj === "1" ? "0" : "1"
+          )
+        }
+      />
+      <Divider />
       {/* <Divider />
       <CheckOption
         label="Об’єкти компанії"

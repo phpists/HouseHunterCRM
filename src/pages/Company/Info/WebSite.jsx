@@ -1,14 +1,37 @@
 import { styled } from "styled-components";
 import { ReactComponent as WebsiteIcon } from "../../../assets/images/website.svg";
 import editIcon from "../../../assets/images/edit-company.svg";
+import { useState } from "react";
 
-export const WebSite = ({ webSite }) => (
-  <StyledWebSite className="flex items-end">
-    <WebsiteIcon />
-    <span>{webSite?.length > 0 ? webSite : "-"}</span>
-    <img src={editIcon} alt="" />
-  </StyledWebSite>
-);
+export const WebSite = ({ webSite, onEdit }) => {
+  const [edit, setEdit] = useState(false);
+
+  const handleSave = (e) => {
+    const value = e.target.value;
+    if (webSite !== value && value?.length > 0) {
+      onEdit(value);
+    }
+    setEdit(false);
+  };
+
+  return (
+    <StyledWebSite className="flex items-end">
+      <WebsiteIcon />
+      {edit ? (
+        <input
+          type="text"
+          defaultValue={webSite}
+          placeholder="Введіть значення"
+          onBlur={handleSave}
+        />
+      ) : (
+        <span>{webSite?.length > 0 ? webSite : "-"}</span>
+      )}
+
+      <img src={editIcon} alt="" onClick={() => setEdit(true)} />
+    </StyledWebSite>
+  );
+};
 
 const StyledWebSite = styled.div`
   padding: 10px 11px 9px;

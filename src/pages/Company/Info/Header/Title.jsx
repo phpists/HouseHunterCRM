@@ -2,22 +2,25 @@ import { styled } from "styled-components";
 import editIcon from "../../../../assets/images/edit-company.svg";
 import { useState } from "react";
 
-export const Title = ({ title }) => {
+export const Title = ({ title, onEdit }) => {
   const [edit, setEdit] = useState(false);
+
+  const handleSave = (e) => {
+    const value = e.target.value;
+    if (title !== value && value?.length > 0) {
+      onEdit("company_name", value);
+    }
+    setEdit(false);
+  };
 
   return (
     <StyledTitle
       className="flex items-center"
-      //   onClick={() => setEdit(true)}
+      onClick={() => setEdit(true)}
       edit={edit}
     >
       {edit ? (
-        <input
-          type="text"
-          defaultValue={title}
-          autoFocus
-          onBlur={() => setEdit(false)}
-        />
+        <input type="text" defaultValue={title} autoFocus onBlur={handleSave} />
       ) : (
         title
       )}

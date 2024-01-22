@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { styled } from "styled-components";
 
 export const Card = ({
@@ -6,22 +7,50 @@ export const Card = ({
   Icon,
   hoverBackground,
   hoverSubtitle,
-}) => (
-  <StyledCard
-    className="flex items-start justify-between card"
-    hoverBackground={hoverBackground}
-    hoverSubtitle={hoverSubtitle}
-  >
-    <div>
-      <div className="title">{title}</div>
-      <div className="subtitle-wrapper">
-        <div className="subtitle">{subtitle}</div>
-        <div className="subtitle subtitle-hover">{hoverSubtitle}</div>
+  editable,
+  onEdit,
+}) => {
+  const [edit, setEdit] = useState(false);
+
+  const handleSave = (e) => {
+    const value = e.target.value;
+    if (title !== value && value?.length > 0) {
+      onEdit(value);
+    }
+    setEdit(false);
+  };
+
+  return (
+    <StyledCard
+      className="flex items-start justify-between card"
+      hoverBackground={hoverBackground}
+      hoverSubtitle={hoverSubtitle}
+    >
+      <div>
+        <div
+          className="title"
+          onClick={() => (editable ? setEdit(true) : null)}
+        >
+          {edit ? (
+            <input
+              type="text"
+              defaultValue={title}
+              onBlur={handleSave}
+              autoFocus
+            />
+          ) : (
+            title
+          )}
+        </div>
+        <div className="subtitle-wrapper">
+          <div className="subtitle">{subtitle}</div>
+          <div className="subtitle subtitle-hover">{hoverSubtitle}</div>
+        </div>
       </div>
-    </div>
-    <Icon />
-  </StyledCard>
-);
+      <Icon />
+    </StyledCard>
+  );
+};
 
 const StyledCard = styled.div`
   padding: 8px 8px 9px 9px;
@@ -38,6 +67,8 @@ const StyledCard = styled.div`
     font-weight: 200;
     line-height: 118%; /* 23.6px */
     letter-spacing: 0.4px;
+    position: relative;
+    z-index: 10;
   }
   .subtitle {
     color: #fff;
