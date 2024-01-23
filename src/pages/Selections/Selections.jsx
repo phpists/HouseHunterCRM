@@ -170,11 +170,13 @@ export const Selections = () => {
 
   const handleApplyFilter = (isApply) => {
     filterActive.current = isApply;
-    handleGetSelections(true);
     if (!isApply) {
       setFilters(INIT_FILTERS);
       setFilterFields([]);
+      currentPage.current = 0;
+      setIsAllPages(false);
     }
+    handleGetSelections(true);
   };
 
   const handleSelectAll = (isReset, count) => {

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   balance: 0,
+  workersCount: 0,
 };
 
 export const billingSlice = createSlice({
@@ -10,6 +11,9 @@ export const billingSlice = createSlice({
   reducers: {
     saveBalance(state, action) {
       state.balance = action.payload;
+    },
+    saveWorkersCount(state, action) {
+      state.workersCount = action.payload;
     },
   },
 });

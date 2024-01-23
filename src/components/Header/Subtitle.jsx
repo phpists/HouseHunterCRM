@@ -12,6 +12,9 @@ export const Subtitle = () => {
   const { callsCount } = useAppSelect((state) => state.calls);
   const { selectionsCount } = useAppSelect((state) => state.selections);
   const { workersCount } = useAppSelect((state) => state.structure);
+  const { workersCount: companyWorkers } = useAppSelect(
+    (state) => state.billing
+  );
 
   const handleGetEnding = (val) => (val > 0 && val < 8 ? "а" : "ів");
 
@@ -32,7 +35,7 @@ export const Subtitle = () => {
       case "/structure":
         return `Всього ${workersCount} агентів`;
       case "/company":
-        return "12 працівників";
+        return `${companyWorkers} працівників`;
       case "/request":
         return "Запит об'єкта";
       case "/calls":

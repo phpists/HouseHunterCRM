@@ -248,11 +248,13 @@ export const Requests = () => {
 
   const handleApplyFilter = (isApply) => {
     filterActive.current = isApply;
-    handleGetRequests(true);
     if (!isApply) {
       setFilters(INIT_FILTERS);
       setFilterFields([]);
+      currentPage.current = 0;
+      setIsAllPages(false);
     }
+    handleGetRequests(true);
   };
 
   const handleSelectAll = (isReset, count) => {

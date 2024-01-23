@@ -113,6 +113,10 @@ export const Clients = () => {
 
   const handleApplyFilters = (isApply) => {
     isFilters.current = isApply;
+    if (!isApply) {
+      currentPage.current = 0;
+      setIsAllPages(false);
+    }
     handleGetClients(true);
   };
 

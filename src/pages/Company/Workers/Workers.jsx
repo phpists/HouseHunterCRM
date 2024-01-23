@@ -5,6 +5,7 @@ import { EditWorker } from "./EditWorker/EditWorker";
 import { useEffect, useState } from "react";
 import { useGetDirectorWorkersQuery } from "../../../store/billing/billing.api";
 import { WorkerModal } from "../../Structure/WorkerModal";
+import { useActions } from "../../../hooks/actions";
 
 export const Workers = ({ tarifSelected, selectedWorkers, onSelect }) => {
   const [editOpen, setEditOpen] = useState(false);
@@ -16,6 +17,7 @@ export const Workers = ({ tarifSelected, selectedWorkers, onSelect }) => {
     active: false,
     roles: [],
   });
+  const { saveWorkersCount } = useActions();
 
   const handleChangeFilter = (fieldName, value) =>
     setFilter({ ...filter, [fieldName]: value });
@@ -59,6 +61,10 @@ export const Workers = ({ tarifSelected, selectedWorkers, onSelect }) => {
             )
           : true
       );
+
+  useEffect(() => {
+    saveWorkersCount(workers?.length);
+  }, [workers]);
 
   return (
     <StyledWorkers>

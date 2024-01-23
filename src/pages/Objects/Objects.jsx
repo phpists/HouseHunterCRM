@@ -52,6 +52,7 @@ export const Objects = () => {
   const isLoading = useRef(false);
   const listRef = useRef();
   const [isAllPages, setIsAllPages] = useState(false);
+  const isFirstRender = useRef(true);
 
   const handleChangeFilter = (field, value, isDataUpdate) => {
     if (isDataUpdate) {
@@ -79,6 +80,7 @@ export const Objects = () => {
     );
 
   const handleGetObjects = (isReset) => {
+    isFirstRender.current = false;
     if ((!isLoading.current && !isAllPages) || isReset) {
       isLoading.current = true;
 
@@ -123,11 +125,6 @@ export const Objects = () => {
     }
   };
 
-  useEffect(() => {
-    handleGetObjects();
-    // eslint-disable-next-line
-  }, []);
-
   const handleToggleFavoritesStatus = () => {
     setObjects(
       objects.map((req) => {
@@ -150,17 +147,21 @@ export const Objects = () => {
   };
 
   useEffect(() => {
-    handleGetObjects(true);
+    if (!isFirstRender.current) {
+      handleGetObjects(true);
+    }
     // eslint-disable-next-line
   }, [isFavorite]);
 
   const handleApplyFilter = (isApply) => {
     filterActive.current = isApply;
-    handleGetObjects(true);
     if (!isApply) {
       setFilters({ ...INIT_FILTERS, id_hash: "" });
       setFilterFields([]);
+      currentPage.current = 0;
+      setIsAllPages(false);
     }
+    handleGetObjects(true);
   };
 
   const handleSelectAll = (isReset, count) => {
@@ -243,6 +244,8 @@ export const Objects = () => {
     } else if (filterApply === "?showLiquidity") {
       setFilters({ showLiquidity: "1" });
       filterActive.current = true;
+    } else {
+      handleGetObjects();
     }
   }, [location.search]);
 
