@@ -55,7 +55,8 @@ export const Clients = () => {
           resp,
           () => {
             if (resp?.data?.error === 0 && resp?.data.data?.clients?.length) {
-              setAllCount(resp?.data?.data?.all_item ?? 0);
+              const respItemsCount = resp?.data?.data?.clients?.length;
+              setAllCount(isReset ? respItemsCount : allCount + respItemsCount);
               saveClientsCount(resp?.data?.data?.all_item ?? 0);
               setClients(
                 isReset

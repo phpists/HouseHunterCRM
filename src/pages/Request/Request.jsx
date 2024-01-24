@@ -171,7 +171,7 @@ export const Request = () => {
   const handleCheckAllFields = () => {
     let errorData = [];
 
-    const isNotEmptyField = data.fields.map((data) => {
+    data.fields.forEach((data) => {
       const fieldFields = fieldData.find((f) => f.id === data.id_rubric);
       const emptyFields = handleCheckFields({
         title: fieldFields?.title,

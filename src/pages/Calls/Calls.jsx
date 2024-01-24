@@ -130,7 +130,7 @@ export const Calls = () => {
   return (
     <StyledCalls>
       <Header
-        selectedCount={selected.length}
+        selectedCount={selected?.length}
         filters={filters}
         onChangeFilter={handleChangeFilter}
         onApplyFilter={handleApplyFilter}

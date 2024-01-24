@@ -40,6 +40,8 @@ export const Modal = ({ onClose }) => {
     setConfirmFunc(() => func);
   };
 
+  console.log(level);
+
   return (
     <>
       {confirm && (

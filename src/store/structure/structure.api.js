@@ -299,7 +299,8 @@ export const structure = createApi({
             const transformedResponse = Object.fromEntries(
               Object.entries(response)?.filter((e) => e[0] !== "error")
             );
-            return transformedResponse;
+
+            return transformedResponse?.level;
           },
           () => null,
           false,

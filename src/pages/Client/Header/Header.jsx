@@ -17,7 +17,7 @@ import cogoToast from "cogo-toast";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
 import { useGetAccessQuery } from "../../../store/auth/auth.api";
 
-export const Header = ({ favorite }) => {
+export const Header = ({ favorite, onRefetch }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [deleteClient] = useLazyDeleteCientQuery();
@@ -44,6 +44,7 @@ export const Header = ({ favorite }) => {
           hideAfter: 3,
           position: "top-right",
         });
+        onRefetch();
       });
     });
   };
@@ -81,7 +82,7 @@ export const Header = ({ favorite }) => {
           Icon={StarIcon}
           className="mr-2.5 icon-btn"
           onClick={handleAddClientToFavorite}
-          active={favorite === "1"}
+          active={favorite}
         />
         {handleCheckAccess(accessData, "clients", "delete") ? (
           <IconButton

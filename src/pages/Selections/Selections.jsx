@@ -100,7 +100,7 @@ export const Selections = () => {
             isLoading.current = false;
             const objectsResp = resp.data?.data ?? [];
             setObjects(isReset ? objectsResp : [...objects, ...objectsResp]);
-            setAllCount(allCount + resp.data?.data?.length);
+            setAllCount(allCount + objectsResp?.length);
             saveSelectionsCount(resp?.data?.all_item ?? "0");
           },
           () => {
@@ -204,22 +204,6 @@ export const Selections = () => {
     setSelected([]);
   };
 
-  const handleToggleFavoriteStatus = (id) => {
-    addObjectToFavorites(id).then((resp) => {
-      handleResponse(resp, () => {
-        setObjects(
-          objects?.map((obj) =>
-            obj?.id === id ? { ...obj, favorite: !obj.favorite } : obj
-          )
-        );
-        cogoToast.success("Статус успішно змінено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-      });
-    });
-  };
-
   const handleToggleHidden = () => {
     setShowObjectHide(showObjectHide === "1" ? undefined : "1");
     setFilters(INIT_FILTERS);
@@ -227,6 +211,8 @@ export const Selections = () => {
   };
 
   useEffect(() => {
+    currentPage.current = 0;
+    setIsAllPages(false);
     handleGetSelections();
   }, [showObjectHide]);
 

@@ -115,9 +115,12 @@ export const Requests = () => {
           resp,
           () => {
             if (resp?.data?.requests) {
-              setAllCount(resp?.data.all_item ?? 0);
               saveRequestsCount(resp?.data.all_item ?? 0);
               if (Object.entries(resp?.data?.requests)?.length) {
+                setAllCount(
+                  allCount + Object.entries(resp?.data?.requests)?.length
+                );
+
                 setRequests(
                   isReset
                     ? handleFormatRequests(resp?.data)
@@ -242,6 +245,8 @@ export const Requests = () => {
   useEffect(() => {
     if (!isFirstRender.current) {
       handleGetRequests(true);
+      currentPage.current = 0;
+      setIsAllPages(false);
       // eslint-disable-next-line
     }
   }, [isFavorite]);

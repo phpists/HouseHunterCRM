@@ -6,6 +6,7 @@ import {
   useGetAllPerimissionsLevelsQuery,
   useGetCompanyStructureLevelQuery,
 } from "../../../store/structure/structure.api";
+import { Empty } from "../../../components/Empty";
 
 export const List = ({
   selected,
@@ -36,38 +37,42 @@ export const List = ({
 
   return (
     <StyledList className="hide-scroll">
-      {data.map(
-        (
-          {
-            id,
-            call_type,
-            phone_call,
-            dt_incoming,
-            full_name,
-            photo,
-            coment,
-            status,
-            struct_level_user,
-          },
-          i
-        ) => (
-          <CallCard
-            key={i}
-            selected={!!selected.find((j) => j === id)}
-            onSelect={() => onSelect(id)}
-            openMore={openMore === id}
-            onOpenMore={() => setOpenMore(openMore === id ? null : id)}
-            callType={call_type}
-            phone={phone_call}
-            date={handleFormatDate(Number(dt_incoming) * 1000)}
-            name={full_name}
-            photo={photo}
-            comment={coment}
-            status={status}
-            onSetStatus={() => onSetStatus(id, status === "1" ? "0" : "1")}
-            onAddComment={(comment) => onAddComment(id, comment)}
-            level={handleGetCurrentLevel(struct_level_user)}
-          />
+      {data?.length === 0 ? (
+        <Empty />
+      ) : (
+        data.map(
+          (
+            {
+              id,
+              call_type,
+              phone_call,
+              dt_incoming,
+              full_name,
+              photo,
+              coment,
+              status,
+              struct_level_user,
+            },
+            i
+          ) => (
+            <CallCard
+              key={i}
+              selected={!!selected.find((j) => j === id)}
+              onSelect={() => onSelect(id)}
+              openMore={openMore === id}
+              onOpenMore={() => setOpenMore(openMore === id ? null : id)}
+              callType={call_type}
+              phone={phone_call}
+              date={handleFormatDate(Number(dt_incoming) * 1000)}
+              name={full_name}
+              photo={photo}
+              comment={coment}
+              status={status}
+              onSetStatus={() => onSetStatus(id, status === "1" ? "0" : "1")}
+              onAddComment={(comment) => onAddComment(id, comment)}
+              level={handleGetCurrentLevel(struct_level_user)}
+            />
+          )
         )
       )}
     </StyledList>

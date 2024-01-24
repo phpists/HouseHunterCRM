@@ -24,7 +24,6 @@ export const Title = () => {
   const handleGetTitle = () => {
     switch (pathname) {
       case "/":
-        console.log(handleGetTime());
         return `Доброго ${handleGetTime()}, ${
           user?.first_name?.length > 25
             ? `${user?.first_name?.subsring(0, 25)}...`
