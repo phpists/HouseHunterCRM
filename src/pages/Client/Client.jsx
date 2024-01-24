@@ -31,7 +31,7 @@ export const Client = () => {
 
   return (
     <StyledClient isEmpty={!selectedObject}>
-      <Header />
+      <Header favorite={clientData?.data?.favorite} />
       <ProfileMobile
         data={clientData?.data}
         onRefreshClientData={handleGetClient}

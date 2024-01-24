@@ -12,6 +12,7 @@ export const Header = ({
   onRefetchData,
   onToggleShowNotStructureWorkers,
   showNotStructureWorkers,
+  currentLevel,
 }) => {
   const { data: accessData } = useGetAccessQuery();
 

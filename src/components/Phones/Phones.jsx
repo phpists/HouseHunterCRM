@@ -13,11 +13,14 @@ export const Phones = ({ top, className, classNameContent, phones }) => {
         showOnHoverIcon
         className={classNameContent}
         phone={phones?.length > 0 ? phones[0] : ""}
+        isLessThenOne={phones?.length <= 1}
       />
-      <Arrow
-        open={open}
-        onToggleOpen={() => (phones?.length > 1 ? setOpen(!open) : null)}
-      />
+      {phones?.length > 1 ? (
+        <Arrow
+          open={open}
+          onToggleOpen={() => (phones?.length > 1 ? setOpen(!open) : null)}
+        />
+      ) : null}
       <Dropdown
         open={open}
         onSelect={() => setOpen(false)}

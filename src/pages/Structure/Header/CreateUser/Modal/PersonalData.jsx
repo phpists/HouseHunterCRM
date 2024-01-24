@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Field } from "../../../../../components/Field";
 import { Divider } from "./Divider";
 import { useGetPhonesCodesQuery } from "../../../../../store/auth/auth.api";
+import { Phones } from "../../../../../components/UserInfoCard/Phones/Phones";
 
 export const PersonalData = ({ data, onChangeField, errors }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
@@ -37,22 +38,11 @@ export const PersonalData = ({ data, onChangeField, errors }) => {
         type="date"
       />
       <Divider />
-      <Field
-        label="Телефон"
-        full
-        phone
-        placeholder="+38 (___) ___-__- __"
-        value={data?.phones[0]?.phone}
-        onChange={(val) =>
-          onChangeField("phones", [{ ...data?.phones[0], phone: val }])
-        }
-        phoneCode={data?.phones[0]?.code}
-        onChangePhoneCode={(cod) =>
-          onChangeField("phones", [{ ...data?.phones[0], code: cod }])
-        }
-        phonesCodes={phonesCodes}
+      <Phones
+        phones={data?.phones}
+        onChange={(val) => onChangeField("phones", val)}
+        errors={errors}
         noResetValueOnCodeChange
-        error={!!errors?.find((e) => e === "phones")}
       />
       <Divider />
       <Field

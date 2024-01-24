@@ -7,7 +7,7 @@ export const Comment = ({ className, comment }) => (
       <div className="value">{comment?.length > 0 ? comment : "-"}</div>
       <div className="label">Коментар</div>
     </div>
-    <img src={editIcon} alt="" />
+    {/* <img src={editIcon} alt="" /> */}
   </StyledComment>
 );
 

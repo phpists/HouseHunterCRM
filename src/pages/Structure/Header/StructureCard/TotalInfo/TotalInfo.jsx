@@ -5,17 +5,24 @@ import { useEffect, useState } from "react";
 import userCheckIcon from "../../../../../assets/images/user-check-gradient.svg";
 import megaphoneIcon from "../../../../../assets/images/card-megafon.svg";
 import homeIcon from "../../../../../assets/images/home-gradient.svg";
+import { useLazyGetStatisticTotalWorkerQuery } from "../../../../../store/structure/structure.api";
 
-export const TotalInfo = ({ open, onToggleOpen }) => {
+export const TotalInfo = ({ open, onToggleOpen, id }) => {
   const [active, setActive] = useState(false);
+  const [getStatistic, { data }] = useLazyGetStatisticTotalWorkerQuery();
 
   useEffect(() => {
     setActive(false);
   }, [open]);
 
+  useEffect(() => {
+    id && getStatistic(id);
+  }, [id]);
+
   const handleToggleCard = (e) =>
     e.target.classList.contains("clickable") && onToggleOpen();
 
+  console.log(data);
   return (
     <StyledTotalInfo
       active={active}
@@ -28,9 +35,24 @@ export const TotalInfo = ({ open, onToggleOpen }) => {
         onToggleActive={() => setActive(!active && open)}
       />
       <div className="cards clickable notClickable">
-        <Card open={open} title="Клієнти" icon={userCheckIcon} />
-        <Card open={open} title="Запити" icon={megaphoneIcon} />
-        <Card open={open} title="Об’єкти" icon={homeIcon} />
+        <Card
+          open={open}
+          title="Клієнти"
+          icon={userCheckIcon}
+          count={data?.data?.clients ?? "0"}
+        />
+        <Card
+          open={open}
+          title="Запити"
+          icon={megaphoneIcon}
+          count={data?.data?.request ?? "0"}
+        />
+        <Card
+          open={open}
+          title="Об’єкти"
+          icon={homeIcon}
+          count={data?.data?.objects ?? "0"}
+        />
       </div>
     </StyledTotalInfo>
   );

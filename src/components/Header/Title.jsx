@@ -6,10 +6,26 @@ export const Title = () => {
   const { pathname } = useLocation();
   const { user } = useAppSelect((state) => state.auth);
 
+  const handleGetHour = () => new Date().getHours();
+
+  const handleGetTime = () => {
+    const hours = handleGetHour();
+    if (hours >= 6 && hours <= 12) {
+      return "ранку";
+    } else if (hours >= 12 && hours <= 18) {
+      return "дня";
+    } else if (hours >= 18 && hours <= 23) {
+      return "вечора";
+    } else {
+      return "ночі";
+    }
+  };
+
   const handleGetTitle = () => {
     switch (pathname) {
       case "/":
-        return `Доброго ранку, ${
+        console.log(handleGetTime());
+        return `Доброго ${handleGetTime()}, ${
           user?.first_name?.length > 25
             ? `${user?.first_name?.subsring(0, 25)}...`
             : user?.first_name

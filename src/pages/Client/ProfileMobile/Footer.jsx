@@ -8,6 +8,7 @@ export const Footer = ({ onSave, onReset, loading }) => (
       onClick={onSave}
       className="btn enter-btn"
       disabled={loading}
+      loading={loading}
     />
     <Button
       title="Скасувати"

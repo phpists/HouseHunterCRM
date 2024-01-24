@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const Tag = () => <StyledTag>+44</StyledTag>;
+export const Tag = ({ count }) => (
+  <StyledTag>{count === "0" ? "0" : `+${count}`}</StyledTag>
+);
 
 const StyledTag = styled.div`
   padding: 2px 4px;

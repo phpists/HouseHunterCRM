@@ -63,7 +63,12 @@ export const Info = ({ tarifOpen, onCloseTarif }) => {
         />
         {!tarifOpen && (
           <>
-            <About />
+            <About
+              value={data?.data?.description_copmany}
+              onChange={(val) =>
+                handleEditCompanyField("description_copmany", val)
+              }
+            />
             <Cards data={data?.data} onEdit={handleEditCompanyField} />
           </>
         )}

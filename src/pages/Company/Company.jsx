@@ -9,6 +9,7 @@ import {
 } from "../../store/billing/billing.api";
 import { handleResponse } from "../../utilits";
 import { useActions } from "../../hooks/actions";
+import { useLazyGetUserQuery } from "../../store/auth/auth.api";
 
 export const Company = () => {
   const [tarifOpen, setTarifOpen] = useState(false);
@@ -18,7 +19,14 @@ export const Company = () => {
   const [continueBilling] = useLazyContinueBillingQuery();
   const [loading, setLoading] = useState(false);
   const { data: balanceData, refetch } = useViewCompanyBalanceQuery();
-  const { saveBalance } = useActions();
+  const { saveBalance, loginUser } = useActions();
+  const [getProfile] = useLazyGetUserQuery();
+
+  const handleGetUserData = () => {
+    getProfile().then((resp) => {
+      loginUser(resp?.data?.data);
+    });
+  };
 
   const handleCloseTarif = () => {
     if (!loading) {
@@ -55,6 +63,7 @@ export const Company = () => {
             setLoading(false);
             setPaying(true);
             refetch();
+            handleGetUserData();
             setTimeout(() => {
               setPaying(false);
               setTarifSelected(null);

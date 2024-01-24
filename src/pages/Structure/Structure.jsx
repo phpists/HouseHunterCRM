@@ -56,12 +56,12 @@ export const Structure = () => {
     }
   };
 
-  const handleGetLevelWorkers = () => {
+  const handleGetLevelWorkers = (lvl) => {
     if (!recurseData) {
       return [];
     }
 
-    return recurseData[`struct_level_${level}`] ?? [];
+    return recurseData[`struct_level_${lvl ?? level}`] ?? [];
   };
 
   useEffect(() => {
@@ -84,6 +84,7 @@ export const Structure = () => {
         onToggleShowNotStructureWorkers={() =>
           setShowNotStructureWorkers(!showNotStructureWorkers)
         }
+        currentLevel={currentLevel}
       />
       <MobileHeader />
       {infoOpen && (
@@ -96,6 +97,7 @@ export const Structure = () => {
             showNotStructureWorkers && getNotStructureWorkers();
           }}
           showNotStructureWorkers={showNotStructureWorkers}
+          worker={level !== 1}
         />
       )}
       <div className="structure-content hide-scroll">
@@ -143,7 +145,7 @@ export const Structure = () => {
                     ) ?? {}
                   : {},
               }}
-              isMore
+              isMore={handleGetLevelWorkers(1 + user?.struct_level)?.length > 0}
             />
           ) : handleGetLevelWorkers()?.length === 0 ? (
             <Empty />

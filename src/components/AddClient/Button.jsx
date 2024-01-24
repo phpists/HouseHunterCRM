@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import { Loader } from "../Loader";
 
-export const Button = ({ onClick, disabled }) => (
+export const Button = ({ onClick, disabled, loading }) => (
   <StyledButton onClick={onClick} disabled={disabled}>
-    Відправити
+    {loading ? <Loader white /> : "Відправити"}
   </StyledButton>
 );
 

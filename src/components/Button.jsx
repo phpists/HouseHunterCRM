@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { Loader } from "./Loader";
 
 export const Button = ({
   title,
@@ -7,18 +8,25 @@ export const Button = ({
   outline,
   className,
   disabled,
+  loading,
 }) => (
   <StyledButton
     onClick={onClick}
     className={`flex items-center justify-center ${className}`}
     outline={outline}
-    disabled={disabled}
+    disabled={disabled | loading}
   >
-    <span>{title}</span>
-    {icon && (
-      <div className="icon">
-        <img src={icon} alt="" className="ml-1" />
-      </div>
+    {loading ? (
+      <Loader />
+    ) : (
+      <>
+        <span>{title}</span>
+        {icon && (
+          <div className="icon">
+            <img src={icon} alt="" className="ml-1" />
+          </div>
+        )}
+      </>
     )}
   </StyledButton>
 );

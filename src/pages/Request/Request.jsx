@@ -59,6 +59,7 @@ export const Request = () => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [errors, setErrors] = useState([]);
   const contentRef = useRef();
+  const [loading, setLoading] = useState(false);
 
   const handleGetRubricsFields = (id, title) => {
     getRubricField(id).then((resp) => {
@@ -229,6 +230,7 @@ export const Request = () => {
 
   const handleCreateRequest = () => {
     if (handleCheckAllFields()) {
+      setLoading(true);
       createRequest({
         ...data,
         general_group: {
@@ -242,6 +244,7 @@ export const Request = () => {
           favorite: undefined,
         },
       })?.then((resp) => {
+        setLoading(false);
         handleResponse(resp, () => {
           cogoToast.success("Заявка успішно створена", {
             hideAfter: 3,
@@ -255,6 +258,7 @@ export const Request = () => {
 
   const handleEditRequest = () => {
     if (handleCheckAllFields()) {
+      setLoading(true);
       editRequest({
         ...data,
         general_group: {
@@ -269,6 +273,7 @@ export const Request = () => {
           favorite: undefined,
         },
       })?.then((resp) => {
+        setLoading(false);
         handleResponse(resp, () => {
           cogoToast.success("Зміни успішно збережено", {
             hideAfter: 3,
@@ -347,6 +352,7 @@ export const Request = () => {
         onToggleFavorite={() => setFavorite(!favorite)}
         data={data}
         onChangeField={handleChangeField}
+        loading={loading}
       />
       <div className="request-content hide-scroll" ref={contentRef}>
         <div>

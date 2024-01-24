@@ -62,10 +62,14 @@ export const MainInfo = ({
               <Divider />
               <StatusCard
                 title={
-                  <>
-                    <span>Сплачено до</span>{" "}
-                    {handleFormatDate(Number(billingTo) * 1000, true)}
-                  </>
+                  new Date()?.getTime() < Number(billingTo) * 1000 ? (
+                    <>
+                      <span>Сплачено до</span>{" "}
+                      {handleFormatDate(Number(billingTo) * 1000, true)}
+                    </>
+                  ) : (
+                    <>Не сплачено</>
+                  )
                 }
                 status={new Date()?.getTime() < Number(billingTo) * 1000}
                 subtitle="Білінг"

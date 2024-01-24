@@ -16,5 +16,5 @@ const StyledId = styled.div`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  max-width: 100px;
+  max-width: 80px;
 `;

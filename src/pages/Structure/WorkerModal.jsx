@@ -34,7 +34,7 @@ const INITIAL_DATA = {
   phones: [{ code: 1, phone: "", telegram: "0", viber: "0" }],
   photos: [],
   active: "1",
-  dt_birthday: new Date(),
+  dt_birthday: null,
 };
 
 export const WorkerModal = ({
@@ -63,6 +63,7 @@ export const WorkerModal = ({
   const [errors, setErrors] = useState([]);
   const [deleteUserAvatar] = useLazyDeleteAvatarQuery();
   const [deleteWorkerImg] = useLazyDeleteWorkerImgQuery();
+  const [loading, setLoading] = useState(false);
 
   const handleChangeField = (fieldName, value) => {
     let newData = { ...profileData, [fieldName]: value };
@@ -97,7 +98,8 @@ export const WorkerModal = ({
     profileData?.first_name?.length === 0 && errorsData.push("first_name");
     profileData?.last_name?.length === 0 && errorsData.push("last_name");
     profileData?.password?.length === 0 && errorsData.push("password");
-    profileData?.phones[0]?.phone?.length === 0 && errorsData.push("phones");
+    profileData?.phones?.filter((p) => p?.phone?.length === 0)?.length > 0 &&
+      errorsData.push("phones");
 
     if (errorsData?.length > 0) {
       setErrors(errorsData);
@@ -125,7 +127,7 @@ export const WorkerModal = ({
               photo: { url: resp?.data[0]?.photo },
               dt_birthday:
                 resp?.data[0]?.dt_birthday === "0"
-                  ? new Date()
+                  ? null
                   : new Date(Number(resp?.data[0]?.dt_birthday) * 1000),
             }
           : INITIAL_DATA
@@ -140,6 +142,7 @@ export const WorkerModal = ({
   };
 
   useEffect(() => {
+    console.log(level === 1 && !showNotStructureWorkers && !worker);
     if (level === 1 && !showNotStructureWorkers && !worker) {
       setProfileData({
         ...user,
@@ -158,6 +161,8 @@ export const WorkerModal = ({
     }
   }, [workerId]);
 
+  console.log(user);
+
   const handleGetUserData = () => {
     getProfile().then((resp) => {
       loginUser(resp?.data?.data);
@@ -166,6 +171,7 @@ export const WorkerModal = ({
 
   const handleSaveUser = () => {
     if (handleCheckFields()) {
+      setLoading(true);
       const { first_name, last_name, email, phones, password, photo } =
         profileData;
 
@@ -190,20 +196,22 @@ export const WorkerModal = ({
             ? new Date()?.getTime() / 1000
             : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000
         ),
-      }).then((resp) =>
+      }).then((resp) => {
+        setLoading(false);
         handleResponse(resp, () => {
           cogoToast.success("Зміни успішно збережено", {
             hideAfter: 3,
             position: "top-right",
           });
           handleGetUserData();
-        })
-      );
+        });
+      });
     }
   };
 
   const handleSaveWorker = () => {
     if (handleCheckFields()) {
+      setLoading(true);
       editWorker({
         ...profileData,
         id_permision: rolesPermission?.id_permision,
@@ -223,7 +231,8 @@ export const WorkerModal = ({
             phone: handleRemovePhoneMask(phone.phone),
           }))
         ),
-      }).then((resp) =>
+      }).then((resp) => {
+        setLoading(false);
         handleResponse(resp, () => {
           cogoToast.success("Зміни успішно збережено", {
             hideAfter: 3,
@@ -232,8 +241,8 @@ export const WorkerModal = ({
           onRefetchData();
           handleGetWorker();
           onClose();
-        })
-      );
+        });
+      });
     }
   };
 
@@ -302,6 +311,7 @@ export const WorkerModal = ({
         noStructure={noStructure}
         showPayHistory={showPayHistory}
         workerId={workerId}
+        loading={loading}
       />
     </>
   );

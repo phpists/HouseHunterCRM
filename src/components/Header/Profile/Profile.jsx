@@ -14,15 +14,18 @@ import {
   useLazyDeleteAvatarQuery,
   useLazyEditProfileQuery,
   useLazyGetUserQuery,
+  useLazyLogoutQuery,
 } from "../../../store/auth/auth.api";
 import { handleRemovePhoneMask, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Confirm } from "../../Confirm/Confirm";
 
 export const Profile = () => {
   const { pathname } = useLocation();
   const [openEdit, setOpenEdit] = useState(false);
   const [openNotifications, setOpenNotifications] = useState(false);
+  const [openLogout, setOpenLogout] = useState(false);
   const { user } = useAppSelect((state) => state.auth);
   const [profileData, setProfileData] = useState(null);
   const { loginUser } = useActions();
@@ -31,6 +34,9 @@ export const Profile = () => {
   const [deleteAvatar] = useLazyDeleteAvatarQuery();
   const [errors, setErrors] = useState([]);
   const { data } = useGetNotificationsQuery();
+  const [logout] = useLazyLogoutQuery();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleCheckAllFields = () => {
     const { first_name, last_name, email, phones } = profileData;
@@ -38,7 +44,11 @@ export const Profile = () => {
       ...[first_name?.length === 0 ? "first_name" : ""],
       ...[last_name?.length === 0 ? "last_name" : ""],
       ...[email?.length === 0 ? "email" : ""],
-      ...[phones[0]?.phone?.length === 0 ? "phones" : ""],
+      ...[
+        phones?.filter((p) => p?.phone?.length === 0)?.length > 0
+          ? "phones"
+          : "",
+      ],
       //   ...[password?.length === 0 ? "password" : []],
       "updated",
     ];
@@ -62,7 +72,7 @@ export const Profile = () => {
       })),
       dt_birthday:
         user?.dt_birthday === "0"
-          ? new Date()
+          ? null
           : new Date(Number(user?.dt_birthday) * 1000),
     });
   }, [user]);
@@ -79,6 +89,7 @@ export const Profile = () => {
     const { first_name, last_name, email, phones, password, photo } =
       profileData;
     if (handleCheckAllFields()) {
+      setLoading(true);
       editProfile({
         first_name,
         last_name,
@@ -96,18 +107,19 @@ export const Profile = () => {
         photo: photo?.file,
         dt_birthday: Math.floor(
           profileData?.dt_birthday === "0"
-            ? new Date()?.getTime() / 1000
+            ? null
             : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000
         ),
-      }).then((resp) =>
+      }).then((resp) => {
+        setLoading(false);
         handleResponse(resp, () => {
           cogoToast.success("Зміни успішно збережено", {
             hideAfter: 3,
             position: "top-right",
           });
           handleGetUserData();
-        })
-      );
+        });
+      });
     }
   };
 
@@ -120,7 +132,7 @@ export const Profile = () => {
       })),
       dt_birthday:
         user?.dt_birthday === "0"
-          ? new Date()
+          ? null
           : new Date(Number(user?.dt_birthday) * 1000),
     });
 
@@ -150,8 +162,33 @@ export const Profile = () => {
     );
   };
 
+  const handleOpenNotifications = () => {
+    if (data?.count_notify > 0) {
+      setOpenNotifications(!openNotifications);
+    } else {
+      cogoToast.error("Немає сповіщень", {
+        hideAfter: 3,
+        position: "top-right",
+      });
+    }
+  };
+
+  const handleLogout = () => {
+    logout();
+    localStorage.removeItem("token");
+    navigate("/auth");
+    loginUser(null);
+  };
+
   return (
     <>
+      {openLogout && (
+        <Confirm
+          onClose={() => setOpenLogout(false)}
+          title="Ви точно хочете вийти?"
+          onSubmit={handleLogout}
+        />
+      )}
       {openEdit && (
         <UserInfoCard
           onClose={() => setOpenEdit(false)}
@@ -171,6 +208,8 @@ export const Profile = () => {
           errors={errors}
           onRemoveAvatar={handleRemoveAvatar}
           noResetValueOnCodeChange
+          onLogout={() => setOpenLogout(true)}
+          loading={loading}
         />
       )}
       <StyledProfile
@@ -182,7 +221,7 @@ export const Profile = () => {
       >
         <Notification
           active={openNotifications}
-          onToggle={() => setOpenNotifications(!openNotifications)}
+          onToggle={handleOpenNotifications}
           count={data?.count_notify}
         />
         {openNotifications && <NotificationsDropdown data={data} />}

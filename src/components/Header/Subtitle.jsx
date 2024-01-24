@@ -33,7 +33,7 @@ export const Subtitle = () => {
       case "/calendar":
         return "Перегляд об'єкту через 40 хвилин";
       case "/structure":
-        return `Всього ${workersCount} агентів`;
+        return `Всього ${workersCount ?? 0} агентів`;
       case "/company":
         return `${companyWorkers} працівників`;
       case "/request":

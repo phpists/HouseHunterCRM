@@ -81,6 +81,10 @@ export const RoleSelect = ({ value, onChange }) => {
     }
   };
 
+  if (!level) {
+    return null;
+  }
+
   return (
     <StyledRoleSelect
       active={roles?.find((role) => role?.level === value)}

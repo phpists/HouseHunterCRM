@@ -10,7 +10,7 @@ import backgrondPink from "../../../../assets/images/pink-card-mask.svg";
 export const Cards = ({ data, onEdit }) => (
   <StyledCards>
     <Card
-      title={data?.years_the_market ?? "-"}
+      title={data?.years_the_market ?? "0"}
       subtitle={
         <>
           Років <br /> на ринку

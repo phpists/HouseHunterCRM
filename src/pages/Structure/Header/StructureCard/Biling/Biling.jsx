@@ -3,6 +3,7 @@ import { StatusCard } from "./StatusCard";
 import { Divider } from "./Divider";
 import { BossCard } from "./BossCard/BossCard";
 import { Structure } from "./Structure/Structure";
+import { handleCheckBilling } from "../../../../../utilits";
 
 export const Biling = ({ open, onClick, data }) => (
   <StyledBiling open={open} onClick={onClick} className="hide-scroll">
@@ -18,8 +19,12 @@ export const Biling = ({ open, onClick, data }) => (
     )}
 
     <StatusCard
-      status={data?.active === "1"}
-      title={`Сплачено до ${data?.billing_to}`}
+      status={handleCheckBilling(data?.billing_to)}
+      title={
+        handleCheckBilling(data?.billing_to)
+          ? `Сплачено до ${data?.billing_to}`
+          : "Не сплачено"
+      }
       subtitle="Білінг"
     />
 

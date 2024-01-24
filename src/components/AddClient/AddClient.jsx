@@ -138,6 +138,7 @@ export const AddClient = ({ onClose, onAdded }) => {
                 errors?.email ||
                 loading
               }
+              loading={loading}
             />
           </div>
         )}

@@ -34,6 +34,12 @@ export const Select = ({
     }
   };
 
+  useEffect(() => {
+    if (selectedCount === 0) {
+      setActive(false);
+    }
+  }, [selectedCount]);
+
   return (
     <>
       {deleteModal && (

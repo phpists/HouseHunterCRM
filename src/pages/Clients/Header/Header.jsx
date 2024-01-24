@@ -58,15 +58,11 @@ export const Header = ({
     <StyledHeader>
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          {favoritesFilter && <BackButton onClick={onToggleFavoriteFilter} />}
+          {/* {favoritesFilter && <BackButton onClick={onToggleFavoriteFilter} />} */}
           <Title
-            title={
-              favoritesFilter
-                ? "Улюблене"
-                : `${newClientsCount ?? "-"} нових клієнтів за сьогодні`
-            }
+            title={`${newClientsCount ?? "-"} нових клієнтів за сьогодні`}
           />
-          {favoritesFilter && <Subtitle subtitle="54 обрано" />}
+          {/* {favoritesFilter && <Subtitle subtitle="54 обрано" />} */}
         </div>
         <Buttons
           favoritesFilter={favoritesFilter}

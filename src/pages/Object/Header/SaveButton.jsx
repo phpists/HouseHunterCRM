@@ -1,12 +1,23 @@
 import { styled } from "styled-components";
+import { Loader } from "../../../components/Loader";
 
-export const SaveButton = ({ onClick }) => (
-  <StyledSaveButton onClick={onClick} className="flex items-center">
-    Зберегти <span>зміни</span>
+export const SaveButton = ({ onClick, loading }) => (
+  <StyledSaveButton
+    onClick={onClick}
+    className="flex items-center"
+    disabled={loading}
+  >
+    {loading ? (
+      <Loader white className="loader-wrapper" />
+    ) : (
+      <>
+        Зберегти <span>зміни</span>
+      </>
+    )}
   </StyledSaveButton>
 );
 
-const StyledSaveButton = styled.div`
+const StyledSaveButton = styled.button`
   color: #fff;
   text-align: center;
   font-family: Overpass;
@@ -26,6 +37,11 @@ const StyledSaveButton = styled.div`
   span {
     margin-left: 5px;
   }
+  .loader-wrapper {
+    height: 18px;
+    width: 100px;
+  }
+
   @media (max-width: 800px) {
     font-size: 13px;
     padding: 8px 14px;

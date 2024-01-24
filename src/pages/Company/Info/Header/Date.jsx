@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const Date = () => <StyledDate>Додана -</StyledDate>;
+export const Date = ({ date }) => <StyledDate>Додана {date}</StyledDate>;
 
 const StyledDate = styled.h3`
   color: #fff;

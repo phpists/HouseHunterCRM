@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Tag } from "./Tag";
 
-export const Card = ({ open, title, icon }) => (
+export const Card = ({ open, title, icon, count }) => (
   <StyledCard className="flex justify-center clickable" open={open}>
     {open && (
       <div className="mr-auto flex items-center clickable">
@@ -9,7 +9,7 @@ export const Card = ({ open, title, icon }) => (
         <div className="title clickable">{title}</div>
       </div>
     )}
-    <Tag />
+    <Tag count={count} />
   </StyledCard>
 );
 

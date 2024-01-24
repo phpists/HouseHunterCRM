@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const Title = () => <StyledTitle>3 покази на сьгодні</StyledTitle>;
+export const Title = () => <StyledTitle>Повернутися</StyledTitle>;
 
 const StyledTitle = styled.div`
   color: #fff;

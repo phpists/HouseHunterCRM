@@ -55,7 +55,11 @@ export const MobileContent = ({
       </div>
       <div className="footer-info-wrapper  more-content-wrapper">
         <Statistic statisticData={statisticData} />
-        <TotalInfo open={totalInfoOpened} onToggleOpen={() => null} />
+        <TotalInfo
+          open={totalInfoOpened}
+          onToggleOpen={() => null}
+          id={data?.id}
+        />
       </div>
       <MoreButton open={open} onToggle={() => setOpen(!open)} />
       {isMore ? <Arrow onClick={onNextLevel} /> : null}

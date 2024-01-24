@@ -1,12 +1,13 @@
 import styled from "styled-components";
+import { Loader } from "../Loader";
 
-export const FooterDelete = ({ noDelete, onSave, onReset }) => (
+export const FooterDelete = ({ noDelete, onSave, onReset, loading }) => (
   <StyledFooter noDelete={noDelete}>
-    <button className="submit-btn" onClick={onSave}>
-      Застосувати
+    <button className="submit-btn" onClick={onSave} disabled={loading}>
+      {loading ? <Loader className="wrapper-loader" /> : "Застосувати"}
     </button>
     {!noDelete && (
-      <button className="cancel-btn" onClick={onReset}>
+      <button className="cancel-btn" onClick={onReset} disabled={loading}>
         Видалити
       </button>
     )}
@@ -27,6 +28,12 @@ const StyledFooter = styled.div`
     font-weight: 300;
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
+    .wrapper-loader {
+      width: 130px;
+    }
+    svg {
+      height: 17px;
+    }
   }
 
   .submit-btn {

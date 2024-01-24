@@ -292,6 +292,20 @@ export const structure = createApi({
           mod: "structure",
         }),
       }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => {
+            const transformedResponse = Object.fromEntries(
+              Object.entries(response)?.filter((e) => e[0] !== "error")
+            );
+            return transformedResponse;
+          },
+          () => null,
+          false,
+          true
+        );
+      },
     }),
     changeCompanyStructureLevel: build.query({
       query: (structure_level) => ({
@@ -408,6 +422,28 @@ export const structure = createApi({
           action: "get_statistic_worker",
           mod: "structure",
           id_user,
+        }),
+      }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
+    }),
+    getStatisticTotalWorker: build.query({
+      query: (id_worker) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_statistic_new_items_worker",
+          mod: "system_info",
+          id_worker,
+          period: 1,
         }),
       }),
       transformResponse: (response) => {
@@ -556,4 +592,5 @@ export const {
   useLazyGetNotStructureWorkersQuery,
   useLazyAddWorkerToStructureQuery,
   useLazyGetWorkerCountQuery,
+  useLazyGetStatisticTotalWorkerQuery,
 } = structure;

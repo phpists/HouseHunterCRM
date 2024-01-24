@@ -78,7 +78,8 @@ export const Modal = ({ onClose, onRefetchData }) => {
     data?.first_name?.length === 0 && errorsData.push("first_name");
     data?.last_name?.length === 0 && errorsData.push("last_name");
     data?.password?.length === 0 && errorsData.push("password");
-    data?.phones[0]?.phone?.length === 0 && errorsData.push("phones");
+    data?.phones?.filter((p) => p?.phone?.length === 0)?.length > 0 &&
+      errorsData.push("phones");
 
     if (errorsData?.length > 0) {
       setErrors(errorsData);
@@ -157,6 +158,7 @@ export const Modal = ({ onClose, onRefetchData }) => {
         <Footer
           onSave={() => (loading ? null : handleCreate())}
           onCancel={handleReset}
+          loading={loading}
         />
       </div>
     </StyledModal>

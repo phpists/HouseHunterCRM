@@ -3,6 +3,7 @@ import { Field } from "../Field";
 import { Divider } from "./Divider";
 import { ProfileField } from "../ProfileField";
 import { useGetPhonesCodesQuery } from "../../store/auth/auth.api";
+import { Phones } from "./Phones/Phones";
 
 export const PersonalData = ({
   data,
@@ -45,7 +46,13 @@ export const PersonalData = ({
         type="date"
       />
       <Divider />
-      <Field
+      <Phones
+        phones={data?.phones}
+        onChange={(val) => onChangeField("phones", val)}
+        errors={errors}
+        noResetValueOnCodeChange={noResetValueOnCodeChange}
+      />
+      {/* <Field
         label="Телефон"
         full
         phone
@@ -63,7 +70,7 @@ export const PersonalData = ({
         phonesCodes={phonesCodes}
         error={!!errors?.find((e) => e === "phones")}
         noResetValueOnCodeChange={noResetValueOnCodeChange}
-      />
+      /> */}
       <Divider />
       <Field
         value={data?.email ?? ""}

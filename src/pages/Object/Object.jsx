@@ -46,6 +46,7 @@ export const ObjectPage = () => {
   const [photos, setPhotos] = useState([]);
   const [errors, setErrors] = useState([]);
   const contentRef = useRef();
+  const [loading, setLoading] = useState(false);
 
   const handleChangePhotos = (p) => setPhotos(p);
 
@@ -169,6 +170,7 @@ export const ObjectPage = () => {
     });
 
     if (isEmptyFields?.length === 0) {
+      setLoading(true);
       createObject({
         field: {
           ...handleFormatDatesToTimestamp(data, fields),
@@ -181,15 +183,16 @@ export const ObjectPage = () => {
             : undefined,
         },
         photos: photos.map((p) => p.file),
-      }).then((resp) =>
+      }).then((resp) => {
+        setLoading(false);
         handleResponse(resp, () => {
           cogoToast.success("Об'єкт успішно створено", {
             hideAfter: 3,
             position: "top-right",
           });
           navigate(`/client/${clientId}`);
-        })
-      );
+        });
+      });
     } else {
       setErrors([...isEmptyFields, "updated"]);
     }
@@ -233,6 +236,7 @@ export const ObjectPage = () => {
     });
 
     if (isEmptyFields?.length === 0) {
+      setLoading(true);
       editObject({
         id_object: id,
         field: {
@@ -249,7 +253,8 @@ export const ObjectPage = () => {
           photos_json: null,
         },
         photos: photos.filter((p) => p?.status !== "old").map((p) => p.file),
-      }).then((resp) =>
+      }).then((resp) => {
+        setLoading(false);
         handleResponse(resp, () => {
           cogoToast.success("Зміни успішно збережено", {
             hideAfter: 3,
@@ -257,8 +262,8 @@ export const ObjectPage = () => {
           });
           setPhotos(photos.map((p) => (p?.file ? { ...p, status: "old" } : p)));
           handleGetObject();
-        })
-      );
+        });
+      });
     } else {
       setErrors(isEmptyFields);
       setErrors([...isEmptyFields, "updated"]);
@@ -296,6 +301,7 @@ export const ObjectPage = () => {
         onSave={id ? handleEdit : handleCreate}
         favorite={favorite}
         onToggleFavorite={() => setFavorite(!favorite)}
+        loading={loading}
       />
       {handleCheckIsField(fields, "obj_is_actual_dt") && (
         <Header

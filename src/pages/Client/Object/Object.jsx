@@ -21,7 +21,7 @@ export const ObjectCard = ({ className, selectedObject }) => {
   const [getRequest, { data: requestData }] = useLazyGetRequestQuery();
   const [getObject] = useLazyGetObjectQuery();
   const [getRubricField] = useLazyGetRubricsFieldsQuery();
-  const [data, setData] = useState(REQUEST_INIT);
+  const [data, setData] = useState([]);
   const [fields, setFields] = useState([]);
   const [getRubricFields, { data: objectFields }] =
     useLazyGetRubricFieldsQuery();
@@ -30,35 +30,45 @@ export const ObjectCard = ({ className, selectedObject }) => {
     getRequest(selectedObject?.id).then((resp) => {
       handleResponse(resp, () => {
         // ! Object.entries(resp?.data)[0][1]
-        const infoField = Object.entries(
-          Object.entries(resp?.data)[0][1]
-        ).filter((f) => f[0] !== "General_field_group")[0][1];
-        const generalInfo = Object.entries(
-          Object.entries(resp?.data)[0][1]
-        ).find((f) => f[0] === "General_field_group");
+        console.log(resp?.data && Object.entries(resp?.data)[1][1]);
+        if (resp?.data && Object.entries(resp?.data)[1][1]) {
+          let infoFields = Object.entries(Object.entries(resp?.data)[1][1])
+            .filter((f) => f[0] !== "General_field_group")
+            ?.map((f) => f[1]);
+          infoFields = infoFields?.length ? infoFields : [infoFields];
+          const generalInfo = Object.entries(
+            Object.entries(resp?.data)[1][1]
+          ).find((f) => f[0] === "General_field_group");
 
-        setData({
-          id_client: infoField?.id_client,
-          id_rubric: infoField?.id_rubric,
-          id_location: infoField?.id_location,
-          type_obj_apartment: infoField?.type_obj_apartment,
-          price_min: infoField?.price_min,
-          price_max: infoField?.price_max,
-          room_min: infoField?.room_min,
-          room_max: infoField?.room_max,
-          address_storey: infoField?.address_storey,
-          storey_count: infoField?.storey_count,
-          area_total_min: infoField?.area_total_min,
-          area_total_max: infoField?.area_total_max,
-          comment: infoField?.comment,
-          not_actual: infoField?.not_actual,
-          dt_deadline: Object.entries(resp?.data)[0][1]?.dt_deadline,
-          deleted: infoField?.deleted,
-          dt_add:
-            generalInfo?.length > 0 && generalInfo[1]?.dt_add
-              ? handleFormatDate(Number(generalInfo[1]?.dt_add) * 1000, true)
-              : "-",
-        });
+          console.log(infoFields);
+          setData(
+            infoFields?.map((field) => ({
+              id_client: field?.id_client,
+              id_rubric: field?.id_rubric,
+              id_location: field?.id_location,
+              type_obj_apartment: field?.type_obj_apartment,
+              price_min: field?.price_min,
+              price_max: field?.price_max,
+              room_min: field?.room_min,
+              room_max: field?.room_max,
+              address_storey: field?.address_storey,
+              storey_count: field?.storey_count,
+              area_total_min: field?.area_total_min,
+              area_total_max: field?.area_total_max,
+              comment: field?.comment,
+              not_actual: field?.not_actual,
+              dt_deadline: Object.entries(resp?.data)[0][1]?.dt_deadline,
+              deleted: field?.deleted,
+              dt_add:
+                generalInfo?.length > 0 && generalInfo[1]?.dt_add
+                  ? handleFormatDate(
+                      Number(generalInfo[1]?.dt_add) * 1000,
+                      true
+                    )
+                  : "-",
+            }))
+          );
+        }
       });
     });
   };
@@ -67,20 +77,22 @@ export const ObjectCard = ({ className, selectedObject }) => {
     getObject(selectedObject?.id).then((resp) => {
       handleResponse(resp, () => {
         getRubricFields(resp?.data?.id_rubric);
-        setData({
-          ...resp?.data,
-          img: Object.entries(resp?.data?.img)
-            ?.map((p) => p[1])
-            ?.sort((a, b) => b?.order - a?.order)
-            ?.map(({ url }) => url),
-          id_client: resp?.data?.id_client,
-          id_rubric: resp?.data?.id_rubric,
-          id_location: resp?.data?.id_location,
-          price_min: resp?.data?.price,
-          dt_add: resp?.data?.dt_add
-            ? handleFormatDate(Number(resp?.data?.dt_add) * 1000, true)
-            : "-",
-        });
+        setData([
+          {
+            ...resp?.data,
+            img: Object.entries(resp?.data?.img)
+              ?.map((p) => p[1])
+              ?.sort((a, b) => b?.order - a?.order)
+              ?.map(({ url }) => url),
+            id_client: resp?.data?.id_client,
+            id_rubric: resp?.data?.id_rubric,
+            id_location: resp?.data?.id_location,
+            price_min: resp?.data?.price,
+            dt_add: resp?.data?.dt_add
+              ? handleFormatDate(Number(resp?.data?.dt_add) * 1000, true)
+              : "-",
+          },
+        ]);
       });
     });
   };
@@ -105,25 +117,30 @@ export const ObjectCard = ({ className, selectedObject }) => {
     }
   };
 
+  console.log(data);
   return (
-    <StyledObject className={`hide-scroll ${className}`}>
-      <SectionTitle title={data?.rubric ?? ""} />
-      <Maininfo
-        data={data}
-        onChangeField={handleChangeField}
-        requestData={requestData}
-        isObject={selectedObject?.type === "object"}
-        objectFields={objectFields}
-      />
-      {started ? (
-        <>
-          {/* <SectionTitle title="Етап" /> */}
-          {/* <Steps /> */}
-        </>
-      ) : (
-        <StartButton onClick={() => setStarted(true)} />
-      )}
-    </StyledObject>
+    <>
+      {data?.map((e, i) => (
+        <StyledObject key={i} className={`hide-scroll ${className}`}>
+          <SectionTitle title={e?.rubric ?? ""} />
+          <Maininfo
+            data={e}
+            onChangeField={handleChangeField}
+            requestData={requestData}
+            isObject={selectedObject?.type === "object"}
+            objectFields={objectFields}
+          />
+          {/* {started ? (
+            <>
+              <SectionTitle title="Етап" />
+              <Steps />
+            </>
+          ) : (
+            <StartButton onClick={() => setStarted(true)} />
+          )} */}
+        </StyledObject>
+      ))}
+    </>
   );
 };
 

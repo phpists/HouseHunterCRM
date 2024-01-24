@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useGetDirectorWorkersQuery } from "../../../store/billing/billing.api";
 import { WorkerModal } from "../../Structure/WorkerModal";
 import { useActions } from "../../../hooks/actions";
+import { useAppSelect } from "../../../hooks/redux";
 
 export const Workers = ({ tarifSelected, selectedWorkers, onSelect }) => {
   const [editOpen, setEditOpen] = useState(false);
@@ -18,6 +19,7 @@ export const Workers = ({ tarifSelected, selectedWorkers, onSelect }) => {
     roles: [],
   });
   const { saveWorkersCount } = useActions();
+  const { user } = useAppSelect((state) => state.auth);
 
   const handleChangeFilter = (fieldName, value) =>
     setFilter({ ...filter, [fieldName]: value });
@@ -30,13 +32,15 @@ export const Workers = ({ tarifSelected, selectedWorkers, onSelect }) => {
   }, [tarifSelected]);
 
   useEffect(() => {
-    setWorkers(
-      data
+    setWorkers([
+      ...(data
         ? Object.entries(data)
             ?.filter((w) => w[0] !== "error")
+            ?.filter((w) => w[0] !== "messege")
             ?.map((w) => w[1])
-        : []
-    );
+        : []),
+      user,
+    ]);
   }, [data]);
 
   const handleFilter = () =>
@@ -91,7 +95,7 @@ export const Workers = ({ tarifSelected, selectedWorkers, onSelect }) => {
           onRefetchData={refetch}
           noStructure
           showPayHistory
-          worker
+          worker={!editOpen?.isAdmin}
         />
       )}
     </StyledWorkers>

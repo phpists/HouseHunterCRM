@@ -48,6 +48,7 @@ export const Clients = () => {
             ? searchPhoneCode
             : undefined,
         my_struct: isFilters.current ? filter?.my_struct : undefined,
+        show_favorite: favoritesFilter ? "1" : undefined,
       }).then((resp) => {
         isLoading.current = false;
         handleResponse(
@@ -141,6 +142,12 @@ export const Clients = () => {
       });
     });
   };
+
+  useEffect(() => {
+    handleGetClients(true);
+    currentPage.current = 0;
+    setIsAllPages(false);
+  }, [favoritesFilter]);
 
   return (
     <StyledClients>

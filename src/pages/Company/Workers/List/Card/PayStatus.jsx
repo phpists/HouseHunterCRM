@@ -9,7 +9,9 @@ export const PayStatus = ({ status, billingTo }) => (
       ) : (
         <>
           <span>Сплачено до</span>{" "}
-          {handleFormatDate(Number(billingTo) * 1000, true)}
+          {isNaN(billingTo)
+            ? billingTo
+            : handleFormatDate(Number(billingTo) * 1000, true)}
         </>
       )}
     </div>

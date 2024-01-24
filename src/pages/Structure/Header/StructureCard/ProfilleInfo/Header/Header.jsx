@@ -10,6 +10,7 @@ import {
   useGetAllPerimissionsLevelsQuery,
   useGetCompanyStructureLevelQuery,
 } from "../../../../../../store/structure/structure.api";
+import { handleFormatDate } from "../../../../../../utilits";
 
 export const Header = ({ onOpenInfo, data }) => {
   const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
@@ -23,6 +24,7 @@ export const Header = ({ onOpenInfo, data }) => {
           ?.find((l) => Number(l.level) === Number(level)) ?? []
       : [];
 
+  console.log(level);
   return (
     <StyledHeader className="flex items-center notClickable">
       <Avatar
@@ -48,7 +50,7 @@ export const Header = ({ onOpenInfo, data }) => {
             ] ?? "-"
           }
         />
-        <Date date={data?.dt_reg} />
+        <Date date={handleFormatDate(Number(data?.dt_reg) * 1000, true)} />
       </div>
     </StyledHeader>
   );

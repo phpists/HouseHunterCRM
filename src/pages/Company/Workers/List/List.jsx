@@ -31,7 +31,9 @@ export const List = ({
           ) => (
             <Card
               key={i}
-              onOpenEdit={() => onOpenEdit({ id, struct_level })}
+              onOpenEdit={() =>
+                onOpenEdit({ id, struct_level, isAdmin: i === 0 })
+              }
               onSelect={() => onSelect(id)}
               tarifSelected={tarifSelected}
               isSelected={!!selectedWorkers.find((w) => w === id)}

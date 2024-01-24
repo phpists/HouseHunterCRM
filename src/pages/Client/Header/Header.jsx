@@ -6,7 +6,10 @@ import { Divider } from "./Divider";
 import { IconButton } from "../../../components/IconButton";
 import { ReactComponent as StarIcon } from "../../../assets/images/card-star.svg";
 import { ReactComponent as RemoveIcon } from "../../../assets/images/remove.svg";
-import { useLazyDeleteCientQuery } from "../../../store/clients/clients.api";
+import {
+  useLazyAddClientToFavoriteQuery,
+  useLazyDeleteCientQuery,
+} from "../../../store/clients/clients.api";
 import { Confirm } from "../../../components/Confirm/Confirm";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -14,12 +17,13 @@ import cogoToast from "cogo-toast";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
 import { useGetAccessQuery } from "../../../store/auth/auth.api";
 
-export const Header = () => {
+export const Header = ({ favorite }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [deleteClient] = useLazyDeleteCientQuery();
   const [deleteModal, setDeleteModal] = useState();
   const { data: accessData } = useGetAccessQuery();
+  const [addClientToFavorite] = useLazyAddClientToFavoriteQuery();
 
   const handleDeleteClient = () => {
     deleteClient({ id_client: [id] }).then((resp) => {
@@ -33,6 +37,17 @@ export const Header = () => {
     });
   };
 
+  const handleAddClientToFavorite = () => {
+    addClientToFavorite(id).then((resp) => {
+      handleResponse(resp, () => {
+        cogoToast.success("Статус успішно обновлено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      });
+    });
+  };
+
   return (
     <StyledHeader className="flex items-center justify-between">
       {deleteModal && (
@@ -42,12 +57,15 @@ export const Header = () => {
           onSubmit={handleDeleteClient}
         />
       )}
-      <div className="flex items-center">
+      <div
+        className="flex items-center cursor-pointer"
+        onClick={() => navigate("/clients")}
+      >
         <BackButton />
         <Title />
       </div>
       <div className="flex items-center">
-        <ActionButton
+        {/* <ActionButton
           title="Поставити задачу"
           onClick={null}
           className="mr-2.5 icon-btn"
@@ -57,12 +75,13 @@ export const Header = () => {
           smallTitle="Передати"
           onClick={null}
           className="icon-btn send-client-btn"
-        />
-        <Divider />
+        /> */}
+        {/* <Divider /> */}
         <IconButton
           Icon={StarIcon}
           className="mr-2.5 icon-btn"
-          onClick={null}
+          onClick={handleAddClientToFavorite}
+          active={favorite === "1"}
         />
         {handleCheckAccess(accessData, "clients", "delete") ? (
           <IconButton

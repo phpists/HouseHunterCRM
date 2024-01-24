@@ -2,13 +2,21 @@ import { styled } from "styled-components";
 import { Title } from "./Title";
 import { Description } from "./Description";
 import editIcon from "../../../../assets/images/edit-company.svg";
+import { useState } from "react";
 
-export const About = () => {
+export const About = ({ value, onChange }) => {
+  const [edit, setEdit] = useState(false);
+
   return (
     <StyledAbout className="hover-effect-to-right">
-      <img src={editIcon} alt="" />
+      <img src={editIcon} alt="" onClick={() => setEdit(!edit)} />
       <Title />
-      <Description />
+      <Description
+        value={value}
+        onChange={onChange}
+        // onChangeEdit={() => setEdit(false)}
+        edit={edit}
+      />
     </StyledAbout>
   );
 };

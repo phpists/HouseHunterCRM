@@ -1,9 +1,14 @@
 import { styled } from "styled-components";
 import { Button } from "../Button";
 
-export const Footer = ({ onSave, onReset }) => (
+export const Footer = ({ onSave, onReset, loading }) => (
   <StyledFooter className="flex items-center justify-between">
-    <Button title="Застосувати" onClick={onSave} className="btn enter-btn" />
+    <Button
+      title="Застосувати"
+      onClick={onSave}
+      className="btn enter-btn"
+      loading={loading}
+    />
     <Button title="Скасувати" onClick={onReset} className="btn cancel-btn" />
   </StyledFooter>
 );

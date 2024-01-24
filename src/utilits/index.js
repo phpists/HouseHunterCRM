@@ -323,3 +323,23 @@ export const formatBytes = (bytes, decimals) => {
     i = Math.floor(Math.log(bytes) / Math.log(k));
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 };
+
+const handleFormatBilling = (date) => {
+  const formated = date.split(" ");
+  const hours = formated[1];
+  const dateSplited = formated[0]?.split(".");
+
+  return isNaN(date)
+    ? Math.floor(
+        new Date(
+          `${dateSplited[1]}.${dateSplited[0]}.${dateSplited[2]} ${hours ?? ""}`
+        )?.getTime()
+      )
+    : Number(date) * 1000;
+};
+
+export const handleCheckBilling = (billingTo) => {
+  const now = new Date().getTime();
+  const billing = handleFormatBilling(billingTo);
+  return billing > now;
+};

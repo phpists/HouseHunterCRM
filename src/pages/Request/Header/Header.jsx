@@ -23,6 +23,7 @@ export const Header = ({
   onToggleFavorite,
   data,
   onChangeField,
+  loading,
 }) => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -68,7 +69,11 @@ export const Header = ({
       <div className="flex title-wrapper">
         <Title />
         <div className="mobile-action-btns flex items-center">
-          <SaveButton className="desktop-save-btn" onClick={onSave} />
+          <SaveButton
+            className="desktop-save-btn"
+            onClick={onSave}
+            loading={loading}
+          />
           {id && (
             <>
               <IconButton
@@ -90,7 +95,7 @@ export const Header = ({
         </div>
       </div>
       <div className="flex items-center bts">
-        <SaveButton onClick={onSave} />
+        <SaveButton onClick={onSave} loading={loading} />
         <Button
           title="Призупинити показ"
           active={Number(data?.general_group?.stop_showing) > 0}

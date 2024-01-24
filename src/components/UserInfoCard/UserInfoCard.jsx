@@ -34,6 +34,8 @@ export const UserInfoCard = ({
   noStructure,
   showPayHistory,
   workerId,
+  onLogout,
+  loading,
 }) => {
   const controls = useAnimationControls();
   const contentRef = useRef(null);
@@ -95,11 +97,16 @@ export const UserInfoCard = ({
         />
         {showPayHistory && <PersonalBills workerId={workerId} />}
         {isDelete ? (
-          <FooterDelete noDelete={noDelete} onSave={onSave} onReset={onReset} />
+          <FooterDelete
+            noDelete={noDelete}
+            onSave={onSave}
+            onReset={onReset}
+            loading={loading}
+          />
         ) : (
-          <Footer onSave={onSave} onReset={onReset} />
+          <Footer onSave={onSave} onReset={onReset} loading={loading} />
         )}
-        {logout && <Logout />}
+        {logout && <Logout onLogout={onLogout} />}
       </div>
     </StyledUserInfoCard>
   );

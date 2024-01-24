@@ -38,8 +38,10 @@ export const Card = ({
               onBlur={handleSave}
               autoFocus
             />
-          ) : (
+          ) : title?.length > 0 ? (
             title
+          ) : (
+            "0"
           )}
         </div>
         <div className="subtitle-wrapper">

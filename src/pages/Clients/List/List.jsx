@@ -3,12 +3,16 @@ import { Card } from "./Card/Card";
 import { Empty } from "../../../components/Empty/Empty";
 import { useState } from "react";
 import { Confirm } from "../../../components/Confirm/Confirm";
-import { useGetAccessQuery } from "../../../store/auth/auth.api";
+import {
+  useGetAccessQuery,
+  useGetPhonesCodesQuery,
+} from "../../../store/auth/auth.api";
 import { handleCheckAccess } from "../../../utilits";
 
 export const List = ({ selected, onSelect, clients, innerRef, onDelete }) => {
   const [deleteModal, setDeleteModal] = useState(null);
   const { data: accessData } = useGetAccessQuery();
+  const { data: phonesCodes } = useGetPhonesCodesQuery();
 
   const handleOpenDeleteModal = (id) => setDeleteModal(id);
 
@@ -51,7 +55,12 @@ export const List = ({ selected, onSelect, clients, innerRef, onDelete }) => {
                 name={`${first_name} ${last_name}`}
                 id={id}
                 dateCreate={dt_add}
-                phones={phones}
+                phones={phones?.map((p) => ({
+                  ...p,
+                  phone: `${phonesCodes?.find((c) => c.id === p.code)?.code}${
+                    p?.phone
+                  }`,
+                }))}
                 requestsCount={all_req}
                 objectsCount={all_obj}
                 comment={comment}

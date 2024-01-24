@@ -11,9 +11,9 @@ export const RepeatCard = ({ onOpenTarif }) => (
       <Subtitle />
     </div>
     <div className="flex items-center repeatcard-footer ">
-      <Workers />
+      {/* <Workers /> */}
       <Button
-        title="Повторити"
+        title="Поповнити"
         outline="true"
         className="repeat-btn"
         onClick={onOpenTarif}
@@ -28,6 +28,8 @@ const StyledRepeatCard = styled.div`
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(4.5px);
   padding: 11px 19px 13px 15px;
+  opacity: 0.5;
+  cursor: no-drop;
   .repeat-btn {
     padding: 7px 17px 5px;
     font-family: Overpass;

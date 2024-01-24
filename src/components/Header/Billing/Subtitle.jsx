@@ -1,14 +1,24 @@
 import { styled } from "styled-components";
+import { useAppSelect } from "../../../hooks/redux";
+import { handleCheckBilling } from "../../../utilits";
 
-export const Subtitle = ({ subtitle }) => (
-  <StyledSubtitle>
-    {subtitle ?? (
-      <>
-        Сплачено до <span>28.07.2023</span>
-      </>
-    )}
-  </StyledSubtitle>
-);
+export const Subtitle = ({ subtitle }) => {
+  const { user } = useAppSelect((state) => state.auth);
+
+  return (
+    <StyledSubtitle>
+      {subtitle ? (
+        subtitle
+      ) : handleCheckBilling(user?.billing_to ?? "") ? (
+        <>
+          Сплачено до <span>{user?.billing_to?.split(" ")[0] ?? ""}</span>
+        </>
+      ) : (
+        <>Не сплачено</>
+      )}
+    </StyledSubtitle>
+  );
+};
 
 const StyledSubtitle = styled.div`
   color: rgba(255, 255, 255, 0.4);

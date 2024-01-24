@@ -43,12 +43,12 @@ export const Buttons = ({
         />
       ) : null}
 
-      {/* <IconButton
+      <IconButton
         Icon={StarIcon}
         onClick={onToggleFavoriteFilter}
         className="icon-btn"
         active={favoritesFilter}
-      /> */}
+      />
       <Search
         filter={filter}
         onChangeFilter={onChangeFilter}

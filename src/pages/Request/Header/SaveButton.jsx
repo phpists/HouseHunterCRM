@@ -1,8 +1,9 @@
 import { styled } from "styled-components";
+import { Loader } from "../../../components/Loader";
 
-export const SaveButton = ({ className, onClick }) => (
-  <StyledSaveButton className={className} onClick={onClick}>
-    Зберегти зміни
+export const SaveButton = ({ className, onClick, loading }) => (
+  <StyledSaveButton className={className} onClick={onClick} disabled={loading}>
+    {loading ? <Loader white /> : "Зберегти зміни"}
   </StyledSaveButton>
 );
 

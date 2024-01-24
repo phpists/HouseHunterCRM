@@ -97,7 +97,9 @@ export const Field = ({
                   phonesCodes?.find((p) => p.id === phoneCode)?.code ?? ""
                 }${value}`
               : type === "date"
-              ? handleFormatDate(value, true)
+              ? value
+                ? handleFormatDate(value, true)
+                : "Введіть значення"
               : value?.length > 0
               ? value
               : placeholder}

@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import { Loader } from "../../../../../components/Loader";
 
-export const Footer = ({ onSave, onCancel }) => (
+export const Footer = ({ onSave, onCancel, loading }) => (
   <StyledFooter>
-    <button className="submit-btn" onClick={onSave}>
-      Застосувати
+    <button className="submit-btn" onClick={onSave} disabled={loading}>
+      {loading ? <Loader className="loader-wrapper" /> : "Застосувати"}
     </button>
-    <button className="cancel-btn" onClick={onCancel}>
+    <button className="cancel-btn" onClick={onCancel} disabled={loading}>
       Скасувати
     </button>
   </StyledFooter>
@@ -25,6 +26,10 @@ const StyledFooter = styled.div`
     font-weight: 300;
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
+    height: 30px;
+    .loader-wrapper {
+      width: 120px;
+    }
   }
 
   .submit-btn {

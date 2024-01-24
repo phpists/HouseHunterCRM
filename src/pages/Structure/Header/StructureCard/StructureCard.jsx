@@ -19,6 +19,7 @@ export const StructureCard = ({
     getWorkerStatistic(id);
   }, [id]);
 
+  console.log(data?.billing_to);
   return (
     <StyledStructureCard>
       <DesktopContent

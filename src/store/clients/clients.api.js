@@ -70,6 +70,7 @@ export const clients = createApi({
         search_phone,
         search_phone_code,
         my_struct,
+        show_favorite,
       }) => ({
         url: "",
         method: "POST",
@@ -83,6 +84,7 @@ export const clients = createApi({
           search_phone,
           search_phone_code,
           my_struct,
+          show_favorite,
         }),
       }),
       transformResponse: (response) => {
@@ -142,6 +144,18 @@ export const clients = createApi({
           },
           { photos }
         ),
+      }),
+    }),
+    addClientToFavorite: build.query({
+      query: (id_client) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "add_client_to_favorite",
+          mod: "clients",
+          id_client,
+        }),
       }),
     }),
     deleteCient: build.query({
@@ -257,4 +271,5 @@ export const {
   useLazyGetClientsObjectsQuery,
   useLazyGetClientPhotosQuery,
   useGetClientsCountQuery,
+  useLazyAddClientToFavoriteQuery,
 } = clients;

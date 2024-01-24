@@ -3,6 +3,7 @@ import { CompanyLogo } from "../../../../components/CompanyLogo";
 import { Title } from "./Title";
 import { Date } from "./Date";
 import { Owner } from "./Owner/Owner";
+import { handleFormatDate } from "../../../../utilits";
 
 export const Header = ({ tarifOpen, data, onEdit }) => {
   return (
@@ -14,7 +15,7 @@ export const Header = ({ tarifOpen, data, onEdit }) => {
         <CompanyLogo />
         <div className="flex flex-col items-start ml-2.5">
           <Title title={data?.company_name ?? "-"} onEdit={onEdit} />
-          <Date />
+          <Date date={handleFormatDate(Number(data?.dt_reg) * 1000, true)} />
         </div>
       </div>
       <Owner data={data} />

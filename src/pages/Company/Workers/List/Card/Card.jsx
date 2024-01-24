@@ -4,6 +4,7 @@ import { EnterStatus } from "./EnterStatus";
 import { PayStatus } from "./PayStatus";
 import { ReactComponent as Arrow } from "../../../../../assets/images/arrow-right-tarif.svg";
 import { Selected } from "./Selected";
+import { handleCheckBilling } from "../../../../../utilits";
 
 export const Card = ({
   onOpenEdit,
@@ -38,10 +39,7 @@ export const Card = ({
     ) : (
       <EnterStatus status={active} />
     )}
-    <PayStatus
-      status={Number(billingTo) * 1000 > new Date()?.getTime()}
-      billingTo={billingTo}
-    />
+    <PayStatus status={handleCheckBilling(billingTo)} billingTo={billingTo} />
     <div className="flex items-center justify-center h-full more-arrow-desktop">
       <Arrow />
     </div>

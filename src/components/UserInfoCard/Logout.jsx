@@ -1,27 +1,10 @@
 import styled from "styled-components";
 import { Button } from "../Button";
-import { useLazyLogoutQuery } from "../../store/auth/auth.api";
-import { useNavigate } from "react-router-dom";
-import { useActions } from "../../hooks/actions";
-
-export const Logout = () => {
-  const [logout] = useLazyLogoutQuery();
-  const navigate = useNavigate();
-  const { loginUser } = useActions();
-
-  const handleLogout = () => {
-    logout();
-    localStorage.removeItem("token");
-    navigate("/auth");
-    loginUser(null);
-  };
-
-  return (
-    <StyledLogout>
-      <Button title="Вийти" onClick={handleLogout} className="btn enter-btn" />
-    </StyledLogout>
-  );
-};
+export const Logout = ({ onLogout }) => (
+  <StyledLogout>
+    <Button title="Вийти" onClick={onLogout} className="btn enter-btn" />
+  </StyledLogout>
+);
 
 const StyledLogout = styled.div`
   margin-top: 10px;

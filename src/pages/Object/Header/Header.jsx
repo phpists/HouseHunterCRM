@@ -16,7 +16,7 @@ import {
 } from "../../../store/objects/objects.api";
 import { useGetAccessQuery } from "../../../store/auth/auth.api";
 
-export const Header = ({ onSave, favorite, onToggleFavorite }) => {
+export const Header = ({ onSave, favorite, onToggleFavorite, loading }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [deleteModal, setDeleteModal] = useState(false);
@@ -63,7 +63,7 @@ export const Header = ({ onSave, favorite, onToggleFavorite }) => {
       <StyledHeader className="flex items-center justify-between">
         <BackButton />
         <div className="btns-header flex items-center">
-          <SaveButton onClick={onSave} />
+          <SaveButton onClick={onSave} loading={loading} />
           <SendClientButton />
           <IconButton
             Icon={StarIcon}
