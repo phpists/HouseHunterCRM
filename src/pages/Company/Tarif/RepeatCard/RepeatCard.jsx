@@ -28,7 +28,6 @@ const StyledRepeatCard = styled.div`
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(4.5px);
   padding: 11px 19px 13px 15px;
-  opacity: 0.5;
   cursor: no-drop;
   .repeat-btn {
     padding: 7px 17px 5px;

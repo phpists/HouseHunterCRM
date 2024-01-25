@@ -11,19 +11,20 @@ import {
   useLazyDeleteCientQuery,
 } from "../../../store/clients/clients.api";
 import { Confirm } from "../../../components/Confirm/Confirm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import cogoToast from "cogo-toast";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
 import { useGetAccessQuery } from "../../../store/auth/auth.api";
 
-export const Header = ({ favorite, onRefetch }) => {
+export const Header = ({ favorite }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [deleteClient] = useLazyDeleteCientQuery();
   const [deleteModal, setDeleteModal] = useState();
   const { data: accessData } = useGetAccessQuery();
   const [addClientToFavorite] = useLazyAddClientToFavoriteQuery();
+  const [status, setStatus] = useState(false);
 
   const handleDeleteClient = () => {
     deleteClient({ id_client: [id] }).then((resp) => {
@@ -44,10 +45,14 @@ export const Header = ({ favorite, onRefetch }) => {
           hideAfter: 3,
           position: "top-right",
         });
-        onRefetch();
+        setStatus(!status);
       });
     });
   };
+
+  useEffect(() => {
+    setStatus(favorite);
+  }, [favorite]);
 
   return (
     <StyledHeader className="flex items-center justify-between">
@@ -82,7 +87,7 @@ export const Header = ({ favorite, onRefetch }) => {
           Icon={StarIcon}
           className="mr-2.5 icon-btn"
           onClick={handleAddClientToFavorite}
-          active={favorite}
+          active={status}
         />
         {handleCheckAccess(accessData, "clients", "delete") ? (
           <IconButton

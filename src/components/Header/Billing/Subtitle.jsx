@@ -14,7 +14,7 @@ export const Subtitle = ({ subtitle }) => {
           Сплачено до <span>{user?.billing_to?.split(" ")[0] ?? ""}</span>
         </>
       ) : (
-        <>Не сплачено</>
+        <span className="error">Акаунт не оплачений</span>
       )}
     </StyledSubtitle>
   );
@@ -31,5 +31,9 @@ const StyledSubtitle = styled.div`
 
   span {
     color: rgba(255, 255, 255, 0.6);
+  }
+  .error {
+    color: #ff4343;
+    font-weight: 400;
   }
 `;

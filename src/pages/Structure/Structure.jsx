@@ -146,6 +146,7 @@ export const Structure = () => {
                   : {},
               }}
               isMore={handleGetLevelWorkers(1 + user?.struct_level)?.length > 0}
+              user={true}
             />
           ) : handleGetLevelWorkers()?.length === 0 ? (
             <Empty />

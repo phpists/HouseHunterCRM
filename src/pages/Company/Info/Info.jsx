@@ -21,10 +21,11 @@ export const Info = ({ tarifOpen, onCloseTarif }) => {
     const updatedData = {
       action: "update_company_info",
       mod: "profile",
-      company_name: data?.data?.company_name ?? "",
-      web_site_copmany: data?.data?.web_site_copmany ?? " ",
-      registration_adress: data?.data?.registration_adress ?? " ",
-      years_the_market: data?.data?.years_the_market ?? " ",
+      company_name: data?.data?.company_name ?? "-",
+      web_site_copmany: data?.data?.web_site_copmany ?? "-",
+      registration_adress: data?.data?.registration_adress ?? "-",
+      years_the_market: data?.data?.years_the_market ?? "-",
+      description_copmany: data?.data?.description_copmany ?? "-",
       [fieldName]: value,
     };
 

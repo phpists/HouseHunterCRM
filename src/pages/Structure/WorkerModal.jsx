@@ -142,14 +142,13 @@ export const WorkerModal = ({
   };
 
   useEffect(() => {
-    console.log(level === 1 && !showNotStructureWorkers && !worker);
     if (level === 1 && !showNotStructureWorkers && !worker) {
       setProfileData({
         ...user,
         structure_level: level,
         dt_birthday:
           user?.dt_birthday === "0"
-            ? new Date()
+            ? null
             : new Date(Number(user?.dt_birthday) * 1000),
         phones: user.phones.map((p) => ({
           ...p,
@@ -160,8 +159,6 @@ export const WorkerModal = ({
       handleGetWorker();
     }
   }, [workerId]);
-
-  console.log(user);
 
   const handleGetUserData = () => {
     getProfile().then((resp) => {
@@ -176,7 +173,6 @@ export const WorkerModal = ({
         profileData;
 
       editProfile({
-        profileData,
         first_name,
         last_name,
         email,
@@ -190,10 +186,10 @@ export const WorkerModal = ({
           }))
         ),
         password: password?.length > 0 ? password : undefined,
-        photo: profileData?.photo.file ?? undefined,
+        photo: photo.file ?? undefined,
         dt_birthday: Math.floor(
           profileData?.dt_birthday === "0"
-            ? new Date()?.getTime() / 1000
+            ? null
             : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000
         ),
       }).then((resp) => {
@@ -219,7 +215,7 @@ export const WorkerModal = ({
         photo: profileData?.photo.file ?? undefined,
         dt_birthday: Math.floor(
           profileData?.dt_birthday === "0"
-            ? new Date()?.getTime() / 1000
+            ? null
             : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000
         ),
         phones_json: JSON.stringify(
@@ -297,7 +293,7 @@ export const WorkerModal = ({
         data={profileData}
         onChangeField={handleChangeField}
         onSave={() =>
-          level === 1 && !showNotStructureWorkers && !noStructure
+          (level === 1 && !showNotStructureWorkers && !noStructure) || !worker
             ? handleSaveUser()
             : handleSaveWorker()
         }

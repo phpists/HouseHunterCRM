@@ -17,6 +17,7 @@ export const MobileContent = ({
   statisticData,
   onNextLevel,
   isMore,
+  user,
 }) => {
   const [totalInfoOpened, setTotalInfoOpened] = useState(false);
   const [open, setOpen] = useState(false);
@@ -40,7 +41,7 @@ export const MobileContent = ({
     <StyledMobileContent open={open}>
       <div className="main-info-wrapper">
         <ProfilleInfo onOpenInfo={onOpenInfo} data={data} />
-        <Biling open={true} data={data} />
+        <Biling open={true} data={data} user={user} />
       </div>
       {data?.level !== 1 && <MobileBilling data={data} />}
       <div className="more-billing-wrapper more-content-wrapper">

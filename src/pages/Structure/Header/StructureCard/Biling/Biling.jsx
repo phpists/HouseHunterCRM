@@ -5,13 +5,13 @@ import { BossCard } from "./BossCard/BossCard";
 import { Structure } from "./Structure/Structure";
 import { handleCheckBilling } from "../../../../../utilits";
 
-export const Biling = ({ open, onClick, data }) => (
+export const Biling = ({ open, onClick, data, user }) => (
   <StyledBiling open={open} onClick={onClick} className="hide-scroll">
     {!data?.isCurrentUser && (
       <>
         <StatusCard
-          status={data?.active === "1"}
-          title={data?.active === "1" ? "Дозволено" : "Заборонено"}
+          status={data?.active === "1" || user}
+          title={data?.active === "1" || user ? "Дозволено" : "Заборонено"}
           subtitle="Вхід"
         />
         <Divider />

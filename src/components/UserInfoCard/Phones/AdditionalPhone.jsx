@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import { Field } from "../../Field";
 import { ReactComponent as RemoveIcon } from "../../../assets/images/remove.svg";
+import { Socmedias } from "./Socmedias";
 
 export const AdditionalPhone = ({
   onRemove,
@@ -10,23 +11,31 @@ export const AdditionalPhone = ({
   onChangeValue,
 }) => (
   <StyledAdditionalPhone className="flex items-center">
-    <Field
-      label="Телефон"
-      full
-      phone
-      value={phone?.phone}
-      onChange={(val) => onChangeValue({ ...phone, phone: val })}
-      placeholder="+38 (___) ___-__- __"
-      phoneCode={phone?.code}
-      onChangePhoneCode={(cod) =>
-        onChangeValue({ ...phone, code: cod, phone: "" })
-      }
-      phonesCodes={phonesCodes}
-      error={
-        !!errors?.find((e) => e === "phones") && phone?.phone?.length === 0
-      }
-      noResetValueOnCodeChange
-    />
+    <div className="flex items-center">
+      <Socmedias
+        viber={phone?.viber}
+        telegram={phone.telegram}
+        onChange={(field, val) => onChangeValue({ ...phone, [field]: val })}
+      />
+      <Field
+        label="Телефон"
+        full
+        phone
+        value={phone?.phone}
+        onChange={(val) => onChangeValue({ ...phone, phone: val })}
+        placeholder="+38 (___) ___-__- __"
+        phoneCode={phone?.code}
+        onChangePhoneCode={(cod) =>
+          onChangeValue({ ...phone, code: cod, phone: "" })
+        }
+        phonesCodes={phonesCodes}
+        error={
+          !!errors?.find((e) => e === "phones") && phone?.phone?.length === 0
+        }
+        noResetValueOnCodeChange
+        className="field-wrap"
+      />
+    </div>
     <div className="divider" />
     <div
       className="remove-btn flex items-center justify-center"
@@ -48,6 +57,12 @@ const StyledAdditionalPhone = styled.div`
     margin: 0 6px 0 5px;
     transition: all 0.3s;
     opacity: 0;
+  }
+  .field-wrap {
+    width: 230px;
+    .value {
+      width: 100%;
+    }
   }
   .remove-btn {
     width: 32px;

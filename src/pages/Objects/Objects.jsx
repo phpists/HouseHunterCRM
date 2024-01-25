@@ -82,6 +82,11 @@ export const Objects = () => {
   const handleGetObjects = (isReset) => {
     isFirstRender.current = false;
     if ((!isLoading.current && !isAllPages) || isReset) {
+      if (isReset) {
+        listRef.current.scroll({ top: 0 });
+        setObjects([]);
+      }
+
       isLoading.current = true;
 
       let data = {
@@ -107,7 +112,9 @@ export const Objects = () => {
               ? Object.entries(resp?.data?.objects)?.map((obj) => obj[1])
               : [];
 
-            setAllCount(allCount + objectsResp?.length);
+            setAllCount(
+              isReset ? objectsResp?.length : allCount + objectsResp?.length
+            );
             setObjects(isReset ? objectsResp : [...objects, ...objectsResp]);
             saveObjectsCount(resp?.data?.all_item);
           },

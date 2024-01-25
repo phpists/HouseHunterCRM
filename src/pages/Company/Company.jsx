@@ -10,6 +10,7 @@ import {
 import { handleResponse } from "../../utilits";
 import { useActions } from "../../hooks/actions";
 import { useLazyGetUserQuery } from "../../store/auth/auth.api";
+import cogoToast from "cogo-toast";
 
 export const Company = () => {
   const [tarifOpen, setTarifOpen] = useState(false);
@@ -21,6 +22,7 @@ export const Company = () => {
   const { data: balanceData, refetch } = useViewCompanyBalanceQuery();
   const { saveBalance, loginUser } = useActions();
   const [getProfile] = useLazyGetUserQuery();
+  const [refetchWorkers, setRefetchWorkers] = useState(false);
 
   const handleGetUserData = () => {
     getProfile().then((resp) => {
@@ -64,6 +66,11 @@ export const Company = () => {
             setPaying(true);
             refetch();
             handleGetUserData();
+            cogoToast.success("Оплата пройшла успішно", {
+              hideAfter: 3,
+              position: "top-right",
+            });
+            setRefetchWorkers(true);
             setTimeout(() => {
               setPaying(false);
               setTarifSelected(null);
@@ -78,6 +85,11 @@ export const Company = () => {
           }
         )
       );
+    } else {
+      cogoToast.error("Оберіть користувачів для поповнення", {
+        hideAfter: 3,
+        position: "top-right",
+      });
     }
   };
 
@@ -103,6 +115,8 @@ export const Company = () => {
         tarifSelected={tarifSelected}
         selectedWorkers={selectedWorkers}
         onSelect={handleSelectWorker}
+        refetchWorkers={refetchWorkers}
+        onRefetchedWorkers={() => setRefetchWorkers(false)}
       />
     </StyledCompany>
   );

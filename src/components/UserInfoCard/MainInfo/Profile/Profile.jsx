@@ -36,7 +36,7 @@ export const Profile = ({
             />
           )}
         </div>
-        <Subtitle />
+        {/* <Subtitle /> */}
       </div>
     </div>
   </StyledProfile>

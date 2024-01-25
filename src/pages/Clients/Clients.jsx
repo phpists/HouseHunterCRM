@@ -37,7 +37,13 @@ export const Clients = () => {
   const handleGetClients = (isReset) => {
     if ((!isLoading.current && !isAllPages) || isReset) {
       isLoading.current = true;
-      isReset && setIsAllPages(false);
+
+      if (isReset) {
+        setIsAllPages(false);
+        listRef.current.scroll({ top: 0 });
+        setClients([]);
+      }
+
       getClients({
         current_page: currentPage.current,
         item_on_page: 10,

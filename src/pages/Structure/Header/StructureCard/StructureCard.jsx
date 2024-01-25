@@ -10,6 +10,7 @@ export const StructureCard = ({
   id,
   data,
   isMore,
+  user,
 }) => {
   const [getWorkerStatistic, { data: statisticData }] =
     useLazyGetStatisticWorkerQuery();
@@ -29,6 +30,7 @@ export const StructureCard = ({
         statisticData={statisticData}
         onNextLevel={onNextLevel}
         isMore={isMore}
+        user={user}
       />
       <MobileContent
         onOpenInfo={onOpenInfo}
@@ -38,6 +40,7 @@ export const StructureCard = ({
         statisticData={statisticData}
         onNextLevel={onNextLevel}
         isMore={isMore}
+        user={user}
       />
     </StyledStructureCard>
   );

@@ -84,6 +84,10 @@ export const Selections = () => {
   const handleGetSelections = (isReset) => {
     if ((!isLoading.current && !isAllPages) || isReset) {
       isLoading.current = true;
+      if (isReset) {
+        listRef.current.scroll({ top: 0 });
+        setObjects([]);
+      }
 
       getSelections({
         id_requst_group: id,

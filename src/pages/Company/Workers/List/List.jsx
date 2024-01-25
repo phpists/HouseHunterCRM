@@ -26,13 +26,14 @@ export const List = ({
               active,
               photo,
               struct_level,
+              isCurrentUser,
             },
             i
           ) => (
             <Card
               key={i}
               onOpenEdit={() =>
-                onOpenEdit({ id, struct_level, isAdmin: i === 0 })
+                onOpenEdit({ id, struct_level, isAdmin: isCurrentUser })
               }
               onSelect={() => onSelect(id)}
               tarifSelected={tarifSelected}
@@ -48,7 +49,7 @@ export const List = ({
                     }${phones[0]?.phone}`
                   : ""
               }
-              active={active === "1"}
+              active={active === "1" || isCurrentUser}
               billingTo={billing_to}
               level={struct_level}
             />

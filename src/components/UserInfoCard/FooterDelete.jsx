@@ -4,7 +4,11 @@ import { Loader } from "../Loader";
 export const FooterDelete = ({ noDelete, onSave, onReset, loading }) => (
   <StyledFooter noDelete={noDelete}>
     <button className="submit-btn" onClick={onSave} disabled={loading}>
-      {loading ? <Loader className="wrapper-loader" /> : "Застосувати"}
+      {loading ? (
+        <Loader className={!noDelete ? "wrapper-loader" : ""} />
+      ) : (
+        "Застосувати"
+      )}
     </button>
     {!noDelete && (
       <button className="cancel-btn" onClick={onReset} disabled={loading}>

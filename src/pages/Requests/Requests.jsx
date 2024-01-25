@@ -93,6 +93,12 @@ export const Requests = () => {
 
   const handleGetRequests = (isReset) => {
     if ((!isLoading.current && !isAllPages) || isReset) {
+      if (isReset) {
+        listRef.current.scroll({ top: 0 });
+        setRequests([]);
+        setAllCount(0);
+      }
+
       isLoading.current = true;
       let data = {
         current_page: currentPage.current,
@@ -118,7 +124,9 @@ export const Requests = () => {
               saveRequestsCount(resp?.data.all_item ?? 0);
               if (Object.entries(resp?.data?.requests)?.length) {
                 setAllCount(
-                  allCount + Object.entries(resp?.data?.requests)?.length
+                  isReset
+                    ? Object.entries(resp?.data?.requests)?.length
+                    : allCount + Object.entries(resp?.data?.requests)?.length
                 );
 
                 setRequests(

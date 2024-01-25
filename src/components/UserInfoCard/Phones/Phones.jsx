@@ -3,6 +3,7 @@ import { Field } from "../../Field";
 import { AddButton } from "./AddButton";
 import { AdditionalPhone } from "./AdditionalPhone";
 import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
+import { Socmedias } from "./Socmedias";
 
 export const Phones = ({
   phones,
@@ -19,27 +20,35 @@ export const Phones = ({
   const handleRemovePhone = (index) =>
     onChange(phones?.filter((p, i) => i !== index));
 
-  console.log(!!errors?.find((e) => e === "phones"));
   return (
     <div>
-      <Field
-        label="Телефон"
-        full
-        phone
-        value={phones[0]?.phone}
-        onChange={(val) => handleChangePhone(0, { ...phones[0], phone: val })}
-        placeholder="+38 (___) ___-__- __"
-        phoneCode={phones[0]?.code}
-        onChangePhoneCode={(cod) =>
-          handleChangePhone(0, { ...phones[0], code: cod, phone: "" })
-        }
-        phonesCodes={phonesCodes}
-        error={
-          !!errors?.find((e) => e === "phones") &&
-          phones[0]?.phone?.length === 0
-        }
-        noResetValueOnCodeChange={noResetValueOnCodeChange}
-      />
+      <div className="flex items-center">
+        <Socmedias
+          viber={phones[0]?.viber}
+          telegram={phones[0]?.telegram}
+          onChange={(field, val) =>
+            handleChangePhone(0, { ...phones[0], [field]: val })
+          }
+        />
+        <Field
+          label="Телефон"
+          full
+          phone
+          value={phones[0]?.phone}
+          onChange={(val) => handleChangePhone(0, { ...phones[0], phone: val })}
+          placeholder="+38 (___) ___-__- __"
+          phoneCode={phones[0]?.code}
+          onChangePhoneCode={(cod) =>
+            handleChangePhone(0, { ...phones[0], code: cod, phone: "" })
+          }
+          phonesCodes={phonesCodes}
+          error={
+            !!errors?.find((e) => e === "phones") &&
+            phones[0]?.phone?.length === 0
+          }
+          noResetValueOnCodeChange={noResetValueOnCodeChange}
+        />
+      </div>
       {phones.slice(1).map((phone, i) => (
         <>
           <div className="divider" />

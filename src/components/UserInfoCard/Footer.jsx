@@ -23,7 +23,7 @@ const StyledFooter = styled.div`
     letter-spacing: 0.3px;
     padding: 7px 20px 6px 20px;
     height: 31px;
-    width: 100%;
+    width: 50%;
     flex-shrink: 1;
     background: rgba(255, 255, 255, 0.6);
     &:hover {
