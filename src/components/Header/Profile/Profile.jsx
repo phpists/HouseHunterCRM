@@ -117,6 +117,7 @@ export const Profile = () => {
             hideAfter: 3,
             position: "top-right",
           });
+          setOpenEdit(false);
           handleGetUserData();
         });
       });

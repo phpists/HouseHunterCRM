@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 export const Description = ({ value, onChange, edit }) => {
   const handleSave = (e) => {
     const newValue = e.target.value;
-    if (value !== newValue && newValue?.length > 0) {
+    if (value !== newValue) {
       onChange(newValue);
     }
   };
@@ -15,12 +15,12 @@ export const Description = ({ value, onChange, edit }) => {
         <textarea
           defaultValue={value}
           onBlur={handleSave}
-          placeholder="Введіть значення"
+          placeholder="Введіть опис"
         ></textarea>
       ) : value?.length > 0 ? (
         value
       ) : (
-        "-"
+        "Введіть опис"
       )}
     </StyledDescription>
   );

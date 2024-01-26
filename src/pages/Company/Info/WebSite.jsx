@@ -8,7 +8,7 @@ export const WebSite = ({ webSite, onEdit }) => {
 
   const handleSave = (e) => {
     const value = e.target.value;
-    if (webSite !== value && value?.length > 0) {
+    if (webSite !== value) {
       onEdit(value);
     }
     setEdit(false);
@@ -21,11 +21,13 @@ export const WebSite = ({ webSite, onEdit }) => {
         <input
           type="text"
           defaultValue={webSite}
-          placeholder="Введіть значення"
+          placeholder="Введіть значення вебсайту"
           onBlur={handleSave}
         />
       ) : (
-        <span>{webSite?.length > 0 ? webSite : "-"}</span>
+        <span>
+          {webSite?.length > 0 ? webSite : "Введіть значення вебсайту"}
+        </span>
       )}
 
       <img src={editIcon} alt="" onClick={() => setEdit(true)} />
@@ -47,6 +49,11 @@ const StyledWebSite = styled.div`
   flex-shrink: 0;
   cursor: pointer;
   position: relative;
+  span {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
   svg {
     margin-right: 7px;
   }

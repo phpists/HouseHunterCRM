@@ -12,6 +12,7 @@ export const ObjectModal = ({ onClose, selectedObject }) => (
         />
       </div>
     </Modal>
+    <div className="modal-overlay" onClick={onClose}></div>
   </StyledObjectModal>
 );
 

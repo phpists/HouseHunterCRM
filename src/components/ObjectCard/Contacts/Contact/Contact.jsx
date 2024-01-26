@@ -5,7 +5,7 @@ import { useState } from "react";
 import { CommentButton } from "./CommentButton";
 import { ProfileField } from "../../../ProfileField";
 
-export const Contact = ({ type, phones, name }) => {
+export const Contact = ({ type, phones, name, typeText }) => {
   const [commentOpen, setCommentOpen] = useState(false);
 
   return (
@@ -15,7 +15,7 @@ export const Contact = ({ type, phones, name }) => {
           active={commentOpen}
           onClick={() => setCommentOpen(!commentOpen)}
         />
-        <Name type={type} name={name} />
+        <Name type={type} name={name} typeText={typeText} />
       </div>
       {commentOpen && (
         <div className="comment-wrapper">

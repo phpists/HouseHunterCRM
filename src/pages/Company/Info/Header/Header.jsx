@@ -14,7 +14,7 @@ export const Header = ({ tarifOpen, data, onEdit }) => {
       <div className="flex items-center">
         <CompanyLogo />
         <div className="flex flex-col items-start ml-2.5">
-          <Title title={data?.company_name ?? "-"} onEdit={onEdit} />
+          <Title title={data?.company_name} onEdit={onEdit} />
           <Date date={handleFormatDate(Number(data?.dt_reg) * 1000, true)} />
         </div>
       </div>

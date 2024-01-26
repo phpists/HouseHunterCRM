@@ -1,17 +1,17 @@
 import styled from "styled-components";
 import { Contact } from "./Contact/Contact";
 import { Divider } from "./Divider";
-import { useLazyGetClientQuery } from "../../../store/clients/clients.api";
-import { useEffect, useState } from "react";
+import { useLazyGetPhoneObjectQuery } from "../../../store/objects/objects.api";
+import { useState } from "react";
 import { ShowButton } from "./Contact/Phone/ShowButton";
 import { handleResponse } from "../../../utilits";
 
 export const Contacts = ({ className, data }) => {
-  const [getClient, { data: clientData }] = useLazyGetClientQuery();
+  const [getClient, { data: clientData }] = useLazyGetPhoneObjectQuery();
   const [error, setError] = useState(false);
 
   const handleShowClient = () => {
-    getClient(data?.id_client).then((resp) =>
+    getClient(data?.id).then((resp) =>
       handleResponse(
         resp,
         () => null,
@@ -35,8 +35,9 @@ export const Contacts = ({ className, data }) => {
         <>
           <Contact
             type="owner"
-            name={`${clientData?.data?.first_name} ${clientData?.data?.last_name}`}
-            phones={clientData?.data?.phone}
+            name={clientData?.contact?.name}
+            phones={clientData?.contact?.phone}
+            typeText={clientData?.type}
           />
           <Divider />
         </>

@@ -52,7 +52,7 @@ export const Cards = ({ data, onEdit }) => (
       Icon={MegafonIcon}
       hoverBackground={backgrondBlue}
     />
-    <Card
+    {/* <Card
       title={data?.XXXX ?? "-"}
       subtitle={
         <>
@@ -85,20 +85,20 @@ export const Cards = ({ data, onEdit }) => (
           до відгуків
         </>
       }
-    />
+    /> */}
   </StyledCards>
 );
 
 const StyledCards = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-auto-rows: 67px;
   border-radius: 13px;
   overflow: hidden;
   & > .card {
     border: 1px solid rgba(255, 255, 255, 0.1);
     &:nth-child(1),
-    &:nth-child(4) {
+    &:nth-child(3) {
       border-left: none;
       border-right: none;
     }
@@ -107,19 +107,18 @@ const StyledCards = styled.div`
       border-right: none;
     }
     &:nth-child(1),
-    &:nth-child(2),
-    &:nth-child(3) {
+    &:nth-child(2) {
       border-top: none;
       border-bottom: none;
     }
+    &:nth-child(3),
     &:nth-child(4),
-    &:nth-child(5),
     &:nth-child(6) {
       border-bottom: none;
     }
 
     &:nth-child(3),
-    &:nth-child(6) {
+    &:nth-child(4) {
       border-right: none;
     }
   }

@@ -193,6 +193,7 @@ export const WorkerModal = ({
             : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000
         ),
       }).then((resp) => {
+        onClose();
         setLoading(false);
         handleResponse(resp, () => {
           cogoToast.success("Зміни успішно збережено", {
@@ -228,6 +229,7 @@ export const WorkerModal = ({
           }))
         ),
       }).then((resp) => {
+        onClose();
         setLoading(false);
         handleResponse(resp, () => {
           cogoToast.success("Зміни успішно збережено", {
@@ -309,6 +311,7 @@ export const WorkerModal = ({
         workerId={workerId}
         loading={loading}
       />
+      <div className="modal-overlay" onClick={onClose}></div>
     </>
   );
 };

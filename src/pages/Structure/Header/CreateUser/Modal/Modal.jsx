@@ -111,6 +111,8 @@ export const Modal = ({ onClose, onRefetchData }) => {
             ...phone,
             id_phone_code: phone?.code,
             phone: handleRemovePhoneMask(phone.phone),
+            viber: phone?.viber === "1",
+            telegram: phone?.telegram === "1",
           }))
         ),
       }).then((resp) => {
@@ -134,34 +136,38 @@ export const Modal = ({ onClose, onRefetchData }) => {
   }, [, data?.id_permision]);
 
   return (
-    <StyledModal
-      initial={{ opacity: 0, translateX: "100%" }}
-      transition={{ duration: 0.4 }}
-      animate={controls}
-      className="hide-scroll"
-    >
-      <Header onClose={handleReset} />
-      <div className="modal-content">
-        <SectionTitle title="Загальна інформація" />
-        <MainInfo
-          data={data}
-          onChangeField={handleChangeField}
-          users={structureUsersCompany?.data ?? []}
-          errors={errors}
-        />
-        <SectionTitle title="Персональні дані" />
-        <PersonalData
-          data={data}
-          onChangeField={handleChangeField}
-          errors={errors}
-        />
-        <Footer
-          onSave={() => (loading ? null : handleCreate())}
-          onCancel={handleReset}
-          loading={loading}
-        />
-      </div>
-    </StyledModal>
+    <>
+      {" "}
+      <StyledModal
+        initial={{ opacity: 0, translateX: "100%" }}
+        transition={{ duration: 0.4 }}
+        animate={controls}
+        className="hide-scroll"
+      >
+        <Header onClose={handleReset} />
+        <div className="modal-content">
+          <SectionTitle title="Загальна інформація" />
+          <MainInfo
+            data={data}
+            onChangeField={handleChangeField}
+            users={structureUsersCompany?.data ?? []}
+            errors={errors}
+          />
+          <SectionTitle title="Персональні дані" />
+          <PersonalData
+            data={data}
+            onChangeField={handleChangeField}
+            errors={errors}
+          />
+          <Footer
+            onSave={() => (loading ? null : handleCreate())}
+            onCancel={handleReset}
+            loading={loading}
+          />
+        </div>
+      </StyledModal>
+      <div className="modal-overlay" onClick={handleClose}></div>
+    </>
   );
 };
 

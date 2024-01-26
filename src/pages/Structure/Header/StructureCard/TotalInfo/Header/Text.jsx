@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export const Text = () => (
+export const Text = ({ period }) => (
   <StyledText className="notClickable">
     <div className="title notClickable">Статистика</div>
-    <div className="subtitle notClickable">За остані 30 днів</div>
+    <div className="subtitle notClickable">За остані {period} днів</div>
   </StyledText>
 );
 

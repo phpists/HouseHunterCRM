@@ -1,15 +1,12 @@
 import { styled } from "styled-components";
 import { SectionTitle } from "./SectionTitle";
 import { Maininfo } from "./Maininfo/MainInfo";
-import { StartButton } from "./StartButton";
 import { useState } from "react";
-import { Steps } from "./Steps/Steps";
 import { useEffect } from "react";
 import {
   useLazyGetRequestQuery,
   useLazyGetRubricsFieldsQuery,
 } from "../../../store/requests/requests.api";
-import { REQUEST_INIT } from "../../Request/Request";
 import { handleFormatDate, handleResponse } from "../../../utilits";
 import {
   useLazyGetObjectQuery,
@@ -17,7 +14,6 @@ import {
 } from "../../../store/objects/objects.api";
 
 export const ObjectCard = ({ className, selectedObject }) => {
-  const [started, setStarted] = useState(true);
   const [getRequest, { data: requestData }] = useLazyGetRequestQuery();
   const [getObject] = useLazyGetObjectQuery();
   const [getRubricField] = useLazyGetRubricsFieldsQuery();
@@ -30,7 +26,6 @@ export const ObjectCard = ({ className, selectedObject }) => {
     getRequest(selectedObject?.id).then((resp) => {
       handleResponse(resp, () => {
         // ! Object.entries(resp?.data)[0][1]
-        console.log(resp?.data && Object.entries(resp?.data)[1][1]);
         if (resp?.data && Object.entries(resp?.data)[1][1]) {
           let infoFields = Object.entries(Object.entries(resp?.data)[1][1])
             .filter((f) => f[0] !== "General_field_group")
@@ -40,7 +35,6 @@ export const ObjectCard = ({ className, selectedObject }) => {
             Object.entries(resp?.data)[1][1]
           ).find((f) => f[0] === "General_field_group");
 
-          console.log(infoFields);
           setData(
             infoFields?.map((field) => ({
               id_client: field?.id_client,
@@ -117,7 +111,6 @@ export const ObjectCard = ({ className, selectedObject }) => {
     }
   };
 
-  console.log(data);
   return (
     <>
       {data?.map((e, i) => (

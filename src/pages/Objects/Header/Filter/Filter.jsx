@@ -26,30 +26,39 @@ export const Filter = ({
     controls.start({ opacity: 1, translateX: 0 });
   }, []);
 
+  const handleApplyFilters = (isApply) => {
+    onApplyFilter(isApply);
+    handleClose();
+  };
+
   return (
-    <StyledFilter
-      initial={{ opacity: 0, translateX: "100%" }}
-      transition={{ duration: 0.4 }}
-      animate={controls}
-    >
-      <Header onClose={handleClose} />
-      <div className="content">
-        <SectionTitle title="Головне" />
-        <Main
-          filters={filters}
-          onChangeFilter={onChangeFilter}
-          filtersFields={filtersFields}
-        />
-        {/* <SectionTitle title="Актуальність" />
-        <Topicality />
-        <SectionTitle title="Характеристики" />
-        <Characteristics /> */}
-        <Footer
-          onCancel={() => onApplyFilter(false)}
-          onSubmit={() => onApplyFilter(true)}
-        />
-      </div>
-    </StyledFilter>
+    <>
+      {" "}
+      <StyledFilter
+        initial={{ opacity: 0, translateX: "100%" }}
+        transition={{ duration: 0.4 }}
+        animate={controls}
+      >
+        <Header onClose={handleClose} />
+        <div className="content">
+          <SectionTitle title="Головне" />
+          <Main
+            filters={filters}
+            onChangeFilter={onChangeFilter}
+            filtersFields={filtersFields}
+          />
+          {/* <SectionTitle title="Актуальність" />
+     <Topicality />
+     <SectionTitle title="Характеристики" />
+     <Characteristics /> */}
+          <Footer
+            onCancel={() => handleApplyFilters(false)}
+            onSubmit={() => handleApplyFilters(true)}
+          />
+        </div>
+      </StyledFilter>
+      <div className="modal-overlay" onClick={handleClose}></div>
+    </>
   );
 };
 

@@ -39,7 +39,6 @@ export const MoreButton = ({
 const StyledMoreButton = styled.button`
   position: relative;
   transition: all 0.3s;
-  z-index: 2;
   opacity: 0;
   transform: translateX(-10px);
   ${({ isFocusedBtn }) =>
@@ -50,4 +49,11 @@ const StyledMoreButton = styled.button`
       visibility: visible;
     }
 `}
+
+  &:focus {
+    .dropdown {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 `;

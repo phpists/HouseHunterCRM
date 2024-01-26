@@ -15,14 +15,18 @@ export const ProfilleInfo = ({ onOpenInfo, data }) => {
       <Divider />
       <Phones
         className="phones-wrapper notClickable"
-        phones={JSON.parse(data?.phone)?.map(
-          ({ id_phone_code, phone, code }) =>
-            `${
-              code ??
-              phonesCodes?.find(({ id }) => id === id_phone_code)?.code ??
-              ""
-            }${phone}`
-        )}
+        phones={
+          !data?.phone
+            ? []
+            : JSON.parse(data?.phone)?.map(
+                ({ id_phone_code, phone, code }) =>
+                  `${
+                    code ??
+                    phonesCodes?.find(({ id }) => id === id_phone_code)?.code ??
+                    ""
+                  }${phone}`
+              )
+        }
       />
       <Email email={data?.email ?? ""} />
     </StyledProfilleInfo>

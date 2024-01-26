@@ -17,22 +17,26 @@ export const structure = createApi({
         phones_json,
         structure_parent,
         dt_birthday,
+        photo,
       }) => ({
         url: "",
         method: "POST",
         headers: headers(),
-        body: handleToFormData({
-          action: "add_new_worker",
-          mod: "billing",
-          email,
-          id_permision,
-          password,
-          first_name,
-          last_name,
-          phones_json,
-          structure_parent,
-          dt_birthday,
-        }),
+        body: handleToFormData(
+          {
+            action: "add_new_worker",
+            mod: "billing",
+            email,
+            id_permision,
+            password,
+            first_name,
+            last_name,
+            phones_json,
+            structure_parent,
+            dt_birthday,
+          },
+          photo ? { photo } : null
+        ),
       }),
     }),
     editWorker: build.query({
@@ -436,7 +440,7 @@ export const structure = createApi({
       },
     }),
     getStatisticTotalWorker: build.query({
-      query: (id_worker) => ({
+      query: ({ id_worker, period }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -444,7 +448,7 @@ export const structure = createApi({
           action: "get_statistic_new_items_worker",
           mod: "system_info",
           id_worker,
-          period: 1,
+          period,
         }),
       }),
       transformResponse: (response) => {
@@ -499,18 +503,6 @@ export const structure = createApi({
           true
         );
       },
-    }),
-    deleteWorkerImg: build.query({
-      query: (id_worker) => ({
-        url: "",
-        method: "POST",
-        headers: headers(),
-        body: handleToFormData({
-          action: "delete_worker_img",
-          mod: "billing",
-          id_worker,
-        }),
-      }),
     }),
     deleteWorkerImg: build.query({
       query: (id_worker) => ({

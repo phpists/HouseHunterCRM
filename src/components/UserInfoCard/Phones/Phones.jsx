@@ -4,6 +4,7 @@ import { AddButton } from "./AddButton";
 import { AdditionalPhone } from "./AdditionalPhone";
 import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
 import { Socmedias } from "./Socmedias";
+import styled from "styled-components";
 
 export const Phones = ({
   phones,
@@ -21,7 +22,7 @@ export const Phones = ({
     onChange(phones?.filter((p, i) => i !== index));
 
   return (
-    <div>
+    <StyledPhones>
       <div className="flex items-center">
         <Socmedias
           viber={phones[0]?.viber}
@@ -47,6 +48,7 @@ export const Phones = ({
             phones[0]?.phone?.length === 0
           }
           noResetValueOnCodeChange={noResetValueOnCodeChange}
+          className="main-phone"
         />
       </div>
       {phones.slice(1).map((phone, i) => (
@@ -64,28 +66,12 @@ export const Phones = ({
       ))}
       <div className="divider" />
       <AddButton onClick={handleAddPhone} />
-    </div>
+    </StyledPhones>
   );
 };
 
-{
-  /* <Field
-label="Телефон"
-full
-phone
-value={data?.phones[0]?.phone}
-onChange={(val) =>
-  onChangeField("phones", [{ ...data?.phones[0], phone: val }])
-}
-placeholder="+38 (___) ___-__- __"
-phoneCode={data?.phones[0]?.code}
-onChangePhoneCode={(cod) =>
-  onChangeField("phones", [
-    { ...data?.phones[0], code: cod, phone: "" },
-  ])
-}
-phonesCodes={phonesCodes}
-error={!!errors?.find((e) => e === "phones")}
-noResetValueOnCodeChange={noResetValueOnCodeChange}
-/> */
-}
+const StyledPhones = styled.div`
+  .main-phone {
+    width: 80%;
+  }
+`;

@@ -8,7 +8,7 @@ export const structureSlice = createSlice({
   name: "structure",
   initialState,
   reducers: {
-    saveWorkersCount(state, action) {
+    saveStructureWorkersCount(state, action) {
       state.workersCount = action.payload;
     },
   },

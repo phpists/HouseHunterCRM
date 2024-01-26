@@ -7,7 +7,7 @@ export const Title = ({ title, onEdit }) => {
 
   const handleSave = (e) => {
     const value = e.target.value;
-    if (title !== value && value?.length > 0) {
+    if (title !== value) {
       onEdit("company_name", value);
     }
     setEdit(false);
@@ -20,9 +20,17 @@ export const Title = ({ title, onEdit }) => {
       edit={edit}
     >
       {edit ? (
-        <input type="text" defaultValue={title} autoFocus onBlur={handleSave} />
-      ) : (
+        <input
+          type="text"
+          defaultValue={title}
+          autoFocus
+          onBlur={handleSave}
+          placeholder="Введіть назву"
+        />
+      ) : title?.length > 0 ? (
         title
+      ) : (
+        "Введіть назву"
       )}
       <img src={editIcon} alt="" />
     </StyledTitle>

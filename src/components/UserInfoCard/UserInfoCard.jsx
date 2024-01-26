@@ -63,52 +63,56 @@ export const UserInfoCard = ({
   }, [errors]);
 
   return (
-    <StyledUserInfoCard
-      initial={{ opacity: 0, translateX: "100%" }}
-      transition={{ duration: 0.4 }}
-      animate={controls}
-      className="hide-scroll user-info-profile-card"
-      ref={contentRef}
-    >
-      <Header onClose={handleClose} title={title} />
-      <div className="modal-content">
-        <SectionTitle title="Загальна інформація" />
-        <MainInfo
-          avatarBanner={avatarBanner}
-          data={data}
-          onChangeField={onChangeField}
-          onRefreshData={onRefreshData}
-          isProfile={isProfile}
-          profile={profile}
-          billingTo={data?.billing_to}
-          onRemoveAvatar={onRemoveAvatar}
-          bosses={bosses}
-          errors={errors}
-          noStructure={noStructure}
-        />
-        {/* <SectionTitle title="Працівники в підпорядкуванні" />
-        <Workers /> */}
-        <SectionTitle title="Персональні дані" />
-        <PersonalData
-          data={data}
-          onChangeField={onChangeField}
-          errors={errors}
-          noResetValueOnCodeChange={noResetValueOnCodeChange}
-        />
-        {showPayHistory && <PersonalBills workerId={workerId} />}
-        {isDelete ? (
-          <FooterDelete
-            noDelete={noDelete}
-            onSave={onSave}
-            onReset={onReset}
-            loading={loading}
+    <>
+      {" "}
+      <StyledUserInfoCard
+        initial={{ opacity: 0, translateX: "100%" }}
+        transition={{ duration: 0.4 }}
+        animate={controls}
+        className="hide-scroll user-info-profile-card"
+        ref={contentRef}
+      >
+        <Header onClose={handleClose} title={title} />
+        <div className="modal-content">
+          <SectionTitle title="Загальна інформація" />
+          <MainInfo
+            avatarBanner={avatarBanner}
+            data={data}
+            onChangeField={onChangeField}
+            onRefreshData={onRefreshData}
+            isProfile={isProfile}
+            profile={profile}
+            billingTo={data?.billing_to}
+            onRemoveAvatar={onRemoveAvatar}
+            bosses={bosses}
+            errors={errors}
+            noStructure={noStructure}
           />
-        ) : (
-          <Footer onSave={onSave} onReset={onReset} loading={loading} />
-        )}
-        {logout && <Logout onLogout={onLogout} />}
-      </div>
-    </StyledUserInfoCard>
+          {/* <SectionTitle title="Працівники в підпорядкуванні" />
+     <Workers /> */}
+          <SectionTitle title="Персональні дані" />
+          <PersonalData
+            data={data}
+            onChangeField={onChangeField}
+            errors={errors}
+            noResetValueOnCodeChange={noResetValueOnCodeChange}
+          />
+          {showPayHistory && <PersonalBills workerId={workerId} />}
+          {isDelete ? (
+            <FooterDelete
+              noDelete={noDelete}
+              onSave={onSave}
+              onReset={onReset}
+              loading={loading}
+            />
+          ) : (
+            <Footer onSave={onSave} onReset={onReset} loading={loading} />
+          )}
+          {logout && <Logout onLogout={onLogout} />}
+        </div>
+      </StyledUserInfoCard>
+      <div className="modal-overlay" onClick={handleClose}></div>
+    </>
   );
 };
 

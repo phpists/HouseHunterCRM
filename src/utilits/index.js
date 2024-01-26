@@ -325,17 +325,23 @@ export const formatBytes = (bytes, decimals) => {
 };
 
 const handleFormatBilling = (date) => {
-  const formated = date.split(" ");
-  const hours = formated[1];
-  const dateSplited = formated[0]?.split(".");
+  const formated = date?.split(" ");
+  if (formated?.length > 0) {
+    const hours = formated[1];
+    const dateSplited = formated[0]?.split(".");
 
-  return isNaN(date)
-    ? Math.floor(
-        new Date(
-          `${dateSplited[1]}.${dateSplited[0]}.${dateSplited[2]} ${hours ?? ""}`
-        )?.getTime()
-      )
-    : Number(date) * 1000;
+    return isNaN(date)
+      ? Math.floor(
+          new Date(
+            `${dateSplited[1]}.${dateSplited[0]}.${dateSplited[2]} ${
+              hours ?? ""
+            }`
+          )?.getTime()
+        )
+      : Number(date) * 1000;
+  } else {
+    return Number(date) * 1000;
+  }
 };
 
 export const handleCheckBilling = (billingTo) => {

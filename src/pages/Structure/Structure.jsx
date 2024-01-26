@@ -7,13 +7,11 @@ import { WorkerModal } from "./WorkerModal";
 import {
   useGetCompanyStructureLevelQuery,
   useGetRecurseStructureQuery,
-  useGetStructureWorkersQuery,
   useLazyGetNotStructureWorkersQuery,
   useLazyGetWorkerCountQuery,
 } from "../../store/structure/structure.api";
 import { StructureCard } from "./Header/StructureCard/StructureCard";
 import { useAppSelect } from "../../hooks/redux";
-import { useGetAccessQuery } from "../../store/auth/auth.api";
 import { useActions } from "../../hooks/actions";
 
 export const Structure = () => {
@@ -24,16 +22,15 @@ export const Structure = () => {
   const { data: recurseData, refetch } = useGetRecurseStructureQuery();
   const [parents, setParents] = useState([]);
   const [showNotStructureWorkers, setShowNotStructureWorkers] = useState(false);
-  const [
-    getNotStructureWorkers,
-    { data, refetch: refetchNotStructureWorkers },
-  ] = useLazyGetNotStructureWorkersQuery();
-  const { data: accessData } = useGetAccessQuery();
+  const [getNotStructureWorkers, { data }] =
+    useLazyGetNotStructureWorkersQuery();
   const [getWorkerCount] = useLazyGetWorkerCountQuery();
-  const { saveWorkersCount } = useActions();
+  const { saveStructureWorkersCount } = useActions();
 
   const handleGetWorkerCount = () =>
-    getWorkerCount().then((resp) => saveWorkersCount(resp?.data?.count ?? "-"));
+    getWorkerCount().then((resp) =>
+      saveStructureWorkersCount(resp?.data?.count ?? "-")
+    );
 
   useEffect(() => {
     showNotStructureWorkers && getNotStructureWorkers();
@@ -69,7 +66,9 @@ export const Structure = () => {
   }, []);
 
   useEffect(() => {
-    handleGetWorkerCount();
+    if (recurseData) {
+      handleGetWorkerCount();
+    }
   }, [recurseData]);
 
   return (
@@ -97,7 +96,7 @@ export const Structure = () => {
             showNotStructureWorkers && getNotStructureWorkers();
           }}
           showNotStructureWorkers={showNotStructureWorkers}
-          worker={level !== 1}
+          worker={infoOpen !== user?.id}
         />
       )}
       <div className="structure-content hide-scroll">

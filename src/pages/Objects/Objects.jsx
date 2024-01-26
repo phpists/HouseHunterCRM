@@ -53,6 +53,7 @@ export const Objects = () => {
   const listRef = useRef();
   const [isAllPages, setIsAllPages] = useState(false);
   const isFirstRender = useRef(true);
+  const [loading, setLoading] = useState(false);
 
   const handleChangeFilter = (field, value, isDataUpdate) => {
     if (isDataUpdate) {
@@ -102,8 +103,11 @@ export const Objects = () => {
         };
       }
 
+      setLoading(true);
+
       getAllObjects(data).then((resp) => {
         isLoading.current = false;
+        setLoading(false);
 
         handleResponse(
           resp,
@@ -304,6 +308,7 @@ export const Objects = () => {
         toggleFavoriteStatus={handleToggleFavoriteStatus}
         onFindSimilar={handleFindSimilarTo}
         innerRef={listRef}
+        loading={loading}
       />
     </StyledObjects>
   );

@@ -4,7 +4,13 @@ import { Text } from "./Text";
 import { ReactComponent as CalendarIcon } from "../../../../../../assets/images/calendar.svg";
 import { Dropdown } from "./Dropdown/Dropdown";
 
-export const Header = ({ open, active, onToggleActive }) => {
+export const Header = ({
+  open,
+  active,
+  onToggleActive,
+  period,
+  onChangePeriod,
+}) => {
   return (
     <StyledHeader
       className="flex items-center justify-between clickable notClickable"
@@ -15,11 +21,11 @@ export const Header = ({ open, active, onToggleActive }) => {
       <Icon />
       {open && (
         <>
-          <Text />
+          <Text period={period} />
           <CalendarIcon className="notClickable" />
         </>
       )}
-      {active && <Dropdown />}
+      {active && <Dropdown period={period} onChangePeriod={onChangePeriod} />}
     </StyledHeader>
   );
 };

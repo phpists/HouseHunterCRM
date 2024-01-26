@@ -280,6 +280,27 @@ export const objects = createApi({
         }),
       }),
     }),
+    getPhoneObject: build.query({
+      query: (id_obj) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_phone_object",
+          mod: "objects",
+          id_obj,
+        }),
+      }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
+    }),
   }),
 });
 
@@ -303,4 +324,5 @@ export const {
   useGetTagsListQuery,
   useLazyAddTagsToObjectsQuery,
   useLazyShowHistoryTagsQuery,
+  useLazyGetPhoneObjectQuery,
 } = objects;

@@ -4,8 +4,8 @@ import { ReactComponent as CheckIcon } from "../../../../../../../assets/images/
 export const Option = ({ title, active, onSelect, last }) => (
   <StyledOption
     active={active}
-    onSelect={onSelect}
-    className="flex items-center justify-between notClickable"
+    onClick={onSelect}
+    className="flex items-center justify-between notClickable "
     last={last}
   >
     <span className="notClickable"> {title}</span>

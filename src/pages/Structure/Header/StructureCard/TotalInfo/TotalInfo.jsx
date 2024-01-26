@@ -10,19 +10,19 @@ import { useLazyGetStatisticTotalWorkerQuery } from "../../../../../store/struct
 export const TotalInfo = ({ open, onToggleOpen, id }) => {
   const [active, setActive] = useState(false);
   const [getStatistic, { data }] = useLazyGetStatisticTotalWorkerQuery();
+  const [period, setPeriod] = useState(30);
 
   useEffect(() => {
     setActive(false);
   }, [open]);
 
   useEffect(() => {
-    id && getStatistic(id);
-  }, [id]);
+    id && getStatistic({ id_worker: id, period });
+  }, [id, period]);
 
   const handleToggleCard = (e) =>
     e.target.classList.contains("clickable") && onToggleOpen();
 
-  console.log(data);
   return (
     <StyledTotalInfo
       active={active}
@@ -33,6 +33,8 @@ export const TotalInfo = ({ open, onToggleOpen, id }) => {
         open={open}
         active={active}
         onToggleActive={() => setActive(!active && open)}
+        period={period}
+        onChangePeriod={(val) => setPeriod(val)}
       />
       <div className="cards clickable notClickable">
         <Card

@@ -85,6 +85,7 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
       ),
       photos: photos?.filter((p) => !!p?.file)?.map((p) => p?.file),
     }).then((resp) => {
+      setOpen(false);
       setLoading(false);
       handleResponse(resp, () => {
         handleRefreshData();

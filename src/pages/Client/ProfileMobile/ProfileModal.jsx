@@ -90,6 +90,7 @@ export const ProfileModal = ({
           ) : null}
         </div>
       </Modal>
+      <div className="modal-overlay" onClick={onClose}></div>
     </StyledProfileModal>
   );
 };

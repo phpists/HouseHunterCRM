@@ -5,7 +5,6 @@ import { TypeSelect } from "./TypeSelect/TypeSelect";
 import { Roles } from "./Roles/Roles";
 import { motion, useAnimationControls } from "framer-motion";
 import { useEffect, useState } from "react";
-import { AddButton } from "./AddButton/AddButton";
 import {
   useGetAllPerimissionsLevelsQuery,
   useGetCompanyStructureLevelQuery,
@@ -40,8 +39,6 @@ export const Modal = ({ onClose }) => {
     setConfirmFunc(() => func);
   };
 
-  console.log(level);
-
   return (
     <>
       {confirm && (
@@ -74,6 +71,7 @@ export const Modal = ({ onClose }) => {
           {/* <AddButton onRefetchData={refetch} /> */}
         </div>
       </StyledModal>
+      <div className="modal-overlay" onClick={handleClose}></div>
     </>
   );
 };

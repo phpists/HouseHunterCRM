@@ -8,7 +8,7 @@ export const Address = ({ address, onEdit }) => {
 
   const handleSave = (e) => {
     const value = e.target.value;
-    if (address !== value && value?.length > 0) {
+    if (address !== value) {
       onEdit(value);
     }
     setEdit(false);
@@ -21,11 +21,11 @@ export const Address = ({ address, onEdit }) => {
         <input
           type="text"
           defaultValue={address}
-          placeholder="Введіть значення"
+          placeholder="Введіть значення адреси"
           onBlur={handleSave}
         />
       ) : (
-        <span>{address?.length > 0 ? address : "-"}</span>
+        <span>{address?.length > 0 ? address : "Введіть значення адреси"}</span>
       )}
       <img src={editIcon} alt="" onClick={() => setEdit(true)} />
     </StyledAddress>
