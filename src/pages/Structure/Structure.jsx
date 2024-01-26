@@ -71,6 +71,11 @@ export const Structure = () => {
     }
   }, [recurseData]);
 
+  const handleRefetchStructureData = () => {
+    setLevel(1);
+    refetch();
+  };
+
   return (
     <StyledStructure className="hide-scroll">
       <Header
@@ -84,6 +89,7 @@ export const Structure = () => {
           setShowNotStructureWorkers(!showNotStructureWorkers)
         }
         currentLevel={currentLevel}
+        onRefetchStructureData={handleRefetchStructureData}
       />
       <MobileHeader />
       {infoOpen && (

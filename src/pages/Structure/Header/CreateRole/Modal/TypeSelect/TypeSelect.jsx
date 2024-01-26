@@ -12,7 +12,7 @@ import { handleResponse } from "../../../../../../utilits";
 import cogoToast from "cogo-toast";
 import { Confirm } from "../../../../../../components/Confirm/Confirm";
 
-export const TypeSelect = ({ onConfirm }) => {
+export const TypeSelect = ({ onConfirm, onRefetchStructureData }) => {
   const [open, setOpen] = useState(false);
   const { data, refetch } = useGetCompanyStructureLevelQuery();
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
@@ -34,6 +34,7 @@ export const TypeSelect = ({ onConfirm }) => {
           position: "top-right",
         });
         refetch();
+        onRefetchStructureData();
       })
     );
   };

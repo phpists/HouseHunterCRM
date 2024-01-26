@@ -11,7 +11,7 @@ import {
 } from "../../../../../store/structure/structure.api";
 import { Confirm } from "../../../../../components/Confirm/Confirm";
 
-export const Modal = ({ onClose }) => {
+export const Modal = ({ onClose, onRefetchStructureData }) => {
   const controls = useAnimationControls();
   const { data: level, refetch } = useGetCompanyStructureLevelQuery();
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
@@ -59,7 +59,10 @@ export const Modal = ({ onClose }) => {
         <Header onClose={handleClose} />
         <div className="modal-content">
           <SectionTitle title="ФОрмат компанії" />
-          <TypeSelect onConfirm={handleConfrim} />
+          <TypeSelect
+            onConfirm={handleConfrim}
+            onRefetchStructureData={onRefetchStructureData}
+          />
           <SectionTitle title="налаштування доступів" />
           {level && levels && (
             <Roles

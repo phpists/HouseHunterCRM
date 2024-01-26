@@ -2,12 +2,17 @@ import styled from "styled-components";
 import { Modal } from "./Modal/Modal";
 import { useState } from "react";
 
-export const CreateRole = () => {
+export const CreateRole = ({ onRefetchStructureData }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      {open && <Modal onClose={() => setOpen(false)} />}
+      {open && (
+        <Modal
+          onClose={() => setOpen(false)}
+          onRefetchStructureData={onRefetchStructureData}
+        />
+      )}
       <StyledCreateRole onClick={() => setOpen(true)}>
         {/* Створення ролей */}
         Налаштування ролей

@@ -49,7 +49,13 @@ export const Header = ({ onOpenInfo, data }) => {
             ] ?? "-"
           }
         />
-        <Date date={handleFormatDate(Number(data?.dt_reg) * 1000, true)} />
+        <Date
+          date={
+            isNaN(data?.dt_reg)
+              ? data?.dt_reg
+              : handleFormatDate(Number(data?.dt_reg) * 1000, true)
+          }
+        />
       </div>
     </StyledHeader>
   );

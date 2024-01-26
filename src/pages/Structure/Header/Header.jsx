@@ -13,6 +13,7 @@ export const Header = ({
   onToggleShowNotStructureWorkers,
   showNotStructureWorkers,
   currentLevel,
+  onRefetchStructureData,
 }) => {
   const { data: accessData } = useGetAccessQuery();
 
@@ -28,7 +29,7 @@ export const Header = ({
               <CreateUser onRefetchData={onRefetchData} />
             )}
             {handleCheckAccess(accessData, "structure", "edit") && (
-              <CreateRole />
+              <CreateRole onRefetchStructureData={onRefetchStructureData} />
             )}
             {level === 1 && (
               <ToggleShowButton
