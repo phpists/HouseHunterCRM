@@ -8,6 +8,7 @@ import { Confirm } from "../../../components/Confirm/Confirm";
 import { Empty } from "../../../components/Empty/Empty";
 import { useGetAccessQuery } from "../../../store/auth/auth.api";
 import { Chat } from "../../../components/Chat/Chat";
+import { Loader } from "../../../components/Loader";
 
 export const List = ({
   selected,
@@ -16,6 +17,7 @@ export const List = ({
   innerRef,
   onDeleteRequest,
   onFavorite,
+  loading,
 }) => {
   const [deleteRequest] = useLazyDeleteRequestQuery();
   const [deleteModal, setDeleteModal] = useState(false);
@@ -64,7 +66,7 @@ export const List = ({
 
       <StyledList className="hide-scroll" ref={innerRef}>
         {data && Object.entries(data)?.length === 0 ? (
-          <Empty />
+          <Empty loading={loading} />
         ) : Object.entries(data)?.length > 0 ? (
           Object.entries(data)?.map((d, i) => {
             const id = Object.entries(d[1])[1][0];
@@ -84,6 +86,13 @@ export const List = ({
             );
           })
         ) : null}
+        <div className="loader relative">
+          {loading && data && Object.entries(data)?.length > 0 && (
+            <div className="loading-more">
+              <Loader white />
+            </div>
+          )}
+        </div>
       </StyledList>
     </>
   );

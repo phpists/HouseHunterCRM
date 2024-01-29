@@ -193,9 +193,9 @@ export const WorkerModal = ({
             : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000
         ),
       }).then((resp) => {
-        onClose();
         setLoading(false);
         handleResponse(resp, () => {
+          onClose();
           cogoToast.success("Зміни успішно збережено", {
             hideAfter: 3,
             position: "top-right",
@@ -229,7 +229,6 @@ export const WorkerModal = ({
           }))
         ),
       }).then((resp) => {
-        onClose();
         setLoading(false);
         handleResponse(resp, () => {
           cogoToast.success("Зміни успішно збережено", {
@@ -310,6 +309,7 @@ export const WorkerModal = ({
         showPayHistory={showPayHistory}
         workerId={workerId}
         loading={loading}
+        isEdit={user?.struct_level === 1}
       />
       <div className="modal-overlay" onClick={onClose}></div>
     </>

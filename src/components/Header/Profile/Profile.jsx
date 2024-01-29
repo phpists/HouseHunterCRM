@@ -211,6 +211,7 @@ export const Profile = () => {
           noResetValueOnCodeChange
           onLogout={() => setOpenLogout(true)}
           loading={loading}
+          isEdit={true}
         />
       )}
       <StyledProfile

@@ -24,10 +24,10 @@ export const Dropdown = ({
         <StarIcon className={`star-icon ${favorite && "active"} noClickable`} />
       </div>
     )}
-    <div className="flex items-center justify-between noClickable">
+    {/* <div className="flex items-center justify-between noClickable">
       <span className="noClickable">Передати</span>
       <UserIcon className="user-icon noClickable" />
-    </div>
+    </div> */}
     {editLink && (
       <a
         className="flex items-center justify-between noClickable"

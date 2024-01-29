@@ -24,9 +24,11 @@ export const Contacts = ({ className, data }) => {
     <StyledContacts className={`hide-scroll clickable ${className}`}>
       {/* <Contact type="owner" />
       <Divider /> */}
-      {data?.id_client && !clientData ? (
+      {!clientData ? (
         <ShowButton
-          title={error ? "Доступ заборонено" : "Переглянути клієнта"}
+          title={
+            error ? "Доступ заборонено" : "Показати контактні дані          "
+          }
           className="show-client"
           onClick={handleShowClient}
           error={error}
@@ -42,11 +44,11 @@ export const Contacts = ({ className, data }) => {
           <Divider />
         </>
       ) : null}
-      <Contact
+      {/* <Contact
         type="rieltor"
         phones={data?.phones}
         name={`${data?.first_name} ${data?.last_name}`}
-      />
+      /> */}
     </StyledContacts>
   );
 };

@@ -38,7 +38,7 @@ export const List = ({
       )}
       <StyledList className="hide-scroll" ref={innerRef}>
         {data?.length === 0 ? (
-          <Empty />
+          <Empty loading={loading} />
         ) : (
           <>
             {data.map((d, i) => (
@@ -76,15 +76,7 @@ const StyledList = styled.div`
   overflow: auto;
   gap: 10px;
   position: relative;
-  .loading-more {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    svg {
-      height: 40px;
-    }
-  }
+
   @media (max-width: 800px) {
     height: calc(100svh - 200px);
   }

@@ -30,6 +30,9 @@ export const Clients = () => {
   const isFilters = useRef(false);
   const [allCount, setAllCount] = useState(0);
   const [deleteClient] = useLazyDeleteCientQuery();
+  const [loading, setLoading] = useState(false);
+  const dataRef = useRef([]);
+  const allCountRef = useRef(0);
 
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
@@ -42,7 +45,12 @@ export const Clients = () => {
         setIsAllPages(false);
         listRef.current.scroll({ top: 0 });
         setClients([]);
+        currentPage.current = 0;
+        dataRef.current = [];
+        allCountRef.current = 0;
       }
+
+      setLoading(true);
 
       getClients({
         current_page: currentPage.current,
@@ -57,18 +65,23 @@ export const Clients = () => {
         show_favorite: favoritesFilter ? "1" : undefined,
       }).then((resp) => {
         isLoading.current = false;
+        setLoading(false);
         handleResponse(
           resp,
           () => {
             if (resp?.data?.error === 0 && resp?.data.data?.clients?.length) {
               const respItemsCount = resp?.data?.data?.clients?.length;
-              setAllCount(isReset ? respItemsCount : allCount + respItemsCount);
+              const updatedCount = isReset
+                ? respItemsCount
+                : allCountRef.current + respItemsCount;
+              allCountRef.current = updatedCount;
+              setAllCount(updatedCount);
               saveClientsCount(resp?.data?.data?.all_item ?? 0);
-              setClients(
-                isReset
-                  ? resp?.data?.data?.clients
-                  : [...clients, ...resp?.data.data?.clients]
-              );
+              const updatedClients = isReset
+                ? resp?.data?.data?.clients
+                : [...dataRef.current, ...resp?.data.data?.clients];
+              dataRef.current = updatedClients;
+              setClients(updatedClients);
             }
           },
           () => {
@@ -77,6 +90,8 @@ export const Clients = () => {
               setAllCount(0);
               saveClientsCount(0);
               setClients([]);
+              dataRef.current = [];
+              allCountRef.current = 0;
             }
           }
         );
@@ -179,6 +194,7 @@ export const Clients = () => {
         clients={clients}
         innerRef={listRef}
         onDelete={handleDeleteClient}
+        loading={loading}
       />
     </StyledClients>
   );

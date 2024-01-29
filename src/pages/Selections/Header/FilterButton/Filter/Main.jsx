@@ -123,7 +123,17 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         onChange={() =>
           onChangeFilter(
             "obj_is_actual",
-            filters?.obj_is_actual === "1" ? "0" : "1"
+            filters?.obj_is_actual === "1" ? undefined : "1"
+          )
+        }
+      />
+      <ToggleOption
+        label="Не актуальні"
+        value={filters?.obj_is_actual === "0"}
+        onChange={() =>
+          onChangeFilter(
+            "obj_is_actual",
+            filters?.obj_is_actual === "0" ? undefined : "0"
           )
         }
       />
@@ -171,7 +181,8 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
               //   only_street_base_obj: "0",
               //   only_my_obj: "1",
               //   only_my_structure: "0",
-              show_only: "only_my",
+              show_only:
+                filters?.show_only === "only_my" ? undefined : "only_my",
             },
             true
           )
@@ -208,7 +219,10 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
               //   only_street_base_obj: "0",
               //   only_my_obj: "0",
               //   only_my_structure: "1",
-              show_only: "my_structure",
+              show_only:
+                filters?.show_only === "my_structure"
+                  ? undefined
+                  : "my_structure",
             },
             true
           )

@@ -54,6 +54,8 @@ export const Objects = () => {
   const [isAllPages, setIsAllPages] = useState(false);
   const isFirstRender = useRef(true);
   const [loading, setLoading] = useState(false);
+  const dataRef = useRef([]);
+  const allCountRef = useRef(0);
 
   const handleChangeFilter = (field, value, isDataUpdate) => {
     if (isDataUpdate) {
@@ -86,6 +88,9 @@ export const Objects = () => {
       if (isReset) {
         listRef.current.scroll({ top: 0 });
         setObjects([]);
+        currentPage.current = 0;
+        dataRef.current = [];
+        allCountRef.current = 0;
       }
 
       isLoading.current = true;
@@ -99,7 +104,9 @@ export const Objects = () => {
       if (filterActive.current) {
         data = {
           ...data,
-          filters,
+          filters: Object.fromEntries(
+            Object.entries(filters)?.filter((f) => f[1] !== "0")
+          ),
         };
       }
 
@@ -115,11 +122,17 @@ export const Objects = () => {
             const objectsResp = resp?.data?.objects
               ? Object.entries(resp?.data?.objects)?.map((obj) => obj[1])
               : [];
+            const updatedCount = isReset
+              ? objectsResp?.length
+              : allCountRef.current + objectsResp?.length;
+            allCountRef.current = updatedCount;
+            setAllCount(updatedCount);
 
-            setAllCount(
-              isReset ? objectsResp?.length : allCount + objectsResp?.length
-            );
-            setObjects(isReset ? objectsResp : [...objects, ...objectsResp]);
+            const updatedObjects = isReset
+              ? objectsResp
+              : [...dataRef.current, ...objectsResp];
+            dataRef.current = updatedObjects;
+            setObjects(updatedObjects);
             saveObjectsCount(resp?.data?.all_item);
           },
           () => {
@@ -128,6 +141,8 @@ export const Objects = () => {
               setObjects([]);
               setAllCount(0);
               saveObjectsCount(0);
+              dataRef.current = [];
+              allCountRef.current = 0;
             }
           },
           true
@@ -159,9 +174,11 @@ export const Objects = () => {
 
   useEffect(() => {
     if (!isFirstRender.current) {
-      handleGetObjects(true);
       currentPage.current = 0;
       setIsAllPages(false);
+      setFilters(INIT_FILTERS);
+      filterActive.current = false;
+      handleGetObjects(true);
     }
     // eslint-disable-next-line
   }, [isFavorite]);
@@ -171,11 +188,19 @@ export const Objects = () => {
     if (!isApply) {
       setFilters({ ...INIT_FILTERS, id_hash: "" });
       setFilterFields([]);
-      currentPage.current = 0;
-      setIsAllPages(false);
     }
+    currentPage.current = 0;
+    setIsAllPages(false);
     handleGetObjects(true);
   };
+
+  useEffect(() => {
+    if (filterActive.current) {
+      currentPage.current = 0;
+      setIsAllPages(false);
+      handleGetObjects(true);
+    }
+  }, [filters]);
 
   const handleSelectAll = (isReset, count) => {
     const objIds = objects?.map((obj) => obj.id)?.slice(0, count ?? undefined);
@@ -216,28 +241,14 @@ export const Objects = () => {
       id_location,
       price_min: handleGetRange(Number(price_UAH), true)?.start.toFixed(0),
       price_max: handleGetRange(Number(price_UAH), true)?.end.toFixed(0),
-      area_total_min: handleGetRange(Number(area_total), true)?.start.toFixed(
-        0
-      ),
-      area_total_max: handleGetRange(Number(area_total), true)?.end.toFixed(0),
-      area_plot_sotka_min: handleGetRange(
-        Number(area_plot_sotka),
-        true
-      )?.start.toFixed(0),
-      area_plot_sotka_max: handleGetRange(
+      area_total: handleGetRange(Number(area_total), true)?.end.toFixed(0),
+      area_plot_sotka: handleGetRange(
         Number(area_plot_sotka),
         true
       )?.end.toFixed(0),
-      room_min: handleGetRange(Number(rooms))?.start.toFixed(0),
-      room_max: handleGetRange(Number(rooms))?.end.toFixed(0),
-      storey_count_min: handleGetRange(Number(storey_count))?.start.toFixed(0),
-      storey_count_max: handleGetRange(Number(storey_count))?.end.toFixed(0),
-      address_storey_min: handleGetRange(Number(address_storey))?.start.toFixed(
-        0
-      ),
-      address_storey_max: handleGetRange(Number(address_storey))?.end.toFixed(
-        0
-      ),
+      rooms: handleGetRange(Number(rooms))?.end.toFixed(0),
+      storey_count: handleGetRange(Number(storey_count))?.end.toFixed(0),
+      address_storey: handleGetRange(Number(address_storey))?.end.toFixed(0),
       price_currency: "1",
     });
     handleGetRubricsFields(id_rubric);

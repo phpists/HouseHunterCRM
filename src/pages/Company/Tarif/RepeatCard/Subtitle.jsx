@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
-export const Subtitle = () => (
-  <StyledSubtitle>+30 календарних днів</StyledSubtitle>
+export const Subtitle = ({ daysCount }) => (
+  <StyledSubtitle>+{daysCount} календарних днів</StyledSubtitle>
 );
 
 const StyledSubtitle = styled.div`

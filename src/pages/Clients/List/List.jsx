@@ -8,8 +8,16 @@ import {
   useGetPhonesCodesQuery,
 } from "../../../store/auth/auth.api";
 import { handleCheckAccess } from "../../../utilits";
+import { Loader } from "../../../components/Loader";
 
-export const List = ({ selected, onSelect, clients, innerRef, onDelete }) => {
+export const List = ({
+  selected,
+  onSelect,
+  clients,
+  innerRef,
+  onDelete,
+  loading,
+}) => {
   const [deleteModal, setDeleteModal] = useState(null);
   const { data: accessData } = useGetAccessQuery();
   const { data: phonesCodes } = useGetPhonesCodesQuery();
@@ -31,7 +39,7 @@ export const List = ({ selected, onSelect, clients, innerRef, onDelete }) => {
       )}
       <StyledList className="hide-scroll" ref={innerRef}>
         {clients?.length === 0 ? (
-          <Empty />
+          <Empty loading={loading} />
         ) : (
           clients?.map(
             (
@@ -70,6 +78,13 @@ export const List = ({ selected, onSelect, clients, innerRef, onDelete }) => {
             )
           )
         )}
+        <div className="loader relative">
+          {loading && clients?.length > 0 && (
+            <div className="loading-more">
+              <Loader white />
+            </div>
+          )}
+        </div>
       </StyledList>
     </>
   );

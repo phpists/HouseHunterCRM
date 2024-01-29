@@ -1,10 +1,17 @@
 import styled from "styled-components";
 import activityIcon from "../../assets/images/activity.svg";
+import { Loader } from "../Loader";
 
-export const Empty = () => (
+export const Empty = ({ loading }) => (
   <StyledEmpty className="flex flex-col items-center justify-center">
-    <img src={activityIcon} alt="" />
-    <div className="title">Пусто</div>
+    {loading ? (
+      <Loader white />
+    ) : (
+      <>
+        <img src={activityIcon} alt="" />
+        <div className="title">Пусто</div>
+      </>
+    )}
     {/* <div className="subtitle">
       Для того шоб почати працювати з платформою <br />
       необхідно заповнити дані компанії Або <br /> скористатися порадами по
@@ -22,6 +29,9 @@ const StyledEmpty = styled.div`
     width: 24px;
     height: 24px;
     margin-bottom: 4px;
+  }
+  svg {
+    height: 40px;
   }
   .title {
     color: rgba(255, 255, 255, 0.9);

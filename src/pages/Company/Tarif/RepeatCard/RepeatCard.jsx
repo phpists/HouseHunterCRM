@@ -3,24 +3,29 @@ import { Title } from "./Title";
 import { Subtitle } from "./Subtitle";
 import { Workers } from "./Workers/Workers";
 import { Button } from "../../../../components/Button";
+import { useGetPackadgesQuery } from "../../../../store/billing/billing.api";
 
-export const RepeatCard = ({ onOpenTarif }) => (
-  <StyledRepeatCard className="flex items-end justify-between">
-    <div>
-      <Title />
-      <Subtitle />
-    </div>
-    <div className="flex items-center repeatcard-footer ">
-      {/* <Workers /> */}
-      <Button
-        title="Поповнити"
-        outline="true"
-        className="repeat-btn"
-        onClick={onOpenTarif}
-      />
-    </div>
-  </StyledRepeatCard>
-);
+export const RepeatCard = ({ onOpenTarif }) => {
+  const { data } = useGetPackadgesQuery();
+
+  return (
+    <StyledRepeatCard className="flex items-end justify-between">
+      <div>
+        <Title />
+        <Subtitle daysCount={data?.count_day} />
+      </div>
+      <div className="flex items-center repeatcard-footer ">
+        {/* <Workers /> */}
+        <Button
+          title="Поповнити"
+          outline="true"
+          className="repeat-btn"
+          onClick={onOpenTarif}
+        />
+      </div>
+    </StyledRepeatCard>
+  );
+};
 
 const StyledRepeatCard = styled.div`
   width: 100%;

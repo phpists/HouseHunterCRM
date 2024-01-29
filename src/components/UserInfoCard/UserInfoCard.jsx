@@ -36,6 +36,7 @@ export const UserInfoCard = ({
   workerId,
   onLogout,
   loading,
+  isEdit,
 }) => {
   const controls = useAnimationControls();
   const contentRef = useRef(null);
@@ -98,7 +99,7 @@ export const UserInfoCard = ({
             noResetValueOnCodeChange={noResetValueOnCodeChange}
           />
           {showPayHistory && <PersonalBills workerId={workerId} />}
-          {isDelete ? (
+          {!isEdit ? null : isDelete ? (
             <FooterDelete
               noDelete={noDelete}
               onSave={onSave}

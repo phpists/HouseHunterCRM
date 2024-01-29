@@ -49,6 +49,7 @@ export const Selections = () => {
   const isLoading = useRef(false);
   const listRef = useRef();
   const [isAllPages, setIsAllPages] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => {
@@ -89,6 +90,8 @@ export const Selections = () => {
         setObjects([]);
       }
 
+      setLoading(true);
+
       getSelections({
         id_requst_group: id,
         filters: {
@@ -97,7 +100,8 @@ export const Selections = () => {
         },
         current_page: currentPage.current,
         item_on_page: 10,
-      }).then((resp) =>
+      }).then((resp) => {
+        setLoading(false);
         handleResponse(
           resp,
           () => {
@@ -116,8 +120,8 @@ export const Selections = () => {
               saveSelectionsCount(0);
             }
           }
-        )
-      );
+        );
+      });
     }
   };
 
@@ -217,7 +221,9 @@ export const Selections = () => {
   useEffect(() => {
     currentPage.current = 0;
     setIsAllPages(false);
-    handleGetSelections();
+    setFilters(INIT_FILTERS);
+    filterActive.current = false;
+    handleGetSelections(true);
   }, [showObjectHide]);
 
   const handleScroll = () => {
@@ -267,6 +273,7 @@ export const Selections = () => {
         onFindSimilar={handleFindSimilarTo}
         onHide={handleHideObject}
         innerRef={listRef}
+        loading={loading}
         // onFavorite={handleToggleFavoriteStatus}
       />
     </StyledSelections>

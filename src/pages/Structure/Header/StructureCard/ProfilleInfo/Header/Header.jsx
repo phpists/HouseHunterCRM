@@ -24,12 +24,13 @@ export const Header = ({ onOpenInfo, data }) => {
           ?.find((l) => Number(l.level) === Number(level)) ?? []
       : [];
 
+  console.log(data, data?.structure_level);
   return (
     <StyledHeader className="flex items-center notClickable">
       <Avatar
         onOpenInfo={onOpenInfo}
         color={COLORS[handleGetCurrentLevel()?.level ?? "1"]}
-        level={data?.structure_level}
+        level={data?.structure_level ?? data?.struct_level}
         photo={data?.photo}
       />
       <div>
@@ -42,10 +43,10 @@ export const Header = ({ onOpenInfo, data }) => {
           <Id id={data?.id_user} />
         </div>
         <Tag
-          color={COLORS[data?.structure_level - 1]}
+          color={COLORS[(data?.structure_level ?? data?.struct_level) - 1]}
           role={
             handleGetCurrentLevel()[0]?.split(" - ")[
-              data?.structure_level - 1
+              (data?.structure_level ?? data?.struct_level) - 1
             ] ?? "-"
           }
         />

@@ -47,6 +47,9 @@ export const Requests = () => {
   const [allCount, setAllCount] = useState(0);
   const isFirstRender = useRef(true);
   const [isDefaultFiltersSet, setIsDefaultFiltersSet] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const dataRef = useRef([]);
+  const allCountRef = useRef(0);
 
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => {
@@ -97,6 +100,8 @@ export const Requests = () => {
         listRef.current.scroll({ top: 0 });
         setRequests([]);
         setAllCount(0);
+        dataRef.current = [];
+        allCountRef.current = 0;
       }
 
       isLoading.current = true;
@@ -115,25 +120,31 @@ export const Requests = () => {
         };
       }
 
+      setLoading(true);
       getRequests(data).then((resp) => {
         isLoading.current = false;
+        setLoading(false);
         handleResponse(
           resp,
           () => {
             if (resp?.data?.requests) {
               saveRequestsCount(resp?.data.all_item ?? 0);
               if (Object.entries(resp?.data?.requests)?.length) {
-                setAllCount(
-                  isReset
-                    ? Object.entries(resp?.data?.requests)?.length
-                    : allCount + Object.entries(resp?.data?.requests)?.length
-                );
+                const updatedCount = isReset
+                  ? Object.entries(resp?.data?.requests)?.length
+                  : allCountRef.current +
+                    Object.entries(resp?.data?.requests)?.length;
+                allCountRef.current = updatedCount;
+                setAllCount(updatedCount);
 
-                setRequests(
-                  isReset
-                    ? handleFormatRequests(resp?.data)
-                    : { ...requests, ...handleFormatRequests(resp?.data) }
-                );
+                const updatedRequests = isReset
+                  ? handleFormatRequests(resp?.data)
+                  : {
+                      ...dataRef.current,
+                      ...handleFormatRequests(resp?.data),
+                    };
+                dataRef.current = updatedRequests;
+                setRequests(updatedRequests);
               }
             } else if (isReset) {
               setRequests([]);
@@ -147,6 +158,8 @@ export const Requests = () => {
               setRequests([]);
               setAllCount(0);
               saveRequestsCount(0);
+              dataRef.current = [];
+              allCountRef.current = 0;
             }
           }
         );
@@ -252,9 +265,11 @@ export const Requests = () => {
 
   useEffect(() => {
     if (!isFirstRender.current) {
-      handleGetRequests(true);
       currentPage.current = 0;
       setIsAllPages(false);
+      setFilters(INIT_FILTERS);
+      filterActive.current = false;
+      handleGetRequests(true);
       // eslint-disable-next-line
     }
   }, [isFavorite]);
@@ -325,6 +340,7 @@ export const Requests = () => {
         innerRef={listRef}
         onDeleteRequest={handleDeleteRequestSuccess}
         onFavorite={handleToggleFavoriteStatus}
+        loading={loading}
       />
     </StyledRequests>
   );

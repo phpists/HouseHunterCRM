@@ -5,6 +5,7 @@ import { handleCheckAccess } from "../../utilits";
 import { Empty } from "../../components/Empty/Empty";
 import { ObjectHistory } from "../../components/ObjectHistory/ObjectHistory";
 import { useState } from "react";
+import { Loader } from "../../components/Loader";
 
 export const List = ({
   data,
@@ -14,6 +15,7 @@ export const List = ({
   onHide,
   onFavorite,
   innerRef,
+  loading,
 }) => {
   const { data: accessData } = useGetAccessQuery();
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
@@ -28,7 +30,7 @@ export const List = ({
       )}
       <StyledList className="hide-scroll" ref={innerRef}>
         {data?.length === 0 ? (
-          <Empty />
+          <Empty loading={loading} />
         ) : (
           data.map((d, i) => (
             <ObjectCard
@@ -46,6 +48,13 @@ export const List = ({
             />
           ))
         )}
+        <div className="loader relative">
+          {loading && data?.length > 0 && (
+            <div className="loading-more">
+              <Loader white />
+            </div>
+          )}
+        </div>
       </StyledList>
     </>
   );

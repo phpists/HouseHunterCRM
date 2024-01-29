@@ -11,10 +11,18 @@ export const Tags = ({ data }) => {
   const TAGS = [
     { title: data?.rubric_name },
     { title: data?.location_name, icon: homeIcon },
-    { title: `${data?.rooms} кімнати`, icon: doorIcon },
-    { title: `${data?.area_total} м²`, icon: expandIcon },
-    { title: `${data?.address_storey}`, icon: stairsIcon },
-    { title: `${data?.area_plot_sotka} м²`, icon: boxIcon },
+    ...(data?.rooms > 0
+      ? [{ title: `${data?.rooms} кімнати`, icon: doorIcon }]
+      : []),
+    ...(data?.area_total > 0
+      ? [{ title: `${data?.area_total} м²`, icon: expandIcon }]
+      : []),
+    ...(data?.address_storey > 0
+      ? [{ title: `${data?.address_storey}`, icon: stairsIcon }]
+      : []),
+    ...(data.area_plot_sotka > 0
+      ? [{ title: `${data?.area_plot_sotka} м²`, icon: boxIcon }]
+      : []),
     // { title: "Купівля-продаж" },
     // { title: "Хрущьовка", icon: homeIcon },
     // { title: "Цегла", icon: brickIcon },
