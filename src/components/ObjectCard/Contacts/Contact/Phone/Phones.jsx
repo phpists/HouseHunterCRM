@@ -6,7 +6,7 @@ import { useGetPhonesCodesQuery } from "../../../../../store/auth/auth.api";
 
 export const Phone = ({ commentOpen, phones }) => {
   const { data } = useGetPhonesCodesQuery();
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
 
   return (
     <StyledPhone className="clickable">

@@ -11,10 +11,10 @@ export const Contact = ({ type, phones, name, typeText }) => {
   return (
     <StyledContact className="clickable">
       <div className="flex items-center clickable">
-        <CommentButton
+        {/* <CommentButton
           active={commentOpen}
           onClick={() => setCommentOpen(!commentOpen)}
-        />
+        /> */}
         <Name type={type} name={name} typeText={typeText} />
       </div>
       {commentOpen && (

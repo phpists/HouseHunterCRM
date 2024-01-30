@@ -125,7 +125,9 @@ export const App = () => {
                 <Route path="/structure" element={<Structure />} />
               )}
               {true && <Route path="/calls" element={<Calls />} />}
-              <Route path="/company" element={<Company />} />
+              {user?.struct_level === 1 && (
+                <Route path="/company" element={<Company />} />
+              )}
               <Route path="/selections/:id" element={<Selections />} />
               <Route path="*" element={<Dashboard />} />
             </Routes>

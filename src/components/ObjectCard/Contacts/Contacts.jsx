@@ -26,9 +26,7 @@ export const Contacts = ({ className, data }) => {
       <Divider /> */}
       {!clientData ? (
         <ShowButton
-          title={
-            error ? "Доступ заборонено" : "Показати контактні дані          "
-          }
+          title={error ? "Доступ заборонено" : "Показати контакти"}
           className="show-client"
           onClick={handleShowClient}
           error={error}
@@ -41,7 +39,7 @@ export const Contacts = ({ className, data }) => {
             phones={clientData?.contact?.phone}
             typeText={clientData?.type}
           />
-          <Divider />
+          {/* <Divider /> */}
         </>
       ) : null}
       {/* <Contact
@@ -58,7 +56,6 @@ const StyledContacts = styled.div`
   width: 200px;
   overflow: auto;
   .show-client {
-    margin-bottom: 10px;
     padding: 5px 10px 6px;
   }
   @media (min-width: 1400px) {

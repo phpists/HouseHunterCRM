@@ -198,7 +198,7 @@ export const Objects = () => {
     if (filterActive.current) {
       currentPage.current = 0;
       setIsAllPages(false);
-      handleGetObjects(true);
+      //   handleGetObjects(true);
     }
   }, [filters]);
 
@@ -254,10 +254,6 @@ export const Objects = () => {
     handleGetRubricsFields(id_rubric);
     filterActive.current = true;
   };
-
-  useEffect(() => {
-    filterActive.current && handleGetObjects(true);
-  }, [filters]);
 
   useEffect(() => {
     filterActive.current = false;

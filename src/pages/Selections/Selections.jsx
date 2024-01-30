@@ -85,6 +85,7 @@ export const Selections = () => {
   const handleGetSelections = (isReset) => {
     if ((!isLoading.current && !isAllPages) || isReset) {
       isLoading.current = true;
+
       if (isReset) {
         listRef.current.scroll({ top: 0 });
         setObjects([]);
@@ -96,11 +97,12 @@ export const Selections = () => {
         id_requst_group: id,
         filters: {
           ...(filterActive.current ? filters : {}),
-          show_object_hide: showObjectHide,
+          show_object_hide: showObjectHide ? "1" : "0",
         },
         current_page: currentPage.current,
         item_on_page: 10,
       }).then((resp) => {
+        isLoading.current = false;
         setLoading(false);
         handleResponse(
           resp,
@@ -219,6 +221,7 @@ export const Selections = () => {
   };
 
   useEffect(() => {
+    console.log("here");
     currentPage.current = 0;
     setIsAllPages(false);
     setFilters(INIT_FILTERS);

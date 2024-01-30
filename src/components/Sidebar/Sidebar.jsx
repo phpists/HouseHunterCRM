@@ -2,8 +2,11 @@ import styled from "styled-components";
 import { Logo } from "./Logo";
 import { CompanyLogo } from "../CompanyLogo";
 import { NavBar } from "./Navbar";
+import { useAppSelect } from "../../hooks/redux";
 
 export const Sidebar = ({ sidebarOpen, onClose, accessData }) => {
+  const { user } = useAppSelect((state) => state.auth);
+
   return (
     <StyledSidebar
       className="flex flex-col justify-between items-center"
@@ -11,7 +14,7 @@ export const Sidebar = ({ sidebarOpen, onClose, accessData }) => {
     >
       <Logo onClose={onClose} />
       <NavBar accessData={accessData} />
-      <CompanyLogo />
+      {user?.struct_level === 1 ? <CompanyLogo /> : <div />}
     </StyledSidebar>
   );
 };
