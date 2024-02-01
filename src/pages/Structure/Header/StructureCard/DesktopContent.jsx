@@ -14,16 +14,13 @@ export const DesktopContent = ({
   onNextLevel,
   isMore,
   user,
+  id,
 }) => (
   <StyledDesktopContent>
     <ProfilleInfo onOpenInfo={onOpenInfo} data={data} />
     <Biling open={!totalInfoOpened} data={data} user={user} />
     <Statistic statisticData={statisticData} />
-    <TotalInfo
-      open={totalInfoOpened}
-      onToggleOpen={onToggleOpen}
-      id={data?.id}
-    />
+    <TotalInfo open={totalInfoOpened} onToggleOpen={onToggleOpen} id={id} />
     {isMore ? <Arrow onClick={onNextLevel} /> : null}
   </StyledDesktopContent>
 );

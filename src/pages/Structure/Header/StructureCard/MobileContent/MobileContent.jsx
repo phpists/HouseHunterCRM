@@ -18,6 +18,7 @@ export const MobileContent = ({
   onNextLevel,
   isMore,
   user,
+  id,
 }) => {
   const [totalInfoOpened, setTotalInfoOpened] = useState(false);
   const [open, setOpen] = useState(false);
@@ -56,11 +57,7 @@ export const MobileContent = ({
       </div>
       <div className="footer-info-wrapper  more-content-wrapper">
         <Statistic statisticData={statisticData} />
-        <TotalInfo
-          open={totalInfoOpened}
-          onToggleOpen={() => null}
-          id={data?.id}
-        />
+        <TotalInfo open={totalInfoOpened} onToggleOpen={() => null} id={id} />
       </div>
       <MoreButton open={open} onToggle={() => setOpen(!open)} />
       {isMore ? <Arrow onClick={onNextLevel} /> : null}

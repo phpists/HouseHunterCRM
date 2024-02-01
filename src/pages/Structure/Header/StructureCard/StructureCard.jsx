@@ -35,6 +35,7 @@ export const StructureCard = ({
         onNextLevel={onNextLevel}
         isMore={isMore}
         user={user}
+        id={id}
       />
       <MobileContent
         onOpenInfo={onOpenInfo}
@@ -45,6 +46,7 @@ export const StructureCard = ({
         onNextLevel={onNextLevel}
         isMore={isMore}
         user={user}
+        id={id}
       />
     </StyledStructureCard>
   );

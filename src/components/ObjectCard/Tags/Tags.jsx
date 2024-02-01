@@ -93,6 +93,7 @@ const StyledTags = styled.div`
   overflow: auto;
   .comment {
     margin-top: 8px;
+    max-width: 200px;
     .value {
       font-size: 12px;
     }
