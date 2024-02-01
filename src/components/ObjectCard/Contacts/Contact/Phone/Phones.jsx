@@ -16,7 +16,7 @@ export const Phone = ({ commentOpen, phones }) => {
           phones={phones?.map(
             ({ id_phone_code, phone, code }) =>
               `${
-                code ?? data?.find(({ id }) => id === id_phone_code)?.code
+                code ?? data?.find(({ id }) => id === id_phone_code)?.code ?? ""
               }${phone}`
           )}
         />

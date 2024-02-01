@@ -36,7 +36,11 @@ export const Contacts = ({ className, data }) => {
           <Contact
             type="owner"
             name={clientData?.contact?.name}
-            phones={clientData?.contact?.phone}
+            phones={
+              clientData?.contact?.phone
+                ? clientData?.contact?.phone
+                : clientData?.contact?.phones
+            }
             typeText={clientData?.type}
           />
           {/* <Divider /> */}

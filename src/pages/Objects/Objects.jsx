@@ -56,6 +56,7 @@ export const Objects = () => {
   const [loading, setLoading] = useState(false);
   const dataRef = useRef([]);
   const allCountRef = useRef(0);
+  const [updateData, setUpdateData] = useState(false);
 
   const handleChangeFilter = (field, value, isDataUpdate) => {
     if (isDataUpdate) {
@@ -241,19 +242,41 @@ export const Objects = () => {
       id_location,
       price_min: handleGetRange(Number(price_UAH), true)?.start.toFixed(0),
       price_max: handleGetRange(Number(price_UAH), true)?.end.toFixed(0),
-      area_total: handleGetRange(Number(area_total), true)?.end.toFixed(0),
-      area_plot_sotka: handleGetRange(
+      area_total_min: handleGetRange(Number(area_total), true)?.start.toFixed(
+        0
+      ),
+      area_total_max: handleGetRange(Number(area_total), true)?.end.toFixed(0),
+      area_plot_sotka_min: handleGetRange(
+        Number(area_plot_sotka),
+        true
+      )?.start.toFixed(0),
+      area_plot_sotka_max: handleGetRange(
         Number(area_plot_sotka),
         true
       )?.end.toFixed(0),
-      rooms: handleGetRange(Number(rooms))?.end.toFixed(0),
-      storey_count: handleGetRange(Number(storey_count))?.end.toFixed(0),
-      address_storey: handleGetRange(Number(address_storey))?.end.toFixed(0),
+      room_min: handleGetRange(Number(rooms))?.start.toFixed(0),
+      room_max: handleGetRange(Number(rooms))?.end.toFixed(0),
+      storey_count_min: handleGetRange(Number(storey_count))?.start.toFixed(0),
+      storey_count_max: handleGetRange(Number(storey_count))?.end.toFixed(0),
+      address_storey_min: handleGetRange(Number(address_storey))?.start.toFixed(
+        0
+      ),
+      address_storey_max: handleGetRange(Number(address_storey))?.end.toFixed(
+        0
+      ),
       price_currency: "1",
     });
     handleGetRubricsFields(id_rubric);
     filterActive.current = true;
+    setUpdateData(true);
   };
+
+  useEffect(() => {
+    if (updateData) {
+      setUpdateData(false);
+      handleGetObjects(true);
+    }
+  }, [updateData]);
 
   useEffect(() => {
     filterActive.current = false;
@@ -261,9 +284,11 @@ export const Objects = () => {
     if (filterApply === "?showDeadline") {
       setFilters({ showDeadline: "1" });
       filterActive.current = true;
+      setUpdateData(true);
     } else if (filterApply === "?showLiquidity") {
       setFilters({ showLiquidity: "1" });
       filterActive.current = true;
+      setUpdateData(true);
     } else {
       handleGetObjects();
     }

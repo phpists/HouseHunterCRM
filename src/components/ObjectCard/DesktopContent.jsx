@@ -14,6 +14,7 @@ export const DesktopContent = ({
   onHide,
   onAddToSelection,
   onOpenTagsHistory,
+  onOpenPriceHistory,
 }) => (
   <StyledDesktopContent className="flex items-center justify-between">
     <Slider photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)} />
@@ -31,6 +32,7 @@ export const DesktopContent = ({
       onHide={onHide}
       onAddToSelection={onAddToSelection}
       onOpenTagsHistory={onOpenTagsHistory}
+      onOpenPriceHistory={onOpenPriceHistory}
     />
     <div className="mobile-footer w-full">
       <Info data={data} />

@@ -11,6 +11,7 @@ export const Dropdown = ({
   onHide,
   onAddToSelection,
   onOpenTagsHistory,
+  onOpenPriceHistory,
 }) => (
   <StyledDropdown className="dropdown">
     {onToggleFavoriteStatus && (
@@ -35,6 +36,14 @@ export const Dropdown = ({
         onClick={onOpenTagsHistory}
       >
         <span>Історія тегів</span>
+      </div>
+    )}
+    {onOpenPriceHistory && (
+      <div
+        className="flex items-center justify-between"
+        onClick={onOpenPriceHistory}
+      >
+        <span>Графік змін цін</span>
       </div>
     )}
     {onAddToSelection && (

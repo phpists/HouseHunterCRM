@@ -132,12 +132,6 @@ export const WorkerModal = ({
             }
           : INITIAL_DATA
       );
-      !showNotStructureWorkers &&
-        !noStructure &&
-        getStructureUsers({
-          structure_level: level,
-          id_user: resp?.data[0]?.id ?? 0,
-        });
     });
   };
 

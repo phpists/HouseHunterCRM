@@ -20,6 +20,10 @@ export const StructureCard = ({
     getWorkerStatistic(id);
   }, [id]);
 
+  useEffect(() => {
+    getWorkerStatistic(id);
+  }, []);
+
   return (
     <StyledStructureCard>
       <DesktopContent

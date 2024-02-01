@@ -221,7 +221,6 @@ export const Selections = () => {
   };
 
   useEffect(() => {
-    console.log("here");
     currentPage.current = 0;
     setIsAllPages(false);
     setFilters(INIT_FILTERS);

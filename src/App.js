@@ -39,6 +39,9 @@ export const App = () => {
       setLoad(true);
       data && refetch();
       setTimeout(() => setLoading(false), 1500);
+      if (!resp?.data?.data) {
+        localStorage.removeItem("token");
+      }
     });
   };
 

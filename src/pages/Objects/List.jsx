@@ -7,6 +7,7 @@ import { useState } from "react";
 import { AddToSelections } from "./AddToSelections";
 import { ObjectHistory } from "../../components/ObjectHistory/ObjectHistory";
 import { Loader } from "../../components/Loader";
+import { ObjectPriceHistory } from "../../components/ObjectPriceHistory";
 
 export const List = ({
   selected,
@@ -20,14 +21,20 @@ export const List = ({
   const { data: accessData } = useGetAccessQuery();
   const [openAddModal, setOpenAddModal] = useState(null);
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
+  const [openHistoryPriceModal, setOpenHistoryPriceModal] = useState(null);
 
-  console.log(loading);
   return (
     <>
       {openHistoryModal && (
         <ObjectHistory
           onClose={() => setOpenHistoryModal(null)}
           idObject={openHistoryModal}
+        />
+      )}
+      {openHistoryPriceModal && (
+        <ObjectPriceHistory
+          onClose={() => setOpenHistoryPriceModal(null)}
+          data={openHistoryPriceModal}
         />
       )}
       {openAddModal && (
@@ -52,6 +59,9 @@ export const List = ({
                 isEdit={handleCheckAccess(accessData, "objects", "edit")}
                 onAddToSelection={() => setOpenAddModal(d?.id)}
                 onOpenTagsHistory={() => setOpenHistoryModal(d?.id)}
+                onOpenPriceHistory={() =>
+                  setOpenHistoryPriceModal(d?.price_history_json)
+                }
               />
             ))}
           </>

@@ -32,7 +32,7 @@ export const DesktopContent = ({
     <Divider />
     <Objects requestsCount={requestsCount} objectsCount={objectsCount} />
     <div className="flex items-center">
-      <MoreButton onDelete={onDelete} noDelete={!isDelete} />
+      <MoreButton onDelete={onDelete} noDelete={!isDelete} noFavorite />
       <Arrow id={id} />
     </div>
   </StyledDesktopContent>

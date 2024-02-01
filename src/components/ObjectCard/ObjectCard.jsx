@@ -12,6 +12,7 @@ export const ObjectCard = ({
   onHide,
   onAddToSelection,
   onOpenTagsHistory,
+  onOpenPriceHistory,
 }) => {
   const handleClick = (e) =>
     e.target.classList.contains("clickable") && onSelect();
@@ -29,6 +30,7 @@ export const ObjectCard = ({
         onHide={onHide}
         onAddToSelection={onAddToSelection}
         onOpenTagsHistory={onOpenTagsHistory}
+        onOpenPriceHistory={onOpenPriceHistory}
       />
       <MobileContent
         data={data}
@@ -38,6 +40,7 @@ export const ObjectCard = ({
         onHide={onHide}
         onAddToSelection={onAddToSelection}
         onOpenTagsHistory={onOpenTagsHistory}
+        onOpenPriceHistory={onOpenPriceHistory}
       />
     </StyledObjectCard>
   );

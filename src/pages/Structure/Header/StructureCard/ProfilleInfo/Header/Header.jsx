@@ -24,7 +24,6 @@ export const Header = ({ onOpenInfo, data }) => {
           ?.find((l) => Number(l.level) === Number(level)) ?? []
       : [];
 
-  console.log(data, data?.structure_level);
   return (
     <StyledHeader className="flex items-center notClickable">
       <Avatar

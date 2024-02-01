@@ -10,6 +10,7 @@
     "cogo-toast": "^4.2.3",
     "framer-motion": "^10.16.1",
     "react": "^18.2.0",
+    "react-apexcharts": "^1.4.1",
     "react-calendar": "^4.6.0",
     "react-dom": "^18.2.0",
     "react-draggable-lists": "^1.0.1",

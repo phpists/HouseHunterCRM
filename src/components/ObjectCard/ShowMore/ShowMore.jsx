@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Button } from "./Button";
 import { Dropdown } from "./Dropdown";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export const ShowMore = ({
   clientId,
@@ -13,22 +13,32 @@ export const ShowMore = ({
   onHide,
   onAddToSelection,
   onOpenTagsHistory,
+  onOpenPriceHistory,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
+  const moreRef = useRef(null);
+
+  const handleCloseDropdown = () => moreRef.current.blur();
+
+  const handleFindSimilar = () => {
+    onFindSimilar();
+    handleCloseDropdown();
+  };
 
   return (
-    <StyledShowMore isFocusedBtn={isFocusedBtn}>
+    <StyledShowMore isFocusedBtn={isFocusedBtn} ref={moreRef}>
       <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />
       <Dropdown
         clientId={clientId}
         id={id}
         onToggleFavoriteStatus={onToggleFavoriteStatus}
         isFavorite={isFavorite}
-        onFindSimilar={onFindSimilar}
+        onFindSimilar={handleFindSimilar}
         isEdit={isEdit}
         onHide={onHide}
         onAddToSelection={onAddToSelection}
         onOpenTagsHistory={onOpenTagsHistory}
+        onOpenPriceHistory={onOpenPriceHistory}
       />
     </StyledShowMore>
   );

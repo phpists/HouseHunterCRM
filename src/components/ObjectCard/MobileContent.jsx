@@ -17,6 +17,7 @@ export const MobileContent = ({
   onHide,
   onAddToSelection,
   onOpenTagsHistory,
+  onOpenPriceHistory,
 }) => (
   <StyledMobileContent>
     <Header />
@@ -37,6 +38,7 @@ export const MobileContent = ({
       onHide={onHide}
       onAddToSelection={onAddToSelection}
       onOpenTagsHistory={onOpenTagsHistory}
+      onOpenPriceHistory={onOpenPriceHistory}
     />
   </StyledMobileContent>
 );
