@@ -26,6 +26,8 @@ export const Structure = () => {
     useLazyGetNotStructureWorkersQuery();
   const [getWorkerCount] = useLazyGetWorkerCountQuery();
   const { saveStructureWorkersCount } = useActions();
+  const [levelWorkers, setLevelWorkers] = useState([]);
+  const [currentWorkerLevel, setCurrentWorkerLevel] = useState(null);
 
   const handleGetWorkerCount = () =>
     getWorkerCount().then((resp) =>
@@ -36,7 +38,8 @@ export const Structure = () => {
     showNotStructureWorkers && getNotStructureWorkers();
   }, [showNotStructureWorkers]);
 
-  const handleNextLevel = (children) => {
+  const handleNextLevel = (children, id) => {
+    setCurrentWorkerLevel(id);
     if (level < currentLevel && !infoOpen) {
       const newLevel = 1 + level;
       setLevel(newLevel);
@@ -76,6 +79,35 @@ export const Structure = () => {
     refetch();
   };
 
+  useEffect(() => {
+    setLevelWorkers(
+      !recurseData ? [] : recurseData[`struct_level_${level}`] ?? []
+    );
+  }, [recurseData, level]);
+
+  const handleCreatedUser = (parentId) => {
+    refetch().then((resp) => {
+      if (parentId === currentWorkerLevel && resp?.data) {
+        const parent = resp?.data[`struct_level_${level - 1}`]?.find(
+          ({ id_user }) => id_user === currentWorkerLevel
+        );
+        const children = parent?.structure_worker;
+
+        if (children && level > user?.struct_level + 1) {
+          const childrens =
+            Object.entries(children)
+              ?.find((c) => c[0] === `struct_level_${level}`)[1]
+              .map((w) => w?.id_user) ?? [];
+
+          const updatedParents = [...parents];
+          updatedParents[level] = childrens;
+          console.log(updatedParents);
+          setParents(updatedParents);
+        }
+      }
+    });
+  };
+
   return (
     <StyledStructure className="hide-scroll">
       <Header
@@ -90,6 +122,7 @@ export const Structure = () => {
         }
         currentLevel={currentLevel}
         onRefetchStructureData={handleRefetchStructureData}
+        onCreatedUser={handleCreatedUser}
       />
       <MobileHeader />
       {infoOpen && (
@@ -133,7 +166,7 @@ export const Structure = () => {
           ) : level === user?.struct_level ? (
             <StructureCard
               onOpenInfo={() => setInfoOpen(user?.id)}
-              onNextLevel={handleNextLevel}
+              onNextLevel={() => handleNextLevel(null, user?.id)}
               id={user?.id}
               data={{
                 ...user,
@@ -154,9 +187,9 @@ export const Structure = () => {
               user={true}
             />
           ) : handleGetLevelWorkers()?.length === 0 ? (
-            <Empty />
+            <Empty white />
           ) : (
-            handleGetLevelWorkers()
+            levelWorkers
               ?.filter((w) =>
                 level > user?.struct_level + 1
                   ? !!parents[level]?.find((p) => p === w?.id_user)
@@ -166,7 +199,9 @@ export const Structure = () => {
                 <StructureCard
                   key={i}
                   onOpenInfo={() => setInfoOpen(worker?.id_user)}
-                  onNextLevel={() => handleNextLevel(worker?.structure_worker)}
+                  onNextLevel={() =>
+                    handleNextLevel(worker?.structure_worker, worker?.id_user)
+                  }
                   id={worker?.id_user}
                   data={worker}
                   isMore={Object.entries(worker?.structure_worker)?.length > 0}

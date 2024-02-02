@@ -1,23 +1,15 @@
 import { styled } from "styled-components";
 import { Option } from "./Option";
-import { motion } from "framer-motion";
-import { useRef } from "react";
 
 export const Dropdown = ({ open, onChange, options }) => (
-  <StyledDropdown
-    className="hide-scroll select-none"
-    animate={{
-      opacity: open ? 1 : 0,
-      visibility: open ? "visible" : "hidden",
-    }}
-  >
+  <StyledDropdown className="hide-scroll select-none selectDropdown">
     {options?.map(({ title, value }, i) => (
       <Option key={i} title={title} onSelect={() => onChange(value)} />
     ))}
   </StyledDropdown>
 );
 
-const StyledDropdown = styled(motion.div)`
+const StyledDropdown = styled.div`
   position: absolute;
   top: 100%;
   width: 100%;
@@ -29,4 +21,6 @@ const StyledDropdown = styled(motion.div)`
   border-top: 1px solid rgba(0, 0, 0, 0.2);
   z-index: 5;
   scroll-behavior: smooth;
+  opacity: 0;
+  visibility: hidden;
 `;

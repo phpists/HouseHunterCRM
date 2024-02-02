@@ -30,6 +30,9 @@ const StyledCheckOption = styled.div`
   font-weight: 100;
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
+  .label {
+    text-transform: capitalize;
+  }
   button {
     width: 19px;
     height: 19px;

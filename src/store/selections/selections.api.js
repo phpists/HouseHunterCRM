@@ -8,17 +8,14 @@ export const selections = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (build) => ({
     getSelections: build.query({
-      query: ({ id_requst_group, filters, current_page, item_on_page }) => ({
+      query: (data) => ({
         url: "",
         method: "POST",
         headers: headers(),
         body: handleToFormData({
           action: "view_notepad",
           mod: "requests",
-          id_requst_group,
-          filters,
-          current_page,
-          item_on_page,
+          ...data,
         }),
       }),
       transformResponse: (response) => {

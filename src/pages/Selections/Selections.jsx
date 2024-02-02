@@ -85,23 +85,33 @@ export const Selections = () => {
   const handleGetSelections = (isReset) => {
     if ((!isLoading.current && !isAllPages) || isReset) {
       isLoading.current = true;
+      let sendData = {
+        id_requst_group: id,
+        current_page: currentPage.current,
+        item_on_page: 10,
+      };
 
       if (isReset) {
         listRef.current.scroll({ top: 0 });
         setObjects([]);
       }
 
+      if (filterActive.current) {
+        sendData = { ...sendData, filters };
+      }
+
+      if (showObjectHide && filterActive.current) {
+        sendData = {
+          ...sendData,
+          filters: { ...filters, show_object_hide: "1" },
+        };
+      } else if (showObjectHide) {
+        sendData = { ...sendData, filters: { show_object_hide: "1" } };
+      }
+
       setLoading(true);
 
-      getSelections({
-        id_requst_group: id,
-        filters: {
-          ...(filterActive.current ? filters : {}),
-          show_object_hide: showObjectHide ? "1" : "0",
-        },
-        current_page: currentPage.current,
-        item_on_page: 10,
-      }).then((resp) => {
+      getSelections(sendData).then((resp) => {
         isLoading.current = false;
         setLoading(false);
         handleResponse(

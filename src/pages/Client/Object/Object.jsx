@@ -49,6 +49,7 @@ export const ObjectCard = ({ className, selectedObject }) => {
               storey_count: field?.storey_count,
               area_total_min: field?.area_total_min,
               area_total_max: field?.area_total_max,
+              area_total: field?.area_total,
               comment: field?.comment,
               not_actual: field?.not_actual,
               dt_deadline: Object.entries(resp?.data)[0][1]?.dt_deadline,
@@ -85,6 +86,8 @@ export const ObjectCard = ({ className, selectedObject }) => {
             dt_add: resp?.data?.dt_add
               ? handleFormatDate(Number(resp?.data?.dt_add) * 1000, true)
               : "-",
+            area_total: resp?.data?.area_total,
+            area_plot_sotka: resp?.data?.area_plot_sotka,
           },
         ]);
       });

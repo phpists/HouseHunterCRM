@@ -3,6 +3,7 @@ import { Divider } from "../Divider";
 import { ProfileField } from "../../../../components/ProfileField";
 import { Select } from "../../../../components/Select/Select";
 import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.api";
+import { CheckOption } from "../../../../components/CheckOption";
 
 export const Info = ({ fields, data, onChangeField, errors }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
@@ -57,6 +58,14 @@ export const Info = ({ fields, data, onChangeField, errors }) => {
                       labelActive={commentsToFields?.object[field[0]] ?? "-"}
                       hideArrowDefault
                       error={!!errors.find((e) => e === field[0])}
+                    />
+                  );
+                } else if (field[1]?.type === "checkbox") {
+                  return (
+                    <CheckOption
+                      label={commentsToFields?.object[field[0]]}
+                      value={data[field[0]]}
+                      onChange={(val) => onChangeField(field[0], val)}
                     />
                   );
                 } else {

@@ -10,6 +10,7 @@ import { ProfileField } from "../../../components/ProfileField";
 import { TitleDivider } from "./TitleDivider";
 import styled from "styled-components";
 import { useGetCommentsToFieldsQuery } from "../../../store/objects/objects.api";
+import { CheckOption } from "../../../components/CheckOption";
 
 export const Card = ({ title, fields, data, onChangeField, errors }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
@@ -29,6 +30,7 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
     "price_max",
   ];
 
+  console.log(fields);
   return (
     <StyledCard>
       <TitleDivider title={title} />
@@ -89,6 +91,18 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
                   }
                 />
               </>
+            );
+          } else if (field?.type === "checkbox") {
+            return (
+              <CheckOption
+                label={
+                  commentsToFields?.object[field]
+                    ? commentsToFields?.object[field]
+                    : commentsToFields?.request[field] ?? ""
+                }
+                value={data[field]}
+                onChange={(val) => onChangeField(field, val)}
+              />
             );
           } else if (
             field?.includes("_max") &&

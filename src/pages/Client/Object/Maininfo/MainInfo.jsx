@@ -81,7 +81,7 @@ export const Maininfo = ({
       <Divider />
       <div className="field-group">
         <Field
-          value={fortmatNumber(Number(data?.price_min ?? 0))}
+          value={`${fortmatNumber(Number(data?.price_min ?? 0))}$`}
           onChange={(val) => onChangeField("price_min", val)}
           label="Вартість"
           className="price-field"
@@ -107,9 +107,9 @@ export const Maininfo = ({
             Icon={ExpandedIcon}
             text={
               <>
-                {requestData?.area_total_max
-                  ? requestData?.area_total_max
-                  : requestData?.area_plot_sotka ?? 0}{" "}
+                {data?.area_total
+                  ? data?.area_total
+                  : data?.area_plot_sotka ?? 0}{" "}
                 м<sup>2</sup>
               </>
             }

@@ -68,7 +68,9 @@ export const Workers = ({
             )
           : true
       )
-      ?.filter(({ active }) => (filter?.active ? active === "1" : true))
+      ?.filter(({ active, isCurrentUser }) =>
+        filter?.active ? active === "1" || isCurrentUser : true
+      )
       ?.filter(({ billing_to }) =>
         filter?.billing
           ? Number(billing_to) * 1000 > new Date()?.getTime()

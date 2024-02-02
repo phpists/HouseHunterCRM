@@ -5,7 +5,7 @@ export const NotificationsDropdown = ({ data }) => {
   return (
     <StyledNotificationsDropdown className="hide-scroll">
       {data?.birthday?.length > 0 && (
-        <Card type="clients" messages={[data?.birthday[0]]} info />
+        <Card type="clients" messages={data?.birthday} info />
       )}
       {data?.objectDeadline && (
         <Card

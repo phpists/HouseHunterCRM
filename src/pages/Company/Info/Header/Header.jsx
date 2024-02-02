@@ -18,7 +18,7 @@ export const Header = ({ tarifOpen, data, onEdit }) => {
           <Date date={handleFormatDate(Number(data?.dt_reg) * 1000, true)} />
         </div>
       </div>
-      <Owner data={data} />
+      <Owner />
     </StyledHeader>
   );
 };

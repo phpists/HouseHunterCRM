@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import { Option } from "../Option";
-import { motion } from "framer-motion";
 
 export const Dropdown = ({
   open,
@@ -12,9 +11,7 @@ export const Dropdown = ({
   search,
   tags = [],
 }) => (
-  <StyledDropdown
-    animate={{ opacity: open ? 1 : 0, visibility: open ? "visible" : "hidden" }}
-  >
+  <StyledDropdown className="tagsSelectDropdown">
     {options?.length
       ? options
           .filter(({ title }) =>
@@ -39,7 +36,7 @@ export const Dropdown = ({
   </StyledDropdown>
 );
 
-const StyledDropdown = styled(motion.div)`
+const StyledDropdown = styled.div`
   position: absolute;
   top: calc(100% + 1px);
   width: 100%;
@@ -49,6 +46,8 @@ const StyledDropdown = styled(motion.div)`
   overflow: auto;
   z-index: 101;
   max-height: 250px;
+  visibility: hidden;
+  opacity: 0;
   .opt {
     padding: 8px 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);

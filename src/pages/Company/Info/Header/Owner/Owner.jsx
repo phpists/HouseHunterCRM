@@ -1,14 +1,21 @@
 import { styled } from "styled-components";
 import { Status } from "../../../../../components/Status";
 import { Avatar } from "./Avatar";
+import { useAppSelect } from "../../../../../hooks/redux";
 
-export const Owner = ({ data }) => (
-  <StyledOwner className="flex items-center">
-    {/* <Status status={1} className="status-badge" /> */}
-    <div className="name">{data?.full_name ?? "-"}</div>
-    <Avatar photo={data?.photo} />
-  </StyledOwner>
-);
+export const Owner = ({ data }) => {
+  const { user } = useAppSelect((state) => state.auth);
+
+  return (
+    <StyledOwner className="flex items-center">
+      {/* <Status status={1} className="status-badge" /> */}
+      <div className="name">
+        {user?.first_name ?? "-"} {user?.last_name ?? "-"}
+      </div>
+      <Avatar photo={user?.photo} />
+    </StyledOwner>
+  );
+};
 
 const StyledOwner = styled.div`
   padding: 3px 3px 3px 6px;

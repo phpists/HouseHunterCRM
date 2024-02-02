@@ -1,11 +1,18 @@
 import styled from "styled-components";
 import activityIcon from "../../assets/images/activity.svg";
+import { Loader } from "../../components/Loader";
 
-export const Empty = ({ noSubtitle, className }) => (
+export const Empty = ({ noSubtitle, className, loading }) => (
   <StyledEmpty className={className}>
-    <img src={activityIcon} alt="icon" />
-    <div className="title">Упс, тут пусто!</div>
-    {!noSubtitle && <div className="subtitle">Почни з розподілу ролей</div>}
+    {loading ? (
+      <Loader white className="loader-more" />
+    ) : (
+      <>
+        <img src={activityIcon} alt="icon" />
+        <div className="title">Упс, тут пусто!</div>
+        {!noSubtitle && <div className="subtitle">Почни з розподілу ролей</div>}
+      </>
+    )}
   </StyledEmpty>
 );
 
@@ -17,6 +24,10 @@ const StyledEmpty = styled.div`
   height: 100%;
   img {
     margin-bottom: 4px;
+  }
+  .loader-more {
+    height: 40px;
+    margin: 40px 0;
   }
   .title {
     color: rgba(255, 255, 255, 0.9);

@@ -14,6 +14,7 @@ export const Header = ({
   showNotStructureWorkers,
   currentLevel,
   onRefetchStructureData,
+  onCreatedUser,
 }) => {
   const { data: accessData } = useGetAccessQuery();
 
@@ -22,11 +23,11 @@ export const Header = ({
       <Breadcrumbs level={level} onChangeLevel={onChangeLevel} />
       <div className="btns flex items-center">
         {level >= 3 && handleCheckAccess(accessData, "structure", "add") ? (
-          <CreateUser small />
+          <CreateUser small onCreatedUser={onCreatedUser} />
         ) : (
           <>
             {handleCheckAccess(accessData, "structure", "add") && (
-              <CreateUser onRefetchData={onRefetchData} />
+              <CreateUser onCreatedUser={onCreatedUser} />
             )}
             {handleCheckAccess(accessData, "structure", "edit") && (
               <CreateRole onRefetchStructureData={onRefetchStructureData} />

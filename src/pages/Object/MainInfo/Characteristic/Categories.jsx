@@ -9,6 +9,7 @@ import {
 import React from "react";
 import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.api";
 import { ProfileField } from "../../../../components/ProfileField";
+import { CheckOption } from "../../../../components/CheckOption";
 
 export const Categories = ({ data, onChangeField, fields, errors }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
@@ -137,6 +138,15 @@ export const Categories = ({ data, onChangeField, fields, errors }) => {
                           )
                         )}
                       </div>
+                    </>
+                  ) : category[1]?.type === "checkbox" ? (
+                    <>
+                      <Divider />
+                      <CheckOption
+                        label={commentsToFields?.object[category[0]]}
+                        value={data[category[0]]}
+                        onChange={(val) => onChangeField(category[0], val)}
+                      />
                     </>
                   ) : (
                     <>

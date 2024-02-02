@@ -41,8 +41,14 @@ export const SelectTags = ({
         open && "open"
       } ${isActive && "active"} ${error && "error-field"}`}
       showTags={showTags}
-      onMouseEnter={() => setIsActive(true)}
-      onMouseLeave={() => setIsActive(false)}
+      onFocus={() => {
+        setIsActive(true);
+        setOpen(true);
+      }}
+      onBlur={() => {
+        setIsActive(false);
+        setOpen(false);
+      }}
       error={error}
     >
       <div>
@@ -98,7 +104,7 @@ export const SelectTags = ({
         <div className="label">{label}</div>
       </div>
       {(notMultiSelect && !value && showTags) || viewOnly ? null : (
-        <Arrow active={open} onClick={handleToggleOpen} />
+        <Arrow active={open} />
       )}
       <Dropdown
         open={open}
@@ -114,12 +120,13 @@ export const SelectTags = ({
   );
 };
 
-const StyledSelectTags = styled.div`
+const StyledSelectTags = styled.button`
   padding: 6px 10px;
   border-radius: 9px;
   transition: all 0.3s;
   position: relative;
   justify-content: space-between;
+  width: 100%;
   ${({ error }) => error && "border: 1px solid red;"}
   .value {
     color: #fff;
@@ -168,6 +175,7 @@ const StyledSelectTags = styled.div`
     letter-spacing: 0.22px;
     opacity: 0.4;
     text-transform: capitalize;
+    text-align: left;
   }
 
   &.empty {
@@ -181,7 +189,7 @@ const StyledSelectTags = styled.div`
   }
 
   &:hover,
-  &.open {
+  &:focus {
     background: rgba(255, 255, 255, 0.05);
     .value {
       opacity: 1;
@@ -190,9 +198,13 @@ const StyledSelectTags = styled.div`
       opacity: 1;
     }
   }
-  &.open {
+  &:focus {
     border-radius: 9px 9px 0px 0px !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    .tagsSelectDropdown {
+      opacity: 1;
+      visibility: visible;
+    }
   }
 
   .tags {

@@ -7,8 +7,8 @@ export const Objects = ({ requestsCount, objectsCount }) => {
   return (
     <StyledObjects className="flex items-center">
       <Info requestsCount={requestsCount} objectsCount={objectsCount} />
-      <Divider />
-      <List />
+      {/* <Divider /> */}
+      {/* <List /> */}
     </StyledObjects>
   );
 };

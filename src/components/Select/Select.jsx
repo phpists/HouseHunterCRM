@@ -27,15 +27,11 @@ export const Select = ({
 
   return (
     <StyledSelect
-      open={open}
       hideArrowDefault={hideArrowDefault}
       className={`${className} ${error && "error-field"}`}
       error={error}
     >
-      <div
-        className="flex items-center justify-between"
-        onClick={() => setOpen(!open)}
-      >
+      <div className="flex items-center justify-between">
         <div className="flex items-center">
           {Icon && <SelectIcon Icon={Icon} />}
           <div>
@@ -53,13 +49,16 @@ export const Select = ({
   );
 };
 
-const StyledSelect = styled.div`
+const StyledSelect = styled.button`
   padding: 8px 22px 9px 11px;
   border-radius: 6px;
   transition: all 0.3s;
   cursor: pointer;
   position: relative;
   color: #fff;
+  display: block;
+  width: 100%;
+  text-align: left;
   ${({ error }) => error && "border: 1px solid red;"}
   .arrow {
     ${({ hideArrowDefault }) => hideArrowDefault && "opacity: 0;"}
@@ -90,21 +89,23 @@ const StyledSelect = styled.div`
   svg {
     transition: all 0.3s;
   }
-  ${({ open }) =>
-    open &&
-    `
-    background: #FFF !important;
+  &:focus {
+    background: #fff !important;
     border-radius: 6px 6px 0 0 !important;
-    color: #2C2C2C;
+    color: #2c2c2c;
     .arrow path {
-        fill: #2C2C2C;
+      fill: #2c2c2c;
     }
     .arrow {
-        transform: rotate(180deg);
-        opacity: 1;
+      transform: rotate(180deg);
+      opacity: 1;
     }
     .select-icon {
-        background: rgba(44, 44, 44, 0.85) !important;
+      background: rgba(44, 44, 44, 0.85) !important;
     }
-  `}
+    .selectDropdown {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 `;

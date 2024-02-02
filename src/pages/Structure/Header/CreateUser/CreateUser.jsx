@@ -4,13 +4,13 @@ import { Modal } from "./Modal/Modal";
 import { useState } from "react";
 import { SmallButton } from "./SmallButton";
 
-export const CreateUser = ({ small, onRefetchData }) => {
+export const CreateUser = ({ small, onCreatedUser }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
       {open && (
-        <Modal onClose={() => setOpen(false)} onRefetchData={onRefetchData} />
+        <Modal onClose={() => setOpen(false)} onCreatedUser={onCreatedUser} />
       )}
       {small ? (
         <SmallButton onClick={() => setOpen(true)} />

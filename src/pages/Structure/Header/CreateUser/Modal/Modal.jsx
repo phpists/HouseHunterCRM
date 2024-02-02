@@ -33,7 +33,7 @@ const INITIAL_DATA = {
   dt_birthday: new Date(),
 };
 
-export const Modal = ({ onClose, onRefetchData }) => {
+export const Modal = ({ onClose, onCreatedUser }) => {
   const [createWorker] = useLazyCreateWorkerQuery();
   const [createStructure] = useLazyCreateStructureQuery();
   const [changeWorkerLevel] = useLazyChangeWorkerLevelQuery();
@@ -122,8 +122,8 @@ export const Modal = ({ onClose, onRefetchData }) => {
             hideAfter: 3,
             position: "top-right",
           });
+          onCreatedUser && onCreatedUser(data?.structure_parent);
           handleReset();
-          onRefetchData && onRefetchData();
         });
       });
     }

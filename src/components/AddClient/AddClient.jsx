@@ -80,7 +80,12 @@ export const AddClient = ({ onClose, onAdded }) => {
     }).then((resp) => {
       setLoading(false);
       handleResponse(resp, () => {
-        setSuccess(true);
+        // setSuccess(true);
+        handleClose();
+        cogoToast.success("Клієнта успішно додано", {
+          hideAfter: 3,
+          position: "top-right",
+        });
         handleGetClientsCount();
         onAdded && onAdded();
       });
@@ -103,9 +108,7 @@ export const AddClient = ({ onClose, onAdded }) => {
       >
         <Close className="close-btn" onClick={handleClose} />
         <Title title="Додати нового клієнта" />
-        {success ? (
-          <Subtitle />
-        ) : (
+        {success ? null : ( //   <Subtitle />
           <div className="form">
             <Input label="Ім’я" value={name} onChange={(val) => setName(val)} />
             <Input
@@ -113,12 +116,12 @@ export const AddClient = ({ onClose, onAdded }) => {
               value={lastName}
               onChange={(val) => setLastName(val)}
             />
-            <Input
+            {/* <Input
               label="Email"
               value={email}
               onChange={handleChangeEmail}
               error={errors?.email}
-            />
+            /> */}
             <Input
               label="Перевірка номера телефона"
               phone
@@ -134,8 +137,8 @@ export const AddClient = ({ onClose, onAdded }) => {
                 name?.length === 0 ||
                 phone?.includes("_") ||
                 phone?.length === 0 ||
-                email?.length === 0 ||
-                errors?.email ||
+                // email?.length === 0 ||
+                // errors?.email ||
                 loading
               }
               loading={loading}

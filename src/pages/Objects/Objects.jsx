@@ -317,6 +317,10 @@ export const Objects = () => {
     // eslint-disable-next-line
   }, [listRef, isLoading.current, isAllPages, objects]);
 
+  useEffect(() => {
+    saveObjectsCount(0);
+  }, []);
+
   return (
     <StyledObjects>
       <Header
