@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { Arrow } from "./Arrow";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Dropdown } from "./Dropdown";
 import { TagCount } from "./TagCount";
 import { Tag } from "./Tag";
@@ -23,6 +23,7 @@ export const SelectTags = ({
   const [open, setOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [search, setSearch] = useState("");
+  const selectRef = useRef(null);
 
   const handleChangeValue = (val, title) => {
     onChange(val, title);

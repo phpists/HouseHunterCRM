@@ -47,6 +47,7 @@ const StyledOption = styled.div`
   background-size: 210%;
   transition: 0.3s ease-out;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: left;
   &:hover {
     background-position: left;
   }

@@ -11,7 +11,7 @@ export const Arrow = ({ onClick, active }) => (
   </StyledArrow>
 );
 
-const StyledArrow = styled.button`
+const StyledArrow = styled.div`
   width: 32px;
   height: 32px;
   flex-shrink: 0;

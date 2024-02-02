@@ -60,7 +60,7 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
     const locations = Object.entries(locationsList)
       .sort((a, b) => Number(b[1].id_parent) - Number(a[1].id_parent))
       ?.map((loc) => loc[1])
-      .filter((loc) => Number(loc?.id_parent) !== 0)
+      //   .filter((loc) => Number(loc?.id_parent) !== 0)
       .map(({ id, id_parent, name }) => {
         return handleGetLocationAllPath(locList, id, id_parent, name);
       });
