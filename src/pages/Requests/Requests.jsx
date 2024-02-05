@@ -100,6 +100,7 @@ export const Requests = () => {
         listRef.current.scroll({ top: 0 });
         setRequests([]);
         setAllCount(0);
+        setSelected([]);
         dataRef.current = [];
         allCountRef.current = 0;
       }

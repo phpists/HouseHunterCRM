@@ -1,10 +1,12 @@
 import { styled } from "styled-components";
 import checkboxIcon from "../assets/images/checkbox-icon.svg";
 
-export const CheckOption = ({ label, className, value, onChange }) => {
+export const CheckOption = ({ label, className, value, onChange, error }) => {
   return (
     <StyledCheckOption
-      className={`flex items-center justify-between ${className}`}
+      className={`flex items-center justify-between ${className} ${
+        error && "error-field"
+      }`}
     >
       <span className="label">{label}</span>
       <button
@@ -53,5 +55,8 @@ const StyledCheckOption = styled.div`
   }
   &:hover {
     background: rgba(255, 255, 255, 0.05);
+  }
+  &.error-field {
+    border: 1px solid red;
   }
 `;

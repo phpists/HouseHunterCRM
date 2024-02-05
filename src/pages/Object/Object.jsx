@@ -57,8 +57,15 @@ export const ObjectPage = () => {
           ?.map((f) => f[0])
           ?.map((f) => f !== "obj_is_actual_dt")
       : [];
-
-    let updatedData = { ...data };
+    const checkboxes = fieldsData?.other_field
+      ? Object.fromEntries(
+          Object.entries(fieldsData?.other_field)
+            ?.filter((f) => f[1]?.type === "checkbox")
+            ?.map((f) => f[0])
+            ?.map((field) => [field, data[field] ?? "0"])
+        )
+      : [];
+    let updatedData = { ...data, ...checkboxes };
 
     dateFields.forEach((f) => {
       updatedData = {
@@ -295,6 +302,7 @@ export const ObjectPage = () => {
     }
   }, [errors]);
 
+  console.log(data);
   return (
     <StyledObject className="object-main-wrapper" ref={contentRef}>
       <ObjectsHeader

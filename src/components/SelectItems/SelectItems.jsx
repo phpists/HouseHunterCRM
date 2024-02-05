@@ -68,6 +68,8 @@ export const SelectItems = ({
         <StyledSelectItems
           className={`flex items-center ${className}`}
           open={open}
+          onFocus={() => setOpen(true)}
+          onBlur={() => setOpen(false)}
         >
           <Title />
           <div className="flex items-center">
@@ -78,32 +80,32 @@ export const SelectItems = ({
               selectedCount={selectedCount}
               allCount={allCount}
             />
-            {type && <Arrow open={open} onToggleOpen={() => setOpen(!open)} />}
+            {type && <Arrow open={open} />}
           </div>
+          {open && (
+            <>
+              {dropdown ? (
+                <div onClick={() => setOpen(false)}>{dropdown}</div>
+              ) : (
+                <Dropdown
+                  onSelect={handleSelectOption}
+                  noFavorite={noFavorite}
+                  onDelete={onDelete}
+                  onHide={onHide}
+                />
+              )}
+            </>
+          )}
         </StyledSelectItems>
-        {open && (
-          <>
-            {dropdown ? (
-              <div onClick={() => setOpen(false)}>{dropdown}</div>
-            ) : (
-              <Dropdown
-                onSelect={handleSelectOption}
-                noFavorite={noFavorite}
-                onDelete={onDelete}
-                onHide={onHide}
-              />
-            )}
-          </>
-        )}
       </div>
     </>
   );
 };
 
-const StyledSelectItems = styled.div`
+const StyledSelectItems = styled.button`
   border-radius: ${({ open }) => (open ? "8px 8px 0 0" : "8px")};
   background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(18.5px);
+  /* backdrop-filter: blur(18.5px); */
   padding: 4px 4px 4px 12px;
   position: relative;
   transition: all 0.3s;

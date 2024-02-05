@@ -1,17 +1,19 @@
 import { styled } from "styled-components";
 import { ReactComponent as ArrowIcon } from "../../assets/images/arrow-down.svg";
 
-export const Arrow = ({ onClick, active }) => (
+export const Arrow = ({ onClick, onBlur, active, innerRef }) => (
   <StyledArrow
     className="arrow flex items-center justify-center"
     onClick={onClick}
+    onBlur={onBlur}
     active={active}
+    ref={innerRef}
   >
     <ArrowIcon />
   </StyledArrow>
 );
 
-const StyledArrow = styled.div`
+const StyledArrow = styled.button`
   width: 32px;
   height: 32px;
   flex-shrink: 0;

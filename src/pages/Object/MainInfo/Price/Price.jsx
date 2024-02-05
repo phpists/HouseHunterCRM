@@ -34,6 +34,7 @@ export const Price = ({ className, data, onChangeField, errors, mobile }) => {
         full
         error={errors.find((e) => e === "price")}
         mobile={mobile}
+        type="number"
       />
       <Divider />
       <SymbolSelect

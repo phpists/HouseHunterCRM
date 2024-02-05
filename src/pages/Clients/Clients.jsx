@@ -45,6 +45,7 @@ export const Clients = () => {
         setIsAllPages(false);
         listRef.current.scroll({ top: 0 });
         setClients([]);
+        setSelected([]);
         currentPage.current = 0;
         dataRef.current = [];
         allCountRef.current = 0;

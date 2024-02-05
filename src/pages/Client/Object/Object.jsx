@@ -44,7 +44,7 @@ export const ObjectCard = ({ className, selectedObject }) => {
               price_min: field?.price_min,
               price_max: field?.price_max,
               room_min: field?.room_min,
-              room_max: field?.room_max,
+              rooms: field?.rooms,
               address_storey: field?.address_storey,
               storey_count: field?.storey_count,
               area_total_min: field?.area_total_min,
@@ -88,6 +88,7 @@ export const ObjectCard = ({ className, selectedObject }) => {
               : "-",
             area_total: resp?.data?.area_total,
             area_plot_sotka: resp?.data?.area_plot_sotka,
+            rooms: resp?.data?.rooms,
           },
         ]);
       });

@@ -33,6 +33,7 @@ export const DesktopContent = ({
       onAddToSelection={onAddToSelection}
       onOpenTagsHistory={onOpenTagsHistory}
       onOpenPriceHistory={onOpenPriceHistory}
+      isAccess={data?.acsses_change}
     />
     <div className="mobile-footer w-full">
       <Info data={data} />

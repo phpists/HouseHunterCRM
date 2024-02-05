@@ -9,9 +9,13 @@ import { Tag } from "./Tag";
 
 export const Tags = ({ roomMin, roomMax, areaMin, storeyMin, storeyMax }) => {
   const TAGS = [
-    { title: `від ${roomMin} до ${roomMax}`, icon: doorIcon },
-    { title: `від ${areaMin} м²`, icon: expendIcon },
-    { title: `від ${storeyMin} до ${storeyMax}`, icon: stairsIcon },
+    ...(roomMax > 0
+      ? [{ title: `від ${roomMin} до ${roomMax}`, icon: doorIcon }]
+      : []),
+    ...(areaMin > 0 ? [{ title: `від ${areaMin} м²`, icon: expendIcon }] : []),
+    ...(storeyMax > 0
+      ? [{ title: `від ${storeyMin} до ${storeyMax}`, icon: stairsIcon }]
+      : []),
     // { title: "Хрущьовка", icon: homeIcon },
     // { title: "Діти", icon: childIcon },
     // { title: "Тварини", icon: petIcon },

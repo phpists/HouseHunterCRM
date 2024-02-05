@@ -28,7 +28,7 @@ export const Select = ({
   return (
     <StyledSelect
       hideArrowDefault={hideArrowDefault}
-      className={`${className} ${error && "error-field"}`}
+      className={`${className} ${error && "error-field"} ${open && "active"}`}
       error={error}
     >
       <div className="flex items-center justify-between">
@@ -42,14 +42,21 @@ export const Select = ({
             <Label label={open ? labelActive : label} />
           </div>
         </div>
-        <Arrow className="arrow" />
+        <button
+          onClick={(e) => {
+            setOpen(!open);
+          }}
+          onBlur={() => setOpen(false)}
+        >
+          <Arrow className="arrow" />
+        </button>
       </div>
       <Dropdown open={open} onChange={handleChange} options={options} />
     </StyledSelect>
   );
 };
 
-const StyledSelect = styled.button`
+const StyledSelect = styled.div`
   padding: 8px 22px 9px 11px;
   border-radius: 6px;
   transition: all 0.3s;
@@ -89,7 +96,7 @@ const StyledSelect = styled.button`
   svg {
     transition: all 0.3s;
   }
-  &:focus {
+  &.active {
     background: #fff !important;
     border-radius: 6px 6px 0 0 !important;
     color: #2c2c2c;

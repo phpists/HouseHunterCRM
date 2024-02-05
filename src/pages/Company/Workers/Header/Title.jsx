@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 export const Title = ({ count }) => (
-  <StyledTitle>{count} Працівників</StyledTitle>
+  <StyledTitle>{count < 0 ? 0 : count} Працівників</StyledTitle>
 );
 
 const StyledTitle = styled.h3`

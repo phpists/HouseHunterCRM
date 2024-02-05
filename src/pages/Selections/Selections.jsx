@@ -16,7 +16,6 @@ import cogoToast from "cogo-toast";
 import { useActions } from "../../hooks/actions";
 
 const INIT_FILTERS = {
-  show_object_hide: "0",
   id_rubric: "",
   id_location: "",
   price_currency: "1",
@@ -94,6 +93,7 @@ export const Selections = () => {
       if (isReset) {
         listRef.current.scroll({ top: 0 });
         setObjects([]);
+        setSelected([]);
       }
 
       if (filterActive.current) {

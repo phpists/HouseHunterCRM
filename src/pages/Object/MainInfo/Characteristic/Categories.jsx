@@ -146,6 +146,7 @@ export const Categories = ({ data, onChangeField, fields, errors }) => {
                         label={commentsToFields?.object[category[0]]}
                         value={data[category[0]]}
                         onChange={(val) => onChangeField(category[0], val)}
+                        error={!!errors.find((e) => e === category[0])}
                       />
                     </>
                   ) : (

@@ -11,7 +11,7 @@ export const Arrow = ({ open, onToggleOpen }) => (
   </StyledArrow>
 );
 
-const StyledArrow = styled.button`
+const StyledArrow = styled.div`
   margin: 0 7px;
   flex-shrink: 0;
   path {

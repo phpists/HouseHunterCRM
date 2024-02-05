@@ -1,6 +1,12 @@
 import { styled } from "styled-components";
 
-export const Dropdown = ({ onSelect, noFavorite, onDelete, onHide }) => {
+export const Dropdown = ({
+  onSelect,
+  noFavorite,
+  onDelete,
+  onHide,
+  onOpen,
+}) => {
   const OPTIONS = [
     { title: "Додати в улюблене", value: "favorite" },
     // { title: "Передати", value: "send" },
@@ -31,7 +37,7 @@ const StyledDropdown = styled.div`
   overflow: hidden;
   backdrop-filter: blur(18.5px);
   z-index: 100;
-
+  text-align: left;
   div {
     color: rgba(255, 255, 255, 0.4);
     font-family: Overpass;

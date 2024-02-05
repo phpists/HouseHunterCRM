@@ -30,6 +30,7 @@ export const ProfileField = ({
   error,
 }) => {
   const [active, setActive] = useState(false);
+  const [open, setOpen] = useState(false);
   const textareaRef = useRef(null);
 
   const textAreaAdjust = (e) => {
@@ -60,15 +61,20 @@ export const ProfileField = ({
 
   return (
     <StyledProfileField
-      onClick={() => !active && !readOnly && setActive(true)}
       active={active}
       password={password}
       className={`${className} ${active && "active"} ${error && "error-field"}`}
       grey={grey}
       big={big}
       error={error}
+      onClick={() => {
+        if (!active && !readOnly) {
+          setActive(true);
+          setOpen(true);
+        }
+      }}
     >
-      {type === "date" && active && (
+      {type === "date" && active && open && (
         <div className="calendar_wrapper">
           <Calendar value={value} onChange={handleChangeValue} />
         </div>
@@ -94,7 +100,18 @@ export const ProfileField = ({
               ref={textareaRef}
               onChange={textAreaAdjust}
               placeholder={placeholder}
+              autoFocus
             />
+          ) : type === "date" ? (
+            <span
+              className="value hide-scroll"
+              onClick={() => {
+                !active && !readOnly && setActive(true);
+                setOpen(!open);
+              }}
+            >
+              {handleFormatDate(value, true)}
+            </span>
           ) : (
             <input
               className="value hide-scroll"
@@ -104,6 +121,7 @@ export const ProfileField = ({
                 onChange && type !== "date" ? onChange(e.target.value) : null
               }
               type={type === "date" ? "text" : type ?? "text"}
+              autoFocus
             />
           )}
         </>
@@ -131,11 +149,20 @@ export const ProfileField = ({
           </div>
         </>
       )}
+      {open && type === "date" && (
+        <div
+          className="modal-overlay"
+          onClick={() => {
+            setActive(false);
+            setOpen(false);
+          }}
+        ></div>
+      )}
     </StyledProfileField>
   );
 };
 
-const StyledProfileField = styled.div`
+const StyledProfileField = styled.button`
   padding: ${({ big }) => (big ? "8px 11px 8px" : "8px 11px 9px")};
   border-radius: 6px;
   cursor: pointer;
@@ -149,7 +176,11 @@ const StyledProfileField = styled.div`
     right;
   background-size: 210%;
   transition: 0.5s ease-out;
+  display: block;
+  width: 100%;
+  text-align: left;
   ${({ error }) => error && "border: 1px solid red;"}
+
   .value {
     color: #fff;
     font-family: Overpass;

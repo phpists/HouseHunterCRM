@@ -39,6 +39,7 @@ export const MobileContent = ({
       onAddToSelection={onAddToSelection}
       onOpenTagsHistory={onOpenTagsHistory}
       onOpenPriceHistory={onOpenPriceHistory}
+      isAccess={data?.acsses_change}
     />
   </StyledMobileContent>
 );

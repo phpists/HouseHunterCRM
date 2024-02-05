@@ -71,16 +71,14 @@ export const Workers = ({
       ?.filter(({ active, isCurrentUser }) =>
         filter?.active ? active === "1" || isCurrentUser : true
       )
-      ?.filter(({ billing_to }) =>
+      ?.filter(({ billing_to, isCurrentUser }) =>
         filter?.billing
-          ? Number(billing_to) * 1000 > new Date()?.getTime()
+          ? Number(billing_to) * 1000 > new Date()?.getTime() || isCurrentUser
           : true
       )
       ?.filter(({ struct_level }) =>
         filter?.roles?.length > 0
-          ? !!filter.roles?.find(
-              (r) => 1 + Number(r) === (struct_level === 0 ? 1 : struct_level)
-            )
+          ? !!filter.roles?.find((r) => 1 + Number(r) === struct_level)
           : true
       );
 
@@ -91,7 +89,11 @@ export const Workers = ({
         selectedWorkers={selectedWorkers}
         filter={filter}
         onFilterChange={handleChangeFilter}
-        count={handleFilter()?.length - 1}
+        count={
+          handleFilter()?.find((w) => w.isCurrentUser)
+            ? handleFilter()?.length - 1
+            : handleFilter()?.length
+        }
       />
       <List
         onOpenEdit={setEditOpen}

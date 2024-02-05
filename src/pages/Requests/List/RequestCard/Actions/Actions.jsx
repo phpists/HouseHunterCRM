@@ -17,6 +17,7 @@ export const Actions = ({
   idGroup,
   isEdit,
   isDelete,
+  isAccess,
 }) => {
   const navigate = useNavigate();
   const [addToFavorites] = useLazyAddToFavoriteQuery();
@@ -41,14 +42,14 @@ export const Actions = ({
         onClick={handleToggleFavorites}
         active={favorite}
       />
-      {isEdit && (
+      {isEdit && isAccess && (
         <Button
           Icon={EditIcon}
           className="edit-btn mb-2.5"
           onClick={() => navigate(`/edit-request/${clientId}/${idGroup}`)}
         />
       )}
-      {isDelete && (
+      {isDelete && isAccess && (
         <Button Icon={RemoveIcon} className="remove-btn" onClick={onDelete} />
       )}
     </StyledActions>

@@ -55,6 +55,7 @@ export const MobileContent = ({
       idGroup={data?.id_group}
       isDelete={isDelete}
       isEdit={isEdit}
+      isAccess={data?.General_field_group?.acsses_change}
     />
   </StyledMobileContent>
 );

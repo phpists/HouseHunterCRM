@@ -47,6 +47,7 @@ export const DesktopContent = ({
       idGroup={data?.id_group}
       isEdit={isEdit}
       isDelete={isDelete}
+      isAccess={data?.General_field_group?.acsses_change}
     />
   </StyledDesktopContent>
 );

@@ -24,11 +24,14 @@ export const SelectTags = ({
   const [isActive, setIsActive] = useState(false);
   const [search, setSearch] = useState("");
   const selectRef = useRef(null);
+  const isClicked = useRef(false);
 
   const handleChangeValue = (val, title) => {
     onChange(val, title);
     setSearch("");
-    notMultiSelect && setOpen(false);
+    if (notMultiSelect) {
+      setOpen(false);
+    }
   };
 
   const handleToggleOpen = () => {
@@ -42,14 +45,6 @@ export const SelectTags = ({
         open && "open"
       } ${isActive && "active"} ${error && "error-field"}`}
       showTags={showTags}
-      onFocus={() => {
-        setIsActive(true);
-        setOpen(true);
-      }}
-      onBlur={() => {
-        setIsActive(false);
-        setOpen(false);
-      }}
       error={error}
     >
       <div>
@@ -105,7 +100,17 @@ export const SelectTags = ({
         <div className="label">{label}</div>
       </div>
       {(notMultiSelect && !value && showTags) || viewOnly ? null : (
-        <Arrow active={open} />
+        <Arrow
+          active={open}
+          onClick={(e) => {
+            setOpen(!open);
+          }}
+          onBlur={() => {
+            setIsActive(false);
+            setOpen(false);
+          }}
+          innerRef={selectRef}
+        />
       )}
       <Dropdown
         open={open}
@@ -190,7 +195,7 @@ const StyledSelectTags = styled.button`
   }
 
   &:hover,
-  &:focus {
+  &.open {
     background: rgba(255, 255, 255, 0.05);
     .value {
       opacity: 1;
@@ -199,7 +204,7 @@ const StyledSelectTags = styled.button`
       opacity: 1;
     }
   }
-  &:focus {
+  &.open {
     border-radius: 9px 9px 0px 0px !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.4);
     .tagsSelectDropdown {

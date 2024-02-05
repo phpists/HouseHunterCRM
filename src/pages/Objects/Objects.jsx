@@ -89,6 +89,7 @@ export const Objects = () => {
       if (isReset) {
         listRef.current.scroll({ top: 0 });
         setObjects([]);
+        setSelected([]);
         currentPage.current = 0;
         dataRef.current = [];
         allCountRef.current = 0;

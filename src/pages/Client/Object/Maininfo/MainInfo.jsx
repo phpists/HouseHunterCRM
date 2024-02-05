@@ -95,7 +95,7 @@ export const Maininfo = ({
           ? objectFields?.main_field?.rooms?.required === 1
           : true) && (
           <>
-            <Tag Icon={DoorsIcon} text={`${data?.room_min ?? 0}к`} />
+            <Tag Icon={DoorsIcon} text={`${data?.rooms ?? 0}к`} />
             <TagDivider />
           </>
         )}

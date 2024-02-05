@@ -14,6 +14,7 @@ export const ShowMore = ({
   onAddToSelection,
   onOpenTagsHistory,
   onOpenPriceHistory,
+  isAccess,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -34,7 +35,7 @@ export const ShowMore = ({
         onToggleFavoriteStatus={onToggleFavoriteStatus}
         isFavorite={isFavorite}
         onFindSimilar={handleFindSimilar}
-        isEdit={isEdit}
+        isEdit={isEdit && isAccess}
         onHide={onHide}
         onAddToSelection={onAddToSelection}
         onOpenTagsHistory={onOpenTagsHistory}

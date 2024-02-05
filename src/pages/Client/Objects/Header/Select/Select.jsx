@@ -54,12 +54,15 @@ export const Select = ({
           <ClosedButton onClick={onOpen} />
         ) : (
           <>
-            <StyledSelect className="flex items-center" active={active}>
+            <StyledSelect
+              className="flex items-center"
+              active={active}
+              onFocus={() => setActive(true)}
+              onBlur={() => setActive(false)}
+            >
               <Title />
               <Selected value={type} selectedCount={selectedCount} />
-              {selectedCount > 0 && (
-                <Arrow open={active} onToggleOpen={() => setActive(!active)} />
-              )}
+              {selectedCount > 0 && <Arrow open={active} />}
             </StyledSelect>
             {active && <Dropdown onSelect={handleSelectOption} />}
           </>
@@ -69,7 +72,7 @@ export const Select = ({
   );
 };
 
-const StyledSelect = styled.div`
+const StyledSelect = styled.button`
   border-radius: ${({ active }) => (active ? "8px 8px 0 0" : "8px")};
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(18.5px);
