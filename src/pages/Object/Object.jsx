@@ -65,16 +65,19 @@ export const ObjectPage = () => {
             ?.map((field) => [field, data[field] ?? "0"])
         )
       : [];
+
     let updatedData = { ...data, ...checkboxes };
 
     dateFields.forEach((f) => {
-      updatedData = {
-        ...updatedData,
-        [f]:
-          Number(updatedData[f]) === 0
-            ? new Date()
-            : new Date(updatedData[f] * 1000),
-      };
+      if (typeof f !== "boolean") {
+        updatedData = {
+          ...updatedData,
+          [f]:
+            Number(updatedData[f]) === 0
+              ? new Date()
+              : new Date(updatedData[f] * 1000),
+        };
+      }
     });
 
     return updatedData;
@@ -151,6 +154,7 @@ export const ObjectPage = () => {
         ...(fields?.other_field
           ? Object.entries(fields?.other_field)
               ?.filter((f) => f[1]?.required === 1)
+              ?.filter((f) => f[1]?.type !== "checkbox")
               ?.map((f) => f[0])
           : []),
       ],
@@ -217,6 +221,7 @@ export const ObjectPage = () => {
         ...(fields?.other_field
           ? Object.entries(fields?.other_field)
               ?.filter((f) => f[1]?.required === 1)
+              ?.filter((f) => f[1]?.type !== "checkbox")
               ?.map((f) => f[0])
           : []),
       ],
