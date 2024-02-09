@@ -9,6 +9,7 @@ export const List = ({
   selectedWorkers,
   onSelect,
   workers,
+  onOpenTarif,
 }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
 
@@ -52,6 +53,10 @@ export const List = ({
               active={active === "1" || isCurrentUser}
               billingTo={billing_to}
               level={struct_level}
+              payCount={selectedWorkers.filter((w) => w === id)?.length}
+              onOpenTarif={onOpenTarif}
+              id={id}
+              isCurrentUser={isCurrentUser}
             />
           )
         )

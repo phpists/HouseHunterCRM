@@ -20,6 +20,7 @@ import { useAppSelect } from "./hooks/redux";
 import { Loading } from "./components/Loading/Loading";
 import { handleCheckAccess } from "./utilits";
 import { Selections } from "./pages/Selections/Selections";
+import { useGetCompanyInfoQuery } from "./store/billing/billing.api";
 
 export const App = () => {
   const [getProfile] = useLazyGetUserQuery();
@@ -27,11 +28,13 @@ export const App = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSideBarOpen] = useState(false);
   const loggined = !!localStorage.getItem("token");
-  const { loginUser } = useActions();
+  const { loginUser, saveCompanyPhoto } = useActions();
   const { user } = useAppSelect((state) => state.auth);
   const [loading, setLoading] = useState(true);
   const [load, setLoad] = useState(false);
   const { data, refetch } = useGetAccessQuery(null, { skip: !user });
+  const { data: companyInfo, refetch: refetchCompanyInfo } =
+    useGetCompanyInfoQuery();
 
   const handleGetUserData = () => {
     getProfile().then((resp) => {
@@ -39,6 +42,7 @@ export const App = () => {
       setLoad(true);
       data && refetch();
       setTimeout(() => setLoading(false), 1500);
+      refetchCompanyInfo();
       if (!resp?.data?.data) {
         localStorage.removeItem("token");
       }
@@ -62,6 +66,16 @@ export const App = () => {
   useEffect(() => {
     setSideBarOpen(false);
   }, [location]);
+
+  useEffect(() => {
+    if (companyInfo) {
+      saveCompanyPhoto(
+        companyInfo?.data?.copmany_img?.length > 0
+          ? companyInfo?.data?.copmany_img
+          : null
+      );
+    }
+  }, [companyInfo]);
 
   return (
     <>

@@ -71,6 +71,7 @@ export const clients = createApi({
         search_phone_code,
         my_struct,
         show_favorite,
+        ...filters
       }) => ({
         url: "",
         method: "POST",
@@ -85,6 +86,7 @@ export const clients = createApi({
           search_phone_code,
           my_struct,
           show_favorite,
+          ...filters,
         }),
       }),
       transformResponse: (response) => {

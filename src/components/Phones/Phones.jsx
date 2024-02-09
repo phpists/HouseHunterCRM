@@ -4,7 +4,13 @@ import { Arrow } from "./Arrow";
 import { useState } from "react";
 import { Dropdown } from "./Dropdown";
 
-export const Phones = ({ top, className, classNameContent, phones }) => {
+export const Phones = ({
+  top,
+  className,
+  classNameContent,
+  phones,
+  notHideArrow,
+}) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -15,12 +21,13 @@ export const Phones = ({ top, className, classNameContent, phones }) => {
         phone={phones?.length > 0 ? phones[0] : ""}
         isLessThenOne={phones?.length <= 1}
       />
-      {phones?.length > 1 ? (
+      {phones?.length <= 1 && !notHideArrow ? null : (
         <Arrow
+          visible={phones?.length > 1}
           open={open}
           onToggleOpen={() => (phones?.length > 1 ? setOpen(!open) : null)}
         />
-      ) : null}
+      )}
       <Dropdown
         open={open}
         onSelect={() => setOpen(false)}

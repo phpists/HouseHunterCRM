@@ -8,6 +8,8 @@ export const PhoneInput = ({
   value,
   onChange,
   inputClassName,
+  onBlur,
+  onKeyDown,
 }) => (
   <div className="flex items-center relative">
     <CodeSelect
@@ -24,6 +26,9 @@ export const PhoneInput = ({
         .join("")}
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      autoFocus
+      onBlur={onBlur}
+      onKeyDown={onKeyDown}
     />
   </div>
 );

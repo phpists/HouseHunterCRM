@@ -1,23 +1,40 @@
 import styled from "styled-components";
 import { ReactComponent as OfficeIcon } from "../assets/images/office.svg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-export const CompanyLogo = () => (
-  <StyledCompanyLogo
-    className="flex justify-center items-center cursor-pointer"
-    to="/company"
-  >
-    <OfficeIcon />
-  </StyledCompanyLogo>
-);
+export const CompanyLogo = ({ value, onEdit }) => {
+  const navigate = useNavigate();
 
-const StyledCompanyLogo = styled(NavLink)`
+  return (
+    <StyledCompanyLogo
+      className="flex justify-center items-center cursor-pointer"
+      value={value}
+      onClick={() => (onEdit ? null : navigate("/company"))}
+    >
+      {value ? null : <OfficeIcon />}
+      <input type="file" value="" onChange={(e) => onEdit(e.target.files[0])} />
+    </StyledCompanyLogo>
+  );
+};
+
+const StyledCompanyLogo = styled.div`
   width: 56px;
   height: 56px;
   border-radius: 10px;
-  background: #4f4f4f;
+  background: url(${({ value }) => value}) center/cover no-repeat, #4f4f4f;
   transition: all 0.3s;
   border: 1px solid transparent;
+  position: relative;
+  input {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    cursor: pointer;
+    z-index: 10;
+  }
   g {
     transition: all 0.3s;
   }

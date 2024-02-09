@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import editIcon from "../../../../assets/images/edit-company.svg";
 import { useState } from "react";
+import saveIcon from "../../../../assets/images/check.svg";
 
 export const Title = ({ title, onEdit }) => {
   const [edit, setEdit] = useState(false);
@@ -26,13 +27,14 @@ export const Title = ({ title, onEdit }) => {
           autoFocus
           onBlur={handleSave}
           placeholder="Введіть назву"
+          onKeyDown={(e) => e?.keyCode === 13 && handleSave(e)}
         />
       ) : title?.length > 0 ? (
         title
       ) : (
         "Введіть назву"
       )}
-      <img src={editIcon} alt="" />
+      <img src={edit ? saveIcon : editIcon} alt="" />
     </StyledTitle>
   );
 };

@@ -28,4 +28,7 @@ const StyledRegistrationMessage = styled.div`
     transition: all 0.3s;
     opacity: ${({ ishover }) => (ishover === "true" ? 0.3 : 1)} !important;
   }
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;

@@ -13,8 +13,11 @@ import {
 import { StructureCard } from "./Header/StructureCard/StructureCard";
 import { useAppSelect } from "../../hooks/redux";
 import { useActions } from "../../hooks/actions";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const Structure = () => {
+  const { search } = useLocation();
+  const navigate = useNavigate();
   const { user } = useAppSelect((state) => state.auth);
   const [infoOpen, setInfoOpen] = useState(false);
   const [level, setLevel] = useState(1);
@@ -43,6 +46,7 @@ export const Structure = () => {
     if (level < currentLevel && !infoOpen) {
       const newLevel = 1 + level;
       setLevel(newLevel);
+      navigate(`/structure?level=${newLevel}`);
       if (newLevel > user?.struct_level + 1) {
         const childrens =
           Object.entries(children)
@@ -107,6 +111,12 @@ export const Structure = () => {
       }
     });
   };
+
+  useEffect(() => {
+    if (search?.length === 0) {
+      setLevel(1);
+    }
+  }, [search]);
 
   return (
     <StyledStructure className="hide-scroll">

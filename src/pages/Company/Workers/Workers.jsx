@@ -14,6 +14,7 @@ export const Workers = ({
   onSelect,
   refetchWorkers,
   onRefetchedWorkers,
+  onOpenTarif,
 }) => {
   const [editOpen, setEditOpen] = useState(false);
   const { data, refetch } = useGetDirectorWorkersQuery();
@@ -102,6 +103,7 @@ export const Workers = ({
         onSelect={onSelect}
         workers={handleFilter()}
         filter={filter}
+        onOpenTarif={onOpenTarif}
       />
       {editOpen && (
         <WorkerModal

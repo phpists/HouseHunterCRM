@@ -13,11 +13,13 @@ export const CodeSelect = ({ value, onChange, options, className }) => {
   };
 
   return (
-    <StyledSelect open={open} className={`${className}`}>
-      <div
-        className="flex items-center justify-between"
-        onClick={() => setOpen(!open)}
-      >
+    <StyledSelect
+      open={open}
+      className={`${className}`}
+      onFocus={() => setOpen(true)}
+      onBlur={() => setOpen(false)}
+    >
+      <div className="flex items-center justify-between">
         <div className="flex items-center">
           <Value
             value={
@@ -39,13 +41,14 @@ export const CodeSelect = ({ value, onChange, options, className }) => {
   );
 };
 
-const StyledSelect = styled.div`
+const StyledSelect = styled.button`
   padding: 8px 10px;
   border-radius: 6px 0 0 6px;
   transition: all 0.3s;
   cursor: pointer;
   color: rgb(255, 255, 255);
   margin-right: 4px;
+  z-index: 10;
   .arrow {
     margin-left: 5px;
     ${({ hideArrowDefault }) => hideArrowDefault && "opacity: 0;"}

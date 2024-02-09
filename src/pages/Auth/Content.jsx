@@ -29,7 +29,10 @@ export const Content = ({
     />
     <div className="left">
       {type === "registration" ? (
-        <Registration onSuccess={() => onSuccess()} />
+        <Registration
+          onSuccess={() => onSuccess()}
+          onLogin={() => onChangeType("login")}
+        />
       ) : (
         <RegistrationMessage
           ishover={isRightBlockHover}
@@ -50,6 +53,7 @@ export const Content = ({
         <Login
           onForgotPassword={() => onChangeForgotPassword(true)}
           onSuccess={() => onSuccess(true)}
+          onRegister={() => onChangeType("registration")}
         />
       )}
     </div>
@@ -81,5 +85,22 @@ const StyledContent = styled.div`
     right: ${({ forgotPassword, type }) =>
       type === "registration" ? 17 : forgotPassword ? 4 : 8}svw;
     z-index: 10;
+  }
+  @media (max-width: 800px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .left,
+    .right {
+      right: unset;
+      left: unset;
+      top: unset;
+      transform: unset;
+    }
+  }
+  @media (min-width: 800px) {
+    .info-text {
+      display: none;
+    }
   }
 `;

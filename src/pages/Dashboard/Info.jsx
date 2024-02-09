@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import icon from "../../assets/images/activity.svg";
 
-export const Info = () => (
-  <StyledInfo className="flex flex-col justify-center items-center">
+export const Info = ({ className }) => (
+  <StyledInfo
+    className={`flex flex-col justify-center items-center ${className}`}
+  >
     <img src={icon} alt="" />
     <div className="title">Слідкуйте за оновленнями системи</div>
     <div className="subtitle">
@@ -18,6 +20,7 @@ const StyledInfo = styled.div`
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   text-align: center;
   min-height: 200px;
+  height: 100%;
   img {
     width: 24px;
     height: 24px;

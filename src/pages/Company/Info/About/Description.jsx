@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 
-export const Description = ({ value, onChange, edit }) => {
-  const handleSave = (e) => {
+export const Description = ({ value, onChange, edit, onCloseEdit }) => {
+  const handleSave = (e, isCloseEdit) => {
     const newValue = e.target.value;
     if (value !== newValue) {
       onChange(newValue);
     }
+    isCloseEdit && onCloseEdit();
   };
 
   return (
@@ -16,6 +17,8 @@ export const Description = ({ value, onChange, edit }) => {
           defaultValue={value}
           onBlur={handleSave}
           placeholder="Введіть опис"
+          autoFocus
+          onKeyDown={(e) => e?.keyCode === 13 && handleSave(e, true)}
         ></textarea>
       ) : value?.length > 0 ? (
         value

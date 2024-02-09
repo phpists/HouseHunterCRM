@@ -12,7 +12,7 @@ const StyledName = styled.div`
   line-height: 118%; /* 20.06px */
   letter-spacing: 0.34px;
   white-space: nowrap;
-  max-width: 100px;
+  max-width: 200px;
   text-overflow: ellipsis;
   overflow: hidden;
 `;

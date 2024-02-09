@@ -3,6 +3,7 @@ import { Header } from "./Header/Header";
 import { List } from "./List/List";
 import { useEffect, useState } from "react";
 import {
+  useLazyAddClientToFavoriteQuery,
   useLazyDeleteCientQuery,
   useLazyGetClientsCountQuery,
   useLazyGetClientsQuery,
@@ -33,6 +34,7 @@ export const Clients = () => {
   const [loading, setLoading] = useState(false);
   const dataRef = useRef([]);
   const allCountRef = useRef(0);
+  const [addClientToFavorite] = useLazyAddClientToFavoriteQuery();
 
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
@@ -52,18 +54,22 @@ export const Clients = () => {
       }
 
       setLoading(true);
-
+      console.log(
+        filter?.dt_reg_from
+          ? new Date(filter?.dt_reg_from)?.getTime / 1000
+          : undefined
+      );
       getClients({
         current_page: currentPage.current,
         item_on_page: 10,
-        search_key: isFilters.current ? filter.search_key : undefined,
-        search_phone: isFilters.current ? filter.search_phone : undefined,
-        search_phone_code:
-          isFilters.current && filter.search_phone?.length > 0
-            ? searchPhoneCode
-            : undefined,
-        my_struct: isFilters.current ? filter?.my_struct : undefined,
         show_favorite: favoritesFilter ? "1" : undefined,
+        ...filter,
+        dt_reg_from: filter?.dt_reg_from
+          ? new Date(filter?.dt_reg_from)?.getTime() / 1000
+          : undefined,
+        dt_reg_to: filter?.dt_reg_to
+          ? new Date(filter?.dt_reg_to)?.getTime() / 1000
+          : undefined,
       }).then((resp) => {
         isLoading.current = false;
         setLoading(false);
@@ -140,6 +146,7 @@ export const Clients = () => {
     if (!isApply) {
       currentPage.current = 0;
       setIsAllPages(false);
+      setFilter({ search_key: "", search_phone: "" });
     }
     handleGetClients(true);
   };
@@ -172,6 +179,44 @@ export const Clients = () => {
     setIsAllPages(false);
   }, [favoritesFilter]);
 
+  const handleAddClientToFavorite = (id) => {
+    addClientToFavorite(id).then((resp) => {
+      handleResponse(resp, () => {
+        const updatedClients = dataRef.current?.map((c) =>
+          c.id === id ? { ...c, favorite: !c.favorite } : c
+        );
+        dataRef.current = updatedClients;
+        setClients(updatedClients);
+        cogoToast.success("Статус успішно обновлено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      });
+    });
+  };
+
+  const handleAddClientsToFavorite = () => {
+    Promise.all(
+      selected?.map((id) =>
+        addClientToFavorite(id).then((resp) => {
+          handleResponse(resp, () => {
+            cogoToast.success("Статус успішно обновлено", {
+              hideAfter: 3,
+              position: "top-right",
+            });
+          });
+        })
+      )
+    ).then((resp) => {
+      const updatedClients = dataRef.current?.map((c) =>
+        selected.find((s) => s === c?.id) ? { ...c, favorite: !c.favorite } : c
+      );
+      dataRef.current = updatedClients;
+      setClients(updatedClients);
+      setSelected([]);
+    });
+  };
+
   return (
     <StyledClients>
       <Header
@@ -188,6 +233,7 @@ export const Clients = () => {
         onSelectAll={handleSelectAll}
         selected={selected}
         onDelete={handleDeleteClients}
+        onFavorite={handleAddClientsToFavorite}
       />
       <List
         selected={selected}
@@ -196,6 +242,7 @@ export const Clients = () => {
         innerRef={listRef}
         onDelete={handleDeleteClient}
         loading={loading}
+        onAddToFavorite={handleAddClientToFavorite}
       />
     </StyledClients>
   );

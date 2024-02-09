@@ -11,10 +11,13 @@ import {
 } from "../../../store/billing/billing.api";
 import { handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
+import { useEffect } from "react";
+import { useActions } from "../../../hooks/actions";
 
 export const Info = ({ tarifOpen, onCloseTarif }) => {
   const [editCompany] = useLazyEditCompanyInfoQuery();
   const { data, refetch } = useGetCompanyInfoQuery();
+  const { saveCompanyPhoto } = useActions();
 
   const handleEditCompanyField = (fieldName, value) => {
     const formData = new FormData();
@@ -52,6 +55,14 @@ export const Info = ({ tarifOpen, onCloseTarif }) => {
       )
     );
   };
+
+  useEffect(() => {
+    if (data) {
+      saveCompanyPhoto(
+        data?.data?.copmany_img?.length > 0 ? data?.data?.copmany_img : null
+      );
+    }
+  }, [data]);
 
   return (
     <StyledInfo>

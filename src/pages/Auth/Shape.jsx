@@ -44,4 +44,28 @@ const StyledShape = styled.div`
     left: ${({ type }) => (type === "login" ? -6 : 2)}svw;
     width: 37svw;
   }
+  @media (max-width: 1000px) {
+    width: 80svw;
+    right: ${({ type }) => (type === "login" ? -25 : 57)}vw;
+    ${({ ishover, type }) =>
+      ishover === "true" && type === "login" && "right: -20vw;"}
+    &:hover {
+      ${({ type }) => type === "login" && "right: -20vw;"}
+    }
+  }
+  @media (max-width: 800px) {
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    transform: rotate(0deg);
+    background: #2c2c2cca;
+    backdrop-filter: blur(18.5px);
+    .shape-1,
+    .shape-2 {
+      display: none;
+    }
+  }
 `;

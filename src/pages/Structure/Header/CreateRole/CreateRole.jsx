@@ -1,9 +1,15 @@
 import styled from "styled-components";
 import { Modal } from "./Modal/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export const CreateRole = ({ onRefetchStructureData }) => {
+  const { search } = useLocation();
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setOpen(search === "?roles=true");
+  }, [search]);
 
   return (
     <>

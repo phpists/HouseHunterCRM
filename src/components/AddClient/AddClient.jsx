@@ -96,7 +96,7 @@ export const AddClient = ({ onClose, onAdded }) => {
     <StyledAddClient
       className="flex items-center justify-center overlay"
       bg={bg}
-      onClick={handleClickOnOverlay}
+      //   onClick={handleClickOnOverlay}
       initial={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
       animate={controls}

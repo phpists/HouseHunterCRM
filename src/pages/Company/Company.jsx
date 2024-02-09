@@ -11,9 +11,11 @@ import { handleResponse } from "../../utilits";
 import { useActions } from "../../hooks/actions";
 import { useLazyGetUserQuery } from "../../store/auth/auth.api";
 import cogoToast from "cogo-toast";
+import { useLocation } from "react-router-dom";
 
 export const Company = () => {
-  const [tarifOpen, setTarifOpen] = useState(false);
+  const { search } = useLocation();
+  const [tarifOpen, setTarifOpen] = useState(search === "?pay=true");
   const [tarifSelected, setTarifSelected] = useState(null);
   const [selectedWorkers, setSelectedWorkers] = useState([]);
   const [paying, setPaying] = useState(false);
@@ -50,6 +52,8 @@ export const Company = () => {
         ? selectedWorkers.filter((w) => w !== index)
         : [...selectedWorkers, index]
     );
+
+    setSelectedWorkers([...selectedWorkers, index]);
   };
 
   const handlePay = () => {
@@ -97,6 +101,10 @@ export const Company = () => {
     saveBalance(balanceData?.total?.toFixed(2));
   }, [balanceData]);
 
+  useEffect(() => {
+    setTarifOpen(search === "?pay=true");
+  }, [search]);
+
   return (
     <StyledCompany className="hide-scroll">
       <div className="info hide-scroll">
@@ -117,6 +125,7 @@ export const Company = () => {
         onSelect={handleSelectWorker}
         refetchWorkers={refetchWorkers}
         onRefetchedWorkers={() => setRefetchWorkers(false)}
+        onOpenTarif={() => setTarifOpen(true)}
       />
     </StyledCompany>
   );

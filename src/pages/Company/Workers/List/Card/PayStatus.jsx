@@ -1,21 +1,25 @@
 import { styled } from "styled-components";
 import { handleFormatDate } from "../../../../../utilits";
 
-export const PayStatus = ({ status, billingTo }) => (
-  <StyledPayStatus status={status}>
-    <div className="title">
+export const PayStatus = ({ status, billingTo, onOpenTarif }) => (
+  <StyledPayStatus
+    status={status}
+    className="notClickable"
+    onClick={onOpenTarif}
+  >
+    <div className="title notClickable">
       {!status ? (
         "Потребує оплати"
       ) : (
         <>
-          <span>Сплачено до</span>{" "}
+          <span className="notClickable">Сплачено до</span>{" "}
           {isNaN(billingTo)
             ? billingTo
             : handleFormatDate(Number(billingTo) * 1000, true)}
         </>
       )}
     </div>
-    <div className="subtitle">Білінг</div>
+    <div className="subtitle notClickable">Білінг</div>
   </StyledPayStatus>
 );
 

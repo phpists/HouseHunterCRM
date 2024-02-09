@@ -86,6 +86,27 @@ export const handleFormatDate = (d, isShort) => {
     : `${addZero(day)}.${addZero(month)}.${year} ${hours}:${minutes}`;
 };
 
+export const handleFormatInputDate = (d) => {
+  const date = new Date(d);
+  const day = date.getDate();
+  const month = 1 + date.getMonth();
+  const year = date.getFullYear();
+
+  return isNaN(day) ? undefined : `${addZero(year)}-${addZero(month)}-${day}`;
+};
+
+export const handleFromInputDate = (d) => {
+  const date = d?.split(".");
+  if (date?.length === 3) {
+    const day = date[2];
+    const month = date[1];
+    const year = date[0];
+
+    return `${day}.${month}.${year}`;
+  } else {
+    return false;
+  }
+};
 export const handleReformatDate = (d = "") => {
   if (d?.split(".")?.length === 3) {
     const day = d?.split(".")[0];

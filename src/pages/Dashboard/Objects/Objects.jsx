@@ -10,7 +10,7 @@ import {
   useGetStreetBaseObjectsCountQuery,
 } from "../../../store/objects/objects.api";
 
-export const Objects = () => {
+export const Objects = ({ statisticData }) => {
   const { data: objectCount } = useGetObjectsCountQuery();
   const { data: actualObjectCount } = useGetActualObjectsCountQuery();
   const { data: overdueObjectCount } = useGetOverdueObjectsCountQuery();
@@ -18,7 +18,7 @@ export const Objects = () => {
 
   return (
     <StyledObjects>
-      <CardHeader title="До моїх об’єктів" />
+      <CardHeader title="До моїх об’єктів" link="/objects" />
       <div className="content">
         <Card
           IconImg={HomeIcon}
@@ -27,7 +27,6 @@ export const Objects = () => {
         />
         <InfoList
           items={[
-            { title: "Актуальні", value: actualObjectCount?.count ?? "-" },
             {
               title: "Протерміновані",
               value: overdueObjectCount?.count ?? "-",
@@ -36,6 +35,12 @@ export const Objects = () => {
               title: "Об’єкти Street Base",
               value: streetBaseObjectCount?.count ?? "-",
             },
+            { title: "Актуальні", value: actualObjectCount?.count ?? "-" },
+            {
+              title: "Здані",
+              value: statisticData?.count_objects_surrendered ?? "0",
+            },
+            { title: "Видалені", value: "0" },
           ]}
         />
       </div>
@@ -47,7 +52,7 @@ const StyledObjects = styled.div`
   padding: 20px;
   background: #323232;
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   .content {
     padding: 14px;
     border-radius: 9px;

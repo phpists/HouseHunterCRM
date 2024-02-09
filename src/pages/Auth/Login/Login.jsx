@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { Title } from "../Title";
 import { Description } from "../Description";
 import { Input } from "../Input";
-import { ForgotPassword } from "./ForgotPassword";
+import { ForgotPassword, InfoText } from "../InfoText";
 import arrowIcon from "../../../assets/images/arrow.svg";
 import { Button } from "../../../components/Button";
 import { useState } from "react";
@@ -13,7 +13,7 @@ import {
 } from "../../../store/auth/auth.api";
 import cogoToast from "cogo-toast";
 
-export const Login = ({ onForgotPassword, onSuccess }) => {
+export const Login = ({ onForgotPassword, onSuccess, onRegister }) => {
   const [login] = useLazyLoginQuery();
   const [logout] = useLazyLogoutQuery();
   const [email, setEmail] = useState("");
@@ -65,7 +65,7 @@ export const Login = ({ onForgotPassword, onSuccess }) => {
         value={password}
         onChange={(val) => setPassword(val)}
       />
-      <ForgotPassword onForgotPassword={onForgotPassword} />
+      {/* <InfoText onClick={onForgotPassword} /> */}
       <Button
         title="Увійти"
         icon={arrowIcon}
@@ -73,6 +73,11 @@ export const Login = ({ onForgotPassword, onSuccess }) => {
         disabled={
           email?.length === 0 || errors?.email || password?.length === 0
         }
+      />
+      <InfoText
+        text="Зареєструватись"
+        onClick={onRegister}
+        className="info-text"
       />
     </StyledLogin>
   );

@@ -1,11 +1,12 @@
 import { styled } from "styled-components";
 import { ReactComponent as ArrowIcon } from "../../assets/images/arrow-down.svg";
 
-export const Arrow = ({ open, onToggleOpen }) => (
+export const Arrow = ({ open, onToggleOpen, visible }) => (
   <StyledArrow
     className="flex items-center justify-center notClickable"
     open={open}
     onClick={onToggleOpen}
+    visible={visible}
   >
     <ArrowIcon className="notClickable" />
   </StyledArrow>
@@ -20,6 +21,11 @@ const StyledArrow = styled.div`
   height: 100%;
   cursor: pointer;
   flex-shrink: 0;
+  ${({ visible }) =>
+    !visible &&
+    `
+    opacity: 0;
+  `}
   svg {
     width: 17px;
     height: 17px;

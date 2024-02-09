@@ -16,6 +16,8 @@ export const MobileContent = ({
   comment,
   onDelete,
   isDelete,
+  onAddToFavorite,
+  favorite,
 }) => (
   <StyledMobileContent className="flex items-center hide-scroll card">
     <div className="w-full">
@@ -48,6 +50,8 @@ export const MobileContent = ({
       id={id}
       onDelete={onDelete}
       noDelete={!isDelete}
+      onAddToFavorite={onAddToFavorite}
+      favorite={favorite}
     />
   </StyledMobileContent>
 );

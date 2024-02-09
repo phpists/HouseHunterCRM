@@ -16,7 +16,13 @@ import {
   useLazyGetUserQuery,
   useLazyLogoutQuery,
 } from "../../../store/auth/auth.api";
-import { handleRemovePhoneMask, handleResponse } from "../../../utilits";
+import {
+  handleFormatDate,
+  handleFormatInputDate,
+  handleFromInputDate,
+  handleRemovePhoneMask,
+  handleResponse,
+} from "../../../utilits";
 import cogoToast from "cogo-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Confirm } from "../../Confirm/Confirm";
@@ -73,7 +79,7 @@ export const Profile = () => {
       dt_birthday:
         user?.dt_birthday === "0"
           ? null
-          : new Date(Number(user?.dt_birthday) * 1000),
+          : handleFormatDate(new Date(Number(user?.dt_birthday) * 1000), true),
     });
   }, [user]);
 
@@ -108,7 +114,9 @@ export const Profile = () => {
         dt_birthday: Math.floor(
           profileData?.dt_birthday === "0"
             ? null
-            : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000
+            : new Date(
+                handleFromInputDate(profileData?.dt_birthday)
+              )?.getTime() / 1000
         ),
       }).then((resp) => {
         setLoading(false);
@@ -134,7 +142,7 @@ export const Profile = () => {
       dt_birthday:
         user?.dt_birthday === "0"
           ? null
-          : new Date(Number(user?.dt_birthday) * 1000),
+          : handleFormatDate(new Date(Number(user?.dt_birthday) * 1000), true),
     });
 
   const handleRemoveAvatar = () => {
@@ -177,6 +185,7 @@ export const Profile = () => {
   const handleLogout = () => {
     logout();
     localStorage.removeItem("token");
+    localStorage.removeItem("modalClosed");
     navigate("/auth");
     loginUser(null);
   };
@@ -221,12 +230,17 @@ export const Profile = () => {
         }
         openNotifications={openNotifications}
       >
-        <Notification
-          active={openNotifications}
-          onToggle={handleOpenNotifications}
-          count={data?.count_notify}
-        />
-        {openNotifications && <NotificationsDropdown data={data} />}
+        <button
+          onClick={() => setOpenNotifications(!openNotifications)}
+          onBlur={() => setOpenNotifications(false)}
+        >
+          <Notification
+            active={openNotifications}
+            onToggle={handleOpenNotifications}
+            count={data?.count_notify}
+          />
+          {openNotifications && <NotificationsDropdown data={data} />}
+        </button>
         <div className="flex items-start clickable">
           <Status status={1} className="clickable status-tag" />
           <Info />

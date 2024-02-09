@@ -4,7 +4,7 @@ import { Item } from "./Item";
 import { Divider } from "./Divider";
 
 export const InfoList = ({ items }) => (
-  <StyledInfoList>
+  <StyledInfoList className="hide-scroll">
     {items.map(({ title, value }, i) => (
       <React.Fragment key={i}>
         <Item title={title} value={value} />
@@ -16,4 +16,6 @@ export const InfoList = ({ items }) => (
 
 const StyledInfoList = styled.div`
   margin-top: 20px;
+  max-height: 45px;
+  overflow: auto;
 `;

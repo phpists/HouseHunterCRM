@@ -29,6 +29,7 @@ export const Header = ({
   onSelectAll,
   selected,
   onDelete,
+  onFavorite,
 }) => {
   const [getNewClientsCount] = useLazyGetNewClientsCountQuery();
   const { saveNewClientsCount } = useActions();
@@ -58,7 +59,7 @@ export const Header = ({
     <StyledHeader>
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          {/* {favoritesFilter && <BackButton onClick={onToggleFavoriteFilter} />} */}
+          {favoritesFilter && <BackButton onClick={onToggleFavoriteFilter} />}
           <Title
             title={`${newClientsCount ?? "-"} нових клієнтів за сьогодні`}
           />
@@ -84,6 +85,7 @@ export const Header = ({
           deleteConfirmTitle={`Видалити клієнт${
             selected?.length > 1 ? "ів" : "а"
           }`}
+          onFavorite={onFavorite}
         />
       </div>
       <SelectItems
@@ -95,7 +97,7 @@ export const Header = ({
         selectedCount={selectedCount}
         allCount={allCount}
         onSelectAll={onSelectAll}
-        noFavorite
+        onToggleFavorite={onFavorite}
         onDelete={
           handleCheckAccess(accessData, "clients", "delete")
             ? handleDeleteClients

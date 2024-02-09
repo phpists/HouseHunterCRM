@@ -2,16 +2,16 @@ import styled from "styled-components";
 import { StepButton } from "./StepButton";
 import { InfoButton } from "../InfoButton";
 
-export const Header = () => (
-  <StyledHeader>
-    <StepButton />
+export const Header = ({ steps }) => (
+  <StyledHeader steps={steps}>
+    {steps && <StepButton />}
     <InfoButton className="info-btn" />
   </StyledHeader>
 );
 
 const StyledHeader = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: ${({ steps }) => (steps ? "1fr 1fr" : "1fr")};
   gap: 20px;
   @media (min-width: 1100px) {
     display: none;

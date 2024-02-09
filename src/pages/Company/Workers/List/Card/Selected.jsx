@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 
-export const Selected = () => (
+export const Selected = ({ payCount }) => (
   <StyledSelected>
-    <div className="title">+1 місяць</div>
+    <div className="title">+{payCount} місяць</div>
     <div className="subtitle">1 000₴</div>
   </StyledSelected>
 );

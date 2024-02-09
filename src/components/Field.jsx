@@ -50,14 +50,14 @@ export const Field = ({
       hide={hide}
       full={full}
       error={error}
-      onClick={() => (mobile ? setEdit(true) : null)}
+      onClick={() => !edit && setEdit(true)}
     >
       <div className="field-content">
-        {type === "date" && edit && (
+        {/* {type === "date" && edit && (
           <div className="calendar_wrapper">
             <Calendar value={value} onChange={onChange} />
           </div>
-        )}
+        )} */}
         {edit ? (
           <>
             {phone ? (
@@ -68,6 +68,7 @@ export const Field = ({
                 value={value}
                 onChange={onChange}
                 inputClassName="value"
+                onKeyDown={(e) => e?.keyCode === 13 && setEdit(false)}
               />
             ) : textarea ? (
               <textarea
@@ -76,6 +77,18 @@ export const Field = ({
                 value={value}
                 placeholder={placeholder}
                 onChange={(e) => onChange(e.target.value)}
+                autoFocus
+                onKeyDown={(e) => e?.keyCode === 13 && setEdit(false)}
+              />
+            ) : type === "date" ? (
+              <ReactInputMask
+                mask={"99.99.9999"}
+                className="value"
+                value={value}
+                placeholder={placeholder}
+                onChange={(e) => onChange(e.target.value)}
+                autoFocus
+                onKeyDown={(e) => e?.keyCode === 13 && setEdit(false)}
               />
             ) : (
               <input
@@ -86,7 +99,8 @@ export const Field = ({
                   onChange && type !== "date" ? onChange(e.target.value) : null
                 }
                 type={type === "date" ? "text" : type ?? "text"}
-                onBlur={() => (mobile ? setEdit(false) : null)}
+                autoFocus
+                onKeyDown={(e) => e?.keyCode === 13 && setEdit(false)}
               />
             )}
           </>
@@ -98,14 +112,14 @@ export const Field = ({
                 }${value}`
               : type === "date"
               ? value
-                ? handleFormatDate(value, true)
-                : "Введіть значення"
+                ? value
+                : "Введіть дату"
               : value?.length > 0
               ? value
               : placeholder}
           </div>
         )}
-        <div className="label">{edit ? "Редагування" : label}</div>
+        <div className="label">{label}</div>
       </div>
       {viewOnly ? null : (
         <div
@@ -114,6 +128,9 @@ export const Field = ({
         >
           {edit ? <CheckIcon /> : <EditIcon className="edit-icon" />}
         </div>
+      )}
+      {edit && (
+        <div className="modal-overlay" onClick={() => setEdit(false)}></div>
       )}
     </StyleField>
   );
@@ -152,6 +169,10 @@ const StyleField = styled.div`
       line-height: 118%; /* 17.7px */
       letter-spacing: 0.3px;
     }
+  }
+  input,
+  textarea {
+    z-index: 10;
   }
   .label {
     color: #fff;

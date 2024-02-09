@@ -28,10 +28,10 @@ export const Tarif = ({
             paying={paying}
             loading={loading}
           />
-          <Divider />
+          {/* <Divider /> */}
         </>
       )}
-      <RepeatCard onOpenTarif={onOpenTarif} />
+      {/* <RepeatCard onOpenTarif={onOpenTarif} /> */}
     </StyledTarif>
   );
 };
@@ -40,8 +40,8 @@ const StyledTarif = styled.div`
   padding: 16px;
   background: #323232;
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
-  height: calc(100svh - 78px - 24px - 40px - 421px);
-  min-height: ${({ tarifOpen }) => (tarifOpen ? 400 : 215)}px;
+  height: calc(100svh - 78px - 24px - 40px - 481px);
+  min-height: ${({ tarifOpen }) => (tarifOpen ? 180 : 135)}px;
   @media (max-width: 1399.9px) {
     height: max-content;
   }

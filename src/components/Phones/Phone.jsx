@@ -4,6 +4,7 @@ import phoneIcon from "../../assets/images/call.svg";
 export const Phone = ({ showOnHoverIcon, className, phone, isLessThenOne }) => (
   <StyledPhone
     className={`${className} notClickable ${isLessThenOne && "less-then-one"}`}
+    href={`tel:${phone}`}
   >
     <div className="flex items-center notClickable">
       <div className="phone notClickable">{phone}</div>
@@ -13,12 +14,13 @@ export const Phone = ({ showOnHoverIcon, className, phone, isLessThenOne }) => (
   </StyledPhone>
 );
 
-const StyledPhone = styled.div`
+const StyledPhone = styled.a`
   color: #fff;
   transition: all 0.3s;
   background: #444;
   padding: 7px 7.51px 6px;
   border-radius: 6px 0px 0px 6px;
+  display: block !important;
   &.less-then-one {
     border-radius: 6px !important;
   }

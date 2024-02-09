@@ -3,11 +3,13 @@ import { styled } from "styled-components";
 import { ReactComponent as CheckboxIcon } from "../assets/images/checkbox.svg";
 import {
   handleFormatDate,
-  handleReformatDate,
+  handleFormatInputDate,
   handleRemovePhoneMask,
+  onClickOutside,
 } from "../utilits";
 import { PhoneInput } from "./PhoneInput";
 import { Calendar } from "./Calendar/Calendar";
+import { ReactComponent as CalendarIcon } from "../assets/images/calendar.svg";
 
 export const ProfileField = ({
   value,
@@ -28,10 +30,14 @@ export const ProfileField = ({
   readOnly,
   type,
   error,
+  onlyCalendar,
 }) => {
+  const fieldRef = useRef();
   const [active, setActive] = useState(false);
   const [open, setOpen] = useState(false);
   const textareaRef = useRef(null);
+  const [calendarOpen, setCalendarOpen] = useState(false);
+  const [dateInput, setDateInput] = useState(value);
 
   const textAreaAdjust = (e) => {
     e.target.style.height = "1px";
@@ -59,6 +65,12 @@ export const ProfileField = ({
     onChange(val);
   };
 
+  useEffect(() => {
+    if (type === "date") {
+      setDateInput(handleFormatInputDate(value));
+    }
+  }, [value]);
+
   return (
     <StyledProfileField
       active={active}
@@ -67,6 +79,7 @@ export const ProfileField = ({
       grey={grey}
       big={big}
       error={error}
+      ref={fieldRef}
       onClick={() => {
         if (!active && !readOnly) {
           setActive(true);
@@ -74,10 +87,16 @@ export const ProfileField = ({
         }
       }}
     >
-      {type === "date" && active && open && (
+      {type === "date" && active && open && (calendarOpen || onlyCalendar) && (
         <div className="calendar_wrapper">
           <Calendar value={value} onChange={handleChangeValue} />
         </div>
+      )}
+      {type === "date" && !onlyCalendar && (
+        <CalendarIcon
+          onClick={() => setCalendarOpen(!calendarOpen)}
+          className={`check-icon calendar-icon ${calendarOpen && "active"}`}
+        />
       )}
       {!readOnly && (
         <CheckboxIcon onClick={handleToggleActive} className="check-icon" />
@@ -92,6 +111,11 @@ export const ProfileField = ({
               value={value}
               onChange={onChange}
               inputClassName="value"
+              //   onBlur={() => {
+              //     setActive(false);
+              //     setOpen(false);
+              //     setCalendarOpen(false);
+              //   }}
             />
           ) : textarea ? (
             <textarea
@@ -101,8 +125,13 @@ export const ProfileField = ({
               onChange={textAreaAdjust}
               placeholder={placeholder}
               autoFocus
+              //   onBlur={() => {
+              //     setActive(false);
+              //     setOpen(false);
+              //     setCalendarOpen(false);
+              //   }}
             />
-          ) : type === "date" ? (
+          ) : (type === "date" && calendarOpen) || onlyCalendar ? (
             <span
               className="value hide-scroll"
               onClick={() => {
@@ -112,16 +141,40 @@ export const ProfileField = ({
             >
               {handleFormatDate(value, true)}
             </span>
+          ) : type === "date" ? (
+            <input
+              className="value hide-scroll"
+              value={dateInput}
+              placeholder={placeholder}
+              onChange={(e) => setDateInput(e.target.value)}
+              type="date"
+              autoFocus
+              //   onBlur={() => {
+              //     setActive(false);
+              //     setOpen(false);
+              //     onChange(new Date(handleFromInputDate(dateInput)));
+              //     setCalendarOpen(false);
+              //   }}
+            />
           ) : (
             <input
               className="value hide-scroll"
-              value={type === "date" ? handleFormatDate(value, true) : value}
+              value={
+                type === "date" && !calendarOpen
+                  ? handleFormatDate(value, true)
+                  : value
+              }
               placeholder={placeholder}
               onChange={(e) =>
                 onChange && type !== "date" ? onChange(e.target.value) : null
               }
-              type={type === "date" ? "text" : type ?? "text"}
+              type={type ?? "text"}
               autoFocus
+              //   onBlur={() => {
+              //     setActive(false);
+              //     setOpen(false);
+              //     setCalendarOpen(false);
+              //   }}
             />
           )}
         </>
@@ -143,18 +196,19 @@ export const ProfileField = ({
       )}
       {!big && (
         <>
-          <div className="label">{active ? "Змінити" : label}</div>
+          <div className="label">{label}</div>
           <div className="label label-hover">
             {readOnly ? label : "Змінити"}
           </div>
         </>
       )}
-      {open && type === "date" && (
+      {open && active && (
         <div
           className="modal-overlay"
           onClick={() => {
             setActive(false);
             setOpen(false);
+            setCalendarOpen(false);
           }}
         ></div>
       )}
@@ -194,7 +248,7 @@ const StyledProfileField = styled.button`
     transition: all 0.3s;
     text-overflow: ellipsis;
     overflow: hidden;
-    width: 100%;
+    width: 90%;
     white-space: nowrap;
     ${({ password }) => password && " filter: blur(5px);"}
     ${({ big }) =>
@@ -221,6 +275,19 @@ const StyledProfileField = styled.button`
     &[type="date"]::-webkit-calendar-picker-indicator {
       display: none;
       -webkit-appearance: none;
+    }
+  }
+
+  input,
+  textarea {
+    z-index: 10;
+  }
+  .calendar-icon {
+    right: 30px !important;
+    &.active {
+      g {
+        opacity: 1;
+      }
     }
   }
   .label {

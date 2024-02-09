@@ -9,9 +9,28 @@ import { Info } from "./Info";
 import { Header } from "./Header/Header";
 import { InfoButton } from "./InfoButton";
 import { useGetClientsCountQuery } from "../../store/clients/clients.api";
+import { useLazyGetStatisticWorkerQuery } from "../../store/structure/structure.api";
+
+import { useEffect, useState } from "react";
+import { useAppSelect } from "../../hooks/redux";
 
 export const Dashboard = ({ isClientsAccess }) => {
+  const { user } = useAppSelect((state) => state.auth);
   const { data } = useGetClientsCountQuery(null, { skip: !isClientsAccess });
+  const [getWorkerStatistic, { data: statisticData }] =
+    useLazyGetStatisticWorkerQuery();
+  const [steps, setSteps] = useState(!localStorage.getItem("modalClosed"));
+
+  const handleClose = () => {
+    setSteps(false);
+    localStorage.setItem("modalClosed", true);
+  };
+
+  useEffect(() => {
+    if (user?.id) {
+      getWorkerStatistic(user?.id);
+    }
+  }, [user]);
 
   return (
     <StyledDashboard className="hide-scroll">
@@ -19,17 +38,23 @@ export const Dashboard = ({ isClientsAccess }) => {
         <Empty />
       ) : (
         <div className="dashboard-content hide-scroll">
-          <Header />
+          <Header steps={steps} />
           <div className="dashboard-col hide-scroll">
             <Clients data={data} />
-            <Objects />
-            <Requests />
+            <Objects statisticData={statisticData} />
+            <Requests statisticData={statisticData} />
           </div>
           <LastRequests />
           <InfoButton className="dashboard-mob-info-btn" />
           <div className="dashboard-col hide-scroll info-cards-desktop">
-            <Steps className="steps-wrapper hide-scroll" />
-            <Info />
+            {steps && (
+              <Steps
+                className="steps-wrapper hide-scroll"
+                close
+                onClose={handleClose}
+              />
+            )}
+            <Info className={!steps && "info-wrapper"} />
           </div>
         </div>
       )}
@@ -53,6 +78,9 @@ const StyledDashboard = styled.div`
     height: max-content;
     max-height: calc(100svh - 148px);
     overflow: auto;
+  }
+  .info-wrapper {
+    height: calc(100svh - 148px);
   }
   .steps-wrapper {
     width: 100%;

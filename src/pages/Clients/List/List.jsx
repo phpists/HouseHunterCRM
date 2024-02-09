@@ -17,6 +17,7 @@ export const List = ({
   innerRef,
   onDelete,
   loading,
+  onAddToFavorite,
 }) => {
   const [deleteModal, setDeleteModal] = useState(null);
   const { data: accessData } = useGetAccessQuery();
@@ -53,6 +54,7 @@ export const List = ({
                 comment,
                 first_name,
                 last_name,
+                favorite,
               },
               i
             ) => (
@@ -74,6 +76,8 @@ export const List = ({
                 comment={comment}
                 onDelete={() => handleOpenDeleteModal(id)}
                 isDelete={handleCheckAccess(accessData, "clients", "delete")}
+                onAddToFavorite={() => onAddToFavorite(id)}
+                favorite={favorite}
               />
             )
           )

@@ -19,6 +19,8 @@ import {
 } from "../../store/auth/auth.api";
 import {
   emailValidation,
+  handleFormatDate,
+  handleFromInputDate,
   handleRemovePhoneMask,
   handleResponse,
 } from "../../utilits";
@@ -128,7 +130,9 @@ export const WorkerModal = ({
               dt_birthday:
                 resp?.data[0]?.dt_birthday === "0"
                   ? null
-                  : new Date(Number(resp?.data[0]?.dt_birthday) * 1000),
+                  : handleFormatDate(
+                      new Date(Number(resp?.data[0]?.dt_birthday) * 1000)
+                    ),
             }
           : INITIAL_DATA
       );
@@ -143,7 +147,10 @@ export const WorkerModal = ({
         dt_birthday:
           user?.dt_birthday === "0"
             ? null
-            : new Date(Number(user?.dt_birthday) * 1000),
+            : handleFormatDate(
+                new Date(Number(user?.dt_birthday) * 1000),
+                true
+              ),
         phones: user.phones.map((p) => ({
           ...p,
           code: p.id_phone_code,
@@ -184,7 +191,9 @@ export const WorkerModal = ({
         dt_birthday: Math.floor(
           profileData?.dt_birthday === "0"
             ? null
-            : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000
+            : new Date(
+                handleFromInputDate(profileData?.dt_birthday)
+              )?.getTime() / 1000
         ),
       }).then((resp) => {
         setLoading(false);
@@ -211,7 +220,9 @@ export const WorkerModal = ({
         dt_birthday: Math.floor(
           profileData?.dt_birthday === "0"
             ? null
-            : new Date(Number(profileData?.dt_birthday))?.getTime() / 1000
+            : new Date(
+                handleFromInputDate(profileData?.dt_birthday)
+              )?.getTime() / 1000
         ),
         phones_json: JSON.stringify(
           profileData?.phones.map((phone) => ({

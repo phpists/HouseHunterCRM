@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { ReactComponent as WebsiteIcon } from "../../../assets/images/website.svg";
 import editIcon from "../../../assets/images/edit-company.svg";
 import { useState } from "react";
+import saveIcon from "../../../assets/images/check.svg";
 
 export const WebSite = ({ webSite, onEdit }) => {
   const [edit, setEdit] = useState(false);
@@ -23,6 +24,8 @@ export const WebSite = ({ webSite, onEdit }) => {
           defaultValue={webSite}
           placeholder="Введіть значення вебсайту"
           onBlur={handleSave}
+          autoFocus
+          onKeyDown={(e) => e?.keyCode === 13 && handleSave(e, true)}
         />
       ) : (
         <span>
@@ -30,7 +33,11 @@ export const WebSite = ({ webSite, onEdit }) => {
         </span>
       )}
 
-      <img src={editIcon} alt="" onClick={() => setEdit(true)} />
+      <img
+        src={edit ? saveIcon : editIcon}
+        alt=""
+        onClick={() => setEdit(true)}
+      />
     </StyledWebSite>
   );
 };

@@ -3,7 +3,7 @@ import { Loader } from "../Loader";
 
 export const Button = ({ onClick, disabled, loading }) => (
   <StyledButton onClick={onClick} disabled={disabled}>
-    {loading ? <Loader white /> : "Відправити"}
+    {loading ? <Loader white /> : "Cтворити"}
   </StyledButton>
 );
 

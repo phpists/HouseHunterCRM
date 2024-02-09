@@ -4,13 +4,18 @@ import { useState } from "react";
 import { EmptyBlock } from "./EmptyBlock";
 
 export const Empty = () => {
-  const [bannerVisible, setBannerVisible] = useState(true);
+  const [bannerVisible, setBannerVisible] = useState(
+    !localStorage.getItem("modalClosed")
+  );
+
+  const handleClose = () => {
+    setBannerVisible(false);
+    localStorage.setItem("modalClosed", true);
+  };
 
   return (
     <StyledEmpty className="flex flex-col">
-      {bannerVisible && (
-        <WelcomeBanner onClose={() => setBannerVisible(false)} />
-      )}
+      {bannerVisible && <WelcomeBanner onClose={handleClose} />}
       <EmptyBlock />
     </StyledEmpty>
   );

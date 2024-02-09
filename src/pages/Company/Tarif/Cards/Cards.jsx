@@ -14,7 +14,7 @@ export const Cards = ({
   const { data } = useGetPackadgesQuery();
   const CARDS_DATA = [
     {
-      title: "Бомж",
+      title: "+1 місяць",
       priceTitle: data?.price ?? "0",
       color: "#5D63FF",
       price: 1000,

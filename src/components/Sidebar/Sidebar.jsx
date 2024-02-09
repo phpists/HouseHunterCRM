@@ -6,6 +6,7 @@ import { useAppSelect } from "../../hooks/redux";
 
 export const Sidebar = ({ sidebarOpen, onClose, accessData }) => {
   const { user } = useAppSelect((state) => state.auth);
+  const { companyPhoto } = useAppSelect((state) => state.billing);
 
   return (
     <StyledSidebar
@@ -14,7 +15,11 @@ export const Sidebar = ({ sidebarOpen, onClose, accessData }) => {
     >
       <Logo onClose={onClose} />
       <NavBar accessData={accessData} />
-      {user?.struct_level === 1 ? <CompanyLogo /> : <div />}
+      {user?.struct_level === 1 ? (
+        <CompanyLogo value={companyPhoto} />
+      ) : (
+        <div />
+      )}
     </StyledSidebar>
   );
 };

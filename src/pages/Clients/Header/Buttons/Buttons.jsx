@@ -4,10 +4,11 @@ import { ReactComponent as PlusIcon } from "../../../../assets/images/plus.svg";
 import { Search } from "./Search";
 import { styled } from "styled-components";
 import { SelectItems } from "../../../../components/SelectItems/SelectItems";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddClient } from "../../../../components/AddClient/AddClient";
 import { useGetAccessQuery } from "../../../../store/auth/auth.api";
 import { handleCheckAccess } from "../../../../utilits";
+import { useLocation } from "react-router-dom";
 
 export const Buttons = ({
   favoritesFilter,
@@ -23,9 +24,15 @@ export const Buttons = ({
   onSelectAll,
   onDelete,
   deleteConfirmTitle,
+  onFavorite,
 }) => {
+  const { search } = useLocation();
   const [addClient, setAddClient] = useState(false);
   const { data } = useGetAccessQuery();
+
+  useEffect(() => {
+    setAddClient(search === "?create=true");
+  }, [search]);
 
   return (
     <StyledButtons className="flex items-center">
@@ -62,7 +69,7 @@ export const Buttons = ({
         selectedCount={selectedCount}
         allCount={allCount}
         onSelectAll={onSelectAll}
-        noFavorite
+        onToggleFavorite={onFavorite}
         onDelete={onDelete}
         deleteConfirmTitle={deleteConfirmTitle}
       />

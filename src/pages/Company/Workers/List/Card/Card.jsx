@@ -17,34 +17,50 @@ export const Card = ({
   active,
   billingTo,
   level,
-}) => (
-  <StyledCard
-    onClick={() => (tarifSelected ? onSelect() : onOpenEdit())}
-    isSelected={isSelected}
-  >
-    <div className="flex items-center info-wrapper">
-      <Info
-        isSelected={isSelected}
-        name={name}
-        photo={photo}
-        phone={phone}
-        level={level}
+  payCount,
+  onOpenTarif,
+  id,
+  isCurrentUser,
+}) => {
+  const handleClick = (e) => {
+    if (!e.target.classList.contains("notClickable")) {
+      onOpenEdit();
+    }
+  };
+
+  return (
+    <StyledCard
+      onClick={(e) => (tarifSelected ? onSelect() : handleClick(e))}
+      isSelected={isSelected}
+    >
+      <div className="flex items-center info-wrapper">
+        <Info
+          isSelected={isSelected}
+          name={name}
+          photo={photo}
+          phone={phone}
+          level={level}
+        />
+        <Arrow className="more-arrow-mobile" />
+      </div>
+      {tarifSelected && isSelected ? (
+        <Selected payCount={payCount} />
+      ) : tarifSelected ? (
+        <div />
+      ) : (
+        <EnterStatus status={active} isCurrentUser={isCurrentUser} id={id} />
+      )}
+      <PayStatus
+        status={handleCheckBilling(billingTo)}
+        billingTo={billingTo}
+        onOpenTarif={onOpenTarif}
       />
-      <Arrow className="more-arrow-mobile" />
-    </div>
-    {tarifSelected && isSelected ? (
-      <Selected />
-    ) : tarifSelected ? (
-      <div />
-    ) : (
-      <EnterStatus status={active} />
-    )}
-    <PayStatus status={handleCheckBilling(billingTo)} billingTo={billingTo} />
-    <div className="flex items-center justify-center h-full more-arrow-desktop">
-      <Arrow />
-    </div>
-  </StyledCard>
-);
+      <div className="flex items-center justify-center h-full more-arrow-desktop">
+        <Arrow />
+      </div>
+    </StyledCard>
+  );
+};
 
 const StyledCard = styled.button`
   padding: 9px 20px 9px 9px;

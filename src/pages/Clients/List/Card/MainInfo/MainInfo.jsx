@@ -23,6 +23,7 @@ export const MainInfo = ({ name, id, dateCreate }) => {
 const StyledMainInfo = styled.div`
   margin-right: 45px;
   flex-shrink: 0;
+  width: 250px;
   .small-avatar {
     display: block;
     width: 40px;

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { styled } from "styled-components";
+import { ReactComponent as EditIcon } from "../../../../../assets/images/edit-company.svg";
+import { ReactComponent as Arrow } from "../../../../../assets/images/check.svg";
 
 export const Card = ({
   title,
@@ -25,12 +27,10 @@ export const Card = ({
       className="flex items-start justify-between card"
       hoverBackground={hoverBackground}
       hoverSubtitle={hoverSubtitle}
+      onClick={() => (editable && !edit ? setEdit(true) : null)}
     >
       <div>
-        <div
-          className="title"
-          onClick={() => (editable ? setEdit(true) : null)}
-        >
+        <div className="title">
           {edit ? (
             <input
               type="text"
@@ -49,7 +49,20 @@ export const Card = ({
           <div className="subtitle subtitle-hover">{hoverSubtitle}</div>
         </div>
       </div>
-      <Icon />
+      {editable ? (
+        <>
+          {!edit ? (
+            <div>
+              <EditIcon className="hover" />
+              <Icon className="notHover" />
+            </div>
+          ) : (
+            <Arrow />
+          )}
+        </>
+      ) : (
+        <Icon />
+      )}
     </StyledCard>
   );
 };
@@ -61,6 +74,10 @@ const StyledCard = styled.div`
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  .hover {
+    display: none;
+  }
+
   .title {
     color: #fff;
     font-family: Overpass;
@@ -90,6 +107,7 @@ const StyledCard = styled.div`
   g,
   path {
     transition: all 0.3s;
+    z-index: 1000;
   }
 
   .subtitle-hover {
@@ -114,6 +132,12 @@ const StyledCard = styled.div`
 
   &:hover {
     background: rgba(255, 255, 255, 0.15);
+    .hover {
+      display: block;
+    }
+    .notHover {
+      display: none;
+    }
     .subtitle {
       ${({ hoverSubtitle }) =>
         hoverSubtitle &&

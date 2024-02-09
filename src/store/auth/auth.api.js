@@ -60,7 +60,7 @@ export const auth = createApi({
           response,
           () => response,
           () => null,
-          false,
+          true,
           true
         );
       },
@@ -166,6 +166,20 @@ export const auth = createApi({
         }),
       }),
     }),
+    addBannerProfile: build.query({
+      query: (img) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData(
+          {
+            mod: "profile",
+            action: "addBannerProfile",
+          },
+          { img }
+        ),
+      }),
+    }),
   }),
 });
 
@@ -180,4 +194,5 @@ export const {
   useLazyDeleteAvatarQuery,
   useGetAccessQuery,
   useGetNotificationsQuery,
+  useLazyAddBannerProfileQuery,
 } = auth;

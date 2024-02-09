@@ -15,8 +15,9 @@ import {
   handleResponse,
 } from "../../utilits";
 import cogoToast from "cogo-toast";
+import { InfoText } from "./InfoText";
 
-export const Registration = ({ onSuccess }) => {
+export const Registration = ({ onSuccess, onLogin }) => {
   const [registrate] = useLazyRegisterQuery();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -108,6 +109,7 @@ export const Registration = ({ onSuccess }) => {
           errors.email
         }
       />
+      <InfoText text="Увійти" onClick={onLogin} className="info-text" />
     </StyledRegistration>
   );
 };

@@ -3,18 +3,27 @@ import { Title } from "./Title";
 import { Description } from "./Description";
 import editIcon from "../../../../assets/images/edit-company.svg";
 import { useState } from "react";
+import checkIcon from "../../../../assets/images/check.svg";
 
 export const About = ({ value, onChange }) => {
   const [edit, setEdit] = useState(false);
 
   return (
-    <StyledAbout className="hover-effect-to-right">
-      <img src={editIcon} alt="" onClick={() => setEdit(!edit)} />
+    <StyledAbout
+      className="hover-effect-to-right"
+      onClick={() => !edit && setEdit(!edit)}
+    >
+      <img
+        src={edit ? checkIcon : editIcon}
+        alt=""
+        className={edit && "edit"}
+        onClick={() => setEdit(false)}
+      />
       <Title />
       <Description
         value={value}
         onChange={onChange}
-        // onChangeEdit={() => setEdit(false)}
+        onCloseEdit={() => setEdit(false)}
         edit={edit}
       />
     </StyledAbout>
@@ -36,6 +45,10 @@ const StyledAbout = styled.div`
     transition: all 0.3s;
     visibility: hidden;
     width: 17px;
+  }
+  .edit {
+    visibility: visible;
+    opacity: 1;
   }
   &:hover {
     img {

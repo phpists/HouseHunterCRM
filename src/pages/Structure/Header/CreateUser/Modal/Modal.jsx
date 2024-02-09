@@ -18,6 +18,7 @@ import {
 } from "../../../../../store/structure/structure.api";
 import {
   emailValidation,
+  handleFromInputDate,
   handleRemovePhoneMask,
   handleResponse,
 } from "../../../../../utilits";
@@ -30,7 +31,7 @@ const INITIAL_DATA = {
   last_name: "",
   phones: [{ code: "1", phone: "", telegram: "0", viber: "0" }],
   photo: { file: null, url: null },
-  dt_birthday: new Date(),
+  dt_birthday: null,
 };
 
 export const Modal = ({ onClose, onCreatedUser }) => {
@@ -103,7 +104,8 @@ export const Modal = ({ onClose, onCreatedUser }) => {
           Math.floor(
             data?.dt_birthday === "0"
               ? new Date()?.getTime() / 1000
-              : new Date(Number(data?.dt_birthday))?.getTime() / 1000
+              : new Date(handleFromInputDate(data?.dt_birthday))?.getTime() /
+                  1000
           )
         ),
         phones_json: JSON.stringify(

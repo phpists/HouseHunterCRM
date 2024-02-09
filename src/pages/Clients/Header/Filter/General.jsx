@@ -35,6 +35,32 @@ export const General = ({
         onChangePhoneCode={(val) => onChangeSearchCode(val)}
       />
       <Divider />
+      <ProfileField
+        label="Пошук по номеру часткове співпадіння"
+        placeholder="Введіть значення..."
+        value={filter.findPhone}
+        onChange={(val) =>
+          onChangeFilter("findPhone", val?.length === 0 ? undefined : val)
+        }
+      />
+      <Divider />
+      <div className="flex items-center">
+        <ProfileField
+          label="Дата реєстрації від"
+          type="date"
+          value={filter?.dt_reg_from}
+          onChange={(val) => onChangeFilter("dt_reg_from", val)}
+          onlyCalendar
+        />
+        <ProfileField
+          label="Дата реєстрації до"
+          type="date"
+          value={filter?.dt_reg_to}
+          onChange={(val) => onChangeFilter("dt_reg_to", val)}
+          onlyCalendar
+        />
+      </div>
+      <Divider />
       <ToggleOption
         label="Моя структура"
         value={filter?.my_struct === "1"}
@@ -42,6 +68,64 @@ export const General = ({
           onChangeFilter("my_struct", filter?.my_struct === "1" ? "0" : "1")
         }
       />
+      {/* <Divider />
+      <ToggleOption
+        label="Клієнти до видалення"
+        value={filter?.XXXX === "1"}
+        onChange={() =>
+          onChangeFilter("XXXX", filter?.XXXX === "1" ? "0" : "1")
+        }
+      /> */}
+      {/* <Divider />
+      <ToggleOption
+        label="Клієнти моєї структури"
+        value={filter?.XXXX === "1"}
+        onChange={() =>
+          onChangeFilter("XXXX", filter?.XXXX === "1" ? "0" : "1")
+        }
+      /> */}
+      <Divider />
+      <ToggleOption
+        label="Клієнти без об'єктів та запитів"
+        value={filter?.clientNotItem === "1"}
+        onChange={() =>
+          onChangeFilter(
+            "clientNotItem",
+            filter?.clientNotItem === "1" ? undefined : "1"
+          )
+        }
+      />
+      <Divider />
+      <ToggleOption
+        label="Клієнти з об'єктами"
+        value={filter?.clietnHasObject === "1"}
+        onChange={() =>
+          onChangeFilter(
+            "clietnHasObject",
+            filter?.clietnHasObject === "1" ? undefined : "1"
+          )
+        }
+      />
+      <Divider />
+      <ToggleOption
+        label="Клієнти з запитами"
+        value={filter?.clietnHasRequest === "1"}
+        onChange={() =>
+          onChangeFilter(
+            "clietnHasRequest",
+            filter?.clietnHasRequest === "1" ? undefined : "1"
+          )
+        }
+      />
+      {/* <Divider />
+      <ToggleOption
+        label="Тільки делеговані клієнти"
+        value={filter?.XXXX === "1"}
+        onChange={() =>
+          onChangeFilter("XXXX", filter?.XXXX === "1" ? "0" : "1")
+        }
+      /> */}
+
       {/* <Select
         label="Категорія"
         labelActive="Оберіть категорію"

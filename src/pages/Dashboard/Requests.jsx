@@ -9,14 +9,14 @@ import {
   useGetRequestsCountQuery,
 } from "../../store/requests/requests.api";
 
-export const Requests = () => {
+export const Requests = ({ statisticData }) => {
   const { data: requestsCount } = useGetRequestsCountQuery();
   const { data: actualRequestsCount } = useGetActualRequestCountQuery();
   const { data: overdueRequestsCount } = useGetOverdueRequestCountQuery();
 
   return (
     <StyledRequests>
-      <CardHeader title="До моїх запитів" />
+      <CardHeader title="До моїх запитів" link="/requests" />
       <div className="content">
         <Card
           IconImg={MegaphoneIcon}
@@ -30,6 +30,11 @@ export const Requests = () => {
               title: "Протерміновані",
               value: overdueRequestsCount?.count ?? "-",
             },
+            {
+              title: "Неактуальні ",
+              value: statisticData?.count_request_not_actual ?? "0",
+            },
+            { title: "Видалені ", value: "0" },
           ]}
         />
       </div>

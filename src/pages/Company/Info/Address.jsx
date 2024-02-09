@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { ReactComponent as LocationIcon } from "../../../assets/images/location.svg";
 import editIcon from "../../../assets/images/edit-company.svg";
 import { useState } from "react";
+import saveIcon from "../../../assets/images/check.svg";
 
 export const Address = ({ address, onEdit }) => {
   const [edit, setEdit] = useState(false);
@@ -23,11 +24,17 @@ export const Address = ({ address, onEdit }) => {
           defaultValue={address}
           placeholder="Введіть значення адреси"
           onBlur={handleSave}
+          autoFocus
+          onKeyDown={(e) => e?.keyCode === 13 && handleSave(e, true)}
         />
       ) : (
         <span>{address?.length > 0 ? address : "Введіть значення адреси"}</span>
       )}
-      <img src={editIcon} alt="" onClick={() => setEdit(true)} />
+      <img
+        src={edit ? saveIcon : editIcon}
+        alt=""
+        onClick={() => setEdit(true)}
+      />
     </StyledAddress>
   );
 };

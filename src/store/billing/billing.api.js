@@ -131,6 +131,19 @@ export const billing = createApi({
         body: data,
       }),
     }),
+    toggleActiveWorkerStatus: build.query({
+      query: ({ id_worker, status }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "disabled_worker",
+          mod: "billing",
+          id_worker,
+          status,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -145,4 +158,5 @@ export const {
   useGetDirectorWorkersQuery,
   useGetCompanyInfoQuery,
   useLazyEditCompanyInfoQuery,
+  useLazyToggleActiveWorkerStatusQuery,
 } = billing;
