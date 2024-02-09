@@ -43,9 +43,6 @@ export const App = () => {
       data && refetch();
       setTimeout(() => setLoading(false), 1500);
       refetchCompanyInfo();
-      if (!resp?.data?.data) {
-        localStorage.removeItem("token");
-      }
     });
   };
 

@@ -12,7 +12,13 @@ export const CompanyLogo = ({ value, onEdit }) => {
       onClick={() => (onEdit ? null : navigate("/company"))}
     >
       {value ? null : <OfficeIcon />}
-      <input type="file" value="" onChange={(e) => onEdit(e.target.files[0])} />
+      {onEdit ? (
+        <input
+          type="file"
+          value=""
+          onChange={(e) => onEdit(e.target.files[0])}
+        />
+      ) : null}
     </StyledCompanyLogo>
   );
 };

@@ -12,6 +12,8 @@ export const General = ({
   onChangeFilter,
   searchPhoneCode,
   onChangeSearchCode,
+  searchPhoneCodeSecond,
+  onChangeSearchCodeSecond,
 }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
 
@@ -38,9 +40,9 @@ export const General = ({
       <ProfileField
         label="Пошук по номеру часткове співпадіння"
         placeholder="Введіть значення..."
-        value={filter.findPhone}
+        value={filter?.filters?.findPhone}
         onChange={(val) =>
-          onChangeFilter("findPhone", val?.length === 0 ? undefined : val)
+          onChangeFilter("filters", { ...filter.filters, findPhone: val })
         }
       />
       <Divider />
@@ -48,15 +50,19 @@ export const General = ({
         <ProfileField
           label="Дата реєстрації від"
           type="date"
-          value={filter?.dt_reg_from}
-          onChange={(val) => onChangeFilter("dt_reg_from", val)}
+          value={filter?.filters?.dt_reg_from}
+          onChange={(val) =>
+            onChangeFilter("filters", { ...filter.filters, dt_reg_from: val })
+          }
           onlyCalendar
         />
         <ProfileField
           label="Дата реєстрації до"
           type="date"
-          value={filter?.dt_reg_to}
-          onChange={(val) => onChangeFilter("dt_reg_to", val)}
+          value={filter?.filters?.dt_reg_to}
+          onChange={(val) =>
+            onChangeFilter("filters", { ...filter.filters, dt_reg_to: val })
+          }
           onlyCalendar
         />
       </div>
@@ -65,7 +71,10 @@ export const General = ({
         label="Моя структура"
         value={filter?.my_struct === "1"}
         onChange={() =>
-          onChangeFilter("my_struct", filter?.my_struct === "1" ? "0" : "1")
+          onChangeFilter(
+            "my_struct",
+            filter?.my_struct === "1" ? undefined : "1"
+          )
         }
       />
       {/* <Divider />
@@ -87,34 +96,37 @@ export const General = ({
       <Divider />
       <ToggleOption
         label="Клієнти без об'єктів та запитів"
-        value={filter?.clientNotItem === "1"}
+        value={filter?.filters?.clientNotItem === "1"}
         onChange={() =>
-          onChangeFilter(
-            "clientNotItem",
-            filter?.clientNotItem === "1" ? undefined : "1"
-          )
+          onChangeFilter("filters", {
+            ...filter.filters,
+            clientNotItem:
+              filter?.filters?.clientNotItem === "1" ? undefined : "1",
+          })
         }
       />
       <Divider />
       <ToggleOption
         label="Клієнти з об'єктами"
-        value={filter?.clietnHasObject === "1"}
+        value={filter?.filters?.clietnHasObject === "1"}
         onChange={() =>
-          onChangeFilter(
-            "clietnHasObject",
-            filter?.clietnHasObject === "1" ? undefined : "1"
-          )
+          onChangeFilter("filters", {
+            ...filter.filters,
+            clietnHasObject:
+              filter?.filters?.clietnHasObject === "1" ? undefined : "1",
+          })
         }
       />
       <Divider />
       <ToggleOption
         label="Клієнти з запитами"
-        value={filter?.clietnHasRequest === "1"}
+        value={filter?.filters?.clietnHasRequest === "1"}
         onChange={() =>
-          onChangeFilter(
-            "clietnHasRequest",
-            filter?.clietnHasRequest === "1" ? undefined : "1"
-          )
+          onChangeFilter("filters", {
+            ...filter.filters,
+            clietnHasRequest:
+              filter?.filters?.clietnHasRequest === "1" ? undefined : "1",
+          })
         }
       />
       {/* <Divider />

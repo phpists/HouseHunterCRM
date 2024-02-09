@@ -20,6 +20,8 @@ export const DesktopContent = ({
   isDelete,
   onAddToFavorite,
   favorite,
+  agent,
+  agentPhone,
 }) => (
   <StyledDesktopContent className="flex items-center justify-between hide-scroll card">
     <MainInfo name={name} id={id} dateCreate={dateCreate} />
@@ -31,7 +33,7 @@ export const DesktopContent = ({
     <Divider />
     <Comment comment={comment} className="desktop-comment" />
     <Divider />
-    <PhoneInfo phone={phones?.map(({ phone }) => phone)[0] ?? ""} name={name} />
+    <PhoneInfo agent={agent} agentPhone={agentPhone} />
     <Divider />
     <Objects requestsCount={requestsCount} objectsCount={objectsCount} />
     <div className="flex items-center">

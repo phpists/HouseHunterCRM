@@ -105,7 +105,6 @@ export const Structure = () => {
 
           const updatedParents = [...parents];
           updatedParents[level] = childrens;
-          console.log(updatedParents);
           setParents(updatedParents);
         }
       }

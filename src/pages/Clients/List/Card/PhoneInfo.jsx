@@ -1,11 +1,11 @@
 import { styled } from "styled-components";
 import armIcon from "../../../../assets/images/arm-emoji.png";
 
-export const PhoneInfo = ({ name, phone }) => (
+export const PhoneInfo = ({ agent, agentPhone }) => (
   <StyledPhoneInfo className="flex items-start">
     <div>
-      <div className="name">{name}</div>
-      <div className="phone">{phone}</div>
+      <div className="name">{agent?.full_name ?? "-"}</div>
+      <div className="phone">{agentPhone}</div>
     </div>
     <img src={armIcon} alt="" />
   </StyledPhoneInfo>
@@ -59,7 +59,6 @@ const StyledPhoneInfo = styled.div`
     height: 47px;
     .name {
       font-size: 14px;
-      width: 100%;
     }
   }
 `;

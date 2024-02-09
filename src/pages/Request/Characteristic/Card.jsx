@@ -30,7 +30,6 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
     "price_max",
   ];
 
-  console.log(fields);
   return (
     <StyledCard>
       <TitleDivider title={title} />

@@ -307,7 +307,6 @@ export const ObjectPage = () => {
     }
   }, [errors]);
 
-  console.log(data);
   return (
     <StyledObject className="object-main-wrapper" ref={contentRef}>
       <ObjectsHeader

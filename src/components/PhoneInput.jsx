@@ -29,6 +29,7 @@ export const PhoneInput = ({
       autoFocus
       onBlur={onBlur}
       onKeyDown={onKeyDown}
+      alwaysShowMask
     />
   </div>
 );

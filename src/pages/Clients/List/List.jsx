@@ -55,6 +55,7 @@ export const List = ({
                 first_name,
                 last_name,
                 favorite,
+                agent,
               },
               i
             ) => (
@@ -78,6 +79,12 @@ export const List = ({
                 isDelete={handleCheckAccess(accessData, "clients", "delete")}
                 onAddToFavorite={() => onAddToFavorite(id)}
                 favorite={favorite}
+                agent={agent}
+                agentPhone={`${
+                  phonesCodes?.find(
+                    (c) => c.id === agent?.phones[0].id_phone_code
+                  )?.code
+                }${agent?.phones[0]?.phone ?? ""}`}
               />
             )
           )

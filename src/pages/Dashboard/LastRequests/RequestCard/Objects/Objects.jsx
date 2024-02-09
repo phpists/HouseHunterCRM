@@ -8,28 +8,36 @@ import { Tag } from "./Tag";
 import { Comments } from "./Comments";
 import { ReactComponent as Arrow } from "../../../../../assets/images/welcome-step-arrow.svg";
 import { CopyLink } from "../../../../../components/CopyLink";
+import { useNavigate } from "react-router-dom";
 
-export const Objects = ({ data, id, onOpenChat }) => (
-  <StyledObjects>
-    <LastSeen />
-    <div className="flex items-center">
-      <Photo photo={img1} />
-      <Photo photo={img2} />
-      <div>
-        <Title count={data?.count_objects} />
-        <Tag count={data?.count_new_object} />
-      </div>
-      <div className="bts flex items-center">
-        <CopyLink
-          className="copy-btn"
-          link={`https://xhouse-web.netlify.app/?id=${id}`}
+export const Objects = ({ data, id, onOpenChat }) => {
+  const navigate = useNavigate();
+
+  return (
+    <StyledObjects>
+      {/* <LastSeen /> */}
+      <div className="flex items-center">
+        <Photo photo={img1} />
+        <Photo photo={img2} />
+        <div>
+          <Title count={data?.count_objects} />
+          <Tag count={data?.count_new_object} />
+        </div>
+        <div className="bts flex items-center">
+          <CopyLink
+            className="copy-btn"
+            link={`https://xhouse-web.netlify.app/?id=${id}`}
+          />
+          <Comments onOpenChat={onOpenChat} />
+        </div>
+        <Arrow
+          className="arrow-main"
+          onClick={() => navigate(`/selections/${id}`)}
         />
-        <Comments onOpenChat={onOpenChat} />
       </div>
-      <Arrow className="arrow-main" />
-    </div>
-  </StyledObjects>
-);
+    </StyledObjects>
+  );
+};
 
 const StyledObjects = styled.div`
   padding: 10px;

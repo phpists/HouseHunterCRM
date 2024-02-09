@@ -4,10 +4,10 @@ import { Divider } from "./Divider";
 import { Message } from "./Message";
 import React from "react";
 
-export const Card = ({ type, messages, info, link }) => {
+export const Card = ({ type, messages, info, link, onClose }) => {
   return (
     <StyledCard>
-      <Header type={type} info={info} />
+      <Header type={type} info={info} onClose={onClose} />
       <Divider />
       {messages.map((msg, i) => (
         <React.Fragment key={i}>

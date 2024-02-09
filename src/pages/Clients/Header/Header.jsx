@@ -24,6 +24,8 @@ export const Header = ({
   onChangeFilter,
   searchPhoneCode,
   onChangeSearchCode,
+  searchPhoneCodeSecond,
+  onChangeSearchCodeSecond,
   onApplyFilters,
   allCount,
   onSelectAll,
@@ -73,6 +75,8 @@ export const Header = ({
           onChangeFilter={onChangeFilter}
           searchPhoneCode={searchPhoneCode}
           onChangeSearchCode={onChangeSearchCode}
+          searchPhoneCodeSecond={searchPhoneCodeSecond}
+          onChangeSearchCodeSecond={onChangeSearchCodeSecond}
           onApplyFilters={onApplyFilters}
           selectedCount={selectedCount}
           allCount={allCount}

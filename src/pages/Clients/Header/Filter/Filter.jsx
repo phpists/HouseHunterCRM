@@ -15,6 +15,8 @@ export const Filter = ({
   searchPhoneCode,
   onChangeSearchCode,
   onApplyFilters,
+  searchPhoneCodeSecond,
+  onChangeSearchCodeSecond,
 }) => {
   const controls = useAnimationControls();
 
@@ -31,6 +33,7 @@ export const Filter = ({
     onChangeFilter("search_key", "");
     onChangeFilter("search_key", "");
     onChangeSearchCode("1");
+    onChangeSearchCodeSecond("1");
     onApplyFilters(false);
     handleClose();
   };
@@ -55,6 +58,8 @@ export const Filter = ({
             onChangeFilter={onChangeFilter}
             searchPhoneCode={searchPhoneCode}
             onChangeSearchCode={onChangeSearchCode}
+            searchPhoneCodeSecond={searchPhoneCodeSecond}
+            onChangeSearchCodeSecond={onChangeSearchCodeSecond}
           />
           {/* <SectionTitle title="Актуальність" />
    <Topicality />

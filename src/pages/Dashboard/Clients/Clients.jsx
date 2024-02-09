@@ -15,7 +15,7 @@ export const Clients = ({ data }) => (
 );
 
 const StyledClients = styled.div`
-  padding: 20px;
+  padding: 10px;
   margin-bottom: 10px;
   background: #323232;
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);

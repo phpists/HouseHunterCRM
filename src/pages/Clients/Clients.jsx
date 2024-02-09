@@ -24,10 +24,11 @@ export const Clients = () => {
   const listRef = useRef();
   const [isAllPages, setIsAllPages] = useState(false);
   const [filter, setFilter] = useState({
-    search_key: "",
-    search_phone: "",
+    search_key: undefined,
+    search_phone: undefined,
   });
   const [searchPhoneCode, setSearchPhoneCode] = useState("1");
+  const [searchPhoneCodeSecond, setSearchPhoneCodeSecond] = useState("1");
   const isFilters = useRef(false);
   const [allCount, setAllCount] = useState(0);
   const [deleteClient] = useLazyDeleteCientQuery();
@@ -35,6 +36,7 @@ export const Clients = () => {
   const dataRef = useRef([]);
   const allCountRef = useRef(0);
   const [addClientToFavorite] = useLazyAddClientToFavoriteQuery();
+  const firstThousand = useRef([]);
 
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
@@ -54,35 +56,56 @@ export const Clients = () => {
       }
 
       setLoading(true);
-      console.log(
-        filter?.dt_reg_from
-          ? new Date(filter?.dt_reg_from)?.getTime / 1000
-          : undefined
-      );
+
       getClients({
         current_page: currentPage.current,
         item_on_page: 10,
         show_favorite: favoritesFilter ? "1" : undefined,
-        ...filter,
-        dt_reg_from: filter?.dt_reg_from
-          ? new Date(filter?.dt_reg_from)?.getTime() / 1000
+        search_phone_code: isFilters.current ? searchPhoneCode : undefined,
+        search_phone: isFilters.current
+          ? filter.search_phone
+              ?.replaceAll("-", "")
+              ?.replace("(", "")
+              ?.replace(")", "")
+              ?.replaceAll("_", "")
           : undefined,
-        dt_reg_to: filter?.dt_reg_to
-          ? new Date(filter?.dt_reg_to)?.getTime() / 1000
-          : undefined,
+        search_key: isFilters.current ? filter.search_key : undefined,
+        my_struct: isFilters.current ? filter.my_struct : undefined,
+        ...(isFilters.current
+          ? {
+              filters: {
+                ...filter.filters,
+                dt_reg_from: filter?.filters?.dt_reg_from
+                  ? new Date(filter?.filters?.dt_reg_from)?.getTime() / 1000
+                  : undefined,
+                dt_reg_to: filter?.filters?.dt_reg_to
+                  ? new Date(filter?.filters?.dt_reg_to)?.getTime() / 1000
+                  : undefined,
+                findPhone:
+                  filter?.filters?.findPhone?.length > 0
+                    ? filter?.filters?.findPhone
+                        ?.replaceAll("-", "")
+                        ?.replace("(", "")
+                        ?.replace(")", "")
+                        ?.replaceAll("_", "")
+                    : null,
+              },
+            }
+          : []),
       }).then((resp) => {
         isLoading.current = false;
         setLoading(false);
+        firstThousand.current = resp?.data?.data?.first_1000;
         handleResponse(
           resp,
           () => {
             if (resp?.data?.error === 0 && resp?.data.data?.clients?.length) {
               const respItemsCount = resp?.data?.data?.clients?.length;
-              const updatedCount = isReset
-                ? respItemsCount
-                : allCountRef.current + respItemsCount;
-              allCountRef.current = updatedCount;
-              setAllCount(updatedCount);
+              //   const updatedCount = isReset
+              //     ? respItemsCount
+              //     : allCountRef.current + respItemsCount;
+              //   allCountRef.current = updatedCount;
+              setAllCount(resp?.data?.data?.all_item ?? 0);
               saveClientsCount(resp?.data?.data?.all_item ?? 0);
               const updatedClients = isReset
                 ? resp?.data?.data?.clients
@@ -152,7 +175,7 @@ export const Clients = () => {
   };
 
   const handleSelectAll = (isReset, count) => {
-    const clientsIds = clients?.slice(0, count ?? undefined)?.map((c) => c.id);
+    const clientsIds = firstThousand.current;
     setSelected(isReset ? [] : clientsIds);
   };
 
@@ -174,9 +197,11 @@ export const Clients = () => {
   };
 
   useEffect(() => {
-    handleGetClients(true);
     currentPage.current = 0;
     setIsAllPages(false);
+    setFilter({});
+    isFilters.current = false;
+    handleGetClients(true);
   }, [favoritesFilter]);
 
   const handleAddClientToFavorite = (id) => {
@@ -228,6 +253,8 @@ export const Clients = () => {
         onChangeFilter={handleChangeFilter}
         searchPhoneCode={searchPhoneCode}
         onChangeSearchCode={(val) => setSearchPhoneCode(val)}
+        searchPhoneCodeSecond={searchPhoneCodeSecond}
+        onChangeSearchCodeSecond={(val) => setSearchPhoneCodeSecond(val)}
         onApplyFilters={handleApplyFilters}
         allCount={allCount}
         onSelectAll={handleSelectAll}

@@ -28,6 +28,10 @@ const StyledComment = styled.div`
     letter-spacing: 0.3px;
     margin-bottom: 1px;
     min-height: 10px;
+    max-width: 200px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   .label {
     font-family: Open Sans;

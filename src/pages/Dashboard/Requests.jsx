@@ -34,7 +34,6 @@ export const Requests = ({ statisticData }) => {
               title: "Неактуальні ",
               value: statisticData?.count_request_not_actual ?? "0",
             },
-            { title: "Видалені ", value: "0" },
           ]}
         />
       </div>
@@ -43,9 +42,8 @@ export const Requests = ({ statisticData }) => {
 };
 
 const StyledRequests = styled.div`
-  padding: 20px;
+  padding: 10px;
   background: #323232;
-  box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   .content {
     padding: 14px;
     border-radius: 9px;

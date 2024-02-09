@@ -9,6 +9,8 @@ export const Search = ({
   searchPhoneCode,
   onChangeSearchCode,
   onApplyFilters,
+  searchPhoneCodeSecond,
+  onChangeSearchCodeSecond,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -27,6 +29,8 @@ export const Search = ({
           searchPhoneCode={searchPhoneCode}
           onChangeSearchCode={onChangeSearchCode}
           onApplyFilters={onApplyFilters}
+          searchPhoneCodeSecond={searchPhoneCodeSecond}
+          onChangeSearchCodeSecond={onChangeSearchCodeSecond}
         />
       )}
     </div>

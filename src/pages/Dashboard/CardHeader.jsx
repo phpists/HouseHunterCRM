@@ -17,7 +17,7 @@ const StyledCardHeader = styled(NavLink)`
   font-weight: 200;
   line-height: normal;
   letter-spacing: 0.36px;
-  margin-bottom: 11px;
+  margin-bottom: 5px;
   cursor: pointer;
   svg {
     transition: all 0.3s;

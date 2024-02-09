@@ -18,6 +18,8 @@ export const MobileContent = ({
   isDelete,
   onAddToFavorite,
   favorite,
+  agent,
+  agentPhone,
 }) => (
   <StyledMobileContent className="flex items-center hide-scroll card">
     <div className="w-full">
@@ -34,10 +36,7 @@ export const MobileContent = ({
               phones={phones?.map(({ phone }) => phone)}
             />
           </div>
-          <PhoneInfo
-            phone={phones?.map(({ phone }) => phone)[0] ?? ""}
-            name={name}
-          />
+          <PhoneInfo agent={agent} agentPhone={agentPhone} />
         </div>
       </div>
       <div className=" w-full row-wrapper">

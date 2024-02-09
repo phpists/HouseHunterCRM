@@ -16,6 +16,6 @@ export const InfoList = ({ items }) => (
 
 const StyledInfoList = styled.div`
   margin-top: 20px;
-  max-height: 45px;
+  max-height: 50px;
   overflow: auto;
 `;

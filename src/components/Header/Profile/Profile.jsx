@@ -43,6 +43,37 @@ export const Profile = () => {
   const [logout] = useLazyLogoutQuery();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [closed, setClosed] = useState([]);
+
+  const handleCheckIsRefresh = () => {
+    const now = new Date()?.getTime() / 1000;
+    const lastActive = new Date(user?.last_active)?.getTime() / 1000;
+    const timePassed = now - lastActive;
+    const TWELVE_HOURS = 43200;
+
+    if (timePassed >= TWELVE_HOURS) {
+      setClosed([]);
+      localStorage.removeItem("closedNotifications");
+    }
+  };
+
+  const handleCloseNotification = (key) => {
+    const updatedClosed = [...closed, key];
+    localStorage.setItem("closedNotifications", JSON.stringify(updatedClosed));
+    setClosed(updatedClosed);
+  };
+
+  useEffect(() => {
+    const closedNotifications = localStorage.getItem("closedNotifications");
+
+    if (closedNotifications) {
+      setClosed(JSON.parse(closedNotifications));
+    }
+  }, []);
+
+  useEffect(() => {
+    user && handleCheckIsRefresh();
+  }, [user]);
 
   const handleCheckAllFields = () => {
     const { first_name, last_name, email, phones } = profileData;
@@ -230,17 +261,24 @@ export const Profile = () => {
         }
         openNotifications={openNotifications}
       >
-        <button
-          onClick={() => setOpenNotifications(!openNotifications)}
-          onBlur={() => setOpenNotifications(false)}
-        >
-          <Notification
-            active={openNotifications}
-            onToggle={handleOpenNotifications}
-            count={data?.count_notify}
-          />
-          {openNotifications && <NotificationsDropdown data={data} />}
-        </button>
+        <Notification
+          active={openNotifications}
+          onToggle={handleOpenNotifications}
+          count={data?.count_notify - closed?.length}
+        />
+        <NotificationsDropdown
+          data={data}
+          open={openNotifications}
+          onToggleOpen={(val) => setOpenNotifications(val)}
+          closed={closed}
+          onClose={handleCloseNotification}
+        />
+        {openNotifications && (
+          <div
+            className="modal-overlay"
+            onClick={() => setOpenNotifications(false)}
+          ></div>
+        )}
         <div className="flex items-start clickable">
           <Status status={1} className="clickable status-tag" />
           <Info />

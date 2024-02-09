@@ -16,6 +16,8 @@ export const Card = ({
   isDelete,
   onAddToFavorite,
   favorite,
+  agent,
+  agentPhone,
 }) => {
   const handleClick = (e) => {
     e.target.classList.contains("card") && onSelect();
@@ -39,6 +41,8 @@ export const Card = ({
         isDelete={isDelete}
         onAddToFavorite={onAddToFavorite}
         favorite={favorite}
+        agent={agent}
+        agentPhone={agentPhone}
       />
       <MobileContent
         name={name}
@@ -52,6 +56,8 @@ export const Card = ({
         isDelete={isDelete}
         onAddToFavorite={onAddToFavorite}
         favorite={favorite}
+        agent={agent}
+        agentPhone={agentPhone}
       />
     </StyledCard>
   );

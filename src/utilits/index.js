@@ -162,7 +162,17 @@ export const handleResponse = (
   notShowErrorMessage,
   isReturnData
 ) => {
-  if (resp?.error?.data) {
+  if (resp?.data?.error === 11 || resp?.error === 11) {
+    localStorage.removeItem("token");
+    cogoToast.error(
+      resp?.data?.messege ? resp?.data?.messege : resp?.messege ?? "Помилка",
+      {
+        hideAfter: 3,
+        position: "top-right",
+      }
+    );
+    window.location.replace("/");
+  } else if (resp?.error?.data) {
     onError && onError();
     !notShowErrorMessage &&
       cogoToast.error("Помилка", {
@@ -369,4 +379,17 @@ export const handleCheckBilling = (billingTo) => {
   const now = new Date().getTime();
   const billing = handleFormatBilling(billingTo);
   return billing > now;
+};
+
+export const handleCopy = (text) => {
+  const linkElem = document.createElement("input");
+  linkElem.value = text;
+  document.body.appendChild(linkElem);
+  linkElem.select();
+  document.execCommand("copy");
+  document.body.removeChild(linkElem);
+  cogoToast.success("Успішно спопійовано", {
+    hideAfter: 3,
+    position: "top-right",
+  });
 };

@@ -1,40 +1,63 @@
 import styled from "styled-components";
 import { Card } from "./Card/Card";
+import { useEffect, useState } from "react";
+import { useAppSelect } from "../../../../hooks/redux";
 
-export const NotificationsDropdown = ({ data }) => {
+export const NotificationsDropdown = ({ data, open, closed, onClose }) => {
+  const { user } = useAppSelect((state) => state.auth);
+
   return (
-    <StyledNotificationsDropdown className="hide-scroll">
-      {data?.birthday?.length > 0 && (
-        <Card type="clients" messages={data?.birthday} info />
+    <StyledNotificationsDropdown
+      className="hide-scroll"
+      open={open && closed?.length < data?.count_notify}
+    >
+      {data?.birthday?.length > 0 && !closed.find((n) => n === "birthday") && (
+        <Card
+          type="clients"
+          messages={data?.birthday}
+          info
+          onClose={() => onClose("birthday")}
+        />
       )}
-      {data?.objectDeadline && (
+      {data?.objectDeadline && !closed.find((n) => n === "objectDeadline") && (
         <Card
           type="objects"
           messages={[data?.objectDeadline]}
           link="/objects?showDeadline=true"
+          onClose={() => onClose("objectDeadline")}
         />
       )}
-      {data?.objectLiquidity && (
+      {data?.objectLiquidity &&
+        !closed.find((n) => n === "objectLiquidity") && (
+          <Card
+            type="objects"
+            messages={[data?.objectLiquidity]}
+            link="/objects?showLiquidity=true"
+            onClose={() => onClose("objectLiquidity")}
+          />
+        )}
+      {data?.requestDtDeadline &&
+        !closed.find((n) => n === "requestDtDeadline") && (
+          <Card
+            type="requests"
+            messages={[data?.requestDtDeadline]}
+            link="/requests?showDeadline=true"
+            onClose={() => onClose("requestDtDeadline")}
+          />
+        )}
+      {data?.calls && !closed.find((n) => n === "calls") && (
         <Card
-          type="objects"
-          messages={[data?.objectLiquidity]}
-          link="/objects?showLiquidity=true"
+          type="calls"
+          messages={[data?.calls]}
+          onClose={() => onClose("calls")}
+          link="/calls?view=true"
         />
       )}
-      {data?.requestDtDeadline && (
-        <Card
-          type="requests"
-          messages={[data?.requestDtDeadline]}
-          link="/requests?showDeadline=true"
-        />
-      )}
-      {data?.calls && (
-        <Card type="calls" messages={[data?.calls]} link="/calls?view=true" />
-      )}
-      {data?.chatMessege && (
+      {data?.chatMessege && !closed.find((n) => n === "chatMessege") && (
         <Card
           type="requests"
           messages={[data?.chatMessege]}
+          onClose={() => onClose("chatMessege")}
           link="/requests?showUnreadMessege=true"
         />
       )}
@@ -57,6 +80,8 @@ const StyledNotificationsDropdown = styled.div`
   gap: 2px;
   max-height: 273px;
   overflow: auto;
+  visibility: ${({ open }) => (open ? "visible" : "hidden")};
+  opacity: ${({ open }) => (open ? "1" : "0")};
   @media (max-width: 1200px) {
     width: 320px;
     right: 0;

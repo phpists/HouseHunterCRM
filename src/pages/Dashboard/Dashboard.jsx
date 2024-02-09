@@ -39,7 +39,7 @@ export const Dashboard = ({ isClientsAccess }) => {
       ) : (
         <div className="dashboard-content hide-scroll">
           <Header steps={steps} />
-          <div className="dashboard-col hide-scroll">
+          <div className="dashboard-col hide-scroll dashboard-col-statistic">
             <Clients data={data} />
             <Objects statisticData={statisticData} />
             <Requests statisticData={statisticData} />
@@ -78,6 +78,10 @@ const StyledDashboard = styled.div`
     height: max-content;
     max-height: calc(100svh - 148px);
     overflow: auto;
+    background: #323232;
+  }
+  .dashboard-col-statistic {
+    height: calc(100svh - 148px);
   }
   .info-wrapper {
     height: calc(100svh - 148px);

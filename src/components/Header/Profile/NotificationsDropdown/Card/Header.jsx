@@ -24,7 +24,7 @@ const TYPES = {
   },
 };
 
-export const Header = ({ type, info }) => (
+export const Header = ({ type, info, onClose }) => (
   <StyledHeader className="flex items-center justify-between">
     <div className="flex items-center">
       <img src={TYPES[type].icon} alt="" />
@@ -33,7 +33,7 @@ export const Header = ({ type, info }) => (
     <div className="flex items-center">
       {/* <div className="subtitle">18.09.2023</div> */}
       {/* <div className="subtitle">11 хв тому</div> */}
-      {/* <CloseIcon /> */}
+      <CloseIcon onClick={onClose} />
     </div>
   </StyledHeader>
 );

@@ -40,7 +40,6 @@ export const Objects = ({ statisticData }) => {
               title: "Здані",
               value: statisticData?.count_objects_surrendered ?? "0",
             },
-            { title: "Видалені", value: "0" },
           ]}
         />
       </div>
@@ -49,7 +48,7 @@ export const Objects = ({ statisticData }) => {
 };
 
 const StyledObjects = styled.div`
-  padding: 20px;
+  padding: 10px;
   background: #323232;
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   margin-bottom: 10px;

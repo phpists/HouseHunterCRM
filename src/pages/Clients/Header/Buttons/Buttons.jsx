@@ -25,6 +25,8 @@ export const Buttons = ({
   onDelete,
   deleteConfirmTitle,
   onFavorite,
+  searchPhoneCodeSecond,
+  onChangeSearchCodeSecond,
 }) => {
   const { search } = useLocation();
   const [addClient, setAddClient] = useState(false);
@@ -62,6 +64,8 @@ export const Buttons = ({
         searchPhoneCode={searchPhoneCode}
         onChangeSearchCode={onChangeSearchCode}
         onApplyFilters={onApplyFilters}
+        searchPhoneCodeSecond={searchPhoneCodeSecond}
+        onChangeSearchCodeSecond={onChangeSearchCodeSecond}
       />
       <SelectItems
         title="клієнтів"
