@@ -13,10 +13,13 @@ import { useLazyGetStatisticWorkerQuery } from "../../store/structure/structure.
 
 import { useEffect, useState } from "react";
 import { useAppSelect } from "../../hooks/redux";
+import { Loader } from "../../components/Loader";
 
 export const Dashboard = ({ isClientsAccess }) => {
   const { user } = useAppSelect((state) => state.auth);
-  const { data } = useGetClientsCountQuery(null, { skip: !isClientsAccess });
+  const { data, isLoading } = useGetClientsCountQuery(null, {
+    skip: !isClientsAccess,
+  });
   const [getWorkerStatistic, { data: statisticData }] =
     useLazyGetStatisticWorkerQuery();
   const [steps, setSteps] = useState(!localStorage.getItem("modalClosed"));
@@ -34,7 +37,9 @@ export const Dashboard = ({ isClientsAccess }) => {
 
   return (
     <StyledDashboard className="hide-scroll">
-      {data?.count === 0 || !data?.count ? (
+      {isLoading ? (
+        <Loader white className="dashboardLoader" />
+      ) : data?.count === 0 || !data?.count ? (
         <Empty />
       ) : (
         <div className="dashboard-content hide-scroll">
@@ -63,6 +68,10 @@ export const Dashboard = ({ isClientsAccess }) => {
 };
 
 const StyledDashboard = styled.div`
+  .dashboardLoader {
+    height: 40px;
+    margin-top: 40px;
+  }
   .dashboard-content {
     display: grid;
     gap: 20px;

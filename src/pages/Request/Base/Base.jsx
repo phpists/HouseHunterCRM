@@ -7,7 +7,7 @@ export const Base = ({ data, onChangeField }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
   return (
-    <StyledBase className="request-card hide-scroll">
+    <StyledBase className="request-card ">
       <TitleDivider title="X company" />
       <CheckOption
         label={commentsToFields?.request_groups["deleted"] ?? ""}

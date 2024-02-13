@@ -65,8 +65,8 @@ export const Filter = ({
    <Topicality />
    <SectionTitle title="Характеристики" />
    <Characteristics /> */}
-          <Footer onReset={handleResetFilters} onSubmit={handleApplyFilters} />
         </div>
+        <Footer onReset={handleResetFilters} onSubmit={handleApplyFilters} />
       </StyledFilter>
       <div className="modal-overlay" onClick={handleClose}></div>
     </>
@@ -74,26 +74,23 @@ export const Filter = ({
 };
 
 const StyledFilter = styled(motion.div)`
-  position: absolute;
-  top: -18px;
-  right: -20px;
+  position: fixed;
+  top: -0;
+  right: 0;
   bottom: 0;
   width: 439px;
-  height: calc(100svh - 162px);
+  height: 100svh;
   flex-shrink: 0;
   background: rgba(44, 44, 44, 0.8);
   backdrop-filter: blur(12.5px);
   z-index: 20;
   .content {
     padding: 0 20px 20px;
-    height: calc(100svh - 162px - 70px - 20px);
+    height: calc(100svh - 157px);
     overflow: auto;
+    border-radius: 9px;
   }
   @media (max-width: 850px) {
     width: 100svw;
-    height: calc(100svh - 110px);
-    .content {
-      height: calc(100svh - 162px - 20px);
-    }
   }
 `;

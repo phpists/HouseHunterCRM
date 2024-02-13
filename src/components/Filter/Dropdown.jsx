@@ -20,19 +20,23 @@ export const Dropdown = ({ open, filter, onFilterChange }) => {
 
   return (
     <StyledDropdown open={open}>
-      <div className="flex items-center justify-between toggle-wrapper">
+      <div
+        className="flex items-center justify-between toggle-wrapper"
+        onClick={() => onFilterChange("active", !filter?.active)}
+      >
         <span>Вхід дозволено</span>
         <Toggle
           value={filter?.active}
-          onChange={() => onFilterChange("active", !filter?.active)}
           className={filter?.active ? "toggle--active " : "toggle"}
         />
       </div>
-      <div className="flex items-center justify-between toggle-wrapper">
+      <div
+        className="flex items-center justify-between toggle-wrapper"
+        onClick={() => onFilterChange("billing", !filter?.billing)}
+      >
         <span>Доступ оплачено</span>
         <Toggle
           value={filter?.billing}
-          onChange={() => onFilterChange("billing", !filter?.billing)}
           className={filter?.billing ? "toggle--active " : "toggle"}
         />
       </div>

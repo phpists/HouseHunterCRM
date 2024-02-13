@@ -1,23 +1,65 @@
 import { styled } from "styled-components";
-import { ReactComponent as RemoveIcon } from "../../../../assets/images/remove.svg";
 import { ReactComponent as ShowIcon } from "../../../../assets/images/eye-access.svg";
+import { RemoveButton } from "./RemoveButton";
 
 export const Photo = ({ photo, onRemove, onShow, readOnly }) => {
   return (
-    <StyledPhoto photo={photo} className="flex items-center justify-center">
-      {!readOnly ? (
-        <>
-          <div className="btn noClickable">
+    <StyledPhotoWrapper
+      className="relative"
+      onClick={(e) =>
+        e.target.classList.contains("noClickable") ? null : onShow()
+      }
+    >
+      <StyledPhoto
+        photo={photo}
+        className="flex items-center justify-center"
+        onClick={onShow}
+      >
+        {!readOnly ? (
+          <>
+            {/* <div className="btn noClickable">
             <ShowIcon onClick={onShow} className="noClickable" />
-          </div>
-          <div className="btn noClickable">
-            <RemoveIcon onClick={onRemove} className="noClickable" />
-          </div>
-        </>
-      ) : null}
-    </StyledPhoto>
+          </div> */}
+          </>
+        ) : null}
+      </StyledPhoto>
+      <RemoveButton onRemove={onRemove} />
+    </StyledPhotoWrapper>
   );
 };
+
+const StyledPhotoWrapper = styled.div`
+  .btn {
+    transition: all 0.3s;
+    opacity: 0;
+    visibility: hidden;
+  }
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: calc(100% - 3px);
+    height: 100%;
+    background: #2c2c2c;
+    opacity: 0;
+    z-index: 5;
+    transition: all 0.3s;
+    border-radius: 7px;
+  }
+
+  &:hover {
+    .btn {
+      opacity: 1;
+      visibility: visible;
+    }
+    g {
+      opacity: 1;
+    }
+    &::before {
+      opacity: 0.5;
+    }
+  }
+`;
 
 const StyledPhoto = styled.div`
   display: flex;
@@ -32,16 +74,7 @@ const StyledPhoto = styled.div`
   position: relative;
   transition: all 0.3s;
   margin-right: 3px;
-  &::before {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #2c2c2c;
-    opacity: 0;
-    transition: all 0.3s;
-  }
+
   svg {
     z-index: 3;
   }
@@ -49,18 +82,8 @@ const StyledPhoto = styled.div`
     transition: all 0.3s;
     opacity: 0;
   }
-  .btn {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
   &:hover {
     border: 1px solid rgba(255, 255, 255, 0.4);
-    &::before {
-      opacity: 0.5;
-    }
     g {
       opacity: 1;
     }

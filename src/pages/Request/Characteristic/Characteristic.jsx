@@ -65,7 +65,7 @@ export const Characteristic = ({
 
   return (
     <StyledCharacteristic
-      className="request-card hide-scroll request-characteristic-wrapper"
+      className="request-card  request-characteristic-wrapper"
       ref={contentRef}
     >
       <ProfileField

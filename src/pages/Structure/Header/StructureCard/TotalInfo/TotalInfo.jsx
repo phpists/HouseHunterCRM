@@ -20,14 +20,11 @@ export const TotalInfo = ({ open, onToggleOpen, id }) => {
     id && getStatistic({ id_worker: id, period });
   }, [id, period]);
 
-  const handleToggleCard = (e) =>
-    e.target.classList.contains("clickable") && onToggleOpen();
-
   return (
     <StyledTotalInfo
       active={active}
-      onClick={handleToggleCard}
       className="clickable notClickable"
+      open={open}
     >
       <Header
         open={open}
@@ -35,6 +32,7 @@ export const TotalInfo = ({ open, onToggleOpen, id }) => {
         onToggleActive={() => setActive(!active && open)}
         period={period}
         onChangePeriod={(val) => setPeriod(val)}
+        onToggleOpen={onToggleOpen}
       />
       <div className="cards clickable notClickable">
         <Card
@@ -65,6 +63,7 @@ const StyledTotalInfo = styled.div`
   border-radius: 10px;
   background: rgba(50, 50, 50, 0.8);
   height: 224px;
+  ${({ open }) => open && "width: 281px;"}
   .cards {
     display: grid;
     gap: 8px;

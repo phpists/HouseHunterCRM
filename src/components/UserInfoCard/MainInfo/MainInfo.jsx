@@ -22,7 +22,12 @@ export const MainInfo = ({
 }) => {
   return (
     <StyledMainInfo>
-      {avatarBanner && <AvatarBanner />}
+      {avatarBanner && (
+        <AvatarBanner
+          onChange={(val) => onChangeField("id_baner", val)}
+          value={data?.id_baner}
+        />
+      )}
       <Profile
         data={data}
         onChangeField={onChangeField}

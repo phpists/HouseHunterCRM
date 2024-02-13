@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 export const Label = ({ label }) => (
-  <StyledLabel>
+  <StyledLabel className="selectLabel-wrapper">
     <span className="label">{label}</span>
     <span className="label label-hover">Змінити</span>
   </StyledLabel>

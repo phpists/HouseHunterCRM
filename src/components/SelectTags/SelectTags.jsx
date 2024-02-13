@@ -46,6 +46,12 @@ export const SelectTags = ({
       } ${isActive && "active"} ${error && "error-field"}`}
       showTags={showTags}
       error={error}
+      onClick={(e) => {
+        if (!e.target.classList.contains("notClickable")) {
+          setOpen(!open);
+          setIsActive(!open);
+        }
+      }}
     >
       <div>
         {!value && showTags && tags?.length === 0 && (
@@ -53,17 +59,17 @@ export const SelectTags = ({
         )}
         {!value && showTags ? (
           <div className="flex flex-wrap tags select-none">
-            {tags?.slice(0, isActive ? tags.length : 3)?.map((tag, i) => (
+            {tags?.slice(0, isActive ? tags.length : 5)?.map((tag, i) => (
               <Tag
                 key={i}
                 title={tag?.title}
-                isFirst={i === 0}
+                // isFirst={i === 0}
                 viewOnly={viewOnly}
                 onRemove={() => onChange(tag.value, tag.title)}
               />
             ))}
-            {!isActive && tags.length - 3 > 0 && (
-              <TagCount count={tags.length - 3} />
+            {!isActive && tags.length - 5 > 0 && (
+              <TagCount count={tags.length - 5} />
             )}
           </div>
         ) : (
@@ -90,6 +96,7 @@ export const SelectTags = ({
                     ? "Пошук"
                     : options?.find((opt) => opt.value === value)?.title
                 }
+                autoFocus
               />
             )}
             {!value && !notMultiSelect && (
@@ -100,17 +107,7 @@ export const SelectTags = ({
         <div className="label">{label}</div>
       </div>
       {(notMultiSelect && !value && showTags) || viewOnly ? null : (
-        <Arrow
-          active={open}
-          onClick={(e) => {
-            setOpen(!open);
-          }}
-          onBlur={() => {
-            setIsActive(false);
-            setOpen(false);
-          }}
-          innerRef={selectRef}
-        />
+        <Arrow active={open} innerRef={selectRef} />
       )}
       <Dropdown
         open={open}
@@ -122,6 +119,15 @@ export const SelectTags = ({
         search={search}
         tags={tags}
       />
+      {open && (
+        <div
+          className="modal-overlay"
+          onClick={() => {
+            setOpen(false);
+            setIsActive(false);
+          }}
+        ></div>
+      )}
     </StyledSelectTags>
   );
 };
@@ -144,6 +150,8 @@ const StyledSelectTags = styled.button`
     letter-spacing: 0.3px;
     margin-bottom: 1px;
     transition: all 0.3s;
+    z-index: 10;
+    text-align: left;
     &::placeholder {
       color: #fff;
       font-family: Overpass;
@@ -153,6 +161,10 @@ const StyledSelectTags = styled.button`
       line-height: 118%; /* 17.7px */
       letter-spacing: 0.3px;
     }
+  }
+  input {
+    position: relative;
+    z-index: 10;
   }
   .value-tag {
     display: flex;

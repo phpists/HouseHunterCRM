@@ -166,19 +166,39 @@ export const auth = createApi({
         }),
       }),
     }),
-    addBannerProfile: build.query({
-      query: (img) => ({
+    updateBannerId: build.query({
+      query: (id_baner) => ({
         url: "",
         method: "POST",
         headers: headers(),
         body: handleToFormData(
           {
             mod: "profile",
-            action: "addBannerProfile",
+            action: "update_banner_id",
           },
-          { img }
+          { id_baner }
         ),
       }),
+    }),
+    getBanners: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "system_info",
+          action: "get_all_baners",
+        }),
+      }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          true,
+          true
+        );
+      },
     }),
   }),
 });
@@ -194,5 +214,6 @@ export const {
   useLazyDeleteAvatarQuery,
   useGetAccessQuery,
   useGetNotificationsQuery,
-  useLazyAddBannerProfileQuery,
+  useLazyUpdateBannerIdQuery,
+  useGetBannersQuery,
 } = auth;

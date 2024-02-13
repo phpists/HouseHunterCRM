@@ -18,6 +18,7 @@ export const Card = ({
   favorite,
   agent,
   agentPhone,
+  onSend,
 }) => {
   const handleClick = (e) => {
     e.target.classList.contains("card") && onSelect();
@@ -43,6 +44,7 @@ export const Card = ({
         favorite={favorite}
         agent={agent}
         agentPhone={agentPhone}
+        onSend={onSend}
       />
       <MobileContent
         name={name}
@@ -58,6 +60,7 @@ export const Card = ({
         favorite={favorite}
         agent={agent}
         agentPhone={agentPhone}
+        onSend={onSend}
       />
     </StyledCard>
   );

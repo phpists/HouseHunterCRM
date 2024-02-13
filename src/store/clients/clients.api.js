@@ -257,6 +257,39 @@ export const clients = createApi({
         );
       },
     }),
+    getWorkerToMoveClients: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getWorkerToMoveClients",
+          mod: "system_info",
+        }),
+      }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
+    }),
+    moveClients: build.query({
+      query: ({ id_clients, id_user_to }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "move_clients",
+          mod: "clients",
+          id_clients,
+          id_user_to,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -274,4 +307,6 @@ export const {
   useLazyGetClientPhotosQuery,
   useGetClientsCountQuery,
   useLazyAddClientToFavoriteQuery,
+  useGetWorkerToMoveClientsQuery,
+  useLazyMoveClientsQuery,
 } = clients;

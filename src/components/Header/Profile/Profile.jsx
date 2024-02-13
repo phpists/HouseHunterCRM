@@ -123,7 +123,7 @@ export const Profile = () => {
   };
 
   const handleSave = () => {
-    const { first_name, last_name, email, phones, password, photo } =
+    const { first_name, last_name, email, phones, password, photo, id_baner } =
       profileData;
     if (handleCheckAllFields()) {
       setLoading(true);
@@ -131,6 +131,7 @@ export const Profile = () => {
         first_name,
         last_name,
         email,
+        id_baner,
         phones_json: JSON.stringify(
           phones.map((phone) => ({
             ...phone,

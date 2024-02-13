@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import maskBackground from "../../assets/images/auth-shape-mask.svg";
+import maskBackground from "../../assets/images/add-client-bg.svg";
 
 export const Shape = ({ ishover, onChangeishover, type }) => (
   <StyledShape
@@ -34,15 +34,17 @@ const StyledShape = styled.div`
   }
   .shape-1 {
     position: absolute;
-    top: -25svw;
+    top: -18svw;
     right: ${({ type }) => (type === "login" ? 5 : -9)}svw;
     width: 37svw;
+    opacity: 0.5;
   }
   .shape-2 {
     position: absolute;
-    bottom: ${({ type }) => (type === "login" ? -5 : -5)}svw;
+    bottom: ${({ type }) => (type === "login" ? 10 : 10)}svw;
     left: ${({ type }) => (type === "login" ? -6 : 2)}svw;
     width: 37svw;
+    opacity: 0.5;
   }
   @media (max-width: 1000px) {
     width: 80svw;

@@ -4,13 +4,20 @@ import { Divider } from "./Divider";
 import { Phones } from "../../../../../components/Phones/Phones";
 import { Email } from "./Email";
 import bg from "../../../../../assets/images/profile-bg.png";
-import { useGetPhonesCodesQuery } from "../../../../../store/auth/auth.api";
+import {
+  useGetBannersQuery,
+  useGetPhonesCodesQuery,
+} from "../../../../../store/auth/auth.api";
 
 export const ProfilleInfo = ({ onOpenInfo, data }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
+  const { data: bannersData } = useGetBannersQuery();
 
   return (
-    <StyledProfilleInfo bg={bg} className="notClickable">
+    <StyledProfilleInfo
+      bg={bannersData?.data[data?.id_baner]?.url ?? bannersData?.data[1]?.url}
+      className="notClickable"
+    >
       <Header onOpenInfo={onOpenInfo} data={data} />
       <Divider />
       <Phones

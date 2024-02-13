@@ -4,7 +4,7 @@ import { ReactComponent as CloseIcon } from "../../assets/images/close.svg";
 
 export const Tag = ({ title, isFirst, type, isHide, onRemove, viewOnly }) => (
   <StyledTag
-    className="flex items-center justify-between"
+    className="flex items-center justify-between notClickable"
     isFirst={isFirst}
     type={type}
     animate={{
@@ -14,9 +14,14 @@ export const Tag = ({ title, isFirst, type, isHide, onRemove, viewOnly }) => (
       marginRight: isFirst ? 0 : isHide ? 0 : "4px",
     }}
   >
-    <span>{title?.length > 40 ? `${title.substring(0, 40)}...` : title}</span>
-    <button className="flex items-center justify-center" onClick={onRemove}>
-      {viewOnly ? null : <CloseIcon />}
+    <span className="notClickable">
+      {title?.length > 40 ? `${title.substring(0, 40)}...` : title}
+    </span>
+    <button
+      className="flex items-center justify-center notClickable"
+      onClick={onRemove}
+    >
+      {viewOnly ? null : <CloseIcon className="notClickable" />}
     </button>
   </StyledTag>
 );

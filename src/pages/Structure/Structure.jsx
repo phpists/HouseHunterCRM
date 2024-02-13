@@ -39,6 +39,9 @@ export const Structure = () => {
 
   useEffect(() => {
     showNotStructureWorkers && getNotStructureWorkers();
+    if (showNotStructureWorkers) {
+      navigate(`/structure?level=notStructure`);
+    }
   }, [showNotStructureWorkers]);
 
   const handleNextLevel = (children, id) => {
@@ -114,6 +117,7 @@ export const Structure = () => {
   useEffect(() => {
     if (search?.length === 0) {
       setLevel(1);
+      setShowNotStructureWorkers(false);
     }
   }, [search]);
 

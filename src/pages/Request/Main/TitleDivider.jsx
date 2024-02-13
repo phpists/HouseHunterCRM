@@ -22,7 +22,7 @@ const StyledTitleDivider = styled.div`
     background: #323232;
     flex-shrink: 0;
     padding: 3px 20px 0;
-    color: rgba(255, 255, 255, 0.4);
+    color: #50f835;
     text-align: center;
     font-family: Overpass;
     font-size: 11px;

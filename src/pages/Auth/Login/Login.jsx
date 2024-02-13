@@ -26,18 +26,24 @@ export const Login = ({ onForgotPassword, onSuccess, onRegister }) => {
   };
 
   const handleSubmit = () => {
-    // logout();
-    login({
-      email,
-      password,
-      mod: "account",
-      action: "login",
-    }).then((resp) => {
-      handleResponse(resp, () => {
-        localStorage.setItem("token", resp?.data.token);
-        onSuccess();
+    if (email?.length === 0 || errors?.email || password?.length === 0) {
+      setErrors({
+        email: emailValidation(email) || email?.length === 0,
+        password: password?.length === 0,
       });
-    });
+    } else {
+      login({
+        email,
+        password,
+        mod: "account",
+        action: "login",
+      }).then((resp) => {
+        handleResponse(resp, () => {
+          localStorage.setItem("token", resp?.data.token);
+          onSuccess();
+        });
+      });
+    }
   };
 
   return (
@@ -63,17 +69,14 @@ export const Login = ({ onForgotPassword, onSuccess, onRegister }) => {
         className="input password-input"
         password
         value={password}
-        onChange={(val) => setPassword(val)}
+        onChange={(val) => {
+          setPassword(val);
+          setErrors({ ...errors, password: false });
+        }}
+        error={errors?.password}
       />
       {/* <InfoText onClick={onForgotPassword} /> */}
-      <Button
-        title="Увійти"
-        icon={arrowIcon}
-        onClick={handleSubmit}
-        disabled={
-          email?.length === 0 || errors?.email || password?.length === 0
-        }
-      />
+      <Button title="Увійти" icon={arrowIcon} onClick={handleSubmit} />
       <InfoText
         text="Зареєструватись"
         onClick={onRegister}

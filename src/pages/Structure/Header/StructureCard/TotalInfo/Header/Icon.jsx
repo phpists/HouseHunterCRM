@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import { ReactComponent as StatiscticIcon } from "../../../../../../assets/images/statistic.svg";
 
-export const Icon = () => (
-  <StyledIcon className="flex items-center justify-center clickable notClickable">
+export const Icon = ({ open, onToggleOpen }) => (
+  <StyledIcon
+    className="flex items-center justify-center clickable notClickable"
+    open={open}
+    onClick={onToggleOpen}
+  >
     <StatiscticIcon className="clickable notClickable" />
   </StyledIcon>
 );
@@ -14,6 +18,7 @@ const StyledIcon = styled.button`
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.1);
   transition: all 0.3s;
+  ${({ open }) => open && "margin-left: 17px;"}
   &:hover {
     background: rgba(255, 255, 255, 0.3);
     path {

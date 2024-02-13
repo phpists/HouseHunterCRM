@@ -8,7 +8,7 @@ export const Text = ({ period }) => (
 );
 
 const StyledText = styled.div`
-  margin: 0 37px 0 17px;
+  margin: 0 37px 0 0px;
   .title {
     color: #fff;
     font-family: Overpass;

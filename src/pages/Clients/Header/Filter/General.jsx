@@ -6,6 +6,7 @@ import { Ranger } from "./Ranger/Ranger";
 import { ProfileField } from "../../../../components/ProfileField";
 import { useGetPhonesCodesQuery } from "../../../../store/auth/auth.api";
 import { ToggleOption } from "./ToggleOption";
+import { Field } from "../../../../components/Field";
 
 export const General = ({
   filter,
@@ -46,24 +47,22 @@ export const General = ({
         }
       />
       <Divider />
-      <div className="flex items-center">
-        <ProfileField
+      <div className="dates-wrapper">
+        <Field
           label="Дата реєстрації від"
           type="date"
           value={filter?.filters?.dt_reg_from}
           onChange={(val) =>
             onChangeFilter("filters", { ...filter.filters, dt_reg_from: val })
           }
-          onlyCalendar
         />
-        <ProfileField
+        <Field
           label="Дата реєстрації до"
           type="date"
           value={filter?.filters?.dt_reg_to}
           onChange={(val) =>
             onChangeFilter("filters", { ...filter.filters, dt_reg_to: val })
           }
-          onlyCalendar
         />
       </div>
       <Divider />
@@ -173,4 +172,8 @@ const StyledGeneral = styled.div`
   background: rgba(255, 255, 255, 0.1);
   padding: 6px;
   margin-bottom: 25px;
+  .dates-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 `;

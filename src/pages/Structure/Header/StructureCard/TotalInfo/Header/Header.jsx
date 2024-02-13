@@ -10,32 +10,35 @@ export const Header = ({
   onToggleActive,
   period,
   onChangePeriod,
+  onToggleOpen,
 }) => {
   return (
     <StyledHeader
       className="flex items-center justify-between clickable notClickable"
       open={open}
-      onClick={onToggleActive}
       active={active}
     >
-      <Icon />
       {open && (
-        <>
+        <div className="flex items-center" onClick={onToggleActive}>
+          <CalendarIcon className="notClickable calendarIcon" />
           <Text period={period} />
-          <CalendarIcon className="notClickable" />
-        </>
+        </div>
       )}
+      <Icon open={open} onToggleOpen={onToggleOpen} />
       {active && <Dropdown period={period} onChangePeriod={onChangePeriod} />}
     </StyledHeader>
   );
 };
 
 const StyledHeader = styled.div`
-  padding: ${({ open }) => (open ? "4px 16px 4px 4px" : "4px")};
+  padding: ${({ open }) => (open ? "4px 10px 4px" : "4px")};
   border-radius: 6px;
   background: #3d3d3d;
   margin-bottom: 8px;
   position: relative;
+  .calendarIcon {
+    margin-right: 8px;
+  }
   svg {
     cursor: pointer;
     g {

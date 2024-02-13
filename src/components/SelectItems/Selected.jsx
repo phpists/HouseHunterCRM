@@ -9,10 +9,12 @@ export const Selected = ({
   onSelectAll,
 }) => (
   <StyledSelected className="flex items-center">
-    <div onClick={() => onChnage(1)} className={`${value === 1 && "active"}`}>
-      {selectedCount > 0 ? selectedCount : 10}
-      {title}
-    </div>
+    {selectedCount > 0 && selectedCount < allCount ? (
+      <div onClick={() => onChnage(1)} className={`${value === 1 && "active"}`}>
+        {selectedCount > 0 ? selectedCount : 10}
+        {title}
+      </div>
+    ) : null}
     <div onClick={() => onChnage(2)} className={`${value === 2 && "active"}`}>
       усі {allCount}
     </div>

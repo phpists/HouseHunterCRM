@@ -28,11 +28,21 @@ export const handleToFormData = (data, files) => {
 
   Object.entries(data).forEach((field) => {
     if (Array.isArray(field[1])) {
+      console.log("here1");
       field[1].forEach((f, i) => {
         if (typeof f === "object") {
           Object.entries(f).forEach((fField) => {
-            fField[1] &&
-              formData.append(`${field[0]}[${i}][${fField[0]}]`, fField[1]);
+            if (Array.isArray(fField[1])) {
+              fField[1].forEach((fValue, valueIndex) => {
+                formData.append(
+                  `${field[0]}[${i}][${fField[0]}][${valueIndex}]`,
+                  fValue
+                );
+              });
+            } else {
+              fField[1] &&
+                formData.append(`${field[0]}[${i}][${fField[0]}]`, fField[1]);
+            }
           });
         } else {
           (f || f?.length > 0) && formData.append(`${field[0]}[${i}]`, f);
@@ -392,4 +402,13 @@ export const handleCopy = (text) => {
     hideAfter: 3,
     position: "top-right",
   });
+};
+
+export const checkIsJSON = (data) => {
+  try {
+    const formatedData = JSON.parse(data);
+    return formatedData;
+  } catch {
+    return [];
+  }
 };

@@ -32,6 +32,7 @@ export const Header = ({
   selected,
   onDelete,
   onFavorite,
+  onSendClients,
 }) => {
   const [getNewClientsCount] = useLazyGetNewClientsCountQuery();
   const { saveNewClientsCount } = useActions();
@@ -90,6 +91,7 @@ export const Header = ({
             selected?.length > 1 ? "ів" : "а"
           }`}
           onFavorite={onFavorite}
+          onSendClients={onSendClients}
         />
       </div>
       <SelectItems
@@ -107,6 +109,7 @@ export const Header = ({
             ? handleDeleteClients
             : null
         }
+        onSend={onSendClients}
       />
     </StyledHeader>
   );

@@ -65,13 +65,13 @@ export const UserInfoCard = ({
 
   return (
     <>
-      {" "}
       <StyledUserInfoCard
         initial={{ opacity: 0, translateX: "100%" }}
         transition={{ duration: 0.4 }}
         animate={controls}
         className="hide-scroll user-info-profile-card"
         ref={contentRef}
+        logout={logout}
       >
         <Header onClose={handleClose} title={title} />
         <div className="modal-content">
@@ -99,6 +99,8 @@ export const UserInfoCard = ({
             noResetValueOnCodeChange={noResetValueOnCodeChange}
           />
           {showPayHistory && <PersonalBills workerId={workerId} />}
+        </div>
+        <div className="footer-card">
           {!isEdit ? null : isDelete ? (
             <FooterDelete
               noDelete={noDelete}
@@ -118,7 +120,7 @@ export const UserInfoCard = ({
 };
 
 const StyledUserInfoCard = styled(motion.div)`
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 0;
   height: 100%;
@@ -130,6 +132,12 @@ const StyledUserInfoCard = styled(motion.div)`
   z-index: 1088;
   .modal-content {
     padding: 0 10px 15px 11px;
+    height: calc(100svh - ${({ logout }) => (logout ? 200 : 160)}px);
+    overflow: auto;
+    border-radius: 9px;
+  }
+  .footer-card {
+    margin: 20px;
   }
   @media (max-width: 600px) {
     width: 100%;

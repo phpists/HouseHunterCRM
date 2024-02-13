@@ -29,4 +29,5 @@ const StyledDropdown = styled.div`
   top: 100%;
   width: 100%;
   z-index: 10;
+  left: 0;
 `;

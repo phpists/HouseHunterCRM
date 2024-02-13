@@ -27,6 +27,7 @@ export const Buttons = ({
   onFavorite,
   searchPhoneCodeSecond,
   onChangeSearchCodeSecond,
+  onSendClients,
 }) => {
   const { search } = useLocation();
   const [addClient, setAddClient] = useState(false);
@@ -76,6 +77,7 @@ export const Buttons = ({
         onToggleFavorite={onFavorite}
         onDelete={onDelete}
         deleteConfirmTitle={deleteConfirmTitle}
+        onSend={onSendClients}
       />
     </StyledButtons>
   );

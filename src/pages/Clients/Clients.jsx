@@ -10,8 +10,9 @@ import {
 } from "../../store/clients/clients.api";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
-import { handleResponse } from "../../utilits";
+import { handleFromInputDate, handleResponse } from "../../utilits";
 import cogoToast from "cogo-toast";
+import { SendModal } from "./SendModal";
 
 export const Clients = () => {
   const [favoritesFilter, setFavoritesFilter] = useState(false);
@@ -37,9 +38,20 @@ export const Clients = () => {
   const allCountRef = useRef(0);
   const [addClientToFavorite] = useLazyAddClientToFavoriteQuery();
   const firstThousand = useRef([]);
+  const [sendClients, setSendClients] = useState([]);
 
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
+
+  const handleFormatFilterDate = (d, isFrom) => {
+    const date = new Date(handleFromInputDate(d));
+
+    date.setHours(isFrom ? 0 : 23);
+    date.setMinutes(isFrom ? 0 : 59);
+    date.setSeconds(isFrom ? 0 : 59);
+
+    return date?.getTime() / 1000;
+  };
 
   const handleGetClients = (isReset) => {
     if ((!isLoading.current && !isAllPages) || isReset) {
@@ -76,10 +88,10 @@ export const Clients = () => {
               filters: {
                 ...filter.filters,
                 dt_reg_from: filter?.filters?.dt_reg_from
-                  ? new Date(filter?.filters?.dt_reg_from)?.getTime() / 1000
+                  ? handleFormatFilterDate(filter?.filters?.dt_reg_from, true)
                   : undefined,
                 dt_reg_to: filter?.filters?.dt_reg_to
-                  ? new Date(filter?.filters?.dt_reg_to)?.getTime() / 1000
+                  ? handleFormatFilterDate(filter?.filters?.dt_reg_to)
                   : undefined,
                 findPhone:
                   filter?.filters?.findPhone?.length > 0
@@ -180,6 +192,11 @@ export const Clients = () => {
   };
 
   const handleDeleteClients = () => {
+    firstThousand.current = firstThousand.current.filter(
+      (c) => !selected.find((sc) => sc === c)
+    );
+    saveClientsCount(allCount - selected?.length);
+    setAllCount(allCount - selected?.length);
     setClients(clients.filter((c) => !selected.find((sc) => sc === c.id)));
     setSelected([]);
   };
@@ -192,6 +209,11 @@ export const Clients = () => {
           position: "top-right",
         });
         setClients(clients.filter((c) => c.id !== clientId));
+        firstThousand.current = firstThousand.current.filter(
+          (c) => c !== clientId
+        );
+        saveClientsCount(allCount - 1);
+        setAllCount(allCount - 1);
       });
     });
   };
@@ -242,8 +264,24 @@ export const Clients = () => {
     });
   };
 
+  const handleSendClient = (id) => {
+    setSendClients([id]);
+  };
+
+  const handleSuccessSend = () => {
+    setSendClients([]);
+    setSelected([]);
+  };
+
   return (
     <StyledClients>
+      {sendClients?.length > 0 ? (
+        <SendModal
+          onSendSuccess={handleSuccessSend}
+          onClose={() => setSendClients([])}
+          clients={sendClients}
+        />
+      ) : null}
       <Header
         favoritesFilter={favoritesFilter}
         onToggleFavoriteFilter={() => setFavoritesFilter(!favoritesFilter)}
@@ -261,6 +299,7 @@ export const Clients = () => {
         selected={selected}
         onDelete={handleDeleteClients}
         onFavorite={handleAddClientsToFavorite}
+        onSendClients={() => setSendClients(selected)}
       />
       <List
         selected={selected}
@@ -270,6 +309,7 @@ export const Clients = () => {
         onDelete={handleDeleteClient}
         loading={loading}
         onAddToFavorite={handleAddClientToFavorite}
+        onSend={handleSendClient}
       />
     </StyledClients>
   );

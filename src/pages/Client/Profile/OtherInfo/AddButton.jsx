@@ -27,6 +27,7 @@ const StyledAddButton = styled.div`
   transition: all 0.3s;
   cursor: pointer;
   position: relative;
+  margin-right: 3px;
   svg {
     height: 20px;
     width: 20px;

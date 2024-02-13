@@ -3,12 +3,13 @@ import { InfoCard } from "./InfoCard/InfoCard";
 import { TagsFilter } from "../../../../../components/TagsFilter/TagsFilter";
 
 export const Date = ({ category, location, date }) => {
+  console.log(location);
   return (
     <StyledDate className="hide-scroll clickable">
       <InfoCard category={category} date={date} />
       <TagsFilter
         label="Локація"
-        initTags={[location]}
+        tags={location}
         className="tags-wrapper"
         noEdit
       />

@@ -14,7 +14,7 @@ export const Card = ({ IconImg, title, subtitle }) => (
 );
 
 const StyledCard = styled.div`
-  padding: 10px;
+  padding: 5px;
   border-radius: 9px;
   background: rgba(255, 255, 255, 0.05);
 `;

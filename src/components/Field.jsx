@@ -172,7 +172,8 @@ const StyleField = styled.div`
   }
   input,
   textarea {
-    z-index: 10;
+    position: relative;
+    z-index: 100;
   }
   .label {
     color: #fff;
@@ -192,6 +193,7 @@ const StyleField = styled.div`
     height: 32px;
     cursor: pointer;
     margin-left: 10px;
+    z-index: 10;
     flex-shrink: 0;
     ${({ edit }) => !edit && " opacity: 0; transform: translateX(-10px);"}
     &:hover {

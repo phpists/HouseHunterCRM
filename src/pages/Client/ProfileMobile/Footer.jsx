@@ -20,6 +20,7 @@ export const Footer = ({ onSave, onReset, loading }) => (
 );
 
 const StyledFooter = styled.div`
+  margin: 20px;
   .btn {
     font-family: Overpass;
     font-size: 15px;

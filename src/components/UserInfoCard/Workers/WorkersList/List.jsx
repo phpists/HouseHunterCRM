@@ -10,7 +10,7 @@ const data = [team1, team2];
 export const List = () => (
   <StyledList className="flex items-center">
     {data.map((photo, i) => (
-      <Avatar key={i} photo={photo} zIndex={data.length - i} />
+      <Avatar key={i} photo={photo} zIndex={data?.length - i} />
     ))}
   </StyledList>
 );

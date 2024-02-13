@@ -37,14 +37,14 @@ export const Filter = ({ onClose, filters, onChangeFilter, onApplyFilter }) => {
         <Period filters={filters} onChangeFilter={onChangeFilter} />
         <SectionTitle title="Пошук по " />
         <Search filters={filters} onChangeFilter={onChangeFilter} />
-        <Footer onApplyFilter={onApplyFilter} />
       </div>
+      <Footer onApplyFilter={onApplyFilter} />
     </StyledFilter>
   );
 };
 
 const StyledFilter = styled(motion.div)`
-  position: absolute;
+  position: fixed;
   top: 0px;
   right: 0px;
   width: 361px;
@@ -56,8 +56,9 @@ const StyledFilter = styled(motion.div)`
   z-index: 25;
   .content {
     padding: 0 20px 20px;
-    height: calc(100svh - 162px - 70px - 20px);
+    height: calc(100svh - 157px);
     overflow: auto;
+    border-radius: 9px;
   }
   .section {
     border-radius: 9px;

@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { handleResponse } from "../../../../utilits";
 import { PhotoSlider } from "react-photo-view";
 import { useState } from "react";
+import { Confirm } from "../../../../components/Confirm/Confirm";
 
 export const OtherInfo = ({
   photos,
@@ -17,6 +18,8 @@ export const OtherInfo = ({
   const [deletePhoto] = useLazyDeleteClientPhotoQuery();
   const [openView, setOpenView] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [removeConfirm, setRemoveConfirm] = useState(null);
+  const [onConfirmRemove, setOnRemoveConfirm] = useState(null);
 
   const handleAddPhoto = (files) => {
     const formatedFiles = [];
@@ -45,6 +48,13 @@ export const OtherInfo = ({
 
   return (
     <StyledOtherInfo className="flex items-center">
+      {removeConfirm && (
+        <Confirm
+          title={"Видалити фото?"}
+          onClose={() => setRemoveConfirm(false)}
+          onSubmit={() => (onConfirmRemove ? onConfirmRemove() : null)}
+        />
+      )}
       <PhotoSlider
         images={photos.map((photo) => ({
           src: photo?.name,
@@ -55,22 +65,25 @@ export const OtherInfo = ({
         index={currentSlide}
         onIndexChange={(index) => setCurrentSlide(index)}
       />
+      {!readOnly && <AddButton onAdd={handleAddPhoto} />}
       {photos?.length > 0
         ? photos?.map((photo, i) => (
             <Photo
               key={i}
               photo={photo?.name}
-              onRemove={() =>
-                photo?.file
-                  ? onChange(photos.filter((p, j) => j !== i))
-                  : handleDeletePhoto(photo?.id?.toString(), i)
-              }
+              onRemove={() => {
+                setRemoveConfirm(true);
+                setOnRemoveConfirm(() =>
+                  photo?.file
+                    ? () => onChange(photos.filter((p, j) => j !== i))
+                    : () => handleDeletePhoto(photo?.id?.toString(), i)
+                );
+              }}
               onShow={() => handleOpenSlider(i)}
               readOnly={readOnly}
             />
           ))
         : null}
-      {!readOnly && <AddButton onAdd={handleAddPhoto} />}
     </StyledOtherInfo>
   );
 };

@@ -2,16 +2,18 @@ import { styled } from "styled-components";
 import { Avatar } from "./Avatar";
 import empty from "../../../../../../assets/images/small-avatar-green.svg";
 import { handleGetRoleAvatar } from "../../../../../../utilits";
+import { MoreButton } from "./MoreButton";
 
 export const List = ({ photos, level }) => (
-  <StyledList className="flex items-center">
-    {photos.map((photo, i) => (
+  <StyledList className="flex items-center" count={photos.length}>
+    {photos.slice(0, 5).map((photo, i) => (
       <Avatar
         key={i}
         photo={photo?.length > 0 ? photo : handleGetRoleAvatar(level)}
-        zIndex={photos.length - i}
+        zIndex={i - photos.length * -1}
       />
     ))}
+    {photos?.length > 5 ? <MoreButton count={photos.slice(5)?.length} /> : null}
   </StyledList>
 );
 
@@ -20,8 +22,10 @@ const StyledList = styled.div`
   background: #333;
   padding: 4px;
   width: 98px;
+  overflow: hidden;
+  flex-shrink: 0;
   div:not(:first-child) {
-    margin-left: -10px;
+    margin-left: -22.6px;
   }
   @media (max-width: 850px) {
     width: 100%;

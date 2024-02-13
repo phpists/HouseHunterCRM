@@ -3,6 +3,7 @@ import { Comment } from "./Comment";
 import { Content } from "./Content";
 import { Search } from "./Search/Search";
 import { Name } from "./Name";
+import { useGetRubricsQuery } from "../../../store/requests/requests.api";
 
 export const Main = ({
   data,
@@ -14,6 +15,7 @@ export const Main = ({
   onChangeErrors,
 }) => {
   const contentRef = useRef(null);
+  const { data: rubricsList } = useGetRubricsQuery();
 
   useEffect(() => {
     if (!!errors?.find((e) => e.id === "updated")) {
@@ -39,11 +41,26 @@ export const Main = ({
     );
   };
 
+  const handleChangeValue = (rubricId, fieldName, value) => {
+    onChangeField(
+      "fields",
+      data?.fields.map((f) =>
+        f.id_rubric === rubricId ? { ...f, [fieldName]: value } : f
+      )
+    );
+    onChangeErrors(
+      errors
+        .map((e) =>
+          e.id_rubric === rubricId
+            ? { ...e, errors: e.errors.filter((f) => f !== fieldName) }
+            : e
+        )
+        .filter((e) => e.id !== "updated")
+    );
+  };
+
   return (
-    <div
-      className="request-card hide-scroll request-main-wrapper"
-      ref={contentRef}
-    >
+    <div className="request-card  request-main-wrapper" ref={contentRef}>
       <Comment
         value={data?.general_group?.comment}
         onChange={handleChangeComment}
@@ -53,12 +70,12 @@ export const Main = ({
             ?.errors?.find((e) => e === "comment")
         }
       />
-      <Name
+      {/* <Name
         value={data?.general_group?.name}
         onChange={(name) =>
           onChangeField("general_group", { ...data?.general_group, name })
         }
-      />
+      /> */}
       <Content
         data={data}
         onChangeField={onChangeField}
@@ -68,7 +85,6 @@ export const Main = ({
         errors={errors}
         onChangeErrors={onChangeErrors}
       />
-      {/* <Search /> */}
     </div>
   );
 };

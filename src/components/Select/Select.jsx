@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { Value } from "./Value";
 import { Label } from "./Label";
@@ -17,7 +17,9 @@ export const Select = ({
   options,
   error,
   placeholder,
+  isSearch,
 }) => {
+  const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
 
   const handleChange = (val) => {
@@ -25,38 +27,65 @@ export const Select = ({
     setOpen(false);
   };
 
+  useEffect(() => {
+    !open && setSearch("");
+  }, [open]);
+
   return (
     <StyledSelect
       hideArrowDefault={hideArrowDefault}
       className={`${className} ${error && "error-field"} ${open && "active"}`}
       error={error}
+      onClick={(e) => {
+        !open && setOpen(!open);
+      }}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           {Icon && <SelectIcon Icon={Icon} />}
           <div>
-            <Value
-              value={options?.find((opt) => opt.value === value)?.title}
-              placeholder={placeholder}
-            />
-            <Label label={open ? labelActive : label} />
+            {open && isSearch ? (
+              <input
+                type="text"
+                placeholder="Пошук"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                autoFocus
+              />
+            ) : (
+              <Value
+                value={options?.find((opt) => opt.value === value)?.title}
+                placeholder={placeholder}
+              />
+            )}
+            {open ? null : <Label label={open ? labelActive : label} />}
           </div>
         </div>
         <button
           onClick={(e) => {
             setOpen(!open);
           }}
-          onBlur={() => setOpen(false)}
         >
           <Arrow className="arrow" />
         </button>
       </div>
-      <Dropdown open={open} onChange={handleChange} options={options} />
+      <Dropdown
+        open={open}
+        onChange={handleChange}
+        options={options?.filter(({ title }) =>
+          isSearch && search?.length > 0
+            ? title?.toLowerCase().includes(search.toLowerCase())
+            : true
+        )}
+      />
+      {open && (
+        <div className="modal-overlay" onClick={() => setOpen(false)}></div>
+      )}
     </StyledSelect>
   );
 };
 
-const StyledSelect = styled.div`
+const StyledSelect = styled.button`
   padding: 8px 22px 9px 11px;
   border-radius: 6px;
   transition: all 0.3s;
@@ -72,6 +101,11 @@ const StyledSelect = styled.div`
   }
   .arrow path {
     fill: #fff;
+  }
+
+  input {
+    position: relative;
+    z-index: 10;
   }
   &:hover {
     background: rgba(255, 255, 255, 0.1);
@@ -91,6 +125,7 @@ const StyledSelect = styled.div`
       opacity: 1;
       transform: translateX(0px);
     }
+    
   `}
   }
   svg {

@@ -9,6 +9,7 @@ export const Footer = ({ onCancel, onSubmit }) => (
 );
 
 const StyledFooter = styled.div`
+  margin: 20px;
   .btn {
     font-family: Overpass;
     font-size: 15px;

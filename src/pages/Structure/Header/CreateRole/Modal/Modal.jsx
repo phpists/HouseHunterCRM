@@ -80,7 +80,7 @@ export const Modal = ({ onClose, onRefetchStructureData }) => {
 };
 
 const StyledModal = styled(motion.div)`
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 0;
   height: 100%;
@@ -92,6 +92,9 @@ const StyledModal = styled(motion.div)`
   z-index: 10;
   .modal-content {
     padding: 0 45px 20px 20px;
+    height: calc(100svh - 82px);
+    overflow: auto;
+    border-radius: 9px;
   }
   @media (max-width: 600px) {
     width: 100%;

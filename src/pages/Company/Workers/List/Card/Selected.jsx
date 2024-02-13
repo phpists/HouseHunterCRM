@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 
-export const Selected = ({ payCount }) => (
+export const Selected = ({ payCount, tarifPrice }) => (
   <StyledSelected>
     <div className="title">+{payCount} місяць</div>
-    <div className="subtitle">1 000₴</div>
+    <div className="subtitle">{tarifPrice * payCount}₴</div>
   </StyledSelected>
 );
 

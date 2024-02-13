@@ -21,6 +21,7 @@ export const Card = ({
   onOpenTarif,
   id,
   isCurrentUser,
+  tarifPrice,
 }) => {
   const handleClick = (e) => {
     if (!e.target.classList.contains("notClickable")) {
@@ -44,7 +45,7 @@ export const Card = ({
         <Arrow className="more-arrow-mobile" />
       </div>
       {tarifSelected && isSelected ? (
-        <Selected payCount={payCount} />
+        <Selected payCount={payCount} tarifPrice={tarifPrice} />
       ) : tarifSelected ? (
         <div />
       ) : (

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Progress } from "./Progress";
 import logo from "../../assets/images/full-logo.svg";
-import bg from "../../assets/images/loading-bg.svg";
+import bg from "../../assets/images/loading.svg";
 
 export const Loading = ({ load }) => (
   <StyledLoading className="flex flex-col justify-center items-center" bg={bg}>

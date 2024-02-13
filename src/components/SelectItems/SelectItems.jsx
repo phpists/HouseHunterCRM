@@ -18,6 +18,7 @@ export const SelectItems = ({
   onSelectAll,
   noFavorite,
   onHide,
+  onSend,
 }) => {
   const [type, setType] = useState(null);
   const [open, setOpen] = useState(false);
@@ -38,6 +39,8 @@ export const SelectItems = ({
       setDeleteModal(true);
     } else if (opt === "favorite") {
       onToggleFavorite();
+    } else if ("send") {
+      onSend();
     } else if ("hide") {
       onHide();
     }
@@ -68,7 +71,7 @@ export const SelectItems = ({
         <StyledSelectItems
           className={`flex items-center ${className}`}
           open={open}
-          onFocus={() => setOpen(true)}
+          onClick={() => selectedCount > 0 && setOpen(!open)}
           onBlur={() => setOpen(false)}
         >
           <Title />
@@ -92,6 +95,7 @@ export const SelectItems = ({
                   noFavorite={noFavorite}
                   onDelete={onDelete}
                   onHide={onHide}
+                  onSend={onSend}
                 />
               )}
             </>

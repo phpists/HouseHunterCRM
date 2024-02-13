@@ -15,7 +15,13 @@ import {
 import { useEffect, useRef, useState } from "react";
 import cogoToast from "cogo-toast";
 import { useNavigate, useParams } from "react-router-dom";
-import { handleCheckFields, handleResponse } from "../../utilits";
+import {
+  checkIsJSON,
+  handleCheckFields,
+  handleFormatDate,
+  handleResponse,
+  handleToFormData,
+} from "../../utilits";
 import { useGetCommentsToFieldsQuery } from "../../store/objects/objects.api";
 
 export const REQUEST_INIT = {
@@ -38,6 +44,7 @@ export const REQUEST_INIT = {
     tags_foreigners: "0",
     structure: "0",
     comment: "",
+    name: "test",
   },
 };
 
@@ -173,6 +180,7 @@ export const Request = () => {
 
     data.fields.forEach((data) => {
       const fieldFields = fieldData.find((f) => f.id === data.id_rubric);
+
       const emptyFields = handleCheckFields({
         title: fieldFields?.title,
         data,
@@ -323,7 +331,15 @@ export const Request = () => {
             },
             fields: Object.entries(resp?.data[id])
               .filter((f) => f[0] !== "General_field_group")
-              .map((f) => f[1]),
+              .map((f) => ({
+                ...f[1],
+                id_location: checkIsJSON(f[1]?.id_location),
+                search_key_like_json: checkIsJSON(f[1]?.search_key_like_json),
+                search_key_like2_json: checkIsJSON(f[1]?.search_key_like2_json),
+                search_key_notlike_json: checkIsJSON(
+                  f[1]?.search_key_notlike_json
+                ),
+              })),
           });
         });
       });
@@ -354,7 +370,7 @@ export const Request = () => {
         onChangeField={handleChangeField}
         loading={loading}
       />
-      <div className="request-content hide-scroll" ref={contentRef}>
+      <div className="request-content" ref={contentRef}>
         <div>
           <CardTitle title="Головне" />
           <Main
@@ -402,6 +418,15 @@ const StyledRequest = styled.div`
     height: calc(100svh - 302px);
     overflow: auto;
     border-radius: 14px;
+    &::-webkit-scrollbar-thumb {
+      background: transparent;
+      transition: all 0.3s;
+    }
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        background: #fff;
+      }
+    }
   }
   @media (max-width: 1250px) {
     .request-content {

@@ -161,12 +161,12 @@ export const Modal = ({ onClose, onCreatedUser }) => {
             onChangeField={handleChangeField}
             errors={errors}
           />
-          <Footer
-            onSave={() => (loading ? null : handleCreate())}
-            onCancel={handleReset}
-            loading={loading}
-          />
         </div>
+        <Footer
+          onSave={() => (loading ? null : handleCreate())}
+          onCancel={handleReset}
+          loading={loading}
+        />
       </StyledModal>
       <div className="modal-overlay" onClick={handleClose}></div>
     </>
@@ -174,7 +174,7 @@ export const Modal = ({ onClose, onCreatedUser }) => {
 };
 
 const StyledModal = styled(motion.div)`
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 0;
   height: 100%;
@@ -186,5 +186,8 @@ const StyledModal = styled(motion.div)`
   z-index: 10;
   .modal-content {
     padding: 0 10px 15px 11px;
+    height: calc(100svh - 157px);
+    overflow: auto;
+    border-radius: 9px;
   }
 `;

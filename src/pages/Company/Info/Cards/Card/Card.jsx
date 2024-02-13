@@ -33,10 +33,11 @@ export const Card = ({
         <div className="title">
           {edit ? (
             <input
-              type="text"
+              type="number"
               defaultValue={title}
               onBlur={handleSave}
               autoFocus
+              onKeyDown={(e) => e?.keyCode === 13 && handleSave(e)}
             />
           ) : title?.length > 0 ? (
             title

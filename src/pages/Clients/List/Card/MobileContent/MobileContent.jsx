@@ -20,6 +20,7 @@ export const MobileContent = ({
   favorite,
   agent,
   agentPhone,
+  onSend,
 }) => (
   <StyledMobileContent className="flex items-center hide-scroll card">
     <div className="w-full">
@@ -51,6 +52,7 @@ export const MobileContent = ({
       noDelete={!isDelete}
       onAddToFavorite={onAddToFavorite}
       favorite={favorite}
+      onSend={onSend}
     />
   </StyledMobileContent>
 );

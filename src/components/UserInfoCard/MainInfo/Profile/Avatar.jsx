@@ -61,6 +61,13 @@ const StyledAvatarWrapper = styled.div`
     right: 8px;
     cursor: pointer;
     z-index: 10;
+    opacity: 0;
+    transition: all 0.3s;
+  }
+  &:hover {
+    .add-btn {
+      opacity: 1;
+    }
   }
 `;
 const StyledAvatar = styled.div`

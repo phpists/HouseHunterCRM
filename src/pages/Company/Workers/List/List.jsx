@@ -57,6 +57,7 @@ export const List = ({
               onOpenTarif={onOpenTarif}
               id={id}
               isCurrentUser={isCurrentUser}
+              tarifPrice={Number(tarifSelected?.price ?? "0")}
             />
           )
         )

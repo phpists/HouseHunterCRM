@@ -85,10 +85,10 @@ export const ProfileModal = ({
               </>
             ) : null}
           </div>
-          {isAccess ? (
-            <Footer onSave={onSave} onReset={onReset} loading={loading} />
-          ) : null}
         </div>
+        {isAccess ? (
+          <Footer onSave={onSave} onReset={onReset} loading={loading} />
+        ) : null}
       </Modal>
       <div className="modal-overlay" onClick={onClose}></div>
     </StyledProfileModal>

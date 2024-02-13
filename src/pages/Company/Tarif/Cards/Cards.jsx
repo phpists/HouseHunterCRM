@@ -17,7 +17,7 @@ export const Cards = ({
       title: "+1 місяць",
       priceTitle: data?.price ?? "0",
       color: "#5D63FF",
-      price: 1000,
+      price: data?.price,
       dayCount: data?.count_day ?? "0",
     },
     // { title: "Еліта", priceTitle: "900", color: "#E9A624", price: 900 },
@@ -28,6 +28,8 @@ export const Cards = ({
     onSelectTarif(null);
     setOpen(index);
   };
+
+  console.log(tarifSelected);
 
   return (
     <StyledCards>

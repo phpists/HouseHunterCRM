@@ -16,6 +16,7 @@ const StyledFooter = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
+  margin: 20px;
   button {
     padding: 7px 20px 6px 20px;
     border-radius: 6px;

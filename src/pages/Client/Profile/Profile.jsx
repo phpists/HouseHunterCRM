@@ -107,60 +107,62 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
       />
       <Divider />
       <div className="profile-content hide-scroll">
-        <SectionTitle title="Дані клієнта" />
-        <BasicInfo
-          firstName={updatedData?.first_name}
-          lastName={updatedData?.last_name}
-          onChangeField={handleChangeField}
-          readOnly={!isAccess}
-        />
-        <SectionTitle title="Контакти" />
-        <Contact
-          phones={updatedData?.phone ?? []}
-          email={updatedData?.email}
-          onChangeField={handleChangeField}
-          readOnly={!isAccess}
-        />
-        {isAccess ? (
-          <>
-            <SectionTitle title="Коментар" />
-            <Comment
-              comment={updatedData?.comment}
-              onChange={(val) => handleChangeField("comment", val)}
-              readOnly={!isAccess}
-            />
-          </>
-        ) : data?.comment?.length > 0 ? (
-          <>
-            <SectionTitle title="Коментар" />
-            <Comment
-              comment={updatedData?.comment}
-              onChange={(val) => handleChangeField("comment", val)}
-              readOnly={!isAccess}
-            />
-          </>
-        ) : null}
-        {isAccess ? (
-          <>
-            <SectionTitle title="Фото / Додатково" />
-            <OtherInfo
-              photos={photos}
-              onChange={(val) => setPhotos(val)}
-              onRefreshClientData={handleRefreshData}
-              readOnly={!isAccess}
-            />
-          </>
-        ) : photos?.length > 0 ? (
-          <>
-            <SectionTitle title="Фото / Додатково" />
-            <OtherInfo
-              photos={photos}
-              onChange={(val) => setPhotos(val)}
-              onRefreshClientData={handleRefreshData}
-              readOnly={!isAccess}
-            />
-          </>
-        ) : null}
+        <div className="main-info-wrapper hide-scroll">
+          <SectionTitle title="Дані клієнта" />
+          <BasicInfo
+            firstName={updatedData?.first_name}
+            lastName={updatedData?.last_name}
+            onChangeField={handleChangeField}
+            readOnly={!isAccess}
+          />
+          <SectionTitle title="Контакти" />
+          <Contact
+            phones={updatedData?.phone ?? []}
+            email={updatedData?.email}
+            onChangeField={handleChangeField}
+            readOnly={!isAccess}
+          />
+          {isAccess ? (
+            <>
+              <SectionTitle title="Коментар" />
+              <Comment
+                comment={updatedData?.comment}
+                onChange={(val) => handleChangeField("comment", val)}
+                readOnly={!isAccess}
+              />
+            </>
+          ) : data?.comment?.length > 0 ? (
+            <>
+              <SectionTitle title="Коментар" />
+              <Comment
+                comment={updatedData?.comment}
+                onChange={(val) => handleChangeField("comment", val)}
+                readOnly={!isAccess}
+              />
+            </>
+          ) : null}
+          {isAccess ? (
+            <>
+              <SectionTitle title="Фото / Додатково" />
+              <OtherInfo
+                photos={photos}
+                onChange={(val) => setPhotos(val)}
+                onRefreshClientData={handleRefreshData}
+                readOnly={!isAccess}
+              />
+            </>
+          ) : photos?.length > 0 ? (
+            <>
+              <SectionTitle title="Фото / Додатково" />
+              <OtherInfo
+                photos={photos}
+                onChange={(val) => setPhotos(val)}
+                onRefreshClientData={handleRefreshData}
+                readOnly={!isAccess}
+              />
+            </>
+          ) : null}
+        </div>
         {isAccess && (
           <Footer
             onSave={handleSaveChanges}
@@ -184,6 +186,11 @@ const StyledProfile = styled.div`
     height: calc(100svh - 348px);
     overflow: auto;
     border-radius: 10px;
+  }
+  .main-info-wrapper {
+    height: calc(100vh - 416px);
+    overflow: auto;
+    border-radius: 9px;
   }
   &::before {
     content: "";

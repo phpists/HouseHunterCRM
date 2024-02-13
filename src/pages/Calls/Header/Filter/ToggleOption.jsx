@@ -6,13 +6,10 @@ export const ToggleOption = ({ label, className, value, onChange }) => (
     className={`flex items-center justify-between ${className} ${
       value && "active"
     }`}
+    onClick={onChange}
   >
     <span>{label}</span>
-    <Toggle
-      value={value}
-      onChange={onChange}
-      className={value ? "toggle-active" : ""}
-    />
+    <Toggle value={value} className={value ? "toggle-active" : ""} />
   </StyledToggleOption>
 );
 

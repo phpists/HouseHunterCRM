@@ -5,7 +5,7 @@ import { Text } from "./Text";
 
 export const StructureCard = ({ count, level, levelTitle, photos }) => (
   <StyledStructureCard className="flex items-center">
-    <List photos={photos?.slice(0, 3)} level={level} />
+    <List photos={photos} level={level} />
     <Divider />
     <Text count={count} level={levelTitle} />
   </StyledStructureCard>
