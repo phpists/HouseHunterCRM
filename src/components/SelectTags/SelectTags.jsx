@@ -71,6 +71,23 @@ export const SelectTags = ({
             {!isActive && tags.length - 5 > 0 && (
               <TagCount count={tags.length - 5} />
             )}
+            {open && (
+              <input
+                className="value"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder={
+                  initValue
+                    ? initValue
+                    : placeholder
+                    ? placeholder
+                    : !value
+                    ? "Пошук"
+                    : options?.find((opt) => opt.value === value)?.title
+                }
+                autoFocus
+              />
+            )}
           </div>
         ) : (
           <div className="flex flex-wrap items-center">

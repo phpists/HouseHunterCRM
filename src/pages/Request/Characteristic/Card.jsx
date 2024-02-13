@@ -33,14 +33,13 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
   return (
     <StyledCard>
       <TitleDivider title={title} />
-
       {fields
         ?.filter((f) => !filteredFields?.find((ff) => ff === f?.field))
         ?.map(({ field, field_option }, i) => {
           if (Object.entries(field_option)?.length > 0) {
             return (
               <>
-                <Divider />
+                {i > 0 && <Divider />}
                 <SelectTags
                   label={
                     commentsToFields?.object[field]
@@ -71,7 +70,7 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
 
             return (
               <>
-                <Divider />
+                {i > 0 && <Divider />}
                 <Ranger
                   label={labels[field] ?? ""}
                   max={100}

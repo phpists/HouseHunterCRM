@@ -10,6 +10,7 @@ import {
 import { PhoneInput } from "./PhoneInput";
 import { Calendar } from "./Calendar/Calendar";
 import { ReactComponent as CalendarIcon } from "../assets/images/calendar.svg";
+import ReactInputMask from "react-input-mask";
 
 export const ProfileField = ({
   value,
@@ -97,12 +98,12 @@ export const ProfileField = ({
           <Calendar value={value} onChange={handleChangeValue} />
         </div>
       )}
-      {type === "date" && !onlyCalendar && (
+      {/* {type === "date" && !onlyCalendar && (
         <CalendarIcon
           onClick={() => setCalendarOpen(!calendarOpen)}
           className={`check-icon calendar-icon ${calendarOpen && "active"}`}
         />
-      )}
+      )} */}
       {!readOnly && (
         <CheckboxIcon onClick={handleToggleActive} className="check-icon" />
       )}
@@ -149,20 +150,19 @@ export const ProfileField = ({
               {handleFormatDate(value, true)}
             </span>
           ) : type === "date" ? (
-            <input
-              className="value hide-scroll"
-              value={dateInput}
+            <ReactInputMask
+              mask={"99.99.9999"}
+              className="value"
+              value={value}
               placeholder={placeholder}
-              onChange={(e) => setDateInput(e.target.value)}
-              type="date"
+              onChange={(e) => onChange(e.target.value)}
               autoFocus
-              onKeyDown={(e) => e?.keyCode === 13 && handleClose()}
-              //   onBlur={() => {
-              //     setActive(false);
-              //     setOpen(false);
-              //     onChange(new Date(handleFromInputDate(dateInput)));
-              //     setCalendarOpen(false);
-              //   }}
+              onKeyDown={(e) => {
+                if (e?.keyCode === 13) {
+                  setOpen(false);
+                  setActive(false);
+                }
+              }}
             />
           ) : (
             <input

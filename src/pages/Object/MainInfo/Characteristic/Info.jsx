@@ -36,6 +36,7 @@ export const Info = ({ fields, data, onChangeField, errors }) => {
     "label_without_children",
     "label_without_foreigners",
     "label_without_students",
+    "mls",
   ];
 
   return (

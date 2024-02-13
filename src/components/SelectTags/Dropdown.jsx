@@ -12,8 +12,15 @@ export const Dropdown = ({
   tags = [],
 }) => (
   <StyledDropdown className="tagsSelectDropdown">
-    {options?.length
-      ? options
+    {options?.length ? (
+      options.filter(({ title }) =>
+        search?.length > 0
+          ? title?.toLowerCase()?.includes(search.toLowerCase())
+          : true
+      )?.length === 0 ? (
+        <div className="epmty">Пусто</div>
+      ) : (
+        options
           .filter(({ title }) =>
             search?.length > 0
               ? title?.toLowerCase()?.includes(search.toLowerCase())
@@ -32,7 +39,8 @@ export const Dropdown = ({
               }
             />
           ))
-      : null}
+      )
+    ) : null}
   </StyledDropdown>
 );
 
@@ -55,5 +63,15 @@ const StyledDropdown = styled.div`
     &:last-child {
       border-bottom: none;
     }
+  }
+  .epmty {
+    padding: 10px;
+    color: #fff;
+    font-family: Overpass;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 200;
+    line-height: 118%; /* 17.7px */
+    letter-spacing: 0.3px;
   }
 `;

@@ -18,7 +18,7 @@ export const TagsFilter = ({
   const [value, setValue] = useState("");
 
   const handleAddTag = (e) => {
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 && Array.isArray(tags)) {
       onChange([...tags, value]);
       setValue("");
     }

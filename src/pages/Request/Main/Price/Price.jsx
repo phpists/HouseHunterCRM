@@ -12,12 +12,12 @@ export const Price = ({
     <StyledPrice error={error} className={`${error && "error-field"}`}>
       <Ranger
         label="Ціновий діапазон"
-        mainTypes={[
-          <>
-            M<sup>2</sup>
-          </>,
-          "Обєкт",
-        ]}
+        // mainTypes={[
+        //   <>
+        //     M<sup>2</sup>
+        //   </>,
+        //   "Обєкт",
+        // ]}
         currency
         big
         max={1000000}

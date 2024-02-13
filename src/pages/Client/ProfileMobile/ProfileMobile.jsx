@@ -4,7 +4,7 @@ import { ReactComponent as Arrow } from "../../../assets/images/welcome-step-arr
 import { useState } from "react";
 import { ProfileModal } from "./ProfileModal";
 import { UserCard } from "../Profile/Header/UserCard";
-import maskBackground from "../../../assets/images/auth-shape-mask.svg";
+import maskBackground from "../../../assets/images/add-client-bg.svg";
 import { useParams } from "react-router-dom";
 import {
   useLazyEditClientQuery,

@@ -1,12 +1,12 @@
 import { styled } from "styled-components";
 import { TitleDivider } from "./TitleDivider";
-import { CheckOption } from "../../../components/CheckOption";
-import { useGetCommentsToFieldsQuery } from "../../../store/objects/objects.api";
+import { CheckOption } from "../CheckOption";
+import { useGetCommentsToFieldsQuery } from "../../store/objects/objects.api";
 import { useState } from "react";
-import { Select } from "../../../components/Select/Select";
-import { ToggleOption } from "../../Objects/Header/Filter/ToggleOption";
+import { Select } from "../Select/Select";
 import { Period } from "./Period/Period";
 import { Divider } from "./Divider";
+import { ToggleOption } from "../ToggleOption";
 
 export const Base = ({ data, onChangeField, className }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();

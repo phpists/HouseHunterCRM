@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Comment } from "./Comment";
 import { Content } from "./Content";
-import { Search } from "./Search/Search";
 import { Name } from "./Name";
 import { useGetRubricsQuery } from "../../../store/requests/requests.api";
 

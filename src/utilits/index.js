@@ -106,15 +106,19 @@ export const handleFormatInputDate = (d) => {
 };
 
 export const handleFromInputDate = (d) => {
-  const date = d?.split(".");
-  if (date?.length === 3) {
-    const day = date[2];
-    const month = date[1];
-    const year = date[0];
+  try {
+    const date = d?.split(".");
+    if (date?.length === 3) {
+      const day = date[2];
+      const month = date[1];
+      const year = date[0];
 
-    return `${day}.${month}.${year}`;
-  } else {
-    return false;
+      return `${day}.${month}.${year}`;
+    } else {
+      return false;
+    }
+  } catch {
+    return d;
   }
 };
 export const handleReformatDate = (d = "") => {

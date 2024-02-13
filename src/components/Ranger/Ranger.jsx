@@ -39,13 +39,14 @@ export const Ranger = ({
     min,
     max,
     stepSize: 1,
+    onDrag: onChange,
   });
 
   return (
     <StyledRanger
       big={big}
       error={error}
-      className={`${error && "error-field"}`}
+      className={`${error && "error-field"} select-none	`}
     >
       <Header label={label} mainTypes={mainTypes} />
       {big && (

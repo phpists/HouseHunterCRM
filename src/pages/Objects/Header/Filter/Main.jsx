@@ -17,6 +17,8 @@ import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.a
 import { Price } from "../../../Request/Main/Price/Price";
 import { ToggleOption } from "./ToggleOption";
 import { CheckOption } from "../../../../components/CheckOption";
+import { Base } from "../../../../components/Base/Base";
+import { TagsFilter } from "../../../../components/TagsFilter/TagsFilter";
 
 const notAllowedFields = [
   "comment",
@@ -149,7 +151,6 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
           )
         }
       />
-      <Divider />
 
       {/* <Divider />
       <CheckOption
@@ -170,7 +171,7 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
           )
         }
       /> */}
-      <CheckOption
+      {/* <CheckOption
         label="Мої об'єкти"
         className="check-opt"
         value={filters?.show_only === "only_my" ? "1" : "0"}
@@ -179,34 +180,13 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
             "only_my_obj",
             {
               ...filters,
-              //   only_company_obj: "0",
-              //   only_street_base_obj: "0",
-              //   only_my_obj: "1",
-              //   only_my_structure: "0",
+
               show_only: "only_my",
             },
             true
           )
         }
       />
-      {/* <CheckOption
-        label="Об’єкти STREET BASE"
-        className="check-opt"
-        value={filters?.only_street_base_obj}
-        onChange={(val) =>
-          onChangeFilter(
-            "only_street_base_obj",
-            {
-              ...filters,
-              only_company_obj: "0",
-              only_street_base_obj: "1",
-              only_my_obj: "0",
-              only_my_structure: "0",
-            },
-            true
-          )
-        }
-      /> */}
       <CheckOption
         label="Об'єкти моєї структури"
         className="check-opt"
@@ -216,10 +196,6 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
             "only_my_structure",
             {
               ...filters,
-              //   only_company_obj: "0",
-              //   only_street_base_obj: "0",
-              //   only_my_obj: "0",
-              //   only_my_structure: "1",
               show_only: "my_structure",
             },
             true
@@ -236,15 +212,49 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
             "obj_street_base",
             {
               ...filters,
-              //   only_company_obj: "0",
-              //   only_street_base_obj: "0",
-              //   only_my_obj: "0",
-              //   only_my_structure: "1",
+
               show_only: "obj_street_base",
             },
             true
           )
         }
+      /> */}
+      <Base className="base-wrapper" />
+      <Divider />
+      <TagsFilter
+        label="Пошук 1"
+        search
+        // tags={
+        //   Array.isArray(data?.search_key_like_json)
+        //     ? data?.search_key_like_json
+        //     : []
+        // }
+        // onChange={(val) => onChangeField("search_key_like_json", val)}
+        // error={!!errors?.find((e) => e === "search_key_like_json")}
+      />
+      <Divider />
+      <TagsFilter
+        label="Пошук 2"
+        search
+        // tags={
+        //   Array.isArray(data?.search_key_like2_json)
+        //     ? data?.search_key_like2_json
+        //     : []
+        // }
+        // onChange={(val) => onChangeField("search_key_like2_json", val)}
+        // error={!!errors?.find((e) => e === "search_key_like2_json")}
+      />
+      <Divider />
+      <TagsFilter
+        label="Пошук Пошук виключення"
+        search
+        // tags={
+        //   Array.isArray(data?.search_key_notlike_json)
+        //     ? data?.search_key_notlike_json
+        //     : []
+        // }
+        // onChange={(val) => onChangeField("search_key_notlike_json", val)}
+        // error={!!errors?.find((e) => e === "search_key_notlike_json")}
       />
       <Divider />
       <ProfileField
@@ -310,5 +320,9 @@ const StyledMain = styled.div`
     &::after {
       background: #4e4e4e !important;
     }
+  }
+
+  .base-wrapper {
+    background: none;
   }
 `;

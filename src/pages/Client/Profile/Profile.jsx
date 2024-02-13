@@ -6,7 +6,7 @@ import { BasicInfo } from "./BasicInfo";
 import { Contact } from "./Contact/Contact";
 import { Comment } from "./Comment";
 import { OtherInfo } from "./OtherInfo/OtherInfo";
-import maskBackground from "../../../assets/images/auth-shape-mask.svg";
+import maskBackground from "../../../assets/images/add-client-bg.svg";
 import { useEffect, useState } from "react";
 import {
   useLazyEditClientQuery,
@@ -202,7 +202,7 @@ const StyledProfile = styled.div`
     background: url(${({ maskBackground }) => maskBackground}) center/cover
       no-repeat;
     background-size: 200%;
-    background-position: -292px -557px;
+    background-position: -192px -507px;
   }
   @media (min-width: 1400px) {
     width: 290px;
