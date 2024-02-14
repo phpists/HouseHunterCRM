@@ -1,14 +1,14 @@
 import { styled } from "styled-components";
 import { Dropdown } from "./Dropdown";
 
-export const Period = () => {
+export const Period = ({ options, value, onChange }) => {
   return (
     <StyledPeriod className="flex items-center justify-between">
       <div className="flex flex-col items-start">
         <div className="title">Оберіть</div>
         <div className="subtitle">За який період</div>
       </div>
-      <Dropdown />
+      <Dropdown options={options} value={value} onChange={onChange} />
     </StyledPeriod>
   );
 };

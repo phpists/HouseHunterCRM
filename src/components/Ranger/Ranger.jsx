@@ -35,7 +35,6 @@ export const Ranger = ({
 }) => {
   const { getTrackProps, handles, segments } = useRanger({
     values,
-    onChange,
     min,
     max,
     stepSize: 1,

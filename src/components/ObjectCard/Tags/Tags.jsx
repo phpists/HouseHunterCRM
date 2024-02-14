@@ -10,7 +10,7 @@ import {
 } from "../../../store/objects/objects.api";
 import { handleResponse } from "../../../utilits";
 
-export const Tags = ({ className, data }) => {
+export const Tags = ({ className, data, isAccess }) => {
   const { data: tagsList } = useGetTagsListQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [addTag] = useLazyAddTagsToObjectsQuery();

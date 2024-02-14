@@ -1,32 +1,23 @@
 import { useRef, useState } from "react";
 import { styled } from "styled-components";
 
-export const Dropdown = () => {
-  const opt = [
-    "За 1 годину",
-    "За 2 години",
-    "За 3 години",
-    "За 6 годин",
-    "За 12 годин",
-    "За 1 добу",
-    "За 1 тиждень",
-    "За весь час",
-  ];
-  const [active, setActive] = useState(opt[0]);
+export const Dropdown = ({ options, value, onChange }) => {
   const dropdownRef = useRef(null);
 
   const handleSelect = (value) => {
-    setActive(value);
+    onChange(value);
     dropdownRef.current && dropdownRef.current.blur();
   };
 
   return (
     <StyledDropdown ref={dropdownRef}>
-      <div className="current-value">{active}</div>
+      <div className="current-value">
+        {options.find((opt) => opt.value === value)?.title ?? "Пусто"}
+      </div>
       <div className="options">
-        {opt.map((opt, i) => (
-          <div key={i} onClick={() => handleSelect(opt)}>
-            {opt}
+        {options.map((opt, i) => (
+          <div key={i} onClick={() => handleSelect(opt.value)}>
+            {opt.title}
           </div>
         ))}
       </div>
@@ -63,6 +54,8 @@ const StyledDropdown = styled.button`
     opacity: 0;
     visibility: hidden;
     width: 100%;
+    max-height: 100px;
+    overflow: auto;
     div {
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       &:hover {

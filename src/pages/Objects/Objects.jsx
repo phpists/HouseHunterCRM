@@ -26,13 +26,11 @@ export const Objects = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const INIT_FILTERS = {
     id_rubric: "",
-    id_location: "",
+    id_location: [],
     price_currency: "1",
     price: "",
     price_max: "",
     price_min: "",
-    obj_is_actual: "1",
-    show_only: "only_my",
     id_hash: id ?? "",
     //   only_company_obj: "0",
     //   only_street_base_obj: "0",
@@ -57,6 +55,7 @@ export const Objects = () => {
   const dataRef = useRef([]);
   const allCountRef = useRef(0);
   const [updateData, setUpdateData] = useState(false);
+  const firstThousand = useRef([]);
 
   const handleChangeFilter = (field, value, isDataUpdate) => {
     if (isDataUpdate) {
@@ -104,11 +103,21 @@ export const Objects = () => {
       };
 
       if (filterActive.current) {
+        const {
+          company_object,
+          street_base_object,
+          mls_object,
+          ...otherFilters
+        } = Object.fromEntries(
+          Object.entries(filters)?.filter((f) => f[1] !== "0")
+        );
+
         data = {
           ...data,
-          filters: Object.fromEntries(
-            Object.entries(filters)?.filter((f) => f[1] !== "0")
-          ),
+          company_object,
+          street_base_object,
+          mls_object,
+          filters: otherFilters,
         };
       }
 
@@ -121,14 +130,15 @@ export const Objects = () => {
         handleResponse(
           resp,
           () => {
+            firstThousand.current = resp?.data?.first_1000;
             const objectsResp = resp?.data?.objects
               ? Object.entries(resp?.data?.objects)?.map((obj) => obj[1])
               : [];
-            const updatedCount = isReset
-              ? objectsResp?.length
-              : allCountRef.current + objectsResp?.length;
-            allCountRef.current = updatedCount;
-            setAllCount(updatedCount);
+            // const updatedCount = isReset
+            //   ? objectsResp?.length
+            //   : allCountRef.current + objectsResp?.length;
+            allCountRef.current = resp?.data?.all_item;
+            setAllCount(resp?.data?.all_item);
 
             const updatedObjects = isReset
               ? objectsResp
@@ -169,6 +179,11 @@ export const Objects = () => {
   };
 
   const handleDeleteSuccess = () => {
+    firstThousand.current = firstThousand.current.filter(
+      (c) => !selected.find((sc) => sc === c)
+    );
+    saveObjectsCount(allCount - selected?.length);
+    setAllCount(allCount - selected?.length);
     setObjects(objects.filter((obj) => !selected.find((s) => s === obj.id)));
     setSelected([]);
     handleGetObjects();
@@ -205,9 +220,8 @@ export const Objects = () => {
   }, [filters]);
 
   const handleSelectAll = (isReset, count) => {
-    const objIds = objects?.map((obj) => obj.id)?.slice(0, count ?? undefined);
-
-    setSelected(isReset ? [] : objIds);
+    const objectsIds = firstThousand.current;
+    setSelected(isReset ? [] : objectsIds);
   };
 
   const handleToggleFavoriteStatus = (id) => {

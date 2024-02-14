@@ -12,8 +12,14 @@ export const Dropdown = ({
   onAddToSelection,
   onOpenTagsHistory,
   onOpenPriceHistory,
+  link,
 }) => (
   <StyledDropdown className="dropdown">
+    {link?.length > 0 && (
+      <div onClick={() => window.open(link, "_blank")}>
+        Перейти на першоджерело
+      </div>
+    )}
     {onToggleFavoriteStatus && (
       <div
         className="flex items-center justify-between"
@@ -93,6 +99,8 @@ const StyledDropdown = styled.div`
   z-index: 333;
   div,
   a {
+    display: flex;
+    text-align: left;
     padding: 5px 5px 5px 6px;
     background: rgba(255, 255, 255, 0.7);
     transform: all 0.3s;

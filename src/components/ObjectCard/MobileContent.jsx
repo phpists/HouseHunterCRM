@@ -18,6 +18,8 @@ export const MobileContent = ({
   onAddToSelection,
   onOpenTagsHistory,
   onOpenPriceHistory,
+  currency,
+  onChangeCurrency,
 }) => (
   <StyledMobileContent>
     <Header />
@@ -25,7 +27,12 @@ export const MobileContent = ({
     <Slider photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)} />
     <CardDescription text={data?.description} />
     <Footer createDate={data?.dt_add} />
-    <MainInfo className="mobile-main-info" data={data} />
+    <MainInfo
+      className="mobile-main-info"
+      data={data}
+      currency={currency}
+      onChangeCurrency={onChangeCurrency}
+    />
     <Tags className="mobile-tags" data={data} />
     <Contacts data={data} />
     <ShowMore
@@ -40,6 +47,7 @@ export const MobileContent = ({
       onOpenTagsHistory={onOpenTagsHistory}
       onOpenPriceHistory={onOpenPriceHistory}
       isAccess={data?.acsses_change}
+      link={data?.link}
     />
   </StyledMobileContent>
 );

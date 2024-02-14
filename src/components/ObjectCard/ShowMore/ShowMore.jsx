@@ -15,6 +15,7 @@ export const ShowMore = ({
   onOpenTagsHistory,
   onOpenPriceHistory,
   isAccess,
+  link,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -40,6 +41,7 @@ export const ShowMore = ({
         onAddToSelection={onAddToSelection}
         onOpenTagsHistory={onOpenTagsHistory}
         onOpenPriceHistory={onOpenPriceHistory}
+        link={link}
       />
     </StyledShowMore>
   );

@@ -15,10 +15,16 @@ export const DesktopContent = ({
   onAddToSelection,
   onOpenTagsHistory,
   onOpenPriceHistory,
+  currency,
+  onChangeCurrency,
 }) => (
   <StyledDesktopContent className="flex items-center justify-between">
     <Slider photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)} />
-    <MainInfo data={data} />
+    <MainInfo
+      data={data}
+      currency={currency}
+      onChangeCurrency={onChangeCurrency}
+    />
     <Info className="desktop-item" data={data} />
     <Tags data={data} />
     <Contacts className="desktop-item" data={data} />
@@ -34,6 +40,7 @@ export const DesktopContent = ({
       onOpenTagsHistory={onOpenTagsHistory}
       onOpenPriceHistory={onOpenPriceHistory}
       isAccess={data?.acsses_change}
+      link={data?.link}
     />
     <div className="mobile-footer w-full">
       <Info data={data} />

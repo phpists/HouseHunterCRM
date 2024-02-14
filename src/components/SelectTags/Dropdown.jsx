@@ -26,6 +26,11 @@ export const Dropdown = ({
               ? title?.toLowerCase()?.includes(search.toLowerCase())
               : true
           )
+          .sort(
+            (a, b) =>
+              a.title?.toLowerCase()?.indexOf(search.toLowerCase()) -
+              b.title?.toLowerCase()?.indexOf(search.toLowerCase())
+          )
           .map(({ title, value }, i) => (
             <Option
               key={i}

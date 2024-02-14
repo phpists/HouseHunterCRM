@@ -283,6 +283,37 @@ export const requests = createApi({
         }),
       }),
     }),
+    getCompanies: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_other_company",
+          mod: "system_info",
+        }),
+      }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
+    }),
+    getSortingObject: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_sorting_object",
+          mod: "system_info",
+        }),
+      }),
+    }),
   }),
 });
 
@@ -303,4 +334,6 @@ export const {
   useLazyGetLastRequestsQuery,
   useLazyDeleteRequestInGroupQuery,
   useLazyAddEmptyRequestInGroupQuery,
+  useGetCompaniesQuery,
+  useGetSortingObjectQuery,
 } = requests;

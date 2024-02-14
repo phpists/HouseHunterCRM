@@ -22,6 +22,7 @@ export const List = ({
   const [openAddModal, setOpenAddModal] = useState(null);
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
   const [openHistoryPriceModal, setOpenHistoryPriceModal] = useState(null);
+  const [currency, setCurrency] = useState(0);
 
   return (
     <>
@@ -62,6 +63,8 @@ export const List = ({
                 onOpenPriceHistory={() =>
                   setOpenHistoryPriceModal(d?.price_history_json)
                 }
+                currency={currency}
+                onChangeCurrency={(val) => setCurrency(val)}
               />
             ))}
           </>

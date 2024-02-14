@@ -2,12 +2,14 @@ import styled from "styled-components";
 import { Price } from "../../Price/Price";
 import { Tags } from "./Tags/Tags";
 
-export const MainInfo = ({ className, data }) => {
+export const MainInfo = ({ className, data, currency, onChangeCurrency }) => {
   return (
     <StyledMainInfo className={`${className}`}>
       <Price
         prices={[data?.price_UAH, data?.price_USD, data.price_EUR]}
         priceFor={Number(data?.price_for ?? 1)}
+        currency={currency}
+        onChangeCurrency={onChangeCurrency}
       />
       <Tags data={data} />
     </StyledMainInfo>

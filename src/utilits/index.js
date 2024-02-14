@@ -28,7 +28,6 @@ export const handleToFormData = (data, files) => {
 
   Object.entries(data).forEach((field) => {
     if (Array.isArray(field[1])) {
-      console.log("here1");
       field[1].forEach((f, i) => {
         if (typeof f === "object") {
           Object.entries(f).forEach((fField) => {
@@ -54,6 +53,25 @@ export const handleToFormData = (data, files) => {
           fField[1].forEach((f, i) => {
             formData.append(`${field[0]}[${fField[0]}][]`, f);
           });
+        } else if (typeof fField[1] === "object") {
+          // *
+          Object.entries(fField[1]).forEach((innerFField) => {
+            if (Array.isArray(innerFField[1])) {
+              innerFField[1].forEach((f, i) => {
+                formData.append(
+                  `${field[0]}[${fField[0]}][${innerFField[0]}][]`,
+                  f
+                );
+              });
+            } else {
+              (innerFField[1] || innerFField[1]?.length > 0) &&
+                formData.append(
+                  `${field[0]}[${fField[0]}][${innerFField[0]}]`,
+                  innerFField[1]
+                );
+            }
+          });
+          // *
         } else {
           (fField[1] || fField[1]?.length > 0) &&
             formData.append(`${field[0]}[${fField[0]}]`, fField[1]);

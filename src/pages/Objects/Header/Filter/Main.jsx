@@ -94,167 +94,34 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
       <Divider />
       <SelectTags
         label="Локація"
-        notMultiSelect
-        value={filters?.id_location}
+        tags={formatedLocations?.filter(
+          (l) => !!filters?.id_location?.find((v) => v === l.value)
+        )}
         onChange={(val) =>
           onChangeFilter(
             "id_location",
-            val === filters?.id_location ? null : val
+            filters?.id_location?.find((l) => l === val)
+              ? filters?.id_location?.filter((l) => l !== val)
+              : [...(filters?.id_location ? filters?.id_location : []), val]
           )
         }
         options={formatedLocations}
+        showTags
       />
+
       <Divider />
       <Price
-        values={[filters?.price_min ?? 0, filters?.price_max ?? 0]}
+        values={[filters?.price_min ?? "0", filters?.price_max ?? "0"]}
         onChange={(values) =>
           handleChangeRange(
             values,
-            [filters?.price_min ?? 0, filters?.price_max ?? 0],
+            [filters?.price_min ?? "0", filters?.price_max ?? "0"],
             ["price_min", "price_max"],
             onChangeFilter
           )
         }
         currency={Number(filters?.price_currency)}
         onChangeCurrency={(val) => onChangeFilter("price_currency", val)}
-      />
-      <Divider />
-      <ToggleOption
-        label="Актуальні"
-        value={filters?.obj_is_actual === "1"}
-        onChange={() =>
-          onChangeFilter(
-            "obj_is_actual",
-            filters?.obj_is_actual === "1" ? "0" : "1"
-          )
-        }
-      />
-      <Divider />
-      <ToggleOption
-        label="Протерміновані об`єкти"
-        value={filters?.showDeadline === "1"}
-        onChange={() =>
-          onChangeFilter(
-            "showDeadline",
-            filters?.showDeadline === "1" ? "0" : "1"
-          )
-        }
-      />
-      <Divider />
-      <ToggleOption
-        label="Об`єкти ліквідність"
-        value={filters?.showLiquidity === "1"}
-        onChange={() =>
-          onChangeFilter(
-            "showLiquidity",
-            filters?.showLiquidity === "1" ? "0" : "1"
-          )
-        }
-      />
-
-      {/* <Divider />
-      <CheckOption
-        label="Об’єкти компанії"
-        className="check-opt"
-        value={filters?.only_company_obj}
-        onChange={(val) =>
-          onChangeFilter(
-            "only_company_obj",
-            {
-              ...filters,
-              only_company_obj: "1",
-              only_street_base_obj: "0",
-              only_my_obj: "0",
-              only_my_structure: "0",
-            },
-            true
-          )
-        }
-      /> */}
-      {/* <CheckOption
-        label="Мої об'єкти"
-        className="check-opt"
-        value={filters?.show_only === "only_my" ? "1" : "0"}
-        onChange={(val) =>
-          onChangeFilter(
-            "only_my_obj",
-            {
-              ...filters,
-
-              show_only: "only_my",
-            },
-            true
-          )
-        }
-      />
-      <CheckOption
-        label="Об'єкти моєї структури"
-        className="check-opt"
-        value={filters?.show_only === "my_structure" ? "1" : "0"}
-        onChange={(val) =>
-          onChangeFilter(
-            "only_my_structure",
-            {
-              ...filters,
-              show_only: "my_structure",
-            },
-            true
-          )
-        }
-      />
-      <Divider />
-      <CheckOption
-        label="Об’єкти STREET BASE"
-        className="check-opt"
-        value={filters?.show_only === "obj_street_base" ? "1" : "0"}
-        onChange={(val) =>
-          onChangeFilter(
-            "obj_street_base",
-            {
-              ...filters,
-
-              show_only: "obj_street_base",
-            },
-            true
-          )
-        }
-      /> */}
-      <Base className="base-wrapper" />
-      <Divider />
-      <TagsFilter
-        label="Пошук 1"
-        search
-        // tags={
-        //   Array.isArray(data?.search_key_like_json)
-        //     ? data?.search_key_like_json
-        //     : []
-        // }
-        // onChange={(val) => onChangeField("search_key_like_json", val)}
-        // error={!!errors?.find((e) => e === "search_key_like_json")}
-      />
-      <Divider />
-      <TagsFilter
-        label="Пошук 2"
-        search
-        // tags={
-        //   Array.isArray(data?.search_key_like2_json)
-        //     ? data?.search_key_like2_json
-        //     : []
-        // }
-        // onChange={(val) => onChangeField("search_key_like2_json", val)}
-        // error={!!errors?.find((e) => e === "search_key_like2_json")}
-      />
-      <Divider />
-      <TagsFilter
-        label="Пошук Пошук виключення"
-        search
-        // tags={
-        //   Array.isArray(data?.search_key_notlike_json)
-        //     ? data?.search_key_notlike_json
-        //     : []
-        // }
-        // onChange={(val) => onChangeField("search_key_notlike_json", val)}
-        // error={!!errors?.find((e) => e === "search_key_notlike_json")}
       />
       <Divider />
       <ProfileField
@@ -265,15 +132,18 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         className="field"
         grey
       />
-      <Divider />
       {filtersFields?.main_field
         ? Object.entries(filtersFields?.main_field)
             .filter((field) => !notAllowedFields?.find((f) => f === field[0]))
             ?.filter((field) => commentsToFields?.object[field[0]]?.length > 0)
             .map((field) => {
+              if (field[0] === "mls") {
+                return null;
+              }
               if (typeof field[1]?.field_option === "object") {
                 return (
                   <>
+                    <Divider />
                     <Select
                       value={filters[field[0]]}
                       options={Object.entries(field[1]?.field_option)?.map(
@@ -284,7 +154,6 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
                       labelActive={commentsToFields?.object[field[0]]}
                       hideArrowDefault
                     />
-                    <Divider />
                   </>
                 );
               } else {
@@ -293,6 +162,7 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
                 }
                 return (
                   <>
+                    <Divider />
                     <ProfileField
                       placeholder="Введіть значення"
                       value={filters[field[0]]}
@@ -304,12 +174,45 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
                         field[1]?.type === "int" ? "number" : field[1]?.type
                       }
                     />
-                    <Divider />
                   </>
                 );
               }
             })
         : null}
+      <Base className="base-wrapper" data={filters} onChange={onChangeFilter} />
+      <Divider />
+      <TagsFilter
+        label="Пошук 1"
+        search
+        tags={
+          Array.isArray(filters?.search_key_like_json)
+            ? filters?.search_key_like_json
+            : []
+        }
+        onChange={(val) => onChangeFilter("search_key_like_json", val)}
+      />
+      <Divider />
+      <TagsFilter
+        label="Пошук 2"
+        search
+        tags={
+          Array.isArray(filters?.search_key_like2_json)
+            ? filters?.search_key_like2_json
+            : []
+        }
+        onChange={(val) => onChangeFilter("search_key_like2_json", val)}
+      />
+      <Divider />
+      <TagsFilter
+        label="Пошук Пошук виключення"
+        search
+        tags={
+          Array.isArray(filters?.search_key_notlike_json)
+            ? filters?.search_key_notlike_json
+            : []
+        }
+        onChange={(val) => onChangeFilter("search_key_notlike_json", val)}
+      />
     </StyledMain>
   );
 };

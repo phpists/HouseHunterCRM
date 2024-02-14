@@ -39,6 +39,15 @@ export const Buttons = ({
 
   return (
     <StyledButtons className="flex items-center">
+      <Search
+        filter={filter}
+        onChangeFilter={onChangeFilter}
+        searchPhoneCode={searchPhoneCode}
+        onChangeSearchCode={onChangeSearchCode}
+        onApplyFilters={onApplyFilters}
+        searchPhoneCodeSecond={searchPhoneCodeSecond}
+        onChangeSearchCodeSecond={onChangeSearchCodeSecond}
+      />
       {addClient && (
         <AddClient
           onClose={() => setAddClient(false)}
@@ -58,15 +67,6 @@ export const Buttons = ({
         onClick={onToggleFavoriteFilter}
         className="icon-btn"
         active={favoritesFilter}
-      />
-      <Search
-        filter={filter}
-        onChangeFilter={onChangeFilter}
-        searchPhoneCode={searchPhoneCode}
-        onChangeSearchCode={onChangeSearchCode}
-        onApplyFilters={onApplyFilters}
-        searchPhoneCodeSecond={searchPhoneCodeSecond}
-        onChangeSearchCodeSecond={onChangeSearchCodeSecond}
       />
       <SelectItems
         title="клієнтів"

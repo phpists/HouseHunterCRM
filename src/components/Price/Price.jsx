@@ -4,9 +4,16 @@ import { useState } from "react";
 import { Manage } from "./Manage/Manage";
 import { fortmatNumber } from "../../utilits";
 
-export const Price = ({ title, subtitle, className, prices, priceFor }) => {
+export const Price = ({
+  title,
+  subtitle,
+  className,
+  prices,
+  priceFor,
+  currency,
+  onChangeCurrency,
+}) => {
   const [open, setOpen] = useState(false);
-  const [activeCurrency, setActiveCurrency] = useState(0);
   const options = ["₴", "$", "€"];
 
   return (
@@ -16,16 +23,16 @@ export const Price = ({ title, subtitle, className, prices, priceFor }) => {
     >
       {open ? (
         <Manage
-          onChangeCurrency={(val) => setActiveCurrency(val)}
-          activeCurrency={activeCurrency}
+          onChangeCurrency={(val) => onChangeCurrency(val)}
+          activeCurrency={currency}
           priceFor={priceFor}
         />
       ) : (
         <Closed
           price={
             title ??
-            `${fortmatNumber(Number(prices[activeCurrency]) ?? 0)} ${
-              options[activeCurrency]
+            `${fortmatNumber(Number(prices[currency]) ?? 0)} ${
+              options[currency]
             }`
           }
           onOpen={() => setOpen(true)}

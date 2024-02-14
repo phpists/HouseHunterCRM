@@ -13,7 +13,7 @@ export const PositionCard = ({
     <div className="title">{title}</div>
     <div className="value">
       <input
-        value={value}
+        value={value?.toString()?.length === 0 ? "0" : value}
         type="number"
         onChange={(e) => onChange(Number(e.target.value))}
       />

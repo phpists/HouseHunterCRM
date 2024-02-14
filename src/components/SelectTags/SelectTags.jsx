@@ -19,6 +19,7 @@ export const SelectTags = ({
   viewOnly,
   tags,
   error,
+  className,
 }) => {
   const [open, setOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -43,11 +44,11 @@ export const SelectTags = ({
     <StyledSelectTags
       className={`flex items-center justify-between ${!value && "empty"} ${
         open && "open"
-      } ${isActive && "active"} ${error && "error-field"}`}
+      } ${isActive && "active"} ${error && "error-field"} ${className}`}
       showTags={showTags}
       error={error}
       onClick={(e) => {
-        if (!e.target.classList.contains("notClickable")) {
+        if (!e.target.classList.contains("notClickable") && !viewOnly) {
           setOpen(!open);
           setIsActive(!open);
         }
