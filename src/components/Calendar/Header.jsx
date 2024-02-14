@@ -1,9 +1,10 @@
 import { styled } from "styled-components";
 import { ReactComponent as ArrowBack } from "../../assets/images/calendar-back.svg";
 import { ReactComponent as ArrowNext } from "../../assets/images/calendar-next.svg";
+import { ReactComponent as Close } from "../../assets/images/close.svg";
 import ReactInputMask from "react-input-mask";
 
-export const Header = ({ value, onChangeMonth, onChangeYear }) => {
+export const Header = ({ value, onChangeMonth, onChangeYear, onClose }) => {
   const handleGetTitle = (date) => {
     const MONTHS = [
       "Січень",
@@ -46,6 +47,7 @@ export const Header = ({ value, onChangeMonth, onChangeYear }) => {
         <ArrowBack className="mr-6" onClick={() => onChangeMonth(-1)} />
         <ArrowNext onClick={() => onChangeMonth(1)} />
       </div>
+      {onClose ? <Close className="close-icon" onClick={onClose} /> : null}
     </StyledHeader>
   );
 };
@@ -73,6 +75,17 @@ const StyledHeader = styled.div`
       }
     }
   }
+  .close-icon {
+    margin-left: auto;
+    g {
+      transition: all 0.3s;
+    }
+    &:hover {
+      g {
+        opacity: 1;
+      }
+    }
+  }
   input {
     border-radius: 4px;
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -80,5 +93,6 @@ const StyledHeader = styled.div`
     padding: 10px;
     width: 60px;
     height: 24px;
+    margin-right: 5px;
   }
 `;

@@ -35,7 +35,7 @@ export const Text = ({ data, onChangeField, errors }) => {
         placeholder="Введіть опис"
         onChange={(val) => onChangeField("description", val)}
         textarea
-        className="title"
+        className="title desciption"
         contentHeight
         label="Опис"
         error={!!errors.find((e) => e === "description")}
@@ -65,6 +65,19 @@ const StyledText = styled.div`
     }
     &:hover {
       background: rgba(255, 255, 255, 0.3);
+    }
+  }
+  .desciption {
+    .value {
+      white-space: unset !important;
+      height: 160px;
+      overflow: auto;
+      text-overflow: unset;
+      width: 100%;
+      word-wrap: break-word;
+    }
+    textarea {
+      height: 160px !important;
     }
   }
   @media (max-width: 1300px) {

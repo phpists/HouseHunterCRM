@@ -3,7 +3,11 @@ import { styled } from "styled-components";
 import ReactCalendar from "react-calendar";
 import { Header } from "./Header";
 
-export const Calendar = ({ value = new Date(), onChange = () => null }) => {
+export const Calendar = ({
+  value = new Date(),
+  onChange = () => null,
+  onClose,
+}) => {
   const [loading, setLoading] = useState(false);
 
   const handleChangeMonth = (count) => {
@@ -18,16 +22,22 @@ export const Calendar = ({ value = new Date(), onChange = () => null }) => {
     setTimeout(() => setLoading(false), 100);
   };
 
+  const handleChangeCalendar = (val) => {
+    onChange(val);
+    onClose && onClose();
+  };
+
   return (
     <StyledCalendar className="calendar-wrapper">
       <Header
         value={value ?? new Date()}
         onChangeMonth={handleChangeMonth}
         onChangeYear={handleChangeYear}
+        onClose={onClose}
       />
       {!loading && (
         <ReactCalendar
-          onChange={onChange}
+          onChange={handleChangeCalendar}
           value={value}
           maxDetail="month"
           defaultView="month"

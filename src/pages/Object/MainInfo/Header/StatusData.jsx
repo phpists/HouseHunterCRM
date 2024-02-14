@@ -10,18 +10,30 @@ export const StatusData = ({ value, onChange }) => {
   const handleChangeDate = (val) => onChange(val.getTime());
 
   return (
-    <StyledDate
-      className={`flex items-center justify-between ${open && "active"}`}
-    >
-      <div className="text-data" onClick={() => setOpen(!open)}>
-        <div className="title">{handleFormatDate(new Date(value), true)}</div>
-        <div className="subtitle">звільняється з </div>
-      </div>
-      <CalendarIcon onClick={() => setOpen(!open)} className="calendar-icon" />
-      <div className="dropdown">
-        <Calendar value={new Date(value)} onChange={handleChangeDate} />
-      </div>
-    </StyledDate>
+    <>
+      <StyledDate
+        className={`flex items-center justify-between ${open && "active"}`}
+      >
+        <div className="text-data" onClick={() => setOpen(!open)}>
+          <div className="title">{handleFormatDate(new Date(value), true)}</div>
+          <div className="subtitle">звільняється з </div>
+        </div>
+        <CalendarIcon
+          onClick={() => setOpen(!open)}
+          className="calendar-icon"
+        />
+        <div className="dropdown">
+          <Calendar
+            value={new Date(value)}
+            onChange={handleChangeDate}
+            onClose={() => setOpen(false)}
+          />
+        </div>
+      </StyledDate>
+      {open && (
+        <div className="modal-overlay" onClick={() => setOpen(false)}></div>
+      )}
+    </>
   );
 };
 
@@ -32,6 +44,10 @@ const StyledDate = styled.button`
   position: relative;
   padding: 7px 13.5px 6px 10px;
   transition: all 0.3s;
+  border-radius: 9px;
+  .modal-overlay {
+    background: red;
+  }
   .text-data {
     transition: all 0.3s;
     border: 1px solid rgba(255, 255, 255, 0);
@@ -86,16 +102,24 @@ const StyledDate = styled.button`
     }
   }
   &:hover {
-    border-radius: 9px;
-    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    background: rgba(255, 159, 46, 0.4);
+    opacity: 0.5;
   }
+
+  &.active {
+    color: #fff;
+    background: rgba(255, 159, 46, 0.4);
+    opacity: 1 !important;
+  }
+
   &.active {
     .dropdown {
       opacity: 1;
       visibility: visible;
     }
     border-radius: 9px;
-    background: rgba(255, 255, 255, 0.05);
+    /* background: rgba(255, 255, 255, 0.05); */
     .calendar-icon g {
       opacity: 1;
     }

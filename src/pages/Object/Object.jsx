@@ -105,7 +105,22 @@ export const ObjectPage = () => {
       setData(newData);
       handleGetRubricsFields(value, newData, true);
     } else {
-      const newData = { ...data, [fieldName]: value };
+      const newData = {
+        ...data,
+        [fieldName]: value,
+        obj_is_actual:
+          fieldName === "obj_is_actual_dt"
+            ? "0"
+            : fieldName === "obj_is_actual"
+            ? value
+            : data.obj_is_actual,
+        mls:
+          fieldName === "obj_is_actual_dt"
+            ? "0"
+            : fieldName === "mls"
+            ? value
+            : data.mls,
+      };
       setData(newData);
     }
   };

@@ -36,6 +36,7 @@ const StyledAction = styled(NavLink)`
   transition: all 0.3s;
   height: 74px;
   overflow: hidden;
+  position: relative;
   span {
     color: #fff;
     text-align: center;
@@ -48,10 +49,33 @@ const StyledAction = styled(NavLink)`
     opacity: 0.4;
     margin-top: 5px;
     width: max-content;
+    transition: all 0.3;
   }
   img {
     height: 21px;
     width: 21px;
+  }
+
+  &:before {
+    content: "";
+    display: block;
+    background: ${({ color }) => `${color}40`};
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    border-radius: 200% 200% 0 0;
+    transform: translateY(100%);
+    transition: all 0.5s;
+  }
+
+  &:hover {
+    border: 1px solid ${({ color }) => color};
+    span {
+      opacity: 1;
+    }
+    &:before {
+      transform: translateY(0%);
+    }
   }
 
   @media (max-width: 700px) {

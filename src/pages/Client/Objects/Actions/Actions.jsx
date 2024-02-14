@@ -22,7 +22,7 @@ export const Actions = ({ accessData }) => {
           background="rgba(45, 244, 125, 0.10)"
           className="mr-2.5"
           onChangeHover={handleChangeActive}
-          active={!handleCheckAccess(accessData, "objects", "add") ? 1 : active}
+          //   active={!handleCheckAccess(accessData, "objects", "add") ? 1 : active}
           index={1}
           link={`/create-request/${id}`}
         />
@@ -34,9 +34,9 @@ export const Actions = ({ accessData }) => {
           color="#9747FF"
           background="rgba(151, 71, 255, 0.10)"
           onChangeHover={handleChangeActive}
-          active={
-            !handleCheckAccess(accessData, "requests", "add") ? 2 : active
-          }
+          //   active={
+          //     !handleCheckAccess(accessData, "requests", "add") ? 2 : active
+          //   }
           index={2}
           link={`/create-object/${id}`}
         />
