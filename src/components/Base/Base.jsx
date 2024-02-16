@@ -13,13 +13,25 @@ import {
 } from "../../store/requests/requests.api";
 import { SelectTags } from "../SelectTags/SelectTags";
 
-export const Base = ({ data, onChange, className }) => {
+export const Base = ({
+  data,
+  onChange,
+  className,
+  actualFieldName = "actual",
+  notActualFieldName = "not_actual",
+  streetBaseFieldName = "show_street_base_company",
+  companiesFieldName = "mls_object",
+  streetBaseOpen,
+  mlsBaseOpen,
+}) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: companies } = useGetCompaniesQuery();
   const { data: sortingPeriods } = useGetSortingObjectQuery();
   const [company, setCompany] = useState(true);
-  const [streetBase, setStreetBase] = useState(!!data.street_base_object);
-  const [mlsBase, setMlsBase] = useState(!!data.mls_object);
+  const [streetBase, setStreetBase] = useState(
+    !!data.street_base_object || streetBaseOpen
+  );
+  const [mlsBase, setMlsBase] = useState(!!data.mls_object || mlsBaseOpen);
 
   const handleGetFormatCompanies = () =>
     companies?.data
@@ -53,6 +65,7 @@ export const Base = ({ data, onChange, className }) => {
     setMlsBase(!mlsBase);
   };
 
+  console.log(data?.mls_object?.[companiesFieldName]);
   return (
     <StyledBase className={`request-card ${className}`}>
       <TitleDivider title="Company" />
@@ -102,11 +115,14 @@ export const Base = ({ data, onChange, className }) => {
           <CheckOption
             label="Aктуальні"
             className="check-opt"
-            value={data?.company_object?.actual}
+            value={data?.company_object?.[actualFieldName]}
             onChange={() =>
               onChange("company_object", {
                 ...data?.company_object,
-                actual: data?.company_object?.actual === "1" ? undefined : "1",
+                [actualFieldName]:
+                  data?.company_object[actualFieldName] === "1"
+                    ? undefined
+                    : "1",
               })
             }
           />
@@ -122,20 +138,20 @@ export const Base = ({ data, onChange, className }) => {
               })
             }
           />
-          {/* <CheckOption
+          <CheckOption
             label="Неактуальні"
             className="check-opt"
-            value={data?.company_object?.show_street_base_company === "1"}
+            value={data?.company_object?.[notActualFieldName]}
             onChange={() =>
               onChange("company_object", {
                 ...data?.company_object,
-                show_only:
-                  data?.company_object?.show_street_base_company === "1"
+                [notActualFieldName]:
+                  data?.company_object[notActualFieldName] === "1"
                     ? undefined
                     : "1",
               })
             }
-          /> */}
+          />
           <CheckOption
             label="Протерміновані"
             className="check-opt"
@@ -155,12 +171,12 @@ export const Base = ({ data, onChange, className }) => {
               </>
             }
             className="check-opt"
-            value={data?.company_object?.show_street_base_company}
+            value={data?.company_object?.[streetBaseFieldName]}
             onChange={() =>
               onChange("company_object", {
                 ...data?.company_object,
-                show_street_base_company:
-                  data?.company_object?.show_street_base_company === "1"
+                [streetBaseFieldName]:
+                  data?.company_object[streetBaseFieldName] === "1"
                     ? undefined
                     : "1",
               })
@@ -221,18 +237,24 @@ export const Base = ({ data, onChange, className }) => {
             label="Компанія"
             placeholder="Оберіть компанію"
             tags={handleGetFormatCompanies()?.filter((v) =>
-              data?.mls_object?.list_company?.find((c) => c === v.value)
+              data?.mls_object?.[companiesFieldName]
+                ? data?.mls_object?.[companiesFieldName]?.find(
+                    (c) => c === v.value
+                  )
+                : false
             )}
             onChange={(val) =>
               onChange("mls_object", {
                 ...data?.mls_object,
-                list_company: !!data?.mls_object?.list_company?.find(
-                  (c) => c === val
-                )
-                  ? data?.mls_object?.list_company?.filter((c) => c !== val)
+                [companiesFieldName]: !!data?.mls_object?.[
+                  companiesFieldName
+                ]?.find((c) => c === val)
+                  ? data?.mls_object?.[companiesFieldName]?.filter(
+                      (c) => c !== val
+                    )
                   : [
-                      ...(Array.isArray(data?.mls_object?.list_company)
-                        ? data?.mls_object?.list_company
+                      ...(Array.isArray(data?.mls_object?.[companiesFieldName])
+                        ? data?.mls_object?.[companiesFieldName]
                         : []),
                       val,
                     ],

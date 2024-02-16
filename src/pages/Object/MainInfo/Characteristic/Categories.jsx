@@ -90,6 +90,16 @@ export const Categories = ({ data, onChangeField, fields, errors }) => {
             ?.filter(
               (category) => commentsToFields?.object[category[0]]?.length > 0
             )
+            ?.sort((a, b) => a[1]?.sort - b[1]?.sort)
+            ?.filter(
+              (category) =>
+                ![
+                  "street",
+                  "address_entrance_number",
+                  "address_apartment_number",
+                  "address_house_number",
+                ]?.find((c) => c === category[0])
+            )
             ?.map((category, i) => (
               <React.Fragment key={i}>
                 <>

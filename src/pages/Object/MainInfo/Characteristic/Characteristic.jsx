@@ -84,11 +84,14 @@ export const Characteristic = ({ data, onChangeField, fields, errors }) => {
             labelActive="Оберіть розташування"
             className="mb-2"
             hideArrowDefault
+            isSearch
             error={!!errors.find((e) => e === "id_location")}
           />
-          {handleCheckIsField(fields, "address_house_number") ? (
-            <DetailPosition data={data} onChangeField={onChangeField} />
-          ) : null}
+          <DetailPosition
+            data={data}
+            onChangeField={onChangeField}
+            fields={fields}
+          />
         </div>
         {fields?.main_field && (
           <Info

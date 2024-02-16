@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 
-export const TypeSelect = ({ value, onChange }) => {
-  const options = [
-    { title: "За об’єкт", value: 4 },
-    { title: "За м²", value: 1 },
-  ];
-
+export const TypeSelect = ({ value, onChange, options }) => {
   return (
     <StyledTypeSelect>
       {options.map((opt, i) => (
@@ -28,9 +23,9 @@ const StyledTypeSelect = styled.div`
   border-radius: 6px;
   background: rgba(44, 44, 44, 0.5);
   padding: 2px;
-  display: grid;
-  grid-template-columns: repeat(3, max-content);
+  display: flex;
   gap: 3px;
+  width: max-content;
   div {
     border-radius: 5px;
     padding: 1px 4px;

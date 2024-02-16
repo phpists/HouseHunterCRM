@@ -5,7 +5,14 @@ import { SymbolSelect } from "./SymbolSelect";
 import { TypeSelect } from "./TypeSelect";
 import { useEffect, useRef } from "react";
 
-export const Price = ({ className, data, onChangeField, errors, mobile }) => {
+export const Price = ({
+  className,
+  data,
+  onChangeField,
+  errors,
+  mobile,
+  options,
+}) => {
   const priceRef = useRef(null);
 
   useEffect(() => {
@@ -42,8 +49,35 @@ export const Price = ({ className, data, onChangeField, errors, mobile }) => {
         onChange={(val) => onChangeField("price_currency", val)}
       />
       <TypeSelect
-        value={Number(data?.price_for)}
+        value={data?.price_for}
         onChange={(val) => onChangeField("price_for", val)}
+        options={
+          data?.id_rubric === "65" || data?.id_rubric === "66"
+            ? [
+                {
+                  title: "Об'єкт",
+                  value: "4",
+                },
+                {
+                  title: "Сотка",
+                  value: "2",
+                },
+                {
+                  title: "Гектар",
+                  value: "3",
+                },
+              ]
+            : [
+                {
+                  title: "Обєкт",
+                  value: "4",
+                },
+                {
+                  title: "м²",
+                  value: "1",
+                },
+              ]
+        }
       />
     </StyledPrice>
   );

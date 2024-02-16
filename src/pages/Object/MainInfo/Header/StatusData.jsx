@@ -12,10 +12,15 @@ export const StatusData = ({ value, onChange }) => {
   return (
     <>
       <StyledDate
-        className={`flex items-center justify-between ${open && "active"}`}
+        className={`flex items-center justify-between ${open && "active"} ${
+          value && "notEmpty"
+        }`}
       >
+        <div></div>
         <div className="text-data" onClick={() => setOpen(!open)}>
-          <div className="title">{handleFormatDate(new Date(value), true)}</div>
+          <div className="title">
+            {value ? handleFormatDate(new Date(value), true) : "Оберіть дату"}
+          </div>
           <div className="subtitle">звільняється з </div>
         </div>
         <CalendarIcon
@@ -24,9 +29,10 @@ export const StatusData = ({ value, onChange }) => {
         />
         <div className="dropdown">
           <Calendar
-            value={new Date(value)}
+            value={value ? new Date(value) : undefined}
             onChange={handleChangeDate}
             onClose={() => setOpen(false)}
+            onReset={() => onChange("0")}
           />
         </div>
       </StyledDate>
@@ -45,6 +51,7 @@ const StyledDate = styled.button`
   padding: 7px 13.5px 6px 10px;
   transition: all 0.3s;
   border-radius: 9px;
+  min-width: max-content;
   .modal-overlay {
     background: red;
   }
@@ -87,7 +94,6 @@ const StyledDate = styled.button`
     z-index: 10;
     visibility: hidden;
     opacity: 0;
-    transition: all 0.3s;
     width: 328px;
     left: 50%;
     transform: translateX(-50%);
@@ -107,7 +113,8 @@ const StyledDate = styled.button`
     opacity: 0.5;
   }
 
-  &.active {
+  &.active,
+  &.notEmpty {
     color: #fff;
     background: rgba(255, 159, 46, 0.4);
     opacity: 1 !important;

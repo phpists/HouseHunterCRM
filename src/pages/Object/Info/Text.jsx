@@ -45,7 +45,8 @@ export const Text = ({ data, onChangeField, errors }) => {
         placeholder="Введіть коментар"
         onChange={(val) => onChangeField("comment", val)}
         label="Коментар"
-        className="title"
+        className="title comment"
+        textarea
       />
     </StyledText>
   );
@@ -56,7 +57,7 @@ const StyledText = styled.div`
   border-radius: 10px;
   background: #3d3d3d;
   margin-bottom: 10px;
-  height: calc(100svh - 344px);
+  height: calc(100svh - 350px);
   overflow: auto;
   .title {
     margin-bottom: 10px;
@@ -70,14 +71,27 @@ const StyledText = styled.div`
   .desciption {
     .value {
       white-space: unset !important;
-      height: 160px;
+      height: 125px;
       overflow: auto;
       text-overflow: unset;
       width: 100%;
       word-wrap: break-word;
     }
     textarea {
-      height: 160px !important;
+      height: 128px !important;
+    }
+  }
+  .comment {
+    .value {
+      white-space: unset !important;
+      height: 35px;
+      overflow: auto;
+      text-overflow: unset;
+      width: 100%;
+      word-wrap: break-word;
+    }
+    textarea {
+      height: 35px !important;
     }
   }
   @media (max-width: 1300px) {

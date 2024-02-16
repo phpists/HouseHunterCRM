@@ -23,7 +23,7 @@ export const emailValidation = (value) => {
   return false;
 };
 
-export const handleToFormData = (data, files) => {
+export const handleToFormData = (data, files, notCleanFields) => {
   const formData = new FormData();
 
   Object.entries(data).forEach((field) => {
@@ -53,8 +53,7 @@ export const handleToFormData = (data, files) => {
           fField[1].forEach((f, i) => {
             formData.append(`${field[0]}[${fField[0]}][]`, f);
           });
-        } else if (typeof fField[1] === "object") {
-          // *
+        } else if (typeof fField[1] === "object" && fField[1]) {
           Object.entries(fField[1]).forEach((innerFField) => {
             if (Array.isArray(innerFField[1])) {
               innerFField[1].forEach((f, i) => {
@@ -64,7 +63,9 @@ export const handleToFormData = (data, files) => {
                 );
               });
             } else {
-              (innerFField[1] || innerFField[1]?.length > 0) &&
+              (innerFField[1] ||
+                innerFField[1]?.length > 0 ||
+                notCleanFields?.find((l) => l === fField[0])) &&
                 formData.append(
                   `${field[0]}[${fField[0]}][${innerFField[0]}]`,
                   innerFField[1]
@@ -174,6 +175,9 @@ export const handleCheckIsField = (fields, fieldName) =>
   !!handleFormatFields(fields?.main_field)?.find(
     ({ field }) => field === fieldName
   );
+
+export const handleCheckIsFieldExist = (fields, fieldName) =>
+  !!handleFormatFields(fields)?.find(({ field }) => field === fieldName);
 
 export const handleGetFieldsOptions = (fields, fieldName) => {
   const field = fields?.find(({ field }) => field === fieldName);

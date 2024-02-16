@@ -3,8 +3,12 @@ import { styled } from "styled-components";
 import { ReactComponent as Arrows } from "../../../../assets/images/arrows.svg";
 import { Divider } from "../Divider";
 import { ProfileField } from "../../../../components/ProfileField";
+import {
+  handleCheckIsField,
+  handleCheckIsFieldExist,
+} from "../../../../utilits";
 
-export const DetailPosition = ({ data, onChangeField }) => {
+export const DetailPosition = ({ data, onChangeField, fields }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -14,33 +18,65 @@ export const DetailPosition = ({ data, onChangeField }) => {
       <div className="fields">
         {open && (
           <>
-            <ProfileField
-              value={data?.address_house_number}
-              onChange={(val) => onChangeField("address_house_number", val)}
-              label="Будинок"
-              className="field"
-              grey
-              placeholder="Введіть значення"
-            />
-
-            {/* <div className="field-group">
-              <ProfileField
-                value="22-й"
-                label="Вулиця"
-                className="field"
-                grey
-              />
-              <ProfileField value="45" label="Будинок" className="field" grey />
+            <div className="field-group">
+              {handleCheckIsFieldExist(fields?.other_field, "street") && (
+                <ProfileField
+                  label="Вулиця"
+                  placeholder="Введіть значення"
+                  className="field"
+                  grey
+                  value={data?.street}
+                  onChange={(val) => onChangeField("street", val)}
+                />
+              )}
+              {handleCheckIsFieldExist(
+                fields?.main_field,
+                "address_house_number"
+              ) && (
+                <ProfileField
+                  placeholder="Введіть значення"
+                  value={data?.address_house_number}
+                  onChange={(val) => onChangeField("address_house_number", val)}
+                  label="Будинок"
+                  className="field"
+                  grey
+                />
+              )}
             </div>
             <div className="field-group">
-              <ProfileField value="3" label="Підїзд" className="field" grey />
-              <ProfileField
-                value="45"
-                label="Квартира"
-                className="field"
-                grey
-              />
-            </div> */}
+              {handleCheckIsFieldExist(
+                fields?.other_field,
+                "address_entrance_number"
+              ) && (
+                <ProfileField
+                  placeholder="Введіть значення"
+                  value={data?.address_entrance_number}
+                  onChange={(val) =>
+                    onChangeField("address_entrance_number", val)
+                  }
+                  label="Підїзд"
+                  className="field"
+                  grey
+                  type="number"
+                />
+              )}
+              {handleCheckIsFieldExist(
+                fields?.other_field,
+                "address_apartment_number"
+              ) && (
+                <ProfileField
+                  placeholder="Введіть значення"
+                  value={data?.address_apartment_number}
+                  onChange={(val) =>
+                    onChangeField("address_apartment_number", val)
+                  }
+                  label="Квартира"
+                  className="field"
+                  grey
+                  type="number"
+                />
+              )}
+            </div>
           </>
         )}
       </div>
@@ -67,8 +103,7 @@ const StyledDetailPosition = styled.div`
     grid-auto-rows: max-content;
   }
   .field-group {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: 4px;
   }
 `;

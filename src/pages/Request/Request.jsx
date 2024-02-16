@@ -3,7 +3,6 @@ import { Header } from "./Header/Header";
 import { CardTitle } from "./CardTitle";
 import { Main } from "./Main/Main";
 import { Characteristic } from "./Characteristic/Characteristic";
-import { Base } from "./Base/Base";
 import {
   useLazyAddEmptyRequestInGroupQuery,
   useLazyCreateRequestQuery,
@@ -23,6 +22,7 @@ import {
   handleToFormData,
 } from "../../utilits";
 import { useGetCommentsToFieldsQuery } from "../../store/objects/objects.api";
+import { Base } from "../../components/Base/Base";
 
 export const REQUEST_INIT = {
   fields: [],
@@ -267,11 +267,31 @@ export const Request = () => {
   const handleEditRequest = () => {
     if (handleCheckAllFields()) {
       setLoading(true);
+      const {
+        id_client,
+        name,
+        comment,
+        stop_showing,
+        folder_empty,
+        not_actual,
+        dt_deadline,
+        company_object,
+        street_base_object,
+        mls_object,
+      } = data?.general_group;
+
       editRequest({
         ...data,
         general_group: {
+          name,
+          comment,
+          stop_showing,
+          folder_empty,
+          not_actual,
+          company_object,
+          street_base_object,
+          mls_object,
           id_group: id,
-          ...data.general_group,
           id_client: clientId,
           dt_deadline: data?.general_group?.dt_deadline
             ? Math.floor(
@@ -310,6 +330,7 @@ export const Request = () => {
             .map((f) => f[1]?.id_rubric);
 
           handleGetCategories(categories);
+
           setData({
             general_group: {
               ...resp?.data[id]?.General_field_group,
@@ -328,6 +349,39 @@ export const Request = () => {
                 resp?.data[id]?.General_field_group?.tags_student ?? "0",
               tags_foreigners:
                 resp?.data[id]?.General_field_group?.tags_foreigners ?? "0",
+              company_object: {
+                show_only:
+                  resp?.data[id]?.General_field_group?.show_company_obj === "1"
+                    ? "company"
+                    : resp?.data[id]?.General_field_group?.show_my_obj === "1"
+                    ? "only_my"
+                    : resp?.data[id]?.General_field_group?.structure === "1"
+                    ? "my_structure"
+                    : undefined,
+                show_actual:
+                  resp?.data[id]?.General_field_group?.show_actual_object,
+                show_not_actual:
+                  resp?.data[id]?.General_field_group?.show_no_actual_object,
+                given_objects:
+                  resp?.data[id]?.General_field_group?.show_given_objects,
+                overdue:
+                  resp?.data[id]?.General_field_group?.show_overdue_objects,
+                company_street_base:
+                  resp?.data[id]?.General_field_group?.show_street_base,
+              },
+              street_base_object: {
+                disable_cooperation:
+                  resp?.data[id]?.General_field_group?.disable_cooperation,
+                sorting_id:
+                  resp?.data[id]?.General_field_group?.street_base_sorting_id,
+              },
+              mls_object: {
+                disable_cooperation:
+                  resp?.data[id]?.General_field_group?.disable_cooperation,
+                list_company: checkIsJSON(
+                  resp?.data[id]?.General_field_group?.list_copmany_mls
+                ),
+              },
             },
             fields: Object.entries(resp?.data[id])
               .filter((f) => f[0] !== "General_field_group")
@@ -359,6 +413,18 @@ export const Request = () => {
       }
     }
   }, [errors]);
+
+  const handleChangeBase = (field, value, isClear) => {
+    handleChangeField(
+      "general_group",
+      isClear
+        ? { ...data.general_group, ...value }
+        : {
+            ...data.general_group,
+            [field]: value ?? "0",
+          }
+    );
+  };
 
   return (
     <StyledRequest>
@@ -393,9 +459,19 @@ export const Request = () => {
             onChangeErrors={(val) => setErrors(val)}
           />
         </div>
+
         <div className="base-wrapper">
           <CardTitle title="Вібір бази" />
-          <Base data={data} onChangeField={handleChangeField} />
+          <Base
+            data={data.general_group}
+            actualFieldName="show_actual"
+            notActualFieldName="show_not_actual"
+            streetBaseFieldName="company_street_base"
+            companiesFieldName="list_company"
+            onChange={handleChangeBase}
+            streetBaseOpen={data?.general_group?.mls === "1"}
+            mlsBaseOpen={data?.general_group?.mls === "1"}
+          />
         </div>
       </div>
     </StyledRequest>

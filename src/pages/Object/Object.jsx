@@ -27,7 +27,7 @@ const INIT_DATA = {
   title: "",
   description: "",
   comment: "",
-  obj_is_actual: 1,
+  obj_is_actual: "0",
   price_currency: 1,
   price_for: 1,
   obj_is_actual_dt: new Date().getTime(),
@@ -75,7 +75,7 @@ export const ObjectPage = () => {
           ...updatedData,
           [f]:
             Number(updatedData[f]) === 0
-              ? new Date()
+              ? "0"
               : new Date(updatedData[f] * 1000),
         };
       }
@@ -115,11 +115,17 @@ export const ObjectPage = () => {
             ? value
             : data.obj_is_actual,
         mls:
-          fieldName === "obj_is_actual_dt"
+          fieldName === "obj_is_actual_dt" || fieldName === "obj_is_actual"
             ? "0"
             : fieldName === "mls"
             ? value
             : data.mls,
+        dt_end_agreement:
+          fieldName === "obj_is_actual"
+            ? "0"
+            : fieldName === "dt_end_agreement"
+            ? value
+            : data.dt_end_agreement,
       };
       setData(newData);
     }
@@ -131,12 +137,13 @@ export const ObjectPage = () => {
         const objectData = {
           ...handleFormatDatesToTimestamp(resp?.data, true),
           obj_is_actual_dt:
+            !resp?.data?.obj_is_actual_dt ||
             Number(resp?.data?.obj_is_actual_dt) === 0
-              ? new Date()
+              ? undefined
               : new Date(Number(resp?.data?.obj_is_actual_dt) * 1000),
           dt_end_agreement:
             Number(resp?.data?.dt_end_agreement) === 0
-              ? new Date()
+              ? undefined
               : new Date(Number(resp?.data?.dt_end_agreement) * 1000),
         };
         setData(objectData);
@@ -166,6 +173,7 @@ export const ObjectPage = () => {
           ? Object.entries(fields?.main_field)
               ?.filter((f) => f[1]?.required === 1)
               ?.map((f) => f[0])
+              ?.filter((f) => f !== "dt_end_agreement")
           : []),
         ...(fields?.other_field
           ? Object.entries(fields?.other_field)
@@ -202,16 +210,20 @@ export const ObjectPage = () => {
         field: {
           ...handleFormatDatesToTimestamp(data, fields),
           id_client: clientId,
-          obj_is_actual_dt: data?.obj_is_actual_dt
+          obj_is_actual_dt: !data?.obj_is_actual_dt
+            ? "0"
+            : data?.obj_is_actual_dt !== "0"
             ? Math.floor(new Date(data?.obj_is_actual_dt)?.getTime() / 1000)
-            : undefined,
-          dt_end_agreement: data?.dt_end_agreement
+            : "0",
+          dt_end_agreement: !data?.dt_end_agreement
+            ? "0"
+            : data?.dt_end_agreement !== "0"
             ? Math.floor(
                 new Date(
                   handleFromInputDate(data?.dt_end_agreement)
                 )?.getTime() / 1000
               )
-            : undefined,
+            : "0",
         },
         photos: photos.map((p) => p.file),
       }).then((resp) => {
@@ -237,6 +249,7 @@ export const ObjectPage = () => {
           ? Object.entries(fields?.main_field)
               ?.filter((f) => f[1]?.required === 1)
               ?.map((f) => f[0])
+              ?.filter((f) => f !== "dt_end_agreement")
           : []),
         ...(fields?.other_field
           ? Object.entries(fields?.other_field)
@@ -274,16 +287,20 @@ export const ObjectPage = () => {
         field: {
           ...handleFormatDatesToTimestamp(data, fields),
           id_client: clientId,
-          obj_is_actual_dt: data?.obj_is_actual_dt
+          obj_is_actual_dt: !data?.obj_is_actual_dt
+            ? "0"
+            : data?.obj_is_actual_dt !== "0"
             ? Math.floor(new Date(data?.obj_is_actual_dt)?.getTime() / 1000)
-            : undefined,
-          dt_end_agreement: data?.dt_end_agreement
+            : "0",
+          dt_end_agreement: !data?.dt_end_agreement
+            ? "0"
+            : data?.dt_end_agreement !== "0"
             ? Math.floor(
                 new Date(
                   handleFromInputDate(data?.dt_end_agreement)
                 )?.getTime() / 1000
               )
-            : undefined,
+            : "0",
           img: null,
 
           photos_json: null,
@@ -339,19 +356,24 @@ export const ObjectPage = () => {
         onToggleFavorite={() => setFavorite(!favorite)}
         loading={loading}
       />
-      {handleCheckIsField(fields, "obj_is_actual_dt") && (
-        <Header
-          className="mobile-header"
-          data={data}
-          onChangeField={handleChangeField}
-        />
-      )}
+      <Header
+        className="mobile-header"
+        data={data}
+        onChangeField={handleChangeField}
+      />
       <Price
         className="mobile-price"
         data={data}
         onChangeField={handleChangeField}
         errors={errors}
         mobile
+        options={
+          fields?.main_field?.price_for?.field_option
+            ? Object.entries(fields?.main_field?.price_for?.field_option)?.map(
+                (f) => ({ title: f[1], value: f[0] })
+              )
+            : []
+        }
       />
       <div className="object-wrappper">
         <Photos photos={photos} onChange={handleChangePhotos} />

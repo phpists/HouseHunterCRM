@@ -7,13 +7,11 @@ import { handleCheckIsField } from "../../../utilits";
 export const MainInfo = ({ data, onChangeField, fields, errors }) => {
   return (
     <StyledMainInfo className="object-maininfo-wrapper">
-      {handleCheckIsField(fields, "obj_is_actual_dt") && (
-        <Header
-          className="desktop-maininfo-header"
-          data={data}
-          onChangeField={onChangeField}
-        />
-      )}
+      <Header
+        className="desktop-maininfo-header"
+        data={data}
+        onChangeField={onChangeField}
+      />
 
       <Characteristic
         data={data}
@@ -26,6 +24,13 @@ export const MainInfo = ({ data, onChangeField, fields, errors }) => {
         data={data}
         onChangeField={onChangeField}
         errors={errors}
+        options={
+          fields?.main_field?.price_for?.field_option
+            ? Object.entries(fields?.main_field?.price_for?.field_option)?.map(
+                (f) => ({ title: f[1], value: f[0] })
+              )
+            : []
+        }
       />
     </StyledMainInfo>
   );

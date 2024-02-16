@@ -7,6 +7,7 @@ export const Calendar = ({
   value = new Date(),
   onChange = () => null,
   onClose,
+  onReset,
 }) => {
   const [loading, setLoading] = useState(false);
 
@@ -23,7 +24,12 @@ export const Calendar = ({
   };
 
   const handleChangeCalendar = (val) => {
-    onChange(val);
+    if (new Date(val)?.getTime() === new Date(value)?.getTime() && onReset) {
+      onReset && onReset();
+    } else {
+      onChange(val);
+    }
+
     onClose && onClose();
   };
 

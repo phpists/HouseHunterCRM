@@ -309,6 +309,7 @@ const StyledProfileField = styled.button`
     letter-spacing: 0.22px;
     opacity: 0.4;
     margin-top: 2px;
+    text-transform: capitalize;
   }
 
   textarea {

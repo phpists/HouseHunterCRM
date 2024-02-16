@@ -178,12 +178,15 @@ export const requests = createApi({
         url: "",
         method: "POST",
         headers: headers(),
-        body: handleToFormData({
-          action: "edit",
-          mod: "requests",
-          fields,
-          general_group,
-        }),
+        body: handleToFormData(
+          {
+            action: "edit",
+            mod: "requests",
+            fields,
+            general_group,
+          },
+          null
+        ),
       }),
     }),
     addToFavorite: build.query({

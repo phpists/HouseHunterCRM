@@ -26,7 +26,7 @@ export const StatusButton = ({ type, active, onChange }) => {
 };
 
 const StyledStatusButton = styled.button`
-  padding: 10px 20px;
+  padding: 10px 10px;
   border-radius: 6px;
   width: 150px;
   height: 46px;
@@ -46,6 +46,7 @@ const StyledStatusButton = styled.button`
   transition: all 0.3s;
   flex-shrink: 0;
   white-space: nowrap;
+  width: auto;
   &:hover {
     color: ${({ type }) => type.color};
     background: ${({ type }) => type.background};

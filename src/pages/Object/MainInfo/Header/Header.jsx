@@ -16,23 +16,36 @@ export const Header = ({ className, data, onChangeField }) => {
       <div className="active-wrapper">
         <StatusButton
           type="actual"
-          active={data?.obj_is_actual === "1"}
+          active={
+            data?.obj_is_actual === "1" &&
+            (data?.dt_end_agreement === "0" || !data?.dt_end_agreement)
+          }
           onChange={() => onChangeField("obj_is_actual", "1")}
         />
-        {data?.obj_is_actual === "1" ? (
-          <MlsButton
-            value={data?.mls === "1"}
-            onChange={() => onChangeField("mls", data?.mls === "1" ? "0" : "1")}
-          />
-        ) : null}
+        <MlsButton
+          visible={
+            data?.obj_is_actual === "1" &&
+            (data?.dt_end_agreement === "0" || !data?.dt_end_agreement)
+          }
+          value={
+            data?.mls === "1" &&
+            (data?.dt_end_agreement === "0" || !data?.dt_end_agreement)
+          }
+          onChange={() => onChangeField("mls", data?.mls === "1" ? "0" : "1")}
+        />
       </div>
       <StatusData
-        value={data?.obj_is_actual_dt}
-        onChange={(val) => onChangeField("obj_is_actual_dt", val)}
+        value={
+          data?.dt_end_agreement === "0" ? undefined : data?.dt_end_agreement
+        }
+        onChange={(val) => onChangeField("dt_end_agreement", val)}
       />
       <StatusButton
         type="not_actual"
-        active={data?.obj_is_actual === "0"}
+        active={
+          data?.obj_is_actual === "0" &&
+          (data?.dt_end_agreement === "0" || !data?.dt_end_agreement)
+        }
         onChange={() => onChangeField("obj_is_actual", "0")}
       />
     </StyledHeader>
@@ -43,10 +56,16 @@ const StyledHeader = styled.div`
   margin-bottom: 13px;
   .active-wrapper {
     display: grid;
-    grid-template-columns: 1fr max-content;
+    grid-template-columns: max-content max-content;
   }
   @media (max-width: 550px) {
     grid-template-columns: 1fr !important;
     gap: 10px;
+  }
+  @media (max-width: 1300px) {
+    .active-wrapper {
+      display: grid;
+      grid-template-columns: 1fr max-content;
+    }
   }
 `;

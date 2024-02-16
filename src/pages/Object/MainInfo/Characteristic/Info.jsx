@@ -37,6 +37,7 @@ export const Info = ({ fields, data, onChangeField, errors }) => {
     "label_without_foreigners",
     "label_without_students",
     "mls",
+    "dt_end_agreement",
   ];
 
   return (
@@ -46,6 +47,7 @@ export const Info = ({ fields, data, onChangeField, errors }) => {
         {fields?.main_field
           ? Object.entries(fields?.main_field)
               .filter((field) => !notAllowedFields?.find((f) => f === field[0]))
+              ?.sort((a, b) => a[1]?.sort - b[1]?.sort)
               .map((field) => {
                 if (typeof field[1]?.field_option === "object") {
                   return (

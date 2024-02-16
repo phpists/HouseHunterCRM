@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
-export const MlsButton = ({ value, onChange }) => (
-  <StyledMlsButton className={`${value && "active"}`} onClick={onChange}>
+export const MlsButton = ({ value, onChange, visible }) => (
+  <StyledMlsButton
+    className={`${value && "active"}`}
+    onClick={onChange}
+    visible={visible}
+  >
     MLS
   </StyledMlsButton>
 );
@@ -10,7 +14,7 @@ const StyledMlsButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 20px;
+  padding: 10px 0px;
   border-radius: 6px;
   height: 46px;
   flex-shrink: 0;
@@ -29,7 +33,17 @@ const StyledMlsButton = styled.button`
   transition: all 0.3s;
   flex-shrink: 0;
   white-space: nowrap;
-  margin-left: 5px;
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  ${({ visible }) =>
+    visible &&
+    `
+    width: 50px;
+    opacity: 1;
+    padding: 10px 10px;
+    margin-left: 5px;
+  `}
   &:hover {
     color: #fff;
     background: #3d8ecc;

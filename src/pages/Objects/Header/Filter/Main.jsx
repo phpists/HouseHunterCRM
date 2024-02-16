@@ -19,6 +19,7 @@ import { ToggleOption } from "./ToggleOption";
 import { CheckOption } from "../../../../components/CheckOption";
 import { Base } from "../../../../components/Base/Base";
 import { TagsFilter } from "../../../../components/TagsFilter/TagsFilter";
+import { useGetPhonesCodesQuery } from "../../../../store/auth/auth.api";
 
 const notAllowedFields = [
   "comment",
@@ -56,6 +57,7 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
   const { data: rubricsList } = useGetRubricsQuery();
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
+  const { data: phonesCodes } = useGetPhonesCodesQuery();
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -124,6 +126,31 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         onChangeCurrency={(val) => onChangeFilter("price_currency", val)}
       />
       <Divider />
+      <TagsFilter
+        label="Пошук 1"
+        search
+        tags={Array.isArray(filters?.search_like) ? filters?.search_like : []}
+        onChange={(val) => onChangeFilter("search_like", val)}
+      />
+      <Divider />
+      <TagsFilter
+        label="Пошук 2"
+        search
+        tags={Array.isArray(filters?.search_like2) ? filters?.search_like2 : []}
+        onChange={(val) => onChangeFilter("search_like2", val)}
+      />
+      <Divider />
+      <TagsFilter
+        label="Пошук Пошук виключення"
+        search
+        tags={
+          Array.isArray(filters?.search_not_like)
+            ? filters?.search_not_like
+            : []
+        }
+        onChange={(val) => onChangeFilter("search_not_like", val)}
+      />
+      <Divider />
       <ProfileField
         placeholder="Введіть значення"
         value={filters?.id_hash}
@@ -132,87 +159,78 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         className="field"
         grey
       />
-      {filtersFields?.main_field
-        ? Object.entries(filtersFields?.main_field)
-            .filter((field) => !notAllowedFields?.find((f) => f === field[0]))
-            ?.filter((field) => commentsToFields?.object[field[0]]?.length > 0)
-            .map((field) => {
-              if (field[0] === "mls") {
-                return null;
-              }
-              if (typeof field[1]?.field_option === "object") {
-                return (
-                  <>
-                    <Divider />
-                    <Select
-                      value={filters[field[0]]}
-                      options={Object.entries(field[1]?.field_option)?.map(
-                        (opt) => ({ value: opt[0], title: opt[1] })
-                      )}
-                      onChange={(val) => onChangeFilter(field[0], val)}
-                      label={commentsToFields?.object[field[0]]}
-                      labelActive={commentsToFields?.object[field[0]]}
-                      hideArrowDefault
-                    />
-                  </>
-                );
-              } else {
-                if (field[1]?.type === "date") {
+      <Divider />
+      <ProfileField
+        label="Пошук по телефону"
+        placeholder="Введіть значення..."
+        value={filters.search_phone}
+        onChange={(val) => onChangeFilter("search_phone", val)}
+        phone
+        phonesCodes={phonesCodes}
+        phoneCode={filters.search_phone_code}
+        onChangePhoneCode={(val) => onChangeFilter("search_phone_code ", val)}
+      />
+      <Divider />
+      <ProfileField
+        label="Пошук по номеру часткове співпадіння"
+        placeholder="Введіть значення..."
+        value={filters?.findPhone}
+        onChange={(val) => onChangeFilter("findPhone", val)}
+      />
+
+      <div className="fields-wrapper">
+        {filtersFields?.main_field
+          ? Object.entries(filtersFields?.main_field)
+              .filter((field) => !notAllowedFields?.find((f) => f === field[0]))
+              ?.filter(
+                (field) => commentsToFields?.object[field[0]]?.length > 0
+              )
+              ?.sort((a, b) => a[1]?.sort - b[1]?.sort)
+              .map((field) => {
+                if (field[0] === "mls") {
                   return null;
                 }
-                return (
-                  <>
-                    <Divider />
-                    <ProfileField
-                      placeholder="Введіть значення"
-                      value={filters[field[0]]}
-                      onChange={(val) => onChangeFilter(field[0], val)}
-                      label={commentsToFields?.object[field[0]]}
-                      className="field"
-                      grey
-                      type={
-                        field[1]?.type === "int" ? "number" : field[1]?.type
-                      }
-                    />
-                  </>
-                );
-              }
-            })
-        : null}
+                if (typeof field[1]?.field_option === "object") {
+                  return (
+                    <>
+                      {/* <Divider /> */}
+                      <Select
+                        value={filters[field[0]]}
+                        options={Object.entries(field[1]?.field_option)?.map(
+                          (opt) => ({ value: opt[0], title: opt[1] })
+                        )}
+                        onChange={(val) => onChangeFilter(field[0], val)}
+                        label={commentsToFields?.object[field[0]]}
+                        labelActive={commentsToFields?.object[field[0]]}
+                        hideArrowDefault
+                      />
+                    </>
+                  );
+                } else {
+                  if (field[1]?.type === "date") {
+                    return null;
+                  }
+                  return (
+                    <>
+                      {/* <Divider /> */}
+                      <ProfileField
+                        placeholder="Введіть значення"
+                        value={filters[field[0]]}
+                        onChange={(val) => onChangeFilter(field[0], val)}
+                        label={commentsToFields?.object[field[0]]}
+                        className="field"
+                        grey
+                        type={
+                          field[1]?.type === "int" ? "number" : field[1]?.type
+                        }
+                      />
+                    </>
+                  );
+                }
+              })
+          : null}
+      </div>
       <Base className="base-wrapper" data={filters} onChange={onChangeFilter} />
-      <Divider />
-      <TagsFilter
-        label="Пошук 1"
-        search
-        tags={
-          Array.isArray(filters?.search_key_like_json)
-            ? filters?.search_key_like_json
-            : []
-        }
-        onChange={(val) => onChangeFilter("search_key_like_json", val)}
-      />
-      <Divider />
-      <TagsFilter
-        label="Пошук 2"
-        search
-        tags={
-          Array.isArray(filters?.search_key_like2_json)
-            ? filters?.search_key_like2_json
-            : []
-        }
-        onChange={(val) => onChangeFilter("search_key_like2_json", val)}
-      />
-      <Divider />
-      <TagsFilter
-        label="Пошук Пошук виключення"
-        search
-        tags={
-          Array.isArray(filters?.search_key_notlike_json)
-            ? filters?.search_key_notlike_json
-            : []
-        }
-        onChange={(val) => onChangeFilter("search_key_notlike_json", val)}
-      />
     </StyledMain>
   );
 };
@@ -227,5 +245,10 @@ const StyledMain = styled.div`
 
   .base-wrapper {
     background: none;
+  }
+  .fields-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
   }
 `;

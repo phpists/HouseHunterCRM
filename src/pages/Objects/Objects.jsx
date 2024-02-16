@@ -32,6 +32,7 @@ export const Objects = () => {
     price_max: "",
     price_min: "",
     id_hash: id ?? "",
+    search_phone_code: "1",
     //   only_company_obj: "0",
     //   only_street_base_obj: "0",
     //   only_my_obj: "0",
@@ -117,7 +118,25 @@ export const Objects = () => {
           company_object,
           street_base_object,
           mls_object,
-          filters: otherFilters,
+          filters: {
+            ...otherFilters,
+            findPhone:
+              filters?.findPhone?.length > 0
+                ? filters?.findPhone
+                    ?.replaceAll("-", "")
+                    ?.replace("(", "")
+                    ?.replace(")", "")
+                    ?.replaceAll("_", "")
+                : undefined,
+            search_phone:
+              filters?.search_phone?.length > 0
+                ? filters?.search_phone
+                    ?.replaceAll("-", "")
+                    ?.replace("(", "")
+                    ?.replace(")", "")
+                    ?.replaceAll("_", "")
+                : undefined,
+          },
         };
       }
 
