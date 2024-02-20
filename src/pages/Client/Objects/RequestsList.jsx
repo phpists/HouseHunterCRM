@@ -1,8 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useLazyGetClientsRequestQuery } from "../../../store/clients/clients.api";
-import { useLazyDeleteRequestQuery } from "../../../store/requests/requests.api";
-import { handleFormatDate, handleResponse } from "../../../utilits";
+import {
+  useGetLocationsQuery,
+  useLazyDeleteRequestQuery,
+} from "../../../store/requests/requests.api";
+import {
+  checkIsJSON,
+  handleFormatDate,
+  handleGetLocationAllPath,
+  handleResponse,
+} from "../../../utilits";
 import cogoToast from "cogo-toast";
 import { Card } from "./Card/Card";
 import { Confirm } from "../../../components/Confirm/Confirm";
@@ -26,6 +34,37 @@ export const RequestsList = ({
   const requestsCurrentPage = useRef(0);
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
+  const { data: locationsList } = useGetLocationsQuery();
+  const [formatedLocations, setFormatedLocations] = useState([]);
+
+  const handleFormatLocations = () => {
+    const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
+    const locations = Object.entries(locationsList)
+      .sort((a, b) => Number(b[1].id_parent) - Number(a[1].id_parent))
+      ?.map((loc) => loc[1])
+      //   .filter((loc) => Number(loc?.id_parent) !== 0)
+      .map(({ id, id_parent, name }) => {
+        return handleGetLocationAllPath(locList, id, id_parent, name);
+      });
+
+    setFormatedLocations(locations);
+  };
+
+  useEffect(() => {
+    if (locationsList) {
+      handleFormatLocations();
+    }
+  }, [locationsList]);
+
+  const handleGetLocation = (location) => {
+    const locationValue = checkIsJSON(location);
+    return !formatedLocations
+      ? []
+      : formatedLocations
+          ?.filter((v) => locationValue.find((l) => l === v.value))
+          ?.map((l) => l.title)
+          ?.join(",") ?? [];
+  };
 
   const handleGetClientsRequests = (isReset) => {
     getClientsRequests({
@@ -109,6 +148,7 @@ export const RequestsList = ({
     onChangeRequestsCount(Object.entries(requests)?.length ?? 0);
   }, [requests]);
 
+  console.log(requests);
   return (
     <>
       {deleteModal && (
@@ -140,7 +180,7 @@ export const RequestsList = ({
                     true
                   )}
                   title={infoField?.rubric}
-                  location={infoField?.location}
+                  location={handleGetLocation(infoField?.location)}
                   price={infoField?.price_min}
                   id={id}
                   favorite={c[1]?.General_field_group?.favorite}

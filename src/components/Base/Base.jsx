@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { TitleDivider } from "./TitleDivider";
 import { CheckOption } from "../CheckOption";
 import { useGetCommentsToFieldsQuery } from "../../store/objects/objects.api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Select } from "../Select/Select";
 import { Period } from "./Period/Period";
 import { Divider } from "./Divider";
@@ -23,6 +23,7 @@ export const Base = ({
   companiesFieldName = "mls_object",
   streetBaseOpen,
   mlsBaseOpen,
+  onChangeDefaultFiltersOpened,
 }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: companies } = useGetCompaniesQuery();
@@ -32,6 +33,11 @@ export const Base = ({
     !!data.street_base_object || streetBaseOpen
   );
   const [mlsBase, setMlsBase] = useState(!!data.mls_object || mlsBaseOpen);
+
+  useEffect(() => {
+    setMlsBase(mlsBaseOpen);
+    setStreetBase(streetBaseOpen);
+  }, [streetBaseOpen, mlsBaseOpen]);
 
   const handleGetFormatCompanies = () =>
     companies?.data
@@ -55,6 +61,9 @@ export const Base = ({
     }
 
     setStreetBase(!streetBase);
+    if (onChangeDefaultFiltersOpened) {
+      onChangeDefaultFiltersOpened("street_base_object", !streetBase);
+    }
   };
 
   const handleToggleMlsBase = () => {
@@ -63,9 +72,11 @@ export const Base = ({
     }
 
     setMlsBase(!mlsBase);
+    if (onChangeDefaultFiltersOpened) {
+      onChangeDefaultFiltersOpened("mls_object", !mlsBase);
+    }
   };
 
-  console.log(data?.mls_object?.[companiesFieldName]);
   return (
     <StyledBase className={`request-card ${className}`}>
       <TitleDivider title="Company" />

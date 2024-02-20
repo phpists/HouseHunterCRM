@@ -91,20 +91,15 @@ export const Objects = ({ selected, onSelect }) => {
   };
 
   const handleToggleObjectsFavorites = (objects) => {
-    Promise.all(
-      objects?.map((id) =>
-        addObjectsToFavorites(id).then((resp) => {
-          handleResponse(resp, () => {
-            cogoToast.success("Статус успішно змінено!", {
-              hideAfter: 3,
-              position: "top-right",
-            });
-          });
-        })
-      )
-    ).then((resp) => {
-      handleClearSelectedItemsByType("object");
-      handleRefreshObjects(true);
+    addObjectsToFavorites(objects).then((resp) => {
+      handleResponse(resp, () => {
+        cogoToast.success("Статус успішно змінено!", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        handleClearSelectedItemsByType("object");
+        handleRefreshObjects(true);
+      });
     });
   };
 

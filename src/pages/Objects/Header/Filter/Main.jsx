@@ -52,7 +52,13 @@ const notAllowedFields = [
   "label_without_students",
 ];
 
-export const Main = ({ filters, onChangeFilter, filtersFields }) => {
+export const Main = ({
+  filters,
+  onChangeFilter,
+  filtersFields,
+  onChangeDefaultFiltersOpened,
+  filtersOpened,
+}) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: rubricsList } = useGetRubricsQuery();
   const { data: locationsList } = useGetLocationsQuery();
@@ -230,7 +236,19 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
               })
           : null}
       </div>
-      <Base className="base-wrapper" data={filters} onChange={onChangeFilter} />
+      <Base
+        className="base-wrapper"
+        data={filters}
+        onChange={onChangeFilter}
+        streetBaseOpen={filtersOpened?.street_base_object}
+        mlsBaseOpen={filtersOpened?.mls_object}
+        onChangeDefaultFiltersOpened={(fieldName, value) =>
+          onChangeDefaultFiltersOpened({
+            ...filtersOpened,
+            [fieldName]: value,
+          })
+        }
+      />
     </StyledMain>
   );
 };

@@ -13,6 +13,7 @@ export const Date = ({ date }) => (
 );
 
 const StyledDate = styled.div`
+  white-space: nowrap;
   .title {
     color: #fff;
     leading-trim: both;

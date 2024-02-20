@@ -14,6 +14,8 @@ export const Filter = ({
   onChangeFilter,
   filtersFields,
   onApplyFilter,
+  onChangeDefaultFiltersOpened,
+  filtersOpened,
 }) => {
   const controls = useAnimationControls();
 
@@ -45,6 +47,8 @@ export const Filter = ({
             filters={filters}
             onChangeFilter={onChangeFilter}
             filtersFields={filtersFields}
+            filtersOpened={filtersOpened}
+            onChangeDefaultFiltersOpened={onChangeDefaultFiltersOpened}
           />
           {/* <SectionTitle title="Актуальність" />
      <Topicality />

@@ -38,7 +38,7 @@ export const Header = ({ onSave, favorite, onToggleFavorite, loading }) => {
 
   const handleToggleFavorites = () => {
     if (id) {
-      addToFavorites(id).then((resp) => {
+      addToFavorites([id]).then((resp) => {
         handleResponse(resp, () => {
           onToggleFavorite();
           cogoToast.success("Статус успішно змінено!", {

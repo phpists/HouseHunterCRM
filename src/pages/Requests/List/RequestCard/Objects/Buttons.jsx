@@ -13,7 +13,7 @@ export const Buttons = ({ onOpenChat, idGroup }) => (
 );
 
 const StyledButtons = styled.div`
-  margin-top: -48px;
+  /* margin-top: -48px; */
   .copy-btn {
     width: 32px;
     height: 32px;

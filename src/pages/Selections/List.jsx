@@ -25,7 +25,7 @@ export const List = ({
       {openHistoryModal && (
         <ObjectHistory
           onClose={() => setOpenHistoryModal(null)}
-          idObject={openHistoryModal}
+          object={openHistoryModal}
         />
       )}
       <StyledList className="hide-scroll" ref={innerRef}>
@@ -44,7 +44,12 @@ export const List = ({
               // onFindSimilar={() => onFindSimilar(d)}
               isEdit={handleCheckAccess(accessData, "objects", "edit")}
               onHide={() => onHide(d?.id)}
-              onOpenTagsHistory={() => setOpenHistoryModal(d?.id)}
+              onOpenTagsHistory={() =>
+                setOpenHistoryModal({
+                  id: d?.id,
+                  isStreetBase: d?.obj_street_base === "1",
+                })
+              }
             />
           ))
         )}

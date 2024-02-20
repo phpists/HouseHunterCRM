@@ -39,7 +39,7 @@ export const Card = ({
 
   const handleToggleFavorites = () => {
     isObject
-      ? addObjectToFavorites(id).then((resp) => {
+      ? addObjectToFavorites([id]).then((resp) => {
           handleResponse(resp, () => {
             onChangeFavorite();
             cogoToast.success("Статус успішно змінено!", {

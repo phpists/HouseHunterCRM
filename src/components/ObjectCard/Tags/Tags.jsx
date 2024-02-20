@@ -7,6 +7,7 @@ import {
   useGetCommentsToFieldsQuery,
   useGetTagsListQuery,
   useLazyAddTagsToObjectsQuery,
+  useLazyAddTagsToStreetBaseObjectsQuery,
 } from "../../../store/objects/objects.api";
 import { handleResponse } from "../../../utilits";
 
@@ -14,27 +15,47 @@ export const Tags = ({ className, data, isAccess }) => {
   const { data: tagsList } = useGetTagsListQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [addTag] = useLazyAddTagsToObjectsQuery();
+  const [addTagStreetBase] = useLazyAddTagsToStreetBaseObjectsQuery();
   const [tags, setTags] = useState([]);
 
   const handleSelect = (val) => {
     const isExist = !!tags?.find((t) => t.value === val);
 
-    addTag({
-      actions: isExist ? "0" : "1",
-      tags: val,
-      id_object: data?.id,
-    }).then((resp) =>
-      handleResponse(resp, () => {
-        setTags(
-          isExist
-            ? tags?.filter((t) => t.value !== val)
-            : [
-                ...tags,
-                { title: commentsToFields?.object[val] ?? "-", value: val },
-              ]
-        );
-      })
-    );
+    if (data?.obj_street_base === "1") {
+      addTagStreetBase({
+        actions: isExist ? "0" : "1",
+        tags: val,
+        id_object: data?.id,
+      }).then((resp) =>
+        handleResponse(resp, () => {
+          setTags(
+            isExist
+              ? tags?.filter((t) => t.value !== val)
+              : [
+                  ...tags,
+                  { title: commentsToFields?.object[val] ?? "-", value: val },
+                ]
+          );
+        })
+      );
+    } else {
+      addTag({
+        actions: isExist ? "0" : "1",
+        tags: val,
+        id_object: data?.id,
+      }).then((resp) =>
+        handleResponse(resp, () => {
+          setTags(
+            isExist
+              ? tags?.filter((t) => t.value !== val)
+              : [
+                  ...tags,
+                  { title: commentsToFields?.object[val] ?? "-", value: val },
+                ]
+          );
+        })
+      );
+    }
   };
 
   const handleGetInitTags = () => {

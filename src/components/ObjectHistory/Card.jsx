@@ -2,20 +2,22 @@ import styled from "styled-components";
 import deleteIcon from "../../assets/images/delete-history.svg";
 import checkIcon from "../../assets/images/check-history.svg";
 
-export const Card = ({ title, date, hours, tagName, action }) => (
+export const Card = ({ title, date, hours, tagName, action, userName }) => (
   <>
     <div className="icon">
       <img src={action ? checkIcon : deleteIcon} alt="" />
     </div>
     <StyledCard action={action}>
       <div className="history-card-title">{title}</div>
-      {/* <div className="history-card-date">
-        <div>{date}</div>
-        <span>{hours}</span>
-      </div> */}
+      {date ? (
+        <div className="history-card-date">
+          <div>{date}</div>
+          {/* <span>{hours}</span> */}
+        </div>
+      ) : null}
       <div className="history-card-footer">
         <div className="history-card-status">
-          {action ? "Додав тег:" : "Видалив тег:"}
+          {userName} {action ? "Додав тег:" : "Видалив тег:"}
         </div>
         <span className="history-card-tagName">{tagName}</span>
       </div>

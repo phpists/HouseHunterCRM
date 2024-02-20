@@ -14,9 +14,14 @@ export const Info = ({
   return (
     <StyledInfo className="hide-scroll clickable">
       <Price
-        title={`до ${fortmatNumber(Number(priceMax ?? 0))}₴`}
+        title={
+          Number(priceMax ?? 0) === 0
+            ? "Ціну не обрано"
+            : `до ${fortmatNumber(Number(priceMax ?? 0))}₴`
+        }
         subtitle="Бажана ціна"
         className="price-wrapper"
+        notChangeCurrency
       />
       <Tags
         roomMin={roomMin}
@@ -35,7 +40,7 @@ const StyledInfo = styled.div`
   padding: 10px;
   height: 136px;
   overflow: auto;
-  width: 264px;
+  /* width: 264px; */
   .price-wrapper {
     height: 44px;
     .closed-wrapper {

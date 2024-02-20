@@ -17,6 +17,10 @@ const StyledInfoText = styled.div`
     line-height: normal;
     letter-spacing: 0.28px;
     margin-bottom: 2px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 140px;
   }
   .id {
     opacity: 0.4;

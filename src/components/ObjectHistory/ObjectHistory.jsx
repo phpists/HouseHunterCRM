@@ -4,16 +4,29 @@ import { Card } from "./Card";
 import {
   useGetCommentsToFieldsQuery,
   useLazyShowHistoryTagsQuery,
+  useLazyShowStreetBaseHistoryTagsQuery,
 } from "../../store/objects/objects.api";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { handleFormatDate, handleResponse } from "../../utilits";
 
-export const ObjectHistory = ({ onClose, idObject }) => {
-  const [getHistory, { data }] = useLazyShowHistoryTagsQuery();
+export const ObjectHistory = ({ onClose, object }) => {
+  const [data, setData] = useState(null);
+  const [getHistory] = useLazyShowHistoryTagsQuery();
+  const [getStreetBaseHistory] = useLazyShowStreetBaseHistoryTagsQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
   useEffect(() => {
-    getHistory(idObject);
-  }, [idObject]);
+    console.log(object);
+    if (object?.isStreetBase) {
+      getStreetBaseHistory(object?.id).then((resp) =>
+        handleResponse(resp, () => setData(resp?.data?.data ?? []))
+      );
+    } else {
+      getHistory(object?.id).then((resp) =>
+        handleResponse(resp, () => setData(resp?.data?.data ?? []))
+      );
+    }
+  }, [object]);
 
   return (
     <StyledObjectHistory>
@@ -23,14 +36,15 @@ export const ObjectHistory = ({ onClose, idObject }) => {
             <div className="empty">Пусто</div>
           ) : (
             <div className="object-history-cards">
-              {data?.map(({ action, label, name }, i) => (
+              {data?.map(({ action, label, name, tag, user_name, time }, i) => (
                 <Card
                   key={i}
                   title={name}
-                  //   date="15:12:2023"
+                  date={time ? handleFormatDate(time * 1000, true) : undefined}
                   //   hours="11:01"
-                  tagName={commentsToFields?.object[label] ?? "-"}
+                  tagName={commentsToFields?.object[tag ?? label] ?? "-"}
                   action={action === "add"}
+                  userName={user_name}
                 />
               ))}
             </div>

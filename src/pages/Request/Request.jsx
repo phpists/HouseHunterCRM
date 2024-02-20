@@ -217,12 +217,6 @@ export const Request = () => {
         hideAfter: 3,
         position: "top-right",
       });
-    } else if (data?.general_group?.comment?.length === 0) {
-      errorData.push({ id: "general", errors: ["comment"] });
-      cogoToast.error("Введіть коментар", {
-        hideAfter: 3,
-        position: "top-right",
-      });
     } else {
       errorData.push({ id: "general", errors: [] });
     }
@@ -282,6 +276,17 @@ export const Request = () => {
 
       editRequest({
         ...data,
+        fields: data?.fields?.map((f) => ({
+          ...f,
+          search_key_like_json:
+            f.search_key_like_json?.length === 0
+              ? [""]
+              : f.search_key_like_json,
+          search_key_like2_json:
+            f.search_key_like2_json === 0 ? [""] : f.search_key_like2_json,
+          search_key_notlike_json:
+            f.search_key_notlike_json === 0 ? [""] : f.search_key_notlike_json,
+        })),
         general_group: {
           name,
           comment,
@@ -359,15 +364,30 @@ export const Request = () => {
                     ? "my_structure"
                     : undefined,
                 show_actual:
-                  resp?.data[id]?.General_field_group?.show_actual_object,
+                  resp?.data[id]?.General_field_group?.show_actual_object ===
+                  "1"
+                    ? "1"
+                    : undefined,
                 show_not_actual:
-                  resp?.data[id]?.General_field_group?.show_no_actual_object,
+                  resp?.data[id]?.General_field_group?.show_no_actual_object ===
+                  "1"
+                    ? "1"
+                    : undefined,
                 given_objects:
-                  resp?.data[id]?.General_field_group?.show_given_objects,
+                  resp?.data[id]?.General_field_group?.show_given_objects ===
+                  "1"
+                    ? "1"
+                    : undefined,
                 overdue:
-                  resp?.data[id]?.General_field_group?.show_overdue_objects,
+                  resp?.data[id]?.General_field_group?.show_overdue_objects ===
+                  "1"
+                    ? "1"
+                    : undefined,
                 company_street_base:
-                  resp?.data[id]?.General_field_group?.show_street_base,
+                  resp?.data[id]?.General_field_group
+                    ?.show_company_street_base === "1"
+                    ? "1"
+                    : undefined,
               },
               street_base_object: {
                 disable_cooperation:
@@ -376,8 +396,10 @@ export const Request = () => {
                   resp?.data[id]?.General_field_group?.street_base_sorting_id,
               },
               mls_object: {
-                disable_cooperation:
-                  resp?.data[id]?.General_field_group?.disable_cooperation,
+                invert_company:
+                  resp?.data[id]?.General_field_group?.invert_company === "1"
+                    ? "1"
+                    : undefined,
                 list_company: checkIsJSON(
                   resp?.data[id]?.General_field_group?.list_copmany_mls
                 ),
@@ -388,11 +410,15 @@ export const Request = () => {
               .map((f) => ({
                 ...f[1],
                 id_location: checkIsJSON(f[1]?.id_location),
-                search_key_like_json: checkIsJSON(f[1]?.search_key_like_json),
-                search_key_like2_json: checkIsJSON(f[1]?.search_key_like2_json),
+                search_key_like_json: checkIsJSON(
+                  f[1]?.search_key_like_json
+                )?.filter((v) => v.length > 0),
+                search_key_like2_json: checkIsJSON(
+                  f[1]?.search_key_like2_json
+                )?.filter((v) => v.length > 0),
                 search_key_notlike_json: checkIsJSON(
                   f[1]?.search_key_notlike_json
-                ),
+                )?.filter((v) => v.length > 0),
               })),
           });
         });

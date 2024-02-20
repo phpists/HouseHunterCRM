@@ -6,7 +6,6 @@ import { Phones } from "../../../../../components/Phones/Phones";
 export const Client = ({ firstName, lastName, idClient, phones, avatar }) => {
   return (
     <StyledClient className="clickable">
-      {/* <Step /> */}
       <Info
         firstName={firstName}
         lastName={lastName}
@@ -39,5 +38,22 @@ const StyledClient = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 200px;
+    .phones-wrapper {
+      width: 200px;
+    }
+  }
+  @media (min-width: 1500px) {
+    width: 250px;
+    .phones-wrapper {
+      width: 250px;
+    }
+  }
+
+  @media (min-width: 1600px) {
+    width: max-content;
+    /* .phones-wrapper {
+      width: max-content;
+    } */
   }
 `;

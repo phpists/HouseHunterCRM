@@ -65,13 +65,6 @@ export const Objects = () => {
       setFilters({ ...filters, [field]: value });
       if (field === "id_rubric") {
         handleGetRubricsFields(value);
-        setFilters({
-          id_rubric: value,
-          id_location: filters?.id_location,
-          price_currency: filters?.price_currency,
-          price_min: filters?.price_min,
-          price_max: filters?.price_max,
-        });
       }
     }
   };
@@ -244,7 +237,7 @@ export const Objects = () => {
   };
 
   const handleToggleFavoriteStatus = (id) => {
-    addObjectToFavorites(id).then((resp) => {
+    addObjectToFavorites([id]).then((resp) => {
       handleResponse(resp, () => {
         setObjects(
           objects?.map((obj) =>

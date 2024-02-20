@@ -16,6 +16,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
 import { useGetAccessQuery } from "../../../store/auth/auth.api";
+import { BackButton } from "../../../components/BackButton";
 
 export const Header = ({
   onSave,
@@ -58,7 +59,6 @@ export const Header = ({
 
   return (
     <StyledHeader className="flex items-center justify-between">
-      {/* <BackButton /> */}
       {deleteModal && (
         <Confirm
           title="Видалити запит?"
@@ -67,7 +67,10 @@ export const Header = ({
         />
       )}
       <div className="flex title-wrapper">
-        <Title />
+        <div className="flex items-center">
+          <BackButton onClick={() => navigate(-1)} />
+          <Title />
+        </div>
         <div className="mobile-action-btns flex items-center">
           <SaveButton
             className="desktop-save-btn"

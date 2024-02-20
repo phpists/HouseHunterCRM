@@ -44,7 +44,7 @@ export const handleToFormData = (data, files, notCleanFields) => {
             }
           });
         } else {
-          (f || f?.length > 0) && formData.append(`${field[0]}[${i}]`, f);
+          (f || f?.length > 0) && formData.append(`${field[0]}[]`, f);
         }
       });
     } else if (typeof field[1] === "object") {

@@ -36,20 +36,16 @@ export const Header = ({
   const [addToFavorites] = useLazyAddToFavoritesQuery();
   const [deleteObject] = useLazyDeleteObjectQuery();
   const { data } = useGetAccessQuery();
+  const [defaultFiltersOpen, setDefalultFiltersOpen] = useState({});
 
   const handleToggleFavorites = () => {
-    Promise.all(
-      selected?.map((id) =>
-        addToFavorites(id).then((resp) => {
-          handleResponse(resp, () => {
-            cogoToast.success("Статус успішно змінено!", {
-              hideAfter: 3,
-              position: "top-right",
-            });
-          });
-        })
-      )
-    ).then((resp) => {
+    addToFavorites(selected).then((resp) => {
+      handleResponse(resp, () => {
+        cogoToast.success("Статус успішно змінено!", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      });
       onFavorite();
     });
   };
@@ -136,6 +132,8 @@ export const Header = ({
           onChangeFilter={onChangeFilter}
           filtersFields={filtersFields}
           onApplyFilter={onApplyFilter}
+          filtersOpened={defaultFiltersOpen}
+          onChangeDefaultFiltersOpened={(val) => setDefalultFiltersOpen(val)}
         />
       )}
       {addClient && <AddClient onClose={() => setAddClient(false)} />}

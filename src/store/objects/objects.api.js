@@ -72,14 +72,14 @@ export const objects = createApi({
       }),
     }),
     addToFavorites: build.query({
-      query: (id_object) => ({
+      query: (id_objects) => ({
         url: "",
         method: "POST",
         headers: headers(),
         body: handleToFormData({
           action: "add_edit_favorit",
           mod: "objects",
-          id_object,
+          id_objects,
         }),
       }),
     }),
@@ -280,6 +280,18 @@ export const objects = createApi({
         }),
       }),
     }),
+    showStreetBaseHistoryTags: build.query({
+      query: (id_object) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "view_tag_street_base",
+          mod: "objects",
+          id_object,
+        }),
+      }),
+    }),
     getPhoneObject: build.query({
       query: (id_obj) => ({
         url: "",
@@ -300,6 +312,20 @@ export const objects = createApi({
           true
         );
       },
+    }),
+    addTagsToStreetBaseObjects: build.query({
+      query: ({ actions, tags, id_object }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "add_tags_street_base",
+          mod: "objects",
+          actions,
+          tags,
+          id_object,
+        }),
+      }),
     }),
   }),
 });
@@ -325,4 +351,6 @@ export const {
   useLazyAddTagsToObjectsQuery,
   useLazyShowHistoryTagsQuery,
   useLazyGetPhoneObjectQuery,
+  useLazyAddTagsToStreetBaseObjectsQuery,
+  useLazyShowStreetBaseHistoryTagsQuery,
 } = objects;

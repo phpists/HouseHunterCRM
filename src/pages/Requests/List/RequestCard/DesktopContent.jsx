@@ -14,18 +14,25 @@ export const DesktopContent = ({
   isEdit,
   isDelete,
   onOpenChat,
+  clientData,
 }) => (
   <StyledDesktopContent>
     <Client
-      firstName={data?.usr_first_name}
-      lastName={data?.usr_last_name}
-      idClient={data?.id_client}
-      phones={data?.General_field_group?.user_phones}
-      avatar={data?.usr_img?.length > 0 ? data?.usr_img[0] : null}
+      firstName={clientData?.first_name ?? data?.usr_first_name}
+      lastName={clientData?.last_name ?? data?.usr_last_name}
+      idClient={data?.General_field_group?.id_client}
+      phones={clientData?.phone ?? data?.General_field_group?.user_phones}
+      avatar={
+        clientData?.last_name
+          ? ""
+          : data?.usr_img?.length > 0
+          ? data?.usr_img[0]
+          : null
+      }
     />
     <Date
       category={data?.rubric_name}
-      location={data?.location_name}
+      location={data?.id_location}
       date={data?.General_field_group?.dt_deadline}
     />
     <Info
@@ -36,7 +43,7 @@ export const DesktopContent = ({
       storeyMin={data?.address_storey_min}
       storeyMax={data?.address_storey_max}
     />
-    <Comment comment={data?.comment} />
+    <Comment comment={data?.General_field_group?.comment_group} />
     <Objects data={data} idGroup={data?.id_group} onOpenChat={onOpenChat} />
     <Actions
       id={id}

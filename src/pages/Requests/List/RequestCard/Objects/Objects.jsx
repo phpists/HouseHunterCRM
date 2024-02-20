@@ -12,9 +12,9 @@ export const Objects = ({ idGroup, onOpenChat, data }) => {
 
   return (
     <StyledObjects className="clickable">
-      <SeenTime />
+      {/* <SeenTime /> */}
       <div className="flex items-center clickable">
-        <Photos />
+        {/* <Photos /> */}
         <div className="clickable objects-info-wrapper">
           <div className="flex items-center justify-between clickable">
             <div className="clickable">

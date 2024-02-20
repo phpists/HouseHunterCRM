@@ -84,7 +84,7 @@ export const FieldCard = ({
             ? data?.search_key_notlike_json
             : []
         }
-        onChange={(val) => onChangeField("search_key_notlike_json", val)}
+        onChange={(val) => console.log("search_key_notlike_json", val)}
         error={!!errors?.find((e) => e === "search_key_notlike_json")}
       />
     </StyledFieldCard>

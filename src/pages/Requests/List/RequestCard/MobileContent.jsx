@@ -14,16 +14,19 @@ export const MobileContent = ({
   isDelete,
   isEdit,
   onOpenChat,
+  clientData,
 }) => (
   <StyledMobileContent className="flex ">
     <div className="w-full">
       <Client
-        firstName={data?.usr_first_name}
-        lastName={data?.usr_last_name}
+        firstName={clientData?.first_name ?? data?.usr_first_name}
+        lastName={clientData?.last_name ?? data?.usr_last_name}
         idClient={data?.General_field_group?.id_client}
-        phones={data?.General_field_group?.user_phones}
+        phones={clientData?.phone ?? data?.General_field_group?.user_phones}
         avatar={
-          data?.General_field_group?.usr_img?.length > 0
+          clientData?.last_name
+            ? ""
+            : data?.usr_img?.length > 0
             ? data?.usr_img[0]
             : null
         }
@@ -31,7 +34,7 @@ export const MobileContent = ({
       <div className="mobile-content-wrapper">
         <Date
           category={data?.rubric_name}
-          location={data?.location_name}
+          location={data?.id_location}
           date={data?.General_field_group?.dt_deadline}
         />
         <Info
@@ -42,7 +45,7 @@ export const MobileContent = ({
           storeyMin={data?.address_storey_min}
           storeyMax={data?.address_storey_max}
         />
-        <Comment comment={data?.comment} />
+        <Comment comment={data?.General_field_group?.comment_group} />
         <Objects data={data} idGroup={data?.id_group} onOpenChat={onOpenChat} />
       </div>
     </div>

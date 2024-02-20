@@ -29,7 +29,7 @@ export const List = ({
       {openHistoryModal && (
         <ObjectHistory
           onClose={() => setOpenHistoryModal(null)}
-          idObject={openHistoryModal}
+          object={openHistoryModal}
         />
       )}
       {openHistoryPriceModal && (
@@ -59,7 +59,12 @@ export const List = ({
                 onFindSimilar={() => onFindSimilar(d)}
                 isEdit={handleCheckAccess(accessData, "objects", "edit")}
                 onAddToSelection={() => setOpenAddModal(d?.id)}
-                onOpenTagsHistory={() => setOpenHistoryModal(d?.id)}
+                onOpenTagsHistory={() =>
+                  setOpenHistoryModal({
+                    id: d?.id,
+                    isStreetBase: d?.obj_street_base === "1",
+                  })
+                }
                 onOpenPriceHistory={() =>
                   setOpenHistoryPriceModal(d?.price_history_json)
                 }

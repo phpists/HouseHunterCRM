@@ -9,8 +9,8 @@ export const Manage = ({ onChangeCurrency, activeCurrency, priceFor }) => {
         onChangeCurrency={onChangeCurrency}
         activeCurrency={activeCurrency}
       />
-      <div className="divider" />
-      <TypeSelect priceFor={priceFor} />
+      {/* <div className="divider" /> */}
+      {/* <TypeSelect priceFor={priceFor} /> */}
     </StyledManage>
   );
 };
