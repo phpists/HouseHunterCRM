@@ -57,6 +57,7 @@ export const List = ({
                 last_name,
                 favorite,
                 agent,
+                email,
               },
               i
             ) => (
@@ -87,6 +88,9 @@ export const List = ({
                     (c) => c.id === agent?.phones[0].id_phone_code
                   )?.code
                 }${agent?.phones[0]?.phone ?? ""}`}
+                firstName={first_name}
+                lastName={last_name}
+                email={email}
               />
             )
           )

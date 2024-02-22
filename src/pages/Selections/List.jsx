@@ -16,9 +16,11 @@ export const List = ({
   onFavorite,
   innerRef,
   loading,
+  isHideObjects,
 }) => {
   const { data: accessData } = useGetAccessQuery();
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
+  const [currency, setCurrency] = useState(0);
 
   return (
     <>
@@ -44,6 +46,9 @@ export const List = ({
               // onFindSimilar={() => onFindSimilar(d)}
               isEdit={handleCheckAccess(accessData, "objects", "edit")}
               onHide={() => onHide(d?.id)}
+              isHideObjects={isHideObjects}
+              onChangeCurrency={(val) => setCurrency(val)}
+              currency={currency}
               onOpenTagsHistory={() =>
                 setOpenHistoryModal({
                   id: d?.id,

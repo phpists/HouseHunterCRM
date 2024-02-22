@@ -21,6 +21,7 @@ import { Loading } from "./components/Loading/Loading";
 import { handleCheckAccess } from "./utilits";
 import { Selections } from "./pages/Selections/Selections";
 import { useGetCompanyInfoQuery } from "./store/billing/billing.api";
+import { ErrorBoundary } from "react-error-boundary";
 
 export const App = () => {
   const [getProfile] = useLazyGetUserQuery();
@@ -76,80 +77,110 @@ export const App = () => {
 
   return (
     <>
-      {loading ? (
-        <Loading load={load} />
-      ) : user ? (
-        <StyledApp>
-          <Sidebar
-            sidebarOpen={sidebarOpen}
-            onClose={() => setSideBarOpen(false)}
-            accessData={data}
-          />
-          <Header onOpenSidebar={() => setSideBarOpen(true)} />
-          <div className="app-content">
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <Dashboard
-                    isClientsAccess={handleCheckAccess(data, "clients", "view")}
-                  />
-                }
-              />
-              <Route path="/empty" element={<Dashboard />} />
-              {handleCheckAccess(data, "clients", "view") && (
-                <Route path="/clients" element={<Clients />} />
-              )}
-              {handleCheckAccess(data, "clients", "view") && (
-                <Route path="/client/:id" element={<Client />} />
-              )}
-
-              {handleCheckAccess(data, "objects", "view") && (
+      <ErrorBoundary
+        fallback={
+          <div className="error-wrapper">
+            <svg
+              fill="rgba(255, 255, 255, 0.9)"
+              viewBox="0 0 30 30"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <path d="M11.514 13c-.45 0-.688.54-.363.857l3.143 3.14-3.146 3.146c-.455.436.255 1.177.707.707L15 17.705l3.146 3.145c.452.47 1.162-.27.707-.707l-3.146-3.145 3.142-3.14c.324-.318.087-.858-.364-.858-.13.004-.253.058-.344.15L15 16.29l-3.142-3.14c-.09-.092-.214-.146-.344-.15zM2.5 8h25c.277 0 .5.223.5.5s-.223.5-.5.5h-25c-.277 0-.5-.223-.5-.5s.223-.5.5-.5zM7 6.5a.5.5 0 0 1-.5.5.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5.5.5 0 0 1 .5.5zm-2 0a.5.5 0 0 1-.5.5.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5.5.5 0 0 1 .5.5zm-2 0a.5.5 0 0 1-.5.5.5.5 0 0 1-.5-.5.5.5 0 0 1 .5-.5.5.5 0 0 1 .5.5zM1.5 4C.678 4 0 4.678 0 5.5v19c0 .822.678 1.5 1.5 1.5h27c.822 0 1.5-.678 1.5-1.5v-19c0-.822-.678-1.5-1.5-1.5h-27zm0 1h27c.286 0 .5.214.5.5v19c0 .286-.214.5-.5.5h-27c-.286 0-.5-.214-.5-.5v-19c0-.286.214-.5.5-.5z"></path>
+              </g>
+            </svg>
+            Системний збій
+          </div>
+        }
+      >
+        {loading ? (
+          <Loading load={load} />
+        ) : user ? (
+          <StyledApp>
+            <Sidebar
+              sidebarOpen={sidebarOpen}
+              onClose={() => setSideBarOpen(false)}
+              accessData={data}
+            />
+            <Header onOpenSidebar={() => setSideBarOpen(true)} />
+            <div className="app-content">
+              <Routes>
                 <Route
-                  path="/create-object/:clientId"
-                  element={<ObjectPage />}
+                  path="/"
+                  element={
+                    <Dashboard
+                      isClientsAccess={handleCheckAccess(
+                        data,
+                        "clients",
+                        "view"
+                      )}
+                    />
+                  }
                 />
-              )}
-              {handleCheckAccess(data, "objects", "view") &&
-                handleCheckAccess(data, "objects", "edit") && (
+                <Route path="/empty" element={<Dashboard />} />
+                {handleCheckAccess(data, "clients", "view") && (
+                  <Route path="/clients" element={<Clients />} />
+                )}
+                {handleCheckAccess(data, "clients", "view") && (
+                  <Route path="/client/:id" element={<Client />} />
+                )}
+
+                {handleCheckAccess(data, "objects", "view") && (
                   <Route
-                    path="/edit-object/:clientId/:id"
+                    path="/create-object/:clientId"
                     element={<ObjectPage />}
                   />
                 )}
-              {handleCheckAccess(data, "objects", "view") && (
-                <Route path="/objects" element={<Objects />} />
-              )}
-              {handleCheckAccess(data, "objects", "view") && (
-                <Route path="/objects/:id" element={<Objects />} />
-              )}
-              {handleCheckAccess(data, "requests", "view") && (
-                <Route path="/create-request/:clientId" element={<Request />} />
-              )}
-              {handleCheckAccess(data, "requests", "view") && (
-                <Route
-                  path="/edit-request/:clientId/:id"
-                  element={<Request />}
-                />
-              )}
-              {handleCheckAccess(data, "requests", "view") && (
-                <Route path="/requests" element={<Requests />} />
-              )}
-              {handleCheckAccess(data, "structure", "view") && (
-                <Route path="/structure" element={<Structure />} />
-              )}
-              {true && <Route path="/calls" element={<Calls />} />}
-              {user?.struct_level === 1 && (
-                <Route path="/company" element={<Company />} />
-              )}
-              <Route path="/selections/:id" element={<Selections />} />
-              <Route path="*" element={<Dashboard />} />
-            </Routes>
-          </div>
-        </StyledApp>
-      ) : (
-        <Auth />
-      )}
+                {handleCheckAccess(data, "objects", "view") &&
+                  handleCheckAccess(data, "objects", "edit") && (
+                    <Route
+                      path="/edit-object/:clientId/:id"
+                      element={<ObjectPage />}
+                    />
+                  )}
+                {handleCheckAccess(data, "objects", "view") && (
+                  <Route path="/objects" element={<Objects />} />
+                )}
+                {handleCheckAccess(data, "objects", "view") && (
+                  <Route path="/objects/:id" element={<Objects />} />
+                )}
+                {handleCheckAccess(data, "requests", "view") && (
+                  <Route
+                    path="/create-request/:clientId"
+                    element={<Request />}
+                  />
+                )}
+                {handleCheckAccess(data, "requests", "view") && (
+                  <Route
+                    path="/edit-request/:clientId/:id"
+                    element={<Request />}
+                  />
+                )}
+                {handleCheckAccess(data, "requests", "view") && (
+                  <Route path="/requests" element={<Requests />} />
+                )}
+                {handleCheckAccess(data, "structure", "view") && (
+                  <Route path="/structure" element={<Structure />} />
+                )}
+                {true && <Route path="/calls" element={<Calls />} />}
+                {user?.struct_level === 1 && (
+                  <Route path="/company" element={<Company />} />
+                )}
+                <Route path="/selections/:id" element={<Selections />} />
+                <Route path="*" element={<Dashboard />} />
+              </Routes>
+            </div>
+          </StyledApp>
+        ) : (
+          <Auth />
+        )}
+      </ErrorBoundary>
     </>
   );
 };
@@ -167,6 +198,7 @@ const StyledApp = styled.div`
     overflow: auto;
     overflow-x: hidden;
   }
+
   @media (max-width: 1200px) {
     grid-template-columns: 1fr;
     .app-content {

@@ -6,38 +6,13 @@ import { Dropdown } from "./Dropdown/Dropdown";
 import { useEffect } from "react";
 import {
   useGetAllPerimissionsLevelsQuery,
-  useGetAllPerimissionsQuery,
   useGetCompanyStructureLevelQuery,
 } from "../../../../../store/structure/structure.api";
 
-const ROLES = [
-  {
-    title: "Керівник",
-    color: "#7ECEFD",
-    bg: "rgba(126, 206, 253, 0.25)",
-  },
-  {
-    title: "Структурний",
-    color: "#D0A0FF",
-    bg: "rgba(208, 160, 255, 0.25)",
-  },
-  {
-    title: "Регіональний",
-    color: "#59D8E6",
-    bg: "rgba(89, 216, 230, 0.25)",
-  },
-  {
-    title: "Агент",
-    color: "#B1FF91",
-    bg: "rgba(177, 255, 145, 0.25)",
-  },
-];
-
-export const RoleSelect = ({ value, onChange }) => {
+export const RoleSelect = ({ value, onChange, rolesOnlyView }) => {
   const [open, setOpen] = useState(false);
   const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
-  const { data: permissionsList } = useGetAllPerimissionsQuery();
-  const { data: level, refetch } = useGetCompanyStructureLevelQuery();
+  const { data: level } = useGetCompanyStructureLevelQuery();
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
   const [roles, setRoles] = useState([]);
 
@@ -76,7 +51,7 @@ export const RoleSelect = ({ value, onChange }) => {
       .filter((role) => role?.level !== value)
       .filter((role) => role?.level !== 1);
 
-    if (filteredRoles?.length > 0 && value !== 1) {
+    if (filteredRoles?.length > 0 && value !== 1 && !rolesOnlyView) {
       setOpen(!open);
     }
   };
@@ -98,11 +73,13 @@ export const RoleSelect = ({ value, onChange }) => {
           ? "Оберіть роль"
           : "Немає ролі"}
       </div>
-      <button className="select-btn flex items-center justify-center">
-        <PlusIcon className="plus-icon-btn" />
-        {value !== 1 && <ArrowDownIcon className="arrow" />}
-      </button>
-      {open && (
+      {!rolesOnlyView && (
+        <button className="select-btn flex items-center justify-center">
+          <PlusIcon className="plus-icon-btn" />
+          {value !== 1 && <ArrowDownIcon className="arrow" />}
+        </button>
+      )}
+      {open && !rolesOnlyView && (
         <Dropdown
           roles={roles
             .filter((role) => role?.level !== value)
@@ -118,7 +95,7 @@ export const RoleSelect = ({ value, onChange }) => {
 const StyledRoleSelect = styled.div`
   padding: ${({ active }) => (active ? " 2px 4px 2px 2px" : "2px")};
   display: grid;
-  grid-template-columns: 1fr 18px;
+  grid-template-columns: 1fr max-content;
   gap: 3px;
   background: ${({ active }) => active?.bg ?? "rgba(255, 255, 255, 0.30)"};
   border-radius: ${({ open }) => (open ? "6px 6px 0 0" : "6px")};
@@ -126,7 +103,7 @@ const StyledRoleSelect = styled.div`
   align-items: center;
   position: relative;
   transition: all 0.3s;
-  width: 121px;
+  max-width: 121px;
   .title {
     color: ${({ active }) => active?.color ?? "#fff"};
     leading-trim: both;

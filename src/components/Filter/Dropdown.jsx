@@ -2,21 +2,40 @@ import { styled } from "styled-components";
 import { Toggle } from "../Toggle";
 import { useEffect, useState } from "react";
 import { Option } from "../Option";
-import { useGetAllPerimissionsLevelsQuery } from "../../store/structure/structure.api";
+import {
+  useGetAllPerimissionsLevelsQuery,
+  useGetCompanyStructureLevelQuery,
+} from "../../store/structure/structure.api";
 
 export const Dropdown = ({ open, filter, onFilterChange }) => {
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
   const [roles, setRoles] = useState([]);
+  const { data: level } = useGetCompanyStructureLevelQuery();
+
+  const handleGetCurrentLevel = () =>
+    levels
+      ? Object.entries(levels)
+          ?.map((l) => l[1])
+          ?.find((l) => Number(l.level) === Number(level))
+      : [];
+
+  const handleFormatLevelRoles = () => {
+    if (handleGetCurrentLevel()) {
+      const levelRoles = handleGetCurrentLevel()["0"];
+      if (levelRoles) {
+        return levelRoles?.split(" - ");
+      } else {
+        return [];
+      }
+    }
+  };
 
   useEffect(() => {
-    if (levels) {
-      setRoles(
-        Object.entries(levels)[Object.entries(levels)?.length - 1][1][0]?.split(
-          " - "
-        ) ?? []
-      );
+    if (level && levels) {
+      const formatedRoles = handleFormatLevelRoles();
+      setRoles(formatedRoles);
     }
-  }, [levels]);
+  }, [level, levels]);
 
   return (
     <StyledDropdown open={open}>

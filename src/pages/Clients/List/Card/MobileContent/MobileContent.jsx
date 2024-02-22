@@ -21,6 +21,9 @@ export const MobileContent = ({
   agent,
   agentPhone,
   onSend,
+  firstName,
+  lastName,
+  email,
 }) => (
   <StyledMobileContent className="flex items-center hide-scroll card">
     <div className="w-full">
@@ -42,7 +45,13 @@ export const MobileContent = ({
       </div>
       <div className=" w-full row-wrapper">
         <Objects requestsCount={requestsCount} objectsCount={objectsCount} />
-        <Comment comment={comment} />
+        <Comment
+          comment={comment}
+          id={id}
+          firstName={firstName}
+          lastName={lastName}
+          email={email}
+        />
       </div>
     </div>
     <ActionsButtons

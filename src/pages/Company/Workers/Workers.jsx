@@ -114,6 +114,7 @@ export const Workers = ({
           noStructure
           showPayHistory
           worker={!editOpen?.isAdmin}
+          rolesOnlyView
         />
       )}
     </StyledWorkers>

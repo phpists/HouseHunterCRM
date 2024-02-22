@@ -113,6 +113,10 @@ export const Objects = () => {
           mls_object,
           filters: {
             ...otherFilters,
+            search_phone_code:
+              filters?.search_phone?.length > 0
+                ? otherFilters?.search_phone_code
+                : undefined,
             findPhone:
               filters?.findPhone?.length > 0
                 ? filters?.findPhone

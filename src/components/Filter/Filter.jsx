@@ -10,6 +10,14 @@ export const Filter = ({ className, filter, onFilterChange }) => {
     <StyledFilter className={`flex items-center justify-center ${className}`}>
       <Button open={open} onClick={() => setOpen(!open)} />
       <Dropdown open={open} filter={filter} onFilterChange={onFilterChange} />
+      {open && (
+        <div
+          className="modal-overlay"
+          onClick={() => {
+            setOpen(false);
+          }}
+        ></div>
+      )}
     </StyledFilter>
   );
 };

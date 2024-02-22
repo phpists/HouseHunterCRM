@@ -3,7 +3,11 @@ import { InfoCard } from "./InfoCard/InfoCard";
 import { TagsFilter } from "../../../../../components/TagsFilter/TagsFilter";
 import { useGetLocationsQuery } from "../../../../../store/requests/requests.api";
 import { useEffect, useState } from "react";
-import { checkIsJSON, handleGetLocationAllPath } from "../../../../../utilits";
+import {
+  checkIsArray,
+  checkIsJSON,
+  handleGetLocationAllPath,
+} from "../../../../../utilits";
 
 export const Date = ({ category, location, date }) => {
   const { data: locationsList } = useGetLocationsQuery();
@@ -29,7 +33,9 @@ export const Date = ({ category, location, date }) => {
   }, [locationsList]);
 
   const handleGetLocation = () => {
-    const locationValue = checkIsJSON(location);
+    const locationValue = checkIsArray(location)
+      ? location
+      : checkIsArray(checkIsJSON(location));
     return !formatedLocations
       ? []
       : formatedLocations

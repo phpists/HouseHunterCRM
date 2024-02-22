@@ -23,6 +23,9 @@ export const DesktopContent = ({
   agent,
   agentPhone,
   onSend,
+  firstName,
+  lastName,
+  email,
 }) => (
   <StyledDesktopContent className="flex items-center justify-between hide-scroll card">
     <MainInfo name={name} id={id} dateCreate={dateCreate} />
@@ -32,7 +35,14 @@ export const DesktopContent = ({
       notHideArrow
     />
     <Divider />
-    <Comment comment={comment} className="desktop-comment" />
+    <Comment
+      comment={comment}
+      className="desktop-comment"
+      id={id}
+      firstName={firstName}
+      lastName={lastName}
+      email={email}
+    />
     <Divider />
     <PhoneInfo agent={agent} agentPhone={agentPhone} />
     <Divider />

@@ -21,6 +21,7 @@ export const RoleCard = ({
   idPermision,
   onRefetchData,
   level,
+  onClose,
 }) => {
   const [editPermission] = useLazyEditPerimissionQuery();
   const [open, setOpen] = useState(false);
@@ -67,6 +68,7 @@ export const RoleCard = ({
           position: "top-right",
         });
         onRefetchData();
+        onClose();
       })
     );
   };

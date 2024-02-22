@@ -32,6 +32,7 @@ export const Ranger = ({
   currencyValue,
   onChangeCurrency,
   error,
+  className,
 }) => {
   const { getTrackProps, handles, segments } = useRanger({
     values,
@@ -45,7 +46,7 @@ export const Ranger = ({
     <StyledRanger
       big={big}
       error={error}
-      className={`${error && "error-field"} select-none	`}
+      className={`${error && "error-field"} select-none	${className}`}
     >
       <Header label={label} mainTypes={mainTypes} />
       {big && (

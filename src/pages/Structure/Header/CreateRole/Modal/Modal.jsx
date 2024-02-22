@@ -69,6 +69,7 @@ export const Modal = ({ onClose, onRefetchStructureData }) => {
               level={level}
               levelData={handleGetCurrentLevel(level)}
               onRefetchData={refetch}
+              onClose={handleClose}
             />
           )}
           {/* <AddButton onRefetchData={refetch} /> */}

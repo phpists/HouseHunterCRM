@@ -20,7 +20,12 @@ export const Header = ({
 
   return (
     <StyledHeader className="flex items-center justify-between">
-      <Breadcrumbs level={level} onChangeLevel={onChangeLevel} />
+      <Breadcrumbs
+        level={level}
+        onChangeLevel={onChangeLevel}
+        showNotStructureWorkers={showNotStructureWorkers}
+        onToggleShowNotStructureWorkers={onToggleShowNotStructureWorkers}
+      />
       <div className="btns flex items-center">
         {level >= 3 && handleCheckAccess(accessData, "structure", "add") ? (
           <CreateUser small onCreatedUser={onCreatedUser} />

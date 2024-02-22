@@ -1,17 +1,54 @@
 import styled from "styled-components";
 import { ProfileField } from "../../../../components/ProfileField";
+import { useEffect, useState } from "react";
+import { useLazyEditRequestCommentQuery } from "../../../../store/requests/requests.api";
+import { handleResponse } from "../../../../utilits";
+import cogoToast from "cogo-toast";
 
-export const Comment = ({ comment = "" }) => (
-  <StyledComment>
-    <ProfileField
-      label="Коментар"
-      value={comment?.length === 0 ? "Пусто" : comment}
-      textarea
-      className="field"
-      readOnly
-    />
-  </StyledComment>
-);
+export const Comment = ({ comment = "", id }) => {
+  const [edit, setEdit] = useState(false);
+  const [value, setValue] = useState("");
+  const [editComment] = useLazyEditRequestCommentQuery();
+
+  useEffect(() => {
+    setValue(comment);
+  }, [comment]);
+
+  const handleSave = () => {
+    if (value !== comment) {
+      editComment({
+        request_group: id,
+        comment: value,
+      }).then((resp) =>
+        handleResponse(
+          resp,
+          () => {
+            cogoToast.success("Зміни успішно збережено", {
+              hideAfter: 3,
+              position: "top-right",
+            });
+          },
+          () => setValue(comment)
+        )
+      );
+    }
+  };
+
+  return (
+    <StyledComment>
+      <ProfileField
+        label="Коментар"
+        placeholder="Пусто"
+        value={value}
+        onChange={(val) => setValue(val)}
+        textarea
+        onSave={handleSave}
+        onBlur={handleSave}
+        className="field"
+      />
+    </StyledComment>
+  );
+};
 
 const StyledComment = styled.div`
   width: 200px;

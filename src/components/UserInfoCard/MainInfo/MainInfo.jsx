@@ -19,6 +19,7 @@ export const MainInfo = ({
   bosses = [],
   errors = [],
   noStructure,
+  rolesOnlyView,
 }) => {
   return (
     <StyledMainInfo>
@@ -36,6 +37,7 @@ export const MainInfo = ({
         profile={profile}
         onRemoveAvatar={onRemoveAvatar}
         noStructure={noStructure}
+        rolesOnlyView={rolesOnlyView}
       />
       {bosses?.length > 0 && data?.structure_level && !noStructure ? (
         <>

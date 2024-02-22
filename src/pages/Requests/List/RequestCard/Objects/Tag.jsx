@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Tag = ({ count }) => (
+export const Tag = ({ count = 0 }) => (
   <StyledTag> {Number(count) > 99 ? "+99" : count} нових</StyledTag>
 );
 

@@ -39,7 +39,9 @@ export const handleToFormData = (data, files, notCleanFields) => {
                 );
               });
             } else {
-              fField[1] &&
+              const isValue =
+                fField[1] || notCleanFields?.find((l) => l === fField[0]);
+              isValue &&
                 formData.append(`${field[0]}[${i}][${fField[0]}]`, fField[1]);
             }
           });
@@ -438,3 +440,5 @@ export const checkIsJSON = (data) => {
     return [];
   }
 };
+
+export const checkIsArray = (arr) => (Array.isArray(arr) ? arr : []);

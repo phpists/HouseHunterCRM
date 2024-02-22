@@ -19,7 +19,7 @@ export const AddToSelections = ({ onClose, idObject }) => {
   const handleAddObj = () => {
     addObjectToSelections({
       id_request_group: selectedRequest,
-      id_object: idObject,
+      id_objects: [idObject],
     }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Об'єкт успішно добалено", {

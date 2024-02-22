@@ -29,7 +29,7 @@ export const selections = createApi({
       },
     }),
     addObjectToSelections: build.query({
-      query: ({ id_request_group, id_object }) => ({
+      query: ({ id_request_group, id_objects }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -37,12 +37,12 @@ export const selections = createApi({
           action: "add_object_to_folder",
           mod: "requests",
           id_request_group,
-          id_object,
+          id_objects,
         }),
       }),
     }),
     hideObjectFromSelections: build.query({
-      query: ({ id_request_group, id_object }) => ({
+      query: ({ id_request_group, id_objects }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -50,7 +50,7 @@ export const selections = createApi({
           action: "hide_object_to_folder",
           mod: "requests",
           id_request_group,
-          id_object,
+          id_objects,
         }),
       }),
     }),

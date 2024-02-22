@@ -21,7 +21,7 @@ export const AddModal = ({ onClose, onRefresh, objectsIds }) => {
   const handleAddObj = () => {
     addObjectToSelections({
       id_request_group: id,
-      id_object: selectedObj,
+      id_objects: [selectedObj],
     }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Об'єкт успішно добалено", {

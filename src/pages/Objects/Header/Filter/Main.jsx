@@ -20,6 +20,7 @@ import { CheckOption } from "../../../../components/CheckOption";
 import { Base } from "../../../../components/Base/Base";
 import { TagsFilter } from "../../../../components/TagsFilter/TagsFilter";
 import { useGetPhonesCodesQuery } from "../../../../store/auth/auth.api";
+import { Ranger } from "../../../../components/Ranger/Ranger";
 
 const notAllowedFields = [
   "comment",
@@ -58,6 +59,7 @@ export const Main = ({
   filtersFields,
   onChangeDefaultFiltersOpened,
   filtersOpened,
+  errors,
 }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: rubricsList } = useGetRubricsQuery();
@@ -175,6 +177,7 @@ export const Main = ({
         phonesCodes={phonesCodes}
         phoneCode={filters.search_phone_code}
         onChangePhoneCode={(val) => onChangeFilter("search_phone_code ", val)}
+        error={errors?.search_phone}
       />
       <Divider />
       <ProfileField
@@ -196,7 +199,43 @@ export const Main = ({
                 if (field[0] === "mls") {
                   return null;
                 }
-                if (typeof field[1]?.field_option === "object") {
+                const rangeFields = [
+                  "area_total",
+                  "area_dwelling_place",
+                  "area_kitchen",
+                  "rooms",
+                  "address_storey",
+                  "storey_count",
+                ];
+
+                const fieldName = field[0] === "rooms" ? "room" : field[0];
+
+                if (rangeFields.includes(field[0])) {
+                  return (
+                    <>
+                      <Ranger
+                        label={commentsToFields?.object[field[0]]}
+                        max={100}
+                        values={[
+                          filters[`${fieldName}_min`] ?? 0,
+                          filters[`${fieldName}_max`] ?? 0,
+                        ]}
+                        className="filter-range-wrapper"
+                        onChange={(values) =>
+                          handleChangeRange(
+                            values,
+                            [
+                              filters[`${fieldName}_min`] ?? 0,
+                              filters[`${fieldName}_max`] ?? 0,
+                            ],
+                            [`${fieldName}_min`, `${fieldName}_max`],
+                            onChangeFilter
+                          )
+                        }
+                      />
+                    </>
+                  );
+                } else if (typeof field[1]?.field_option === "object") {
                   return (
                     <>
                       {/* <Divider /> */}
@@ -268,5 +307,8 @@ const StyledMain = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
+  }
+  .filter-range-wrapper {
+    grid-column: 1/3;
   }
 `;

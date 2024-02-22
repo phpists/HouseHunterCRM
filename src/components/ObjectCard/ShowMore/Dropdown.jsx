@@ -13,6 +13,7 @@ export const Dropdown = ({
   onOpenTagsHistory,
   onOpenPriceHistory,
   link,
+  isHideObjects,
 }) => (
   <StyledDropdown className="dropdown">
     {link?.length > 0 && (
@@ -62,7 +63,7 @@ export const Dropdown = ({
     )}
     {onHide && (
       <div className="flex items-center justify-between" onClick={onHide}>
-        <span>Приховати</span>
+        <span>{isHideObjects ? "Показати" : "Приховати"}</span>
       </div>
     )}
     {isEdit && (

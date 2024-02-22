@@ -6,6 +6,7 @@ import {
   useLazyDeleteRequestQuery,
 } from "../../../store/requests/requests.api";
 import {
+  checkIsArray,
   checkIsJSON,
   handleFormatDate,
   handleGetLocationAllPath,
@@ -57,7 +58,8 @@ export const RequestsList = ({
   }, [locationsList]);
 
   const handleGetLocation = (location) => {
-    const locationValue = checkIsJSON(location);
+    const locationValue = checkIsArray(checkIsJSON(location));
+
     return !formatedLocations
       ? []
       : formatedLocations
@@ -148,7 +150,6 @@ export const RequestsList = ({
     onChangeRequestsCount(Object.entries(requests)?.length ?? 0);
   }, [requests]);
 
-  console.log(requests);
   return (
     <>
       {deleteModal && (

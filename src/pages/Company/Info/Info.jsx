@@ -37,22 +37,13 @@ export const Info = ({ tarifOpen, onCloseTarif }) => {
     );
 
     editCompany(formData).then((resp) =>
-      handleResponse(
-        resp,
-        () => {
-          cogoToast.success("Зміни успішно збережено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
-          refetch();
-        },
-        () => {
-          cogoToast.error("Помилка", {
-            hideAfter: 3,
-            position: "top-right",
-          });
-        }
-      )
+      handleResponse(resp, () => {
+        cogoToast.success("Зміни успішно збережено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        refetch();
+      })
     );
   };
 

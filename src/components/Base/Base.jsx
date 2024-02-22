@@ -20,7 +20,7 @@ export const Base = ({
   actualFieldName = "actual",
   notActualFieldName = "not_actual",
   streetBaseFieldName = "show_street_base_company",
-  companiesFieldName = "mls_object",
+  companiesFieldName = "list_company",
   streetBaseOpen,
   mlsBaseOpen,
   onChangeDefaultFiltersOpened,

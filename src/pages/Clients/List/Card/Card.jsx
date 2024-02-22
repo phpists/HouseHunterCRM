@@ -19,6 +19,9 @@ export const Card = ({
   agent,
   agentPhone,
   onSend,
+  firstName,
+  lastName,
+  email,
 }) => {
   const handleClick = (e) => {
     e.target.classList.contains("card") && onSelect();
@@ -45,6 +48,9 @@ export const Card = ({
         agent={agent}
         agentPhone={agentPhone}
         onSend={onSend}
+        firstName={firstName}
+        lastName={lastName}
+        email={email}
       />
       <MobileContent
         name={name}
@@ -61,6 +67,9 @@ export const Card = ({
         agent={agent}
         agentPhone={agentPhone}
         onSend={onSend}
+        firstName={firstName}
+        lastName={lastName}
+        email={email}
       />
     </StyledCard>
   );

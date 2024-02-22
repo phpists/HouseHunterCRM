@@ -169,3 +169,28 @@ input[type="number"] {
 .loading-more svg {
   height: 40px !important;
 }
+
+.error-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 20px;
+  background: #323232;
+  box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
+  position: relative;
+  height: 100vh;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: Overpass;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 200;
+  line-height: normal;
+  letter-spacing: 0.36px;
+  margin-bottom: 10px;
+  flex-direction: column;
+}
+
+.error-wrapper svg {
+  margin-bottom: 20px;
+  width: 80px;
+}

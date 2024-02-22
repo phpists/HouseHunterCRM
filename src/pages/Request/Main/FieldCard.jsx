@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Divider } from "../Divider";
 import { SelectTags } from "../../../components/SelectTags/SelectTags";
-import { handleChangeRange } from "../../../utilits";
+import { checkIsArray, handleChangeRange } from "../../../utilits";
 import { Price } from "./Price/Price";
 import { TitleDivider } from "./TitleDivider";
 import { TagsFilter } from "../../../components/TagsFilter/TagsFilter";
@@ -19,14 +19,19 @@ export const FieldCard = ({
       <SelectTags
         label="Локація"
         tags={formatedLocations?.filter(
-          (l) => !!data?.id_location?.find((v) => v === l.value)
+          (l) => !!checkIsArray(data?.id_location)?.find((v) => v === l.value)
         )}
         onChange={(val) =>
           onChangeField(
             "id_location",
-            data?.id_location?.find((l) => l === val)
-              ? data?.id_location?.filter((l) => l !== val)
-              : [...(data?.id_location ? data?.id_location : []), val]
+            checkIsArray(data?.id_location)?.find((l) => l === val)
+              ? checkIsArray(data?.id_location)?.filter((l) => l !== val)
+              : [
+                  ...(checkIsArray(data?.id_location)
+                    ? checkIsArray(data?.id_location)
+                    : []),
+                  val,
+                ]
           )
         }
         options={formatedLocations}
@@ -84,7 +89,7 @@ export const FieldCard = ({
             ? data?.search_key_notlike_json
             : []
         }
-        onChange={(val) => console.log("search_key_notlike_json", val)}
+        onChange={(val) => onChangeField("search_key_notlike_json", val)}
         error={!!errors?.find((e) => e === "search_key_notlike_json")}
       />
     </StyledFieldCard>

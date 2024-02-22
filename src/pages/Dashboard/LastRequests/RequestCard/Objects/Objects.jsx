@@ -20,8 +20,8 @@ export const Objects = ({ data, id, onOpenChat }) => {
         <Photo photo={img1} />
         <Photo photo={img2} />
         <div>
-          <Title count={data?.count_objects} />
-          <Tag count={data?.count_new_object} />
+          <Title count={data?.count_object} />
+          <Tag count={data?.count_object} />
         </div>
         <div className="bts flex items-center">
           <CopyLink

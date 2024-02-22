@@ -276,17 +276,6 @@ export const Request = () => {
 
       editRequest({
         ...data,
-        fields: data?.fields?.map((f) => ({
-          ...f,
-          search_key_like_json:
-            f.search_key_like_json?.length === 0
-              ? [""]
-              : f.search_key_like_json,
-          search_key_like2_json:
-            f.search_key_like2_json === 0 ? [""] : f.search_key_like2_json,
-          search_key_notlike_json:
-            f.search_key_notlike_json === 0 ? [""] : f.search_key_notlike_json,
-        })),
         general_group: {
           name,
           comment,
@@ -389,21 +378,30 @@ export const Request = () => {
                     ? "1"
                     : undefined,
               },
-              street_base_object: {
-                disable_cooperation:
-                  resp?.data[id]?.General_field_group?.disable_cooperation,
-                sorting_id:
-                  resp?.data[id]?.General_field_group?.street_base_sorting_id,
-              },
-              mls_object: {
-                invert_company:
-                  resp?.data[id]?.General_field_group?.invert_company === "1"
-                    ? "1"
-                    : undefined,
-                list_company: checkIsJSON(
-                  resp?.data[id]?.General_field_group?.list_copmany_mls
-                ),
-              },
+              street_base_object:
+                resp?.data[id]?.General_field_group?.show_street_base === "1"
+                  ? {
+                      disable_cooperation:
+                        resp?.data[id]?.General_field_group
+                          ?.disable_cooperation,
+                      sorting_id:
+                        resp?.data[id]?.General_field_group
+                          ?.street_base_sorting_id,
+                    }
+                  : undefined,
+              mls_object:
+                resp?.data[id]?.General_field_group?.mls === "1"
+                  ? {
+                      invert_company:
+                        resp?.data[id]?.General_field_group?.invert_company ===
+                        "1"
+                          ? "1"
+                          : undefined,
+                      list_company: checkIsJSON(
+                        resp?.data[id]?.General_field_group?.list_copmany_mls
+                      ),
+                    }
+                  : undefined,
             },
             fields: Object.entries(resp?.data[id])
               .filter((f) => f[0] !== "General_field_group")
@@ -495,7 +493,7 @@ export const Request = () => {
             streetBaseFieldName="company_street_base"
             companiesFieldName="list_company"
             onChange={handleChangeBase}
-            streetBaseOpen={data?.general_group?.mls === "1"}
+            streetBaseOpen={data?.general_group?.show_street_base === "1"}
             mlsBaseOpen={data?.general_group?.mls === "1"}
           />
         </div>

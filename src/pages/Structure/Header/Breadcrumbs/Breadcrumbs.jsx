@@ -4,8 +4,14 @@ import {
   useGetAllPerimissionsLevelsQuery,
   useGetCompanyStructureLevelQuery,
 } from "../../../../store/structure/structure.api";
+import { BackButton } from "../../../../components/BackButton";
 
-export const Breadcrumbs = ({ level, onChangeLevel }) => {
+export const Breadcrumbs = ({
+  level,
+  onChangeLevel,
+  showNotStructureWorkers,
+  onToggleShowNotStructureWorkers,
+}) => {
   const { data: companyLevel, refetch } = useGetCompanyStructureLevelQuery();
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
 
@@ -25,23 +31,30 @@ export const Breadcrumbs = ({ level, onChangeLevel }) => {
 
   return (
     <StyledBreadcrumbs className="flex items-center" isSmall={level >= 3}>
-      {handleGetPath()
-        .slice(0, level)
-        .map((title, i) => (
-          <React.Fragment>
-            <div
-              className={`title ${
-                i === handleGetPath()?.slice(0, level).length - 1 && "active"
-              }`}
-              onClick={() => onChangeLevel(1 + i)}
-            >
-              {title}
-            </div>
-            {i < handleGetPath()?.slice(0, level).length - 1 && (
-              <div className="divider">/</div>
-            )}
-          </React.Fragment>
-        ))}
+      {showNotStructureWorkers ? (
+        <div className="flex items-center">
+          <BackButton onClick={onToggleShowNotStructureWorkers} />
+          <div className="title active">Незакріплені працівники</div>
+        </div>
+      ) : (
+        handleGetPath()
+          .slice(0, level)
+          .map((title, i) => (
+            <React.Fragment>
+              <div
+                className={`title ${
+                  i === handleGetPath()?.slice(0, level).length - 1 && "active"
+                }`}
+                onClick={() => onChangeLevel(1 + i)}
+              >
+                {title}
+              </div>
+              {i < handleGetPath()?.slice(0, level).length - 1 && (
+                <div className="divider">/</div>
+              )}
+            </React.Fragment>
+          ))
+      )}
     </StyledBreadcrumbs>
   );
 };

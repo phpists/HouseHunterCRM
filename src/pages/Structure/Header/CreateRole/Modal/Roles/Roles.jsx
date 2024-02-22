@@ -8,7 +8,7 @@ import {
 } from "../../../../../../store/structure/structure.api";
 import { Empty } from "./Empty";
 
-export const Roles = ({ level, levelData, onRefetchData }) => {
+export const Roles = ({ level, levelData, onRefetchData, onClose }) => {
   const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
   const { data: permissionsList } = useGetAllPerimissionsQuery();
   const { data: rolesPermission, refetch } = useGetPerimissionDirectorQuery();
@@ -41,6 +41,7 @@ export const Roles = ({ level, levelData, onRefetchData }) => {
                 level={1 + i}
                 onRefetchData={refetch}
                 noOpen={i === 0}
+                onClose={onClose}
               />
             ))
         : null}

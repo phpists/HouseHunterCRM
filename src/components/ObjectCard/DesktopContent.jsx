@@ -17,6 +17,7 @@ export const DesktopContent = ({
   onOpenPriceHistory,
   currency,
   onChangeCurrency,
+  isHideObjects,
 }) => (
   <StyledDesktopContent className="flex items-center justify-between">
     <Slider photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)} />
@@ -41,6 +42,7 @@ export const DesktopContent = ({
       onOpenPriceHistory={onOpenPriceHistory}
       isAccess={data?.acsses_change}
       link={data?.link}
+      isHideObjects={isHideObjects}
     />
     <div className="mobile-footer w-full">
       <Info data={data} />

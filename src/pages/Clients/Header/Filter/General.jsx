@@ -15,6 +15,7 @@ export const General = ({
   onChangeSearchCode,
   searchPhoneCodeSecond,
   onChangeSearchCodeSecond,
+  errors,
 }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
 
@@ -36,6 +37,7 @@ export const General = ({
         phonesCodes={phonesCodes}
         phoneCode={searchPhoneCode}
         onChangePhoneCode={(val) => onChangeSearchCode(val)}
+        error={errors?.search_phone}
       />
       <Divider />
       <ProfileField

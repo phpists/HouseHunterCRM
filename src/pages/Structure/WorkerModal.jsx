@@ -48,6 +48,7 @@ export const WorkerModal = ({
   noStructure,
   showPayHistory,
   worker,
+  rolesOnlyView,
 }) => {
   const [getWorker] = useLazyGetWorkerByIdQuery();
   const { user } = useAppSelect((state) => state.auth);
@@ -102,6 +103,8 @@ export const WorkerModal = ({
     profileData?.password?.length === 0 && errorsData.push("password");
     profileData?.phones?.filter((p) => p?.phone?.length === 0)?.length > 0 &&
       errorsData.push("phones");
+    new Date(handleFromInputDate(profileData?.dt_birthday)).toString() ===
+      "Invalid Date" && errorsData.push("dt_birthday");
 
     if (errorsData?.length > 0) {
       setErrors(errorsData);
@@ -131,7 +134,8 @@ export const WorkerModal = ({
                 resp?.data[0]?.dt_birthday === "0"
                   ? null
                   : handleFormatDate(
-                      new Date(Number(resp?.data[0]?.dt_birthday) * 1000)
+                      new Date(Number(resp?.data[0]?.dt_birthday) * 1000),
+                      true
                     ),
             }
           : INITIAL_DATA
@@ -315,6 +319,7 @@ export const WorkerModal = ({
         workerId={workerId}
         loading={loading}
         isEdit={user?.struct_level === 1}
+        rolesOnlyView={rolesOnlyView}
       />
       <div className="modal-overlay" onClick={onClose}></div>
     </>

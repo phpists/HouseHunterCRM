@@ -32,6 +32,7 @@ export const ProfileField = ({
   type,
   error,
   onlyCalendar,
+  onBlur,
 }) => {
   const fieldRef = useRef();
   const [active, setActive] = useState(false);
@@ -77,6 +78,13 @@ export const ProfileField = ({
     setOpen(false);
   };
 
+  const handlePressKey = (e) => {
+    if (e?.keyCode === 13) {
+      handleClose();
+      onSave && onSave();
+    }
+  };
+
   return (
     <StyledProfileField
       active={active}
@@ -117,7 +125,7 @@ export const ProfileField = ({
               value={value}
               onChange={onChange}
               inputClassName="value"
-              onKeyDown={(e) => e?.keyCode === 13 && handleClose()}
+              onKeyDown={handlePressKey}
               //   onBlur={() => {
               //     setActive(false);
               //     setOpen(false);
@@ -132,7 +140,7 @@ export const ProfileField = ({
               onChange={textAreaAdjust}
               placeholder={placeholder}
               autoFocus
-              onKeyDown={(e) => e?.keyCode === 13 && handleClose()}
+              onKeyDown={handlePressKey}
               //   onBlur={() => {
               //     setActive(false);
               //     setOpen(false);
@@ -161,6 +169,7 @@ export const ProfileField = ({
                 if (e?.keyCode === 13) {
                   setOpen(false);
                   setActive(false);
+                  onSave && onSave();
                 }
               }}
             />
@@ -178,7 +187,7 @@ export const ProfileField = ({
               }
               type={type ?? "text"}
               autoFocus
-              onKeyDown={(e) => e?.keyCode === 13 && handleClose()}
+              onKeyDown={handlePressKey}
               //   onBlur={() => {
               //     setActive(false);
               //     setOpen(false);
@@ -218,6 +227,7 @@ export const ProfileField = ({
             setActive(false);
             setOpen(false);
             setCalendarOpen(false);
+            onBlur && onBlur();
           }}
         ></div>
       )}

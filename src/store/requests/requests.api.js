@@ -1,7 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../../api/baseUrl";
 import { headers } from "../../api/headers";
-import { handleResponse, handleToFormData } from "../../utilits";
+import {
+  checkIsArray,
+  checkIsJSON,
+  handleResponse,
+  handleToFormData,
+} from "../../utilits";
 
 export const requests = createApi({
   reducerPath: "requests/api",
@@ -145,7 +150,27 @@ export const requests = createApi({
       transformResponse: (response) => {
         return handleResponse(
           response,
-          () => response,
+          () => {
+            return {
+              ...response,
+              requests: Object.fromEntries(
+                Object.entries(response?.requests)?.map((r) => [
+                  r[0],
+                  Object.fromEntries(
+                    Object.entries(r[1])?.map((req) => [
+                      req[0],
+                      {
+                        ...req[1],
+                        id_location: checkIsArray(
+                          checkIsJSON(req[1]?.id_location)
+                        ),
+                      },
+                    ])
+                  ),
+                ])
+              ),
+            };
+          },
           () => null,
           false,
           true
@@ -185,7 +210,8 @@ export const requests = createApi({
             fields,
             general_group,
           },
-          null
+          null,
+          ["price_min", "price_max"]
         ),
       }),
     }),
@@ -317,6 +343,19 @@ export const requests = createApi({
         }),
       }),
     }),
+    editRequestComment: build.query({
+      query: ({ request_group, comment }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "edit_comment",
+          mod: "requests",
+          request_group,
+          comment,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -339,4 +378,5 @@ export const {
   useLazyAddEmptyRequestInGroupQuery,
   useGetCompaniesQuery,
   useGetSortingObjectQuery,
+  useLazyEditRequestCommentQuery,
 } = requests;

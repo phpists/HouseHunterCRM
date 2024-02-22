@@ -229,11 +229,13 @@ export const Clients = () => {
   const handleAddClientToFavorite = (id) => {
     addClientToFavorite(id).then((resp) => {
       handleResponse(resp, () => {
-        const updatedClients = dataRef.current?.map((c) =>
-          c.id === id ? { ...c, favorite: !c.favorite } : c
-        );
+        const updatedClients = dataRef.current
+          ?.map((c) => (c.id === id ? { ...c, favorite: !c.favorite } : c))
+          ?.filter((c) => (favoritesFilter ? c.id !== id : true));
+
         dataRef.current = updatedClients;
         setClients(updatedClients);
+        setAllCount(favoritesFilter ? allCount - 1 : allCount);
         cogoToast.success("Статус успішно обновлено", {
           hideAfter: 3,
           position: "top-right",
@@ -255,10 +257,18 @@ export const Clients = () => {
         })
       )
     ).then((resp) => {
-      const updatedClients = dataRef.current?.map((c) =>
-        selected.find((s) => s === c?.id) ? { ...c, favorite: !c.favorite } : c
-      );
+      const updatedClients = dataRef.current
+        ?.map((c) =>
+          selected.find((s) => s === c?.id)
+            ? { ...c, favorite: !c.favorite }
+            : c
+        )
+        ?.filter((c) =>
+          favoritesFilter ? !selected.find((s) => s === c?.id) : true
+        );
+
       dataRef.current = updatedClients;
+      setAllCount(favoritesFilter ? allCount - selected?.length : allCount);
       setClients(updatedClients);
       setSelected([]);
     });
@@ -269,6 +279,15 @@ export const Clients = () => {
   };
 
   const handleSuccessSend = () => {
+    const updatedClients = dataRef.current?.filter(
+      (c) => !sendClients.find((s) => s === c?.id)
+    );
+    dataRef.current = updatedClients;
+    setClients(updatedClients);
+    const updatedCount = allCount - sendClients?.length;
+    setAllCount(updatedCount);
+    saveClientsCount(updatedCount);
+    allCountRef.current = updatedCount;
     setSendClients([]);
     setSelected([]);
   };

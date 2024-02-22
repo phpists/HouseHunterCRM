@@ -3,6 +3,7 @@ import { Price } from "../../Price/Price";
 import { Tags } from "./Tags/Tags";
 
 export const MainInfo = ({ className, data, currency, onChangeCurrency }) => {
+  console.log(data);
   return (
     <StyledMainInfo className={`${className}`}>
       <Price

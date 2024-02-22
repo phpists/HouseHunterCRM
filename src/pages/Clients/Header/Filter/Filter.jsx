@@ -6,7 +6,7 @@ import { Topicality } from "./Topicality";
 import { Characteristics } from "./Characteristics";
 import { Footer } from "./Footer";
 import { motion, useAnimationControls } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const Filter = ({
   onClose,
@@ -19,6 +19,7 @@ export const Filter = ({
   onChangeSearchCodeSecond,
 }) => {
   const controls = useAnimationControls();
+  const [errors, setErrors] = useState({});
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
@@ -43,6 +44,18 @@ export const Filter = ({
     handleClose();
   };
 
+  const handleApply = () => {
+    if (
+      filter?.search_phone?.length > 0 &&
+      filter?.search_phone?.includes("_")
+    ) {
+      setErrors({ search_phone: true });
+    } else {
+      handleApplyFilters();
+      setErrors({ search_phone: false });
+    }
+  };
+
   return (
     <>
       <StyledFilter
@@ -60,13 +73,14 @@ export const Filter = ({
             onChangeSearchCode={onChangeSearchCode}
             searchPhoneCodeSecond={searchPhoneCodeSecond}
             onChangeSearchCodeSecond={onChangeSearchCodeSecond}
+            errors={errors}
           />
           {/* <SectionTitle title="Актуальність" />
    <Topicality />
    <SectionTitle title="Характеристики" />
    <Characteristics /> */}
         </div>
-        <Footer onReset={handleResetFilters} onSubmit={handleApplyFilters} />
+        <Footer onReset={handleResetFilters} onSubmit={handleApply} />
       </StyledFilter>
       <div className="modal-overlay" onClick={handleClose}></div>
     </>

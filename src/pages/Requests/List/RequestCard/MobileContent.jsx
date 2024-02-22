@@ -45,7 +45,10 @@ export const MobileContent = ({
           storeyMin={data?.address_storey_min}
           storeyMax={data?.address_storey_max}
         />
-        <Comment comment={data?.General_field_group?.comment_group} />
+        <Comment
+          comment={data?.General_field_group?.comment_group}
+          id={data?.id_group}
+        />
         <Objects data={data} idGroup={data?.id_group} onOpenChat={onOpenChat} />
       </div>
     </div>

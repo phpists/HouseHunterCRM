@@ -16,35 +16,32 @@ export const ObjectHistory = ({ onClose, object }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
   useEffect(() => {
-    console.log(object);
     if (object?.isStreetBase) {
       getStreetBaseHistory(object?.id).then((resp) =>
         handleResponse(resp, () => setData(resp?.data?.data ?? []))
       );
     } else {
-      getHistory(object?.id).then((resp) =>
-        handleResponse(resp, () => setData(resp?.data?.data ?? []))
-      );
+      getHistory(object?.id).then((resp) => setData(resp?.data ?? []));
     }
   }, [object]);
 
+  console.log(data);
   return (
     <StyledObjectHistory>
       <Modal onClose={onClose} title="Історія тегів">
         <div className="object-history-wrapper">
-          {data?.length === 0 ? (
+          {data?.length === 0 || !data ? (
             <div className="empty">Пусто</div>
           ) : (
             <div className="object-history-cards">
               {data?.map(({ action, label, name, tag, user_name, time }, i) => (
                 <Card
                   key={i}
-                  title={name}
+                  title={name ?? user_name}
                   date={time ? handleFormatDate(time * 1000, true) : undefined}
                   //   hours="11:01"
                   tagName={commentsToFields?.object[tag ?? label] ?? "-"}
                   action={action === "add"}
-                  userName={user_name}
                 />
               ))}
             </div>

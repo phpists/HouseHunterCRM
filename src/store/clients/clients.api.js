@@ -290,6 +290,19 @@ export const clients = createApi({
         }),
       }),
     }),
+    editClientComment: build.query({
+      query: ({ id_client, comment }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "edit_comment",
+          mod: "clients",
+          id_client,
+          comment,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -309,4 +322,5 @@ export const {
   useLazyAddClientToFavoriteQuery,
   useGetWorkerToMoveClientsQuery,
   useLazyMoveClientsQuery,
+  useLazyEditClientCommentQuery,
 } = clients;

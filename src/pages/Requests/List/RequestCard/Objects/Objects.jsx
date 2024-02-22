@@ -18,8 +18,8 @@ export const Objects = ({ idGroup, onOpenChat, data }) => {
         <div className="clickable objects-info-wrapper">
           <div className="flex items-center justify-between clickable">
             <div className="clickable">
-              <Title count={data?.General_field_group?.count_object} />
-              <Tag count={data?.General_field_group?.count_new_object} />
+              <Title count={data?.General_field_group?.count_objects} />
+              <Tag count={data?.General_field_group?.count_objects} />
             </div>
             <Buttons onOpenChat={onOpenChat} idGroup={idGroup} />
           </div>

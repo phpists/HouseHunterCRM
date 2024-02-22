@@ -32,19 +32,14 @@ export const Header = ({
   const [hideObject] = useLazyHideObjectFromSelectionsQuery();
 
   const handleHide = () => {
-    Promise.all(
-      selected?.map((id_object) =>
-        hideObject({ id_request_group: id, id_object }).then((resp) => {
-          handleResponse(resp, () => {
-            cogoToast.success("Статус успішно змінено!", {
-              hideAfter: 3,
-              position: "top-right",
-            });
-          });
-        })
-      )
-    ).then((resp) => {
-      onHide();
+    hideObject({ id_request_group: id, id_objects: selected }).then((resp) => {
+      handleResponse(resp, () => {
+        cogoToast.success("Статус успішно змінено!", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        onHide();
+      });
     });
   };
 
@@ -82,6 +77,7 @@ export const Header = ({
               //   onToggleFavorite={handleToggleFavorites}
               onHide={handleHide}
               noFavorite
+              isHideObjects={showObjectHide}
             />
           </div>
         </div>
@@ -96,6 +92,7 @@ export const Header = ({
           //   onToggleFavorite={handleToggleFavorites}
           onHide={handleHide}
           noFavorite
+          isHideObjects={showObjectHide}
         />
       </div>
     </StyledHeader>

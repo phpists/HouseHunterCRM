@@ -12,6 +12,7 @@ export const Profile = ({
   isProfile,
   profile,
   onRemoveAvatar,
+  rolesOnlyView,
 }) => (
   <StyledProfile>
     <LastDate data={data?.last_active ?? ""} />
@@ -33,6 +34,7 @@ export const Profile = ({
               onChange={(val) =>
                 isProfile ? null : onChangeField("structure_level", val)
               }
+              rolesOnlyView={rolesOnlyView}
             />
           )}
         </div>

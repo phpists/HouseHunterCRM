@@ -20,6 +20,7 @@ export const MobileContent = ({
   onOpenPriceHistory,
   currency,
   onChangeCurrency,
+  isHideObjects,
 }) => (
   <StyledMobileContent>
     <Header />
@@ -48,6 +49,7 @@ export const MobileContent = ({
       onOpenPriceHistory={onOpenPriceHistory}
       isAccess={data?.acsses_change}
       link={data?.link}
+      isHideObjects={isHideObjects}
     />
   </StyledMobileContent>
 );

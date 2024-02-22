@@ -37,6 +37,7 @@ export const UserInfoCard = ({
   onLogout,
   loading,
   isEdit,
+  rolesOnlyView,
 }) => {
   const controls = useAnimationControls();
   const contentRef = useRef(null);
@@ -88,6 +89,7 @@ export const UserInfoCard = ({
             bosses={bosses}
             errors={errors}
             noStructure={noStructure}
+            rolesOnlyView={rolesOnlyView}
           />
           {/* <SectionTitle title="Працівники в підпорядкуванні" />
      <Workers /> */}

@@ -29,8 +29,6 @@ export const Cards = ({
     setOpen(index);
   };
 
-  console.log(tarifSelected);
-
   return (
     <StyledCards>
       {CARDS_DATA.map(({ title, priceTitle, price, color, dayCount }, i) => (

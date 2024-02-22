@@ -49,6 +49,7 @@ export const Selections = () => {
   const listRef = useRef();
   const [isAllPages, setIsAllPages] = useState(false);
   const [loading, setLoading] = useState(false);
+  const firstThousend = useRef(null);
 
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => {
@@ -120,7 +121,11 @@ export const Selections = () => {
             isLoading.current = false;
             const objectsResp = resp.data?.data ?? [];
             setObjects(isReset ? objectsResp : [...objects, ...objectsResp]);
-            setAllCount(allCount + objectsResp?.length);
+            setAllCount(
+              isReset
+                ? objectsResp?.length
+                : Number(allCount) + objectsResp?.length
+            );
             saveSelectionsCount(resp?.data?.all_item ?? "0");
           },
           () => {
@@ -208,20 +213,28 @@ export const Selections = () => {
   };
 
   const handleHideObject = (id_object) => {
-    hideObject({ id_request_group: id, id_object }).then((resp) =>
+    hideObject({ id_request_group: id, id_objects: [id_object] }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Об'єкт успішно приховано", {
           hideAfter: 3,
           position: "top-right",
         });
-        setObjects(objects?.filter((o) => o?.id !== id_object));
+        const updatedObjects = objects?.filter((o) => o?.id !== id_object);
+        setObjects(updatedObjects);
+        setAllCount(allCount - 1);
+        saveSelectionsCount(allCount - 1);
+        updatedObjects?.length === 0 && handleGetSelections(true);
       })
     );
   };
 
   const handleHideObjects = () => {
-    setObjects(objects?.filter((o) => !selected?.find((s) => s === o?.id)));
+    const updatedObjects = objects?.filter(
+      (o) => !selected?.find((s) => s === o?.id)
+    );
+    setObjects(updatedObjects);
     setSelected([]);
+    updatedObjects?.length === 0 && handleGetSelections(true);
   };
 
   const handleToggleHidden = () => {
@@ -286,6 +299,7 @@ export const Selections = () => {
         onHide={handleHideObject}
         innerRef={listRef}
         loading={loading}
+        isHideObjects={showObjectHide}
         // onFavorite={handleToggleFavoriteStatus}
       />
     </StyledSelections>

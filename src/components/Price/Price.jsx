@@ -17,12 +17,6 @@ export const Price = ({
   const [open, setOpen] = useState(false);
   const options = ["₴", "$", "€"];
 
-  console.log(
-    title ??
-      `${fortmatNumber(Number(prices[currency]) ?? 0)} ${
-        options[currency] ?? options[0]
-      }`
-  );
   return (
     <StyledPrice
       onMouseLeave={() => setOpen(false)}

@@ -3,7 +3,7 @@ import { Header } from "./Header/Header";
 import { SectionTitle } from "./SectionTitle";
 import { Footer } from "./Footer";
 import { motion, useAnimationControls } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Main } from "./Main";
 import { Topicality } from "./Topicality";
 import { Characteristics } from "./Characteristics";
@@ -18,6 +18,7 @@ export const Filter = ({
   filtersOpened,
 }) => {
   const controls = useAnimationControls();
+  const [errors, setErrors] = useState({});
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
@@ -31,6 +32,18 @@ export const Filter = ({
   const handleApplyFilters = (isApply) => {
     onApplyFilter(isApply);
     handleClose();
+  };
+
+  const handleApply = () => {
+    if (
+      filters?.search_phone?.length > 0 &&
+      filters?.search_phone?.includes("_")
+    ) {
+      setErrors({ search_phone: true });
+    } else {
+      handleApplyFilters(true);
+      setErrors({ search_phone: false });
+    }
   };
 
   return (
@@ -49,6 +62,7 @@ export const Filter = ({
             filtersFields={filtersFields}
             filtersOpened={filtersOpened}
             onChangeDefaultFiltersOpened={onChangeDefaultFiltersOpened}
+            errors={errors}
           />
           {/* <SectionTitle title="Актуальність" />
      <Topicality />
@@ -57,7 +71,7 @@ export const Filter = ({
         </div>
         <Footer
           onCancel={() => handleApplyFilters(false)}
-          onSubmit={() => handleApplyFilters(true)}
+          onSubmit={handleApply}
         />
       </StyledFilter>
       <div className="modal-overlay" onClick={handleClose}></div>
