@@ -3,6 +3,7 @@ import { Avatar } from "./Avatar";
 import { Name } from "./Name";
 import { Status } from "../../../../../../components/Status";
 import { Subtitle } from "./Subtitle";
+import { Tag } from "./Tag";
 
 export const Info = ({ isSelected, name, photo, phone, level }) => (
   <StyledInfo className="flex items-center">
@@ -12,6 +13,7 @@ export const Info = ({ isSelected, name, photo, phone, level }) => (
         <Name isSelected={isSelected} name={name} />
         {/* <Status status={2} /> */}
       </div>
+      <Tag level={level} />
       <Subtitle phone={phone} />
     </div>
   </StyledInfo>

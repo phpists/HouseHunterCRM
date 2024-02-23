@@ -20,7 +20,10 @@ export const DesktopContent = ({
   isHideObjects,
 }) => (
   <StyledDesktopContent className="flex items-center justify-between">
-    <Slider photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)} />
+    <Slider
+      photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)}
+      data={data}
+    />
     <MainInfo
       data={data}
       currency={currency}

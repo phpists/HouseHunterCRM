@@ -7,7 +7,13 @@ import { fortmatNumber, handleFormatDate } from "../../../../../utilits";
 export const Price = ({ data, id }) => (
   <StyledPrice className="flex items-center justify-between">
     <div>
-      <Title price={fortmatNumber(Number(data?.price_max ?? "0"))} />
+      <Title
+        price={
+          Number(data?.price_max ?? "0") === 0
+            ? "Не вказана"
+            : `до ${fortmatNumber(Number(data?.price_max ?? "0"))}$`
+        }
+      />
       <Subtitle subtitle="Бажана ціна" />
     </div>
     <div>

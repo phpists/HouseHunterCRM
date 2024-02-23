@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { Phone } from "./Phone";
 import { motion } from "framer-motion";
 
-export const Dropdown = ({ open, onSelect, top, options }) => (
+export const Dropdown = ({ open, onSelect, top, options, activePhone }) => (
   <StyledDropdown
     open={open}
     initial={{ opacity: 0, visibility: "hidden" }}
@@ -10,11 +10,13 @@ export const Dropdown = ({ open, onSelect, top, options }) => (
     top={top}
     className="notClickable"
   >
-    {options?.map((phone, i) => (
-      <div key={i} onClick={onSelect} className="notClickable">
-        <Phone className="phone-opt notClickable" phone={phone} />
-      </div>
-    ))}
+    {options?.map((phone, i) =>
+      activePhone === i ? null : (
+        <div key={i} onClick={() => onSelect(i)} className="notClickable">
+          <Phone className="phone-opt notClickable" phone={phone} readOnly />
+        </div>
+      )
+    )}
   </StyledDropdown>
 );
 

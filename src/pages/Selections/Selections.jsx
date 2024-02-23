@@ -195,11 +195,11 @@ export const Selections = () => {
 
   const handleApplyFilter = (isApply) => {
     filterActive.current = isApply;
+    currentPage.current = 0;
+    setIsAllPages(false);
     if (!isApply) {
       setFilters(INIT_FILTERS);
       setFilterFields([]);
-      currentPage.current = 0;
-      setIsAllPages(false);
     }
     handleGetSelections(true);
   };

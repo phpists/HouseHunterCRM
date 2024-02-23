@@ -218,49 +218,63 @@ export const Requests = () => {
   };
 
   const handleToggleFavoriteStatus = (id) => {
-    setRequests(
-      Object.fromEntries(
-        Object.entries(requests).map((req) => {
-          const reqId = req[0];
+    const updatedData = Object.fromEntries(
+      isFavorite
+        ? Object.entries(requests).filter((req) => req[0] !== id)
+        : Object.entries(requests).map((req) => {
+            const reqId = req[0];
 
-          if (reqId === id) {
-            const request = {
-              ...req[1],
-              General_field_group: {
-                ...req[1].General_field_group,
-                favorite: !req[1].General_field_group.favorite,
-              },
-            };
+            if (reqId === id) {
+              const request = {
+                ...req[1],
+                General_field_group: {
+                  ...req[1].General_field_group,
+                  favorite: !req[1].General_field_group.favorite,
+                },
+              };
 
-            return [reqId, request];
-          }
-          return req;
-        })
-      )
+              return [reqId, request];
+            }
+            return req;
+          })
     );
+    dataRef.current = updatedData;
+    setRequests(updatedData);
+    const updatedCount = allCount - 1;
+    allCountRef.current = updatedCount;
+    setAllCount(updatedCount);
   };
 
   const handleToggleFavoritesStatus = () => {
-    setRequests(
-      Object.fromEntries(
-        Object.entries(requests).map((req) => {
-          const reqId = req[0];
+    const updatedData = Object.fromEntries(
+      isFavorite
+        ? Object.entries(requests).filter(
+            (req) => !selected.find((s) => s === req[0])
+          )
+        : Object.entries(requests).map((req) => {
+            const reqId = req[0];
 
-          if (!!selected.find((s) => s === reqId)) {
-            const request = {
-              ...req[1],
-              General_field_group: {
-                ...req[1].General_field_group,
-                favorite: !req[1].General_field_group.favorite,
-              },
-            };
+            if (!!selected.find((s) => s === reqId)) {
+              const request = {
+                ...req[1],
+                General_field_group: {
+                  ...req[1].General_field_group,
+                  favorite: !req[1].General_field_group.favorite,
+                },
+              };
 
-            return [reqId, request];
-          }
-          return req;
-        })
-      )
+              return [reqId, request];
+            }
+            return req;
+          })
     );
+    setRequests(updatedData);
+    dataRef.current = updatedData;
+    setRequests(updatedData);
+    const updatedCount = allCount - selected.length;
+    allCountRef.current = updatedCount;
+    setAllCount(updatedCount);
+    saveRequestsCount(updatedCount);
     setSelected([]);
   };
 

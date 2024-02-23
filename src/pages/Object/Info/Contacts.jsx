@@ -12,7 +12,7 @@ export const Contacts = () => {
   const [getClient, { data }] = useLazyGetClientQuery();
   const [viber, setViber] = useState(false);
   const [telegram, setTelegram] = useState(false);
-
+  const [activePhone, setActivePhone] = useState(0);
   const handleGetClient = () => getClient(clientId);
 
   useEffect(() => {
@@ -34,16 +34,18 @@ export const Contacts = () => {
           <div className="socmedias">
             <Socmedia
               type="viber"
-              active={true}
+              active={data?.data?.phone[activePhone]?.viber === "1"}
               onClick={() => setViber(!viber)}
               className="viber-card"
               open
+              phone={`${data?.data?.phone[activePhone]?.code}${data?.data?.phone[activePhone]?.phone}`}
             />
             <Socmedia
               type="telegram"
-              active={true}
+              active={data?.data?.phone[activePhone]?.telegram === "1"}
               onClick={() => setTelegram(!telegram)}
               open
+              phone={`${data?.data?.phone[activePhone]?.code}${data?.data?.phone[activePhone]?.phone}`}
             />
           </div>
           <Phones
@@ -51,6 +53,8 @@ export const Contacts = () => {
             phones={data?.data?.phone?.map(
               ({ code, phone }) => `${code}${phone}`
             )}
+            onChangeActive={(index) => setActivePhone(index)}
+            activePhone={activePhone}
           />
         </div>
       </div>

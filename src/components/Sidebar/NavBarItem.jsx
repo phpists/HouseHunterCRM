@@ -1,16 +1,21 @@
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
-export const NavBarItem = ({ Icon, link }) => (
-  <StyledNavbarItem
-    to={link}
-    className="flex items-center"
-    activeClassName="active"
-  >
-    <Icon />
-  </StyledNavbarItem>
-);
+export const NavBarItem = ({ Icon, link, childrenLinks }) => {
+  const { pathname } = useLocation();
 
+  return (
+    <StyledNavbarItem
+      to={link}
+      className={`flex items-center ${
+        childrenLinks.includes(pathname?.split("/")?.[1]) && "active"
+      }`}
+      activeClassName="active"
+    >
+      <Icon />
+    </StyledNavbarItem>
+  );
+};
 const StyledNavbarItem = styled(NavLink)`
   height: 40px;
   width: 84px;

@@ -59,6 +59,7 @@ export const Objects = () => {
   const firstThousand = useRef([]);
 
   const handleChangeFilter = (field, value, isDataUpdate) => {
+    console.log(field, value);
     if (isDataUpdate) {
       setFilters(value);
     } else {
@@ -180,17 +181,19 @@ export const Objects = () => {
   };
 
   const handleToggleFavoritesStatus = () => {
-    setObjects(
-      objects.map((req) => {
-        if (!!selected.find((s) => s === req[0])) {
-          let request = [];
-          request[0] = req[0];
-          request[1] = { ...req[1], favorite: !req[1]?.favorite };
-          return request;
-        }
-        return req;
-      })
-    );
+    const updatedData = isFavorite
+      ? objects?.filter((obj) => !selected.find((i) => i === obj?.id))
+      : objects?.map((obj) =>
+          !!selected.find((i) => i === obj?.id)
+            ? { ...obj, favorite: !obj.favorite }
+            : obj
+        );
+    dataRef.current = updateData;
+    setObjects(updatedData);
+    const updatedCount = isFavorite ? allCount - selected.length : allCount;
+    allCountRef.current = updatedCount;
+    setAllCount(updatedCount);
+    saveObjectsCount(updatedCount);
     setSelected([]);
   };
 
@@ -198,9 +201,15 @@ export const Objects = () => {
     firstThousand.current = firstThousand.current.filter(
       (c) => !selected.find((sc) => sc === c)
     );
-    saveObjectsCount(allCount - selected?.length);
-    setAllCount(allCount - selected?.length);
-    setObjects(objects.filter((obj) => !selected.find((s) => s === obj.id)));
+    const updatedCount = allCount - selected?.length;
+    allCountRef.current = updatedCount;
+    saveObjectsCount(updatedCount);
+    setAllCount(updatedCount);
+    const updatedData = objects.filter(
+      (obj) => !selected.find((s) => s === obj.id)
+    );
+    dataRef.current = updateData;
+    setObjects(updatedData);
     setSelected([]);
     handleGetObjects();
   };
@@ -243,11 +252,18 @@ export const Objects = () => {
   const handleToggleFavoriteStatus = (id) => {
     addObjectToFavorites([id]).then((resp) => {
       handleResponse(resp, () => {
-        setObjects(
-          objects?.map((obj) =>
-            obj?.id === id ? { ...obj, favorite: !obj.favorite } : obj
-          )
-        );
+        const updatedData = isFavorite
+          ? objects?.filter((obj) => obj?.id !== id)
+          : objects?.map((obj) =>
+              obj?.id === id ? { ...obj, favorite: !obj.favorite } : obj
+            );
+        dataRef.current = updateData;
+        setObjects(updatedData);
+        const updatedCount = isFavorite ? allCount - 1 : allCount;
+        allCountRef.current = updatedCount;
+        setAllCount(updatedCount);
+        saveObjectsCount(updatedCount);
+
         cogoToast.success("Статус успішно змінено!", {
           hideAfter: 3,
           position: "top-right",
@@ -318,6 +334,19 @@ export const Objects = () => {
       setUpdateData(true);
     } else if (filterApply === "?showLiquidity") {
       setFilters({ showLiquidity: "1" });
+      filterActive.current = true;
+      setUpdateData(true);
+    } else if (filterApply === "?my_objects") {
+      setFilters({
+        company_object: {
+          show_only: "only_my",
+          show_street_base_company: "1",
+          overdue: "1",
+          not_actual: "1",
+          given_objects: "1",
+          actual: "1",
+        },
+      });
       filterActive.current = true;
       setUpdateData(true);
     } else {

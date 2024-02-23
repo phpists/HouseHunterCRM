@@ -2,17 +2,30 @@ import { styled } from "styled-components";
 import phoneIcon from "../../assets/images/call.svg";
 import { handleCopy } from "../../utilits";
 
-export const Phone = ({ showOnHoverIcon, className, phone, isLessThenOne }) => (
+export const Phone = ({
+  showOnHoverIcon,
+  className,
+  phone,
+  isLessThenOne,
+  readOnly,
+}) => (
   <StyledPhone
     className={`${className} notClickable ${isLessThenOne && "less-then-one"}`}
   >
     <div className="flex items-center notClickable">
-      <div className="phone notClickable" onClick={() => handleCopy(phone)}>
+      <div
+        className="phone notClickable"
+        onClick={() => (readOnly ? null : handleCopy(phone))}
+      >
         {phone}
       </div>
-      <a href={`tel:${phone}`}>
+      {readOnly ? (
         <img src={phoneIcon} alt="" className="notClickable" />
-      </a>
+      ) : (
+        <a href={`tel:${phone}`}>
+          <img src={phoneIcon} alt="" className="notClickable" />
+        </a>
+      )}
     </div>
     <div className="subtitle notClickable">Телефон</div>
   </StyledPhone>

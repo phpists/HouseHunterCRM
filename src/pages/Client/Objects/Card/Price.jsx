@@ -3,8 +3,10 @@ import { fortmatNumber } from "../../../../utilits";
 
 export const Price = ({ price }) => (
   <StyledPrice className="flex items-center">
-    {fortmatNumber(Number(price ?? 0))}
-    <span>₴</span>
+    {Number(price ?? 0) === 0
+      ? "Не вказана"
+      : fortmatNumber(Number(price ?? 0))}
+    {Number(price ?? 0) !== 0 && <span>₴</span>}
   </StyledPrice>
 );
 

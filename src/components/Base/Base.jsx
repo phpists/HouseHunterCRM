@@ -48,17 +48,21 @@ export const Base = ({
       : [];
 
   const handleToggleCompany = () => {
-    if (company) {
-      onChange("reset", { ...data, company_object: undefined }, true);
-    }
+    onChange(
+      "reset",
+      { ...data, company_object: company ? undefined : {} },
+      true
+    );
 
     setCompany(!company);
   };
 
   const handleToggleStreetBase = () => {
-    if (streetBase) {
-      onChange("reset", { ...data, street_base_object: undefined }, true);
-    }
+    onChange(
+      "reset",
+      { ...data, street_base_object: streetBase ? undefined : {} },
+      true
+    );
 
     setStreetBase(!streetBase);
     if (onChangeDefaultFiltersOpened) {
@@ -67,9 +71,7 @@ export const Base = ({
   };
 
   const handleToggleMlsBase = () => {
-    if (mlsBase) {
-      onChange("reset", { ...data, mls_object: undefined }, true);
-    }
+    onChange("reset", { ...data, mls_object: mlsBase ? undefined : {} }, true);
 
     setMlsBase(!mlsBase);
     if (onChangeDefaultFiltersOpened) {
@@ -274,6 +276,7 @@ export const Base = ({
             options={handleGetFormatCompanies()}
             showTags
             className="companySelect"
+            closeOnScroll
           />
           <ToggleOption
             label="Все крім цього"

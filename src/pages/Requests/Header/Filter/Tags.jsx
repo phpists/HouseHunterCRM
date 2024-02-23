@@ -268,7 +268,7 @@ export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
           </>
         )}
       <CheckOption
-        label="Об’єкти компанії"
+        label="Запити компанії"
         className="check-opt"
         value={filters?.only_company_obj}
         onChange={(val) =>
@@ -286,7 +286,7 @@ export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
         }
       />
       <CheckOption
-        label="Мої об'єкти"
+        label="Мої запити"
         className="check-opt"
         value={filters?.only_my_obj}
         onChange={(val) =>
@@ -303,8 +303,8 @@ export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
           )
         }
       />
-      <CheckOption
-        label="Об’єкти STREET BASE"
+      {/* <CheckOption
+        label="Запити STREET BASE"
         className="check-opt"
         value={filters?.only_street_base_obj}
         onChange={(val) =>
@@ -320,9 +320,9 @@ export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
             true
           )
         }
-      />
+      /> */}
       <CheckOption
-        label="Об'єкти моєї структури"
+        label="Запити моєї структури"
         className="check-opt"
         value={filters?.only_my_structure}
         onChange={(val) =>

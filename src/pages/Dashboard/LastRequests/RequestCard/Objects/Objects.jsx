@@ -17,8 +17,8 @@ export const Objects = ({ data, id, onOpenChat }) => {
     <StyledObjects>
       {/* <LastSeen /> */}
       <div className="flex items-center">
-        <Photo photo={img1} />
-        <Photo photo={img2} />
+        {/* <Photo photo={img1} />
+        <Photo photo={img2} /> */}
         <div>
           <Title count={data?.count_object} />
           <Tag count={data?.count_object} />

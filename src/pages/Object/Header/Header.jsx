@@ -64,7 +64,7 @@ export const Header = ({ onSave, favorite, onToggleFavorite, loading }) => {
         <BackButton />
         <div className="btns-header flex items-center">
           <SaveButton onClick={onSave} loading={loading} />
-          <SendClientButton />
+          {/* <SendClientButton /> */}
           <IconButton
             Icon={StarIcon}
             className="icon-btn"

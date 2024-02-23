@@ -50,7 +50,7 @@ export const Field = ({
       hide={hide}
       full={full}
       error={error}
-      onClick={() => !edit && setEdit(true)}
+      onClick={() => !edit && !viewOnly && setEdit(true)}
     >
       <div className="field-content">
         {/* {type === "date" && edit && (

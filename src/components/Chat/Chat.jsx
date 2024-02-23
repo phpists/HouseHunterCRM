@@ -10,7 +10,7 @@ export const Chat = ({ onClose, rieltor, requestObjectId }) => {
   const [showChat] = useLazyShowChatQuery();
   const [data, setData] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
-
+  const [client, setClient] = useState({});
   const handleSelectMessage = (msg) =>
     setSelectedMessage(msg === selectedMessage ? null : msg);
 
@@ -19,6 +19,7 @@ export const Chat = ({ onClose, rieltor, requestObjectId }) => {
       handleResponse(resp, () => {
         setData(resp?.data?.data);
         setSelectedMessage(null);
+        setClient(resp?.data?.client_info);
       })
     );
   };
@@ -28,23 +29,26 @@ export const Chat = ({ onClose, rieltor, requestObjectId }) => {
   }, []);
 
   return (
-    <StyledChat>
-      <Header onCloseChat={onClose} rieltor={rieltor} />
-      <Content
-        data={data}
-        selected={selectedMessage}
-        onSelect={handleSelectMessage}
-        rieltorName={rieltor?.name ?? "Рієлтор"}
-        requestObjectId={requestObjectId}
-      />
-      <Footer
-        onRefreshData={handleGetChat}
-        selectedMessage={selectedMessage}
-        onCloseSelectedMessage={() => setSelectedMessage(null)}
-        rieltorName={rieltor?.name ?? "Рієлтор"}
-        requestObjectId={requestObjectId}
-      />
-    </StyledChat>
+    <>
+      <StyledChat>
+        <Header onCloseChat={onClose} rieltor={client} />
+        <Content
+          data={data}
+          selected={selectedMessage}
+          onSelect={handleSelectMessage}
+          rieltorName={client?.name ?? "Рієлтор"}
+          requestObjectId={requestObjectId}
+        />
+        <Footer
+          onRefreshData={handleGetChat}
+          selectedMessage={selectedMessage}
+          onCloseSelectedMessage={() => setSelectedMessage(null)}
+          rieltorName={client?.name ?? "Рієлтор"}
+          requestObjectId={requestObjectId}
+        />
+      </StyledChat>
+      <div className="modal-overlay" onClick={onClose}></div>
+    </>
   );
 };
 

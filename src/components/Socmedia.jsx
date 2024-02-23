@@ -16,22 +16,29 @@ export const Socmedia = ({
   className,
   open,
   readOnly,
-}) => (
-  <StyledSocmedia
-    className={`flex items-center justify-between ${className} ${
-      active && "active"
-    }`}
-    onClick={onClick}
-    color={TYPES[type].color}
-    readOnly={readOnly}
-  >
-    <img src={TYPES[type].icon} alt="" />
-    <div className="divider" />
-    {open ? <ArrowIcon /> : <CheckIcon />}
-  </StyledSocmedia>
-);
+  phone,
+}) => {
+  const phoneValue =
+    type === "viber" ? `viber://chat?number=${phone}` : `https://t.me/${phone}`;
+  return (
+    <StyledSocmedia
+      className={`flex items-center justify-between ${className} ${
+        active && "active"
+      }`}
+      onClick={onClick}
+      color={TYPES[type].color}
+      readOnly={readOnly}
+      href={phone && active ? phoneValue : undefined}
+      target={phone && active && type === "telegram" ? "_blank" : undefined}
+    >
+      <img src={TYPES[type].icon} alt="" />
+      <div className="divider" />
+      {open ? <ArrowIcon /> : <CheckIcon />}
+    </StyledSocmedia>
+  );
+};
 
-const StyledSocmedia = styled.div`
+const StyledSocmedia = styled.a`
   padding: 2px;
   border-radius: 6px;
   width: 48px;

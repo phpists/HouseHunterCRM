@@ -18,7 +18,7 @@ export const Objects = ({ statisticData }) => {
 
   return (
     <StyledObjects>
-      <CardHeader title="До моїх об’єктів" link="/objects" />
+      <CardHeader title="До моїх об’єктів" link="/objects?my_objects=true" />
       <div className="content">
         <Card
           IconImg={HomeIcon}
@@ -36,6 +36,10 @@ export const Objects = ({ statisticData }) => {
               value: streetBaseObjectCount?.count ?? "-",
             },
             { title: "Актуальні", value: actualObjectCount?.count ?? "-" },
+            {
+              title: "Не актуальні",
+              value: statisticData?.count_objects_not_actual ?? "0",
+            },
             {
               title: "Здані",
               value: statisticData?.count_objects_surrendered ?? "0",

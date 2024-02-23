@@ -45,6 +45,10 @@ export const Workers = ({
   }, [refetchWorkers]);
 
   useEffect(() => {
+    refetch();
+  }, []);
+
+  useEffect(() => {
     const workersResp = data
       ? Object.entries(data)
           ?.filter((w) => w[0] !== "error")

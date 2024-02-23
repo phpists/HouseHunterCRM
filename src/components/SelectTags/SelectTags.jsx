@@ -20,6 +20,7 @@ export const SelectTags = ({
   tags,
   error,
   className,
+  closeOnScroll,
 }) => {
   const [open, setOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -144,6 +145,12 @@ export const SelectTags = ({
             setOpen(false);
             setIsActive(false);
           }}
+          onWheel={() => {
+            if (closeOnScroll) {
+              setOpen(false);
+              setIsActive(false);
+            }
+          }}
         ></div>
       )}
     </StyledSelectTags>
@@ -170,6 +177,7 @@ const StyledSelectTags = styled.button`
     transition: all 0.3s;
     z-index: 10;
     text-align: left;
+    width: 90%;
     &::placeholder {
       color: #fff;
       font-family: Overpass;

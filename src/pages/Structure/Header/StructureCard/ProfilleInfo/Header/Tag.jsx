@@ -7,10 +7,10 @@ export const Tag = ({ color, role }) => (
 );
 
 const StyledTag = styled.div`
-  padding: 4px 6px;
+  padding: 6px 6px 4px;
   border-radius: 4px;
-  background: ${({ color }) => `${color}40`};
-  color: ${({ color }) => color};
+  background: ${({ color }) => (color ? `${color}40` : "#FFFFFF1A")};
+  color: ${({ color }) => color ?? "#FFFFFFCC"};
   text-align: center;
   leading-trim: both;
   text-edge: cap;

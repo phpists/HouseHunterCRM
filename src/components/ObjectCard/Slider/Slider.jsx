@@ -9,6 +9,7 @@ import { Photos } from "./Photos/Photos";
 import { Arrows } from "./Arrows";
 import { PhotoSlider } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
+import { Tags } from "./Tags";
 
 const settings = {
   dots: false,
@@ -20,7 +21,7 @@ const settings = {
   touchMove: true,
 };
 
-export const Slider = ({ photos }) => {
+export const Slider = ({ photos, data }) => {
   const sliderRef = useRef(null);
   const slickRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(1);
@@ -35,6 +36,8 @@ export const Slider = ({ photos }) => {
     slickRef.current.slickGoTo(0);
   }, []);
 
+  //   obj_street_base
+  //   mls
   return (
     <>
       <PhotoSlider
@@ -57,6 +60,7 @@ export const Slider = ({ photos }) => {
               onChangeSlide={handleChangeSlide}
             />
           )}
+          <Tags data={data} />
           <SlickSlider
             {...settings}
             beforeChange={(currentSlide, nextSlide) =>

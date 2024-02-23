@@ -50,36 +50,48 @@ export const handleToFormData = (data, files, notCleanFields) => {
         }
       });
     } else if (typeof field[1] === "object") {
-      Object.entries(field[1]).forEach((fField) => {
-        if (Array.isArray(fField[1])) {
-          fField[1].forEach((f, i) => {
-            formData.append(`${field[0]}[${fField[0]}][]`, f);
-          });
-        } else if (typeof fField[1] === "object" && fField[1]) {
-          Object.entries(fField[1]).forEach((innerFField) => {
-            if (Array.isArray(innerFField[1])) {
-              innerFField[1].forEach((f, i) => {
-                formData.append(
-                  `${field[0]}[${fField[0]}][${innerFField[0]}][]`,
-                  f
-                );
+      if (Object.entries(field[1])?.length > 0) {
+        Object.entries(field[1]).forEach((fField) => {
+          console.log(fField);
+          if (Array.isArray(fField[1])) {
+            fField[1].forEach((f, i) => {
+              formData.append(`${field[0]}[${fField[0]}][]`, f);
+            });
+          } else if (typeof fField[1] === "object" && fField[1]) {
+            if (Object.entries(fField[1])?.length > 0) {
+              Object.entries(fField[1]).forEach((innerFField) => {
+                if (Array.isArray(innerFField[1])) {
+                  innerFField[1].forEach((f, i) => {
+                    formData.append(
+                      `${field[0]}[${fField[0]}][${innerFField[0]}][]`,
+                      f
+                    );
+                  });
+                } else {
+                  (innerFField[1] ||
+                    innerFField[1]?.length > 0 ||
+                    notCleanFields?.find((l) => l === fField[0])) &&
+                    formData.append(
+                      `${field[0]}[${fField[0]}][${innerFField[0]}]`,
+                      innerFField[1]
+                    );
+                }
               });
             } else {
-              (innerFField[1] ||
-                innerFField[1]?.length > 0 ||
-                notCleanFields?.find((l) => l === fField[0])) &&
-                formData.append(
-                  `${field[0]}[${fField[0]}][${innerFField[0]}]`,
-                  innerFField[1]
-                );
+              formData.append(
+                `${field[0]}[${fField[0]}]`,
+                JSON.stringify(fField[1])
+              );
             }
-          });
-          // *
-        } else {
-          (fField[1] || fField[1]?.length > 0) &&
-            formData.append(`${field[0]}[${fField[0]}]`, fField[1]);
-        }
-      });
+            // *
+          } else {
+            (fField[1] || fField[1]?.length > 0) &&
+              formData.append(`${field[0]}[${fField[0]}]`, fField[1]);
+          }
+        });
+      } else {
+        formData.append(field[0], JSON.stringify(field[1]));
+      }
     } else {
       field[1] && formData.append(field[0], field[1]);
     }

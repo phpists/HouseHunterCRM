@@ -21,41 +21,22 @@ export const Tags = ({ className, data, isAccess }) => {
   const handleSelect = (val) => {
     const isExist = !!tags?.find((t) => t.value === val);
 
-    if (data?.obj_street_base === "1") {
-      addTagStreetBase({
-        actions: isExist ? "0" : "1",
-        tags: val,
-        id_object: data?.id,
-      }).then((resp) =>
-        handleResponse(resp, () => {
-          setTags(
-            isExist
-              ? tags?.filter((t) => t.value !== val)
-              : [
-                  ...tags,
-                  { title: commentsToFields?.object[val] ?? "-", value: val },
-                ]
-          );
-        })
-      );
-    } else {
-      addTag({
-        actions: isExist ? "0" : "1",
-        tags: val,
-        id_object: data?.id,
-      }).then((resp) =>
-        handleResponse(resp, () => {
-          setTags(
-            isExist
-              ? tags?.filter((t) => t.value !== val)
-              : [
-                  ...tags,
-                  { title: commentsToFields?.object[val] ?? "-", value: val },
-                ]
-          );
-        })
-      );
-    }
+    addTag({
+      actions: isExist ? "0" : "1",
+      tags: val,
+      id_object: data?.id,
+    }).then((resp) =>
+      handleResponse(resp, () => {
+        setTags(
+          isExist
+            ? tags?.filter((t) => t.value !== val)
+            : [
+                ...tags,
+                { title: commentsToFields?.object[val] ?? "-", value: val },
+              ]
+        );
+      })
+    );
   };
 
   const handleGetInitTags = () => {
@@ -111,7 +92,6 @@ const StyledTags = styled.div`
   width: 200px;
   margin-right: 10px;
   height: 200px;
-  overflow: auto;
   .comment {
     margin-top: 8px;
     max-width: 200px;

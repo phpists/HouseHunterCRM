@@ -15,7 +15,7 @@ export const Tag = ({ title, isFirst, type, isHide, onRemove, viewOnly }) => (
     }}
   >
     <span className="notClickable">
-      {title?.length > 40 ? `${title.substring(0, 40)}...` : title}
+      {title?.length > 35 ? `${title.substring(0, 35)}...` : title}
     </span>
     <button
       className="flex items-center justify-center notClickable"
@@ -44,6 +44,7 @@ const StyledTag = styled(motion.div)`
   span {
     width: max-content;
     white-space: nowrap;
+    max-width: 90%;
   }
   button {
     margin-left: 2px;

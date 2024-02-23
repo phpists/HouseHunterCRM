@@ -16,7 +16,7 @@ export const Arrow = ({ onClick, onBlur, active, innerRef }) => (
 const StyledArrow = styled.button`
   width: 32px;
   height: 32px;
-  flex-shrink: 0;
+  flex-shrink: 1;
   border-radius: 8px;
   transition: all 0.3s;
   svg {

@@ -46,7 +46,7 @@ export const Header = ({ onOpenInfo, data }) => {
           role={
             handleGetCurrentLevel()[0]?.split(" - ")[
               (data?.structure_level ?? data?.struct_level) - 1
-            ] ?? "-"
+            ] ?? "Без ролі"
           }
         />
         <Date

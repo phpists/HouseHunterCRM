@@ -7,7 +7,12 @@ import {
   useLazyGetRequestQuery,
   useLazyGetRubricsFieldsQuery,
 } from "../../../store/requests/requests.api";
-import { handleFormatDate, handleResponse } from "../../../utilits";
+import {
+  checkIsArray,
+  checkIsJSON,
+  handleFormatDate,
+  handleResponse,
+} from "../../../utilits";
 import {
   useLazyGetObjectQuery,
   useLazyGetRubricFieldsQuery,
@@ -39,7 +44,7 @@ export const ObjectCard = ({ className, selectedObject }) => {
             infoFields?.map((field) => ({
               id_client: field?.id_client,
               id_rubric: field?.id_rubric,
-              id_location: field?.id_location,
+              id_location: checkIsArray(checkIsJSON(field?.id_location)),
               type_obj_apartment: field?.type_obj_apartment,
               price_min: field?.price_min,
               price_max: field?.price_max,
@@ -81,7 +86,7 @@ export const ObjectCard = ({ className, selectedObject }) => {
               ?.map(({ url }) => url),
             id_client: resp?.data?.id_client,
             id_rubric: resp?.data?.id_rubric,
-            id_location: resp?.data?.id_location,
+            id_location: [resp?.data?.id_location],
             price_min: resp?.data?.price,
             dt_add: resp?.data?.dt_add
               ? handleFormatDate(Number(resp?.data?.dt_add) * 1000, true)

@@ -17,7 +17,11 @@ import {
 import { useState } from "react";
 import { useEffect } from "react";
 import { SelectTags } from "../../../../components/SelectTags/SelectTags";
-import { fortmatNumber, handleGetLocationAllPath } from "../../../../utilits";
+import {
+  checkIsArray,
+  fortmatNumber,
+  handleGetLocationAllPath,
+} from "../../../../utilits";
 
 export const Maininfo = ({
   data,
@@ -72,16 +76,22 @@ export const Maininfo = ({
       <Divider />
       <SelectTags
         label="Локація"
-        notMultiSelect
-        value={data.id_location}
+        tags={formatedLocations?.filter((l) =>
+          checkIsArray(data.id_location)?.find((i) => i === l.value)
+        )}
         onChange={(val) => onChangeField("id_location", val)}
         options={formatedLocations}
         viewOnly
+        showTags
       />
       <Divider />
       <div className="field-group">
         <Field
-          value={`${fortmatNumber(Number(data?.price_min ?? 0))}$`}
+          value={
+            Number(data?.price_min ?? 0) === 0
+              ? "Не вказана"
+              : `${fortmatNumber(Number(data?.price_min ?? 0))}$`
+          }
           onChange={(val) => onChangeField("price_min", val)}
           label="Вартість"
           className="price-field"

@@ -25,7 +25,10 @@ export const MobileContent = ({
   <StyledMobileContent>
     <Header />
     <CardTitle title={data?.title} />
-    <Slider photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)} />
+    <Slider
+      photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)}
+      data={data}
+    />
     <CardDescription text={data?.description} />
     <Footer createDate={data?.dt_add} />
     <MainInfo

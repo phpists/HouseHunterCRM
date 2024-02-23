@@ -40,13 +40,13 @@ const StyledClient = styled.div`
     justify-content: space-between;
     width: 200px;
     .phones-wrapper {
-      width: 200px;
+      width: 180px;
     }
   }
   @media (min-width: 1500px) {
     width: 250px;
     .phones-wrapper {
-      width: 250px;
+      width: 220px;
     }
   }
 

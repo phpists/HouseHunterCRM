@@ -10,15 +10,22 @@ export const Phones = ({
   classNameContent,
   phones,
   notHideArrow,
+  onChangeActive,
+  activePhone = 0,
 }) => {
   const [open, setOpen] = useState(false);
+
+  const handleSelectPhone = (index) => {
+    setOpen(false);
+    onChangeActive && onChangeActive(index);
+  };
 
   return (
     <StyledPhones open={open} className={`${className}`}>
       <Phone
         showOnHoverIcon
         className={classNameContent}
-        phone={phones?.length > 0 ? phones[0] : ""}
+        phone={phones?.length > 0 ? phones[activePhone] : ""}
         isLessThenOne={phones?.length <= 1}
       />
       {phones?.length <= 1 && !notHideArrow ? null : (
@@ -30,9 +37,10 @@ export const Phones = ({
       )}
       <Dropdown
         open={open}
-        onSelect={() => setOpen(false)}
+        onSelect={handleSelectPhone}
         top={top}
-        options={phones?.filter((p, i) => i !== 0) ?? []}
+        options={phones ?? []}
+        activePhone={activePhone}
       />
     </StyledPhones>
   );

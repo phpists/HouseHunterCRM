@@ -1,5 +1,13 @@
 import { NavLink } from "react-router-dom";
 import { styled } from "styled-components";
+import { ReactComponent as Star } from "../../../assets/images/star-object.svg";
+import { ReactComponent as Search } from "../../../assets/images/search-object.svg";
+import { ReactComponent as History } from "../../../assets/images/history-object.svg";
+import { ReactComponent as Prices } from "../../../assets/images/price-object.svg";
+import { ReactComponent as Selection } from "../../../assets/images/home.svg";
+import { ReactComponent as Edit } from "../../../assets/images/edit-company.svg";
+import { ReactComponent as Eye } from "../../../assets/images/eye-access.svg";
+import { ReactComponent as Link } from "../../../assets/images/link.svg";
 
 export const Dropdown = ({
   clientId,
@@ -19,6 +27,7 @@ export const Dropdown = ({
     {link?.length > 0 && (
       <div onClick={() => window.open(link, "_blank")}>
         Перейти на першоджерело
+        <Link className="selection-icon" />
       </div>
     )}
     {onToggleFavoriteStatus && (
@@ -26,7 +35,7 @@ export const Dropdown = ({
         className="flex items-center justify-between"
         onClick={onToggleFavoriteStatus}
       >
-        <span> {isFavorite ? "Із" : "До"} улюблених</span>
+        <span> {isFavorite ? "Із" : "До"} улюблених</span> <Star />
       </div>
     )}
     {onFindSimilar ? (
@@ -34,7 +43,7 @@ export const Dropdown = ({
         className="flex items-center justify-between"
         onClick={onFindSimilar}
       >
-        <span>Знайти схожі</span>
+        <span>Знайти схожі</span> <Search />
       </div>
     ) : null}
     {onOpenTagsHistory && (
@@ -42,7 +51,7 @@ export const Dropdown = ({
         className="flex items-center justify-between"
         onClick={onOpenTagsHistory}
       >
-        <span>Історія тегів</span>
+        <span>Історія тегів</span> <History />
       </div>
     )}
     {onOpenPriceHistory && (
@@ -50,7 +59,7 @@ export const Dropdown = ({
         className="flex items-center justify-between"
         onClick={onOpenPriceHistory}
       >
-        <span>Графік змін цін</span>
+        <span>Графік змін цін</span> <Prices />
       </div>
     )}
     {onAddToSelection && (
@@ -58,12 +67,14 @@ export const Dropdown = ({
         className="flex items-center justify-between"
         onClick={onAddToSelection}
       >
-        <span>Добавити в підбірку</span>
+        <span>Добавити в підбірку</span>{" "}
+        <Selection className="selection-icon" />
       </div>
     )}
     {onHide && (
       <div className="flex items-center justify-between" onClick={onHide}>
-        <span>{isHideObjects ? "Показати" : "Приховати"}</span>
+        <span>{isHideObjects ? "Показати" : "Приховати"}</span>{" "}
+        <Eye className="selection-icon" />
       </div>
     )}
     {isEdit && (
@@ -71,7 +82,7 @@ export const Dropdown = ({
         to={`/edit-object/${clientId}/${id}`}
         className="flex items-center justify-between"
       >
-        <span>Редагувати</span>
+        <span>Редагувати</span> <Edit />
       </NavLink>
     )}
   </StyledDropdown>
@@ -114,8 +125,16 @@ const StyledDropdown = styled.div`
   div:first-child {
     border: none;
   }
+  svg {
+    flex-shrink: 0;
+    width: 14px;
+  }
   g {
     opacity: 1;
+  }
+
+  .selection-icon path {
+    fill: #3e46fb;
   }
 
   .star-icon path {

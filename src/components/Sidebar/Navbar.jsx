@@ -14,19 +14,25 @@ export const NavBar = ({ accessData }) => {
   const LINKS = [
     { icon: GridIcon, link: "/" },
     ...(handleCheckAccess(accessData, "clients", "view")
-      ? [{ icon: UsersIcon, link: "/clients" }]
+      ? [{ icon: UsersIcon, link: "/clients", childrenLinks: ["client"] }]
       : []),
     ...(handleCheckAccess(accessData, "objects", "view")
-      ? [{ icon: HomeIcon, link: "/objects" }]
+      ? [{ icon: HomeIcon, link: "/objects", childrenLinks: ["create-object"] }]
       : []),
     ...(handleCheckAccess(accessData, "requests", "view")
-      ? [{ icon: MegaphoneIcon, link: "/requests" }]
+      ? [
+          {
+            icon: MegaphoneIcon,
+            link: "/requests",
+            childrenLinks: ["edit-request"],
+          },
+        ]
       : []),
     ...(handleCheckAccess(accessData, "structure", "view")
-      ? [{ icon: CopyIcon, link: "/structure" }]
+      ? [{ icon: CopyIcon, link: "/structure", childrenLinks: [] }]
       : []),
     ...(handleCheckAccess(accessData, "calls", "view")
-      ? [{ icon: PhoneIcon, link: "/calls" }]
+      ? [{ icon: PhoneIcon, link: "/calls", childrenLinks: [] }]
       : []),
     //   { icon: XbaseIcon, link: "/note" },
     //   { icon: CalendarIcon, link: "/calendar" },
@@ -35,8 +41,13 @@ export const NavBar = ({ accessData }) => {
 
   return (
     <StyledNavBar>
-      {LINKS.map(({ icon, link }, i) => (
-        <NavBarItem key={i} Icon={icon} link={link} />
+      {LINKS.map(({ icon, link, childrenLinks = [] }, i) => (
+        <NavBarItem
+          key={i}
+          Icon={icon}
+          link={link}
+          childrenLinks={childrenLinks}
+        />
       ))}
     </StyledNavBar>
   );
