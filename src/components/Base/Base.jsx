@@ -28,7 +28,7 @@ export const Base = ({
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: companies } = useGetCompaniesQuery();
   const { data: sortingPeriods } = useGetSortingObjectQuery();
-  const [company, setCompany] = useState(true);
+  const [company, setCompany] = useState(!!data?.company_object);
   const [streetBase, setStreetBase] = useState(
     !!data.street_base_object || streetBaseOpen
   );
@@ -38,6 +38,10 @@ export const Base = ({
     setMlsBase(mlsBaseOpen);
     setStreetBase(streetBaseOpen);
   }, [streetBaseOpen, mlsBaseOpen]);
+
+  useEffect(() => {
+    setCompany(!!data?.company_object?.show_only);
+  }, [data?.company_object?.show_only]);
 
   const handleGetFormatCompanies = () =>
     companies?.data

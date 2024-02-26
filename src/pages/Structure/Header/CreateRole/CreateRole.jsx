@@ -44,6 +44,7 @@ const StyledCreateRole = styled.button`
   letter-spacing: 0.3px;
   text-transform: capitalize;
   transition: all 0.3s;
+  white-space: nowrap;
   &:hover {
     background: #fff;
     color: #2c2c2c;

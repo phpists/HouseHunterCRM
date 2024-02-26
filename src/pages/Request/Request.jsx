@@ -392,14 +392,20 @@ export const Request = () => {
               mls_object:
                 resp?.data[id]?.General_field_group?.mls === "1"
                   ? {
-                      invert_company:
-                        resp?.data[id]?.General_field_group?.invert_company ===
-                        "1"
-                          ? "1"
-                          : undefined,
-                      list_company: checkIsJSON(
+                      ...(resp?.data[id]?.General_field_group
+                        ?.invert_company === "1"
+                        ? { invert_company: "1" }
+                        : {}),
+                      ...(checkIsJSON(
                         resp?.data[id]?.General_field_group?.list_copmany_mls
-                      ),
+                      )?.length > 0
+                        ? {
+                            list_company: checkIsJSON(
+                              resp?.data[id]?.General_field_group
+                                ?.list_copmany_mls
+                            ),
+                          }
+                        : {}),
                     }
                   : undefined,
             },

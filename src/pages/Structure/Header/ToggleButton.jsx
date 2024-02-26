@@ -24,6 +24,8 @@ const StyledToggleShowButton = styled.div`
   transition: all 0.3s;
   margin-left: 20px;
   cursor: pointer;
+  white-space: nowrap;
+
   .plus-icon {
     width: 26px;
     height: 26px;

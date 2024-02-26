@@ -4,7 +4,7 @@ import emptyAvatar from "../../../../../assets/images/small-avatar.svg";
 export const Info = ({ firstName, lastName, idClient, avatar }) => (
   <StyledInfo
     className="flex items-center clickable"
-    avatar={avatar?.length === 0 ? emptyAvatar : avatar}
+    avatar={avatar?.length === 0 || !avatar ? emptyAvatar : avatar}
   >
     <div className="avatar clickable" />
     <div>

@@ -24,7 +24,7 @@ export const DesktopContent = ({
       phones={clientData?.phone ?? data?.General_field_group?.user_phones}
       avatar={
         clientData?.last_name
-          ? ""
+          ? null
           : data?.usr_img?.length > 0
           ? data?.usr_img[0]
           : null

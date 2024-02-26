@@ -22,7 +22,7 @@ export const CreateUser = ({ small, onCreatedUser }) => {
           <button className="plus-icon flex items-center justify-center">
             <img src={plusIcon} alt="" />
           </button>
-          Створити працівника
+          Створити <span className="more">працівника</span>
         </StyledCreateUser>
       )}
     </>
@@ -47,6 +47,16 @@ const StyledCreateUser = styled.button`
   text-transform: capitalize;
   transition: all 0.3s;
   margin-right: 20px;
+  white-space: nowrap;
+  .more {
+    margin-left: 5px;
+    @media (min-width: 850px) {
+      display: none;
+    }
+    @media (min-width: 920px) {
+      display: inline;
+    }
+  }
   .plus-icon {
     width: 26px;
     height: 26px;

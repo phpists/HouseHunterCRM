@@ -26,7 +26,7 @@ export const MobileContent = ({
         avatar={
           clientData?.last_name
             ? ""
-            : data?.usr_img?.length > 0
+            : data?.usr_img?.[0]?.length > 0
             ? data?.usr_img[0]
             : null
         }

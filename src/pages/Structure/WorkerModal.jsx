@@ -109,8 +109,16 @@ export const WorkerModal = ({
       errorsData.push("phones");
     new Date(handleFromInputDate(profileData?.dt_birthday)).toString() ===
       "Invalid Date" && errorsData.push("dt_birthday");
-    if (showNotStructureWorkers && profileData.name_permision?.length === 0) {
+    if (
+      showNotStructureWorkers &&
+      profileData.name_permision?.length === 0 &&
+      !profileData?.structure_level
+    ) {
       errorsData.push("name_permision");
+    }
+
+    if (profileData?.structure_level && !profileData?.structure_parent) {
+      errorsData.push("structure_parent");
     }
 
     if (errorsData?.length > 0) {
@@ -260,11 +268,13 @@ export const WorkerModal = ({
       }).then((resp) => {
         setLoading(false);
         handleResponse(resp, () => {
-          const { name_permision, permission_list_json } = profileData;
+          const { name_permision, permission_list_json, structure_level } =
+            profileData;
           if (
             showNotStructureWorkers &&
             permission_list_json &&
-            name_permision?.length > 0
+            name_permision?.length > 0 &&
+            !structure_level
           ) {
             editWorkerPermission({
               name_permision,

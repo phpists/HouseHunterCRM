@@ -39,7 +39,7 @@ export const MainInfo = ({
         noStructure={noStructure}
         rolesOnlyView={rolesOnlyView}
       />
-      {bosses?.length > 0 && data?.structure_level && !noStructure ? (
+      {bosses?.length > 0 && data?.structure_level ? (
         <>
           <Divider />
           <BossSelect
