@@ -42,13 +42,11 @@ export const Tags = ({ className, data, isAccess }) => {
   const handleGetInitTags = () => {
     let initTags = [];
 
-    tagsList?.data?.forEach((tag) => {
-      if (data[tag] === "1") {
-        initTags.push({
-          title: commentsToFields?.object[tag] ?? "-",
-          value: tag,
-        });
-      }
+    data?.tags?.forEach((tag) => {
+      initTags.push({
+        title: commentsToFields?.object[tag] ?? "-",
+        value: tag,
+      });
     });
 
     setTags(initTags);
@@ -72,7 +70,7 @@ export const Tags = ({ className, data, isAccess }) => {
         }))}
         onChange={handleSelect}
       />
-      {data?.comment && (
+      {data?.comment?.length > 0 && (
         <ProfileField
           label="Коментар"
           value={data?.comment}

@@ -65,12 +65,15 @@ export const RoleSelect = ({ value, onChange, rolesOnlyView }) => {
       active={roles?.find((role) => role?.level === value)}
       onClick={handleToggleOpen}
       open={open}
+      rolesOnlyView={rolesOnlyView}
     >
       <div className="title">
         {value && roles?.find((r) => r.level === value)
           ? roles?.find((r) => r.level === value)?.title
           : open
           ? "Оберіть роль"
+          : rolesOnlyView
+          ? "Без ролі"
           : "Немає ролі"}
       </div>
       {!rolesOnlyView && (
@@ -97,7 +100,8 @@ const StyledRoleSelect = styled.div`
   display: grid;
   grid-template-columns: 1fr max-content;
   gap: 3px;
-  background: ${({ active }) => active?.bg ?? "rgba(255, 255, 255, 0.30)"};
+  background: ${({ active, rolesOnlyView }) =>
+    rolesOnlyView ? "#FFFFFF1A" : active?.bg ?? "rgba(255, 255, 255, 0.30)"};
   border-radius: ${({ open }) => (open ? "6px 6px 0 0" : "6px")};
   height: 22px;
   align-items: center;
@@ -122,9 +126,10 @@ const StyledRoleSelect = styled.div`
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    ${({ active, open }) =>
+    ${({ active, open, rolesOnlyView }) =>
       !active &&
       !open &&
+      !rolesOnlyView &&
       `
         border-radius: 5px;
         background: rgba(255, 255, 255, 0.30);

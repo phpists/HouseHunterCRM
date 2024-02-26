@@ -28,6 +28,7 @@ export const List = ({
               photo,
               struct_level,
               isCurrentUser,
+              name_permision,
             },
             i
           ) => (
@@ -58,6 +59,7 @@ export const List = ({
               id={id}
               isCurrentUser={isCurrentUser}
               tarifPrice={Number(tarifSelected?.price ?? "0")}
+              namePermision={name_permision}
             />
           )
         )

@@ -2,8 +2,7 @@ import styled from "styled-components";
 
 export const Tags = ({ data }) => (
   <StyledTags>
-    {data?.obj_street_base ? <div>xbase</div> : null}
-    {data?.mls ? <div>mls</div> : null}
+    {data?.type_object?.length > 0 ? <div>{data?.type_object}</div> : null}
   </StyledTags>
 );
 

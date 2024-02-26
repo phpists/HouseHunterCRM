@@ -13,6 +13,7 @@ export const Profile = ({
   profile,
   onRemoveAvatar,
   rolesOnlyView,
+  noStructure,
 }) => (
   <StyledProfile>
     <LastDate data={data?.last_active ?? ""} />

@@ -75,6 +75,20 @@ export const structure = createApi({
         ),
       }),
     }),
+    editWorkerPermission: build.query({
+      query: ({ name_permision, id_worker, permission_list_json }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "edit_worker_not_structure",
+          mod: "billing",
+          name_permision,
+          id_worker,
+          permission_list_json,
+        }),
+      }),
+    }),
     deleteWorker: build.query({
       query: (id_worker) => ({
         url: "",
@@ -586,4 +600,5 @@ export const {
   useLazyAddWorkerToStructureQuery,
   useLazyGetWorkerCountQuery,
   useLazyGetStatisticTotalWorkerQuery,
+  useLazyEditWorkerPermissionQuery,
 } = structure;

@@ -22,6 +22,7 @@ export const Card = ({
   id,
   isCurrentUser,
   tarifPrice,
+  namePermision,
 }) => {
   const handleClick = (e) => {
     if (!e.target.classList.contains("notClickable")) {
@@ -41,6 +42,7 @@ export const Card = ({
           photo={photo}
           phone={phone}
           level={level}
+          namePermision={namePermision}
         />
         <Arrow className="more-arrow-mobile" />
       </div>

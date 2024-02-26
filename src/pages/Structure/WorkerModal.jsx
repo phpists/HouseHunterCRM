@@ -6,6 +6,7 @@ import {
   useLazyChangeWorkerLevelQuery,
   useLazyDeleteWorkerImgQuery,
   useLazyDeleteWorkerQuery,
+  useLazyEditWorkerPermissionQuery,
   useLazyEditWorkerQuery,
   useLazyGetStructureUsersCompanyQuery,
   useLazyGetWorkerByIdQuery,
@@ -18,6 +19,8 @@ import {
   useLazyGetUserQuery,
 } from "../../store/auth/auth.api";
 import {
+  checkIsArray,
+  checkIsJSON,
   emailValidation,
   handleFormatDate,
   handleFromInputDate,
@@ -66,6 +69,7 @@ export const WorkerModal = ({
   const [errors, setErrors] = useState([]);
   const [deleteUserAvatar] = useLazyDeleteAvatarQuery();
   const [deleteWorkerImg] = useLazyDeleteWorkerImgQuery();
+  const [editWorkerPermission] = useLazyEditWorkerPermissionQuery();
   const [loading, setLoading] = useState(false);
 
   const handleChangeField = (fieldName, value) => {
@@ -105,6 +109,9 @@ export const WorkerModal = ({
       errorsData.push("phones");
     new Date(handleFromInputDate(profileData?.dt_birthday)).toString() ===
       "Invalid Date" && errorsData.push("dt_birthday");
+    if (showNotStructureWorkers && profileData.name_permision?.length === 0) {
+      errorsData.push("name_permision");
+    }
 
     if (errorsData?.length > 0) {
       setErrors(errorsData);
@@ -130,6 +137,9 @@ export const WorkerModal = ({
               structure_level: !showNotStructureWorkers ? level : undefined,
               structure_parent: resp?.data[0]?.structure_parent_id ?? null,
               photo: { url: resp?.data[0]?.photo },
+              permission_list_json: checkIsArray(
+                checkIsJSON(resp?.data?.[0]?.permision_not_structure)
+              ),
               dt_birthday:
                 resp?.data[0]?.dt_birthday === "0"
                   ? null
@@ -213,6 +223,16 @@ export const WorkerModal = ({
     }
   };
 
+  const handleSuccessSaveWorker = () => {
+    cogoToast.success("Зміни успішно збережено", {
+      hideAfter: 3,
+      position: "top-right",
+    });
+    onRefetchData();
+    handleGetWorker();
+    onClose();
+  };
+
   const handleSaveWorker = () => {
     if (handleCheckFields()) {
       setLoading(true);
@@ -240,13 +260,20 @@ export const WorkerModal = ({
       }).then((resp) => {
         setLoading(false);
         handleResponse(resp, () => {
-          cogoToast.success("Зміни успішно збережено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
-          onRefetchData();
-          handleGetWorker();
-          onClose();
+          const { name_permision, permission_list_json } = profileData;
+          if (
+            showNotStructureWorkers &&
+            permission_list_json &&
+            name_permision?.length > 0
+          ) {
+            editWorkerPermission({
+              name_permision,
+              permission_list_json: JSON.stringify(permission_list_json),
+              id_worker: profileData?.id,
+            }).then((r) => handleResponse(r, handleSuccessSaveWorker));
+          } else {
+            handleSuccessSaveWorker();
+          }
         });
       });
     }
@@ -320,6 +347,7 @@ export const WorkerModal = ({
         loading={loading}
         isEdit={user?.struct_level === 1}
         rolesOnlyView={rolesOnlyView}
+        permissionEdit={showNotStructureWorkers}
       />
       <div className="modal-overlay" onClick={onClose}></div>
     </>

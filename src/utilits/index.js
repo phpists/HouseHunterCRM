@@ -78,10 +78,7 @@ export const handleToFormData = (data, files, notCleanFields) => {
                 }
               });
             } else {
-              formData.append(
-                `${field[0]}[${fField[0]}]`,
-                JSON.stringify(fField[1])
-              );
+              formData.append(`${field[0]}[${fField[0]}][]`, []);
             }
             // *
           } else {
@@ -90,7 +87,7 @@ export const handleToFormData = (data, files, notCleanFields) => {
           }
         });
       } else {
-        formData.append(field[0], JSON.stringify(field[1]));
+        formData.append(`${field[0]}[]`, []);
       }
     } else {
       field[1] && formData.append(field[0], field[1]);

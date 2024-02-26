@@ -36,8 +36,6 @@ export const Slider = ({ photos, data }) => {
     slickRef.current.slickGoTo(0);
   }, []);
 
-  //   obj_street_base
-  //   mls
   return (
     <>
       <PhotoSlider

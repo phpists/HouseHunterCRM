@@ -4,7 +4,7 @@ import {
   useGetCompanyStructureLevelQuery,
 } from "../../../../../../store/structure/structure.api";
 
-export const Tag = ({ level }) => {
+export const Tag = ({ level, namePermision }) => {
   const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
   const { data: companyLevel, refetch } = useGetCompanyStructureLevelQuery();
@@ -18,7 +18,8 @@ export const Tag = ({ level }) => {
 
   return (
     <StyledTag className="notClickable" color={COLORS[level - 1]}>
-      {handleGetCurrentLevel()[0]?.split(" - ")?.[level - 1] ?? "Без ролі"}
+      {handleGetCurrentLevel()[0]?.split(" - ")?.[level - 1] ??
+        `${namePermision?.length > 0 ? namePermision : "Без ролі"}`}
     </StyledTag>
   );
 };

@@ -16,16 +16,9 @@ export const ObjectHistory = ({ onClose, object }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
   useEffect(() => {
-    if (object?.isStreetBase) {
-      getStreetBaseHistory(object?.id).then((resp) =>
-        handleResponse(resp, () => setData(resp?.data?.data ?? []))
-      );
-    } else {
-      getHistory(object?.id).then((resp) => setData(resp?.data ?? []));
-    }
+    getHistory(object?.id).then((resp) => setData(resp?.data?.data ?? []));
   }, [object]);
 
-  console.log(data);
   return (
     <StyledObjectHistory>
       <Modal onClose={onClose} title="Історія тегів">

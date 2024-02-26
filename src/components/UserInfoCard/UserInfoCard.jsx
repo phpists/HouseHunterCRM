@@ -11,6 +11,7 @@ import { FooterDelete } from "./FooterDelete";
 import { Logout } from "./Logout";
 import { useRef } from "react";
 import { PersonalBills } from "./PesonalBills/PersonalBills";
+import { RoleCard } from "./RoleCard/RoleCard";
 
 export const UserInfoCard = ({
   onClose,
@@ -38,6 +39,7 @@ export const UserInfoCard = ({
   loading,
   isEdit,
   rolesOnlyView,
+  permissionEdit,
 }) => {
   const controls = useAnimationControls();
   const contentRef = useRef(null);
@@ -101,6 +103,14 @@ export const UserInfoCard = ({
             noResetValueOnCodeChange={noResetValueOnCodeChange}
           />
           {showPayHistory && <PersonalBills workerId={workerId} />}
+
+          {permissionEdit && !data?.structure_level && (
+            <RoleCard
+              data={data}
+              onChangeField={onChangeField}
+              error={!!errors?.find((e) => e === "name_permision")}
+            />
+          )}
         </div>
         <div className="footer-card">
           {!isEdit ? null : isDelete ? (

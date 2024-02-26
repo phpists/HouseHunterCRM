@@ -171,60 +171,44 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
       <CheckOption
         label="Мої об'єкти"
         className="check-opt"
-        value={filters?.show_only === "only_my" ? "1" : "0"}
+        value={filters?.my_object ? "1" : "0"}
         onChange={(val) =>
           onChangeFilter(
-            "only_my_obj",
-            {
-              ...filters,
-              //   only_company_obj: "0",
-              //   only_street_base_obj: "0",
-              //   only_my_obj: "1",
-              //   only_my_structure: "0",
-              show_only:
-                filters?.show_only === "only_my" ? undefined : "only_my",
-            },
-            true
+            "my_object",
+            filters?.my_object === "1" ? undefined : "1"
           )
         }
       />
-      {/* <CheckOption
-        label="Об’єкти STREET BASE"
+      <CheckOption
+        label="Об'єкти компанії"
         className="check-opt"
-        value={filters?.only_street_base_obj}
+        value={filters?.company_object ? "1" : "0"}
         onChange={(val) =>
           onChangeFilter(
-            "only_street_base_obj",
-            {
-              ...filters,
-              only_company_obj: "0",
-              only_street_base_obj: "1",
-              only_my_obj: "0",
-              only_my_structure: "0",
-            },
-            true
+            "company_object",
+            filters?.company_object === "1" ? undefined : "1"
           )
         }
-      /> */}
+      />
       <CheckOption
-        label="Об'єкти моєї структури"
+        label="Об'єкти street base"
         className="check-opt"
-        value={filters?.show_only === "my_structure" ? "1" : "0"}
+        value={filters?.street_base_object ? "1" : "0"}
         onChange={(val) =>
           onChangeFilter(
-            "only_my_structure",
-            {
-              ...filters,
-              //   only_company_obj: "0",
-              //   only_street_base_obj: "0",
-              //   only_my_obj: "0",
-              //   only_my_structure: "1",
-              show_only:
-                filters?.show_only === "my_structure"
-                  ? undefined
-                  : "my_structure",
-            },
-            true
+            "street_base_object",
+            filters?.street_base_object === "1" ? undefined : "1"
+          )
+        }
+      />
+      <CheckOption
+        label="Об'єкти MLS"
+        className="check-opt"
+        value={filters?.mls_object ? "1" : "0"}
+        onChange={(val) =>
+          onChangeFilter(
+            "mls_object",
+            filters?.mls_object === "1" ? undefined : "1"
           )
         }
       />

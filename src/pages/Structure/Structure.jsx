@@ -149,6 +149,7 @@ export const Structure = () => {
           }}
           showNotStructureWorkers={showNotStructureWorkers}
           worker={infoOpen !== user?.id}
+          noStructure={showNotStructureWorkers}
         />
       )}
       <div className="structure-content hide-scroll">
