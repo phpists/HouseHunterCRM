@@ -14,6 +14,7 @@ import { StructureCard } from "./Header/StructureCard/StructureCard";
 import { useAppSelect } from "../../hooks/redux";
 import { useActions } from "../../hooks/actions";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Loader } from "../../components/Loader";
 
 export const Structure = () => {
   const { search } = useLocation();
@@ -31,6 +32,7 @@ export const Structure = () => {
   const { saveStructureWorkersCount } = useActions();
   const [levelWorkers, setLevelWorkers] = useState([]);
   const [currentWorkerLevel, setCurrentWorkerLevel] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleGetWorkerCount = () =>
     getWorkerCount().then((resp) =>
@@ -38,11 +40,21 @@ export const Structure = () => {
     );
 
   useEffect(() => {
-    showNotStructureWorkers && getNotStructureWorkers();
+    if (showNotStructureWorkers) {
+      setLoading(true);
+      getNotStructureWorkers();
+    }
     if (showNotStructureWorkers) {
       navigate(`/structure?level=notStructure`);
     }
   }, [showNotStructureWorkers]);
+
+  useEffect(() => {
+    if (data) {
+      Object.entries(data)?.filter((w) => w[0] !== "error")?.length === 0 &&
+        setLoading(false);
+    }
+  }, [data]);
 
   const handleNextLevel = (children, id) => {
     setCurrentWorkerLevel(id);
@@ -154,6 +166,11 @@ export const Structure = () => {
       )}
       <div className="structure-content hide-scroll">
         <div className="structure-cards hide-scroll">
+          {loading ? (
+            <div className="structure-loader">
+              <Loader white className="loader-wrap" />
+            </div>
+          ) : null}
           {showNotStructureWorkers && data && Object.entries(data) ? (
             <>
               {Object.entries(data)?.filter((w) => w[0] !== "error")?.length >
@@ -171,6 +188,14 @@ export const Structure = () => {
                       id={worker?.id_user}
                       data={worker}
                       isMore={false}
+                      onLoad={() =>
+                        i + 1 ===
+                        Object.entries(data)
+                          ?.filter((w) => w[0] !== "error")
+                          ?.map((w) => w[1])?.length
+                          ? setLoading(false)
+                          : null
+                      }
                     />
                   ))
               ) : (
@@ -242,9 +267,25 @@ const StyledStructure = styled.div`
     grid-template-columns: 1fr;
     grid-auto-rows: max-content;
     gap: 20px;
+    position: relative;
   }
   .no-structure-empty {
     margin-top: 40px;
+  }
+  .loader-wrap {
+    height: 50px;
+    margin: 40px 0;
+  }
+  .structure-loader {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 10000;
+    background: #323232;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
   }
   @media (max-width: 850px) {
     width: 100svw;

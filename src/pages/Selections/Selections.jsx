@@ -50,6 +50,7 @@ export const Selections = () => {
   const [isAllPages, setIsAllPages] = useState(false);
   const [loading, setLoading] = useState(false);
   const firstThousend = useRef(null);
+  const [actionLoading, setActionLoading] = useState(false);
 
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => {
@@ -290,6 +291,7 @@ export const Selections = () => {
         onHide={handleHideObjects}
         onToggleHidden={handleToggleHidden}
         showObjectHide={showObjectHide}
+        onChangeActionLoading={(val) => setActionLoading(val)}
       />
       <List
         data={objects}
@@ -300,6 +302,7 @@ export const Selections = () => {
         innerRef={listRef}
         loading={loading}
         isHideObjects={showObjectHide}
+        actionLoading={actionLoading}
         // onFavorite={handleToggleFavoriteStatus}
       />
     </StyledSelections>

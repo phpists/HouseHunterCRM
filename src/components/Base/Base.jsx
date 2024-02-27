@@ -24,6 +24,8 @@ export const Base = ({
   streetBaseOpen,
   mlsBaseOpen,
   onChangeDefaultFiltersOpened,
+  companyOpen,
+  errors = [],
 }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: companies } = useGetCompaniesQuery();
@@ -37,10 +39,11 @@ export const Base = ({
   useEffect(() => {
     setMlsBase(mlsBaseOpen);
     setStreetBase(streetBaseOpen);
-  }, [streetBaseOpen, mlsBaseOpen]);
+    setCompany(companyOpen);
+  }, [streetBaseOpen, mlsBaseOpen, companyOpen]);
 
   useEffect(() => {
-    setCompany(!!data?.company_object?.show_only);
+    !companyOpen && setCompany(!!data?.company_object?.show_only);
   }, [data?.company_object?.show_only]);
 
   const handleGetFormatCompanies = () =>
@@ -59,6 +62,9 @@ export const Base = ({
     );
 
     setCompany(!company);
+    if (onChangeDefaultFiltersOpened) {
+      onChangeDefaultFiltersOpened("company", !company);
+    }
   };
 
   const handleToggleStreetBase = () => {
@@ -103,6 +109,7 @@ export const Base = ({
                 show_only: "company",
               })
             }
+            error={!!errors.find((e) => e === "show_only")}
           />
           <CheckOption
             label="Об'єкти моєї структури"
@@ -116,6 +123,7 @@ export const Base = ({
                 show_only: "my_structure",
               })
             }
+            error={!!errors.find((e) => e === "show_only")}
           />
           <CheckOption
             label="Тільки мої об'єкти"
@@ -127,6 +135,7 @@ export const Base = ({
                 show_only: "only_my",
               })
             }
+            error={!!errors.find((e) => e === "show_only")}
           />
           <Divider />
           <CheckOption

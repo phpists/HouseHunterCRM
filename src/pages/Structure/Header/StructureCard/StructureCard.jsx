@@ -11,17 +11,18 @@ export const StructureCard = ({
   data,
   isMore,
   user,
+  onLoad,
 }) => {
   const [getWorkerStatistic, { data: statisticData }] =
     useLazyGetStatisticWorkerQuery();
   const [totalInfoOpened, settotalInfoOpened] = useState(false);
 
   useEffect(() => {
-    getWorkerStatistic(id);
+    getWorkerStatistic(id).then(() => (onLoad ? onLoad() : null));
   }, [id]);
 
   useEffect(() => {
-    getWorkerStatistic(id);
+    getWorkerStatistic(id).then(() => (onLoad ? onLoad() : null));
   }, []);
 
   return (

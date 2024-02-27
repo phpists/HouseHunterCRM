@@ -3,72 +3,63 @@ import { Modal } from "../Modal/Modal";
 import { Card } from "./Card";
 import {
   useGetCommentsToFieldsQuery,
+  useLazyGetObjectCommentHistoryQuery,
   useLazyShowHistoryTagsQuery,
   useLazyShowStreetBaseHistoryTagsQuery,
 } from "../../store/objects/objects.api";
 import { useEffect, useRef, useState } from "react";
-import { handleFormatDate, handleResponse } from "../../utilits";
+import { checkIsArray, handleFormatDate, handleResponse } from "../../utilits";
 
-export const ObjectHistory = ({ onClose, object }) => {
+export const ObjectCommentHistory = ({ onClose, object }) => {
   const [data, setData] = useState(null);
-  const [getHistory] = useLazyShowHistoryTagsQuery();
-  const [getStreetBaseHistory] = useLazyShowStreetBaseHistoryTagsQuery();
-  const { data: commentsToFields } = useGetCommentsToFieldsQuery();
+  const [getHistory] = useLazyGetObjectCommentHistoryQuery();
 
   useEffect(() => {
-    getHistory(object?.id).then((resp) => setData(resp?.data?.data ?? []));
+    getHistory({ id_object: object?.id }).then((resp) =>
+      setData(resp?.data?.data ?? [])
+    );
   }, [object]);
 
   return (
-    <StyledObjectHistory>
-      <Modal onClose={onClose} title="Історія тегів">
+    <StyledObjectCommentHistory>
+      <Modal onClose={onClose} title="Історія коментарів">
         <div className="object-history-wrapper">
           {data?.length === 0 || !data ? (
             <div className="empty">Пусто</div>
           ) : (
             <div className="object-history-cards">
-              {data
-                ?.reverse()
-                ?.map(({ action, label, name, tag, user_name, time }, i) => (
-                  <Card
-                    key={i}
-                    title={name ?? user_name}
-                    date={
-                      time ? handleFormatDate(time * 1000, true) : undefined
-                    }
-                    //   hours="11:01"
-                    tagName={commentsToFields?.object[tag ?? label] ?? "-"}
-                    action={action === "add"}
-                  />
-                ))}
+              {data &&
+                checkIsArray([...data])
+                  ?.reverse()
+                  ?.map(({ name, comment, time }, i) => (
+                    <Card
+                      key={i}
+                      title={name ?? ""}
+                      date={
+                        time ? handleFormatDate(time * 1000, true) : undefined
+                      }
+                      //   hours="11:01"
+                      tagName={comment}
+                    />
+                  ))}
             </div>
           )}
         </div>
       </Modal>
-    </StyledObjectHistory>
+    </StyledObjectCommentHistory>
   );
 };
 
-const StyledObjectHistory = styled.div`
+const StyledObjectCommentHistory = styled.div`
   .object-history-wrapper {
     max-height: 60vh;
     overflow: auto;
   }
   .object-history-cards {
     display: grid;
-    grid-template-columns: 18px 1fr;
+    grid-template-columns: 1fr;
     gap: 15px 24px;
     position: relative;
-    &::before {
-      content: "";
-      width: 1px;
-      background: rgba(255, 255, 255, 0.1);
-      position: absolute;
-      left: 7px;
-      top: 0;
-      bottom: 0;
-      display: block;
-    }
     .icon {
       background: #2b2b2b;
       border: 2px solid #2b2b2b;

@@ -57,9 +57,9 @@ export const Objects = () => {
   const allCountRef = useRef(0);
   const [updateData, setUpdateData] = useState(false);
   const firstThousand = useRef([]);
+  const [actionLoading, setActionLoading] = useState(false);
 
   const handleChangeFilter = (field, value, isDataUpdate) => {
-    console.log(field, value);
     if (isDataUpdate) {
       setFilters(value);
     } else {
@@ -134,6 +134,14 @@ export const Objects = () => {
                     ?.replace(")", "")
                     ?.replaceAll("_", "")
                 : undefined,
+          },
+        };
+      } else {
+        data = {
+          ...data,
+          company_object: {
+            show_only: "only_my",
+            actual: "1",
           },
         };
       }
@@ -228,7 +236,12 @@ export const Objects = () => {
   const handleApplyFilter = (isApply) => {
     filterActive.current = isApply;
     if (!isApply) {
-      setFilters({ ...INIT_FILTERS, id_hash: "" });
+      setFilters({
+        company_object: {
+          show_only: "only_my",
+          actual: "1",
+        },
+      });
       setFilterFields([]);
     }
     currentPage.current = 0;
@@ -350,7 +363,14 @@ export const Objects = () => {
       filterActive.current = true;
       setUpdateData(true);
     } else {
-      handleGetObjects();
+      setFilters({
+        company_object: {
+          show_only: "only_my",
+          actual: "1",
+        },
+      });
+      filterActive.current = true;
+      setUpdateData(true);
     }
   }, [location.search]);
 
@@ -396,6 +416,7 @@ export const Objects = () => {
         onApplyFilter={handleApplyFilter}
         allCount={allCount}
         onSelectAll={handleSelectAll}
+        onChangeActionLoading={(val) => setActionLoading(val)}
       />
       <List
         selected={selected}
@@ -405,6 +426,7 @@ export const Objects = () => {
         onFindSimilar={handleFindSimilarTo}
         innerRef={listRef}
         loading={loading}
+        actionLoading={actionLoading}
       />
     </StyledObjects>
   );

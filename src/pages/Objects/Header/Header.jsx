@@ -30,6 +30,7 @@ export const Header = ({
   onApplyFilter,
   allCount,
   onSelectAll,
+  onChangeActionLoading,
 }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClient, setAddClient] = useState(false);
@@ -39,20 +40,23 @@ export const Header = ({
   const [defaultFiltersOpen, setDefalultFiltersOpen] = useState({});
 
   const handleToggleFavorites = () => {
+    onChangeActionLoading(true);
     addToFavorites(selected).then((resp) => {
       handleResponse(resp, () => {
         cogoToast.success("Статус успішно змінено!", {
           hideAfter: 3,
           position: "top-right",
         });
+        onFavorite();
       });
-      onFavorite();
+      onChangeActionLoading(false);
     });
   };
 
   const handleDelete = () => {
     if (selected?.length > 0) {
-      deleteObject(selected).then((resp) =>
+      onChangeActionLoading(true);
+      deleteObject(selected).then((resp) => {
         handleResponse(resp, () => {
           cogoToast.success(
             `Обєкт${selectedCount === 1 ? "" : "и"} успішно видалено!`,
@@ -62,8 +66,18 @@ export const Header = ({
             }
           );
           onDelete();
-        })
-      );
+        });
+        onChangeActionLoading(false);
+      });
+    }
+  };
+
+  const handleApplyFilter = (isApply) => {
+    onApplyFilter(isApply);
+    if (!isApply) {
+      setDefalultFiltersOpen({
+        company: true,
+      });
     }
   };
 
@@ -131,7 +145,7 @@ export const Header = ({
           filters={filters}
           onChangeFilter={onChangeFilter}
           filtersFields={filtersFields}
-          onApplyFilter={onApplyFilter}
+          onApplyFilter={handleApplyFilter}
           filtersOpened={defaultFiltersOpen}
           onChangeDefaultFiltersOpened={(val) => setDefalultFiltersOpen(val)}
         />

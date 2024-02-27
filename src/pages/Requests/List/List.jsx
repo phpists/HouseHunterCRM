@@ -18,6 +18,7 @@ export const List = ({
   onDeleteRequest,
   onFavorite,
   loading,
+  actionLoading,
 }) => {
   const [deleteRequest] = useLazyDeleteRequestQuery();
   const [deleteModal, setDeleteModal] = useState(false);
@@ -65,8 +66,8 @@ export const List = ({
       )}
 
       <StyledList className="hide-scroll" ref={innerRef}>
-        {data && Object.entries(data)?.length === 0 ? (
-          <Empty loading={loading} />
+        {(data && Object.entries(data)?.length === 0) || actionLoading ? (
+          <Empty loading={loading || actionLoading} />
         ) : Object.entries(data)?.length > 0 ? (
           Object.entries(data)?.map((d, i) => {
             const id = Object.entries(d[1])[1][0];

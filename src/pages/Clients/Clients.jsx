@@ -39,6 +39,7 @@ export const Clients = () => {
   const [addClientToFavorite] = useLazyAddClientToFavoriteQuery();
   const firstThousand = useRef([]);
   const [sendClients, setSendClients] = useState([]);
+  const [actionLoading, setActionLoading] = useState(false);
 
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
@@ -245,6 +246,7 @@ export const Clients = () => {
   };
 
   const handleAddClientsToFavorite = () => {
+    setActionLoading(true);
     Promise.all(
       selected?.map((id) =>
         addClientToFavorite(id).then((resp) => {
@@ -257,6 +259,7 @@ export const Clients = () => {
         })
       )
     ).then((resp) => {
+      setActionLoading(false);
       const updatedClients = dataRef.current
         ?.map((c) =>
           selected.find((s) => s === c?.id)
@@ -299,6 +302,7 @@ export const Clients = () => {
           onSendSuccess={handleSuccessSend}
           onClose={() => setSendClients([])}
           clients={sendClients}
+          onChangeLoading={(val) => setActionLoading(val)}
         />
       ) : null}
       <Header
@@ -319,6 +323,7 @@ export const Clients = () => {
         onDelete={handleDeleteClients}
         onFavorite={handleAddClientsToFavorite}
         onSendClients={() => setSendClients(selected)}
+        onChangeActionLoading={(val) => setActionLoading(val)}
       />
       <List
         selected={selected}
@@ -329,6 +334,7 @@ export const Clients = () => {
         loading={loading}
         onAddToFavorite={handleAddClientToFavorite}
         onSend={handleSendClient}
+        actionLoading={actionLoading}
       />
     </StyledClients>
   );

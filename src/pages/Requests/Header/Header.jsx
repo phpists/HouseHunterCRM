@@ -30,6 +30,7 @@ export const Header = ({
   onApplyFilter,
   allCount,
   onSelectAll,
+  onChangeActionLoading,
 }) => {
   const [deleteRequest] = useLazyDeleteRequestQuery();
   const [filterOpen, setFilterOpen] = useState(false);
@@ -38,6 +39,7 @@ export const Header = ({
   const { data } = useGetAccessQuery();
 
   const handleToggleFavorites = () => {
+    onChangeActionLoading(true);
     Promise.all(
       selected?.map((id) =>
         addToFavorites(id).then((resp) => {
@@ -49,14 +51,18 @@ export const Header = ({
           });
         })
       )
-    ).then((resp) => {
-      onFavorite();
-    });
+    )
+      .then((resp) => {
+        onFavorite();
+        onChangeActionLoading(false);
+      })
+      .catch(() => onChangeActionLoading(false));
   };
 
   const handleDelete = () => {
     if (selected?.length > 0) {
-      deleteRequest(selected).then((resp) =>
+      onChangeActionLoading(true);
+      deleteRequest(selected).then((resp) => {
         handleResponse(resp, () => {
           cogoToast.success(
             `Заявк${selectedCount === 1 ? "у" : "и"} успішно видалено!`,
@@ -66,8 +72,9 @@ export const Header = ({
             }
           );
           onDelete();
-        })
-      );
+        });
+        onChangeActionLoading(false);
+      });
     }
   };
 

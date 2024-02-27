@@ -21,6 +21,7 @@ export const MobileContent = ({
   currency,
   onChangeCurrency,
   isHideObjects,
+  onOpenCommetHistory,
 }) => (
   <StyledMobileContent>
     <Header />
@@ -53,6 +54,7 @@ export const MobileContent = ({
       isAccess={data?.acsses_change}
       link={data?.link}
       isHideObjects={isHideObjects}
+      onOpenCommetHistory={onOpenCommetHistory}
     />
   </StyledMobileContent>
 );

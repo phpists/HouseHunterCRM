@@ -327,6 +327,26 @@ export const objects = createApi({
         }),
       }),
     }),
+    editObjectComment: build.query({
+      query: (data) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: data,
+      }),
+    }),
+    getObjectCommentHistory: build.query({
+      query: ({ id_object, comment }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "show_comment_object",
+          mod: "objects",
+          id_object,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -353,4 +373,6 @@ export const {
   useLazyGetPhoneObjectQuery,
   useLazyAddTagsToStreetBaseObjectsQuery,
   useLazyShowStreetBaseHistoryTagsQuery,
+  useLazyEditObjectCommentQuery,
+  useLazyGetObjectCommentHistoryQuery,
 } = objects;

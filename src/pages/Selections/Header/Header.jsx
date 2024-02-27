@@ -26,12 +26,14 @@ export const Header = ({
   onHide,
   onToggleHidden,
   showObjectHide,
+  onChangeActionLoading,
 }) => {
   const { id } = useParams();
   const [addToFavorites] = useLazyAddToFavoritesQuery();
   const [hideObject] = useLazyHideObjectFromSelectionsQuery();
 
   const handleHide = () => {
+    onChangeActionLoading(true);
     hideObject({ id_request_group: id, id_objects: selected }).then((resp) => {
       handleResponse(resp, () => {
         cogoToast.success("Статус успішно змінено!", {
@@ -40,6 +42,7 @@ export const Header = ({
         });
         onHide();
       });
+      onChangeActionLoading(false);
     });
   };
 

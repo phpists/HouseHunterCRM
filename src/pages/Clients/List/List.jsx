@@ -19,6 +19,7 @@ export const List = ({
   loading,
   onAddToFavorite,
   onSend,
+  actionLoading,
 }) => {
   const [deleteModal, setDeleteModal] = useState(null);
   const { data: accessData } = useGetAccessQuery();
@@ -40,8 +41,8 @@ export const List = ({
         />
       )}
       <StyledList className="hide-scroll" ref={innerRef}>
-        {clients?.length === 0 ? (
-          <Empty loading={loading} />
+        {clients?.length === 0 || actionLoading ? (
+          <Empty loading={loading || actionLoading} />
         ) : (
           clients?.map(
             (

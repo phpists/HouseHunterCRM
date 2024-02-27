@@ -217,6 +217,11 @@ export const Request = () => {
         hideAfter: 3,
         position: "top-right",
       });
+    } else if (
+      data?.general_group?.company_object &&
+      !data?.general_group?.company_object?.show_only
+    ) {
+      errorData.push({ id: "general", errors: ["show_only"] });
     } else {
       errorData.push({ id: "general", errors: [] });
     }
@@ -324,6 +329,41 @@ export const Request = () => {
             .map((f) => f[1]?.id_rubric);
 
           handleGetCategories(categories);
+          let company_object = {
+            show_only:
+              resp?.data[id]?.General_field_group?.show_company_obj === "1"
+                ? "company"
+                : resp?.data[id]?.General_field_group?.show_my_obj === "1"
+                ? "only_my"
+                : resp?.data[id]?.General_field_group?.structure === "1"
+                ? "my_structure"
+                : undefined,
+            show_actual:
+              resp?.data[id]?.General_field_group?.show_actual_object === "1"
+                ? "1"
+                : undefined,
+            show_not_actual:
+              resp?.data[id]?.General_field_group?.show_no_actual_object === "1"
+                ? "1"
+                : undefined,
+            given_objects:
+              resp?.data[id]?.General_field_group?.show_given_objects === "1"
+                ? "1"
+                : undefined,
+            overdue:
+              resp?.data[id]?.General_field_group?.show_overdue_objects === "1"
+                ? "1"
+                : undefined,
+            company_street_base:
+              resp?.data[id]?.General_field_group?.show_company_street_base ===
+              "1"
+                ? "1"
+                : undefined,
+          };
+
+          company_object = Object.fromEntries(
+            Object.entries(company_object)?.filter((f) => f[1] !== undefined)
+          );
 
           setData({
             general_group: {
@@ -343,41 +383,10 @@ export const Request = () => {
                 resp?.data[id]?.General_field_group?.tags_student ?? "0",
               tags_foreigners:
                 resp?.data[id]?.General_field_group?.tags_foreigners ?? "0",
-              company_object: {
-                show_only:
-                  resp?.data[id]?.General_field_group?.show_company_obj === "1"
-                    ? "company"
-                    : resp?.data[id]?.General_field_group?.show_my_obj === "1"
-                    ? "only_my"
-                    : resp?.data[id]?.General_field_group?.structure === "1"
-                    ? "my_structure"
-                    : undefined,
-                show_actual:
-                  resp?.data[id]?.General_field_group?.show_actual_object ===
-                  "1"
-                    ? "1"
-                    : undefined,
-                show_not_actual:
-                  resp?.data[id]?.General_field_group?.show_no_actual_object ===
-                  "1"
-                    ? "1"
-                    : undefined,
-                given_objects:
-                  resp?.data[id]?.General_field_group?.show_given_objects ===
-                  "1"
-                    ? "1"
-                    : undefined,
-                overdue:
-                  resp?.data[id]?.General_field_group?.show_overdue_objects ===
-                  "1"
-                    ? "1"
-                    : undefined,
-                company_street_base:
-                  resp?.data[id]?.General_field_group
-                    ?.show_company_street_base === "1"
-                    ? "1"
-                    : undefined,
-              },
+              company_object:
+                Object.entries(company_object)?.length === 0
+                  ? undefined
+                  : company_object,
               street_base_object:
                 resp?.data[id]?.General_field_group?.show_street_base === "1"
                   ? {
@@ -454,6 +463,13 @@ export const Request = () => {
             [field]: value ?? "0",
           }
     );
+    setErrors(
+      errors?.map((er) =>
+        er.id === "general"
+          ? { ...er, errors: er.errors?.filter((e) => e !== "show_only") }
+          : er
+      )
+    );
   };
 
   return (
@@ -501,6 +517,7 @@ export const Request = () => {
             onChange={handleChangeBase}
             streetBaseOpen={data?.general_group?.show_street_base === "1"}
             mlsBaseOpen={data?.general_group?.mls === "1"}
+            errors={errors?.find((er) => er?.id === "general")?.errors ?? []}
           />
         </div>
       </div>

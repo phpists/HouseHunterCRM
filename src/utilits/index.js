@@ -52,7 +52,6 @@ export const handleToFormData = (data, files, notCleanFields) => {
     } else if (typeof field[1] === "object") {
       if (Object.entries(field[1])?.length > 0) {
         Object.entries(field[1]).forEach((fField) => {
-          console.log(fField);
           if (Array.isArray(fField[1])) {
             fField[1].forEach((f, i) => {
               formData.append(`${field[0]}[${fField[0]}][]`, f);

@@ -6,6 +6,7 @@ import { Empty } from "../../components/Empty/Empty";
 import { ObjectHistory } from "../../components/ObjectHistory/ObjectHistory";
 import { useState } from "react";
 import { Loader } from "../../components/Loader";
+import { ObjectCommentHistory } from "../../components/ObjectCommentHistory/ObjectCommentHistory";
 
 export const List = ({
   data,
@@ -17,13 +18,21 @@ export const List = ({
   innerRef,
   loading,
   isHideObjects,
+  actionLoading,
 }) => {
   const { data: accessData } = useGetAccessQuery();
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
   const [currency, setCurrency] = useState(0);
+  const [openCommentHistoryModal, setOpenCommentHistoryModal] = useState(null);
 
   return (
     <>
+      {openCommentHistoryModal && (
+        <ObjectCommentHistory
+          onClose={() => setOpenCommentHistoryModal(null)}
+          object={openCommentHistoryModal}
+        />
+      )}
       {openHistoryModal && (
         <ObjectHistory
           onClose={() => setOpenHistoryModal(null)}
@@ -31,8 +40,8 @@ export const List = ({
         />
       )}
       <StyledList className="hide-scroll" ref={innerRef}>
-        {data?.length === 0 ? (
-          <Empty loading={loading} />
+        {data?.length === 0 || actionLoading ? (
+          <Empty loading={loading || actionLoading} />
         ) : (
           data.map((d, i) => (
             <ObjectCard
@@ -54,6 +63,9 @@ export const List = ({
                   id: d?.id,
                   isStreetBase: d?.obj_street_base === "1",
                 })
+              }
+              onOpenCommetHistory={() =>
+                setOpenCommentHistoryModal({ id: d?.id })
               }
             />
           ))

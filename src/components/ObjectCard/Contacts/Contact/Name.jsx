@@ -29,5 +29,9 @@ const StyledName = styled.div`
     line-height: 118%; /* 14.16px */
     letter-spacing: 0.24px;
     opacity: 0.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 170px;
+    overflow: hidden;
   }
 `;

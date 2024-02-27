@@ -33,6 +33,7 @@ export const Header = ({
   onDelete,
   onFavorite,
   onSendClients,
+  onChangeActionLoading,
 }) => {
   const [getNewClientsCount] = useLazyGetNewClientsCountQuery();
   const { saveNewClientsCount } = useActions();
@@ -46,14 +47,20 @@ export const Header = ({
 
   const handleDeleteClients = () => {
     if (selected?.length > 0) {
+      onChangeActionLoading(true);
       deleteClient({ id_client: selected }).then((resp) => {
-        handleResponse(resp, () => {
-          cogoToast.success("Клієнтів успішно видалено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
-          onDelete();
-        });
+        handleResponse(
+          resp,
+          () => {
+            cogoToast.success("Клієнтів успішно видалено", {
+              hideAfter: 3,
+              position: "top-right",
+            });
+            onDelete();
+            onChangeActionLoading(false);
+          },
+          () => onChangeActionLoading(false)
+        );
       });
     }
   };

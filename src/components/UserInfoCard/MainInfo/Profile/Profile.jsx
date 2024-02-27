@@ -36,6 +36,7 @@ export const Profile = ({
                 isProfile ? null : onChangeField("structure_level", val)
               }
               rolesOnlyView={rolesOnlyView}
+              namePermission={data?.name_permision}
             />
           )}
         </div>

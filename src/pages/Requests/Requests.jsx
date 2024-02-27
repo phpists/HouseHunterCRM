@@ -50,6 +50,7 @@ export const Requests = () => {
   const [loading, setLoading] = useState(false);
   const dataRef = useRef([]);
   const allCountRef = useRef(0);
+  const [actionLoading, setActionLoading] = useState(false);
 
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => {
@@ -240,9 +241,11 @@ export const Requests = () => {
     );
     dataRef.current = updatedData;
     setRequests(updatedData);
-    const updatedCount = allCount - 1;
-    allCountRef.current = updatedCount;
-    setAllCount(updatedCount);
+    if (isFavorite) {
+      const updatedCount = allCount - 1;
+      allCountRef.current = updatedCount;
+      setAllCount(updatedCount);
+    }
   };
 
   const handleToggleFavoritesStatus = () => {
@@ -271,10 +274,12 @@ export const Requests = () => {
     setRequests(updatedData);
     dataRef.current = updatedData;
     setRequests(updatedData);
-    const updatedCount = allCount - selected.length;
-    allCountRef.current = updatedCount;
-    setAllCount(updatedCount);
-    saveRequestsCount(updatedCount);
+    if (isFavorite) {
+      const updatedCount = allCount - selected.length;
+      allCountRef.current = updatedCount;
+      setAllCount(updatedCount);
+      saveRequestsCount(updatedCount);
+    }
     setSelected([]);
   };
 
@@ -347,6 +352,7 @@ export const Requests = () => {
         onApplyFilter={handleApplyFilter}
         allCount={allCount}
         onSelectAll={handleSelectAll}
+        onChangeActionLoading={(val) => setActionLoading(val)}
       />
       <List
         selected={selected}
@@ -356,6 +362,7 @@ export const Requests = () => {
         onDeleteRequest={handleDeleteRequestSuccess}
         onFavorite={handleToggleFavoriteStatus}
         loading={loading}
+        actionLoading={actionLoading}
       />
     </StyledRequests>
   );

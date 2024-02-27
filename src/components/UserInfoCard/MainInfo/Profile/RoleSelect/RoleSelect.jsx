@@ -9,7 +9,12 @@ import {
   useGetCompanyStructureLevelQuery,
 } from "../../../../../store/structure/structure.api";
 
-export const RoleSelect = ({ value, onChange, rolesOnlyView }) => {
+export const RoleSelect = ({
+  value,
+  onChange,
+  rolesOnlyView,
+  namePermission,
+}) => {
   const [open, setOpen] = useState(false);
   const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -73,7 +78,9 @@ export const RoleSelect = ({ value, onChange, rolesOnlyView }) => {
           : open
           ? "Оберіть роль"
           : rolesOnlyView
-          ? "Без ролі"
+          ? namePermission?.length > 0
+            ? namePermission
+            : "Без ролі"
           : "Немає ролі"}
       </div>
       {!rolesOnlyView && (

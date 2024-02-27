@@ -5,9 +5,11 @@ import { useGetAccessQuery } from "../../store/auth/auth.api";
 import { handleCheckAccess } from "../../utilits";
 import { useState } from "react";
 import { AddToSelections } from "./AddToSelections";
-import { ObjectHistory } from "../../components/ObjectHistory/ObjectHistory";
+
 import { Loader } from "../../components/Loader";
 import { ObjectPriceHistory } from "../../components/ObjectPriceHistory";
+import { ObjectCommentHistory } from "../../components/ObjectCommentHistory/ObjectCommentHistory";
+import { ObjectHistory } from "../../components/ObjectHistory/ObjectHistory";
 
 export const List = ({
   selected,
@@ -17,15 +19,23 @@ export const List = ({
   onFindSimilar,
   innerRef,
   loading,
+  actionLoading,
 }) => {
   const { data: accessData } = useGetAccessQuery();
   const [openAddModal, setOpenAddModal] = useState(null);
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
   const [openHistoryPriceModal, setOpenHistoryPriceModal] = useState(null);
+  const [openCommentHistoryModal, setOpenCommentHistoryModal] = useState(null);
   const [currency, setCurrency] = useState(0);
 
   return (
     <>
+      {openCommentHistoryModal && (
+        <ObjectCommentHistory
+          onClose={() => setOpenCommentHistoryModal(null)}
+          object={openCommentHistoryModal}
+        />
+      )}
       {openHistoryModal && (
         <ObjectHistory
           onClose={() => setOpenHistoryModal(null)}
@@ -45,8 +55,8 @@ export const List = ({
         />
       )}
       <StyledList className="hide-scroll" ref={innerRef}>
-        {data?.length === 0 ? (
-          <Empty loading={loading} />
+        {data?.length === 0 || actionLoading ? (
+          <Empty loading={loading || actionLoading} />
         ) : (
           <>
             {data.map((d, i) => (
@@ -64,6 +74,9 @@ export const List = ({
                     id: d?.id,
                     isStreetBase: d?.obj_street_base === "1",
                   })
+                }
+                onOpenCommetHistory={() =>
+                  setOpenCommentHistoryModal({ id: d?.id })
                 }
                 onOpenPriceHistory={() =>
                   setOpenHistoryPriceModal(d?.price_history_json)

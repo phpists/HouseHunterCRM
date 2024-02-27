@@ -10,23 +10,36 @@ import { Button } from "../../components/Button";
 import { handleResponse } from "../../utilits";
 import cogoToast from "cogo-toast";
 
-export const SendModal = ({ clients, onClose, onSendSuccess }) => {
+export const SendModal = ({
+  clients,
+  onClose,
+  onSendSuccess,
+  onChangeLoading,
+}) => {
   const { data } = useGetWorkerToMoveClientsQuery();
   const [moveClients] = useLazyMoveClientsQuery();
   const [selectedUser, setSelectedUser] = useState(null);
 
   const handleSubmit = () => {
+    onChangeLoading && onChangeLoading(true);
     moveClients({
       id_clients: clients,
       id_user_to: selectedUser,
     }).then((resp) =>
-      handleResponse(resp, () => {
-        onSendSuccess();
-        cogoToast.success("Успішно передано", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-      })
+      handleResponse(
+        resp,
+        () => {
+          onSendSuccess();
+          cogoToast.success("Успішно передано", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          onChangeLoading && onChangeLoading(false);
+        },
+        () => {
+          onChangeLoading && onChangeLoading(false);
+        }
+      )
     );
   };
 

@@ -281,6 +281,7 @@ export const Main = ({
         onChange={onChangeFilter}
         streetBaseOpen={filtersOpened?.street_base_object}
         mlsBaseOpen={filtersOpened?.mls_object}
+        companyOpen={filtersOpened?.company}
         onChangeDefaultFiltersOpened={(fieldName, value) =>
           onChangeDefaultFiltersOpened({
             ...filtersOpened,

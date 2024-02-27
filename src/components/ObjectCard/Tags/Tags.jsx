@@ -10,6 +10,7 @@ import {
   useLazyAddTagsToStreetBaseObjectsQuery,
 } from "../../../store/objects/objects.api";
 import { handleResponse } from "../../../utilits";
+import { Comment } from "./Comment";
 
 export const Tags = ({ className, data, isAccess }) => {
   const { data: tagsList } = useGetTagsListQuery();
@@ -17,6 +18,7 @@ export const Tags = ({ className, data, isAccess }) => {
   const [addTag] = useLazyAddTagsToObjectsQuery();
   const [addTagStreetBase] = useLazyAddTagsToStreetBaseObjectsQuery();
   const [tags, setTags] = useState([]);
+  const [comment, setComment] = useState("");
 
   const handleSelect = (val) => {
     const isExist = !!tags?.find((t) => t.value === val);
@@ -70,15 +72,7 @@ export const Tags = ({ className, data, isAccess }) => {
         }))}
         onChange={handleSelect}
       />
-      {data?.comment?.length > 0 && (
-        <ProfileField
-          label="Коментар"
-          value={data?.comment}
-          className="comment"
-          contentHeight
-          readOnly
-        />
-      )}
+      <Comment id={data?.id} comment={data?.comment} />
     </StyledTags>
   );
 };
@@ -90,16 +84,6 @@ const StyledTags = styled.div`
   width: 200px;
   margin-right: 10px;
   height: 200px;
-  .comment {
-    margin-top: 8px;
-    max-width: 200px;
-    .value {
-      font-size: 12px;
-    }
-    .label {
-      font-size: 11px;
-    }
-  }
   @media (min-width: 1400px) {
     width: 195px;
   }
