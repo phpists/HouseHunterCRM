@@ -149,7 +149,12 @@ export const Structure = () => {
         onRefetchStructureData={handleRefetchStructureData}
         onCreatedUser={handleCreatedUser}
       />
-      <MobileHeader />
+      <MobileHeader
+        showNotStructureWorkers={showNotStructureWorkers}
+        onToggleShowNotStructureWorkers={() =>
+          setShowNotStructureWorkers(!showNotStructureWorkers)
+        }
+      />
       {infoOpen && (
         <WorkerModal
           onClose={() => setInfoOpen(false)}

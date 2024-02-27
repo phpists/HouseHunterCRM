@@ -79,9 +79,16 @@ export const ProfileField = ({
   };
 
   const handlePressKey = (e) => {
-    if (e?.keyCode === 13) {
+    const keyCode = e?.keyCode;
+    if (keyCode === 13) {
       handleClose();
       onSave && onSave();
+    } else if (keyCode === 34) {
+      e.target.blur();
+      setActive(false);
+      setOpen(false);
+      setCalendarOpen(false);
+      onBlur && onBlur();
     }
   };
 
@@ -183,11 +190,24 @@ export const ProfileField = ({
               }
               placeholder={placeholder}
               onChange={(e) =>
-                onChange && type !== "date" ? onChange(e.target.value) : null
+                type === "number"
+                  ? Number(e.target.value) >= 0
+                    ? onChange(e.target.value)
+                    : null
+                  : onChange && type !== "date"
+                  ? onChange(e.target.value)
+                  : null
               }
               type={type ?? "text"}
               autoFocus
               onKeyDown={handlePressKey}
+              onWheel={(e) => {
+                e.target.blur();
+                setActive(false);
+                setOpen(false);
+                setCalendarOpen(false);
+                onBlur && onBlur();
+              }}
               //   onBlur={() => {
               //     setActive(false);
               //     setOpen(false);

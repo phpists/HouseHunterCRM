@@ -14,7 +14,7 @@ export const ObjectCard = ({ photo, className, date, isObject }) => (
           alt=""
           className="0.5 openInfo"
         />
-        <span className="openInfo">{date ?? "04.10"}</span>
+        <span className="openInfo date">{date ?? ""}</span>
       </>
     )}
   </StyledObjectCard>
@@ -60,6 +60,16 @@ const StyledObjectCard = styled.div`
     border: 1px solid #fff;
     &::before {
       opacity: 1;
+    }
+  }
+  @media (max-width: 800px) {
+    .date {
+      font-size: 6px;
+    }
+  }
+  @media (max-width: 450px) {
+    .date {
+      display: none;
     }
   }
 `;

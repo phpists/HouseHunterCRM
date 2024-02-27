@@ -40,7 +40,7 @@ const StyledHeader = styled.div`
   }
 
   @media (max-width: 700px) {
-    padding: 0 0 20px;
+    padding: 20px 0;
     margin-bottom: 10px;
 
     .header-btns {

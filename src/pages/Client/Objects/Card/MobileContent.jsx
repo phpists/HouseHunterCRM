@@ -44,7 +44,7 @@ export const MobileContent = ({
           <div className="w-max mr-5">
             <div className="flex items-center w-max">
               <Title title={location} className="location" />
-              <Tag />
+              {/* <Tag /> */}
             </div>
             <Label label="Локація" />
           </div>

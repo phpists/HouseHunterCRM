@@ -270,7 +270,7 @@ export const Objects = () => {
           : objects?.map((obj) =>
               obj?.id === id ? { ...obj, favorite: !obj.favorite } : obj
             );
-        dataRef.current = updateData;
+        dataRef.current = updatedData;
         setObjects(updatedData);
         const updatedCount = isFavorite ? allCount - 1 : allCount;
         allCountRef.current = updatedCount;
@@ -401,6 +401,19 @@ export const Objects = () => {
     saveObjectsCount(0);
   }, []);
 
+  const handleDeleteObjectSuccess = (id) => {
+    firstThousand.current = firstThousand.current.filter((c) => c !== id);
+    const updatedCount = allCount - 1;
+    allCountRef.current = updatedCount;
+    saveObjectsCount(updatedCount);
+    setAllCount(updatedCount);
+    const updatedData = objects.filter((obj) => obj.id !== id);
+    dataRef.current = updatedData;
+    setObjects(updatedData);
+    setSelected([]);
+    handleGetObjects();
+  };
+
   return (
     <StyledObjects>
       <Header
@@ -427,6 +440,7 @@ export const Objects = () => {
         innerRef={listRef}
         loading={loading}
         actionLoading={actionLoading}
+        onDeleteSuccess={handleDeleteObjectSuccess}
       />
     </StyledObjects>
   );

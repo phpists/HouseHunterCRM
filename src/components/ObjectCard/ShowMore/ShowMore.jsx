@@ -18,6 +18,7 @@ export const ShowMore = ({
   link,
   isHideObjects,
   onOpenCommetHistory,
+  onDelete,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -26,6 +27,11 @@ export const ShowMore = ({
 
   const handleFindSimilar = () => {
     onFindSimilar();
+    handleCloseDropdown();
+  };
+
+  const handleDelete = () => {
+    onDelete && onDelete();
     handleCloseDropdown();
   };
 
@@ -46,6 +52,7 @@ export const ShowMore = ({
         link={link}
         isHideObjects={isHideObjects}
         onOpenCommetHistory={onOpenCommetHistory}
+        onDelete={onDelete && isAccess ? handleDelete : null}
       />
     </StyledShowMore>
   );

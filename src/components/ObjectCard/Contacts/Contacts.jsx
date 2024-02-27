@@ -80,5 +80,8 @@ const StyledContacts = styled.div`
     .divider-contacts {
       display: none;
     }
+    .show-client {
+      width: max-content;
+    }
   }
 `;

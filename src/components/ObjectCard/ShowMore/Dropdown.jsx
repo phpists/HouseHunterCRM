@@ -9,6 +9,7 @@ import { ReactComponent as Edit } from "../../../assets/images/edit-company.svg"
 import { ReactComponent as Eye } from "../../../assets/images/eye-access.svg";
 import { ReactComponent as Link } from "../../../assets/images/link.svg";
 import { ReactComponent as Comment } from "../../../assets/images/message-object.svg";
+import { ReactComponent as RemoveIcon } from "../../../assets/images/remove.svg";
 
 export const Dropdown = ({
   clientId,
@@ -24,6 +25,7 @@ export const Dropdown = ({
   link,
   isHideObjects,
   onOpenCommetHistory,
+  onDelete,
 }) => (
   <StyledDropdown className="dropdown">
     {link?.length > 0 && (
@@ -94,6 +96,11 @@ export const Dropdown = ({
       >
         <span>Редагувати</span> <Edit />
       </NavLink>
+    )}
+    {onDelete && (
+      <div className="flex items-center justify-between" onClick={onDelete}>
+        <span>Видалити</span> <RemoveIcon className="selection-icon" />
+      </div>
     )}
   </StyledDropdown>
 );

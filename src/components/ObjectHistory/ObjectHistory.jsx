@@ -7,7 +7,7 @@ import {
   useLazyShowStreetBaseHistoryTagsQuery,
 } from "../../store/objects/objects.api";
 import { useEffect, useRef, useState } from "react";
-import { handleFormatDate, handleResponse } from "../../utilits";
+import { checkIsArray, handleFormatDate, handleResponse } from "../../utilits";
 
 export const ObjectHistory = ({ onClose, object }) => {
   const [data, setData] = useState(null);
@@ -27,7 +27,7 @@ export const ObjectHistory = ({ onClose, object }) => {
             <div className="empty">Пусто</div>
           ) : (
             <div className="object-history-cards">
-              {data
+              {checkIsArray([...data])
                 ?.reverse()
                 ?.map(({ action, label, name, tag, user_name, time }, i) => (
                   <Card

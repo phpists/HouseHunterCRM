@@ -37,7 +37,9 @@ export const Header = ({
   const [addToFavorites] = useLazyAddToFavoritesQuery();
   const [deleteObject] = useLazyDeleteObjectQuery();
   const { data } = useGetAccessQuery();
-  const [defaultFiltersOpen, setDefalultFiltersOpen] = useState({});
+  const [defaultFiltersOpen, setDefalultFiltersOpen] = useState({
+    company: true,
+  });
 
   const handleToggleFavorites = () => {
     onChangeActionLoading(true);

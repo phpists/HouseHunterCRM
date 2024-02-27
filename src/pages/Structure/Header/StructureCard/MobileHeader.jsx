@@ -4,8 +4,12 @@ import { useState } from "react";
 import { Modal } from "../CreateRole/Modal/Modal";
 import { useGetAccessQuery } from "../../../../store/auth/auth.api";
 import { handleCheckAccess } from "../../../../utilits";
+import { ToggleShowButton } from "../ToggleButton";
 
-export const MobileHeader = () => {
+export const MobileHeader = ({
+  onToggleShowNotStructureWorkers,
+  showNotStructureWorkers,
+}) => {
   const [openCreateWorker, setOpenCreateWorker] = useState(false);
   const [openRoles, setOpenRoles] = useState(false);
   const { data: accessData } = useGetAccessQuery();
@@ -26,6 +30,12 @@ export const MobileHeader = () => {
           Налаштування ролей
         </button>
       )}
+      <button
+        onClick={onToggleShowNotStructureWorkers}
+        className={`notStructureWorkers ${showNotStructureWorkers && "active"}`}
+      >
+        Незакріплені працівники
+      </button>
     </StyledMobileHeader>
   );
 };
@@ -43,6 +53,9 @@ const StyledMobileHeader = styled.div`
   font-weight: 200;
   line-height: 1;
   letter-spacing: 0.26px;
+  .notStructureWorkers {
+    grid-column: 1/3;
+  }
   button {
     display: flex;
     align-items: center;

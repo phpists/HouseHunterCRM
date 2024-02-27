@@ -45,9 +45,5 @@ const StyledModal = styled(motion.div)`
   @media (max-width: 500px) {
     width: 100%;
     border-left: none;
-    .modal-content {
-      display: flex;
-      justify-content: center;
-    }
   }
 `;

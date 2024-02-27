@@ -101,4 +101,7 @@ const StyledProfileModal = styled.div`
     grid-template-columns: 1fr;
     gap: 25px;
   }
+  .modal-content {
+    height: calc(100svh - 45px);
+  }
 `;

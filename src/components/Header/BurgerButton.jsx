@@ -16,7 +16,7 @@ const StyledBurgerButton = styled.button`
   flex-shrink: 0;
   border-radius: 10px;
   background: #4f4f4f;
-
+  z-index: 2;
   @media (min-width: 1200px) {
     display: none;
   }

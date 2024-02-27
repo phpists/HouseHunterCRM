@@ -30,7 +30,7 @@ export const Client = () => {
   }
 
   return (
-    <StyledClient isEmpty={!selectedObject}>
+    <StyledClient isEmpty={!selectedObject} className="hide-scroll">
       <Header favorite={clientData?.data?.favorite_client} />
       <ProfileMobile
         data={clientData?.data}
@@ -85,8 +85,11 @@ const StyledClient = styled.div`
     width: 100svw;
     margin-left: -24px;
     padding: 20px 24px;
+    overflow: auto;
+    height: calc(100vh - 115px);
     .client-content {
       overflow-x: hidden;
+      height: max-content;
     }
   }
 `;

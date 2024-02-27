@@ -19,6 +19,7 @@ export const DesktopContent = ({
   onChangeCurrency,
   isHideObjects,
   onOpenCommetHistory,
+  onDelete,
 }) => (
   <StyledDesktopContent className="flex items-center justify-between">
     <Slider
@@ -48,6 +49,7 @@ export const DesktopContent = ({
       link={data?.link}
       isHideObjects={isHideObjects}
       onOpenCommetHistory={onOpenCommetHistory}
+      onDelete={onDelete}
     />
     <div className="mobile-footer w-full">
       <Info data={data} />

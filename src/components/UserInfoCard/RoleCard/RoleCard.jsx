@@ -21,7 +21,7 @@ export const RoleCard = ({
   const handleSetInitialValues = () => {
     if (
       !data?.permission_list_json ||
-      data?.permission_list_json?.length === 0
+      checkIsArray(data?.permission_list_json)?.length === 0
     ) {
       onChangeField(
         "permission_list_json",
@@ -42,7 +42,7 @@ export const RoleCard = ({
 
   useEffect(() => {
     permissionsList && handleSetInitialValues();
-  }, [permissionsList]);
+  }, [permissionsList, data]);
 
   const handleChangeValue = (index, field, value) => {
     const initValue =

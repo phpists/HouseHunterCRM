@@ -23,7 +23,12 @@ export const emailValidation = (value) => {
   return false;
 };
 
-export const handleToFormData = (data, files, notCleanFields) => {
+export const handleToFormData = (
+  data,
+  files,
+  notCleanFields,
+  allowEmptyValue
+) => {
   const formData = new FormData();
 
   Object.entries(data).forEach((field) => {
@@ -89,7 +94,8 @@ export const handleToFormData = (data, files, notCleanFields) => {
         formData.append(`${field[0]}[]`, []);
       }
     } else {
-      field[1] && formData.append(field[0], field[1]);
+      const isValue = field[1] || allowEmptyValue;
+      isValue && formData.append(field[0], field[1]);
     }
   });
 

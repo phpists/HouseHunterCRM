@@ -17,6 +17,7 @@ export const ObjectCard = ({
   onChangeCurrency,
   isHideObjects,
   onOpenCommetHistory,
+  onDelete,
 }) => {
   const handleClick = (e) =>
     e.target.classList.contains("clickable") && onSelect();
@@ -39,6 +40,7 @@ export const ObjectCard = ({
         onChangeCurrency={onChangeCurrency}
         isHideObjects={isHideObjects}
         onOpenCommetHistory={onOpenCommetHistory}
+        onDelete={onDelete}
       />
       <MobileContent
         data={data}
@@ -53,6 +55,7 @@ export const ObjectCard = ({
         onChangeCurrency={onChangeCurrency}
         isHideObjects={isHideObjects}
         onOpenCommetHistory={onOpenCommetHistory}
+        onDelete={onDelete}
       />
     </StyledObjectCard>
   );

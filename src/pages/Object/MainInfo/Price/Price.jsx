@@ -97,7 +97,7 @@ const StyledPrice = styled.div`
   }
   @media (max-width: 800px) {
     .field {
-      width: 77px;
+      width: 77px !important;
       padding-left: 0;
       padding-right: 0;
       flex-shrink: 0;

@@ -29,7 +29,6 @@ const StyledTitle = styled.div`
     max-width: 150px;
   }
   @media (max-width: 700px) {
-    max-width: 250px;
     font-size: 14px;
   }
 `;

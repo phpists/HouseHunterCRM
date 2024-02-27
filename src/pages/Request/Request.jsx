@@ -565,11 +565,12 @@ const StyledRequest = styled.div`
   }
 
   @media (max-width: 800px) {
-    padding: 20px 24px;
+    padding: 20px 10px;
     width: 100svw;
     margin-left: -24px;
     .request-content {
       padding: 10px;
+      height: calc(100svh - 190px);
     }
   }
 `;

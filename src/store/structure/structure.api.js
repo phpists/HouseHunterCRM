@@ -80,13 +80,18 @@ export const structure = createApi({
         url: "",
         method: "POST",
         headers: headers(),
-        body: handleToFormData({
-          action: "edit_worker_not_structure",
-          mod: "billing",
-          name_permision,
-          id_worker,
-          permission_list_json,
-        }),
+        body: handleToFormData(
+          {
+            action: "edit_worker_not_structure",
+            mod: "billing",
+            name_permision,
+            id_worker,
+            permission_list_json,
+          },
+          null,
+          [],
+          true
+        ),
       }),
     }),
     deleteWorker: build.query({

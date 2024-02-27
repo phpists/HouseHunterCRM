@@ -145,7 +145,10 @@ const StyledSlider = styled.div`
     flex-direction: row;
     margin: 0;
     .slider {
-      width: calc(100svw - 60px - 8px - 44px - 24px - 39px);
+      width: calc(
+        100svw - -4px - 8px - 44px - 24px -
+          ${({ empty }) => (empty ? 39 : 90)}px
+      );
     }
   }
 

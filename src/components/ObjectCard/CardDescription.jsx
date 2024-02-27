@@ -22,5 +22,6 @@ const StyledCardDescription = styled.div`
     max-height: 153px;
     overflow: auto;
     margin: 10px 0 15px;
+    word-break: break-all;
   }
 `;
