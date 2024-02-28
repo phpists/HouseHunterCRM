@@ -4,7 +4,8 @@ import emailIcon from "../../../../../assets/images/email.svg";
 export const Email = ({ email }) => (
   <StyledEmail className="notClickable">
     <div className="title flex items-center notClickable">
-      <img src={emailIcon} alt="" className="notClickable" /> {email}
+      <img src={emailIcon} alt="" className="notClickable" />{" "}
+      <span>{email}</span>
     </div>
     <div className="label notClickable">Email</div>
   </StyledEmail>
@@ -23,6 +24,13 @@ const StyledEmail = styled.div`
     line-height: 118%; /* 16.52px */
     letter-spacing: 0.28px;
     margin-bottom: 2px;
+    span {
+      width: 100%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 180px;
+    }
     img {
       margin-right: 4px;
     }
