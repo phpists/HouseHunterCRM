@@ -3,7 +3,6 @@ import { Header } from "./Header/Header";
 import { List } from "./List/List";
 import { useEffect, useRef, useState } from "react";
 import {
-  calls,
   useLazyAddCommentToCallQuery,
   useLazyGetCallsQuery,
   useLazySetStatusCallQuery,
@@ -24,7 +23,7 @@ const INIT_FILTERS = {
   view: "0",
 };
 
-export const Calls = () => {
+const Calls = () => {
   const location = useLocation();
   const [getCalls] = useLazyGetCallsQuery();
   const [setCallStatus] = useLazySetStatusCallQuery();
@@ -54,13 +53,10 @@ export const Calls = () => {
     });
   };
 
-  const handleUpdateCall = (id, field, value) =>
-    setData(data?.filter((call) => call.id !== id));
-
   const handleSetCallStatus = (id_call, status) => {
     setCallStatus({ id_call, status }).then((resp) =>
       handleResponse(resp, () => {
-        handleUpdateCall(id_call, "status", status);
+        setData(data?.filter((call) => call.id !== id_call));
         cogoToast.success("Статус успішно змінено!", {
           hideAfter: 3,
           position: "top-right",
@@ -72,7 +68,17 @@ export const Calls = () => {
   const handleAddComment = (id_call, comment) => {
     addComment({ id_call, comment }).then((resp) =>
       handleResponse(resp, () => {
-        handleUpdateCall(id_call, "coment", comment);
+        handleResponse(resp, () => {
+          cogoToast.success("Коментар успішно змінено!", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+        });
+        setData(
+          data?.map((call) =>
+            call.id === id_call ? { ...call, coment: comment } : call
+          )
+        );
       })
     );
   };
@@ -110,7 +116,7 @@ export const Calls = () => {
     } else {
       handleGetCalls(false);
       setIsDefaultFilterSet(true);
-    }
+    } // eslint-disable-next-line
   }, [location.search]);
 
   useEffect(() => {
@@ -118,7 +124,7 @@ export const Calls = () => {
       const filterApply = location?.search?.split("=")[0];
       isFirstLoad.current = false;
       handleGetCalls(!!filterApply);
-    }
+    } // eslint-disable-next-line
   }, [filters, isDefaultFilterSet]);
 
   const handleSelectAll = (isReset, count) => {
@@ -160,3 +166,5 @@ const StyledCalls = styled.div`
     padding: 20px 24px;
   }
 `;
+
+export default Calls;

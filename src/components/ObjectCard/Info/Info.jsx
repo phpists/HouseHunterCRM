@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Header } from "./Header/Header";
+// import { Header } from "./Header/Header";
 import { Text } from "./Text";
 import { Footer } from "./Footer/Footer";
 

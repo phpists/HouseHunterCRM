@@ -4,10 +4,8 @@ import { Logo } from "./Logo";
 import { useState } from "react";
 import { Content } from "./Content";
 import { SuccessMessage } from "./SuccessMessage";
-import { useNavigate } from "react-router-dom";
 
-export const Auth = () => {
-  const navigate = useNavigate();
+const Auth = () => {
   const [isRightBlockHover, setIsRightBlockHover] = useState("false");
   const [forgotPassword, setForgotPassword] = useState(false);
   const [type, setType] = useState("login");
@@ -69,3 +67,5 @@ const StyledAuth = styled.div`
     font-weight: 400;
   }
 `;
+
+export default Auth;

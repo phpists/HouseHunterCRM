@@ -1,8 +1,18 @@
+import { useInView } from "react-intersection-observer";
 import { styled } from "styled-components";
 
-export const Slide = ({ photo, active, empty, onOpen }) => (
-  <StyledSlide photo={active ? photo : ""} empty={empty} onClick={onOpen} />
-);
+export const Slide = ({ photo, active, empty, onOpen }) => {
+  const { ref, inView } = useInView({ triggerOnce: true });
+
+  return (
+    <StyledSlide
+      photo={active && inView ? photo : ""}
+      empty={empty}
+      onClick={onOpen}
+      ref={ref}
+    />
+  );
+};
 
 const StyledSlide = styled.div`
   width: 200px;

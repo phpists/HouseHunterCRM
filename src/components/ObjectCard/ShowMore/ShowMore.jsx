@@ -19,6 +19,8 @@ export const ShowMore = ({
   isHideObjects,
   onOpenCommetHistory,
   onDelete,
+  isStreetBase,
+  searchTag,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -53,6 +55,8 @@ export const ShowMore = ({
         isHideObjects={isHideObjects}
         onOpenCommetHistory={onOpenCommetHistory}
         onDelete={onDelete && isAccess ? handleDelete : null}
+        isStreetBase={isStreetBase}
+        searchTag={searchTag}
       />
     </StyledShowMore>
   );

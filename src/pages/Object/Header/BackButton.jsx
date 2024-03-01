@@ -1,15 +1,21 @@
 import { styled } from "styled-components";
 import { ReactComponent as Arrow } from "../../../assets/images/arrow-right.svg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const BackButton = () => {
   const navigate = useNavigate();
+  const { search } = useLocation();
+
+  const handleBack = () => {
+    if (search === "?objects") {
+      navigate("/objects?prev=true");
+    } else {
+      navigate(-1);
+    }
+  };
 
   return (
-    <StyledBackButton
-      className="flex items-center"
-      onClick={() => navigate(-1)}
-    >
+    <StyledBackButton className="flex items-center" onClick={handleBack}>
       <button className="flex items-center justify-center">
         <Arrow />
       </button>

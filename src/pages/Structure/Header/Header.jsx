@@ -5,6 +5,7 @@ import { CreateUser } from "./CreateUser/CreateUser";
 import { ToggleShowButton } from "./ToggleButton";
 import { useGetAccessQuery } from "../../../store/auth/auth.api";
 import { handleCheckAccess } from "../../../utilits";
+import { useAppSelect } from "../../../hooks/redux";
 
 export const Header = ({
   level,
@@ -17,6 +18,7 @@ export const Header = ({
   onCreatedUser,
 }) => {
   const { data: accessData } = useGetAccessQuery();
+  const { user } = useAppSelect((state) => state.auth);
 
   return (
     <StyledHeader className="flex items-center justify-between">
@@ -27,17 +29,19 @@ export const Header = ({
         onToggleShowNotStructureWorkers={onToggleShowNotStructureWorkers}
       />
       <div className="btns flex items-center">
-        {level >= 3 && handleCheckAccess(accessData, "structure", "add") ? (
+        {level >= 3 &&
+        handleCheckAccess(accessData, "structure", "add") &&
+        user?.is_director ? (
           <CreateUser small onCreatedUser={onCreatedUser} />
         ) : (
           <>
-            {handleCheckAccess(accessData, "structure", "add") && (
-              <CreateUser onCreatedUser={onCreatedUser} />
-            )}
-            {handleCheckAccess(accessData, "structure", "edit") && (
-              <CreateRole onRefetchStructureData={onRefetchStructureData} />
-            )}
-            {level === 1 && (
+            {handleCheckAccess(accessData, "structure", "add") &&
+              user?.is_director && <CreateUser onCreatedUser={onCreatedUser} />}
+            {handleCheckAccess(accessData, "structure", "edit") &&
+              user?.is_director && (
+                <CreateRole onRefetchStructureData={onRefetchStructureData} />
+              )}
+            {level === 1 && user?.is_director && (
               <ToggleShowButton
                 active={showNotStructureWorkers}
                 onClick={onToggleShowNotStructureWorkers}

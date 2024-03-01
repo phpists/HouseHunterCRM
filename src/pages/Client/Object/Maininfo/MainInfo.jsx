@@ -6,7 +6,7 @@ import { CreatedDate } from "./CreatedDate";
 import { Tag } from "./Tag/Tag";
 import { ReactComponent as DoorsIcon } from "../../.../../../../assets/images/doors.svg";
 import { ReactComponent as ExpandedIcon } from "../../.../../../../assets/images/epanded.svg";
-import { ReactComponent as BoxSelectIcon } from "../../.../../../../assets/images/box-select.svg";
+// import { ReactComponent as BoxSelectIcon } from "../../.../../../../assets/images/box-select.svg";
 import { ReactComponent as StairsIcon } from "../../.../../../../assets/images/stairs.svg";
 import noPhoto from "../../.../../../../assets/images/no-photo.svg";
 import { TagDivider } from "./Tag/TagDivider";
@@ -51,6 +51,7 @@ export const Maininfo = ({
     if (locationsList) {
       handleFormatLocations();
     }
+    // eslint-disable-next-line
   }, [locationsList]);
 
   return (

@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import {
   useLazyAddClientToFavoriteQuery,
   useLazyDeleteCientQuery,
-  useLazyGetClientsCountQuery,
   useLazyGetClientsQuery,
 } from "../../store/clients/clients.api";
 import { useActions } from "../../hooks/actions";
@@ -14,7 +13,7 @@ import { handleFromInputDate, handleResponse } from "../../utilits";
 import cogoToast from "cogo-toast";
 import { SendModal } from "./SendModal";
 
-export const Clients = () => {
+const Clients = () => {
   const [favoritesFilter, setFavoritesFilter] = useState(false);
   const [selected, setSelected] = useState([]);
   const { saveClientsCount } = useActions();
@@ -113,7 +112,7 @@ export const Clients = () => {
           resp,
           () => {
             if (resp?.data?.error === 0 && resp?.data.data?.clients?.length) {
-              const respItemsCount = resp?.data?.data?.clients?.length;
+              //   const respItemsCount = resp?.data?.data?.clients?.length;
               //   const updatedCount = isReset
               //     ? respItemsCount
               //     : allCountRef.current + respItemsCount;
@@ -225,6 +224,7 @@ export const Clients = () => {
     setFilter({});
     isFilters.current = false;
     handleGetClients(true);
+    // eslint-disable-next-line
   }, [favoritesFilter]);
 
   const handleAddClientToFavorite = (id) => {
@@ -351,3 +351,5 @@ const StyledClients = styled.div`
     padding: 20px 24px;
   }
 `;
+
+export default Clients;

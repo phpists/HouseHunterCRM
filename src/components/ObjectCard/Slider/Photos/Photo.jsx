@@ -1,16 +1,21 @@
 import { styled } from "styled-components";
 import expandIcon from "../../../../assets/images/expend.svg";
+import { useInView } from "react-intersection-observer";
 
-export const Photo = ({ photo, active, onSelect }) => (
-  <StyledPhoto
-    photo={photo}
-    className={`flex items-center justify-center ${active && "active"}`}
-    onClick={onSelect}
-  >
-    <img src={expandIcon} alt="" />
-  </StyledPhoto>
-);
+export const Photo = ({ photo, active, onSelect }) => {
+  const { ref, inView } = useInView({ triggerOnce: true });
 
+  return (
+    <StyledPhoto
+      photo={inView ? photo : ""}
+      className={`flex items-center justify-center ${active && "active"}`}
+      onClick={onSelect}
+      ref={ref}
+    >
+      <img src={expandIcon} alt="" loading="lazy" />
+    </StyledPhoto>
+  );
+};
 const StyledPhoto = styled.div`
   width: 44px;
   height: 44px;

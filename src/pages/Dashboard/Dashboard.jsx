@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { useAppSelect } from "../../hooks/redux";
 import { Loader } from "../../components/Loader";
 
-export const Dashboard = ({ isClientsAccess }) => {
+const Dashboard = ({ isClientsAccess }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data, isLoading } = useGetClientsCountQuery(null, {
     skip: !isClientsAccess,
@@ -32,7 +32,7 @@ export const Dashboard = ({ isClientsAccess }) => {
   useEffect(() => {
     if (user?.id) {
       getWorkerStatistic(user?.id);
-    }
+    } // eslint-disable-next-line
   }, [user]);
 
   return (
@@ -135,3 +135,5 @@ const StyledDashboard = styled.div`
     }
   }
 `;
+
+export default Dashboard;

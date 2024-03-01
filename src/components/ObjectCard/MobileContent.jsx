@@ -23,6 +23,7 @@ export const MobileContent = ({
   isHideObjects,
   onOpenCommetHistory,
   onDelete,
+  searchTag,
 }) => (
   <StyledMobileContent>
     <Header />
@@ -57,6 +58,8 @@ export const MobileContent = ({
       isHideObjects={isHideObjects}
       onOpenCommetHistory={onOpenCommetHistory}
       onDelete={onDelete}
+      isStreetBase={data?.obj_street_base === "1"}
+      searchTag={searchTag}
     />
   </StyledMobileContent>
 );

@@ -16,7 +16,7 @@ import { useActions } from "../../hooks/actions";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Loader } from "../../components/Loader";
 
-export const Structure = () => {
+const Structure = () => {
   const { search } = useLocation();
   const navigate = useNavigate();
   const { user } = useAppSelect((state) => state.auth);
@@ -47,6 +47,7 @@ export const Structure = () => {
     if (showNotStructureWorkers) {
       navigate(`/structure?level=notStructure`);
     }
+    // eslint-disable-next-line
   }, [showNotStructureWorkers]);
 
   useEffect(() => {
@@ -85,12 +86,14 @@ export const Structure = () => {
 
   useEffect(() => {
     setLevel(user?.struct_level);
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (recurseData) {
       handleGetWorkerCount();
     }
+    // eslint-disable-next-line
   }, [recurseData]);
 
   const handleRefetchStructureData = () => {
@@ -128,9 +131,10 @@ export const Structure = () => {
 
   useEffect(() => {
     if (search?.length === 0) {
-      setLevel(1);
+      setLevel(user?.struct_level);
       setShowNotStructureWorkers(false);
     }
+    // eslint-disable-next-line
   }, [search]);
 
   return (
@@ -185,7 +189,7 @@ export const Structure = () => {
                   ?.map((w) => w[1])
                   ?.map((worker, i) => (
                     <StructureCard
-                      key={i}
+                      key={worker?.id_user}
                       onOpenInfo={() => setInfoOpen(worker?.id_user)}
                       onNextLevel={() =>
                         handleNextLevel(worker?.structure_worker)
@@ -241,7 +245,7 @@ export const Structure = () => {
               )
               .map((worker, i) => (
                 <StructureCard
-                  key={i}
+                  key={worker?.id_user}
                   onOpenInfo={() => setInfoOpen(worker?.id_user)}
                   onNextLevel={() =>
                     handleNextLevel(worker?.structure_worker, worker?.id_user)
@@ -301,3 +305,5 @@ const StyledStructure = styled.div`
     }
   }
 `;
+
+export default Structure;

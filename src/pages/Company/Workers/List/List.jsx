@@ -33,7 +33,7 @@ export const List = ({
             i
           ) => (
             <Card
-              key={i}
+              key={id}
               onOpenEdit={() =>
                 onOpenEdit({ id, struct_level, isAdmin: isCurrentUser })
               }

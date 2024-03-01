@@ -13,7 +13,7 @@ import { useLazyGetUserQuery } from "../../store/auth/auth.api";
 import cogoToast from "cogo-toast";
 import { useLocation } from "react-router-dom";
 
-export const Company = () => {
+const Company = () => {
   const { search } = useLocation();
   const [tarifOpen, setTarifOpen] = useState(search === "?pay=true");
   const [tarifSelected, setTarifSelected] = useState(null);
@@ -99,6 +99,7 @@ export const Company = () => {
 
   useEffect(() => {
     saveBalance(balanceData?.total?.toFixed(2));
+    // eslint-disable-next-line
   }, [balanceData]);
 
   useEffect(() => {
@@ -154,3 +155,5 @@ const StyledCompany = styled.div`
     }
   }
 `;
+
+export default Company;

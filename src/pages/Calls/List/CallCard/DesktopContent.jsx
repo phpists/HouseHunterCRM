@@ -67,6 +67,9 @@ const StyledDesktopContent = styled.div`
     .field-content {
       width: 70%;
     }
+    .value {
+      max-width: 100px;
+    }
   }
 
   @media (max-width: 1399.9px) {

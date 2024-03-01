@@ -10,6 +10,11 @@ import { ReactComponent as Eye } from "../../../assets/images/eye-access.svg";
 import { ReactComponent as Link } from "../../../assets/images/link.svg";
 import { ReactComponent as Comment } from "../../../assets/images/message-object.svg";
 import { ReactComponent as RemoveIcon } from "../../../assets/images/remove.svg";
+import { ReactComponent as ToObjectIcon } from "../../../assets/images/my-object.svg";
+import { useLazyAddStreetBaseObjectQuery } from "../../../store/objects/objects.api";
+import { handleResponse } from "../../../utilits";
+import { useEffect, useState } from "react";
+import cogoToast from "cogo-toast";
 
 export const Dropdown = ({
   clientId,
@@ -26,84 +31,116 @@ export const Dropdown = ({
   isHideObjects,
   onOpenCommetHistory,
   onDelete,
-}) => (
-  <StyledDropdown className="dropdown">
-    {link?.length > 0 && (
-      <div onClick={() => window.open(link, "_blank")}>
-        Перейти на першоджерело
-        <Link className="selection-icon" />
-      </div>
-    )}
-    {onToggleFavoriteStatus && (
-      <div
-        className="flex items-center justify-between"
-        onClick={onToggleFavoriteStatus}
-      >
-        <span> {isFavorite ? "Із" : "До"} улюблених</span> <Star />
-      </div>
-    )}
-    {onFindSimilar ? (
-      <div
-        className="flex items-center justify-between"
-        onClick={onFindSimilar}
-      >
-        <span>Знайти схожі</span> <Search />
-      </div>
-    ) : null}
-    {onOpenTagsHistory && (
-      <div
-        className="flex items-center justify-between"
-        onClick={onOpenTagsHistory}
-      >
-        <span>Історія тегів</span> <History />
-      </div>
-    )}
-    {onOpenCommetHistory && (
-      <div
-        className="flex items-center justify-between"
-        onClick={onOpenCommetHistory}
-      >
-        <span>Історія коментарів</span> <Comment className="selection-icon" />
-      </div>
-    )}
-    {onOpenPriceHistory && (
-      <div
-        className="flex items-center justify-between"
-        onClick={onOpenPriceHistory}
-      >
-        <span>Графік змін цін</span> <Prices />
-      </div>
-    )}
-    {onAddToSelection && (
-      <div
-        className="flex items-center justify-between"
-        onClick={onAddToSelection}
-      >
-        <span>Добавити в підбірку</span>{" "}
-        <Selection className="selection-icon" />
-      </div>
-    )}
-    {onHide && (
-      <div className="flex items-center justify-between" onClick={onHide}>
-        <span>{isHideObjects ? "Показати" : "Приховати"}</span>{" "}
-        <Eye className="selection-icon" />
-      </div>
-    )}
-    {isEdit && (
-      <NavLink
-        to={`/edit-object/${clientId}/${id}`}
-        className="flex items-center justify-between"
-      >
-        <span>Редагувати</span> <Edit />
-      </NavLink>
-    )}
-    {onDelete && (
-      <div className="flex items-center justify-between" onClick={onDelete}>
-        <span>Видалити</span> <RemoveIcon className="selection-icon" />
-      </div>
-    )}
-  </StyledDropdown>
-);
+  isStreetBase,
+  searchTag,
+}) => {
+  const [addStreetBaseObject] = useLazyAddStreetBaseObjectQuery();
+  const [added, setAdded] = useState(false);
+
+  useEffect(() => {
+    setAdded(false);
+  }, [id]);
+
+  const handleAddStreetBaseObject = () => {
+    addStreetBaseObject(id).then((resp) =>
+      handleResponse(resp, () => {
+        cogoToast.success("Об'єкт успішно добавлено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        setAdded(true);
+      })
+    );
+  };
+
+  return (
+    <StyledDropdown className="dropdown">
+      {link?.length > 0 && (
+        <div onClick={() => window.open(link, "_blank")}>
+          Перейти на першоджерело
+          <Link className="selection-icon" />
+        </div>
+      )}
+      {onToggleFavoriteStatus && (
+        <div
+          className="flex items-center justify-between"
+          onClick={onToggleFavoriteStatus}
+        >
+          <span> {isFavorite ? "Із" : "До"} улюблених</span> <Star />
+        </div>
+      )}
+      {onFindSimilar ? (
+        <div
+          className="flex items-center justify-between"
+          onClick={onFindSimilar}
+        >
+          <span>Знайти схожі</span> <Search />
+        </div>
+      ) : null}
+      {onOpenTagsHistory && (
+        <div
+          className="flex items-center justify-between"
+          onClick={onOpenTagsHistory}
+        >
+          <span>Історія тегів</span> <History />
+        </div>
+      )}
+      {onOpenCommetHistory && (
+        <div
+          className="flex items-center justify-between"
+          onClick={onOpenCommetHistory}
+        >
+          <span>Історія коментарів</span> <Comment className="selection-icon" />
+        </div>
+      )}
+      {onOpenPriceHistory && (
+        <div
+          className="flex items-center justify-between"
+          onClick={onOpenPriceHistory}
+        >
+          <span>Графік змін цін</span> <Prices />
+        </div>
+      )}
+      {onAddToSelection && (
+        <div
+          className="flex items-center justify-between"
+          onClick={onAddToSelection}
+        >
+          <span>Добавити в підбірку</span>{" "}
+          <Selection className="selection-icon" />
+        </div>
+      )}
+      {isStreetBase && !added && (
+        <div
+          className="flex items-center justify-between"
+          onClick={handleAddStreetBaseObject}
+        >
+          <span>Добавити обєкт до себе</span>{" "}
+          <ToObjectIcon className="selection-icon" />
+        </div>
+      )}
+      {onHide && (
+        <div className="flex items-center justify-between" onClick={onHide}>
+          <span>{isHideObjects ? "Показати" : "Приховати"}</span>{" "}
+          <Eye className="selection-icon" />
+        </div>
+      )}
+      {isEdit && (
+        <NavLink
+          to={`/edit-object/${clientId}/${id}${searchTag ?? ""}`}
+          className="flex items-center justify-between"
+        >
+          <span>Редагувати</span> <Edit />
+        </NavLink>
+      )}
+      {onDelete && (
+        <div className="flex items-center justify-between" onClick={onDelete}>
+          <span>Видалити</span> <RemoveIcon className="selection-icon" />
+        </div>
+      )}
+    </StyledDropdown>
+  );
+};
 
 const StyledDropdown = styled.div`
   position: absolute;
@@ -124,7 +161,7 @@ const StyledDropdown = styled.div`
   right: -5px;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s;
+  transition: all 0.1s;
   z-index: 333;
   div,
   a {

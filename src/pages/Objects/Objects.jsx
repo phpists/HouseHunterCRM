@@ -5,16 +5,15 @@ import { useEffect, useState } from "react";
 import {
   useLazyAddToFavoritesQuery,
   useLazyGetAllObjectsQuery,
-  useLazyGetObjectsCountQuery,
   useLazyGetRubricFieldsQuery,
 } from "../../store/objects/objects.api";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
-import { handleGetRange, handleResponse } from "../../utilits";
+import { checkIsJSON, handleGetRange, handleResponse } from "../../utilits";
 import cogoToast from "cogo-toast";
 import { useLocation, useParams } from "react-router-dom";
 
-export const Objects = () => {
+const Objects = () => {
   const { id } = useParams();
   const location = useLocation();
   const [getAllObjects] = useLazyGetAllObjectsQuery();
@@ -62,8 +61,14 @@ export const Objects = () => {
   const handleChangeFilter = (field, value, isDataUpdate) => {
     if (isDataUpdate) {
       setFilters(value);
+      localStorage.setItem("objectsLastFilters", JSON.stringify(value));
     } else {
-      setFilters({ ...filters, [field]: value });
+      const updatedFilters = { ...filters, [field]: value };
+      setFilters(updatedFilters);
+      localStorage.setItem(
+        "objectsLastFilters",
+        JSON.stringify(updatedFilters)
+      );
       if (field === "id_rubric") {
         handleGetRubricsFields(value);
       }
@@ -336,6 +341,7 @@ export const Objects = () => {
       setUpdateData(false);
       handleGetObjects(true);
     }
+    // eslint-disable-next-line
   }, [updateData]);
 
   useEffect(() => {
@@ -360,6 +366,19 @@ export const Objects = () => {
           actual: "1",
         },
       });
+      filterActive.current = true;
+      setUpdateData(true);
+    } else if (filterApply === "?prev") {
+      const lastFilters = localStorage.getItem("objectsLastFilters")
+        ? checkIsJSON(localStorage.getItem("objectsLastFilters"))
+        : {
+            company_object: {
+              show_only: "only_my",
+              actual: "1",
+            },
+          };
+
+      setFilters(lastFilters);
       filterActive.current = true;
       setUpdateData(true);
     } else {
@@ -399,6 +418,7 @@ export const Objects = () => {
 
   useEffect(() => {
     saveObjectsCount(0);
+    // eslint-disable-next-line
   }, []);
 
   const handleDeleteObjectSuccess = (id) => {
@@ -452,3 +472,5 @@ const StyledObjects = styled.div`
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   position: relative;
 `;
+
+export default Objects;

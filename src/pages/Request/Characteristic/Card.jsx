@@ -1,12 +1,7 @@
 import { Ranger } from "../../../components/Ranger/Ranger";
 import { Divider } from "../Divider";
 import { SelectTags } from "../../../components/SelectTags/SelectTags";
-import {
-  handleChangeRange,
-  handleFormatFields,
-  handleGetFieldsOptions,
-} from "../../../utilits";
-import { ProfileField } from "../../../components/ProfileField";
+import { handleChangeRange, handleGetFieldsOptions } from "../../../utilits";
 import { TitleDivider } from "./TitleDivider";
 import styled from "styled-components";
 import { useGetCommentsToFieldsQuery } from "../../../store/objects/objects.api";
@@ -107,6 +102,8 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
             !fields?.find((f) => f.field === field?.replace("_max", "_min"))
           ) {
             return <div></div>;
+          } else {
+            return null;
           }
         })}
     </StyledCard>

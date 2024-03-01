@@ -18,7 +18,6 @@ import {
 } from "../../../store/auth/auth.api";
 import {
   handleFormatDate,
-  handleFormatInputDate,
   handleFromInputDate,
   handleRemovePhoneMask,
   handleResponse,
@@ -73,6 +72,7 @@ export const Profile = () => {
 
   useEffect(() => {
     user && handleCheckIsRefresh();
+    // eslint-disable-next-line
   }, [user]);
 
   const handleCheckAllFields = () => {
@@ -281,7 +281,10 @@ export const Profile = () => {
           ></div>
         )}
         <div className="flex items-start clickable">
-          <Status status={1} className="clickable status-tag" />
+          <Status
+            status={user?.struct_level}
+            className="clickable status-tag"
+          />
           <Info />
         </div>
         <Avatar />

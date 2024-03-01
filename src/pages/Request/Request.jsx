@@ -14,13 +14,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import cogoToast from "cogo-toast";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  checkIsJSON,
-  handleCheckFields,
-  handleFormatDate,
-  handleResponse,
-  handleToFormData,
-} from "../../utilits";
+import { checkIsJSON, handleCheckFields, handleResponse } from "../../utilits";
 import { useGetCommentsToFieldsQuery } from "../../store/objects/objects.api";
 import { Base } from "../../components/Base/Base";
 
@@ -48,7 +42,7 @@ export const REQUEST_INIT = {
   },
 };
 
-export const Request = () => {
+const Request = () => {
   const navigate = useNavigate();
   const { clientId, id } = useParams();
   const [createRequest] = useLazyCreateRequestQuery();
@@ -267,13 +261,11 @@ export const Request = () => {
     if (handleCheckAllFields()) {
       setLoading(true);
       const {
-        id_client,
         name,
         comment,
         stop_showing,
         folder_empty,
         not_actual,
-        dt_deadline,
         company_object,
         street_base_object,
         mls_object,
@@ -574,3 +566,5 @@ const StyledRequest = styled.div`
     }
   }
 `;
+
+export default Request;

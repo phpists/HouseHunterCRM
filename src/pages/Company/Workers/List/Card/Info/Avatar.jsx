@@ -1,12 +1,20 @@
 import { styled } from "styled-components";
 import empty from "../../../../../../assets/images/small-avatar-green.svg";
 import { handleGetRoleAvatar } from "../../../../../../utilits";
+import { useInView } from "react-intersection-observer";
 
-export const Avatar = ({ photo, level }) => (
-  <StyledAvatar
-    avatarIcon={photo?.length > 0 ? photo : handleGetRoleAvatar(level)}
-  />
-);
+export const Avatar = ({ photo, level }) => {
+  const { ref, inView } = useInView({ triggerOnce: true });
+
+  return (
+    <StyledAvatar
+      avatarIcon={
+        !inView ? "" : photo?.length > 0 ? photo : handleGetRoleAvatar(level)
+      }
+      ref={ref}
+    />
+  );
+};
 
 const StyledAvatar = styled.div`
   width: 50px;

@@ -2,33 +2,46 @@ import { styled } from "styled-components";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { Header } from "./components/Header/Header";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { Company } from "./pages/Company/Company";
-import { Auth } from "./pages/Auth/Auth";
-import { Clients } from "./pages/Clients/Clients";
-import { Client } from "./pages/Client/Client";
-import { ObjectPage } from "./pages/Object/Object";
-import { Request } from "./pages/Request/Request";
-import { Objects } from "./pages/Objects/Objects";
-import { Requests } from "./pages/Requests/Requests";
-import { Structure } from "./pages/Structure/Structure";
-import { Calls } from "./pages/Calls/Calls";
-import { Dashboard } from "./pages/Dashboard/Dashboard";
+import { Suspense, lazy, useEffect, useState } from "react";
+// import { Company } from "./pages/Company/Company";
+// import { Auth } from "./pages/Auth/Auth";
+// import { Clients } from "./pages/Clients/Clients";
+// import { Client } from "./pages/Client/Client";
+// import { ObjectPage } from "./pages/Object/Object";
+// import { Request } from "./pages/Request/Request";
+// import { Objects } from "./pages/Objects/Objects";
+// import { Requests } from "./pages/Requests/Requests";
+// import { Structure } from "./pages/Structure/Structure";
+// import { Calls } from "./pages/Calls/Calls";
+// import { Dashboard } from "./pages/Dashboard/Dashboard";
+// import { Selections } from "./pages/Selections/Selections";
 import { useGetAccessQuery, useLazyGetUserQuery } from "./store/auth/auth.api";
 import { useActions } from "./hooks/actions";
 import { useAppSelect } from "./hooks/redux";
 import { Loading } from "./components/Loading/Loading";
 import { handleCheckAccess } from "./utilits";
-import { Selections } from "./pages/Selections/Selections";
 import { useGetCompanyInfoQuery } from "./store/billing/billing.api";
 import { ErrorBoundary } from "react-error-boundary";
+import { Loader } from "./components/Loader";
+
+const Company = lazy(() => import("./pages/Company/Company"));
+const Auth = lazy(() => import("./pages/Auth/Auth"));
+const Client = lazy(() => import("./pages/Client/Client"));
+const Clients = lazy(() => import("./pages/Clients/Clients"));
+const ObjectPage = lazy(() => import("./pages/Object/Object"));
+const Request = lazy(() => import("./pages/Request/Request"));
+const Objects = lazy(() => import("./pages/Objects/Objects"));
+const Requests = lazy(() => import("./pages/Requests/Requests"));
+const Structure = lazy(() => import("./pages/Structure/Structure"));
+const Calls = lazy(() => import("./pages/Calls/Calls"));
+const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
+const Selections = lazy(() => import("./pages/Selections/Selections"));
 
 export const App = () => {
   const [getProfile] = useLazyGetUserQuery();
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSideBarOpen] = useState(false);
-  const loggined = !!localStorage.getItem("token");
   const { loginUser, saveCompanyPhoto } = useActions();
   const { user } = useAppSelect((state) => state.auth);
   const [loading, setLoading] = useState(true);
@@ -59,6 +72,7 @@ export const App = () => {
       setLoad(true);
       setTimeout(() => setLoading(false), 1500);
     }
+    // eslint-disable-next-line
   }, [location]);
 
   useEffect(() => {
@@ -72,7 +86,7 @@ export const App = () => {
           ? companyInfo?.data?.copmany_img
           : null
       );
-    }
+    } // eslint-disable-next-line
   }, [companyInfo]);
 
   return (
@@ -110,71 +124,79 @@ export const App = () => {
             />
             <Header onOpenSidebar={() => setSideBarOpen(true)} />
             <div className="app-content">
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <Dashboard
-                      isClientsAccess={handleCheckAccess(
-                        data,
-                        "clients",
-                        "view"
-                      )}
-                    />
-                  }
-                />
-                <Route path="/empty" element={<Dashboard />} />
-                {handleCheckAccess(data, "clients", "view") && (
-                  <Route path="/clients" element={<Clients />} />
-                )}
-                {handleCheckAccess(data, "clients", "view") && (
-                  <Route path="/client/:id" element={<Client />} />
-                )}
-
-                {handleCheckAccess(data, "objects", "view") && (
+              <Suspense
+                fallback={
+                  <div className="page-load">
+                    <Loader white />
+                  </div>
+                }
+              >
+                <Routes>
                   <Route
-                    path="/create-object/:clientId"
-                    element={<ObjectPage />}
+                    path="/"
+                    element={
+                      <Dashboard
+                        isClientsAccess={handleCheckAccess(
+                          data,
+                          "clients",
+                          "view"
+                        )}
+                      />
+                    }
                   />
-                )}
-                {handleCheckAccess(data, "objects", "view") &&
-                  handleCheckAccess(data, "objects", "edit") && (
+                  <Route path="/empty" element={<Dashboard />} />
+                  {handleCheckAccess(data, "clients", "view") && (
+                    <Route path="/clients" element={<Clients />} />
+                  )}
+                  {handleCheckAccess(data, "clients", "view") && (
+                    <Route path="/client/:id" element={<Client />} />
+                  )}
+
+                  {handleCheckAccess(data, "objects", "view") && (
                     <Route
-                      path="/edit-object/:clientId/:id"
+                      path="/create-object/:clientId"
                       element={<ObjectPage />}
                     />
                   )}
-                {handleCheckAccess(data, "objects", "view") && (
-                  <Route path="/objects" element={<Objects />} />
-                )}
-                {handleCheckAccess(data, "objects", "view") && (
-                  <Route path="/objects/:id" element={<Objects />} />
-                )}
-                {handleCheckAccess(data, "requests", "view") && (
-                  <Route
-                    path="/create-request/:clientId"
-                    element={<Request />}
-                  />
-                )}
-                {handleCheckAccess(data, "requests", "view") && (
-                  <Route
-                    path="/edit-request/:clientId/:id"
-                    element={<Request />}
-                  />
-                )}
-                {handleCheckAccess(data, "requests", "view") && (
-                  <Route path="/requests" element={<Requests />} />
-                )}
-                {handleCheckAccess(data, "structure", "view") && (
-                  <Route path="/structure" element={<Structure />} />
-                )}
-                {true && <Route path="/calls" element={<Calls />} />}
-                {user?.struct_level === 1 && (
-                  <Route path="/company" element={<Company />} />
-                )}
-                <Route path="/selections/:id" element={<Selections />} />
-                <Route path="*" element={<Dashboard />} />
-              </Routes>
+                  {handleCheckAccess(data, "objects", "view") &&
+                    handleCheckAccess(data, "objects", "edit") && (
+                      <Route
+                        path="/edit-object/:clientId/:id"
+                        element={<ObjectPage />}
+                      />
+                    )}
+                  {handleCheckAccess(data, "objects", "view") && (
+                    <Route path="/objects" element={<Objects />} />
+                  )}
+                  {handleCheckAccess(data, "objects", "view") && (
+                    <Route path="/objects/:id" element={<Objects />} />
+                  )}
+                  {handleCheckAccess(data, "requests", "view") && (
+                    <Route
+                      path="/create-request/:clientId"
+                      element={<Request />}
+                    />
+                  )}
+                  {handleCheckAccess(data, "requests", "view") && (
+                    <Route
+                      path="/edit-request/:clientId/:id"
+                      element={<Request />}
+                    />
+                  )}
+                  {handleCheckAccess(data, "requests", "view") && (
+                    <Route path="/requests" element={<Requests />} />
+                  )}
+                  {handleCheckAccess(data, "structure", "view") && (
+                    <Route path="/structure" element={<Structure />} />
+                  )}
+                  {true && <Route path="/calls" element={<Calls />} />}
+                  {user?.struct_level === 1 && (
+                    <Route path="/company" element={<Company />} />
+                  )}
+                  <Route path="/selections/:id" element={<Selections />} />
+                  <Route path="*" element={<Dashboard />} />
+                </Routes>
+              </Suspense>
             </div>
           </StyledApp>
         ) : (
@@ -199,6 +221,15 @@ const StyledApp = styled.div`
     overflow-x: hidden;
   }
 
+  .page-load {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    svg {
+      height: 50px;
+    }
+  }
   @media (max-width: 1200px) {
     grid-template-columns: 1fr;
     .app-content {

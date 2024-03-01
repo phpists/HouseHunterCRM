@@ -1,8 +1,4 @@
 import styled from "styled-components";
-import { LastSeen } from "./LastSeen";
-import { Photo } from "./Photo";
-import img1 from "../../../../../assets/images/object-pic-1.png";
-import img2 from "../../../../../assets/images/object-pic-2.png";
 import { Title } from "./Title";
 import { Tag } from "./Tag";
 import { Comments } from "./Comments";
@@ -17,8 +13,6 @@ export const Objects = ({ data, id, onOpenChat }) => {
     <StyledObjects>
       {/* <LastSeen /> */}
       <div className="flex items-center">
-        {/* <Photo photo={img1} />
-        <Photo photo={img2} /> */}
         <div>
           <Title count={data?.count_object} />
           <Tag count={data?.count_object} />
@@ -26,7 +20,7 @@ export const Objects = ({ data, id, onOpenChat }) => {
         <div className="bts flex items-center">
           <CopyLink
             className="copy-btn"
-            link={`https://xhouse-web.netlify.app/?id=${id}`}
+            link={`https://selection.house-hunter.info/?id=${id}`}
           />
           <Comments onOpenChat={onOpenChat} />
         </div>

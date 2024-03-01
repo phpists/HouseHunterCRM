@@ -20,6 +20,7 @@ export const DesktopContent = ({
   isHideObjects,
   onOpenCommetHistory,
   onDelete,
+  searchTag,
 }) => (
   <StyledDesktopContent className="flex items-center justify-between">
     <Slider
@@ -50,6 +51,8 @@ export const DesktopContent = ({
       isHideObjects={isHideObjects}
       onOpenCommetHistory={onOpenCommetHistory}
       onDelete={onDelete}
+      isStreetBase={data?.obj_street_base === "1"}
+      searchTag={searchTag}
     />
     <div className="mobile-footer w-full">
       <Info data={data} />

@@ -1,12 +1,10 @@
 import styled from "styled-components";
 import { Selected } from "./Selected";
 import { ShowButton } from "./ShowButton";
-import { AddButton } from "./AddButton/AddButton";
 import { CopyLink } from "../../../components/CopyLink";
 import { SelectItems } from "../../../components/SelectItems/SelectItems";
 import { ChatButton } from "./ChatButton/ChatButton";
 import { FilterButton } from "./FilterButton/FilterButton";
-import { useLazyAddToFavoritesQuery } from "../../../store/objects/objects.api";
 import { useLazyHideObjectFromSelectionsQuery } from "../../../store/selections/selections.api";
 import { handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
@@ -29,7 +27,6 @@ export const Header = ({
   onChangeActionLoading,
 }) => {
   const { id } = useParams();
-  const [addToFavorites] = useLazyAddToFavoritesQuery();
   const [hideObject] = useLazyHideObjectFromSelectionsQuery();
 
   const handleHide = () => {
@@ -59,7 +56,7 @@ export const Header = ({
             {/* <AddButton onRefresh={onRefresh} objectsIds={objectsIds} /> */}
             <CopyLink
               className="copy-btn"
-              link={`https://xhouse-web.netlify.app/?id=${id}`}
+              link={`https://selection.house-hunter.info/?id=${id}`}
             />
           </div>
           <div className="action-btns flex items-center">

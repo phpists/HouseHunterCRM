@@ -3,7 +3,6 @@ import { Header } from "./Header/Header";
 import { List } from "./List/List";
 import { useState } from "react";
 import {
-  useLazyGetRequestsCountQuery,
   useLazyGetRequestsQuery,
   useLazyGetRubricsFieldsQuery,
 } from "../../store/requests/requests.api";
@@ -13,7 +12,6 @@ import { useRef } from "react";
 import { handleResponse } from "../../utilits";
 import { useAppSelect } from "../../hooks/redux";
 import { useLocation } from "react-router-dom";
-import { Objects } from "./List/RequestCard/Objects/Objects";
 
 const INIT_FILTERS = {
   id_rubric: "",
@@ -28,7 +26,7 @@ const INIT_FILTERS = {
   showUnreadMessege: "0",
 };
 
-export const Requests = () => {
+const Requests = () => {
   const location = useLocation();
   const [getRequests] = useLazyGetRequestsQuery();
   const [getRubricField] = useLazyGetRubricsFieldsQuery();
@@ -292,6 +290,7 @@ export const Requests = () => {
       handleGetRequests(true);
       // eslint-disable-next-line
     }
+    // eslint-disable-next-line
   }, [isFavorite]);
 
   const handleApplyFilter = (isApply) => {
@@ -328,6 +327,7 @@ export const Requests = () => {
       isFirstRender.current = false;
       handleGetRequests(true);
     }
+    // eslint-disable-next-line
   }, [location.search]);
 
   useEffect(() => {
@@ -335,6 +335,7 @@ export const Requests = () => {
       isFirstRender.current = false;
       handleGetRequests(true);
     }
+    // eslint-disable-next-line
   }, [filters, isDefaultFiltersSet]);
 
   return (
@@ -379,3 +380,5 @@ const StyledRequests = styled.div`
     padding: 20px 24px;
   }
 `;
+
+export default Requests;

@@ -3,12 +3,16 @@ import { Tag } from "./Tag";
 import { ReactComponent as Remove } from "../../../../assets/images/remove.svg";
 import noPhoto from "../../../../assets/images/no-photo.svg";
 import { memo } from "react";
+import { useInView } from "react-intersection-observer";
 
 export const Photo = memo(({ photo, onRemove, onMakeMain, isFile }) => {
+  const { ref, inView } = useInView({ triggerOnce: true });
+
   return (
     <StyledPhoto
-      photo={photo?.url?.length > 0 ? photo?.url : noPhoto}
+      photo={!inView ? "" : photo?.url?.length > 0 ? photo?.url : noPhoto}
       className="flex flex-col items-center justify-center"
+      ref={ref}
     >
       <div className="photo-content flex flex-col items-center justify-center">
         {!isFile && <Tag onClick={onMakeMain} />}

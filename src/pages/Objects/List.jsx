@@ -80,7 +80,7 @@ export const List = ({
           <>
             {data.map((d, i) => (
               <ObjectCard
-                key={i}
+                key={d?.id}
                 selected={!!selected.find((j) => j === d?.id)}
                 onSelect={() => onSelect(d?.id)}
                 data={d}
@@ -103,6 +103,7 @@ export const List = ({
                 currency={currency}
                 onChangeCurrency={(val) => setCurrency(val)}
                 onDelete={() => handleDelete(d?.id)}
+                searchTag="?objects"
               />
             ))}
           </>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { DesktopContent } from "./DesktopContent";
 import { MobileContent } from "./MobileContent";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelect } from "../../../../hooks/redux";
 import { useLazyGetClientQuery } from "../../../../store/clients/clients.api";
 
@@ -20,6 +20,22 @@ export const RequestCard = ({
   const handleClick = (e) =>
     e.target.classList.contains("clickable") && onSelect();
   const [getClient, { data: clientData }] = useLazyGetClientQuery();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1400);
+
+  const handleResize = () => {
+    const currentWidth = window.innerWidth;
+
+    if (isMobile && currentWidth >= 1400) {
+      setIsMobile(false);
+    } else if (!isMobile && currentWidth < 1400) {
+      setIsMobile(true);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isMobile]);
 
   useEffect(() => {
     const ownerId = data?.General_field_group?.id_user;
@@ -35,26 +51,29 @@ export const RequestCard = ({
       onClick={handleClick}
       className="clickable"
     >
-      <DesktopContent
-        data={data}
-        id={id}
-        onDelete={onDelete}
-        onFavorite={onFavorite}
-        isEdit={isEdit}
-        isDelete={isDelete}
-        onOpenChat={onOpenChat}
-        clientData={clientData?.data}
-      />
-      <MobileContent
-        data={data}
-        id={id}
-        onDelete={onDelete}
-        onFavorite={onFavorite}
-        isEdit={isEdit}
-        isDelete={isDelete}
-        onOpenChat={onOpenChat}
-        clientData={clientData?.data}
-      />
+      {isMobile ? (
+        <MobileContent
+          data={data}
+          id={id}
+          onDelete={onDelete}
+          onFavorite={onFavorite}
+          isEdit={isEdit}
+          isDelete={isDelete}
+          onOpenChat={onOpenChat}
+          clientData={clientData?.data}
+        />
+      ) : (
+        <DesktopContent
+          data={data}
+          id={id}
+          onDelete={onDelete}
+          onFavorite={onFavorite}
+          isEdit={isEdit}
+          isDelete={isDelete}
+          onOpenChat={onOpenChat}
+          clientData={clientData?.data}
+        />
+      )}
     </StyledRequestCard>
   );
 };

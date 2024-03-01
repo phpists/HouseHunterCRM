@@ -16,8 +16,6 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import {
   handleCheckFields,
-  handleCheckIsField,
-  handleFormatDate,
   handleFromInputDate,
   handleResponse,
 } from "../../utilits";
@@ -33,7 +31,7 @@ const INIT_DATA = {
   obj_is_actual_dt: new Date().getTime(),
 };
 
-export const ObjectPage = () => {
+const ObjectPage = () => {
   const { clientId, id } = useParams();
   const navigate = useNavigate();
   const [createObject] = useLazyCreateObjectQuery();
@@ -233,7 +231,7 @@ export const ObjectPage = () => {
             hideAfter: 3,
             position: "top-right",
           });
-          navigate(`/client/${clientId}`);
+          //   navigate(`/client/${clientId}`);
         });
       });
     } else {
@@ -325,6 +323,7 @@ export const ObjectPage = () => {
 
   useEffect(() => {
     handleGetObject();
+    // eslint-disable-next-line
   }, [id]);
 
   useEffect(() => {
@@ -434,3 +433,5 @@ const StyledObject = styled.div`
     }
   }
 `;
+
+export default ObjectPage;

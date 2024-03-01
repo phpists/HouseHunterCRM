@@ -9,7 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useLazyGetClientQuery } from "../../store/clients/clients.api";
 import { useEffect } from "react";
 
-export const Client = () => {
+const Client = () => {
   const { id } = useParams();
   const [getClient, { data: clientData }] = useLazyGetClientQuery(id);
   const [selectedObject, setSelectedObject] = useState(null);
@@ -23,6 +23,7 @@ export const Client = () => {
         navigate("/clients");
       }
     });
+    // eslint-disable-next-line
   }, [id]);
 
   if (!clientData?.data) {
@@ -93,3 +94,5 @@ const StyledClient = styled.div`
     }
   }
 `;
+
+export default Client;

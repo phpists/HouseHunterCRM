@@ -1,18 +1,20 @@
 import { styled } from "styled-components";
 import { Photo } from "./Photo";
 
-export const Photos = ({ photos, onSelect, active }) => (
-  <StyledPhotos className="hide-scroll">
-    {photos.map((photo, i) => (
-      <Photo
-        key={i}
-        photo={photo}
-        onSelect={() => onSelect(1 + i, true)}
-        active={active === 1 + i}
-      />
-    ))}
-  </StyledPhotos>
-);
+export const Photos = ({ photos, onSelect, active }) => {
+  return (
+    <StyledPhotos className="hide-scroll">
+      {photos.map((photo, i) => (
+        <Photo
+          key={i}
+          photo={photo}
+          onSelect={() => onSelect(1 + i, true)}
+          active={active === 1 + i}
+        />
+      ))}
+    </StyledPhotos>
+  );
+};
 
 const StyledPhotos = styled.div`
   margin-left: 8px;

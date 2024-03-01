@@ -7,10 +7,7 @@ import {
 } from "../../store/selections/selections.api";
 import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import {
-  useLazyAddToFavoritesQuery,
-  useLazyGetRubricFieldsQuery,
-} from "../../store/objects/objects.api";
+import { useLazyGetRubricFieldsQuery } from "../../store/objects/objects.api";
 import { handleGetRange, handleResponse } from "../../utilits";
 import cogoToast from "cogo-toast";
 import { useActions } from "../../hooks/actions";
@@ -24,18 +21,13 @@ const INIT_FILTERS = {
   price_min: "",
   obj_is_actual: "1",
   show_only: "only_my",
-  //   only_company_obj: "0",
-  //   only_street_base_obj: "0",
-  //   only_my_obj: "0",
-  //   only_my_structure: "0",
 };
 
-export const Selections = () => {
+const Selections = () => {
   const { id } = useParams();
   const [getSelections] = useLazyGetSelectionsQuery();
   const [getRubricField] = useLazyGetRubricFieldsQuery();
   const [hideObject] = useLazyHideObjectFromSelectionsQuery();
-  const [addObjectToFavorites] = useLazyAddToFavoritesQuery();
   const [objects, setObjects] = useState([]);
   const [selected, setSelected] = useState([]);
   const [filters, setFilters] = useState(INIT_FILTERS);
@@ -49,7 +41,7 @@ export const Selections = () => {
   const listRef = useRef();
   const [isAllPages, setIsAllPages] = useState(false);
   const [loading, setLoading] = useState(false);
-  const firstThousend = useRef(null);
+  //   const firstThousend = useRef(null);
   const [actionLoading, setActionLoading] = useState(false);
 
   const handleGetRubricsFields = (id) => {
@@ -147,6 +139,7 @@ export const Selections = () => {
     if (id) {
       handleGetSelections(true);
     }
+    // eslint-disable-next-line
   }, [id]);
 
   const handleFindSimilarTo = (obj) => {
@@ -250,6 +243,7 @@ export const Selections = () => {
     setFilters(INIT_FILTERS);
     filterActive.current = false;
     handleGetSelections(true);
+    // eslint-disable-next-line
   }, [showObjectHide]);
 
   const handleScroll = () => {
@@ -315,3 +309,5 @@ const StyledSelections = styled.div`
   padding: 15px 20px;
   position: relative;
 `;
+
+export default Selections;

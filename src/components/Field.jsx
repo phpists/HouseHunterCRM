@@ -5,7 +5,6 @@ import { ReactComponent as CheckIcon } from "../assets/images/check.svg";
 import ReactInputMask from "react-input-mask";
 import { PhoneInput } from "./PhoneInput";
 import { handleFormatDate } from "../utilits";
-import { Calendar } from "./Calendar/Calendar";
 
 export const Field = ({
   value,
@@ -41,6 +40,13 @@ export const Field = ({
     setEdit(!edit);
   };
 
+  const handlePressEnter = (e) => {
+    if (e?.keyCode === 13) {
+      setEdit(false);
+      onSubmit && onSubmit();
+    }
+  };
+
   return (
     <StyleField
       className={`flex items-center justify-between ${className} ${
@@ -53,11 +59,6 @@ export const Field = ({
       onClick={() => !edit && !viewOnly && setEdit(true)}
     >
       <div className="field-content">
-        {/* {type === "date" && edit && (
-          <div className="calendar_wrapper">
-            <Calendar value={value} onChange={onChange} />
-          </div>
-        )} */}
         {edit ? (
           <>
             {phone ? (
@@ -68,7 +69,7 @@ export const Field = ({
                 value={value}
                 onChange={onChange}
                 inputClassName="value"
-                onKeyDown={(e) => e?.keyCode === 13 && setEdit(false)}
+                onKeyDown={handlePressEnter}
               />
             ) : textarea ? (
               <textarea
@@ -78,7 +79,7 @@ export const Field = ({
                 placeholder={placeholder}
                 onChange={(e) => onChange(e.target.value)}
                 autoFocus
-                onKeyDown={(e) => e?.keyCode === 13 && setEdit(false)}
+                onKeyDown={handlePressEnter}
               />
             ) : type === "date" ? (
               <ReactInputMask
@@ -88,7 +89,7 @@ export const Field = ({
                 placeholder={placeholder}
                 onChange={(e) => onChange(e.target.value)}
                 autoFocus
-                onKeyDown={(e) => e?.keyCode === 13 && setEdit(false)}
+                onKeyDown={handlePressEnter}
               />
             ) : (
               <input
@@ -100,7 +101,7 @@ export const Field = ({
                 }
                 type={type === "date" ? "text" : type ?? "text"}
                 autoFocus
-                onKeyDown={(e) => e?.keyCode === 13 && setEdit(false)}
+                onKeyDown={handlePressEnter}
               />
             )}
           </>

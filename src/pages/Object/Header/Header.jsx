@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
 import { BackButton } from "./BackButton";
 import { SaveButton } from "./SaveButton";
-import { SendClientButton } from "./SendClientButton";
 import { IconButton } from "../../../components/IconButton";
 import { ReactComponent as StarIcon } from "../../../assets/images/card-star.svg";
 import { ReactComponent as RemoveIcon } from "../../../assets/images/remove.svg";
@@ -52,7 +51,6 @@ export const Header = ({ onSave, favorite, onToggleFavorite, loading }) => {
 
   return (
     <>
-      {" "}
       {deleteModal && (
         <Confirm
           title="Видалити об'єкт?"

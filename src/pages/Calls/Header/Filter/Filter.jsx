@@ -18,28 +18,37 @@ export const Filter = ({ onClose, filters, onChangeFilter, onApplyFilter }) => {
 
   useEffect(() => {
     controls.start({ opacity: 1, translateX: 0 });
+    // eslint-disable-next-line
   }, []);
 
+  const handleApply = (isApply) => {
+    onApplyFilter(isApply);
+    handleClose();
+  };
+
   return (
-    <StyledFilter
-      initial={{ opacity: 0, translateX: "100%" }}
-      transition={{ duration: 0.4 }}
-      animate={controls}
-    >
-      <Header onClose={handleClose} />
-      <div className="content hide-scroll">
-        <SectionTitle title="Статус" />
-        <Status
-          value={filters?.status}
-          onChange={(val) => onChangeFilter("status", val)}
-        />
-        <SectionTitle title="Період " />
-        <Period filters={filters} onChangeFilter={onChangeFilter} />
-        <SectionTitle title="Пошук по " />
-        <Search filters={filters} onChangeFilter={onChangeFilter} />
-      </div>
-      <Footer onApplyFilter={onApplyFilter} />
-    </StyledFilter>
+    <>
+      <StyledFilter
+        initial={{ opacity: 0, translateX: "100%" }}
+        transition={{ duration: 0.4 }}
+        animate={controls}
+      >
+        <Header onClose={handleClose} />
+        <div className="content hide-scroll">
+          <SectionTitle title="Статус" />
+          <Status
+            value={filters?.status}
+            onChange={(val) => onChangeFilter("status", val)}
+          />
+          <SectionTitle title="Період " />
+          <Period filters={filters} onChangeFilter={onChangeFilter} />
+          <SectionTitle title="Пошук по " />
+          <Search filters={filters} onChangeFilter={onChangeFilter} />
+        </div>
+        <Footer onApplyFilter={handleApply} />
+      </StyledFilter>
+      <div className="modal-overlay" onClick={handleClose}></div>
+    </>
   );
 };
 

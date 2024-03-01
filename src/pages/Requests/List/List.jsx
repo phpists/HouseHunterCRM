@@ -24,7 +24,6 @@ export const List = ({
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedChat, setSelectedChat] = useState(null);
-
   const { data: accessData } = useGetAccessQuery();
 
   const handleCancelDeleteRequest = () => {
@@ -73,7 +72,7 @@ export const List = ({
             const id = Object.entries(d[1])[1][0];
             return (
               <RequestCard
-                key={i}
+                key={id}
                 selected={!!selected.find((j) => j === d[0])}
                 onSelect={() => onSelect(d[0])}
                 data={d[1]}

@@ -347,6 +347,18 @@ export const objects = createApi({
         }),
       }),
     }),
+    addStreetBaseObject: build.query({
+      query: (id_object) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "add_street_base_object",
+          mod: "objects",
+          id_object,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -375,4 +387,5 @@ export const {
   useLazyShowStreetBaseHistoryTagsQuery,
   useLazyEditObjectCommentQuery,
   useLazyGetObjectCommentHistoryQuery,
+  useLazyAddStreetBaseObjectQuery,
 } = objects;
