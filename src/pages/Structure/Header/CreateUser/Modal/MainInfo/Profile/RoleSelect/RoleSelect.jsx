@@ -86,7 +86,7 @@ export const RoleSelect = ({ value, onChange, error }) => {
       active={roles?.find((role) => role?.level === value)?.color}
       onClick={handleToggleOpen}
       open={open}
-      error={error}
+      error={error?.toString()}
     >
       <div className="title">
         {value && roles?.find((r) => r.level === value)
@@ -118,7 +118,7 @@ const StyledRoleSelect = styled.div`
   gap: 3px;
   background: ${({ active }) =>
     active ? `${active}40` : "rgba(255, 255, 255, 0.30)"};
-  border-radius: ${({ open }) => (open ? "6px 6px 0 0" : "6px")};
+  border-radius: ${({ open }) => (open === "true" ? "6px 6px 0 0" : "6px")};
   height: 22px;
   align-items: center;
   position: relative;

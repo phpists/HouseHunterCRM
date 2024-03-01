@@ -94,12 +94,12 @@ export const ProfileField = ({
 
   return (
     <StyledProfileField
-      active={active}
+      active={active?.toString()}
       password={password}
       className={`${className} ${active && "active"} ${error && "error-field"}`}
       grey={grey}
       big={big}
-      error={error}
+      error={error?.toString()}
       ref={fieldRef}
       onClick={() => {
         if (!active && !readOnly) {
@@ -272,7 +272,7 @@ const StyledProfileField = styled.button`
   display: block;
   width: 100%;
   text-align: left;
-  ${({ error }) => error && "border: 1px solid red;"}
+  ${({ error }) => error === "true" && "border: 1px solid red;"}
 
   .value {
     color: #fff;
@@ -389,7 +389,7 @@ const StyledProfileField = styled.button`
     }
   }
   ${({ active, grey }) =>
-    active &&
+    active === "true" &&
     `
     background:  ${grey ? "rgba(255, 255, 255, 0.05)" : "#FFF"} !important;
     .check-icon {

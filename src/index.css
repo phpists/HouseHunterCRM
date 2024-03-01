@@ -194,3 +194,7 @@ input[type="number"] {
   margin-bottom: 20px;
   width: 80px;
 }
+
+.PhotoView__Photo {
+  transition: all 0s !important;
+}

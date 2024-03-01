@@ -38,7 +38,7 @@ export const ShowMore = ({
   };
 
   return (
-    <StyledShowMore isFocusedBtn={isFocusedBtn} ref={moreRef}>
+    <StyledShowMore isfocusedbtn={isFocusedBtn?.toString()} ref={moreRef}>
       <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />
       <Dropdown
         clientId={clientId}
@@ -66,8 +66,8 @@ const StyledShowMore = styled.button`
   position: absolute;
   top: 10px;
   right: 10px;
-  ${({ isFocusedBtn }) =>
-    isFocusedBtn &&
+  ${({ isfocusedbtn }) =>
+    isfocusedbtn === "true" &&
     `
    .dropdown {
       opacity: 1;

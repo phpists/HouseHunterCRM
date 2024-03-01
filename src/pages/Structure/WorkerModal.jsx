@@ -166,7 +166,7 @@ export const WorkerModal = ({
                 new Date(Number(user?.dt_birthday) * 1000),
                 true
               ),
-        phones: user.phones.map((p) => ({
+        phones: user?.phones.map((p) => ({
           ...p,
           code: p.id_phone_code,
         })),

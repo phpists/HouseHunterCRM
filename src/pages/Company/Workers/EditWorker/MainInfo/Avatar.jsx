@@ -4,7 +4,7 @@ import editIcon from "../../../../../assets/images/edit-avatar.svg";
 
 export const Avatar = ({ isScrolled }) => (
   <StyledAvatar
-    avatarIcon={avatarIcon}
+    avataricon={avatarIcon}
     className="flex items-center justify-center"
     isScrolled={isScrolled}
   >
@@ -17,7 +17,7 @@ const StyledAvatar = styled.div`
   height: 90px;
   flex-shrink: 0;
   border-radius: 13px;
-  background: url(${({ avatarIcon }) => avatarIcon}) center/cover no-repeat;
+  background: url(${({ avataricon }) => avataricon}) center/cover no-repeat;
   margin-bottom: 19px;
   position: relative;
   overflow: hidden;

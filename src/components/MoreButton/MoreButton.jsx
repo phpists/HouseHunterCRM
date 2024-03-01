@@ -19,7 +19,7 @@ export const MoreButton = ({
   return (
     <StyledMoreButton
       className={`flex items-center more noClickable ${className}`}
-      isFocusedBtn={isFocusedBtn}
+      isfocusedbtn={isFocusedBtn?.toString()}
     >
       <div className="btn-wrapper relative noClickable">
         <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />
@@ -43,8 +43,8 @@ const StyledMoreButton = styled.button`
   transition: all 0.3s;
   opacity: 0;
   transform: translateX(-10px);
-  ${({ isFocusedBtn }) =>
-    isFocusedBtn &&
+  ${({ isfocusedbtn }) =>
+    isfocusedbtn === "true" &&
     `
    .dropdown {
       opacity: 1;

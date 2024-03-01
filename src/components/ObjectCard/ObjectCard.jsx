@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { DesktopContent } from "./DesktopContent";
 import { MobileContent } from "./MobileContent";
 import { memo, useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
 export const ObjectCard = memo(
   ({
@@ -23,6 +24,7 @@ export const ObjectCard = memo(
     searchTag,
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
+    const { ref, inView } = useInView({ triggerOnce: true });
 
     const handleClick = (e) =>
       e.target.classList.contains("clickable") && onSelect();
@@ -46,8 +48,9 @@ export const ObjectCard = memo(
       <StyledObjectCard
         className={` clickable ${selected && "selected"}`}
         onClick={handleClick}
+        ref={ref}
       >
-        {!isMobile ? (
+        {!inView ? null : !isMobile ? (
           <DesktopContent
             data={data}
             onToggleFavoriteStatus={onToggleFavoriteStatus}
@@ -94,10 +97,15 @@ const StyledObjectCard = styled.div`
   position: relative;
   border: 1px solid transparent;
   cursor: pointer;
+  min-height: 500px;
   &.selected {
     border: 1px solid #fff;
   }
+  @media (min-width: 800px) {
+    min-height: 360px;
+  }
   @media (min-width: 1400px) {
     padding: 20px;
+    min-height: 240px;
   }
 `;

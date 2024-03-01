@@ -10,7 +10,7 @@ export const NavBarItem = ({ Icon, link, childrenLinks }) => {
       className={`flex items-center ${
         childrenLinks.includes(pathname?.split("/")?.[1]) && "active"
       }`}
-      activeClassName="active"
+      activeclassname="active"
     >
       <Icon />
     </StyledNavbarItem>

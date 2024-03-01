@@ -20,6 +20,7 @@ export const SelectItems = ({
   onHide,
   onSend,
   isHideObjects,
+  onAddToSelection,
 }) => {
   const [type, setType] = useState(null);
   const [open, setOpen] = useState(false);
@@ -42,8 +43,10 @@ export const SelectItems = ({
       onToggleFavorite();
     } else if (opt === "send") {
       onSend();
-    } else if ("hide") {
+    } else if (opt === "hide") {
       onHide();
+    } else if (opt === "selection") {
+      onAddToSelection();
     }
   };
 
@@ -98,6 +101,7 @@ export const SelectItems = ({
                   onHide={onHide}
                   onSend={onSend}
                   isHideObjects={isHideObjects}
+                  onAddToSelection={onAddToSelection}
                 />
               )}
             </>

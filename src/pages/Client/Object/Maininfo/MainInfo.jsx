@@ -89,9 +89,15 @@ export const Maininfo = ({
       <div className="field-group">
         <Field
           value={
-            Number(data?.price_min ?? 0) === 0
+            isObject
+              ? Number(data?.price_min ?? 0) === 0
+                ? "Не вказана"
+                : `${fortmatNumber(Number(data?.price_min ?? 0))}$`
+              : Number(data?.price_max ?? 0) === 0
               ? "Не вказана"
-              : `${fortmatNumber(Number(data?.price_min ?? 0))}$`
+              : `${fortmatNumber(
+                  Number(data?.price_min ?? 0)
+                )}$ - ${fortmatNumber(Number(data?.price_max ?? 0))}$`
           }
           onChange={(val) => onChangeField("price_min", val)}
           label="Вартість"
@@ -106,7 +112,14 @@ export const Maininfo = ({
           ? objectFields?.main_field?.rooms?.required === 1
           : true) && (
           <>
-            <Tag Icon={DoorsIcon} text={`${data?.rooms ?? 0}к`} />
+            <Tag
+              Icon={DoorsIcon}
+              text={
+                isObject
+                  ? `${data?.rooms ?? 0}к`
+                  : `${data?.room_min ?? 0}-${data?.room_max ?? 0}к`
+              }
+            />
             <TagDivider />
           </>
         )}
@@ -185,6 +198,7 @@ const StyledMaininfo = styled.div`
   .price-field {
     .value {
       color: #81fb21;
+      width: 150px;
     }
   }
   .location {

@@ -101,17 +101,22 @@ export const Profile = () => {
   };
 
   useEffect(() => {
-    setProfileData({
-      ...user,
-      phones: user.phones.map((p) => ({
-        ...p,
-        code: p.id_phone_code,
-      })),
-      dt_birthday:
-        user?.dt_birthday === "0"
-          ? null
-          : handleFormatDate(new Date(Number(user?.dt_birthday) * 1000), true),
-    });
+    if (user) {
+      setProfileData({
+        ...user,
+        phones: user?.phones.map((p) => ({
+          ...p,
+          code: p.id_phone_code,
+        })),
+        dt_birthday:
+          user?.dt_birthday === "0"
+            ? null
+            : handleFormatDate(
+                new Date(Number(user?.dt_birthday) * 1000),
+                true
+              ),
+      });
+    }
   }, [user]);
 
   const handleChangeField = (fieldName, value) => {
@@ -165,9 +170,10 @@ export const Profile = () => {
   };
 
   const handleReset = () =>
+    user &&
     setProfileData({
       ...user,
-      phones: user.phones.map((p) => ({
+      phones: user?.phones.map((p) => ({
         ...p,
         code: p.id_phone_code,
       })),
@@ -219,7 +225,7 @@ export const Profile = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("modalClosed");
     navigate("/auth");
-    loginUser(null);
+    window.location = "/#/auth";
   };
 
   return (
@@ -260,7 +266,7 @@ export const Profile = () => {
         onClick={(e) =>
           e.target.classList.contains("clickable") && setOpenEdit(true)
         }
-        openNotifications={openNotifications}
+        opennotifications={openNotifications?.toString()}
       >
         <Notification
           active={openNotifications}
@@ -298,7 +304,7 @@ const StyledProfile = styled.div`
   border-radius: 6px;
   cursor: pointer;
   background: ${({ openNotifications }) =>
-    openNotifications ? "#474747" : "#2c2c2c"};
+    openNotifications === "true" ? "#474747" : "#2c2c2c"};
   background: linear-gradient(to right, #2c2c2c 50%, #474747 50%) left;
   background-size: 200%;
   transition: 0.3s ease-out;
@@ -306,8 +312,8 @@ const StyledProfile = styled.div`
   &:hover {
     background-position: right;
   }
-  ${({ openNotifications }) =>
-    openNotifications && "background-position: right;"}
+  ${({ opennotifications }) =>
+    opennotifications === "true" && "background-position: right;"}
   @media (max-width: 1200px) {
     .status-tag {
       display: none;

@@ -8,7 +8,7 @@ export const Avatar = ({ photo, level }) => {
 
   return (
     <StyledAvatar
-      avatarIcon={
+      avataricon={
         !inView ? "" : photo?.length > 0 ? photo : handleGetRoleAvatar(level)
       }
       ref={ref}
@@ -21,6 +21,6 @@ const StyledAvatar = styled.div`
   height: 50px;
   flex-shrink: 0;
   border-radius: 8px;
-  background: url(${({ avatarIcon }) => avatarIcon}) center/cover no-repeat;
+  background: url(${({ avataricon }) => avataricon}) center/cover no-repeat;
   margin-right: 12px;
 `;

@@ -9,7 +9,10 @@ export const Price = ({
   error,
 }) => {
   return (
-    <StyledPrice error={error} className={`${error && "error-field"}`}>
+    <StyledPrice
+      error={error?.toString()}
+      className={`${error && "error-field"}`}
+    >
       <Ranger
         label="Ціновий діапазон"
         // mainTypes={[
@@ -32,5 +35,5 @@ export const Price = ({
 
 const StyledPrice = styled.div`
   border-radius: 9px;
-  ${({ error }) => error && "border: 1px solid red;"}
+  ${({ error }) => error === "true" && "border: 1px solid red;"}
 `;

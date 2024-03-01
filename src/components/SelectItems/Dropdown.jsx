@@ -8,6 +8,7 @@ export const Dropdown = ({
   onOpen,
   onSend,
   isHideObjects,
+  onAddToSelection,
 }) => {
   const OPTIONS = [
     { title: "Додати в улюблене", value: "favorite" },
@@ -15,6 +16,9 @@ export const Dropdown = ({
     ...(onDelete ? [{ title: "Видалити", value: "delete" }] : []),
     ...(onHide
       ? [{ title: isHideObjects ? "Показати" : "Приховати", value: "hide" }]
+      : []),
+    ...(onAddToSelection
+      ? [{ title: "Додати до підбірки", value: "selection" }]
       : []),
   ];
 

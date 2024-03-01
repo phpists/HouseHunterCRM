@@ -11,7 +11,7 @@ export const Sidebar = ({ sidebarOpen, onClose, accessData }) => {
   return (
     <StyledSidebar
       className="flex flex-col justify-between items-center"
-      sidebarOpen={sidebarOpen}
+      sidebaropen={sidebarOpen?.toString()}
     >
       <Logo onClose={onClose} />
       <NavBar accessData={accessData} />
@@ -39,6 +39,8 @@ const StyledSidebar = styled.div`
     left: 0;
     bottom: 0;
     z-index: 1000;
-    transform: translateX(${({ sidebarOpen }) => (sidebarOpen ? 0 : "-100%")});
+    transform: translateX(
+      ${({ sidebaropen }) => (sidebaropen === "true" ? 0 : "-100%")}
+    );
   }
 `;

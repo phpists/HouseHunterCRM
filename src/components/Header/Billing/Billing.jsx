@@ -38,7 +38,7 @@ export const Billing = ({ open, onToggleOpen, onToggleHover }) => {
     <StyledBilling
       className="flex items-center"
       open={open}
-      attach={attach}
+      attach={attach.toString()}
       onMouseEnter={() => onToggleHover(true)}
       onMouseLeave={() => onToggleHover(false)}
       onTouchStart={() => onToggleHover(true)}
@@ -120,7 +120,7 @@ const StyledBilling = styled.div`
     }
   `}
   ${({ attach }) =>
-    attach &&
+    attach === "true" &&
     `
     padding: 4px 20px 4px 4px !important;
     .main-text {

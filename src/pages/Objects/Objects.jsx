@@ -61,14 +61,9 @@ const Objects = () => {
   const handleChangeFilter = (field, value, isDataUpdate) => {
     if (isDataUpdate) {
       setFilters(value);
-      localStorage.setItem("objectsLastFilters", JSON.stringify(value));
     } else {
       const updatedFilters = { ...filters, [field]: value };
       setFilters(updatedFilters);
-      localStorage.setItem(
-        "objectsLastFilters",
-        JSON.stringify(updatedFilters)
-      );
       if (field === "id_rubric") {
         handleGetRubricsFields(value);
       }
@@ -237,6 +232,10 @@ const Objects = () => {
     }
     // eslint-disable-next-line
   }, [isFavorite]);
+
+  useEffect(() => {
+    localStorage.setItem("objectsLastFilters", JSON.stringify(filters));
+  }, [filters]);
 
   const handleApplyFilter = (isApply) => {
     filterActive.current = isApply;

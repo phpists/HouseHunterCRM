@@ -8,7 +8,7 @@ export const Avatar = () => {
 
   return (
     <StyledAvatar
-      avatarIcon={
+      avataricon={
         user?.photo?.length > 0
           ? user?.photo
           : handleGetRoleAvatar(user?.struct_level)
@@ -23,5 +23,5 @@ const StyledAvatar = styled.div`
   height: 52px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: url(${({ avatarIcon }) => avatarIcon}) center/cover no-repeat;
+  background: url(${({ avataricon }) => avataricon}) center/cover no-repeat;
 `;

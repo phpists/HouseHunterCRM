@@ -18,7 +18,7 @@ export const BossSelect = ({ users, value, onChange, error }) => {
   }, [, levelsData]);
 
   return (
-    <StyledBossSelect error={error}>
+    <StyledBossSelect error={error?.toString()}>
       {value && !open ? (
         <Selected
           onClick={() => setOpen(!open)}
@@ -46,6 +46,6 @@ export const BossSelect = ({ users, value, onChange, error }) => {
 
 const StyledBossSelect = styled.div`
   position: relative;
-  ${({ error }) => error && "border: 1px solid red;"}
+  ${({ error }) => error === "true" && "border: 1px solid red;"}
   border-radius: 9px;
 `;

@@ -3,7 +3,7 @@ import SlickSlider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useEffect, useRef, useState } from "react";
-import noPhoto from "../../../assets/images/no-photo.svg";
+import noPhoto from "../../../assets/images/no-photo.webp";
 import { Slide } from "./Slide";
 import { Photos } from "./Photos/Photos";
 import { Arrows } from "./Arrows";
@@ -28,27 +28,40 @@ export const Slider = ({ photos, data }) => {
   const [openView, setOpenView] = useState(false);
 
   const handleChangeSlide = (val, open) => {
-    slickRef.current.slickGoTo(val - 1);
     setOpenView(!!open);
+    setCurrentSlide(val);
   };
 
   useEffect(() => {
-    slickRef.current.slickGoTo(0);
+    slickRef.current && slickRef.current.slickGoTo(0);
   }, []);
 
   return (
     <>
-      <PhotoSlider
-        images={photos.map(({ name }) => ({ src: name, key: name }))}
-        visible={openView}
-        onClose={() => setOpenView(false)}
-        index={currentSlide - 1}
-        onIndexChange={(index) => handleChangeSlide(index + 1, true)}
-      />
+      {openView && (
+        <PhotoSlider
+          images={photos
+            .map(({ name }, key) => ({
+              src: name,
+              key: key + 1 === currentSlide ? 100 : 2,
+            }))
+            ?.sort((a, b) => b?.key - a?.key)}
+          visible={openView}
+          onClose={() => setOpenView(false)}
+          // index={currentSlide - 1}
+          // onIndexChange={(index) => handleChangeSlide(index, true)}
+          speed={() => 0}
+          easing={(type) =>
+            type === 2
+              ? "cubic-bezier(0.36, 0, 0.66, -0.56)"
+              : "cubic-bezier(0.34, 1.56, 0.64, 1)"
+          }
+        />
+      )}
       <StyledSlider
         className="flex items-center"
         ref={sliderRef}
-        empty={photos?.length < 2}
+        empty={(photos?.length < 2).toString()}
       >
         <div className="relative slider">
           {photos?.length > 1 && (
@@ -59,20 +72,20 @@ export const Slider = ({ photos, data }) => {
             />
           )}
           <Tags data={data} />
-          <SlickSlider
-            {...settings}
-            beforeChange={(currentSlide, nextSlide) =>
-              setCurrentSlide(1 + nextSlide)
-            }
-            currentSlide={currentSlide}
-            prevArrow={<></>}
-            nextArrow={<></>}
-            ref={slickRef}
-          >
-            {photos?.length === 0 ? (
-              <Slide photo={noPhoto} active empty onOpen={() => null} />
-            ) : (
-              photos
+          {photos?.length === 0 ? (
+            <Slide photo={noPhoto} active empty onOpen={() => null} />
+          ) : (
+            <SlickSlider
+              {...settings}
+              beforeChange={(currentSlide, nextSlide) =>
+                setCurrentSlide(1 + nextSlide)
+              }
+              currentSlide={currentSlide}
+              prevArrow={<></>}
+              nextArrow={<></>}
+              ref={slickRef}
+            >
+              {photos
                 ?.map(({ name }) => name)
                 .map((photo, i) => (
                   <Slide
@@ -82,9 +95,9 @@ export const Slider = ({ photos, data }) => {
                     empty={photos?.length === 1}
                     onOpen={() => setOpenView(true)}
                   />
-                ))
-            )}
-          </SlickSlider>
+                ))}
+            </SlickSlider>
+          )}
         </div>
         {photos?.length > 1 ? (
           <Photos
@@ -147,14 +160,14 @@ const StyledSlider = styled.div`
     .slider {
       width: calc(
         100svw - -4px - 8px - 44px - 24px -
-          ${({ empty }) => (empty ? 39 : 90)}px
+          ${({ empty }) => (empty === "true" ? 39 : 90)}px
       );
     }
   }
 
   @media (min-width: 1400px) {
     .slider {
-      ${({ empty }) => empty && "width: 252px;"}
+      ${({ empty }) => empty === "true" && "width: 252px;"}
     }
   }
 `;

@@ -62,6 +62,7 @@ export const Footer = ({
         onCloseSelectedMessage={onCloseSelectedMessage}
         rieltorName={rieltorName}
         onSendFile={handleSendMessage}
+        onSend={handleSendMessage}
       />
       <SendButton onSend={handleSendMessage} loading={loading} />
     </StyledFooter>

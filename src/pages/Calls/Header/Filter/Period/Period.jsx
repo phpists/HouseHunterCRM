@@ -27,14 +27,21 @@ export const Period = ({ filters, onChangeFilter }) => {
         onClick={() => setChangeDate(changeDate === 2 ? null : 2)}
       />
       {changeDate && (
-        <Calendar
-          value={
-            new Date(
-              (changeDate === 1 ? filters?.date_from : filters?.date_to) * 1000
-            )
-          }
-          onChange={handleChangeValue}
-        />
+        <>
+          <Calendar
+            value={
+              new Date(
+                (changeDate === 1 ? filters?.date_from : filters?.date_to) *
+                  1000
+              )
+            }
+            onChange={handleChangeValue}
+          />
+          <div
+            className="modal-overlay"
+            onClick={() => setChangeDate(null)}
+          ></div>
+        </>
       )}
     </StyledPeriod>
   );

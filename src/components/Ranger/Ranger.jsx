@@ -45,7 +45,7 @@ export const Ranger = ({
   return (
     <StyledRanger
       big={big}
-      error={error}
+      error={error?.toString()}
       className={`${error && "error-field"} select-none	${className}`}
     >
       <Header label={label} mainTypes={mainTypes} />
@@ -109,7 +109,7 @@ const StyledRanger = styled.div`
   /* background: rgba(255, 255, 255, 0.05); */
   position: relative;
   overflow: hidden;
-  ${({ error }) => error && "border: 1px solid red;"}
+  ${({ error }) => error === "true" && "border: 1px solid red;"}
   .first-angle,
   .second-angle {
     opacity: 0;

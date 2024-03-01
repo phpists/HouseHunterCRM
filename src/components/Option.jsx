@@ -17,7 +17,7 @@ export const Option = ({
         error && "error-field"
       }`}
       onClick={onSelect}
-      active={active}
+      active={active?.toString()}
     >
       <span className="flex items-center">
         {Component}
@@ -58,7 +58,7 @@ const StyledOption = styled.div`
   }
 
   ${({ active }) =>
-    active &&
+    active === "true" &&
     `
     color: #50F835;
     background: rgba(280, 248, 53, 0.1);

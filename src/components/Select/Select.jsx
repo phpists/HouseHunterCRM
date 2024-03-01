@@ -35,7 +35,7 @@ export const Select = ({
     <StyledSelect
       hideArrowDefault={hideArrowDefault}
       className={`${className} ${error && "error-field"} ${open && "active"}`}
-      error={error}
+      error={error?.toString()}
       onClick={(e) => {
         !open && setOpen(!open);
       }}
@@ -95,7 +95,7 @@ const StyledSelect = styled.button`
   display: block;
   width: 100%;
   text-align: left;
-  ${({ error }) => error && "border: 1px solid red;"}
+  ${({ error }) => error === "true" && "border: 1px solid red;"}
   .arrow {
     ${({ hideArrowDefault }) => hideArrowDefault && "opacity: 0;"}
   }

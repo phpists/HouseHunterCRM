@@ -46,8 +46,8 @@ export const SelectTags = ({
       className={`flex items-center justify-between ${!value && "empty"} ${
         open && "open"
       } ${isActive && "active"} ${error && "error-field"} ${className}`}
-      showTags={showTags}
-      error={error}
+      showtags={showTags?.toString()}
+      error={error?.toString()}
       onClick={(e) => {
         if (!e.target.classList.contains("notClickable") && !viewOnly) {
           setOpen(!open);
@@ -164,7 +164,7 @@ const StyledSelectTags = styled.button`
   position: relative;
   justify-content: space-between;
   width: 100%;
-  ${({ error }) => error && "border: 1px solid red;"}
+  ${({ error }) => error === "true" && "border: 1px solid red;"}
   .value {
     color: #fff;
     font-family: Overpass;
@@ -257,8 +257,8 @@ const StyledSelectTags = styled.button`
     margin-bottom: 4px;
   }
 
-  ${({ showTags }) =>
-    showTags &&
+  ${({ showtags }) =>
+    showtags === "true" &&
     `
     background: rgba(255, 255, 255, 0.05);
     .value {

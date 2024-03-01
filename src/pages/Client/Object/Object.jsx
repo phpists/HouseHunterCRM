@@ -49,6 +49,7 @@ export const ObjectCard = ({ className, selectedObject }) => {
               price_min: field?.price_min,
               price_max: field?.price_max,
               room_min: field?.room_min,
+              room_max: field?.room_max,
               rooms: field?.rooms,
               address_storey: field?.address_storey,
               storey_count: field?.storey_count,

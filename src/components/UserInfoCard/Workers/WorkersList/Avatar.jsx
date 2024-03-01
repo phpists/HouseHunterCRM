@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 export const Avatar = ({ photo, zIndex }) => (
-  <StyledAvatar avatarIcon={photo} zIndex={zIndex} />
+  <StyledAvatar avataricon={photo} zIndex={zIndex} />
 );
 
 const StyledAvatar = styled.div`
@@ -10,6 +10,6 @@ const StyledAvatar = styled.div`
   flex-shrink: 0;
   border-radius: 34px;
   border: 1.4px solid #323232;
-  background: url(${({ avatarIcon }) => avatarIcon}) center/cover no-repeat;
+  background: url(${({ avataricon }) => avataricon}) center/cover no-repeat;
   z-index: ${({ zIndex }) => zIndex};
 `;

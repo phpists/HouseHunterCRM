@@ -7,7 +7,11 @@ export const ShowButton = ({
   title = "Показати телефон",
   error,
 }) => (
-  <StyledShowButton onClick={onClick} className={`${className}`} error={error}>
+  <StyledShowButton
+    onClick={onClick}
+    className={`${className}`}
+    error={error?.toString()}
+  >
     <span>{title}</span>
   </StyledShowButton>
 );
@@ -33,7 +37,7 @@ const StyledShowButton = styled.button`
     color: rgba(255, 255, 255, 1);
   }
   ${({ error }) =>
-    error &&
+    error === "true" &&
     `
     color: #ff4343 !important;
     background: rgba(255, 67, 67, 0.3) !important;

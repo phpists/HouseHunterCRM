@@ -2,7 +2,7 @@ import ReactInputMask from "react-input-mask";
 import styled from "styled-components";
 
 export const Input = ({ label, className, phone, value, onChange, error }) => (
-  <StyledInput className={`${className}`} error={error}>
+  <StyledInput className={`${className}`} error={error?.toString()}>
     <div className="label">{label}</div>
     {phone ? (
       <ReactInputMask
@@ -38,7 +38,8 @@ const StyledInput = styled.div`
     border-radius: 6px;
     background: #474747;
     padding: 10px;
-    color: ${({ error }) => (error ? "#ff2e2e" : "rgba(255, 255, 255, 1)")};
+    color: ${({ error }) =>
+      error === "true" ? "#ff2e2e" : "rgba(255, 255, 255, 1)"};
 
     leading-trim: both;
     text-edge: cap;
@@ -49,6 +50,6 @@ const StyledInput = styled.div`
     line-height: 120%;
     width: 100%;
     transition: all 0.3s;
-    ${({ error }) => error && "border: 1px solid #ff2e2e;"}
+    ${({ error }) => error === "true" && "border: 1px solid #ff2e2e;"}
   }
 `;

@@ -7,11 +7,11 @@ import {
   useLazyAddObjectToSelectionsQuery,
 } from "../../store/selections/selections.api";
 import { useParams } from "react-router-dom";
-import { handleResponse } from "../../utilits";
+import { checkIsArray, handleResponse } from "../../utilits";
 import cogoToast from "cogo-toast";
 import { Modal } from "../../components/Modal/Modal";
 
-export const AddToSelections = ({ onClose, idObject }) => {
+export const AddToSelections = ({ onClose, idObject, onSuccess }) => {
   const { data } = useGetFoldersListQuery();
   const [addObjectToSelections] = useLazyAddObjectToSelectionsQuery();
   const [selectedRequest, setSelectedRequest] = useState(null);
@@ -19,14 +19,18 @@ export const AddToSelections = ({ onClose, idObject }) => {
   const handleAddObj = () => {
     addObjectToSelections({
       id_request_group: selectedRequest,
-      id_objects: [idObject],
+      id_objects: Array.isArray(idObject) ? idObject : [idObject],
     }).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Об'єкт успішно добалено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        cogoToast.success(
+          `Об'єкт${checkIsArray(idObject)?.length > 0 && "и"} успішно добалено`,
+          {
+            hideAfter: 3,
+            position: "top-right",
+          }
+        );
         onClose();
+        onSuccess && onSuccess();
       })
     );
   };

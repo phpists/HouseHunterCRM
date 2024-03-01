@@ -13,6 +13,7 @@ export const Input = ({
   onCloseSelectedMessage,
   rieltorName,
   onSendFile,
+  onSend,
 }) => {
   const fileInputRef = useRef(null);
 
@@ -48,6 +49,7 @@ export const Input = ({
         onChange={(e) => onChange(e.target.value)}
         placeholder="Повідомлення"
         disabled={loading}
+        onKeyDown={(e) => e?.keyCode === 13 && onSend()}
       />
       {!selectedMessage && (
         <>

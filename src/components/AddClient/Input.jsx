@@ -14,7 +14,11 @@ export const Input = ({
   phoneCode,
   onChangePhoneCode,
 }) => (
-  <StyledInput className={`${className} `} error={error} phone={phone}>
+  <StyledInput
+    className={`${className} `}
+    error={error?.toString()}
+    phone={phone}
+  >
     <div className="label">{label}</div>
     {phone ? (
       <PhoneInput
@@ -52,7 +56,8 @@ const StyledInput = styled.div`
     border-radius: ${({ phone }) => (phone ? "0 6px 6px 0" : "6px")};
     background: #474747;
     padding: 10px;
-    color: ${({ error }) => (error ? "#ff2e2e" : "rgba(255, 255, 255, 1)")};
+    color: ${({ error }) =>
+      error === "true" ? "#ff2e2e" : "rgba(255, 255, 255, 1)"};
 
     leading-trim: both;
     text-edge: cap;
@@ -64,7 +69,7 @@ const StyledInput = styled.div`
     width: 100%;
     transition: all 0.3s;
     height: 37px;
-    ${({ error }) => error && "border: 1px solid #ff2e2e;"}
+    ${({ error }) => error === "true" && "border: 1px solid #ff2e2e;"}
   }
   .code-select-wrapper {
     background: #474747;

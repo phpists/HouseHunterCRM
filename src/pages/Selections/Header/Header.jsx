@@ -9,6 +9,8 @@ import { useLazyHideObjectFromSelectionsQuery } from "../../../store/selections/
 import { handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { AddToSelections } from "../../Objects/AddToSelections";
 
 export const Header = ({
   onRefresh,
@@ -28,6 +30,7 @@ export const Header = ({
 }) => {
   const { id } = useParams();
   const [hideObject] = useLazyHideObjectFromSelectionsQuery();
+  const [openAddToSelection, setOpenAddToSelection] = useState(false);
 
   const handleHide = () => {
     onChangeActionLoading(true);
@@ -43,8 +46,18 @@ export const Header = ({
     });
   };
 
+  const handleAddToSelection = () => setOpenAddToSelection(true);
+  const handleAddToSelectionSuccess = () => onSelectAll(true);
+
   return (
     <StyledHeader>
+      {openAddToSelection && (
+        <AddToSelections
+          onClose={() => setOpenAddToSelection(false)}
+          idObject={selected}
+          onSuccess={handleAddToSelectionSuccess}
+        />
+      )}
       <div className="main-header-content-wrapper flex items-center justify-between">
         <Selected selectedCount={selectedCount} />
         <div className="main-header-content-btns flex items-center">
@@ -78,6 +91,7 @@ export const Header = ({
               onHide={handleHide}
               noFavorite
               isHideObjects={showObjectHide}
+              onAddToSelection={handleAddToSelection}
             />
           </div>
         </div>
@@ -93,6 +107,7 @@ export const Header = ({
           onHide={handleHide}
           noFavorite
           isHideObjects={showObjectHide}
+          onAddToSelection={handleAddToSelection}
         />
       </div>
     </StyledHeader>

@@ -16,7 +16,9 @@ export const PositionCard = ({
         placeholder="0"
         value={isNaN(value) ? "0" : Number(value).toString()}
         type="number"
-        onChange={(e) => onChange(Number(e.target.value))}
+        onChange={(e) =>
+          Number(e.target.value) >= 0 ? onChange(Number(e.target.value)) : null
+        }
       />
       {mainType ? <span>{mainType}</span> : null}
     </div>

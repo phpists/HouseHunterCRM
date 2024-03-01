@@ -18,7 +18,7 @@ export const Option = ({
     last={last}
     className="flex items-center"
     onClick={onClick}
-    active={active}
+    active={active?.toString()}
   >
     {/* <div className="avatar" /> */}
     <div className="name">{name}</div>

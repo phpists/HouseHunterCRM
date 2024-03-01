@@ -15,23 +15,23 @@ export const Header = ({ onOpenSidebar }) => {
 
   return (
     <StyledHeader
-      isTextHide={isTextHide}
-      openBilling={openBilling || hoverBilling}
+      istexthide={isTextHide?.toString()}
+      openbilling={(openBilling || hoverBilling).toString()}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <BurgerButton onOpenSidebar={onOpenSidebar} />
           <div className="header-text">
-            <Title />
-            <Subtitle />
+            {/* <Title />
+            <Subtitle /> */}
           </div>
         </div>
         <div className="flex items-center">
-          <Billing
+          {/* <Billing
             open={openBilling}
             onToggleOpen={(val) => setOpenBilling(val)}
             onToggleHover={(val) => setHoverBilling(val)}
-          />
+          /> */}
           <Profile />
         </div>
       </div>
@@ -42,7 +42,7 @@ const StyledHeader = styled.div`
   padding: 20px 40px;
   @media (max-width: 1400px) {
     .header-text {
-      ${({ isTextHide }) => isTextHide && "display: none;"}
+      ${({ istexthide }) => istexthide === "true" && "display: none;"}
       margin-left: 24px;
     }
   }
@@ -53,8 +53,8 @@ const StyledHeader = styled.div`
     .header-text {
       display: none;
     }
-    ${({ openBilling }) =>
-      openBilling &&
+    ${({ openbilling }) =>
+      openbilling === "true" &&
       `
         .profile-header-block {
             display: none;
