@@ -6,6 +6,7 @@ export const Button = ({ onChangeFocus }) => (
     className="flex items-center justify-center"
     onFocus={() => onChangeFocus(true)}
     onBlur={() => onChangeFocus(false)}
+    onClick={(e) => e.currentTarget.focus()}
   >
     <img src={dotsIcon} alt="" />
   </StyledButton>

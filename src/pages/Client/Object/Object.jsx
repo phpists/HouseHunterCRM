@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { SectionTitle } from "./SectionTitle";
 import { Maininfo } from "./Maininfo/MainInfo";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import {
   useLazyGetRequestQuery,
@@ -122,9 +122,9 @@ export const ObjectCard = ({ className, selectedObject }) => {
   };
 
   return (
-    <>
+    <StyledObject className={`hide-scroll ${className}`}>
       {data?.map((e, i) => (
-        <StyledObject key={i} className={`hide-scroll ${className}`}>
+        <React.Fragment key={i}>
           <SectionTitle title={e?.rubric ?? ""} />
           <Maininfo
             data={e}
@@ -134,16 +134,16 @@ export const ObjectCard = ({ className, selectedObject }) => {
             objectFields={objectFields}
           />
           {/* {started ? (
-            <>
-              <SectionTitle title="Етап" />
-              <Steps />
-            </>
-          ) : (
-            <StartButton onClick={() => setStarted(true)} />
-          )} */}
-        </StyledObject>
+         <>
+           <SectionTitle title="Етап" />
+           <Steps />
+         </>
+       ) : (
+         <StartButton onClick={() => setStarted(true)} />
+       )} */}
+        </React.Fragment>
       ))}
-    </>
+    </StyledObject>
   );
 };
 

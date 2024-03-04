@@ -6,7 +6,6 @@ import { Dropdown } from "./Dropdown/Dropdown";
 
 export const CodeSelect = ({ value, onChange, options, className }) => {
   const [open, setOpen] = useState(false);
-
   const handleChange = (val) => {
     onChange(val);
     setOpen(false);
@@ -18,6 +17,7 @@ export const CodeSelect = ({ value, onChange, options, className }) => {
       className={`${className}`}
       onFocus={() => setOpen(true)}
       onBlur={() => setOpen(false)}
+      onClick={(e) => !open && e.target.focus()}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center">

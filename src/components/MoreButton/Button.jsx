@@ -6,6 +6,7 @@ export const Button = ({ onChangeFocus }) => (
     className="flex items-center justify-center more-btn"
     onFocus={() => onChangeFocus(true)}
     onBlur={() => onChangeFocus(false)}
+    onClick={(e) => e.currentTarget.focus()}
   >
     <OptionsIcon />
   </StyledButton>

@@ -20,6 +20,7 @@ export const MoreButton = ({
     <StyledMoreButton
       className={`flex items-center more noClickable ${className}`}
       isfocusedbtn={isFocusedBtn?.toString()}
+      onClick={(e) => e.currentTarget.focus()}
     >
       <div className="btn-wrapper relative noClickable">
         <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />
