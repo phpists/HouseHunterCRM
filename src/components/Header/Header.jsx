@@ -22,16 +22,16 @@ export const Header = ({ onOpenSidebar }) => {
         <div className="flex items-center">
           <BurgerButton onOpenSidebar={onOpenSidebar} />
           <div className="header-text">
-            {/* <Title />
-            <Subtitle /> */}
+            <Title />
+            <Subtitle />
           </div>
         </div>
         <div className="flex items-center">
-          {/* <Billing
+          <Billing
             open={openBilling}
             onToggleOpen={(val) => setOpenBilling(val)}
             onToggleHover={(val) => setHoverBilling(val)}
-          /> */}
+          />
           <Profile />
         </div>
       </div>

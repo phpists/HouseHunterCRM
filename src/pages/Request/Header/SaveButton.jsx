@@ -3,7 +3,7 @@ import { Loader } from "../../../components/Loader";
 
 export const SaveButton = ({ className, onClick, loading }) => (
   <StyledSaveButton className={className} onClick={onClick} disabled={loading}>
-    {loading ? <Loader white /> : "Зберегти зміни"}
+    {loading ? <Loader white className="save-btn-loader" /> : "Зберегти зміни"}
   </StyledSaveButton>
 );
 
@@ -28,6 +28,9 @@ const StyledSaveButton = styled.button`
   transition: all 0.3s;
   margin-right: 20px;
   white-space: nowrap;
+  .save-btn-loader {
+    width: 18px;
+  }
   @media (max-width: 800px) {
     margin-right: 15px;
     width: 100%;

@@ -224,8 +224,8 @@ export const Profile = () => {
     logout();
     localStorage.removeItem("token");
     localStorage.removeItem("modalClosed");
-    navigate("/auth");
-    window.location = "/#/auth";
+    window.location.href = "/#/auth";
+    window.location.reload(true);
   };
 
   return (

@@ -14,7 +14,11 @@ export const Search = ({ filters, onChangeFilter }) => {
       <SelectTags
         label="По потоку"
         tags={filters?.type_call?.map((t) => ({
-          title: callsType[t]?.name ?? "",
+          title: callsType
+            ? Object.entries(callsType)?.find(
+                (c) => c[1]?.id?.toString() === t
+              )?.[1].name
+            : "-",
           value: t?.toString(),
         }))}
         onChange={(val, title) => {

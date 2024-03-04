@@ -7,6 +7,7 @@ import { ObjectHistory } from "../../components/ObjectHistory/ObjectHistory";
 import { useState } from "react";
 import { Loader } from "../../components/Loader";
 import { ObjectCommentHistory } from "../../components/ObjectCommentHistory/ObjectCommentHistory";
+import { AddToSelections } from "../Objects/AddToSelections";
 
 export const List = ({
   data,
@@ -22,11 +23,17 @@ export const List = ({
 }) => {
   const { data: accessData } = useGetAccessQuery();
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
-  const [currency, setCurrency] = useState(0);
   const [openCommentHistoryModal, setOpenCommentHistoryModal] = useState(null);
+  const [openAddModal, setOpenAddModal] = useState(null);
 
   return (
     <>
+      {openAddModal && (
+        <AddToSelections
+          onClose={() => setOpenAddModal(false)}
+          idObject={openAddModal}
+        />
+      )}
       {openCommentHistoryModal && (
         <ObjectCommentHistory
           onClose={() => setOpenCommentHistoryModal(null)}
@@ -56,8 +63,6 @@ export const List = ({
               isEdit={handleCheckAccess(accessData, "objects", "edit")}
               onHide={() => onHide(d?.id)}
               isHideObjects={isHideObjects}
-              onChangeCurrency={(val) => setCurrency(val)}
-              currency={currency}
               onOpenTagsHistory={() =>
                 setOpenHistoryModal({
                   id: d?.id,
@@ -67,6 +72,7 @@ export const List = ({
               onOpenCommetHistory={() =>
                 setOpenCommentHistoryModal({ id: d?.id })
               }
+              onAddToSelection={() => setOpenAddModal(d?.id)}
             />
           ))
         )}

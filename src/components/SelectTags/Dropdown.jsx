@@ -40,7 +40,9 @@ export const Dropdown = ({
               Component={Component}
               onSelect={() => onChange(value, title)}
               active={
-                activeValue === value || tags?.find((t) => t.value === value)
+                !!(
+                  activeValue === value || tags?.find((t) => t.value === value)
+                )
               }
             />
           ))
@@ -61,6 +63,7 @@ const StyledDropdown = styled.div`
   max-height: 250px;
   visibility: hidden;
   opacity: 0;
+  transition: all 0.01;
   .opt {
     padding: 8px 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);

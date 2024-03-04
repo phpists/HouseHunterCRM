@@ -37,17 +37,21 @@ export const Comment = ({ className, comment, id }) => {
     <StyledComment className={`flex items-start ${className}`}>
       <div>
         {edit ? (
-          <input
+          <textarea
             type="text"
             className="value"
             autoFocus
             onBlur={handleSave}
-            onKeyDown={(e) => e?.keyCode === 13 && handleSave(e)}
+            onKeyDown={(e) =>
+              e?.keyCode === 13 && !e?.shiftKey && handleSave(e)
+            }
             defaultValue={commentValue}
           />
         ) : (
-          <div className="value" onClick={() => setEdit(true)}>
-            {commentValue?.length > 0 ? commentValue : "-"}
+          <div className="value hide-scroll" onClick={() => setEdit(true)}>
+            {commentValue?.length > 0
+              ? commentValue?.split("\r\n")?.map((c) => <div>{c}</div>)
+              : "-"}
           </div>
         )}
         <div className="label" onClick={() => setEdit(true)}>
@@ -76,10 +80,15 @@ const StyledComment = styled.div`
     letter-spacing: 0.3px;
     margin-bottom: 1px;
     min-height: 10px;
-    max-width: 120px;
+    max-width: 180px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    resize: none;
+    height: max-content;
+    max-height: 25px;
+    overflow: auto;
+    word-break: break-all;
   }
   .label {
     font-family: Open Sans;

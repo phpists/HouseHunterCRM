@@ -160,7 +160,7 @@ export const SelectTags = ({
 const StyledSelectTags = styled.button`
   padding: 6px 10px;
   border-radius: 9px;
-  transition: all 0.3s;
+  transition: all 0.1s;
   position: relative;
   justify-content: space-between;
   width: 100%;

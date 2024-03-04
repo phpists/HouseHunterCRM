@@ -100,8 +100,6 @@ export const List = ({
                 onOpenPriceHistory={() =>
                   setOpenHistoryPriceModal(d?.price_history_json)
                 }
-                currency={currency}
-                onChangeCurrency={(val) => setCurrency(val)}
                 onDelete={() => handleDelete(d?.id)}
                 searchTag="?objects"
               />

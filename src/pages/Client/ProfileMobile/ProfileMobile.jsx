@@ -124,13 +124,13 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
             <Phones
               classNameContent="phones-wrapper"
               phones={
-                updatedData?.phone?.map(
-                  ({ code, phone }) =>
-                    `${
-                      phonesCodes?.find((phone) => phone?.id === code)?.code ??
-                      ""
-                    }${phone}`
-                ) ?? []
+                updatedData?.phone?.map(({ code, phone, viber, telegram }) => ({
+                  phone: `${
+                    phonesCodes?.find((phone) => phone?.id === code)?.code ?? ""
+                  }${phone}`,
+                  viber,
+                  telegram,
+                })) ?? []
               }
             />
           </div>

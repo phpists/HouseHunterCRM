@@ -8,12 +8,16 @@ import {
 } from "../../../../../store/requests/requests.api";
 import { useState } from "react";
 import {
+  checkIsArray,
   handleChangeRange,
   handleGetLocationAllPath,
 } from "../../../../../utilits";
 import { useEffect } from "react";
 import { ProfileField } from "../../../../../components/ProfileField";
-import { useGetCommentsToFieldsQuery } from "../../../../../store/objects/objects.api";
+import {
+  useGetCommentsToFieldsQuery,
+  useGetTagsListQuery,
+} from "../../../../../store/objects/objects.api";
 import { Price } from "../../../../Request/Main/Price/Price";
 import { ToggleOption } from "./ToggleOption";
 import { CheckOption } from "../../../../../components/CheckOption";
@@ -54,6 +58,7 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
   const { data: rubricsList } = useGetRubricsQuery();
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
+  const { data: tagsList } = useGetTagsListQuery();
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -73,6 +78,17 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
       handleFormatLocations();
     }
   }, [locationsList]);
+
+  const handleSelectTag = (val) => {
+    const isExist = !!filters?.labels?.find((t) => t === val);
+
+    onChangeFilter(
+      "labels",
+      isExist
+        ? filters?.labels?.filter((t) => t !== val)
+        : [...checkIsArray(filters?.labels), val]
+    );
+  };
 
   return (
     <StyledMain className="section">
@@ -149,6 +165,27 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         }
       />
       <Divider />
+      <SelectTags
+        label="Теги"
+        showTags
+        tags={
+          tagsList?.data
+            ? tagsList?.data
+                ?.filter((t) => !!filters?.labels?.find((l) => l === t))
+                ?.map((t) => ({
+                  title: commentsToFields?.object[t] ?? "-",
+                  value: t,
+                }))
+            : []
+        }
+        options={tagsList?.data?.map((value) => ({
+          title: commentsToFields?.object[value] ?? "-",
+          value,
+        }))}
+        onChange={handleSelectTag}
+      />
+      <Divider />
+
       {/* <Divider />
       <CheckOption
         label="Об’єкти компанії"

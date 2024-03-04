@@ -7,7 +7,7 @@ export const Contact = () => (
   <StyledContact>
     <Section>
       <div className="fields">
-        <Phones />
+        {/* <Phones /> */}
         <div className="divider" />
         <ProfileField value="yuriyo@gmail.com" label="Пошта" />
       </div>

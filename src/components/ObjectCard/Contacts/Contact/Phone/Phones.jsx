@@ -14,10 +14,13 @@ export const Phone = ({ commentOpen, phones }) => {
         <Phones
           className={commentOpen ? "" : "phones"}
           phones={phones?.map(
-            ({ id_phone_code, phone, code }) =>
-              `${
+            ({ id_phone_code, phone, code, telegram, viber }) => ({
+              phone: `${
                 code ?? data?.find(({ id }) => id === id_phone_code)?.code ?? ""
-              }${phone}`
+              }${phone}`,
+              telegram,
+              viber,
+            })
           )}
         />
       ) : (

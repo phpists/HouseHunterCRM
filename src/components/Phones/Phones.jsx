@@ -3,6 +3,7 @@ import { Phone } from "./Phone";
 import { Arrow } from "./Arrow";
 import { useState } from "react";
 import { Dropdown } from "./Dropdown";
+import { Socmedia } from "../Socmedia";
 
 export const Phones = ({
   top,
@@ -10,39 +11,59 @@ export const Phones = ({
   classNameContent,
   phones,
   notHideArrow,
-  onChangeActive,
-  activePhone = 0,
 }) => {
   const [open, setOpen] = useState(false);
+  const [activePhone, setActivePhone] = useState(0);
 
   const handleSelectPhone = (index) => {
     setOpen(false);
-    onChangeActive && onChangeActive(index);
+    setActivePhone(index);
   };
 
   return (
-    <StyledPhones open={open} className={`${className}`}>
-      <Phone
-        showOnHoverIcon
-        className={classNameContent}
-        phone={phones?.length > 0 ? phones[activePhone] : ""}
-        isLessThenOne={phones?.length <= 1}
-      />
-      {phones?.length <= 1 && !notHideArrow ? null : (
-        <Arrow
-          visible={phones?.length > 1}
-          open={open}
-          onToggleOpen={() => (phones?.length > 1 ? setOpen(!open) : null)}
+    <div className="flex items-center">
+      <div className="socmedias mr-1">
+        <Socmedia
+          type="viber"
+          active={phones?.[activePhone]?.viber === "1"}
+          onClick={() => null}
+          className="viber-card"
+          open
+          phone={`${phones?.[activePhone]?.phone}`}
+          readOnly
         />
-      )}
-      <Dropdown
-        open={open}
-        onSelect={handleSelectPhone}
-        top={top}
-        options={phones ?? []}
-        activePhone={activePhone}
-      />
-    </StyledPhones>
+        <Socmedia
+          type="telegram"
+          active={phones?.[activePhone]?.telegram === "1"}
+          onClick={() => null}
+          open
+          phone={`${phones?.[activePhone]?.phone}`}
+          readOnly
+        />
+      </div>
+      <StyledPhones open={open} className={`${className}`}>
+        <Phone
+          showOnHoverIcon
+          className={classNameContent}
+          phone={phones?.length > 0 ? phones?.[activePhone]?.phone : ""}
+          isLessThenOne={phones?.length <= 1}
+        />
+        {phones?.length <= 1 && !notHideArrow ? null : (
+          <Arrow
+            visible={phones?.length > 1}
+            open={open}
+            onToggleOpen={() => (phones?.length > 1 ? setOpen(!open) : null)}
+          />
+        )}
+        <Dropdown
+          open={open}
+          onSelect={handleSelectPhone}
+          top={top}
+          options={phones ?? []}
+          activePhone={activePhone}
+        />
+      </StyledPhones>
+    </div>
   );
 };
 

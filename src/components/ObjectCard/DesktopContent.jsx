@@ -5,6 +5,7 @@ import { Info } from "./Info/Info";
 import { Tags } from "./Tags/Tags";
 import { Contacts } from "./Contacts/Contacts";
 import { ShowMore } from "./ShowMore/ShowMore";
+import { useState } from "react";
 
 export const DesktopContent = ({
   data,
@@ -15,52 +16,55 @@ export const DesktopContent = ({
   onAddToSelection,
   onOpenTagsHistory,
   onOpenPriceHistory,
-  currency,
-  onChangeCurrency,
   isHideObjects,
   onOpenCommetHistory,
   onDelete,
   searchTag,
-}) => (
-  <StyledDesktopContent className="flex items-center justify-between">
-    <Slider
-      photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)}
-      data={data}
-    />
-    <MainInfo
-      data={data}
-      currency={currency}
-      onChangeCurrency={onChangeCurrency}
-    />
-    <Info className="desktop-item" data={data} />
-    <Tags data={data} />
-    <Contacts className="desktop-item" data={data} />
-    <ShowMore
-      clientId={data?.id_client}
-      id={data?.id}
-      onToggleFavoriteStatus={onToggleFavoriteStatus}
-      isFavorite={data?.favorite}
-      onFindSimilar={onFindSimilar}
-      isEdit={isEdit}
-      onHide={onHide}
-      onAddToSelection={onAddToSelection}
-      onOpenTagsHistory={onOpenTagsHistory}
-      onOpenPriceHistory={onOpenPriceHistory}
-      isAccess={data?.acsses_change}
-      link={data?.link}
-      isHideObjects={isHideObjects}
-      onOpenCommetHistory={onOpenCommetHistory}
-      onDelete={onDelete}
-      isStreetBase={data?.obj_street_base === "1"}
-      searchTag={searchTag}
-    />
-    <div className="mobile-footer w-full">
-      <Info data={data} />
-      <Contacts data={data} />
-    </div>
-  </StyledDesktopContent>
-);
+}) => {
+  const [currency, setCurrency] = useState(1);
 
+  const onChangeCurrency = (val) => setCurrency(val);
+
+  return (
+    <StyledDesktopContent className="flex items-center justify-between">
+      <Slider
+        photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)}
+        data={data}
+      />
+      <MainInfo
+        data={data}
+        currency={currency}
+        onChangeCurrency={onChangeCurrency}
+      />
+      <Info className="desktop-item" data={data} />
+      <Tags data={data} />
+      <Contacts className="desktop-item" data={data} />
+      <ShowMore
+        clientId={data?.id_client}
+        id={data?.id}
+        onToggleFavoriteStatus={onToggleFavoriteStatus}
+        isFavorite={data?.favorite}
+        onFindSimilar={onFindSimilar}
+        isEdit={isEdit}
+        onHide={onHide}
+        onAddToSelection={onAddToSelection}
+        onOpenTagsHistory={onOpenTagsHistory}
+        onOpenPriceHistory={onOpenPriceHistory}
+        isAccess={data?.acsses_change}
+        link={data?.link}
+        isHideObjects={isHideObjects}
+        onOpenCommetHistory={onOpenCommetHistory}
+        onDelete={onDelete}
+        isStreetBase={data?.obj_street_base === "1"}
+        searchTag={searchTag}
+      />
+      <div className="mobile-footer w-full">
+        <Info data={data} />
+        <Contacts data={data} />
+      </div>
+    </StyledDesktopContent>
+  );
+};
 const StyledDesktopContent = styled.div`
   height: max-content;
   display: grid;

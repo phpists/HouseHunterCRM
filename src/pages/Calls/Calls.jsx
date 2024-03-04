@@ -7,7 +7,7 @@ import {
   useLazyGetCallsQuery,
   useLazySetStatusCallQuery,
 } from "../../store/calls/calls.api";
-import { handleResponse } from "../../utilits";
+import { checkIsArray, handleResponse } from "../../utilits";
 import { useActions } from "../../hooks/actions";
 import cogoToast from "cogo-toast";
 import { useLocation } from "react-router-dom";
@@ -34,6 +34,15 @@ const Calls = () => {
   const [filters, setFilters] = useState(INIT_FILTERS);
   const isFirstLoad = useRef(true);
   const [isDefaultFilterSet, setIsDefaultFilterSet] = useState(false);
+  const currentPage = useRef(0);
+  const isLoading = useRef(false);
+  const listRef = useRef();
+  const [isAllPages, setIsAllPages] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const isFilter = useRef(false);
+  const allCountRef = useRef(0);
+  const [allCount, setAllCount] = useState(0);
+  const firstThousand = useRef([]);
 
   const handleChangeFilter = (fieldName, value) => {
     setFilters({ ...filters, [fieldName]: value });
@@ -46,17 +55,80 @@ const Calls = () => {
         : [...selected, index]
     );
 
-  const handleGetCalls = (isApplyFilter) => {
-    getCalls({ filters: isApplyFilter ? filters : undefined }).then((resp) => {
-      setData(resp?.data?.data ?? null);
-      saveCallsCount(resp?.data?.all_item ?? 0);
-    });
+  const handleGetCalls = (isReset) => {
+    if ((!isLoading.current && !isAllPages) || isReset) {
+      if (isReset) {
+        listRef.current.scroll({ top: 0 });
+        setSelected([]);
+        currentPage.current = 0;
+        setIsAllPages(false);
+      }
+      isLoading.current = true;
+      setLoading(true);
+      getCalls({
+        filters: isFilter.current ? filters : undefined,
+        current_page: currentPage.current,
+      }).then((resp) => {
+        isLoading.current = false;
+        setLoading(false);
+        handleResponse(
+          resp,
+          () => {
+            setData(
+              isReset
+                ? resp?.data?.data
+                : [...checkIsArray(data), ...resp?.data?.data]
+            );
+            saveCallsCount(resp?.data?.all_item ?? 0);
+            allCountRef.current = resp?.data?.all_item;
+            setAllCount(resp?.data?.all_item);
+            firstThousand.current = resp?.data?.first_1000;
+          },
+          () => {
+            setIsAllPages(true);
+            if (isReset) {
+              setData([]);
+              saveCallsCount(0);
+              allCountRef.current = 0;
+              setAllCount(0);
+            }
+          }
+        );
+      });
+    }
   };
+
+  const handleScroll = () => {
+    if (
+      listRef.current.offsetHeight + listRef.current.scrollTop <=
+        listRef.current.scrollHeight - 200 ||
+      isLoading.current
+    ) {
+      return;
+    }
+    currentPage.current += 1;
+    handleGetCalls();
+  };
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.addEventListener("scroll", handleScroll);
+      return () =>
+        listRef.current &&
+        // eslint-disable-next-line
+        listRef.current.removeEventListener("scroll", handleScroll);
+    }
+    // eslint-disable-next-line
+  }, [listRef, isLoading.current, isAllPages, data]);
 
   const handleSetCallStatus = (id_call, status) => {
     setCallStatus({ id_call, status }).then((resp) =>
       handleResponse(resp, () => {
         setData(data?.filter((call) => call.id !== id_call));
+        const updatedCount = allCountRef.current - 1;
+        saveCallsCount(updatedCount);
+        allCountRef.current = updatedCount;
+        setAllCount(updatedCount);
         cogoToast.success("Статус успішно змінено!", {
           hideAfter: 3,
           position: "top-right",
@@ -84,8 +156,10 @@ const Calls = () => {
   };
 
   const handleApplyFilter = (isApply) => {
-    handleGetCalls(isApply);
+    currentPage.current = 0;
+    isFilter.current = isApply;
     !isApply && setFilters(INIT_FILTERS);
+    handleGetCalls(true);
   };
 
   const handleSetCallsStatus = (status) => {
@@ -105,6 +179,10 @@ const Calls = () => {
       )
     ).then((resp) => {
       setData(data?.filter((call) => !selected.find((s) => s === call?.id)));
+      const updatedCount = allCountRef.current - selected;
+      saveCallsCount(updatedCount);
+      allCountRef.current = updatedCount;
+      setAllCount(updatedCount);
     });
   };
 
@@ -114,7 +192,7 @@ const Calls = () => {
       setFilters({ view: "0" });
       setIsDefaultFilterSet(true);
     } else {
-      handleGetCalls(false);
+      handleGetCalls(true);
       setIsDefaultFilterSet(true);
     } // eslint-disable-next-line
   }, [location.search]);
@@ -123,14 +201,13 @@ const Calls = () => {
     if (isFirstLoad.current && isDefaultFilterSet) {
       const filterApply = location?.search?.split("=")[0];
       isFirstLoad.current = false;
-      handleGetCalls(!!filterApply);
+      isFilter.current = !!filterApply;
+      handleGetCalls(true);
     } // eslint-disable-next-line
   }, [filters, isDefaultFilterSet]);
 
   const handleSelectAll = (isReset, count) => {
-    const callsIds = data?.map((call) => call.id)?.slice(0, count ?? undefined);
-
-    setSelected(isReset ? [] : callsIds);
+    setSelected(isReset ? [] : firstThousand.current);
   };
 
   return (
@@ -142,7 +219,7 @@ const Calls = () => {
         onApplyFilter={handleApplyFilter}
         onSetCallsStatus={handleSetCallsStatus}
         onSelectAll={handleSelectAll}
-        allCount={data?.length}
+        allCount={allCount}
       />
       <List
         selected={selected}
@@ -150,6 +227,8 @@ const Calls = () => {
         data={data ?? []}
         onSetStatus={handleSetCallStatus}
         onAddComment={handleAddComment}
+        listRef={listRef}
+        loading={loading}
       />
     </StyledCalls>
   );

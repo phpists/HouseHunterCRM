@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ReactComponent as Icon } from "../assets/images/loader.svg";
 
 export const Loader = ({ white, className }) => (
-  <StyledLoader white={white.toString()} className={className}>
+  <StyledLoader white={white?.toString()} className={className}>
     <Icon />
   </StyledLoader>
 );

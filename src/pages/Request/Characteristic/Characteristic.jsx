@@ -5,6 +5,7 @@ import { ProfileField } from "../../../components/ProfileField";
 import { handleFormatFields } from "../../../utilits";
 import { useGetRubricsQuery } from "../../../store/requests/requests.api";
 import { useEffect, useRef } from "react";
+import { Deadline } from "./Deadline";
 
 export const Characteristic = ({
   data,
@@ -68,12 +69,9 @@ export const Characteristic = ({
       className="request-card  request-characteristic-wrapper"
       ref={contentRef}
     >
-      <ProfileField
-        label="Дата дедлайну"
-        placeholder="Введіть дату дедлайну"
+      <Deadline
         value={data?.general_group?.dt_deadline}
         onChange={handleChangeDeadline}
-        type="date"
         error={
           !!errors
             .find((e) => e.id === "general")

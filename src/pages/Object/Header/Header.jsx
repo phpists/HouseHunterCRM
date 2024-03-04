@@ -14,6 +14,7 @@ import {
   useLazyDeleteObjectQuery,
 } from "../../../store/objects/objects.api";
 import { useGetAccessQuery } from "../../../store/auth/auth.api";
+import { ToClientButton } from "./ToClientButton";
 
 export const Header = ({ onSave, favorite, onToggleFavorite, loading }) => {
   const { id } = useParams();
@@ -63,6 +64,7 @@ export const Header = ({ onSave, favorite, onToggleFavorite, loading }) => {
         <div className="btns-header flex items-center">
           <SaveButton onClick={onSave} loading={loading} />
           {/* <SendClientButton /> */}
+          <ToClientButton />
           <IconButton
             Icon={StarIcon}
             className="icon-btn"

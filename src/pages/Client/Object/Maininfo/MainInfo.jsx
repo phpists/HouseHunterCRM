@@ -93,7 +93,8 @@ export const Maininfo = ({
               ? Number(data?.price_min ?? 0) === 0
                 ? "Не вказана"
                 : `${fortmatNumber(Number(data?.price_min ?? 0))}$`
-              : Number(data?.price_max ?? 0) === 0
+              : Number(data?.price_max ?? 0) === 0 &&
+                Number(data?.price_min ?? 0) === 0
               ? "Не вказана"
               : `${fortmatNumber(
                   Number(data?.price_min ?? 0)
@@ -130,12 +131,18 @@ export const Maininfo = ({
           <Tag
             Icon={ExpandedIcon}
             text={
-              <>
-                {data?.area_total
-                  ? data?.area_total
-                  : data?.area_plot_sotka ?? 0}{" "}
-                м<sup>2</sup>
-              </>
+              isObject ? (
+                <>
+                  {data?.area_total
+                    ? data?.area_total
+                    : data?.area_plot_sotka ?? 0}
+                  м<sup>2</sup>
+                </>
+              ) : (
+                <>
+                  {data?.area_total_min}-{data?.area_total_max}м<sup>2</sup>
+                </>
+              )
             }
           />
         )}

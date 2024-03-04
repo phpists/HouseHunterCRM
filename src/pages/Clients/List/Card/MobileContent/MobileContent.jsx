@@ -37,7 +37,11 @@ export const MobileContent = ({
             <Phones
               className="mobile-phones-wrapper"
               classNameContent="mobile-phones-content-wrapper"
-              phones={phones?.map(({ phone }) => phone)}
+              phones={phones?.map(({ phone, viber, telegram }) => ({
+                phone,
+                viber,
+                telegram,
+              }))}
             />
           </div>
           <PhoneInfo agent={agent} agentPhone={agentPhone} />
@@ -51,6 +55,7 @@ export const MobileContent = ({
           firstName={firstName}
           lastName={lastName}
           email={email}
+          className="commet-value"
         />
       </div>
     </div>
@@ -98,6 +103,12 @@ const StyledMobileContent = styled.div`
   .mobile-actions {
     display: none;
   }
+
+  .commet-value {
+    .value {
+      width: 130px;
+    }
+  }
   @media (min-width: 1400px) {
     display: none;
   }
@@ -124,7 +135,7 @@ const StyledMobileContent = styled.div`
       display: flex;
     }
     .mobile-phones-content-wrapper {
-      width: calc(100svw - 99px);
+      width: calc(100svw - 150px);
     }
   }
 `;

@@ -38,7 +38,7 @@ export const REQUEST_INIT = {
     tags_foreigners: "0",
     structure: "0",
     comment: "",
-    name: "test",
+    name: "",
   },
 };
 

@@ -231,7 +231,7 @@ const ObjectPage = () => {
             hideAfter: 3,
             position: "top-right",
           });
-          //   navigate(`/client/${clientId}`);
+          navigate(`/client/${clientId}`);
         });
       });
     } else {

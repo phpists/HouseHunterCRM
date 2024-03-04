@@ -43,13 +43,13 @@ export const Input = ({
           loading={loading}
         />
       )}
-      <input
+      <textarea
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Повідомлення"
         disabled={loading}
-        onKeyDown={(e) => e?.keyCode === 13 && onSend()}
+        onKeyDown={(e) => e?.keyCode === 13 && !e?.shiftKey && onSend()}
       />
       {!selectedMessage && (
         <>
@@ -83,9 +83,11 @@ const StyledInput = styled.div`
   letter-spacing: 0.3px;
   width: 100%;
   z-index: 2;
-  input {
+  textarea {
     width: 100%;
     padding-right: 10px;
+    resize: none;
+    height: 20px;
     &::placeholder {
       color: rgba(255, 255, 255, 0.5);
     }

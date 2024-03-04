@@ -57,7 +57,7 @@ export const Contacts = ({ className, data }) => {
 
 const StyledContacts = styled.div`
   height: max-content;
-  width: 200px;
+  width: 250px;
   overflow: auto;
   .show-client {
     padding: 5px 10px 6px;

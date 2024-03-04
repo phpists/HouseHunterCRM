@@ -14,7 +14,11 @@ export const Client = ({ firstName, lastName, idClient, phones, avatar }) => {
       />
       <Phones
         classNameContent="phones-wrapper"
-        phones={phones?.map(({ phone }) => phone)}
+        phones={phones?.map(({ phone, viber, telegram }) => ({
+          phone,
+          viber,
+          telegram,
+        }))}
       />
     </StyledClient>
   );
@@ -31,7 +35,12 @@ const StyledClient = styled.div`
     flex-direction: column;
     align-items: start;
     .phones-wrapper {
-      width: 100%;
+      width: calc(100svw - 180px);
+    }
+  }
+  @media (min-width: 700px) {
+    .phones-wrapper {
+      width: 200px;
     }
   }
   @media (min-width: 1400px) {
@@ -40,7 +49,7 @@ const StyledClient = styled.div`
     justify-content: space-between;
     width: 200px;
     .phones-wrapper {
-      width: 180px;
+      width: 130px;
     }
   }
   @media (min-width: 1500px) {

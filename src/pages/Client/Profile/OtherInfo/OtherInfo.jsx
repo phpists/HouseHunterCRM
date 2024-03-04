@@ -64,6 +64,12 @@ export const OtherInfo = ({
         onClose={() => setOpenView(false)}
         index={currentSlide}
         onIndexChange={(index) => setCurrentSlide(index)}
+        speed={() => 0}
+        easing={(type) =>
+          type === 2
+            ? "cubic-bezier(0.36, 0, 0.66, -0.56)"
+            : "cubic-bezier(0.34, 1.56, 0.64, 1)"
+        }
       />
       {!readOnly && <AddButton onAdd={handleAddPhoto} />}
       {photos?.length > 0

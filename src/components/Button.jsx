@@ -17,7 +17,7 @@ export const Button = ({
     disabled={disabled | loading}
   >
     {loading ? (
-      <Loader />
+      <Loader className="loader-btn" />
     ) : (
       <>
         <span>{title}</span>
@@ -67,5 +67,8 @@ const StyledButton = styled.button`
   &:active {
     background: #c3c3c3;
     border: 1px solid #c3c3c3;
+  }
+  .loader-btn {
+    width: 18px;
   }
 `;

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Comment } from "./Comment";
 import { Content } from "./Content";
+import { Name } from "./Name";
 
 export const Main = ({
   data,
@@ -37,6 +38,17 @@ export const Main = ({
     );
   };
 
+  const handleChangeName = (name) => {
+    onChangeField("general_group", { ...data?.general_group, name });
+    onChangeErrors(
+      errors?.map((er) =>
+        er.id === "general"
+          ? { ...er, errors: er.errors?.filter((e) => e !== "name") }
+          : er
+      )
+    );
+  };
+
   return (
     <div className="request-card  request-main-wrapper" ref={contentRef}>
       <Comment
@@ -46,6 +58,15 @@ export const Main = ({
           !!errors
             ?.find((er) => er?.id === "general")
             ?.errors?.find((e) => e === "comment")
+        }
+      />
+      <Name
+        value={data?.general_group?.name}
+        onChange={handleChangeName}
+        error={
+          !!errors
+            ?.find((er) => er?.id === "general")
+            ?.errors?.find((e) => e === "name")
         }
       />
       <Content

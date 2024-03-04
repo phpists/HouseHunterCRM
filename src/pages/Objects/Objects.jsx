@@ -37,6 +37,14 @@ const Objects = () => {
     //   only_my_obj: "0",
     //   only_my_structure: "0",
   };
+
+  const DEFAULT_FILTERS = {
+    company_object: {
+      show_only: "only_my",
+      actual: "1",
+    },
+  };
+
   const [filters, setFilters] = useState(INIT_FILTERS);
   const [filtersFields, setFilterFields] = useState([]);
   const filterActive = useRef(!!id);
@@ -61,9 +69,14 @@ const Objects = () => {
   const handleChangeFilter = (field, value, isDataUpdate) => {
     if (isDataUpdate) {
       setFilters(value);
+      localStorage.setItem("objectsLastFilters", JSON.stringify(value));
     } else {
       const updatedFilters = { ...filters, [field]: value };
       setFilters(updatedFilters);
+      localStorage.setItem(
+        "objectsLastFilters",
+        JSON.stringify(updatedFilters)
+      );
       if (field === "id_rubric") {
         handleGetRubricsFields(value);
       }
@@ -229,24 +242,23 @@ const Objects = () => {
       setFilters(INIT_FILTERS);
       filterActive.current = false;
       handleGetObjects(true);
+      localStorage.setItem(
+        "objectsLastFilters",
+        JSON.stringify(DEFAULT_FILTERS)
+      );
     }
     // eslint-disable-next-line
   }, [isFavorite]);
 
-  useEffect(() => {
-    localStorage.setItem("objectsLastFilters", JSON.stringify(filters));
-  }, [filters]);
-
   const handleApplyFilter = (isApply) => {
     filterActive.current = isApply;
     if (!isApply) {
-      setFilters({
-        company_object: {
-          show_only: "only_my",
-          actual: "1",
-        },
-      });
+      setFilters(DEFAULT_FILTERS);
       setFilterFields([]);
+      localStorage.setItem(
+        "objectsLastFilters",
+        JSON.stringify(DEFAULT_FILTERS)
+      );
     }
     currentPage.current = 0;
     setIsAllPages(false);
@@ -343,11 +355,30 @@ const Objects = () => {
     // eslint-disable-next-line
   }, [updateData]);
 
+  console.log(filters);
   useEffect(() => {
     filterActive.current = false;
     const filterApply = location?.search?.split("=")[0];
-    if (filterApply === "?showDeadline") {
-      setFilters({ showDeadline: "1" });
+    if (id) {
+      setFilters({
+        id_hash: id,
+        company_object: {
+          show_only: "company",
+          actual: "1",
+          given_objects: "1",
+          not_actual: "1",
+          overdue: "1",
+          show_street_base_company: "1",
+        },
+        street_base_object: {
+          sorting_id: "16",
+        },
+        mls_object: {},
+      });
+      filterActive.current = true;
+      setUpdateData(true);
+    } else if (filterApply === "?showDeadline") {
+      setFilters({ company_object: { overdue: "1", show_only: "only_my" } });
       filterActive.current = true;
       setUpdateData(true);
     } else if (filterApply === "?showLiquidity") {
@@ -370,27 +401,17 @@ const Objects = () => {
     } else if (filterApply === "?prev") {
       const lastFilters = localStorage.getItem("objectsLastFilters")
         ? checkIsJSON(localStorage.getItem("objectsLastFilters"))
-        : {
-            company_object: {
-              show_only: "only_my",
-              actual: "1",
-            },
-          };
+        : DEFAULT_FILTERS;
 
       setFilters(lastFilters);
       filterActive.current = true;
       setUpdateData(true);
     } else {
-      setFilters({
-        company_object: {
-          show_only: "only_my",
-          actual: "1",
-        },
-      });
+      setFilters(DEFAULT_FILTERS);
       filterActive.current = true;
       setUpdateData(true);
     }
-  }, [location.search]);
+  }, [location.search, id]);
 
   const handleScroll = () => {
     if (

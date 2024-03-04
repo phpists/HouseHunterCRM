@@ -226,7 +226,7 @@ export const ProfileField = ({
                     ""
               }${handleRemovePhoneMask(value)}`
             : value?.length > 0
-            ? value
+            ? value?.split("\r\n")?.map((v) => <div>{v}</div>)
             : type === "date"
             ? handleFormatDate(value, true)
             : placeholder}

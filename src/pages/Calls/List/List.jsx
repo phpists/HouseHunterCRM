@@ -7,6 +7,7 @@ import {
   useGetCompanyStructureLevelQuery,
 } from "../../../store/structure/structure.api";
 import { Empty } from "../../../components/Empty";
+import { Loader } from "../../../components/Loader";
 
 export const List = ({
   selected,
@@ -14,6 +15,8 @@ export const List = ({
   data,
   onSetStatus,
   onAddComment,
+  listRef,
+  loading,
 }) => {
   const [openMore, setOpenMore] = useState(null);
   const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
@@ -36,7 +39,7 @@ export const List = ({
   };
 
   return (
-    <StyledList className="hide-scroll">
+    <StyledList className="hide-scroll" ref={listRef}>
       {data?.length === 0 ? (
         <Empty />
       ) : (
@@ -75,6 +78,13 @@ export const List = ({
           )
         )
       )}
+      <div className="loader relative">
+        {loading && data?.length > 0 && (
+          <div className="loading-more">
+            <Loader white />
+          </div>
+        )}
+      </div>
     </StyledList>
   );
 };

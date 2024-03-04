@@ -1,5 +1,5 @@
 import styled from "styled-components";
-// import { Header } from "./Header/Header";
+import { Header } from "./Header/Header";
 import { Text } from "./Text";
 import { Footer } from "./Footer/Footer";
 
@@ -8,9 +8,9 @@ export const Info = ({ className, data }) => {
     <StyledInfo
       className={`flex flex-col justify-between hide clickable ${className}`}
     >
-      {/* <Header /> */}
+      <Header data={data} />
       <Text data={data} />
-      <Footer createDate={data?.dt_add} />
+      <Footer createDate={data?.dt_add} dateEdit={data?.dt_edit} />
     </StyledInfo>
   );
 };

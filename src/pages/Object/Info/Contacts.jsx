@@ -1,8 +1,6 @@
 import { styled } from "styled-components";
 import { Divider } from "./Divider";
 import { Phones } from "../../../components/Phones/Phones";
-import { Socmedia } from "../../../components/Socmedia";
-import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useLazyGetClientQuery } from "../../../store/clients/clients.api";
@@ -10,9 +8,6 @@ import { useLazyGetClientQuery } from "../../../store/clients/clients.api";
 export const Contacts = () => {
   const { clientId } = useParams();
   const [getClient, { data }] = useLazyGetClientQuery();
-  const [viber, setViber] = useState(false);
-  const [telegram, setTelegram] = useState(false);
-  const [activePhone, setActivePhone] = useState(0);
   const handleGetClient = () => getClient(clientId);
 
   useEffect(() => {
@@ -31,30 +26,15 @@ export const Contacts = () => {
         </div>
         <Divider />
         <div className="flex items-center">
-          <div className="socmedias">
-            <Socmedia
-              type="viber"
-              active={data?.data?.phone[activePhone]?.viber === "1"}
-              onClick={() => setViber(!viber)}
-              className="viber-card"
-              open
-              phone={`${data?.data?.phone[activePhone]?.code}${data?.data?.phone[activePhone]?.phone}`}
-            />
-            <Socmedia
-              type="telegram"
-              active={data?.data?.phone[activePhone]?.telegram === "1"}
-              onClick={() => setTelegram(!telegram)}
-              open
-              phone={`${data?.data?.phone[activePhone]?.code}${data?.data?.phone[activePhone]?.phone}`}
-            />
-          </div>
           <Phones
             top
             phones={data?.data?.phone?.map(
-              ({ code, phone }) => `${code}${phone}`
+              ({ code, phone, viber, telegram }) => ({
+                phone: `${code}${phone}`,
+                viber,
+                telegram,
+              })
             )}
-            onChangeActive={(index) => setActivePhone(index)}
-            activePhone={activePhone}
           />
         </div>
       </div>

@@ -26,12 +26,15 @@ export const ProfilleInfo = ({ onOpenInfo, data }) => {
           !data?.phone
             ? []
             : JSON.parse(data?.phone)?.map(
-                ({ id_phone_code, phone, code }) =>
-                  `${
+                ({ id_phone_code, phone, code, viber, telegram }) => ({
+                  phone: `${
                     code ??
                     phonesCodes?.find(({ id }) => id === id_phone_code)?.code ??
                     ""
-                  }${phone}`
+                  }${phone}`,
+                  viber,
+                  telegram,
+                })
               )
         }
       />
@@ -51,7 +54,7 @@ const StyledProfilleInfo = styled.div`
   .phones-wrapper {
     grid-template-columns: 1fr max-content !important;
     margin-bottom: 4px;
-    width: 100%;
+    width: calc(100% - 52px);
   }
   &:before {
     content: "";

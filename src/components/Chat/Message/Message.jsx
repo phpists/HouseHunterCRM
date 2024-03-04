@@ -64,7 +64,9 @@ export const Message = ({
         />
       )}
       <div className="message">
-        {text}
+        {text?.split("\r\n")?.map((t, i) => (
+          <div key={i}>{t}</div>
+        ))}
         {/* {first && "first"} {last && "last"} {between && "between"} */}
       </div>
       <MessageFooter date={date} isOwner={!!isOwner} isSelected={isSelected} />
