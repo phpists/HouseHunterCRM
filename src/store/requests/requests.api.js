@@ -17,12 +17,17 @@ export const requests = createApi({
         url: "",
         method: "POST",
         headers: headers(),
-        body: handleToFormData({
-          action: "add",
-          mod: "requests",
-          fields,
-          general_group,
-        }),
+        body: handleToFormData(
+          {
+            action: "add",
+            mod: "requests",
+            fields,
+            general_group,
+          },
+          null,
+          [],
+          true
+        ),
       }),
     }),
     getRubrics: build.query({

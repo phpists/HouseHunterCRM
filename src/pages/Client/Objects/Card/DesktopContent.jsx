@@ -9,6 +9,7 @@ import { MoreButton } from "../../../../components/MoreButton/MoreButton";
 import { handleFormatDate } from "../../../../utilits";
 import { Label } from "./Label";
 import { useParams } from "react-router-dom";
+import { ReactComponent as ArrowIcon } from "../../../../assets/images/clients-arrow.svg";
 
 export const DesktopContent = ({
   date,
@@ -60,6 +61,7 @@ export const DesktopContent = ({
             }
             noDelete={!isDelete}
           />
+          <ArrowIcon className="arrow-more" />
         </div>
       </div>
     </StyledDesktopContent>
@@ -88,15 +90,15 @@ const StyledDesktopContent = styled.div`
     opacity: 1;
     margin-left: 12px;
     transform: translateX(0px);
-    button {
+    /* button {
       border: none;
       width: 18px;
       height: 18px;
       background: none;
-    }
-    .divider {
+    } */
+    /* .divider {
       display: none;
-    }
+    } */
   }
   .location {
     max-width: 300px;

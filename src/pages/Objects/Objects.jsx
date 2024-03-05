@@ -355,7 +355,6 @@ const Objects = () => {
     // eslint-disable-next-line
   }, [updateData]);
 
-  console.log(filters);
   useEffect(() => {
     filterActive.current = false;
     const filterApply = location?.search?.split("=")[0];

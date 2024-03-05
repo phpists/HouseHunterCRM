@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Loader } from "../../components/Loader";
 import { ObjectCommentHistory } from "../../components/ObjectCommentHistory/ObjectCommentHistory";
 import { AddToSelections } from "../Objects/AddToSelections";
+import { Client } from "./Client/Client";
 
 export const List = ({
   data,
@@ -20,6 +21,8 @@ export const List = ({
   loading,
   isHideObjects,
   actionLoading,
+  clientData,
+  showClient,
 }) => {
   const { data: accessData } = useGetAccessQuery();
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
@@ -47,6 +50,7 @@ export const List = ({
         />
       )}
       <StyledList className="hide-scroll" ref={innerRef}>
+        {clientData && showClient ? <Client clientData={clientData} /> : null}
         {data?.length === 0 || actionLoading ? (
           <Empty loading={loading || actionLoading} />
         ) : (

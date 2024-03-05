@@ -13,9 +13,9 @@ export const PositionCard = ({
     <div className="title">{title}</div>
     <div className="value">
       <input
-        placeholder="0"
-        value={isNaN(value) ? "0" : Number(value).toString()}
+        value={value ? Number(value).toString() : undefined}
         type="number"
+        placeholder=""
         onChange={(e) =>
           Number(e.target.value) >= 0 ? onChange(Number(e.target.value)) : null
         }

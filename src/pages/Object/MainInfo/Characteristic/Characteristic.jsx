@@ -75,6 +75,7 @@ export const Characteristic = ({ data, onChangeField, fields, errors }) => {
             className="mb-2"
             hideArrowDefault
             error={!!errors.find((e) => e === "id_rubric")}
+            isSearch
           />
           <Select
             value={data?.id_location}

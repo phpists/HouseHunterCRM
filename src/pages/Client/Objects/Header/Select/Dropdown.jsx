@@ -2,7 +2,6 @@ import { styled } from "styled-components";
 
 const OPTIONS = [
   { title: "Додати в улюблене", value: "favorite" },
-  { title: "Передати", value: "1" },
   { title: "Видалити", value: "delete" },
 ];
 

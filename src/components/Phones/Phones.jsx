@@ -21,7 +21,7 @@ export const Phones = ({
   };
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center shrink-0">
       <div className="socmedias mr-1">
         <Socmedia
           type="viber"

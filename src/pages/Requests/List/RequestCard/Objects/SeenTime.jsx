@@ -1,10 +1,13 @@
 import styled from "styled-components";
 import clockIcon from "../../../../../assets/images/clock.svg";
+import { handleFormatDate } from "../../../../../utilits";
 
-export const SeenTime = () => (
+export const SeenTime = ({ date }) => (
   <StyledSeenTime className="flex items-center clickable">
     <img src={clockIcon} alt="" />
-    переглянуто 9 хв тому
+    {!date || date === "0"
+      ? "не переглянуто"
+      : `переглянуто ${handleFormatDate(Number(date) * 1000, true)}`}
   </StyledSeenTime>
 );
 

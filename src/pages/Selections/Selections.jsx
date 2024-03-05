@@ -43,6 +43,8 @@ const Selections = () => {
   const [loading, setLoading] = useState(false);
   //   const firstThousend = useRef(null);
   const [actionLoading, setActionLoading] = useState(false);
+  const [clientData, setClientData] = useState(null);
+  const [showClient, setShowClient] = useState(true);
 
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => {
@@ -108,6 +110,7 @@ const Selections = () => {
       getSelections(sendData).then((resp) => {
         isLoading.current = false;
         setLoading(false);
+        setClientData(resp?.data?.client_info ?? null);
         handleResponse(
           resp,
           () => {
@@ -286,6 +289,8 @@ const Selections = () => {
         onToggleHidden={handleToggleHidden}
         showObjectHide={showObjectHide}
         onChangeActionLoading={(val) => setActionLoading(val)}
+        showClient={showClient}
+        onToggleShowClient={(val) => setShowClient(val)}
       />
       <List
         data={objects}
@@ -297,6 +302,8 @@ const Selections = () => {
         loading={loading}
         isHideObjects={showObjectHide}
         actionLoading={actionLoading}
+        clientData={clientData}
+        showClient={showClient}
         // onFavorite={handleToggleFavoriteStatus}
       />
     </StyledSelections>

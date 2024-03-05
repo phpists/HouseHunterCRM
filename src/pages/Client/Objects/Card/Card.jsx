@@ -5,6 +5,7 @@ import { useLazyAddToFavoriteQuery } from "../../../../store/requests/requests.a
 import { handleResponse } from "../../../../utilits";
 import cogoToast from "cogo-toast";
 import { useLazyAddToFavoritesQuery } from "../../../../store/objects/objects.api";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const Card = ({
   selected,
@@ -23,15 +24,23 @@ export const Card = ({
   isEdit,
   isDelete,
 }) => {
+  const { id: clientId } = useParams();
   const [addRequestToFavorites] = useLazyAddToFavoriteQuery();
   const [addObjectToFavorites] = useLazyAddToFavoritesQuery();
+  const navigate = useNavigate();
 
   const handleClick = (e) => {
-    if (e.target.classList.contains("openInfo")) {
-      onSelect();
-      if (window.innerWidth <= 1400) {
-        onOpenInfo();
-      }
+    onSelect();
+    if (window.innerWidth <= 1400) {
+      onOpenInfo();
+    }
+    if (e.target.classList.contains("arrow-more") && isEdit) {
+      const url = !isEdit
+        ? null
+        : isObject
+        ? `/edit-object/${clientId}/${id}`
+        : `/edit-request/${clientId}/${id}`;
+      url && navigate(url);
     } else if (!e.target.classList.contains("noClickable")) {
       onSelectItem();
     }
@@ -98,8 +107,22 @@ const StyledCard = styled.div`
   margin-bottom: 10px;
   transition: all 0.3s;
   cursor: pointer;
+  .arrow-more {
+    transform: rotate(-45deg);
+    opacity: 0.4;
+    transition: all 0.3s;
+    width: 24px;
+    height: 24px;
+    path {
+      fill: #fff;
+    }
+  }
   &:hover {
     background: #484848;
+    .arrow-more {
+      opacity: 1;
+      transform: rotate(0deg);
+    }
   }
 
   @media (max-width: 700px) {

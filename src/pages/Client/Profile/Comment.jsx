@@ -21,4 +21,9 @@ const StyledComment = styled.div`
   border-radius: 9px;
   background: rgba(255, 255, 255, 0.2);
   margin-bottom: 18px;
+  .value {
+    word-break: break-all;
+    max-width: 200px;
+    white-space: normal;
+  }
 `;

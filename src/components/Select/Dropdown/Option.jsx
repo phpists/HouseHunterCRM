@@ -19,6 +19,7 @@ const StyledOption = styled.div`
   font-weight: 200;
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
+  white-space: pre-line;
   span {
     opacity: 0;
     transform: translateX(-10px);

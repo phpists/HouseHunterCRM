@@ -17,6 +17,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { checkIsJSON, handleCheckFields, handleResponse } from "../../utilits";
 import { useGetCommentsToFieldsQuery } from "../../store/objects/objects.api";
 import { Base } from "../../components/Base/Base";
+import { Contacts } from "./Contacts";
 
 export const REQUEST_INIT = {
   fields: [],
@@ -229,11 +230,31 @@ const Request = () => {
     );
   };
 
+  const handleFillEmptyRangeFields = (sendData, fieldsData) => {
+    return sendData.map((field) => {
+      let filledFilleds = [];
+      const fileds =
+        fieldsData.find((f) => f.id === field.id_rubric)?.fields ?? [];
+
+      fileds
+        ?.filter((f) => f.field.includes("_min") && !f.field.includes("_min_"))
+        .forEach((f) => {
+          filledFilleds.push([[f.field], "0"]);
+        });
+
+      return {
+        ...Object.fromEntries(filledFilleds),
+        ...field,
+      };
+    });
+  };
+
   const handleCreateRequest = () => {
     if (handleCheckAllFields()) {
       setLoading(true);
       createRequest({
         ...data,
+        fields: handleFillEmptyRangeFields(data.fields, fieldsData.current),
         general_group: {
           ...data.general_group,
           id_client: clientId,
@@ -510,7 +531,9 @@ const Request = () => {
             streetBaseOpen={data?.general_group?.show_street_base === "1"}
             mlsBaseOpen={data?.general_group?.mls === "1"}
             errors={errors?.find((er) => er?.id === "general")?.errors ?? []}
+            className="request-base-wrapper"
           />
+          <Contacts />
         </div>
       </div>
     </StyledRequest>
@@ -541,6 +564,16 @@ const StyledRequest = styled.div`
       &::-webkit-scrollbar-thumb {
         background: #fff;
       }
+    }
+  }
+  .request-base-wrapper {
+    height: calc(100svh - 428px) !important;
+    margin-bottom: 15px;
+  }
+  @media (max-width: 1300px) {
+    .request-base-wrapper {
+      height: calc(100svh - 480px) !important;
+      margin-bottom: 15px;
     }
   }
   @media (max-width: 1250px) {

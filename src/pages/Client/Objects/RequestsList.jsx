@@ -182,7 +182,7 @@ export const RequestsList = ({
                   )}
                   title={infoField?.rubric}
                   location={handleGetLocation(infoField?.location)}
-                  price={infoField?.price_min}
+                  price={infoField?.price_max}
                   id={id}
                   favorite={c[1]?.General_field_group?.favorite}
                   onChangeFavorite={() => handleToggleFavoriteStatus(id)}

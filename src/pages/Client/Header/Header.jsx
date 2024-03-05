@@ -16,6 +16,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import cogoToast from "cogo-toast";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
 import { useGetAccessQuery } from "../../../store/auth/auth.api";
+import { SendModal } from "../../Clients/SendModal";
 
 export const Header = ({ favorite }) => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ export const Header = ({ favorite }) => {
   const { data: accessData } = useGetAccessQuery();
   const [addClientToFavorite] = useLazyAddClientToFavoriteQuery();
   const [status, setStatus] = useState(false);
+  const [sendClient, setSendClient] = useState(null);
 
   const handleDeleteClient = () => {
     deleteClient({ id_client: [id] }).then((resp) => {
@@ -54,8 +56,13 @@ export const Header = ({ favorite }) => {
     setStatus(favorite);
   }, [favorite]);
 
+  const handleSuccessSend = () => {
+    navigate("/clients");
+    setSendClient(null);
+  };
+
   return (
-    <StyledHeader className="flex items-center justify-between">
+    <>
       {deleteModal && (
         <Confirm
           title="Видалити клієнта?"
@@ -63,41 +70,50 @@ export const Header = ({ favorite }) => {
           onSubmit={handleDeleteClient}
         />
       )}
-      <div
-        className="flex items-center cursor-pointer"
-        onClick={() => navigate("/clients")}
-      >
-        <BackButton />
-        <Title />
-      </div>
-      <div className="flex items-center">
-        {/* <ActionButton
-          title="Поставити задачу"
-          onClick={null}
-          className="mr-2.5 icon-btn"
+      {sendClient ? (
+        <SendModal
+          onSendSuccess={handleSuccessSend}
+          onClose={() => setSendClient(null)}
+          clients={[sendClient]}
         />
-        <ActionButton
-          title="Передати кліента"
-          smallTitle="Передати"
-          onClick={null}
-          className="icon-btn send-client-btn"
-        /> */}
-        {/* <Divider /> */}
-        <IconButton
-          Icon={StarIcon}
-          className="mr-2.5 icon-btn"
-          onClick={handleAddClientToFavorite}
-          active={status}
-        />
-        {handleCheckAccess(accessData, "clients", "delete") ? (
-          <IconButton
-            Icon={RemoveIcon}
-            className="remove-btn icon-btn"
-            onClick={() => setDeleteModal(true)}
+      ) : null}
+      <StyledHeader className="flex items-center justify-between">
+        <div
+          className="flex items-center cursor-pointer"
+          onClick={() => navigate("/clients")}
+        >
+          <BackButton />
+          <Title />
+        </div>
+        <div className="flex items-center">
+          {/* <ActionButton
+      title="Поставити задачу"
+      onClick={null}
+      className="mr-2.5 icon-btn"
+    /> */}
+          <ActionButton
+            title="Передати кліента"
+            smallTitle="Передати"
+            onClick={() => setSendClient(id)}
+            className="mr-2.5 icon-btn send-client-btn"
           />
-        ) : null}
-      </div>
-    </StyledHeader>
+          {/* <Divider /> */}
+          <IconButton
+            Icon={StarIcon}
+            className="mr-2.5 icon-btn"
+            onClick={handleAddClientToFavorite}
+            active={status}
+          />
+          {handleCheckAccess(accessData, "clients", "delete") ? (
+            <IconButton
+              Icon={RemoveIcon}
+              className="remove-btn icon-btn"
+              onClick={() => setDeleteModal(true)}
+            />
+          ) : null}
+        </div>
+      </StyledHeader>
+    </>
   );
 };
 

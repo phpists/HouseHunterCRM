@@ -146,10 +146,8 @@ export const SelectTags = ({
             setIsActive(false);
           }}
           onWheel={() => {
-            if (closeOnScroll) {
-              setOpen(false);
-              setIsActive(false);
-            }
+            setOpen(false);
+            setIsActive(false);
           }}
         ></div>
       )}

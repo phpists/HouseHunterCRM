@@ -85,4 +85,11 @@ const StyledCard = styled.div`
     background: #484848;
   }
   ${({ selected }) => selected && "border: 1.4px solid #FFF;"}
+  .commet-value, .desktop-comment {
+    textarea {
+      white-space: normal;
+      max-height: 150px !important;
+      overflow: visible;
+    }
+  }
 `;

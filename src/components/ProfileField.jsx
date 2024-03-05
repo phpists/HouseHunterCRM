@@ -236,7 +236,7 @@ export const ProfileField = ({
         <>
           <div className="label">{label}</div>
           <div className="label label-hover">
-            {readOnly ? label : "Змінити"}
+            {readOnly || active ? label : "Змінити"}
           </div>
         </>
       )}

@@ -11,6 +11,7 @@ import cogoToast from "cogo-toast";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { AddToSelections } from "../../Objects/AddToSelections";
+import { ClientButton } from "./ClientButton";
 
 export const Header = ({
   onRefresh,
@@ -27,6 +28,8 @@ export const Header = ({
   onToggleHidden,
   showObjectHide,
   onChangeActionLoading,
+  showClient,
+  onToggleShowClient,
 }) => {
   const { id } = useParams();
   const [hideObject] = useLazyHideObjectFromSelectionsQuery();
@@ -61,6 +64,10 @@ export const Header = ({
       <div className="main-header-content-wrapper flex items-center justify-between">
         <Selected selectedCount={selectedCount} />
         <div className="main-header-content-btns flex items-center">
+          <ClientButton
+            active={showClient}
+            onClick={() => onToggleShowClient(!showClient)}
+          />
           <div className="btns flex items-center">
             <ShowButton
               active={showObjectHide === "1"}
@@ -124,7 +131,7 @@ const StyledHeader = styled.div`
     display: flex;
     justify-content: end;
     align-items: center;
-    width: 255px;
+    margin-left: 20px;
   }
   .select-wrapper-mobile {
     display: none;

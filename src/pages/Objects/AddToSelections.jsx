@@ -49,13 +49,16 @@ export const AddToSelections = ({ onClose, idObject, onSuccess }) => {
           value={selectedRequest}
           onChange={(val) => setSelectedRequest(val)}
           options={
-            data?.data?.map(({ id, name }) => ({
-              title: name?.length === 0 ? "-" : name,
+            data?.data?.map(({ id, name, clients_name }) => ({
+              title: `${clients_name?.length === 0 ? "-" : clients_name} \n ${
+                name?.length === 0 ? "-" : name
+              }`,
               value: id,
             })) ?? []
           }
           placeholder="Оберіть підбірку"
           className="select-wrapper"
+          isSearch
         />
         <button
           className="submit-btn"

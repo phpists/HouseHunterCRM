@@ -22,6 +22,8 @@ const StlyedComment = styled.div`
   background: rgba(255, 255, 255, 0.1);
   margin-bottom: 15px;
   .value {
-    width: 95%;
+    width: 100%;
+    word-break: break-all;
+    white-space: normal;
   }
 `;

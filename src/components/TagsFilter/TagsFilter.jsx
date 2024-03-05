@@ -52,7 +52,7 @@ export const TagsFilter = ({
           {!isActive && tags?.length > 2 && (
             <Count count={tags?.slice(2).length} />
           )}
-          {!(tags?.length > 0 && !isActive) && !noEdit && (
+          {!noEdit && (
             <motion.input
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

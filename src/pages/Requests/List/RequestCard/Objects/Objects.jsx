@@ -12,7 +12,7 @@ export const Objects = ({ idGroup, onOpenChat, data }) => {
 
   return (
     <StyledObjects className="clickable">
-      {/* <SeenTime /> */}
+      <SeenTime date={data?.General_field_group?.dt_view_client} />
       <div className="flex items-center clickable">
         {/* <Photos /> */}
         <div className="clickable objects-info-wrapper">
@@ -35,10 +35,13 @@ const StyledObjects = styled.div`
   border-radius: 9px;
   background: #363636;
   /* opacity: 0.2; */
+  min-width: 190px;
   @media (max-width: 1399.9px) {
     width: 100%;
   }
-
+  @media (min-width: 1400px) {
+    min-width: 220px;
+  }
   .objects-info-wrapper {
     width: 100%;
   }

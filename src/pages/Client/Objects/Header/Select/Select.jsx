@@ -57,7 +57,7 @@ export const Select = ({
             <StyledSelect
               className="flex items-center"
               active={active}
-              onFocus={() => setActive(true)}
+              onFocus={() => selectedCount > 0 && setActive(true)}
               onBlur={() => setActive(false)}
             >
               <Title />

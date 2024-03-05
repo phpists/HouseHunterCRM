@@ -73,11 +73,11 @@ const StyledComment = styled.div`
   }
   @media (min-width: 1400px) {
     width: 15svw;
-    max-width: 500px;
+    max-width: 200px;
   }
   @media (min-width: 1750px) {
     width: 25svw;
-    max-width: 700px;
+    max-width: 600px;
   }
   @media (min-width: 1900px) {
     width: 30svw;

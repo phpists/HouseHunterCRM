@@ -126,7 +126,7 @@ const StyledRoleSelect = styled.div`
   width: 121px;
   cursor: pointer;
   text-align: left;
-  ${({ error }) => error && "border: 1px solid red;"}
+  ${({ error }) => error === "true" && "border: 1px solid red;"}
   .title {
     color: ${({ active }) => active ?? "#fff"};
     leading-trim: both;

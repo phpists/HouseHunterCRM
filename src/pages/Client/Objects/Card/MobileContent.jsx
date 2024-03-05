@@ -9,6 +9,7 @@ import { MoreButton } from "../../../../components/MoreButton/MoreButton";
 import { Label } from "./Label";
 import { Divider } from "./Divider";
 import { useParams } from "react-router-dom";
+import { ReactComponent as ArrowIcon } from "../../../../assets/images/clients-arrow.svg";
 
 export const MobileContent = ({
   date,
@@ -65,6 +66,7 @@ export const MobileContent = ({
             }
             noDelete={!isDelete}
           />
+          <ArrowIcon className="arrow-more" />
         </div>
       </div>
     </StyledMobileContent>
@@ -101,15 +103,6 @@ const StyledMobileContent = styled.div`
     opacity: 1;
     margin-left: 12px;
     transform: translateX(0px);
-    button {
-      border: none;
-      width: 18px;
-      height: 18px;
-      background: none;
-    }
-    .divider {
-      display: none;
-    }
   }
   .location {
     max-width: 300px;
