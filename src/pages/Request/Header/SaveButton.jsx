@@ -10,6 +10,8 @@ export const SaveButton = ({ className, onClick, loading }) => (
 const StyledSaveButton = styled.button`
   color: #fff;
   text-align: center;
+  display: flex;
+  justify-content: center;
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;

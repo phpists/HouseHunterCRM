@@ -10,6 +10,9 @@ import { Arrows } from "./Arrows";
 import { PhotoSlider } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import { Tags } from "./Tags";
+import prevIcon from "../../../assets/images/prev-arrow.svg";
+import nextIcon from "../../../assets/images/next-arrow.svg";
+import { Counter } from "../../../pages/Client/Object/Maininfo/Slider/Counter";
 
 const settings = {
   dots: false,
@@ -64,13 +67,9 @@ export const Slider = ({ photos, data }) => {
         empty={(photos?.length < 2).toString()}
       >
         <div className="relative slider">
-          {photos?.length > 1 && (
-            <Arrows
-              currentSlide={currentSlide}
-              total={photos.length}
-              onChangeSlide={handleChangeSlide}
-            />
-          )}
+          {photos?.length > 1 ? (
+            <Counter current={currentSlide} total={photos.length} />
+          ) : null}
           <Tags data={data} />
           {photos?.length === 0 ? (
             <Slide photo={noPhoto} active empty onOpen={() => null} />
@@ -80,9 +79,17 @@ export const Slider = ({ photos, data }) => {
               beforeChange={(currentSlide, nextSlide) =>
                 setCurrentSlide(1 + nextSlide)
               }
-              currentSlide={currentSlide}
-              prevArrow={<></>}
-              nextArrow={<></>}
+              //   currentSlide={currentSlide}
+              prevArrow={
+                <button>
+                  <img src={prevIcon} alt="" />
+                </button>
+              }
+              nextArrow={
+                <button>
+                  <img src={nextIcon} alt="" />
+                </button>
+              }
               ref={slickRef}
             >
               {photos
@@ -99,13 +106,6 @@ export const Slider = ({ photos, data }) => {
             </SlickSlider>
           )}
         </div>
-        {photos?.length > 1 ? (
-          <Photos
-            photos={photos?.map(({ name }, i) => name)}
-            onSelect={handleChangeSlide}
-            active={currentSlide}
-          />
-        ) : null}
       </StyledSlider>
     </>
   );
@@ -137,7 +137,22 @@ const StyledSlider = styled.div`
       display: none;
     }
   }
-
+  .slick-next,
+  .slick-prev {
+    width: 30px;
+    height: 30px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+  .slick-next {
+    right: 8px;
+    z-index: 4;
+  }
+  .slick-prev {
+    left: 8px;
+    z-index: 4;
+  }
   .slider-arrows {
     opacity: 0;
     visibility: hidden;
@@ -158,16 +173,13 @@ const StyledSlider = styled.div`
     flex-direction: row;
     margin: 0;
     .slider {
-      width: calc(
-        100svw - -4px - 8px - 44px - 24px -
-          ${({ empty }) => (empty === "true" ? 39 : 90)}px
-      );
+      width: calc(100svw - -4px - 8px - 44px - 24px - 39px);
     }
   }
 
   @media (min-width: 1400px) {
     .slider {
-      ${({ empty }) => empty === "true" && "width: 252px;"}
+      width: 252px;
     }
   }
 `;

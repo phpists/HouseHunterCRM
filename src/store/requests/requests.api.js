@@ -216,7 +216,8 @@ export const requests = createApi({
             general_group,
           },
           null,
-          ["price_min", "price_max"]
+          [],
+          true
         ),
       }),
     }),

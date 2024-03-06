@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import emptyAvatar from "../../../../../assets/images/small-avatar.svg";
+import { Id } from "./Id";
 
 export const Info = ({ firstName, lastName, idClient, avatar }) => (
   <StyledInfo
@@ -11,8 +12,8 @@ export const Info = ({ firstName, lastName, idClient, avatar }) => (
       <div className="name clickable">
         {firstName ?? ""} {lastName ?? ""}
       </div>
-      <div className="id clickable">
-        ID клієнта: {idClient?.substring(0, 20)}...
+      <div className=" clickable">
+        <Id id={idClient} />
       </div>
     </div>
   </StyledInfo>
@@ -37,26 +38,6 @@ const StyledInfo = styled.div`
     line-height: 118%; /* 16.52px */
     letter-spacing: 0.28px;
     margin-bottom: 2px;
-    @media (min-width: 1400px) {
-      width: 150px;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-    @media (min-width: 1500px) {
-      width: 200px;
-    }
-  }
-  .id {
-    color: #fff;
-    font-family: Overpass;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 200;
-    line-height: 118%; /* 14.16px */
-    letter-spacing: 0.24px;
-    opacity: 0.4;
-    white-space: nowrap;
     @media (min-width: 1400px) {
       width: 150px;
       text-overflow: ellipsis;

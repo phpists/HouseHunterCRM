@@ -295,6 +295,14 @@ const Clients = () => {
     setSelected([]);
   };
 
+  const handleChangeComment = (comment, id) => {
+    const updatedClients = dataRef.current?.map((c) =>
+      c?.id === id ? { ...c, comment } : c
+    );
+    dataRef.current = updatedClients;
+    setClients(updatedClients);
+  };
+
   return (
     <StyledClients>
       {sendClients?.length > 0 ? (
@@ -335,6 +343,7 @@ const Clients = () => {
         onAddToFavorite={handleAddClientToFavorite}
         onSend={handleSendClient}
         actionLoading={actionLoading}
+        onChangeComment={handleChangeComment}
       />
     </StyledClients>
   );

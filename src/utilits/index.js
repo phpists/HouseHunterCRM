@@ -45,7 +45,9 @@ export const handleToFormData = (
               });
             } else {
               const isValue =
-                fField[1] || notCleanFields?.find((l) => l === fField[0]);
+                fField[1] ||
+                notCleanFields?.find((l) => l === fField[0]) ||
+                allowEmptyValue;
               isValue &&
                 formData.append(`${field[0]}[${i}][${fField[0]}]`, fField[1]);
             }

@@ -7,6 +7,7 @@ import { useLazyAddObjectToSelectionsQuery } from "../../../../store/selections/
 import { useParams } from "react-router-dom";
 import { handleResponse } from "../../../../utilits";
 import cogoToast from "cogo-toast";
+import { SelectionsSelect } from "../../../../components/SelectionsSelect/SelectionsSelect";
 
 export const AddModal = ({ onClose, onRefresh, objectsIds }) => {
   const { id } = useParams();
@@ -43,26 +44,10 @@ export const AddModal = ({ onClose, onRefresh, objectsIds }) => {
         title="Додати об’єкт в підбірку"
       >
         <div className="select-label">Назва підбірки</div>
-        <Select
-          //   label="Назва підбірки"
+        <SelectionsSelect
           value={selectedObj}
           onChange={(val) => setSelectedObj(val)}
-          options={
-            data?.objects
-              ? Object.entries(data?.objects)
-                  ?.map((obj) => ({
-                    title: obj[1]?.title ?? "-",
-                    value: obj[0],
-                  }))
-                  ?.filter((opt) =>
-                    objectsIds?.length > 0
-                      ? !objectsIds.find((o) => o === opt.value)
-                      : true
-                  )
-              : []
-          }
-          placeholder="Оберіть об'єкт"
-          className="select-wrapper"
+          data={data?.data ?? []}
         />
         <button
           className="submit-btn"

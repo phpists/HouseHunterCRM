@@ -5,7 +5,7 @@ export const OpenButton = ({ onClick }) => (
 );
 
 const StyledOpenButton = styled.button`
-  margin-top: 25px;
+margin-right: 20px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.18);
   padding: 9px 18px 10px 18px;

@@ -15,6 +15,7 @@ export const RequestCard = ({
   isEdit,
   isDelete,
   onOpenChat,
+  onChangeComment,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const handleClick = (e) =>
@@ -61,6 +62,7 @@ export const RequestCard = ({
           isDelete={isDelete}
           onOpenChat={onOpenChat}
           clientData={clientData?.data}
+          onChangeComment={onChangeComment}
         />
       ) : (
         <DesktopContent
@@ -72,6 +74,7 @@ export const RequestCard = ({
           isDelete={isDelete}
           onOpenChat={onOpenChat}
           clientData={clientData?.data}
+          onChangeComment={onChangeComment}
         />
       )}
     </StyledRequestCard>

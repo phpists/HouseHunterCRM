@@ -6,10 +6,10 @@ import {
   useGetFoldersListQuery,
   useLazyAddObjectToSelectionsQuery,
 } from "../../store/selections/selections.api";
-import { useParams } from "react-router-dom";
 import { checkIsArray, handleResponse } from "../../utilits";
 import cogoToast from "cogo-toast";
 import { Modal } from "../../components/Modal/Modal";
+import { SelectionsSelect } from "../../components/SelectionsSelect/SelectionsSelect";
 
 export const AddToSelections = ({ onClose, idObject, onSuccess }) => {
   const { data } = useGetFoldersListQuery();
@@ -44,21 +44,10 @@ export const AddToSelections = ({ onClose, idObject, onSuccess }) => {
         title="Додати об’єкт в підбірку"
       >
         <div className="select-label">Назва підбірки</div>
-        <Select
-          //   label="Назва підбірки"
+        <SelectionsSelect
           value={selectedRequest}
           onChange={(val) => setSelectedRequest(val)}
-          options={
-            data?.data?.map(({ id, name, clients_name }) => ({
-              title: `${clients_name?.length === 0 ? "-" : clients_name} \n ${
-                name?.length === 0 ? "-" : name
-              }`,
-              value: id,
-            })) ?? []
-          }
-          placeholder="Оберіть підбірку"
-          className="select-wrapper"
-          isSearch
+          data={data?.data ?? []}
         />
         <button
           className="submit-btn"
@@ -74,6 +63,8 @@ export const AddToSelections = ({ onClose, idObject, onSuccess }) => {
 
 const StyledAddToSelections = styled.div`
   .submit-btn {
+    z-index: 10;
+    position: relative;
     margin-top: 15px;
     border-radius: 8px;
     background: rgba(93, 99, 255, 0.7);

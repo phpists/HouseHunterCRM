@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Title = ({ count = 0 }) => (
   <StyledTitle className="clickable">
-    {Number(count) > 99 ? "+99" : count} об'єктів
+    {Number(count) > 1000 ? "+1000" : count} об'єктів
   </StyledTitle>
 );
 
@@ -14,5 +14,5 @@ const StyledTitle = styled.div`
   font-weight: 300;
   line-height: normal;
   letter-spacing: 0.22px;
-  margin-bottom: 4px;
+  margin-right: 10px;
 `;

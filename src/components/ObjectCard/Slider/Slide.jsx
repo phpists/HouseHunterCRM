@@ -15,7 +15,7 @@ export const Slide = ({ photo, active, empty, onOpen }) => {
 };
 
 const StyledSlide = styled.div`
-  width: 200px;
+  width: 100%;
   min-height: 200px;
   height: 100%;
   flex-shrink: 0;
@@ -28,9 +28,9 @@ const StyledSlide = styled.div`
     height: 250px;
   }
   @media (max-width: 1399.9px) {
-    ${({ empty }) => empty === "true" && "height: 250px;"}
+    height: 250px;
   }
   @media (min-width: 1400px) {
-    ${({ empty }) => empty === "true" && "width: 250px;"}
+    width: 250px;
   }
 `;

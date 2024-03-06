@@ -15,6 +15,7 @@ export const MobileContent = ({
   isEdit,
   onOpenChat,
   clientData,
+  onChangeComment,
 }) => (
   <StyledMobileContent className="flex ">
     <div className="w-full">
@@ -48,6 +49,7 @@ export const MobileContent = ({
         <Comment
           comment={data?.General_field_group?.comment_group}
           id={data?.id_group}
+          onOpenEdit={onChangeComment}
         />
         <Objects data={data} idGroup={data?.id_group} onOpenChat={onOpenChat} />
       </div>

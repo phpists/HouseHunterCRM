@@ -281,6 +281,29 @@ const Requests = () => {
     setSelected([]);
   };
 
+  const handleChangeComment = (comment_group, id) => {
+    const updatedData = Object.fromEntries(
+      Object.entries(requests).map((req) => {
+        const reqId = req[0];
+
+        if (reqId === id) {
+          const request = {
+            ...req[1],
+            General_field_group: {
+              ...req[1].General_field_group,
+              comment_group,
+            },
+          };
+
+          return [reqId, request];
+        }
+        return req;
+      })
+    );
+    dataRef.current = updatedData;
+    setRequests(updatedData);
+  };
+
   useEffect(() => {
     if (!isFirstRender.current) {
       currentPage.current = 0;
@@ -364,6 +387,7 @@ const Requests = () => {
         onFavorite={handleToggleFavoriteStatus}
         loading={loading}
         actionLoading={actionLoading}
+        onChangeComment={handleChangeComment}
       />
     </StyledRequests>
   );

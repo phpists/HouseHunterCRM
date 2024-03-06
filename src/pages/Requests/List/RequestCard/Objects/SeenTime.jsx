@@ -7,7 +7,7 @@ export const SeenTime = ({ date }) => (
     <img src={clockIcon} alt="" />
     {!date || date === "0"
       ? "не переглянуто"
-      : `переглянуто ${handleFormatDate(Number(date) * 1000, true)}`}
+      : `переглянуто ${handleFormatDate(Number(date) * 1000)}`}
   </StyledSeenTime>
 );
 
@@ -22,7 +22,7 @@ const StyledSeenTime = styled.div`
   line-height: normal;
   letter-spacing: 0.22px;
   opacity: 0.4;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
   img {
     height: 12px;
     width: 12px;

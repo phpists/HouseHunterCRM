@@ -5,11 +5,8 @@ import "slick-carousel/slick/slick-theme.css";
 import { useRef, useState } from "react";
 import prevIcon from "../../../../../assets/images/prev-arrow.svg";
 import nextIcon from "../../../../../assets/images/next-arrow.svg";
-import object1 from "../../../../../assets/images/object.png";
-import object2 from "../../../../../assets/images/object2.png";
 import { Slide } from "./Slide";
 import { Counter } from "./Counter";
-import { Photos } from "./Photos/Photos";
 import { PhotoSlider } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 
@@ -68,7 +65,7 @@ export const Slider = ({ photos }) => {
             beforeChange={(currentSlide, nextSlide) =>
               setCurrentSlide(1 + nextSlide)
             }
-            currentSlide={currentSlide}
+            // currentSlide={currentSlide}
             prevArrow={
               <button>
                 <img src={prevIcon} alt="" />
@@ -92,11 +89,11 @@ export const Slider = ({ photos }) => {
             ))}
           </SlickSlider>
         </div>
-        <Photos
+        {/* <Photos
           photos={photos}
           onSelect={handleChangeSlide}
           active={currentSlide}
-        />
+        /> */}
       </StyledSlider>
     </>
   );
@@ -105,12 +102,11 @@ export const Slider = ({ photos }) => {
 const StyledSlider = styled.div`
   position: relative;
   .slider {
-    width: 267px;
+    width: 100%;
     height: 220px;
     overflow: hidden;
     border-radius: 9px;
     flex-shrink: 0;
-    ${({ isOnePhoto }) => isOnePhoto && "width: 100% !important;"}
   }
   .slick-arrow {
     transition: all 0.3s;
@@ -120,8 +116,8 @@ const StyledSlider = styled.div`
   }
   .slick-next,
   .slick-prev {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     display: flex !important;
     align-items: center;
     justify-content: center;
@@ -136,13 +132,13 @@ const StyledSlider = styled.div`
   }
   @media (min-width: 1400px) {
     .slider {
-      width: 190px;
+      width: 100%;
       height: 220px;
     }
   }
   @media (min-width: 1600px) {
     .slider {
-      width: 267px;
+      width: 100%;
       height: 220px;
     }
   }

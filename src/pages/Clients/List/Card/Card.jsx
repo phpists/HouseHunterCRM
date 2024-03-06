@@ -22,6 +22,7 @@ export const Card = ({
   firstName,
   lastName,
   email,
+  onEditComment,
 }) => {
   const handleClick = (e) => {
     e.target.classList.contains("card") && onSelect();
@@ -51,6 +52,7 @@ export const Card = ({
         firstName={firstName}
         lastName={lastName}
         email={email}
+        onEditComment={onEditComment}
       />
       <MobileContent
         name={name}
@@ -70,6 +72,7 @@ export const Card = ({
         firstName={firstName}
         lastName={lastName}
         email={email}
+        onEditComment={onEditComment}
       />
     </StyledCard>
   );

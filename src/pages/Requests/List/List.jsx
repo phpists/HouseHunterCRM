@@ -9,6 +9,7 @@ import { Empty } from "../../../components/Empty/Empty";
 import { useGetAccessQuery } from "../../../store/auth/auth.api";
 import { Chat } from "../../../components/Chat/Chat";
 import { Loader } from "../../../components/Loader";
+import { EditComment } from "./EditComment";
 
 export const List = ({
   selected,
@@ -19,12 +20,14 @@ export const List = ({
   onFavorite,
   loading,
   actionLoading,
+  onChangeComment,
 }) => {
   const [deleteRequest] = useLazyDeleteRequestQuery();
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedChat, setSelectedChat] = useState(null);
   const { data: accessData } = useGetAccessQuery();
+  const [editComment, setEditComment] = useState(false);
 
   const handleCancelDeleteRequest = () => {
     setDeleteModal(false);
@@ -63,7 +66,13 @@ export const List = ({
           requestObjectId={selectedChat}
         />
       )}
-
+      {editComment && (
+        <EditComment
+          onClose={() => setEditComment(false)}
+          request={editComment}
+          onChange={onChangeComment}
+        />
+      )}
       <StyledList className="hide-scroll" ref={innerRef}>
         {(data && Object.entries(data)?.length === 0) || actionLoading ? (
           <Empty loading={loading || actionLoading} />
@@ -82,6 +91,12 @@ export const List = ({
                 isEdit={handleCheckAccess(accessData, "requests", "edit")}
                 isDelete={handleCheckAccess(accessData, "requests", "delete")}
                 onOpenChat={() => setSelectedChat(d[0])}
+                onChangeComment={() =>
+                  setEditComment({
+                    id: d[1]?.id_group,
+                    comment: d[1]?.General_field_group?.comment_group,
+                  })
+                }
               />
             );
           })

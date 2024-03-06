@@ -13,7 +13,11 @@ export const PositionCard = ({
     <div className="title">{title}</div>
     <div className="value">
       <input
-        value={value ? Number(value).toString() : undefined}
+        value={
+          Number(value) === 0 || !value
+            ? ""
+            : Number(value).toString() ?? undefined
+        }
         type="number"
         placeholder=""
         onChange={(e) =>

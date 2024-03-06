@@ -6,6 +6,7 @@ import { Tag } from "./Tag";
 import { OpenButton } from "./OpenButton";
 import { Buttons } from "./Buttons";
 import { useNavigate } from "react-router-dom";
+import { Name } from "./Name";
 
 export const Objects = ({ idGroup, onOpenChat, data }) => {
   const navigate = useNavigate();
@@ -16,14 +17,15 @@ export const Objects = ({ idGroup, onOpenChat, data }) => {
       <div className="flex items-center clickable">
         {/* <Photos /> */}
         <div className="clickable objects-info-wrapper">
-          <div className="flex items-center justify-between clickable">
-            <div className="clickable">
-              <Title count={data?.General_field_group?.count_objects} />
-              <Tag count={data?.General_field_group?.count_objects} />
-            </div>
+          <Name name={data?.General_field_group?.name ?? "-"} />
+          <div className="flex items-center clickable object-counts">
+            <Title count={data?.General_field_group?.count_objects} />
+            <Tag count={data?.General_field_group?.count_objects} />
+          </div>
+          <div className="flex items-center">
+            <OpenButton onClick={() => navigate(`/selections/${idGroup}`)} />
             <Buttons onOpenChat={onOpenChat} idGroup={idGroup} />
           </div>
-          <OpenButton onClick={() => navigate(`/selections/${idGroup}`)} />
         </div>
       </div>
     </StyledObjects>
@@ -36,6 +38,9 @@ const StyledObjects = styled.div`
   background: #363636;
   /* opacity: 0.2; */
   min-width: 190px;
+  .object-counts {
+    margin-bottom: 12px;
+  }
   @media (max-width: 1399.9px) {
     width: 100%;
   }

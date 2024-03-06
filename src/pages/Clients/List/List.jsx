@@ -9,6 +9,7 @@ import {
 } from "../../../store/auth/auth.api";
 import { handleCheckAccess } from "../../../utilits";
 import { Loader } from "../../../components/Loader";
+import { EditComment } from "./EditComment";
 
 export const List = ({
   selected,
@@ -20,8 +21,10 @@ export const List = ({
   onAddToFavorite,
   onSend,
   actionLoading,
+  onChangeComment,
 }) => {
   const [deleteModal, setDeleteModal] = useState(null);
+  const [editComment, setEditComment] = useState(false);
   const { data: accessData } = useGetAccessQuery();
   const { data: phonesCodes } = useGetPhonesCodesQuery();
 
@@ -31,6 +34,7 @@ export const List = ({
     onDelete(deleteModal);
     setDeleteModal(null);
   };
+
   return (
     <>
       {deleteModal && (
@@ -38,6 +42,13 @@ export const List = ({
           title="Видалити клієнта?"
           onSubmit={handleDelete}
           onClose={() => setDeleteModal(null)}
+        />
+      )}
+      {editComment && (
+        <EditComment
+          onClose={() => setEditComment(false)}
+          client={editComment}
+          onChange={onChangeComment}
         />
       )}
       <StyledList className="hide-scroll" ref={innerRef}>
@@ -92,6 +103,7 @@ export const List = ({
                 firstName={first_name}
                 lastName={last_name}
                 email={email}
+                onEditComment={() => setEditComment({ comment, id })}
               />
             )
           )

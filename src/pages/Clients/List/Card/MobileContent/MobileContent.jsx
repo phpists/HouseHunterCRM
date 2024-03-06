@@ -24,6 +24,7 @@ export const MobileContent = ({
   firstName,
   lastName,
   email,
+  onEditComment,
 }) => (
   <StyledMobileContent className="flex items-center hide-scroll card">
     <div className="w-full">
@@ -56,6 +57,7 @@ export const MobileContent = ({
           lastName={lastName}
           email={email}
           className="commet-value"
+          onEditComment={onEditComment}
         />
       </div>
     </div>

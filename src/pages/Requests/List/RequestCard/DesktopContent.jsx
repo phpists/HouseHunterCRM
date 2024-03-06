@@ -15,6 +15,7 @@ export const DesktopContent = ({
   isDelete,
   onOpenChat,
   clientData,
+  onChangeComment,
 }) => (
   <StyledDesktopContent>
     <Client
@@ -46,6 +47,7 @@ export const DesktopContent = ({
     <Comment
       comment={data?.General_field_group?.comment_group}
       id={data?.id_group}
+      onOpenEdit={onChangeComment}
     />
     <Objects data={data} idGroup={data?.id_group} onOpenChat={onOpenChat} />
     <Actions

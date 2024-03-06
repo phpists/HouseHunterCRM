@@ -5,7 +5,7 @@ export const Slide = ({ photo, isOnePhoto, onOpen }) => (
 );
 
 const StyledSlide = styled.div`
-  width: ${({ isOnePhoto }) => (isOnePhoto ? "100%" : "267px")};
+  width: 100%;
   height: 220px;
   flex-shrink: 0;
   border: 1px solid rgba(255, 255, 255, 0.1);

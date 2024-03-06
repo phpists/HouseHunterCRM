@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Modal } from "../../../../components/Modal/Modal";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLazyEditRequestCommentQuery } from "../../../../store/requests/requests.api";
 import { handleResponse } from "../../../../utilits";
 import cogoToast from "cogo-toast";
@@ -10,9 +10,27 @@ export const EditComment = ({ onClose, comment, onChange }) => {
   const { id } = useParams();
   const [value, setValue] = useState(comment ?? "");
   const [editComment] = useLazyEditRequestCommentQuery();
+  const textareaRef = useRef(null);
+
+  const handleResizeTextarea = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
+
+  useEffect(() => {
+    handleResizeTextarea();
+  }, [textareaRef.current]);
+
+  const textAreaAdjust = (e) => {
+    e.target.style.height = "1px";
+    e.target.style.height = e.target.scrollHeight + "px";
+    setValue(e.target.value);
+  };
 
   useEffect(() => {
     setValue(comment);
+    handleResizeTextarea();
   }, [comment]);
 
   const handleSave = () => {
@@ -38,12 +56,13 @@ export const EditComment = ({ onClose, comment, onChange }) => {
   return (
     <StyledEditComment>
       <Modal onClose={onClose} title="Залишити коментар">
-        <div>
+        <div className="edit-comment-content hide-scroll">
           <div className="label">Коментар</div>
           <textarea
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={textAreaAdjust}
             placeholder="Введіть значення"
+            ref={textareaRef}
           />
           <button onClick={handleSave}>Зберегти</button>
         </div>

@@ -26,6 +26,7 @@ export const DesktopContent = ({
   firstName,
   lastName,
   email,
+  onEditComment,
 }) => (
   <StyledDesktopContent className="flex items-center justify-between hide-scroll card">
     <MainInfo name={name} id={id} dateCreate={dateCreate} />
@@ -46,6 +47,7 @@ export const DesktopContent = ({
       firstName={firstName}
       lastName={lastName}
       email={email}
+      onEditComment={onEditComment}
     />
     <Divider />
     <PhoneInfo agent={agent} agentPhone={agentPhone} />

@@ -33,6 +33,7 @@ export const ProfileField = ({
   error,
   onlyCalendar,
   onBlur,
+  onClick,
 }) => {
   const fieldRef = useRef();
   const [active, setActive] = useState(false);
@@ -102,6 +103,7 @@ export const ProfileField = ({
       error={error?.toString()}
       ref={fieldRef}
       onClick={() => {
+        onClick && onClick();
         if (!active && !readOnly) {
           setActive(true);
           setOpen(true);

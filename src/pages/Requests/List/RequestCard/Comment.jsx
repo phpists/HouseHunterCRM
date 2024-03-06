@@ -5,7 +5,7 @@ import { useLazyEditRequestCommentQuery } from "../../../../store/requests/reque
 import { handleResponse } from "../../../../utilits";
 import cogoToast from "cogo-toast";
 
-export const Comment = ({ comment = "", id }) => {
+export const Comment = ({ comment = "", id, onOpenEdit }) => {
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState("");
   const [editComment] = useLazyEditRequestCommentQuery();
@@ -45,6 +45,8 @@ export const Comment = ({ comment = "", id }) => {
         onSave={handleSave}
         onBlur={handleSave}
         className="field"
+        readOnly
+        onClick={onOpenEdit}
       />
     </StyledComment>
   );
@@ -73,7 +75,7 @@ const StyledComment = styled.div`
   }
   @media (min-width: 1400px) {
     width: 15svw;
-    max-width: 200px;
+    max-width: 170px;
   }
   @media (min-width: 1750px) {
     width: 25svw;

@@ -5,7 +5,7 @@ import { useLazyEditClientCommentQuery } from "../store/clients/clients.api";
 import cogoToast from "cogo-toast";
 import { handleResponse } from "../utilits";
 
-export const Comment = ({ className, comment, id }) => {
+export const Comment = ({ className, comment, id, onEditComment }) => {
   const [commentValue, setCommentValue] = useState(comment ?? "");
   const [edit, setEdit] = useState(false);
   const [editComment] = useLazyEditClientCommentQuery();
@@ -33,6 +33,14 @@ export const Comment = ({ className, comment, id }) => {
     }
   };
 
+  const handleEdit = () => {
+    if (onEditComment) {
+      onEditComment();
+    } else {
+      setEdit(true);
+    }
+  };
+
   return (
     <StyledComment className={`flex items-start ${className}`}>
       <div>
@@ -48,17 +56,17 @@ export const Comment = ({ className, comment, id }) => {
             defaultValue={commentValue}
           />
         ) : (
-          <div className="value hide-scroll" onClick={() => setEdit(true)}>
+          <div className="value hide-scroll" onClick={handleEdit}>
             {commentValue?.length > 0
               ? commentValue?.split("\r\n")?.map((c) => <div>{c}</div>)
               : "-"}
           </div>
         )}
-        <div className="label" onClick={() => setEdit(true)}>
+        <div className="label" onClick={handleEdit}>
           Коментар
         </div>
       </div>
-      <img src={editIcon} alt="" onClick={() => setEdit(true)} />
+      <img src={editIcon} alt="" onClick={handleEdit} />
     </StyledComment>
   );
 };

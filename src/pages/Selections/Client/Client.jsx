@@ -6,24 +6,32 @@ import { Comment } from "./Comment/Comment";
 import { ReactComponent as ArrowIcon } from "../../../assets/images/clients-arrow.svg";
 import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
 import { useLazyGetRequestQuery } from "../../../store/requests/requests.api";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 export const Client = ({ clientData }) => {
   const { id } = useParams();
   const { data } = useGetPhonesCodesQuery();
+  const navigate = useNavigate();
   const [getRequest, { data: requestData }] = useLazyGetRequestQuery();
 
   useEffect(() => {
     getRequest(id);
   }, [id]);
 
+  const handleGoToClient = (e) =>
+    e.target.classList.contains("openClient") &&
+    navigate(`/client/${clientData?.id}`);
+
   return (
-    <StyledClient className="flex items-center justify-between">
-      <div className="flex items-center user-info">
-        <img src={smallAvatar} alt="" className="small-avatar" />
-        <div className="name">{clientData?.name ?? "-"}</div>
-        <Id id="1" />
+    <StyledClient
+      className="flex items-center justify-between openClient"
+      onClick={handleGoToClient}
+    >
+      <div className="flex items-center user-info openClient">
+        <img src={smallAvatar} alt="" className="small-avatar openClient" />
+        <div className="name openClient">{clientData?.name ?? "-"}</div>
+        <Id id={clientData?.id} />
       </div>
       <Phones
         phones={clientData?.phones?.map(
@@ -36,10 +44,10 @@ export const Client = ({ clientData }) => {
           })
         )}
       />
-      <div className="divider"></div>
+      <div className="divider openClient"></div>
       <Comment comment={requestData?.[id]?.General_field_group?.comment} />
-      <div className="divider"></div>
-      <ArrowIcon className="arrow-more" />
+      <div className="divider openClient"></div>
+      <ArrowIcon className="arrow-more openClient" />
     </StyledClient>
   );
 };

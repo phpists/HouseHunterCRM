@@ -291,9 +291,9 @@ const Request = () => {
         street_base_object,
         mls_object,
       } = data?.general_group;
-
       editRequest({
         ...data,
+        fields: handleFillEmptyRangeFields(data.fields, fieldsData.current),
         general_group: {
           name,
           comment,
