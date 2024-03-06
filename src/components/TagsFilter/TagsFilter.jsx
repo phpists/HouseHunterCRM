@@ -27,6 +27,22 @@ export const TagsFilter = ({
   const handleRemoveTag = (index) =>
     onChange(tags.filter((t, i) => i !== index));
 
+  const handleCalculateTagsFirstLine = () => {
+    let totalCount = 0;
+    let index = 2;
+
+    tags.forEach((t, i) => {
+      totalCount += t?.length + 5;
+      if (totalCount >= 50) {
+        // index =  i;
+      } else {
+        index = 1 + i;
+      }
+    });
+
+    return index;
+  };
+
   return (
     <StyledTagsFilter
       empty={tags?.length === 0}
@@ -40,17 +56,19 @@ export const TagsFilter = ({
     >
       <div className="flex items-center justify-between">
         <div className="tags-wrapper flex flex-wrap">
-          {tags?.slice(0, isActive ? tags.length : 2)?.map((tag, i) => (
-            <Tag
-              key={i}
-              title={tag}
-              onRemove={() => handleRemoveTag(i)}
-              isHide={!isActive && i > 2}
-              noEdit={noEdit}
-            />
-          ))}
-          {!isActive && tags?.length > 2 && (
-            <Count count={tags?.slice(2).length} />
+          {tags
+            ?.slice(0, isActive ? tags.length : handleCalculateTagsFirstLine())
+            ?.map((tag, i) => (
+              <Tag
+                key={i}
+                title={tag}
+                onRemove={() => handleRemoveTag(i)}
+                isHide={!isActive && i > handleCalculateTagsFirstLine()}
+                noEdit={noEdit}
+              />
+            ))}
+          {!isActive && tags?.length > handleCalculateTagsFirstLine() && (
+            <Count count={tags?.slice(handleCalculateTagsFirstLine()).length} />
           )}
           {!noEdit && (
             <motion.input

@@ -27,6 +27,7 @@ export const RequestsList = ({
   onRefreshed,
   isDelete,
   isEdit,
+  onSelectAll,
 }) => {
   const { id } = useParams();
   const [requests, setRequests] = useState([]);
@@ -76,7 +77,14 @@ export const RequestsList = ({
     }).then((resp) => {
       const data = resp?.data?.data;
       if (data) {
-        setRequests(isReset ? data : { ...requests, ...data });
+        const updatedData = isReset ? data : { ...requests, ...data };
+        setRequests(updatedData);
+        onSelectAll(
+          Object.entries(updatedData)?.map((r) => ({
+            id: r[0],
+            type: "request",
+          }))
+        );
       }
     });
   };

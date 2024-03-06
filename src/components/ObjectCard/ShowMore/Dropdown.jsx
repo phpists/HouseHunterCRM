@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { ReactComponent as Star } from "../../../assets/images/star-object.svg";
 import { ReactComponent as Search } from "../../../assets/images/search-object.svg";
@@ -36,6 +36,7 @@ export const Dropdown = ({
 }) => {
   const [addStreetBaseObject] = useLazyAddStreetBaseObjectQuery();
   const [added, setAdded] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setAdded(false);
@@ -126,12 +127,14 @@ export const Dropdown = ({
         </div>
       )}
       {isEdit && (
-        <NavLink
-          to={`/edit-object/${clientId}/${id}${searchTag ?? ""}`}
+        <div
+          onClick={() =>
+            navigate(`/edit-object/${clientId}/${id}${searchTag ?? ""}`)
+          }
           className="flex items-center justify-between"
         >
           <span>Редагувати</span> <Edit />
-        </NavLink>
+        </div>
       )}
       {onDelete && (
         <div className="flex items-center justify-between" onClick={onDelete}>

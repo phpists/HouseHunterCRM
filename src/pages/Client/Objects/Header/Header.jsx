@@ -1,9 +1,6 @@
 import { styled } from "styled-components";
 import { Title } from "./Title";
-import { Filter } from "../../../../components/Filter/Filter";
-import { Search } from "./Search";
-import { Select } from "./Select/Select";
-import { useState } from "react";
+import { SelectItems } from "../../../../components/SelectItems/SelectItems";
 
 export const Header = ({
   requestsCount,
@@ -11,21 +8,22 @@ export const Header = ({
   selectedCount,
   onDelete,
   onToggleFavorite,
+  onSelectAll,
 }) => {
-  const [isSearch, setIsSearch] = useState(false);
-
   return (
     <StyledHeader className="flex items-center justify-between">
       <Title requestsCount={requestsCount} objectsCount={objectsCount} />
       <div className="flex items-center header-btns">
         {/* <Filter className="header-btn" /> */}
         {/* <Search open={isSearch} onOpen={() => setIsSearch(true)} /> */}
-        <Select
-          open={!isSearch}
-          onOpen={() => setIsSearch(false)}
+        <SelectItems
           selectedCount={selectedCount}
           onDelete={onDelete}
           onToggleFavorite={onToggleFavorite}
+          allCount={objectsCount + requestsCount}
+          title="запитів"
+          deleteConfirmTitle="Видалити обрані заявку(ки)/ об'єкт(и)?"
+          onSelectAll={onSelectAll}
         />
       </div>
     </StyledHeader>

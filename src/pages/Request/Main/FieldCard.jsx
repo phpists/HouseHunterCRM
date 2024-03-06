@@ -12,6 +12,8 @@ export const FieldCard = ({
   onChangeField,
   formatedLocations,
   errors,
+  fields,
+  rubricId,
 }) => {
   return (
     <StyledFieldCard>
@@ -55,6 +57,10 @@ export const FieldCard = ({
           !!errors?.find((e) => e === "price_min") ||
           !!errors?.find((e) => e === "price_max")
         }
+        isType={!!fields?.find((f) => f?.field === "price_for")}
+        rubricId={rubricId}
+        typeValue={data?.price_for}
+        onChangeType={(val) => onChangeField("price_for", val)}
       />
       <Divider />
       <TagsFilter

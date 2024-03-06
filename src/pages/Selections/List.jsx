@@ -49,7 +49,7 @@ export const List = ({
           object={openHistoryModal}
         />
       )}
-      <StyledList className="hide-scroll" ref={innerRef}>
+      <StyledList ref={innerRef}>
         {clientData && showClient ? <Client clientData={clientData} /> : null}
         {data?.length === 0 || actionLoading ? (
           <Empty loading={loading || actionLoading} />

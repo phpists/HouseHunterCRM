@@ -216,7 +216,12 @@ export const handleResponse = (
   notShowErrorMessage,
   isReturnData
 ) => {
-  if (resp?.data?.error === 11 || resp?.error === 11) {
+  if (
+    resp?.data?.error === 11 ||
+    resp?.error === 11 ||
+    resp?.data?.error === 128 ||
+    resp?.error === 128
+  ) {
     localStorage.removeItem("token");
     cogoToast.error(
       resp?.data?.messege ? resp?.data?.messege : resp?.messege ?? "Помилка",

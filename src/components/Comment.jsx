@@ -94,9 +94,9 @@ const StyledComment = styled.div`
     overflow: hidden;
     resize: none;
     height: max-content;
-    /* max-height: 25px; */
-    overflow: auto;
-    word-break: break-all;
+    max-height: 19px;
+    /* overflow: auto;
+    word-break: break-all; */
   }
   .label {
     font-family: Open Sans;

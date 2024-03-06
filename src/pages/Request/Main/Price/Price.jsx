@@ -7,6 +7,10 @@ export const Price = ({
   currency,
   onChangeCurrency = () => null,
   error,
+  isType,
+  rubricId,
+  typeValue,
+  onChangeType,
 }) => {
   return (
     <StyledPrice
@@ -15,12 +19,37 @@ export const Price = ({
     >
       <Ranger
         label="Ціновий діапазон"
-        // mainTypes={[
-        //   <>
-        //     M<sup>2</sup>
-        //   </>,
-        //   "Обєкт",
-        // ]}
+        mainTypes={
+          !isType
+            ? undefined
+            : rubricId === "65" || rubricId === "66"
+            ? [
+                {
+                  title: "Об'єкт",
+                  value: "4",
+                },
+                {
+                  title: "Сотка",
+                  value: "2",
+                },
+                {
+                  title: "Гектар",
+                  value: "3",
+                },
+              ]
+            : [
+                {
+                  title: "Об'єкт",
+                  value: "4",
+                },
+                {
+                  title: "м²",
+                  value: "1",
+                },
+              ]
+        }
+        typeValue={typeValue}
+        onChangeType={onChangeType}
         currency
         big
         max={1000000}

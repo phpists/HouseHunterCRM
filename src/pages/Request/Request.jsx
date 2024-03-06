@@ -566,13 +566,17 @@ const StyledRequest = styled.div`
       }
     }
   }
+  .base-wrapper {
+    overflow: auto;
+  }
   .request-base-wrapper {
-    height: calc(100svh - 428px) !important;
+    height: calc(100svh - 430px) !important;
     margin-bottom: 15px;
+    overflow: auto;
   }
   @media (max-width: 1300px) {
     .request-base-wrapper {
-      height: calc(100svh - 480px) !important;
+      height: calc(100svh - 482px) !important;
       margin-bottom: 15px;
     }
   }
@@ -585,7 +589,7 @@ const StyledRequest = styled.div`
     }
     .request-card {
       height: max-content;
-      overflow: initial;
+      /* overflow: initial; */
     }
   }
 

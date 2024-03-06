@@ -45,7 +45,7 @@ const StyledPositionCard = styled.div`
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
-    margin-right: 15px;
+    margin-right: 5px;
   }
   .value {
     color: #fff;
@@ -60,7 +60,7 @@ const StyledPositionCard = styled.div`
     transition: all 0.3s;
     input {
       width: 60px;
-      margin-right: 10px;
+      margin-right: 0px;
       &::-webkit-outer-spin-button,
       &::-webkit-inner-spin-button {
         /* display: none; <- Crashes Chrome on hover */

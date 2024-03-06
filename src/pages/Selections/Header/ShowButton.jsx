@@ -17,7 +17,6 @@ const StyledShowButton = styled.button`
   width: 32px;
   height: 32px;
   flex-shrink: 0;
-  margin-right: 15px;
   svg {
     opacity: 0.4;
     transition: all 0.3s;

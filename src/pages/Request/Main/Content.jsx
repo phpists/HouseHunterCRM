@@ -95,6 +95,8 @@ export const Content = ({
             handleChangeValue(field.id, fieldName, value)
           }
           formatedLocations={formatedLocations}
+          fields={field?.fields}
+          rubricId={field?.id}
           errors={errors.find((e) => e.id_rubric === field?.id)?.errors ?? []}
         />
       ))}

@@ -13,6 +13,7 @@ export const Select = ({
   selectedCount,
   onDelete,
   onToggleFavorite,
+  allCount
 }) => {
   const [type, setType] = useState(null);
   const [active, setActive] = useState(false);

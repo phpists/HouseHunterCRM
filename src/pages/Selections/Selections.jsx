@@ -111,6 +111,7 @@ const Selections = () => {
         isLoading.current = false;
         setLoading(false);
         setClientData(resp?.data?.client_info ?? null);
+        console.log(resp);
         handleResponse(
           resp,
           () => {

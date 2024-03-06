@@ -73,7 +73,7 @@ export const List = ({
           idObject={openAddModal}
         />
       )}
-      <StyledList className="hide-scroll" ref={innerRef}>
+      <StyledList ref={innerRef}>
         {data?.length === 0 || actionLoading || deleting ? (
           <Empty loading={loading || actionLoading || deleting} />
         ) : (

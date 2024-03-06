@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { Divider } from "../Divider";
 import { Option } from "../../../../components/Option";
 import {
+  checkIsArray,
   handleCheckIsField,
   handleFormatFields,
   handleGetFieldsOptions,
@@ -10,6 +11,8 @@ import React from "react";
 import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.api";
 import { ProfileField } from "../../../../components/ProfileField";
 import { CheckOption } from "../../../../components/CheckOption";
+import { Select } from "../../../../components/Select/Select";
+import { SelectTags } from "../../../../components/SelectTags/SelectTags";
 
 export const Categories = ({ data, onChangeField, fields, errors }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
@@ -83,6 +86,14 @@ export const Categories = ({ data, onChangeField, fields, errors }) => {
       ({ field }) => field === fieldName
     )?.type;
 
+  const handleSelect = (val, field, prevValue) => {
+    const isExist = !!prevValue?.find((t) => t === val);
+    onChangeField(
+      field,
+      isExist ? prevValue?.filter((t) => t !== val) : [...prevValue, val]
+    );
+  };
+
   return (
     <StyledCategories>
       {fields?.other_field && Object.entries(fields?.other_field)?.length > 0
@@ -103,7 +114,8 @@ export const Categories = ({ data, onChangeField, fields, errors }) => {
             ?.map((category, i) => (
               <React.Fragment key={i}>
                 <>
-                  {Object.entries(category[1]?.field_option)?.length > 0 ? (
+                  {Object.entries(category[1]?.field_option)?.length > 0 &&
+                  category[1]?.type === "json" ? (
                     <>
                       <Divider
                         title={commentsToFields?.object[category[0]]}
@@ -149,6 +161,43 @@ export const Categories = ({ data, onChangeField, fields, errors }) => {
                         )}
                       </div>
                     </>
+                  ) : Object.entries(category[1]?.field_option)?.length > 0 &&
+                    category[1]?.type === "select" ? (
+                    <Select
+                      value={data[category[0]]}
+                      options={Object.entries(category[1]?.field_option)?.map(
+                        (opt) => ({ value: opt[0], title: opt[1] })
+                      )}
+                      onChange={(val) => onChangeField(category[0], val)}
+                      label={commentsToFields?.object[category[0]] ?? "-"}
+                      labelActive={commentsToFields?.object[category[0]] ?? "-"}
+                      hideArrowDefault
+                      error={!!errors.find((e) => e === category[0])}
+                    />
+                  ) : Object.entries(category[1]?.field_option)?.length > 0 &&
+                    category[1]?.type === "multi_select" ? (
+                    <>
+                      <Divider />
+                      <SelectTags
+                        label={commentsToFields?.object[category[0]]}
+                        showTags
+                        tags={Object.entries(category[1]?.field_option)
+                          ?.map((opt) => ({ value: opt[0], title: opt[1] }))
+                          ?.filter((v) =>
+                            checkIsArray(data[category[0]])?.includes(v.value)
+                          )}
+                        options={Object.entries(category[1]?.field_option)?.map(
+                          (opt) => ({ value: opt[0], title: opt[1] })
+                        )}
+                        onChange={(val) =>
+                          handleSelect(
+                            val,
+                            category[0],
+                            checkIsArray(data[category[0]])
+                          )
+                        }
+                      />
+                    </>
                   ) : category[1]?.type === "checkbox" ? (
                     <>
                       <Divider />
@@ -182,21 +231,25 @@ export const Categories = ({ data, onChangeField, fields, errors }) => {
               </React.Fragment>
             ))
         : null}
-      <Divider title="Додатково" />
-      <div className="options">
-        {Additional.map((opt, i) => (
-          <Option
-            key={i}
-            title={opt.title}
-            className="opt"
-            active={data[opt.name] === "1"}
-            onSelect={() =>
-              onChangeField(opt.name, data[opt.name] === "1" ? "0" : "1")
-            }
-            error={!!errors.find((e) => e === opt.name)}
-          />
-        ))}
-      </div>
+      {Additional?.length > 0 ? (
+        <>
+          <Divider title="Додатково" />
+          <div className="options">
+            {Additional.map((opt, i) => (
+              <Option
+                key={i}
+                title={opt.title}
+                className="opt"
+                active={data[opt.name] === "1"}
+                onSelect={() =>
+                  onChangeField(opt.name, data[opt.name] === "1" ? "0" : "1")
+                }
+                error={!!errors.find((e) => e === opt.name)}
+              />
+            ))}
+          </div>
+        </>
+      ) : null}
     </StyledCategories>
   );
 };
@@ -205,7 +258,6 @@ const StyledCategories = styled.div`
   border-radius: 10px;
   background: #323232;
   padding: 4px;
-  margin-top: 20px;
   .first-divider {
     margin: -12px 0 0px;
     .title {

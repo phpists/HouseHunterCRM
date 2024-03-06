@@ -41,6 +41,7 @@ const StyledCopyLink = styled.button`
   flex-shrink: 0;
   border-radius: 9px !important;
   transition: all 0.3s;
+  margin-right: 15px;
   .check-icon {
     height: 0px;
   }

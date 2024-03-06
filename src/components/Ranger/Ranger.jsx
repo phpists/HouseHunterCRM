@@ -33,6 +33,8 @@ export const Ranger = ({
   onChangeCurrency,
   error,
   className,
+  typeValue,
+  onChangeType,
 }) => {
   const { getTrackProps, handles, segments } = useRanger({
     values,
@@ -48,7 +50,12 @@ export const Ranger = ({
       error={error?.toString()}
       className={`${error && "error-field"} select-none	${className}`}
     >
-      <Header label={label} mainTypes={mainTypes} />
+      <Header
+        label={label}
+        mainTypes={mainTypes}
+        typeValue={typeValue}
+        onChangeType={onChangeType}
+      />
       {big && (
         <Statistic
           activeSegment={

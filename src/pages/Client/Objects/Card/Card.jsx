@@ -34,7 +34,7 @@ export const Card = ({
     if (window.innerWidth <= 1400) {
       onOpenInfo();
     }
-    if (e.target.classList.contains("arrow-more") && isEdit) {
+    if (e.target.classList.contains("openMore") && isEdit) {
       const url = !isEdit
         ? null
         : isObject
@@ -108,20 +108,35 @@ const StyledCard = styled.div`
   transition: all 0.3s;
   cursor: pointer;
   .arrow-more {
-    transform: rotate(-45deg);
-    opacity: 0.4;
-    transition: all 0.3s;
-    width: 24px;
-    height: 24px;
-    path {
-      fill: #fff;
+    padding: 15px;
+    position: relative;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: block;
+    }
+    svg {
+      transform: rotate(-45deg);
+      opacity: 0.4;
+      transition: all 0.3s;
+      width: 24px;
+      height: 24px;
+      path {
+        fill: #fff;
+      }
     }
   }
   &:hover {
     background: #484848;
     .arrow-more {
-      opacity: 1;
-      transform: rotate(0deg);
+      svg {
+        opacity: 1;
+        transform: rotate(0deg);
+      }
     }
   }
 

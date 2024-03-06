@@ -1,10 +1,16 @@
 import { styled } from "styled-components";
 import { Types } from "./Types";
 
-export const Header = ({ label, mainTypes }) => (
+export const Header = ({ label, mainTypes, typeValue, onChangeType }) => (
   <StyledHeader className="flex items-center justify-between">
     <div className="label">{label}</div>
-    {mainTypes?.length > 0 && <Types types={mainTypes} />}
+    {mainTypes?.length > 0 && (
+      <Types
+        types={mainTypes}
+        typeValue={typeValue}
+        onChangeType={onChangeType}
+      />
+    )}
   </StyledHeader>
 );
 

@@ -51,15 +51,6 @@ export const Main = ({
 
   return (
     <div className="request-card  request-main-wrapper" ref={contentRef}>
-      <Comment
-        value={data?.general_group?.comment}
-        onChange={handleChangeComment}
-        error={
-          !!errors
-            ?.find((er) => er?.id === "general")
-            ?.errors?.find((e) => e === "comment")
-        }
-      />
       <Name
         value={data?.general_group?.name}
         onChange={handleChangeName}
@@ -67,6 +58,15 @@ export const Main = ({
           !!errors
             ?.find((er) => er?.id === "general")
             ?.errors?.find((e) => e === "name")
+        }
+      />
+      <Comment
+        value={data?.general_group?.comment}
+        onChange={handleChangeComment}
+        error={
+          !!errors
+            ?.find((er) => er?.id === "general")
+            ?.errors?.find((e) => e === "comment")
         }
       />
       <Content

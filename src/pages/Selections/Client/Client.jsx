@@ -8,20 +8,27 @@ import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
 import { useLazyGetRequestQuery } from "../../../store/requests/requests.api";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { useActions } from "../../../hooks/actions";
 
 export const Client = ({ clientData }) => {
   const { id } = useParams();
   const { data } = useGetPhonesCodesQuery();
   const navigate = useNavigate();
   const [getRequest, { data: requestData }] = useLazyGetRequestQuery();
+  const { saveSelectionName } = useActions();
 
   useEffect(() => {
+    saveSelectionName(undefined);
     getRequest(id);
   }, [id]);
 
   const handleGoToClient = (e) =>
     e.target.classList.contains("openClient") &&
     navigate(`/client/${clientData?.id}`);
+
+  useEffect(() => {
+    saveSelectionName(requestData?.[id]?.General_field_group?.name);
+  }, [requestData]);
 
   return (
     <StyledClient

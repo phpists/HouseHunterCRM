@@ -5,6 +5,7 @@ import { useAppSelect } from "../../hooks/redux";
 export const Title = () => {
   const { pathname } = useLocation();
   const { user } = useAppSelect((state) => state.auth);
+  const { selectionName } = useAppSelect((state) => state.selections);
 
   const handleGetHour = () => new Date().getHours();
 
@@ -57,7 +58,7 @@ export const Title = () => {
             pathname.split("/")[1] === "edit-object"
           ? "Картка об’єкта"
           : pathname.split("/")[1] === "selections"
-          ? "Підбірки"
+          ? selectionName ?? "Підбірки"
           : pathname.split("/")[1] === "objects"
           ? "Об'єкти"
           : "";
@@ -75,6 +76,10 @@ const StyledTitle = styled.h1`
   font-weight: 200;
   line-height: 118%; /* 40.12px */
   letter-spacing: 0.64px;
+  max-width: 500px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   @media (max-width: 1200px) {
     font-size: 24px;
     line-height: 1;

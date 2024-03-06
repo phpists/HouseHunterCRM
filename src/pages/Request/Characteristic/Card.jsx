@@ -23,6 +23,7 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
     "price_max_UAH",
     "price_min",
     "price_max",
+    "price_for",
   ];
 
   return (

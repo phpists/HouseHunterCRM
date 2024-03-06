@@ -115,6 +115,7 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
             onChangeField={handleChangeField}
             readOnly={!isAccess}
           />
+
           <SectionTitle title="Контакти" />
           <Contact
             phones={updatedData?.phone ?? []}
@@ -198,7 +199,7 @@ const StyledProfile = styled.div`
     position: absolute;
     top: 0;
     width: 100%;
-    height: 100%;
+    height: 120px;
     background: url(${({ maskBackground }) => maskBackground}) center/cover
       no-repeat;
     background-size: 200%;

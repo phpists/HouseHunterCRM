@@ -27,7 +27,7 @@ export const Phones = ({
           type="viber"
           active={phones?.[activePhone]?.viber === "1"}
           onClick={() => null}
-          className="viber-card"
+          className="viber-card mb-1"
           open
           phone={`${phones?.[activePhone]?.phone}`}
           readOnly

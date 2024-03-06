@@ -6,7 +6,7 @@ import { ReactComponent as PlusIcon } from "../../../assets/images/plus.svg";
 import { ReactComponent as StarIcon } from "../../../assets/images/card-star.svg";
 import { SelectItems } from "../../../components/SelectItems/SelectItems";
 import { Filter } from "./Filter/Filter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddClient } from "../../../components/AddClient/AddClient";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
 import {
@@ -40,6 +40,14 @@ export const Header = ({
   const [defaultFiltersOpen, setDefalultFiltersOpen] = useState({
     company: true,
   });
+
+  useEffect(() => {
+    setDefalultFiltersOpen({
+      company: !!filters?.company_object,
+      street_base_object: !!filters?.street_base_object,
+      mls_object: !!filters?.mls_object,
+    });
+  }, [filters]);
 
   const handleToggleFavorites = () => {
     onChangeActionLoading(true);

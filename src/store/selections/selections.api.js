@@ -18,15 +18,6 @@ export const selections = createApi({
           ...data,
         }),
       }),
-      transformResponse: (response) => {
-        return handleResponse(
-          response,
-          () => response,
-          () => null,
-          false,
-          true
-        );
-      },
     }),
     addObjectToSelections: build.query({
       query: ({ id_request_group, id_objects }) => ({

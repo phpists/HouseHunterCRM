@@ -61,7 +61,9 @@ export const DesktopContent = ({
             }
             noDelete={!isDelete}
           />
-          <ArrowIcon className="arrow-more" />
+          <button className="arrow-more openMore">
+            <ArrowIcon className="openMore" />
+          </button>
         </div>
       </div>
     </StyledDesktopContent>

@@ -19,6 +19,7 @@ export const ObjectsList = ({
   onRefreshed,
   isEdit,
   isDelete,
+  onSelectAll,
 }) => {
   const { id } = useParams();
   const [objects, setObjects] = useState([]);
@@ -41,6 +42,9 @@ export const ObjectsList = ({
           type: "object",
         });
         setObjects(data);
+        onSelectAll(
+          Object.entries(data)?.map((o) => ({ id: o?.[1]?.id, type: "object" }))
+        );
       }
     });
   };

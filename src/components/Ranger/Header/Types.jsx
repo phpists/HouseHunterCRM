@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 
-export const Types = ({ types }) => {
-  const [type, setType] = useState(types[0]);
+export const Types = ({ types, typeValue, onChangeType }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -11,13 +10,15 @@ export const Types = ({ types }) => {
       <div className="second-angle" />
       {open &&
         types
-          .filter((t) => t !== type)
+          .filter((t) => t?.value !== typeValue)
           .map((t, i) => (
-            <div key={i} className="opt" onClick={() => setType(t)}>
-              {t}
+            <div key={i} className="opt" onClick={() => onChangeType(t.value)}>
+              {t?.title}
             </div>
           ))}
-      <div>{type}</div>
+      <div>
+        {types?.find((t) => t.value === typeValue)?.title ?? "Оберіть тип"}
+      </div>
     </StyledTypes>
   );
 };

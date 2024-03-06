@@ -69,18 +69,18 @@ export const Header = ({
             onClick={() => onToggleShowClient(!showClient)}
           />
           <div className="btns flex items-center">
-            <ShowButton
-              active={showObjectHide === "1"}
-              onClick={onToggleHidden}
-            />
             {/* <AddButton onRefresh={onRefresh} objectsIds={objectsIds} /> */}
             <CopyLink
               className="copy-btn"
               link={`https://selection.house-hunter.info/?id=${id}`}
             />
+            <ChatButton />
           </div>
           <div className="action-btns flex items-center">
-            <ChatButton />
+            <ShowButton
+              active={showObjectHide === "1"}
+              onClick={onToggleHidden}
+            />
             <FilterButton
               filters={filters}
               onChangeFilter={onChangeFilter}

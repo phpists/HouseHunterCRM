@@ -33,6 +33,8 @@ export const Objects = ({ selected, onSelect }) => {
   const [refreshObjects, setRefreshObjects] = useState(false);
   const [refreshRequests, setRefreshRequests] = useState(false);
   const { data: accessData } = useGetAccessQuery();
+  const [allObjectsIds, setAllOjectsIds] = useState([]);
+  const [allRequestsIds, setAllRequestsIds] = useState([]);
 
   const handleRefreshObjects = (val) => setRefreshObjects(val);
   const handleRefreshRequests = (val) => setRefreshRequests(val);
@@ -130,6 +132,10 @@ export const Objects = ({ selected, onSelect }) => {
     requests?.length > 0 && handleToggleRequestsFavorites(requests);
   };
 
+  const handleSelectAll = (isReset) => {
+    setSelectedItems(isReset ? [] : [...allObjectsIds, ...allRequestsIds]);
+  };
+
   return (
     <StyledObjects>
       {openInfo && (
@@ -145,6 +151,7 @@ export const Objects = ({ selected, onSelect }) => {
         selectedCount={selectedItems?.length}
         onDelete={handleDeleteItems}
         onToggleFavorite={handleToggleItemsFavoriteStatus}
+        onSelectAll={handleSelectAll}
       />
       <div className="objects-content hide-scroll">
         <Actions accessData={accessData} />
@@ -156,6 +163,7 @@ export const Objects = ({ selected, onSelect }) => {
           deleteConfirmTitle="Видалити обрані заявку(ки)/ об'єкт(и)?"
           onDelete={handleDeleteItems}
           onToggleFavorite={handleToggleItemsFavoriteStatus}
+          onSelectAll={handleSelectAll}
         />
         {handleCheckAccess(accessData, "objects", "view") && (
           <ObjectsList
@@ -169,6 +177,7 @@ export const Objects = ({ selected, onSelect }) => {
             onRefreshed={() => handleRefreshObjects(false)}
             isEdit={handleCheckAccess(accessData, "objects", "edit")}
             isDelete={handleCheckAccess(accessData, "objects", "delete")}
+            onSelectAll={(val) => setAllOjectsIds(val)}
           />
         )}
         {handleCheckAccess(accessData, "requests", "view") && (
@@ -183,6 +192,7 @@ export const Objects = ({ selected, onSelect }) => {
             onRefreshed={() => handleRefreshRequests(false)}
             isEdit={handleCheckAccess(accessData, "requests", "edit")}
             isDelete={handleCheckAccess(accessData, "requests", "delete")}
+            onSelectAll={(val) => setAllRequestsIds(val)}
           />
         )}
       </div>
