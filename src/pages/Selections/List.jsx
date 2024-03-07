@@ -54,21 +54,33 @@ export const List = ({
         {clientData && showClient ? <Client clientData={clientData} /> : null}
         {data?.length === 0 ||
         actionLoading ||
-        data.filter((d) =>
-          filters?.only_choise_obj === "1"
-            ? (filters?.like === "1" && d?.like) ||
-              (filters?.dislike === "1" && !d?.like)
-            : true
-        )?.length === 0 ? (
+        data.filter((d) => {
+          if (
+            filters?.only_choise_obj === "1" &&
+            (filters?.like === "1" || filters?.dislike === "1")
+          ) {
+            const isLike = filters?.like === "1" && d?.like === true;
+            const isDislike = filters?.dislike === "1" && d?.like === false;
+            return typeof d?.like === "boolean" && isLike && isDislike;
+          } else {
+            return true;
+          }
+        })?.length === 0 ? (
           <Empty loading={loading || actionLoading} />
         ) : (
           data
-            .filter((d) =>
-              filters?.only_choise_obj === "1"
-                ? (filters?.like === "1" && d?.like) ||
-                  (filters?.dislike === "1" && !d?.like)
-                : true
-            )
+            .filter((d) => {
+              if (
+                filters?.only_choise_obj === "1" &&
+                (filters?.like === "1" || filters?.dislike === "1")
+              ) {
+                const isLike = filters?.like === "1" && d?.like === true;
+                const isDislike = filters?.dislike === "1" && d?.like === false;
+                return typeof d?.like === "boolean" && isLike && isDislike;
+              } else {
+                return true;
+              }
+            })
             .map((d, i) => (
               <ObjectCard
                 key={d?.id}
@@ -92,7 +104,10 @@ export const List = ({
                   setOpenCommentHistoryModal({ id: d?.id })
                 }
                 onAddToSelection={() => setOpenAddModal(d?.id)}
-                showLike
+                showLike={
+                  filters?.only_choise_obj === "1" &&
+                  typeof d?.like === "boolean"
+                }
               />
             ))
         )}

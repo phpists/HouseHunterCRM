@@ -14,21 +14,15 @@ export const Client = ({ clientData }) => {
   const { id } = useParams();
   const { data } = useGetPhonesCodesQuery();
   const navigate = useNavigate();
-  const [getRequest, { data: requestData }] = useLazyGetRequestQuery();
   const { saveSelectionName } = useActions();
-
-  useEffect(() => {
-    saveSelectionName(undefined);
-    getRequest(id);
-  }, [id]);
 
   const handleGoToClient = (e) =>
     e.target.classList.contains("openClient") &&
-    navigate(`/client/${clientData?.id}`);
+    navigate(`/client/${clientData?.client?.id}`);
 
   useEffect(() => {
-    saveSelectionName(requestData?.[id]?.General_field_group?.name);
-  }, [requestData]);
+    saveSelectionName(clientData?.name_group);
+  }, [clientData]);
 
   return (
     <StyledClient
@@ -37,11 +31,11 @@ export const Client = ({ clientData }) => {
     >
       <div className="flex items-center user-info openClient">
         <img src={smallAvatar} alt="" className="small-avatar openClient" />
-        <div className="name openClient">{clientData?.name ?? "-"}</div>
-        <Id id={clientData?.id} />
+        <div className="name openClient">{clientData?.client?.name ?? "-"}</div>
+        <Id id={clientData?.client?.id} />
       </div>
       <Phones
-        phones={clientData?.phones?.map(
+        phones={clientData?.client?.phones?.map(
           ({ id_phone_code, phone, code, telegram, viber }) => ({
             phone: `${
               code ?? data?.find(({ id }) => id === id_phone_code)?.code ?? ""
@@ -52,7 +46,7 @@ export const Client = ({ clientData }) => {
         )}
       />
       <div className="divider openClient"></div>
-      <Comment comment={requestData?.[id]?.General_field_group?.comment} />
+      <Comment comment={clientData?.comment_group} />
       <div className="divider openClient"></div>
       <ArrowIcon className="arrow-more openClient" />
     </StyledClient>

@@ -31,6 +31,7 @@ const Selections = () => {
   const [objects, setObjects] = useState([]);
   const [selected, setSelected] = useState([]);
   const [filters, setFilters] = useState(INIT_FILTERS);
+  const [applyedFilters, setApplyedFilters] = useState({});
   const [filtersFields, setFilterFields] = useState([]);
   const filterActive = useRef(false);
   const [allCount, setAllCount] = useState(0);
@@ -112,7 +113,11 @@ const Selections = () => {
       getSelections(sendData).then((resp) => {
         isLoading.current = false;
         setLoading(false);
-        setClientData(resp?.data?.client_info ?? null);
+        setClientData({
+          client: resp?.data?.client_info ?? null,
+          name_group: resp?.data?.name_group,
+          comment_group: resp?.data?.comment_group,
+        });
         handleResponse(
           resp,
           () => {
@@ -196,6 +201,7 @@ const Selections = () => {
     filterActive.current = isApply;
     currentPage.current = 0;
     setIsAllPages(false);
+    setApplyedFilters(isApply ? filters : {});
     if (!isApply) {
       setFilters(INIT_FILTERS);
       setFilterFields([]);
@@ -307,7 +313,7 @@ const Selections = () => {
         clientData={clientData}
         showClient={showClient}
         // onFavorite={handleToggleFavoriteStatus}
-        filters={filters}
+        filters={applyedFilters}
       />
     </StyledSelections>
   );
