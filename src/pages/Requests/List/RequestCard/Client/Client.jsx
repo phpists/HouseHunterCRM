@@ -40,7 +40,7 @@ const StyledClient = styled.div`
   }
   @media (min-width: 700px) {
     .phones-wrapper {
-      width: 200px;
+      width: 150px;
     }
   }
   @media (min-width: 1400px) {
@@ -49,13 +49,13 @@ const StyledClient = styled.div`
     justify-content: space-between;
     width: 200px;
     .phones-wrapper {
-      width: 130px;
+      width: 120px;
     }
   }
   @media (min-width: 1500px) {
     width: 250px;
     .phones-wrapper {
-      width: 220px;
+      width: 180px;
     }
   }
 

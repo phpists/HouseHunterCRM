@@ -124,6 +124,16 @@ const StyledRanger = styled.div`
     opacity: 0;
     transition: all 0s;
   }
+  ${({ big }) =>
+    big &&
+    `
+     background: rgba(255, 255, 255, 0.05);
+    .first-angle,
+    .second-angle {
+      opacity: 1;
+    }
+  `}
+
   &:hover {
     background: rgba(255, 255, 255, 0.05);
     .first-angle,

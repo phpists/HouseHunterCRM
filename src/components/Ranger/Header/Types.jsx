@@ -12,17 +12,16 @@ export const Types = ({ types, typeValue, onChangeType, typeError }) => {
     >
       <span className="first-angle" />
       <span className="second-angle" />
-      {open &&
-        types
-          .filter((t) => t?.value !== typeValue)
-          .map((t, i) => (
-            <div key={i} className="opt" onClick={() => onChangeType(t.value)}>
-              {t?.title}
-            </div>
-          ))}
-      <div>
-        {types?.find((t) => t.value === typeValue)?.title ?? "Оберіть тип"}
-      </div>
+      {true &&
+        types.map((t, i) => (
+          <div
+            key={i}
+            className={`option opt ${typeValue === t.value && "active"}`}
+            onClick={() => onChangeType(t.value)}
+          >
+            {t?.title}
+          </div>
+        ))}
     </StyledTypes>
   );
 };
@@ -36,13 +35,13 @@ const StyledTypes = styled.div`
   border-radius: 0 0 0 7px;
   transition: all 0.3s;
   div {
-    color: ${({ error }) => (error ? "red" : "#fff")};
+    color: ${({ error }) => (error ? "red" : "rgba(255,255,255, 0.4)")};
     text-align: center;
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
     font-weight: 400;
-    line-height: normal;
+    line-height: 0.5;
     letter-spacing: 0.22px;
     text-transform: uppercase;
     opacity: 1;
@@ -51,9 +50,21 @@ const StyledTypes = styled.div`
     &:hover {
       opacity: 1;
     }
+    &.active {
+      border: 1px solid #808080;
+      z-index: 10;
+      position: relative;
+    }
   }
   .opt {
-    margin-right: 15px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  .option {
+    padding: 4px;
+    border-radius: 4px;
+    z-index: 10;
+    height: 16px;
   }
   .first-angle {
     z-index: 2;
@@ -62,8 +73,8 @@ const StyledTypes = styled.div`
       content: "";
       display: block;
       position: absolute;
-      bottom: 14px;
-      left: -15.299999999999997px;
+      bottom: 20px;
+      left: -16.3px;
       width: 0;
       height: 0;
       border-left: 13px solid transparent;
@@ -75,7 +86,7 @@ const StyledTypes = styled.div`
       content: "";
       display: block;
       position: absolute;
-      bottom: -4.2px;
+      bottom: -1.22px;
       left: -24px;
       height: 26px;
       width: 24px;
