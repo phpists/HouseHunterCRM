@@ -13,6 +13,7 @@ import { Tags } from "./Tags";
 import prevIcon from "../../../assets/images/prev-arrow.svg";
 import nextIcon from "../../../assets/images/next-arrow.svg";
 import { Counter } from "../../../pages/Client/Object/Maininfo/Slider/Counter";
+import { Status } from "./Status";
 
 const settings = {
   dots: false,
@@ -24,7 +25,7 @@ const settings = {
   touchMove: true,
 };
 
-export const Slider = ({ photos, data }) => {
+export const Slider = ({ photos, data, showLike }) => {
   const sliderRef = useRef(null);
   const slickRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(1);
@@ -71,6 +72,7 @@ export const Slider = ({ photos, data }) => {
             <Counter current={currentSlide} total={photos.length} />
           ) : null}
           <Tags data={data} />
+          {showLike && <Status data={data} />}
           {photos?.length === 0 ? (
             <Slide photo={noPhoto} active empty onOpen={() => null} />
           ) : (

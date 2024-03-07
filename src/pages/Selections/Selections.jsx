@@ -83,7 +83,7 @@ const Selections = () => {
       let sendData = {
         id_requst_group: id,
         current_page: currentPage.current,
-        item_on_page: 10,
+        item_on_page: 30,
       };
 
       if (isReset) {
@@ -93,13 +93,15 @@ const Selections = () => {
       }
 
       if (filterActive.current) {
-        sendData = { ...sendData, filters };
+        const { like, dislike, ...otherFilters } = filters;
+        sendData = { ...sendData, otherFilters };
       }
 
       if (showObjectHide && filterActive.current) {
+        const { like, dislike, ...otherFilters } = filters;
         sendData = {
           ...sendData,
-          filters: { ...filters, show_object_hide: "1" },
+          filters: { ...otherFilters, show_object_hide: "1" },
         };
       } else if (showObjectHide) {
         sendData = { ...sendData, filters: { show_object_hide: "1" } };
@@ -111,7 +113,6 @@ const Selections = () => {
         isLoading.current = false;
         setLoading(false);
         setClientData(resp?.data?.client_info ?? null);
-        console.log(resp);
         handleResponse(
           resp,
           () => {
@@ -306,6 +307,7 @@ const Selections = () => {
         clientData={clientData}
         showClient={showClient}
         // onFavorite={handleToggleFavoriteStatus}
+        filters={filters}
       />
     </StyledSelections>
   );

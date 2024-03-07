@@ -23,6 +23,7 @@ export const List = ({
   actionLoading,
   clientData,
   showClient,
+  filters,
 }) => {
   const { data: accessData } = useGetAccessQuery();
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
@@ -51,34 +52,49 @@ export const List = ({
       )}
       <StyledList ref={innerRef}>
         {clientData && showClient ? <Client clientData={clientData} /> : null}
-        {data?.length === 0 || actionLoading ? (
+        {data?.length === 0 ||
+        actionLoading ||
+        data.filter((d) =>
+          filters?.only_choise_obj === "1"
+            ? (filters?.like === "1" && d?.like) ||
+              (filters?.dislike === "1" && !d?.like)
+            : true
+        )?.length === 0 ? (
           <Empty loading={loading || actionLoading} />
         ) : (
-          data.map((d, i) => (
-            <ObjectCard
-              key={d?.id}
-              selected={!!selected.find((j) => j === d?.id)}
-              onSelect={() => onSelect(d?.id)}
-              data={d}
-              onToggleFavoriteStatus={
-                onFavorite ? () => onFavorite(d?.id) : null
-              }
-              // onFindSimilar={() => onFindSimilar(d)}
-              isEdit={handleCheckAccess(accessData, "objects", "edit")}
-              onHide={() => onHide(d?.id)}
-              isHideObjects={isHideObjects}
-              onOpenTagsHistory={() =>
-                setOpenHistoryModal({
-                  id: d?.id,
-                  isStreetBase: d?.obj_street_base === "1",
-                })
-              }
-              onOpenCommetHistory={() =>
-                setOpenCommentHistoryModal({ id: d?.id })
-              }
-              onAddToSelection={() => setOpenAddModal(d?.id)}
-            />
-          ))
+          data
+            .filter((d) =>
+              filters?.only_choise_obj === "1"
+                ? (filters?.like === "1" && d?.like) ||
+                  (filters?.dislike === "1" && !d?.like)
+                : true
+            )
+            .map((d, i) => (
+              <ObjectCard
+                key={d?.id}
+                selected={!!selected.find((j) => j === d?.id)}
+                onSelect={() => onSelect(d?.id)}
+                data={d}
+                onToggleFavoriteStatus={
+                  onFavorite ? () => onFavorite(d?.id) : null
+                }
+                // onFindSimilar={() => onFindSimilar(d)}
+                isEdit={handleCheckAccess(accessData, "objects", "edit")}
+                onHide={() => onHide(d?.id)}
+                isHideObjects={isHideObjects}
+                onOpenTagsHistory={() =>
+                  setOpenHistoryModal({
+                    id: d?.id,
+                    isStreetBase: d?.obj_street_base === "1",
+                  })
+                }
+                onOpenCommetHistory={() =>
+                  setOpenCommentHistoryModal({ id: d?.id })
+                }
+                onAddToSelection={() => setOpenAddModal(d?.id)}
+                showLike
+              />
+            ))
         )}
         <div className="loader relative">
           {loading && data?.length > 0 && (

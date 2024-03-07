@@ -164,6 +164,26 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
           )
         }
       />
+      {filters?.only_choise_obj === "1" ? (
+        <>
+          <Divider />
+          <ToggleOption
+            label="Лайк"
+            value={filters?.like === "1"}
+            onChange={() =>
+              onChangeFilter("like", filters?.like === "1" ? "0" : "1")
+            }
+          />
+          <Divider />
+          <ToggleOption
+            label="Дизлайк"
+            value={filters?.dislike === "1"}
+            onChange={() =>
+              onChangeFilter("dislike", filters?.dislike === "1" ? "0" : "1")
+            }
+          />
+        </>
+      ) : null}
       <Divider />
       <SelectTags
         label="Теги"

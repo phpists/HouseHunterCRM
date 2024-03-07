@@ -55,12 +55,14 @@ export const FieldCard = ({
         onChangeCurrency={(val) => onChangeField("price_currency", val)}
         error={
           !!errors?.find((e) => e === "price_min") ||
-          !!errors?.find((e) => e === "price_max")
+          !!errors?.find((e) => e === "price_max") ||
+          !!errors?.find((e) => e === "price_for")
         }
         isType={!!fields?.find((f) => f?.field === "price_for")}
         rubricId={rubricId}
         typeValue={data?.price_for}
         onChangeType={(val) => onChangeField("price_for", val)}
+        typeError={!!errors?.find((e) => e === "price_for")}
       />
       <Divider />
       <TagsFilter

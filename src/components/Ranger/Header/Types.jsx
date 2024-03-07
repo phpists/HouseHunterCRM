@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 
-export const Types = ({ types, typeValue, onChangeType }) => {
+export const Types = ({ types, typeValue, onChangeType, typeError }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <StyledTypes onClick={() => setOpen(!open)} className="flex items-center">
-      <div className="first-angle" />
-      <div className="second-angle" />
+    <StyledTypes
+      onClick={() => setOpen(!open)}
+      className="flex items-center"
+      error={typeError}
+    >
+      <span className="first-angle" />
+      <span className="second-angle" />
       {open &&
         types
           .filter((t) => t?.value !== typeValue)
@@ -32,7 +36,7 @@ const StyledTypes = styled.div`
   border-radius: 0 0 0 7px;
   transition: all 0.3s;
   div {
-    color: #fff;
+    color: ${({ error }) => (error ? "red" : "#fff")};
     text-align: center;
     font-family: Open Sans;
     font-size: 11px;
@@ -41,7 +45,7 @@ const StyledTypes = styled.div`
     line-height: normal;
     letter-spacing: 0.22px;
     text-transform: uppercase;
-    opacity: 0.3;
+    opacity: 1;
     transition: all 0.3s;
     cursor: pointer;
     &:hover {
@@ -92,7 +96,7 @@ const StyledTypes = styled.div`
       content: "";
       display: block;
       position: absolute;
-      bottom: -2px;
+      bottom: -5px;
       left: 13.700000000000003px;
       width: 0;
       height: 0;

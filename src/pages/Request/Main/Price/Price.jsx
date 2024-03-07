@@ -11,6 +11,7 @@ export const Price = ({
   rubricId,
   typeValue,
   onChangeType,
+  typeError,
 }) => {
   return (
     <StyledPrice
@@ -57,6 +58,7 @@ export const Price = ({
         onChange={onChange}
         currencyValue={currency}
         onChangeCurrency={(val) => onChangeCurrency(val)}
+        typeError={typeError}
       />
     </StyledPrice>
   );

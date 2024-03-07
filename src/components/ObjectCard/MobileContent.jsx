@@ -24,6 +24,7 @@ export const MobileContent = ({
   onOpenCommetHistory,
   onDelete,
   searchTag,
+  showLike,
 }) => (
   <StyledMobileContent>
     <Header />
@@ -31,6 +32,7 @@ export const MobileContent = ({
     <Slider
       photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)}
       data={data}
+      showLike={showLike}
     />
     <CardDescription text={data?.description} />
     <Footer createDate={data?.dt_add} />

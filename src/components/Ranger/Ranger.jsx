@@ -35,6 +35,7 @@ export const Ranger = ({
   className,
   typeValue,
   onChangeType,
+  typeError,
 }) => {
   const { getTrackProps, handles, segments } = useRanger({
     values,
@@ -55,6 +56,7 @@ export const Ranger = ({
         mainTypes={mainTypes}
         typeValue={typeValue}
         onChangeType={onChangeType}
+        typeError={typeError}
       />
       {big && (
         <Statistic

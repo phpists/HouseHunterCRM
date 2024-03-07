@@ -5,7 +5,6 @@ import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
 export const Dropdown = ({ data, value, onChange }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
 
-  console.log(data);
   return (
     <StyledDropdown className="hide-scroll">
       {data?.length === 0 ? (

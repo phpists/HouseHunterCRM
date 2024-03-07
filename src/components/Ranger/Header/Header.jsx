@@ -1,7 +1,13 @@
 import { styled } from "styled-components";
 import { Types } from "./Types";
 
-export const Header = ({ label, mainTypes, typeValue, onChangeType }) => (
+export const Header = ({
+  label,
+  mainTypes,
+  typeValue,
+  onChangeType,
+  typeError,
+}) => (
   <StyledHeader className="flex items-center justify-between">
     <div className="label">{label}</div>
     {mainTypes?.length > 0 && (
@@ -9,6 +15,7 @@ export const Header = ({ label, mainTypes, typeValue, onChangeType }) => (
         types={mainTypes}
         typeValue={typeValue}
         onChangeType={onChangeType}
+        typeError={typeError}
       />
     )}
   </StyledHeader>

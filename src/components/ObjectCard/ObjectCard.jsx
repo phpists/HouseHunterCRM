@@ -22,6 +22,7 @@ export const ObjectCard = memo(
     onOpenCommetHistory,
     onDelete,
     searchTag,
+    showLike,
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
     const { ref, inView } = useInView({ triggerOnce: true });
@@ -66,6 +67,7 @@ export const ObjectCard = memo(
             onOpenCommetHistory={onOpenCommetHistory}
             onDelete={onDelete}
             searchTag={searchTag}
+            showLike={showLike}
           />
         ) : (
           <MobileContent
@@ -83,6 +85,7 @@ export const ObjectCard = memo(
             onOpenCommetHistory={onOpenCommetHistory}
             onDelete={onDelete}
             searchTag={searchTag}
+            showLike={showLike}
           />
         )}
       </StyledObjectCard>

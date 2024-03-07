@@ -20,6 +20,7 @@ export const DesktopContent = ({
   onOpenCommetHistory,
   onDelete,
   searchTag,
+  showLike,
 }) => {
   const [currency, setCurrency] = useState(1);
 
@@ -30,6 +31,7 @@ export const DesktopContent = ({
       <Slider
         photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)}
         data={data}
+        showLike={showLike}
       />
       <MainInfo
         data={data}
