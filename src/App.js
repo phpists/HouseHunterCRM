@@ -42,7 +42,6 @@ export const App = () => {
     getProfile().then((resp) => {
       loginUser(resp?.data?.data);
       setLoad(true);
-      data && refetch();
       setTimeout(() => setLoading(false), 1500);
       refetchCompanyInfo();
     });

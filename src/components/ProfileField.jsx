@@ -11,6 +11,8 @@ import { PhoneInput } from "./PhoneInput";
 import { Calendar } from "./Calendar/Calendar";
 import { ReactComponent as CalendarIcon } from "../assets/images/calendar.svg";
 import ReactInputMask from "react-input-mask";
+import { ReactComponent as EditIcon } from "../assets/images/edit-company.svg";
+import { ReactComponent as CheckIcon } from "../assets/images/check.svg";
 
 export const ProfileField = ({
   value,
@@ -124,122 +126,130 @@ export const ProfileField = ({
       {!readOnly && (
         <CheckboxIcon onClick={handleToggleActive} className="check-icon" />
       )}
-      {active ? (
-        <>
-          {phone ? (
-            <PhoneInput
-              phoneCode={phoneCode}
-              phonesCodes={phonesCodes}
-              onChangePhoneCode={handleChangePhoneCode}
-              value={value}
-              onChange={onChange}
-              inputClassName="value"
-              onKeyDown={handlePressKey}
-              //   onBlur={() => {
-              //     setActive(false);
-              //     setOpen(false);
-              //     setCalendarOpen(false);
-              //   }}
-            />
-          ) : textarea ? (
-            <textarea
-              className="value hide-scroll"
-              defaultValue={value}
-              ref={textareaRef}
-              onChange={textAreaAdjust}
-              placeholder={placeholder}
-              autoFocus
-              onKeyDown={handlePressKey}
-              //   onBlur={() => {
-              //     setActive(false);
-              //     setOpen(false);
-              //     setCalendarOpen(false);
-              //   }}
-            />
-          ) : (type === "date" && calendarOpen) || onlyCalendar ? (
-            <span
-              className="value hide-scroll"
-              onClick={() => {
-                !active && !readOnly && setActive(true);
-                setOpen(!open);
-              }}
-            >
-              {handleFormatDate(value, true)}
-            </span>
-          ) : type === "date" ? (
-            <ReactInputMask
-              mask={"99.99.9999"}
-              className="value"
-              value={value}
-              placeholder={placeholder}
-              onChange={(e) => onChange(e.target.value)}
-              autoFocus
-              onKeyDown={(e) => {
-                if (e?.keyCode === 13) {
-                  setOpen(false);
-                  setActive(false);
-                  onSave && onSave();
+      <div className="flex items-center justify-between">
+        {active ? (
+          <>
+            {phone ? (
+              <PhoneInput
+                phoneCode={phoneCode}
+                phonesCodes={phonesCodes}
+                onChangePhoneCode={handleChangePhoneCode}
+                value={value}
+                onChange={onChange}
+                inputClassName="value"
+                onKeyDown={handlePressKey}
+                //   onBlur={() => {
+                //     setActive(false);
+                //     setOpen(false);
+                //     setCalendarOpen(false);
+                //   }}
+              />
+            ) : textarea ? (
+              <textarea
+                className="value hide-scroll"
+                defaultValue={value}
+                ref={textareaRef}
+                onChange={textAreaAdjust}
+                placeholder={placeholder}
+                autoFocus
+                onKeyDown={handlePressKey}
+                //   onBlur={() => {
+                //     setActive(false);
+                //     setOpen(false);
+                //     setCalendarOpen(false);
+                //   }}
+              />
+            ) : (type === "date" && calendarOpen) || onlyCalendar ? (
+              <span
+                className="value hide-scroll"
+                onClick={() => {
+                  !active && !readOnly && setActive(true);
+                  setOpen(!open);
+                }}
+              >
+                {handleFormatDate(value, true)}
+              </span>
+            ) : type === "date" ? (
+              <ReactInputMask
+                mask={"99.99.9999"}
+                className="value"
+                value={value}
+                placeholder={placeholder}
+                onChange={(e) => onChange(e.target.value)}
+                autoFocus
+                onKeyDown={(e) => {
+                  if (e?.keyCode === 13) {
+                    setOpen(false);
+                    setActive(false);
+                    onSave && onSave();
+                  }
+                }}
+              />
+            ) : (
+              <input
+                className="value hide-scroll"
+                value={
+                  type === "date" && !calendarOpen
+                    ? handleFormatDate(value, true)
+                    : value
                 }
-              }}
-            />
-          ) : (
-            <input
-              className="value hide-scroll"
-              value={
-                type === "date" && !calendarOpen
-                  ? handleFormatDate(value, true)
-                  : value
-              }
-              placeholder={placeholder}
-              onChange={(e) =>
-                type === "number"
-                  ? Number(e.target.value) >= 0
+                placeholder={placeholder}
+                onChange={(e) =>
+                  type === "number"
+                    ? Number(e.target.value) >= 0
+                      ? onChange(e.target.value)
+                      : null
+                    : onChange && type !== "date"
                     ? onChange(e.target.value)
                     : null
-                  : onChange && type !== "date"
-                  ? onChange(e.target.value)
-                  : null
-              }
-              type={type ?? "text"}
-              autoFocus
-              onKeyDown={handlePressKey}
-              onWheel={(e) => {
-                e.target.blur();
-                setActive(false);
-                setOpen(false);
-                setCalendarOpen(false);
-                onBlur && onBlur();
-              }}
-              //   onBlur={() => {
-              //     setActive(false);
-              //     setOpen(false);
-              //     setCalendarOpen(false);
-              //   }}
-            />
-          )}
-        </>
-      ) : (
-        <div className="value hide-scroll">
-          {phone && value?.length > 0
-            ? `${
-                phonesCodes?.find(({ id }) => id === phoneCode)?.code
-                  ? phonesCodes?.find(({ id }) => id === phoneCode)?.code
-                  : phonesCodes?.find(({ code }) => code === phoneCode)?.code ??
-                    ""
-              }${handleRemovePhoneMask(value)}`
-            : value?.length > 0
-            ? value?.split("\r\n")?.map((v) => <div>{v}</div>)
-            : type === "date"
-            ? handleFormatDate(value, true)
-            : placeholder}
-        </div>
-      )}
+                }
+                type={type ?? "text"}
+                autoFocus
+                onKeyDown={handlePressKey}
+                onWheel={(e) => {
+                  e.target.blur();
+                  setActive(false);
+                  setOpen(false);
+                  setCalendarOpen(false);
+                  onBlur && onBlur();
+                }}
+                //   onBlur={() => {
+                //     setActive(false);
+                //     setOpen(false);
+                //     setCalendarOpen(false);
+                //   }}
+              />
+            )}
+          </>
+        ) : (
+          <div className="value hide-scroll">
+            {phone && value?.length > 0
+              ? `${
+                  phonesCodes?.find(({ id }) => id === phoneCode)?.code
+                    ? phonesCodes?.find(({ id }) => id === phoneCode)?.code
+                    : phonesCodes?.find(({ code }) => code === phoneCode)
+                        ?.code ?? ""
+                }${handleRemovePhoneMask(value)}`
+              : value?.length > 0
+              ? value?.split("\r\n")?.map((v) => <div>{v}</div>)
+              : type === "date"
+              ? handleFormatDate(value, true)
+              : placeholder}
+          </div>
+        )}
+        {readOnly || open ? null : (
+          <div
+            className="edit-btn flex items-center justify-center"
+            // onClick={handleToggleEdit}
+          >
+            <EditIcon className="edit-icon" />
+          </div>
+        )}
+      </div>
       {!big && (
         <>
           <div className="label">{label}</div>
-          <div className="label label-hover">
-            {readOnly || active ? label : "Змінити"}
-          </div>
+          <div className="label label-hover">{label}</div>
         </>
       )}
       {open && active && (
@@ -366,6 +376,10 @@ const StyledProfileField = styled.button`
     .value {
       filter: blur(0px);
     }
+    .edit-btn {
+      opacity: 0.4;
+      transform: translateX(0px);
+    }
   }
   .check-icon {
     position: absolute;
@@ -428,5 +442,29 @@ const StyledProfileField = styled.button`
     max-width: 320px;
     left: 0;
     z-index: 1000;
+  }
+  .edit-btn {
+    opacity: 0.4;
+    border-radius: 8px;
+    width: 32px;
+    transition: all 0.3s;
+    height: 32px;
+    cursor: pointer;
+    margin-left: 10px;
+    z-index: 10;
+    flex-shrink: 0;
+    ${({ edit }) => !edit && " opacity: 0; transform: translateX(-10px);"}
+    &:hover {
+      background: rgba(255, 255, 255, 0.2) !important;
+      opacity: 1 !important;
+    }
+  }
+  svg {
+    flex-shrink: 0;
+  }
+  .edit-icon {
+    path {
+      fill: #fff !important;
+    }
   }
 `;
