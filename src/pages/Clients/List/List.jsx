@@ -3,13 +3,11 @@ import { Card } from "./Card/Card";
 import { Empty } from "../../../components/Empty/Empty";
 import { useState } from "react";
 import { Confirm } from "../../../components/Confirm/Confirm";
-import {
-  useGetAccessQuery,
-  useGetPhonesCodesQuery,
-} from "../../../store/auth/auth.api";
+import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
 import { handleCheckAccess } from "../../../utilits";
 import { Loader } from "../../../components/Loader";
 import { EditComment } from "./EditComment";
+import { useAppSelect } from "../../../hooks/redux";
 
 export const List = ({
   selected,
@@ -25,7 +23,7 @@ export const List = ({
 }) => {
   const [deleteModal, setDeleteModal] = useState(null);
   const [editComment, setEditComment] = useState(false);
-  const { data: accessData } = useGetAccessQuery();
+  const { accessData } = useAppSelect((state) => state.auth);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
 
   const handleOpenDeleteModal = (id) => setDeleteModal(id);

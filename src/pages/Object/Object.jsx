@@ -97,6 +97,7 @@ const ObjectPage = () => {
     if (fieldName === "id_rubric") {
       const newData = {
         ...INIT_DATA,
+        dt_end_agreement: data?.dt_end_agreement ?? undefined,
         id_rubric: value,
         id_location: data?.id_location ?? "",
       };

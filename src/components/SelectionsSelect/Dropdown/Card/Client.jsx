@@ -5,7 +5,9 @@ export const Client = ({ name, phone }) => (
   <StyledClient className="flex items-center">
     <img src={avatar} alt="" />
     <div>
-      <div className="name">{name}</div>
+      <div className="name" title={name}>
+        {name}
+      </div>
       <div className="phone">{phone}</div>
     </div>
   </StyledClient>

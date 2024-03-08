@@ -6,9 +6,9 @@ import { styled } from "styled-components";
 import { SelectItems } from "../../../../components/SelectItems/SelectItems";
 import { useEffect, useState } from "react";
 import { AddClient } from "../../../../components/AddClient/AddClient";
-import { useGetAccessQuery } from "../../../../store/auth/auth.api";
 import { handleCheckAccess } from "../../../../utilits";
 import { useLocation } from "react-router-dom";
+import { useAppSelect } from "../../../../hooks/redux";
 
 export const Buttons = ({
   favoritesFilter,
@@ -31,7 +31,7 @@ export const Buttons = ({
 }) => {
   const { search } = useLocation();
   const [addClient, setAddClient] = useState(false);
-  const { data } = useGetAccessQuery();
+  const { accessData: data } = useAppSelect((state) => state.auth);
 
   useEffect(() => {
     setAddClient(search === "?create=true");

@@ -36,6 +36,19 @@ export const NotificationsDropdown = ({ data, open, closed, onClose }) => {
             onClose={() => onClose("objectLiquidity")}
           />
         )}
+      {data?.needs_moderation_after_adding_from_street_base &&
+        !closed.find(
+          (n) => n === "needs_moderation_after_adding_from_street_base"
+        ) && (
+          <Card
+            type="objects"
+            messages={["Потребують модерації"]}
+            link="/objects?moderationAfterStreetBase=true"
+            onClose={() =>
+              onClose("needs_moderation_after_adding_from_street_base")
+            }
+          />
+        )}
       {data?.requestDtDeadline &&
         !closed.find((n) => n === "requestDtDeadline") && (
           <Card

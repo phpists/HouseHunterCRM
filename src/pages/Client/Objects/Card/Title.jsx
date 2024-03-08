@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 export const Title = ({ title, className }) => (
-  <StyledTitle className={`${className}`}>
+  <StyledTitle className={`${className}`} title={title}>
     <span>{title}</span>
   </StyledTitle>
 );

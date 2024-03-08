@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Name = ({ name }) => (
-  <StyledName className="flex items-center">
+  <StyledName className="flex items-center" title={name}>
     <div className="name-title">Назва:</div> <span>{name}</span>
   </StyledName>
 );

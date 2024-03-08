@@ -110,7 +110,11 @@ export const WorkerModal = ({
     new Date(handleFromInputDate(profileData?.dt_birthday)).toString() ===
       "Invalid Date" && errorsData.push("dt_birthday");
 
-    if (profileData?.structure_level && !profileData?.structure_parent) {
+    if (
+      profileData?.structure_level &&
+      !profileData?.structure_parent &&
+      level !== 1
+    ) {
       errorsData.push("structure_parent");
     }
 

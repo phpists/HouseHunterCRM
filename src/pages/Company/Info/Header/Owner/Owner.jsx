@@ -9,7 +9,10 @@ export const Owner = ({ data }) => {
   return (
     <StyledOwner className="flex items-center">
       {/* <Status status={1} className="status-badge" /> */}
-      <div className="name">
+      <div
+        className="name"
+        title={`${user?.first_name ?? "-"} ${user?.last_name ?? "-"}`}
+      >
         {user?.first_name ?? "-"} {user?.last_name ?? "-"}
       </div>
       <Avatar photo={user?.photo} />

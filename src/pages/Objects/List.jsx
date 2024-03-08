@@ -12,6 +12,7 @@ import { ObjectCommentHistory } from "../../components/ObjectCommentHistory/Obje
 import { ObjectHistory } from "../../components/ObjectHistory/ObjectHistory";
 import { useLazyDeleteObjectQuery } from "../../store/objects/objects.api";
 import cogoToast from "cogo-toast";
+import { useAppSelect } from "../../hooks/redux";
 
 export const List = ({
   selected,
@@ -24,7 +25,7 @@ export const List = ({
   actionLoading,
   onDeleteSuccess,
 }) => {
-  const { data: accessData } = useGetAccessQuery();
+  const { accessData } = useAppSelect((state) => state.auth);
   const [openAddModal, setOpenAddModal] = useState(null);
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
   const [openHistoryPriceModal, setOpenHistoryPriceModal] = useState(null);

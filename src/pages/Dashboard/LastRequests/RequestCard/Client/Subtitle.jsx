@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Subtitle = ({ subtitle }) => (
-  <StyledSubtitle>{subtitle}</StyledSubtitle>
+  <StyledSubtitle title={subtitle}>{subtitle}</StyledSubtitle>
 );
 
 const StyledSubtitle = styled.div`

@@ -304,6 +304,29 @@ const Requests = () => {
     setRequests(updatedData);
   };
 
+  const handleOpenChat = (id) => {
+    const updatedData = Object.fromEntries(
+      Object.entries(requests).map((req) => {
+        const reqId = req[0];
+
+        if (reqId === id) {
+          const request = {
+            ...req[1],
+            General_field_group: {
+              ...req[1].General_field_group,
+              new_messege: "0",
+            },
+          };
+
+          return [reqId, request];
+        }
+        return req;
+      })
+    );
+    dataRef.current = updatedData;
+    setRequests(updatedData);
+  };
+
   useEffect(() => {
     if (!isFirstRender.current) {
       currentPage.current = 0;
@@ -388,6 +411,7 @@ const Requests = () => {
         loading={loading}
         actionLoading={actionLoading}
         onChangeComment={handleChangeComment}
+        onOpenChat={handleOpenChat}
       />
     </StyledRequests>
   );

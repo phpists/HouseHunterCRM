@@ -19,7 +19,7 @@ import {
 } from "../../../store/requests/requests.api";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
-import { useGetAccessQuery } from "../../../store/auth/auth.api";
+import { useAppSelect } from "../../../hooks/redux";
 
 export const Objects = ({ selected, onSelect }) => {
   const [openInfo, setOpenInfo] = useState(false);
@@ -32,7 +32,7 @@ export const Objects = ({ selected, onSelect }) => {
   const [addRequestsToFavorites] = useLazyAddToFavoriteQuery();
   const [refreshObjects, setRefreshObjects] = useState(false);
   const [refreshRequests, setRefreshRequests] = useState(false);
-  const { data: accessData } = useGetAccessQuery();
+  const { accessData } = useAppSelect((state) => state.auth);
   const [allObjectsIds, setAllOjectsIds] = useState([]);
   const [allRequestsIds, setAllRequestsIds] = useState([]);
 

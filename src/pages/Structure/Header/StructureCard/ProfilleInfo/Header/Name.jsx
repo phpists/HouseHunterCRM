@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
 export const Name = ({ name }) => (
-  <StyledName className="notClickable">{name}</StyledName>
+  <StyledName className="notClickable" title={name}>
+    {name}
+  </StyledName>
 );
 
 const StyledName = styled.div`

@@ -405,6 +405,16 @@ const Objects = () => {
       setFilters(lastFilters);
       filterActive.current = true;
       setUpdateData(true);
+    } else if (filterApply === "?moderationAfterStreetBase") {
+      setFilters({
+        company_object: {
+          show_only: "only_my",
+          show_street_base_company: "1",
+          not_actual: "1",
+        },
+      });
+      filterActive.current = true;
+      setUpdateData(true);
     } else {
       setFilters(DEFAULT_FILTERS);
       filterActive.current = true;

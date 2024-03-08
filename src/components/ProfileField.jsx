@@ -224,7 +224,7 @@ export const ProfileField = ({
             )}
           </>
         ) : (
-          <div className="value hide-scroll">
+          <div className="value hide-scroll" title={value ?? ""}>
             {phone && value?.length > 0
               ? `${
                   phonesCodes?.find(({ id }) => id === phoneCode)?.code

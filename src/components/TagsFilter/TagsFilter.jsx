@@ -4,6 +4,7 @@ import { Tag } from "./Tag";
 import { Count } from "./Count";
 import { motion } from "framer-motion";
 import { ReactComponent as SearchIcon } from "../../assets/images/search.svg";
+import cogoToast from "cogo-toast";
 
 export const TagsFilter = ({
   label,
@@ -19,8 +20,16 @@ export const TagsFilter = ({
 
   const handleAddTag = (e) => {
     if (e.keyCode === 13 && Array.isArray(tags)) {
-      onChange([...tags, value]);
-      setValue("");
+      const isExist = !!tags?.find((t) => t === value);
+      if (isExist) {
+        cogoToast.error("Значення вже додано", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      } else {
+        onChange([...tags, value]);
+        setValue("");
+      }
     }
   };
 

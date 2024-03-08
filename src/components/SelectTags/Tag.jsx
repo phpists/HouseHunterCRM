@@ -13,6 +13,7 @@ export const Tag = ({ title, isFirst, type, isHide, onRemove, viewOnly }) => (
       padding: isHide ? 0 : "1px 4px 2px 4px",
       marginRight: isFirst ? 0 : isHide ? 0 : "4px",
     }}
+    title={title}
   >
     <span className="notClickable">
       {title?.length > 35 ? `${title.substring(0, 35)}...` : title}

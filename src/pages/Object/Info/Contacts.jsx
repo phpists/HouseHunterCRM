@@ -19,7 +19,10 @@ export const Contacts = () => {
       <div className="title">Контакти клієнта</div>
       <div className="flex items-center contacts-wrapper">
         <div className="client-info">
-          <div className="name">
+          <div
+            className="name"
+            title={`${data?.data?.first_name} ${data?.data?.last_name}`}
+          >
             {data?.data?.first_name} {data?.data?.last_name}
           </div>
           <div className="label">Клієнт</div>

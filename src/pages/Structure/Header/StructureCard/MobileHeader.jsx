@@ -5,6 +5,7 @@ import { Modal } from "../CreateRole/Modal/Modal";
 import { useGetAccessQuery } from "../../../../store/auth/auth.api";
 import { handleCheckAccess } from "../../../../utilits";
 import { ToggleShowButton } from "../ToggleButton";
+import { useAppSelect } from "../../../../hooks/redux";
 
 export const MobileHeader = ({
   onToggleShowNotStructureWorkers,
@@ -12,7 +13,7 @@ export const MobileHeader = ({
 }) => {
   const [openCreateWorker, setOpenCreateWorker] = useState(false);
   const [openRoles, setOpenRoles] = useState(false);
-  const { data: accessData } = useGetAccessQuery();
+  const { accessData } = useAppSelect((state) => state.auth);
 
   return (
     <StyledMobileHeader>

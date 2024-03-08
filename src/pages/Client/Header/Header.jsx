@@ -17,13 +17,14 @@ import cogoToast from "cogo-toast";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
 import { useGetAccessQuery } from "../../../store/auth/auth.api";
 import { SendModal } from "../../Clients/SendModal";
+import { useAppSelect } from "../../../hooks/redux";
 
 export const Header = ({ favorite }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [deleteClient] = useLazyDeleteCientQuery();
   const [deleteModal, setDeleteModal] = useState();
-  const { data: accessData } = useGetAccessQuery();
+  const { accessData } = useAppSelect((state) => state.auth);
   const [addClientToFavorite] = useLazyAddClientToFavoriteQuery();
   const [status, setStatus] = useState(false);
   const [sendClient, setSendClient] = useState(null);

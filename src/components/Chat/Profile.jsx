@@ -9,7 +9,9 @@ export const Profile = ({ small, rieltor }) => {
     <StyledProfile small={small} className="flex items-center">
       <Avatar small={small} photo={rieltor?.photo} />
       <div className="profile-info">
-        <div className="name">{rieltor?.name ?? "-"}</div>
+        <div className="name" title={rieltor?.name ?? "-"}>
+          {rieltor?.name ?? "-"}
+        </div>
         <div className="role">
           {rieltor?.phones?.slice(0, 2).map((p) => {
             const phone = `${

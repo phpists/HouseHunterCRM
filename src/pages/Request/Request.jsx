@@ -431,10 +431,12 @@ const Request = () => {
                   ? {
                       disable_cooperation:
                         resp?.data[id]?.General_field_group
-                          ?.disable_cooperation,
+                          ?.disable_cooperation === "1"
+                          ? "1"
+                          : undefined,
                       sorting_id:
                         resp?.data[id]?.General_field_group
-                          ?.street_base_sorting_id,
+                          ?.street_base_sorting_id ?? undefined,
                     }
                   : undefined,
               mls_object:

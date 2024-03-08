@@ -13,8 +13,8 @@ import {
   useLazyAddToFavoritesQuery,
   useLazyDeleteObjectQuery,
 } from "../../../store/objects/objects.api";
-import { useGetAccessQuery } from "../../../store/auth/auth.api";
 import { ToClientButton } from "./ToClientButton";
+import { useAppSelect } from "../../../hooks/redux";
 
 export const Header = ({ onSave, favorite, onToggleFavorite, loading }) => {
   const { id } = useParams();
@@ -22,7 +22,7 @@ export const Header = ({ onSave, favorite, onToggleFavorite, loading }) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteObject] = useLazyDeleteObjectQuery();
   const [addToFavorites] = useLazyAddToFavoritesQuery();
-  const { accessData } = useGetAccessQuery();
+  const { accessData } = useAppSelect((state) => state.auth);
 
   const handleDeleteRequest = () => {
     deleteObject([id]).then((resp) =>

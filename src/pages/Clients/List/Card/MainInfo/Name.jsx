@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const Name = ({ name }) => <StyledName>{name}</StyledName>;
+export const Name = ({ name }) => <StyledName title={name}>{name}</StyledName>;
 
 const StyledName = styled.div`
   margin-right: 10px;

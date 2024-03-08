@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { Comments } from "./Comments";
 import { CopyLink } from "../../../../../components/CopyLink";
 
-export const Buttons = ({ onOpenChat, idGroup }) => (
+export const Buttons = ({ onOpenChat, idGroup, isNewMessage }) => (
   <StyledButtons className="flex item-center bts">
     <CopyLink
       className="copy-btn"
       link={`https://selection.house-hunter.info/?id=${idGroup}`}
     />
-    <Comments onClick={onOpenChat} />
+    <Comments onClick={onOpenChat} isNewMessage={isNewMessage} />
   </StyledButtons>
 );
 

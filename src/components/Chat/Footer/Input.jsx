@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { styled } from "styled-components";
 // import fileIcon from "../../../assets/images/file-text.svg";
 import imageIcon from "../../../assets/images/image.svg";
@@ -16,6 +16,7 @@ export const Input = ({
   onSend,
 }) => {
   const fileInputRef = useRef(null);
+  const textareaRef = useRef(null);
 
   const handleSelectPhoto = () => {
     if (fileInputRef.current && !loading) {
@@ -27,6 +28,28 @@ export const Input = ({
     const file = e?.target?.files[0];
 
     file && onSendFile(file);
+  };
+
+  const handleResizeTextarea = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = `${
+        value?.length === 0
+          ? 18
+          : textareaRef.current.scrollHeight > 54
+          ? 54
+          : textareaRef.current.scrollHeight
+      }px`;
+    }
+  };
+
+  useEffect(() => {
+    handleResizeTextarea();
+  }, [value]);
+
+  const textAreaAdjust = (e) => {
+    e.target.style.height = "1px";
+    e.target.style.height = e.target.scrollHeight + "px";
+    onChange(e.target.value);
   };
 
   return (
@@ -46,10 +69,11 @@ export const Input = ({
       <textarea
         type="text"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={textAreaAdjust}
         placeholder="Повідомлення"
         disabled={loading}
         onKeyDown={(e) => e?.keyCode === 13 && !e?.shiftKey && onSend()}
+        ref={textareaRef}
       />
       {!selectedMessage && (
         <>
@@ -72,7 +96,7 @@ export const Input = ({
 const StyledInput = styled.div`
   border-radius: 9px;
   background: #343434;
-  height: 40px;
+  min-height: 40px;
   padding: 12px 10px 10px 14px;
   color: #fff;
   text-overflow: ellipsis;

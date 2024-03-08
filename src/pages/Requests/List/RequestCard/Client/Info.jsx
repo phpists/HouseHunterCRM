@@ -9,7 +9,10 @@ export const Info = ({ firstName, lastName, idClient, avatar }) => (
   >
     <div className="avatar clickable" />
     <div>
-      <div className="name clickable">
+      <div
+        className="name clickable"
+        title={`${firstName ?? ""} ${lastName ?? ""}`}
+      >
         {firstName ?? ""} {lastName ?? ""}
       </div>
       <div className=" clickable">

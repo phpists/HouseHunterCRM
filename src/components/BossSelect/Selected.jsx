@@ -5,7 +5,9 @@ export const Selected = ({ onClick, selected, levels }) => (
   <StyledSelected className="flex items-center" img={img} onClick={onClick}>
     {/* <div className="avatar" /> */}
     <div>
-      <div className="name">{selected?.full_name ?? "-"}</div>
+      <div className="name" title={selected?.full_name}>
+        {selected?.full_name ?? "-"}
+      </div>
       <div className="role">{levels[selected?.structure_level - 1] ?? "-"}</div>
     </div>
   </StyledSelected>

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { ObjectCard } from "../../components/ObjectCard/ObjectCard";
-import { useGetAccessQuery } from "../../store/auth/auth.api";
 import { handleCheckAccess } from "../../utilits";
 import { Empty } from "../../components/Empty/Empty";
 import { ObjectHistory } from "../../components/ObjectHistory/ObjectHistory";
@@ -9,6 +8,7 @@ import { Loader } from "../../components/Loader";
 import { ObjectCommentHistory } from "../../components/ObjectCommentHistory/ObjectCommentHistory";
 import { AddToSelections } from "../Objects/AddToSelections";
 import { Client } from "./Client/Client";
+import { useAppSelect } from "../../hooks/redux";
 
 export const List = ({
   data,
@@ -25,7 +25,7 @@ export const List = ({
   showClient,
   filters,
 }) => {
-  const { data: accessData } = useGetAccessQuery();
+  const { accessData } = useAppSelect((state) => state.auth);
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
   const [openCommentHistoryModal, setOpenCommentHistoryModal] = useState(null);
   const [openAddModal, setOpenAddModal] = useState(null);

@@ -16,6 +16,7 @@ import {
 import cogoToast from "cogo-toast";
 import { BackButton } from "../../Clients/Header/BackButton";
 import { useGetAccessQuery } from "../../../store/auth/auth.api";
+import { useAppSelect } from "../../../hooks/redux";
 
 export const Header = ({
   selectedCount,
@@ -36,7 +37,7 @@ export const Header = ({
   const [addClient, setAddClient] = useState(false);
   const [addToFavorites] = useLazyAddToFavoritesQuery();
   const [deleteObject] = useLazyDeleteObjectQuery();
-  const { data } = useGetAccessQuery();
+  const { accessData: data } = useAppSelect((state) => state.auth);
   const [defaultFiltersOpen, setDefalultFiltersOpen] = useState({
     company: true,
   });

@@ -15,8 +15,8 @@ import { Confirm } from "../../../components/Confirm/Confirm";
 import { useNavigate, useParams } from "react-router-dom";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
-import { useGetAccessQuery } from "../../../store/auth/auth.api";
 import { BackButton } from "../../../components/BackButton";
+import { useAppSelect } from "../../../hooks/redux";
 
 export const Header = ({
   onSave,
@@ -31,7 +31,7 @@ export const Header = ({
   const [addToFavorites] = useLazyAddToFavoriteQuery();
   const [deleteRequest] = useLazyDeleteRequestQuery();
   const [deleteModal, setDeleteModal] = useState(false);
-  const { data: accessData } = useGetAccessQuery();
+  const { accessData } = useAppSelect((state) => state.auth);
 
   const handleDeleteRequest = () => {
     deleteRequest([id]).then((resp) =>

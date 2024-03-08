@@ -24,7 +24,11 @@ export const Objects = ({ idGroup, onOpenChat, data }) => {
           </div>
           <div className="flex items-center">
             <OpenButton onClick={() => navigate(`/selections/${idGroup}`)} />
-            <Buttons onOpenChat={onOpenChat} idGroup={idGroup} />
+            <Buttons
+              onOpenChat={onOpenChat}
+              idGroup={idGroup}
+              isNewMessage={data?.General_field_group?.new_messege === "1"}
+            />
           </div>
         </div>
       </div>

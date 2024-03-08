@@ -107,7 +107,7 @@ export const Dropdown = ({
           className="flex items-center justify-between"
           onClick={onAddToSelection}
         >
-          <span>Добавити в підбірку</span>{" "}
+          <span>Додати в підбірку</span>{" "}
           <Selection className="selection-icon" />
         </div>
       )}
@@ -116,7 +116,7 @@ export const Dropdown = ({
           className="flex items-center justify-between"
           onClick={handleAddStreetBaseObject}
         >
-          <span>Добавити обєкт до себе</span>{" "}
+          <span>Додати обєкт до себе</span>{" "}
           <ToObjectIcon className="selection-icon" />
         </div>
       )}

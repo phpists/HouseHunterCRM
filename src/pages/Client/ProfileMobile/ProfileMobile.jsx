@@ -18,10 +18,8 @@ import {
   handleResponse,
 } from "../../../utilits";
 import { useRef } from "react";
-import {
-  useGetAccessQuery,
-  useGetPhonesCodesQuery,
-} from "../../../store/auth/auth.api";
+import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
+import { useAppSelect } from "../../../hooks/redux";
 
 export const ProfileMobile = ({ data, onRefreshClientData }) => {
   const [open, setOpen] = useState(false);
@@ -34,7 +32,7 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
   const [getClientPhotos] = useLazyGetClientPhotosQuery();
   const [photos, setPhotos] = useState([]);
   const [isAccess, setIsAccess] = useState(false);
-  const { data: accessData } = useGetAccessQuery();
+  const { accessData } = useAppSelect((state) => state.auth);
 
   useEffect(() => {
     setIsAccess(handleCheckAccess(accessData, "clients", "edit"));

@@ -4,7 +4,9 @@ import armIcon from "../../../../assets/images/arm-emoji.png";
 export const PhoneInfo = ({ agent, agentPhone }) => (
   <StyledPhoneInfo className="flex items-start">
     <div>
-      <div className="name">{agent?.full_name ?? "-"}</div>
+      <div className="name" title={agent?.full_name ?? "-"}>
+        {agent?.full_name ?? "-"}
+      </div>
       <div className="phone">{agentPhone}</div>
     </div>
     <img src={armIcon} alt="" />

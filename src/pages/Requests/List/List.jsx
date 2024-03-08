@@ -6,10 +6,10 @@ import { handleCheckAccess, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
 import { Confirm } from "../../../components/Confirm/Confirm";
 import { Empty } from "../../../components/Empty/Empty";
-import { useGetAccessQuery } from "../../../store/auth/auth.api";
 import { Chat } from "../../../components/Chat/Chat";
 import { Loader } from "../../../components/Loader";
 import { EditComment } from "./EditComment";
+import { useAppSelect } from "../../../hooks/redux";
 
 export const List = ({
   selected,
@@ -21,12 +21,13 @@ export const List = ({
   loading,
   actionLoading,
   onChangeComment,
+  onOpenChat,
 }) => {
   const [deleteRequest] = useLazyDeleteRequestQuery();
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedChat, setSelectedChat] = useState(null);
-  const { data: accessData } = useGetAccessQuery();
+  const { accessData } = useAppSelect((state) => state.auth);
   const [editComment, setEditComment] = useState(false);
 
   const handleCancelDeleteRequest = () => {
@@ -49,6 +50,11 @@ export const List = ({
         setSelectedCard(null);
       })
     );
+  };
+
+  const handleOpenChat = (id) => {
+    setSelectedChat(id);
+    onOpenChat(id);
   };
 
   return (
@@ -90,7 +96,7 @@ export const List = ({
                 onFavorite={onFavorite}
                 isEdit={handleCheckAccess(accessData, "requests", "edit")}
                 isDelete={handleCheckAccess(accessData, "requests", "delete")}
-                onOpenChat={() => setSelectedChat(d[0])}
+                onOpenChat={() => handleOpenChat(d[0])}
                 onChangeComment={() =>
                   setEditComment({
                     id: d[1]?.id_group,

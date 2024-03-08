@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
 import { Title } from "./Title";
 import { Buttons } from "./Buttons/Buttons";
-import { Subtitle } from "./Subtitle";
 import { BackButton } from "./BackButton";
 import { SelectItems } from "../../../components/SelectItems/SelectItems";
 import {
@@ -13,7 +12,6 @@ import { useActions } from "../../../hooks/actions";
 import { useAppSelect } from "../../../hooks/redux";
 import cogoToast from "cogo-toast";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
-import { useGetAccessQuery } from "../../../store/auth/auth.api";
 
 export const Header = ({
   favoritesFilter,
@@ -39,7 +37,7 @@ export const Header = ({
   const { saveNewClientsCount } = useActions();
   const { newClientsCount } = useAppSelect((state) => state.clients);
   const [deleteClient] = useLazyDeleteCientQuery();
-  const { data: accessData } = useGetAccessQuery();
+  const { accessData } = useAppSelect((state) => state.auth);
 
   useEffect(() => {
     getNewClientsCount().then((resp) => saveNewClientsCount(resp?.data?.count));

@@ -30,7 +30,7 @@ export const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSideBarOpen] = useState(false);
-  const { loginUser, saveCompanyPhoto } = useActions();
+  const { loginUser, saveCompanyPhoto, saveAccess } = useActions();
   const { user } = useAppSelect((state) => state.auth);
   const [loading, setLoading] = useState(true);
   const [load, setLoad] = useState(false);
@@ -38,12 +38,17 @@ export const App = () => {
   const { data: companyInfo, refetch: refetchCompanyInfo } =
     useGetCompanyInfoQuery();
 
+  useEffect(() => {
+    saveAccess(data);
+  }, [data]);
+
   const handleGetUserData = () => {
     getProfile().then((resp) => {
       loginUser(resp?.data?.data);
       setLoad(true);
       setTimeout(() => setLoading(false), 1500);
       refetchCompanyInfo();
+      data && refetch();
     });
   };
 

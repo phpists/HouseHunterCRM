@@ -17,7 +17,9 @@ export const Response = ({ onClick, parentMsg, rieltorName }) => {
     >
       {isPhoto && <div className="photo" />}
       <div>
-        <div className="name">{isOwner ? "Ви" : rieltorName}</div>
+        <div className="name" title={isOwner ? "Ви" : rieltorName}>
+          {isOwner ? "Ви" : rieltorName}
+        </div>
         <span>{isPhoto ? "Фотографія" : parentMsg?.messege}</span>
       </div>
     </StyledResponse>

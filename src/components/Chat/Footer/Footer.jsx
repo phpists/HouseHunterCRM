@@ -74,11 +74,16 @@ const StyledFooter = styled.div`
   position: relative;
   z-index: 400;
   transition: all 0.3s;
+  position: absolute;
+  bottom: 20px;
+  right: 0px;
+  left: 0px;
+  padding: 0 20px;
   ${({ selectedMessage }) =>
     selectedMessage &&
     `
     padding: 4px;
-    margin: 0 -7px;
+    // margin: 0 -7px;
     &:before {
         content: "";
         display: block;
@@ -86,7 +91,7 @@ const StyledFooter = styled.div`
         top: 0;
         width: 100%;
         background: #454545;
-        height: 57px;
+        height: 100px;
         left: 0;
     }
   `}

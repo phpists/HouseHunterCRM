@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import chatIcon from "../../../../../assets/images/chat.svg";
 
-export const Comments = ({ onClick }) => (
+export const Comments = ({ onClick, isNewMessage }) => (
   <StyledComments
     className="flex items-center justify-center"
     onClick={onClick}
   >
     <img src={chatIcon} alt="" />
-    {/* <div className="flex align-center justify-center">9</div> */}
+    {isNewMessage && <div className="flex align-center justify-center">1</div>}
   </StyledComments>
 );
 

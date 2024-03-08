@@ -3,7 +3,6 @@ import { Breadcrumbs } from "./Breadcrumbs/Breadcrumbs";
 import { CreateRole } from "./CreateRole/CreateRole";
 import { CreateUser } from "./CreateUser/CreateUser";
 import { ToggleShowButton } from "./ToggleButton";
-import { useGetAccessQuery } from "../../../store/auth/auth.api";
 import { handleCheckAccess } from "../../../utilits";
 import { useAppSelect } from "../../../hooks/redux";
 
@@ -17,7 +16,7 @@ export const Header = ({
   onRefetchStructureData,
   onCreatedUser,
 }) => {
-  const { data: accessData } = useGetAccessQuery();
+  const { accessData } = useAppSelect((state) => state.auth);
   const { user } = useAppSelect((state) => state.auth);
 
   return (

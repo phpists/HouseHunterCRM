@@ -115,18 +115,6 @@ const StyledSelect = styled.button`
     .select-icon {
       background: rgba(255, 255, 255, 0.1);
     }
-    ${({ open }) =>
-      !open &&
-      `
-    .label {
-      opacity: 0;
-    }
-    .label-hover {
-      opacity: 1;
-      transform: translateX(0px);
-    }
-    
-  `}
   }
   svg {
     transition: all 0.3s;
