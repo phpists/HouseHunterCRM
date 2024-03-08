@@ -90,7 +90,11 @@ export const Base = ({
   };
 
   return (
-    <StyledBase className={`request-card ${className}`}>
+    <StyledBase
+      className={`request-card ${className} ${
+        !!errors?.find((e) => e === "base") && "error-field"
+      }`}
+    >
       <TitleDivider title="Company" />
       <ToggleOption
         label="База Company"
@@ -151,6 +155,7 @@ export const Base = ({
                     : "1",
               })
             }
+            error={!!errors.find((e) => e === "company_object_more")}
           />
           <CheckOption
             label="Здані"
@@ -163,6 +168,7 @@ export const Base = ({
                   data?.company_object?.given_objects === "1" ? undefined : "1",
               })
             }
+            error={!!errors.find((e) => e === "company_object_more")}
           />
           <CheckOption
             label="Неактуальні"
@@ -177,6 +183,7 @@ export const Base = ({
                     : "1",
               })
             }
+            error={!!errors.find((e) => e === "company_object_more")}
           />
           <CheckOption
             label="Протерміновані"
@@ -189,6 +196,7 @@ export const Base = ({
                   data?.company_object?.overdue === "1" ? undefined : "1",
               })
             }
+            error={!!errors.find((e) => e === "company_object_more")}
           />
           <CheckOption
             label={
@@ -207,6 +215,7 @@ export const Base = ({
                     : "1",
               })
             }
+            error={!!errors.find((e) => e === "company_object_more")}
           />
         </>
       ) : null}
@@ -312,6 +321,9 @@ const StyledBase = styled.div`
   padding: 6px 8px;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.1);
+  &.error-field {
+    border: 1px red solid;
+  }
   .check-opt {
     margin-bottom: 6.5px;
   }

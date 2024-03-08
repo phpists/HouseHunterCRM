@@ -43,6 +43,23 @@ export const Info = ({ fields, data, onChangeField, errors }) => {
     "dt_end_agreement",
   ];
 
+  const handleCheckIsCollapsed = () => {
+    const mainFields = Object.entries(fields?.main_field)
+      ?.filter((field) => !notAllowedFields?.find((f) => f === field[0]))
+      ?.filter((field) => field?.[1]?.collapsed === 1);
+
+    const otherFields =
+      Object.entries(fields?.other_field)?.length > 0
+        ? [...Object.entries(fields?.other_field)]
+            ?.filter(
+              (category) => commentsToFields?.object[category[0]]?.length > 0
+            )
+            ?.filter((c) => c?.[1]?.collapsed === 1)
+        : [];
+
+    return mainFields?.length > 0 || otherFields?.length > 0;
+  };
+
   return (
     <StyledCategories>
       <Divider title="Характеристики" className="first-divider" />
@@ -54,23 +71,33 @@ export const Info = ({ fields, data, onChangeField, errors }) => {
         onChangeField={onChangeField}
         errors={errors}
       />
-      <ToggleContent title="Інше">
-        {/* <Fields
-          fields={fields?.main_field}
-          data={data}
-          notAllowedFields={notAllowedFields}
-          commentsToFields={commentsToFields}
-          onChangeField={onChangeField}
-          errors={errors}
-          collapsed
-        /> */}
-        <Categories
-          data={data}
-          onChangeField={onChangeField}
-          fields={fields}
-          errors={errors}
-        />
-      </ToggleContent>
+      <Categories
+        data={data}
+        onChangeField={onChangeField}
+        fields={fields}
+        errors={errors}
+      />
+
+      {handleCheckIsCollapsed() ? (
+        <ToggleContent title="Інше">
+          <Fields
+            fields={fields?.main_field}
+            data={data}
+            notAllowedFields={notAllowedFields}
+            commentsToFields={commentsToFields}
+            onChangeField={onChangeField}
+            errors={errors}
+            collapsed
+          />
+          <Categories
+            data={data}
+            onChangeField={onChangeField}
+            fields={fields}
+            errors={errors}
+            collapsed
+          />
+        </ToggleContent>
+      ) : null}
     </StyledCategories>
   );
 };

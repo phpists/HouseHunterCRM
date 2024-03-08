@@ -191,6 +191,8 @@ export const ProfileField = ({
                 value={
                   type === "date" && !calendarOpen
                     ? handleFormatDate(value, true)
+                    : type === "number" && Number(value) === 0
+                    ? ""
                     : value
                 }
                 placeholder={placeholder}
@@ -230,6 +232,8 @@ export const ProfileField = ({
                     : phonesCodes?.find(({ code }) => code === phoneCode)
                         ?.code ?? ""
                 }${handleRemovePhoneMask(value)}`
+              : type === "number" && Number(value) === 0
+              ? placeholder
               : value?.length > 0
               ? value?.split("\r\n")?.map((v) => <div>{v}</div>)
               : type === "date"
@@ -444,11 +448,14 @@ const StyledProfileField = styled.button`
     z-index: 1000;
   }
   .edit-btn {
+    position: absolute;
+    top: 7px;
+    right: 7px;
     opacity: 0.4;
     border-radius: 8px;
-    width: 32px;
+    width: 28px;
     transition: all 0.3s;
-    height: 32px;
+    height: 28px;
     cursor: pointer;
     margin-left: 10px;
     z-index: 10;

@@ -133,7 +133,7 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         onChangeCurrency={(val) => onChangeFilter("price_currency", val)}
       />
       <Divider />
-      <ToggleOption
+      {/* <ToggleOption
         label="Актуальні"
         value={filters?.obj_is_actual === "1"}
         onChange={() =>
@@ -153,37 +153,58 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
           )
         }
       />
-      <Divider />
+      <Divider /> */}
       <ToggleOption
-        label="Обрані клієнтом "
-        value={filters?.only_choise_obj === "1"}
+        label="Не обрані клієнтом "
+        value={filters?.show_not_choise_objects === "1"}
         onChange={() =>
           onChangeFilter(
-            "only_choise_obj",
-            filters?.only_choise_obj === "1" ? "0" : "1"
+            "only_dislike_object",
+            {
+              ...filters,
+              show_not_choise_objects:
+                filters?.show_not_choise_objects === "1" ? undefined : "1",
+              only_dislike_object: undefined,
+              only_like_object: undefined,
+            },
+            true
           )
         }
       />
-      {filters?.only_choise_obj === "1" ? (
-        <>
-          <Divider />
-          <ToggleOption
-            label="Лайк"
-            value={filters?.like === "1"}
-            onChange={() =>
-              onChangeFilter("like", filters?.like === "1" ? "0" : "1")
-            }
-          />
-          <Divider />
-          <ToggleOption
-            label="Дизлайк"
-            value={filters?.dislike === "1"}
-            onChange={() =>
-              onChangeFilter("dislike", filters?.dislike === "1" ? "0" : "1")
-            }
-          />
-        </>
-      ) : null}
+      <ToggleOption
+        label="Дізлайкнуті"
+        value={filters?.only_dislike_object === "1"}
+        onChange={() =>
+          onChangeFilter(
+            "only_dislike_object",
+            {
+              ...filters,
+              show_not_choise_objects: undefined,
+              only_dislike_object:
+                filters?.only_dislike_object === "1" ? undefined : "1",
+              only_like_object: undefined,
+            },
+            true
+          )
+        }
+      />
+      <ToggleOption
+        label="Лайкнуті"
+        value={filters?.only_like_object === "1"}
+        onChange={() =>
+          onChangeFilter(
+            "only_like_object",
+            {
+              ...filters,
+              show_not_choise_objects: undefined,
+              only_dislike_object: undefined,
+              only_like_object:
+                filters?.only_like_object === "1" ? undefined : "1",
+            },
+            true
+          )
+        }
+      />
       <Divider />
       <SelectTags
         label="Теги"

@@ -14,7 +14,13 @@ import { CheckOption } from "../../../../components/CheckOption";
 import { Select } from "../../../../components/Select/Select";
 import { SelectTags } from "../../../../components/SelectTags/SelectTags";
 
-export const Categories = ({ data, onChangeField, fields, errors }) => {
+export const Categories = ({
+  data,
+  onChangeField,
+  fields,
+  errors,
+  collapsed,
+}) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
   const Additional = fields
@@ -102,6 +108,9 @@ export const Categories = ({ data, onChangeField, fields, errors }) => {
               (category) => commentsToFields?.object[category[0]]?.length > 0
             )
             ?.sort((a, b) => a[1]?.sort - b[1]?.sort)
+            ?.filter((c) =>
+              collapsed ? c?.collapsed === 1 : c?.collapsed === 0
+            )
             ?.filter(
               (category) =>
                 ![
@@ -231,7 +240,7 @@ export const Categories = ({ data, onChangeField, fields, errors }) => {
               </React.Fragment>
             ))
         : null}
-      {Additional?.length > 0 ? (
+      {Additional?.length > 0 && collapsed ? (
         <>
           <Divider title="Додатково" />
           <div className="options">

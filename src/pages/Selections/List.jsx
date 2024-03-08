@@ -52,64 +52,35 @@ export const List = ({
       )}
       <StyledList ref={innerRef}>
         {clientData && showClient ? <Client clientData={clientData} /> : null}
-        {data?.length === 0 ||
-        actionLoading ||
-        data.filter((d) => {
-          if (
-            filters?.only_choise_obj === "1" &&
-            (filters?.like === "1" || filters?.dislike === "1")
-          ) {
-            const isLike = filters?.like === "1" && d?.like === true;
-            const isDislike = filters?.dislike === "1" && d?.like === false;
-            return typeof d?.like === "boolean" && isLike && isDislike;
-          } else {
-            return true;
-          }
-        })?.length === 0 ? (
+        {data?.length === 0 || actionLoading ? (
           <Empty loading={loading || actionLoading} />
         ) : (
-          data
-            .filter((d) => {
-              if (
-                filters?.only_choise_obj === "1" &&
-                (filters?.like === "1" || filters?.dislike === "1")
-              ) {
-                const isLike = filters?.like === "1" && d?.like === true;
-                const isDislike = filters?.dislike === "1" && d?.like === false;
-                return typeof d?.like === "boolean" && isLike && isDislike;
-              } else {
-                return true;
+          data.map((d) => (
+            <ObjectCard
+              key={d?.id}
+              selected={!!selected.find((j) => j === d?.id)}
+              onSelect={() => onSelect(d?.id)}
+              data={d}
+              onToggleFavoriteStatus={
+                onFavorite ? () => onFavorite(d?.id) : null
               }
-            })
-            .map((d, i) => (
-              <ObjectCard
-                key={d?.id}
-                selected={!!selected.find((j) => j === d?.id)}
-                onSelect={() => onSelect(d?.id)}
-                data={d}
-                onToggleFavoriteStatus={
-                  onFavorite ? () => onFavorite(d?.id) : null
-                }
-                // onFindSimilar={() => onFindSimilar(d)}
-                isEdit={handleCheckAccess(accessData, "objects", "edit")}
-                onHide={() => onHide(d?.id)}
-                isHideObjects={isHideObjects}
-                onOpenTagsHistory={() =>
-                  setOpenHistoryModal({
-                    id: d?.id,
-                    isStreetBase: d?.obj_street_base === "1",
-                  })
-                }
-                onOpenCommetHistory={() =>
-                  setOpenCommentHistoryModal({ id: d?.id })
-                }
-                onAddToSelection={() => setOpenAddModal(d?.id)}
-                showLike={
-                  filters?.only_choise_obj === "1" &&
-                  typeof d?.like === "boolean"
-                }
-              />
-            ))
+              // onFindSimilar={() => onFindSimilar(d)}
+              isEdit={handleCheckAccess(accessData, "objects", "edit")}
+              onHide={() => onHide(d?.id)}
+              isHideObjects={isHideObjects}
+              onOpenTagsHistory={() =>
+                setOpenHistoryModal({
+                  id: d?.id,
+                  isStreetBase: d?.obj_street_base === "1",
+                })
+              }
+              onOpenCommetHistory={() =>
+                setOpenCommentHistoryModal({ id: d?.id })
+              }
+              onAddToSelection={() => setOpenAddModal(d?.id)}
+              showLike={typeof d?.like === "boolean"}
+            />
+          ))
         )}
         <div className="loader relative">
           {loading && data?.length > 0 && (

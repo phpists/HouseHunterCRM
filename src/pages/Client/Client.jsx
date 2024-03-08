@@ -45,9 +45,7 @@ const Client = () => {
         />
         <Objects
           selected={selectedObject}
-          onSelect={(value) =>
-            setSelectedObject(value?.id === selectedObject?.id ? null : value)
-          }
+          onSelect={(value) => setSelectedObject(value)}
         />
         {selectedObject?.id ? (
           <ObjectCard

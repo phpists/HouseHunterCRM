@@ -217,6 +217,32 @@ const Request = () => {
       !data?.general_group?.company_object?.show_only
     ) {
       errorData.push({ id: "general", errors: ["show_only"] });
+    } else if (
+      data?.general_group?.company_object &&
+      data?.general_group?.company_object?.show_only &&
+      !data?.general_group?.company_object?.given_objects &&
+      !data?.general_group?.company_object?.overdue &&
+      !data?.general_group?.company_object?.show_actual &&
+      !data?.general_group?.company_object?.my_structure &&
+      !data?.general_group?.company_object?.show_not_actual &&
+      !data?.general_group?.company_object?.company_street_base
+    ) {
+      errorData.push({ id: "general", errors: ["company_object_more"] });
+    } else if (
+      !data?.general_group?.company_object &&
+      !data?.general_group?.street_base_object &&
+      typeof data?.general_group?.street_base_object !== "object" &&
+      !data?.general_group?.mls_object &&
+      typeof data?.general_group?.mls_object !== "object"
+    ) {
+      errorData.push({ id: "general", errors: ["base"] });
+      cogoToast.error(
+        "Щоб зберегти/додати запит потрібно вибрати хочаб одну базу",
+        {
+          hideAfter: 3,
+          position: "top-right",
+        }
+      );
     } else {
       errorData.push({ id: "general", errors: [] });
     }
@@ -479,7 +505,13 @@ const Request = () => {
     setErrors(
       errors?.map((er) =>
         er.id === "general"
-          ? { ...er, errors: er.errors?.filter((e) => e !== "show_only") }
+          ? {
+              ...er,
+              errors: er.errors
+                ?.filter((e) => e !== "show_only")
+                ?.filter((e) => e !== "base")
+                ?.filter((e) => e !== "company_object_more"),
+            }
           : er
       )
     );
@@ -573,6 +605,9 @@ const StyledRequest = styled.div`
     height: calc(100svh - 430px) !important;
     margin-bottom: 15px;
     overflow: auto;
+  }
+  .base-error {
+    border: 1px solid red;
   }
   @media (max-width: 1300px) {
     .request-base-wrapper {

@@ -19,8 +19,8 @@ const INIT_FILTERS = {
   price: "",
   price_max: "",
   price_min: "",
-  obj_is_actual: "1",
-  show_only: "only_my",
+  //   obj_is_actual: "1",
+  //   show_only: "only_my",
 };
 
 const Selections = () => {
@@ -94,15 +94,13 @@ const Selections = () => {
       }
 
       if (filterActive.current) {
-        const { like, dislike, ...otherFilters } = filters;
-        sendData = { ...sendData, otherFilters };
+        sendData = { ...sendData, filters };
       }
 
       if (showObjectHide && filterActive.current) {
-        const { like, dislike, ...otherFilters } = filters;
         sendData = {
           ...sendData,
-          filters: { ...otherFilters, show_object_hide: "1" },
+          filters: { ...filters, show_object_hide: "1" },
         };
       } else if (showObjectHide) {
         sendData = { ...sendData, filters: { show_object_hide: "1" } };
