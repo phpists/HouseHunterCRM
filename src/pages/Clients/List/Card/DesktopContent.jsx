@@ -82,7 +82,7 @@ const StyledDesktopContent = styled.div`
     display: none;
   }
   .desktop-phones {
-    width: 160px;
+    width: 120px;
   }
   .desktop-comment {
     width: 180px;

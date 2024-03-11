@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Title } from "./Title";
 import { IconButton } from "../../../components/IconButton";
-import { ReactComponent as SettingIcon } from "../../../assets/images/setting.svg";
+import { ReactComponent as SettingIcon } from "../../../assets/images/search.svg";
 import { ReactComponent as PlusIcon } from "../../../assets/images/plus.svg";
 import { ReactComponent as StarIcon } from "../../../assets/images/card-star.svg";
 import { SelectItems } from "../../../components/SelectItems/SelectItems";
@@ -21,6 +21,7 @@ export const Header = ({
 }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClientOpen, setAddClientOpen] = useState(false);
+  const prevFilters = localStorage.getItem("callsFilter");
 
   return (
     <StyledHeader>
@@ -29,7 +30,7 @@ export const Header = ({
         <div className="flex items-center bts">
           <IconButton
             Icon={SettingIcon}
-            className="icon-btn"
+            className={`icon-btn ${prevFilters && "alert-btn"}`}
             active={filterOpen}
             onClick={() => setFilterOpen(true)}
           />
@@ -79,9 +80,6 @@ const StyledHeader = styled.div`
   margin-bottom: 20px;
   .icon-btn {
     margin-right: 10px;
-  }
-  .select-wrapper-desktop {
-    width: 250px;
   }
   .select-wrapper-mobile {
     display: none;

@@ -12,6 +12,7 @@ import { useActions } from "../../../hooks/actions";
 import { useAppSelect } from "../../../hooks/redux";
 import cogoToast from "cogo-toast";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
+import { useNavigate } from "react-router-dom";
 
 export const Header = ({
   favoritesFilter,
@@ -33,6 +34,7 @@ export const Header = ({
   onSendClients,
   onChangeActionLoading,
 }) => {
+  const navigate = useNavigate();
   const [getNewClientsCount] = useLazyGetNewClientsCountQuery();
   const { saveNewClientsCount } = useActions();
   const { newClientsCount } = useAppSelect((state) => state.clients);
@@ -67,7 +69,7 @@ export const Header = ({
     <StyledHeader>
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          {favoritesFilter && <BackButton onClick={onToggleFavoriteFilter} />}
+          {favoritesFilter && <BackButton onClick={() => navigate(-1)} />}
           <Title
             title={`${newClientsCount ?? "-"} нових клієнтів за сьогодні`}
           />

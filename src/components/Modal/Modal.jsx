@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { ReactComponent as Close } from "../../assets/images/close.svg";
 import { motion, useAnimationControls } from "framer-motion";
 
-export const Modal = ({ onClose, title, children }) => {
+export const Modal = ({ onClose, title, notCloseOverlay, children }) => {
   const controls = useAnimationControls();
 
   const handleClose = () => {
@@ -19,7 +19,7 @@ export const Modal = ({ onClose, title, children }) => {
   }, []);
 
   const handleClickOnOverlay = (e) =>
-    e.target.classList.contains("overlay") && handleClose();
+    !notCloseOverlay && e.target.classList.contains("overlay") && handleClose();
 
   return (
     <StyledModal

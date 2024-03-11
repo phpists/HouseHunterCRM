@@ -8,10 +8,11 @@ import { FilterButton } from "./FilterButton/FilterButton";
 import { useLazyHideObjectFromSelectionsQuery } from "../../../store/selections/selections.api";
 import { handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { AddToSelections } from "../../Objects/AddToSelections";
 import { ClientButton } from "./ClientButton";
+import { BackButton } from "../../../components/BackButton";
 
 export const Header = ({
   onRefresh,
@@ -31,6 +32,7 @@ export const Header = ({
   showClient,
   onToggleShowClient,
 }) => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [hideObject] = useLazyHideObjectFromSelectionsQuery();
   const [openAddToSelection, setOpenAddToSelection] = useState(false);
@@ -62,7 +64,10 @@ export const Header = ({
         />
       )}
       <div className="main-header-content-wrapper flex items-center justify-between">
-        <Selected selectedCount={selectedCount} />
+        <div className="flex items-center">
+          <BackButton onClick={() => navigate(-1)} />
+          <Selected selectedCount={selectedCount} />
+        </div>
         <div className="main-header-content-btns flex items-center">
           <ClientButton
             active={showClient}

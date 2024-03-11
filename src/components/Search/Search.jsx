@@ -32,7 +32,7 @@ export const Search = ({ title, data, onChangeField, errors }) => {
       />
       <Divider />
       <TagsFilter
-        label="Пошук Пошук виключення"
+        label="Пошук виключення"
         search
         tags={
           Array.isArray(data?.search_key_notlike_json)

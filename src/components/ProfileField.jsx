@@ -36,6 +36,7 @@ export const ProfileField = ({
   onlyCalendar,
   onBlur,
   onClick,
+  onFocus,
 }) => {
   const fieldRef = useRef();
   const [active, setActive] = useState(false);
@@ -86,6 +87,7 @@ export const ProfileField = ({
     if (keyCode === 13) {
       handleClose();
       onSave && onSave();
+      onBlur && onBlur();
     } else if (keyCode === 34) {
       e.target.blur();
       setActive(false);
@@ -109,6 +111,7 @@ export const ProfileField = ({
         if (!active && !readOnly) {
           setActive(true);
           setOpen(true);
+          onFocus && onFocus();
         }
       }}
     >
@@ -138,11 +141,9 @@ export const ProfileField = ({
                 onChange={onChange}
                 inputClassName="value"
                 onKeyDown={handlePressKey}
-                //   onBlur={() => {
-                //     setActive(false);
-                //     setOpen(false);
-                //     setCalendarOpen(false);
-                //   }}
+                onBlur={() => {
+                  onBlur && onBlur();
+                }}
               />
             ) : textarea ? (
               <textarea
@@ -152,12 +153,9 @@ export const ProfileField = ({
                 onChange={textAreaAdjust}
                 placeholder={placeholder}
                 autoFocus
-                onKeyDown={handlePressKey}
-                //   onBlur={() => {
-                //     setActive(false);
-                //     setOpen(false);
-                //     setCalendarOpen(false);
-                //   }}
+                onBlur={() => {
+                  onBlur && onBlur();
+                }}
               />
             ) : (type === "date" && calendarOpen) || onlyCalendar ? (
               <span
@@ -183,6 +181,9 @@ export const ProfileField = ({
                     setActive(false);
                     onSave && onSave();
                   }
+                }}
+                onBlur={() => {
+                  onBlur && onBlur();
                 }}
               />
             ) : (
@@ -215,11 +216,9 @@ export const ProfileField = ({
                   setCalendarOpen(false);
                   onBlur && onBlur();
                 }}
-                //   onBlur={() => {
-                //     setActive(false);
-                //     setOpen(false);
-                //     setCalendarOpen(false);
-                //   }}
+                onBlur={() => {
+                  onBlur && onBlur();
+                }}
               />
             )}
           </>

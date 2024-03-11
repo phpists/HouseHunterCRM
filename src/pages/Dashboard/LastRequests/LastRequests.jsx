@@ -4,16 +4,25 @@ import { RequestCard } from "./RequestCard/RequestCard";
 import { useEffect, useState } from "react";
 import {
   useGetRubricsQuery,
+  useLazyAddToFavoriteQuery,
+  useLazyDeleteRequestQuery,
   useLazyGetLastRequestsQuery,
 } from "../../../store/requests/requests.api";
 import { handleResponse } from "../../../utilits";
 import { Chat } from "../../../components/Chat/Chat";
+import cogoToast from "cogo-toast";
+import { retry } from "@reduxjs/toolkit/query";
+import { Confirm } from "../../../components/Confirm/Confirm";
 
 export const LastRequests = () => {
   const [getRequests] = useLazyGetLastRequestsQuery();
   const [requests, setRequests] = useState({});
   const { data: rubricsList } = useGetRubricsQuery();
   const [selectedChat, setSelectedChat] = useState(null);
+  const [deleteRequest] = useLazyDeleteRequestQuery();
+  const [addToFavorites] = useLazyAddToFavoriteQuery();
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(false);
 
   const handleGetRequests = () => {
     getRequests().then((resp) => {
@@ -37,8 +46,62 @@ export const LastRequests = () => {
     // eslint-disable-next-line
   }, []);
 
+  const handleToggleFavorites = (idGroup, id) => {
+    addToFavorites(idGroup).then((resp) => {
+      handleResponse(resp, () => {
+        cogoToast.success("Статус успішно змінено!", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        setRequests(
+          Object.fromEntries(
+            Object.entries(requests)?.map((r) => {
+              if (r[0] === id) {
+                return [
+                  r[0],
+                  {
+                    ...r[1],
+                    General_field_group: {
+                      ...r[1]?.General_field_group,
+                      favorite: !r[1]?.General_field_group?.favorite,
+                    },
+                  },
+                ];
+              }
+
+              return r;
+            })
+          )
+        );
+      });
+    });
+  };
+
+  const handleDelete = () => {
+    deleteRequest([deleteId?.id]).then((resp) => {
+      handleResponse(resp, () => {
+        cogoToast.success(`Заявку успішно видалено!`, {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        setRequests(
+          Object.fromEntries(
+            Object.entries(requests)?.filter((r) => r[0] !== deleteId?.id)
+          )
+        );
+      });
+    });
+  };
+
   return (
     <>
+      {deleteModal && (
+        <Confirm
+          title="Видалити запит"
+          onClose={() => setDeleteModal(false)}
+          onSubmit={() => handleDelete()}
+        />
+      )}
       {selectedChat && (
         <Chat
           onClose={() => setSelectedChat(false)}
@@ -76,6 +139,16 @@ export const LastRequests = () => {
                     }}
                     id={id}
                     onOpenChat={() => setSelectedChat(requestData?.id_group)}
+                    onToggleFavorite={() =>
+                      handleToggleFavorites(requestData?.id_group, d[0])
+                    }
+                    onDelete={() => {
+                      setDeleteModal(true);
+                      setDeleteId({
+                        idGroup: requestData?.id_group,
+                        id: d[0],
+                      });
+                    }}
                   />
                 );
               })

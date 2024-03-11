@@ -29,12 +29,13 @@ export const Client = ({ clientData }) => {
       className="flex items-center justify-between openClient"
       onClick={handleGoToClient}
     >
-      <div className="flex items-center user-info openClient">
+      <div className="flex items-center user-info openClient mr-2">
         <img src={smallAvatar} alt="" className="small-avatar openClient" />
         <div className="name openClient">{clientData?.client?.name ?? "-"}</div>
         <Id id={clientData?.client?.id} />
       </div>
       <Phones
+        classNameContent="phone-wrapp"
         phones={clientData?.client?.phones?.map(
           ({ id_phone_code, phone, code, telegram, viber }) => ({
             phone: `${

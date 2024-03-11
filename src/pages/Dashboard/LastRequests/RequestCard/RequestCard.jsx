@@ -3,11 +3,23 @@ import { Client } from "./Client/Client";
 import { Price } from "./Price/Price";
 import { Objects } from "./Objects/Objects";
 
-export const RequestCard = ({ data, id, onOpenChat }) => (
+export const RequestCard = ({
+  data,
+  id,
+  onOpenChat,
+  onToggleFavorite,
+  onDelete,
+}) => (
   <StyledRequestCard>
     <Client data={data} id={id} />
     <Price data={data} id={id} />
-    <Objects data={data} id={data?.id_group} onOpenChat={onOpenChat} />
+    <Objects
+      data={data}
+      id={data?.id_group}
+      onOpenChat={onOpenChat}
+      onToggleFavorite={onToggleFavorite}
+      onDelete={onDelete}
+    />
   </StyledRequestCard>
 );
 

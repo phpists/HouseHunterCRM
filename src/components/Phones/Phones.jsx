@@ -22,25 +22,6 @@ export const Phones = ({
 
   return (
     <div className="flex items-center shrink-0">
-      <div className="socmedias mr-1">
-        <Socmedia
-          type="viber"
-          active={phones?.[activePhone]?.viber === "1"}
-          onClick={() => null}
-          className="viber-card mb-1"
-          open
-          phone={`${phones?.[activePhone]?.phone}`}
-          readOnly
-        />
-        <Socmedia
-          type="telegram"
-          active={phones?.[activePhone]?.telegram === "1"}
-          onClick={() => null}
-          open
-          phone={`${phones?.[activePhone]?.phone}`}
-          readOnly
-        />
-      </div>
       <StyledPhones open={open} className={`${className}`}>
         <Phone
           showOnHoverIcon
@@ -63,6 +44,25 @@ export const Phones = ({
           activePhone={activePhone}
         />
       </StyledPhones>
+      <div className="flex items-center ml-1">
+        <Socmedia
+          type="viber"
+          active={phones?.[activePhone]?.viber === "0"}
+          onClick={() => null}
+          className="viber-card mr-1"
+          open
+          phone={`${phones?.[activePhone]?.phone}`}
+          readOnly
+        />
+        <Socmedia
+          type="telegram"
+          active={phones?.[activePhone]?.telegram === "1"}
+          onClick={() => null}
+          open
+          phone={`${phones?.[activePhone]?.phone}`}
+          readOnly
+        />
+      </div>
     </div>
   );
 };

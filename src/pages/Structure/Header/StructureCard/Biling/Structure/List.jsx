@@ -13,7 +13,12 @@ export const List = ({ photos, level }) => (
         zIndex={i - photos.length * -1}
       />
     ))}
-    {photos?.length > 5 ? <MoreButton count={photos.slice(5)?.length} /> : null}
+    {photos?.length > 5 ? (
+      <MoreButton
+        count={photos.slice(5)?.length}
+        zIndex={photos?.length * 10}
+      />
+    ) : null}
   </StyledList>
 );
 

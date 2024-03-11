@@ -12,6 +12,7 @@ import {
   useGetSortingObjectQuery,
 } from "../../store/requests/requests.api";
 import { SelectTags } from "../SelectTags/SelectTags";
+import { Field } from "../Field";
 
 export const Base = ({
   data,
@@ -26,6 +27,7 @@ export const Base = ({
   onChangeDefaultFiltersOpened,
   companyOpen,
   errors = [],
+  dateAgreement,
 }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: companies } = useGetCompaniesQuery();
@@ -157,6 +159,22 @@ export const Base = ({
             }
             error={!!errors.find((e) => e === "company_object_more")}
           />
+          {dateAgreement && (
+            <Field
+              placeholder="Звільняється до"
+              value={data?.company_object?.dt_end_agreement_to}
+              onChange={(val) =>
+                onChange("company_object", {
+                  ...data?.company_object,
+                  dt_end_agreement_to: val,
+                })
+              }
+              label="Звільняється до"
+              className="field-wrapper"
+              error={!!errors?.find((e) => e === "dt_end_agreement_to")}
+              type="date"
+            />
+          )}
           <CheckOption
             label="Здані"
             className="check-opt"

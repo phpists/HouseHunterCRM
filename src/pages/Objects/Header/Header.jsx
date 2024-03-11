@@ -17,6 +17,7 @@ import cogoToast from "cogo-toast";
 import { BackButton } from "../../Clients/Header/BackButton";
 import { useGetAccessQuery } from "../../../store/auth/auth.api";
 import { useAppSelect } from "../../../hooks/redux";
+import { AddToSelections } from "../AddToSelections";
 
 export const Header = ({
   selectedCount,
@@ -41,6 +42,8 @@ export const Header = ({
   const [defaultFiltersOpen, setDefalultFiltersOpen] = useState({
     company: true,
   });
+  const [openAddToSelection, setOpenAddToSelection] = useState(false);
+  const isPrevFilter = localStorage.getItem("objectsLastFilters");
 
   useEffect(() => {
     setDefalultFiltersOpen({
@@ -92,77 +95,93 @@ export const Header = ({
     }
   };
 
+  const handleAddToSelection = () => setOpenAddToSelection(true);
+  const handleAddToSelectionSuccess = () => onSelectAll(true);
+
   return (
-    <StyledHeader>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          {isFavorite && <BackButton onClick={onIsFavotite} />}
-          <Title selectedCount={selectedCount} title={"Обрано"} />
-        </div>
-        <div className="flex items-center bts">
-          <IconButton
-            Icon={SettingIcon}
-            className="icon-btn"
-            active={filterOpen}
-            onClick={() => setFilterOpen(true)}
-          />
-          {handleCheckAccess(data, "clients", "add") ? (
-            <IconButton
-              Icon={PlusIcon}
-              className="icon-btn"
-              onClick={() => setAddClient(true)}
-            />
-          ) : null}
-          <IconButton
-            Icon={StarIcon}
-            className="icon-btn icon-btn-last"
-            active={isFavorite}
-            onClick={onIsFavotite}
-          />
-          <div className="select-wrapper flex items-center justify-end">
-            <SelectItems
-              title="об'єктів"
-              selectedCount={selectedCount}
-              onToggleFavorite={handleToggleFavorites}
-              deleteConfirmTitle="Видалити об'єкт(и)?"
-              onDelete={
-                handleCheckAccess(data, "objects", "delete")
-                  ? handleDelete
-                  : null
-              }
-              allCount={allCount}
-              onSelectAll={onSelectAll}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="select-wrapper-mobile">
-        <SelectItems
-          title="об'єктів"
-          selectedCount={selectedCount}
-          className="mobile-select"
-          onToggleFavorite={handleToggleFavorites}
-          deleteConfirmTitle="Видалити об'єкт(и)?"
-          onDelete={
-            handleCheckAccess(data, "objects", "delete") ? handleDelete : null
-          }
-          allCount={allCount}
-          onSelectAll={onSelectAll}
-        />
-      </div>
-      {filterOpen && (
-        <Filter
-          onClose={() => setFilterOpen(false)}
-          filters={filters}
-          onChangeFilter={onChangeFilter}
-          filtersFields={filtersFields}
-          onApplyFilter={handleApplyFilter}
-          filtersOpened={defaultFiltersOpen}
-          onChangeDefaultFiltersOpened={(val) => setDefalultFiltersOpen(val)}
+    <>
+      {" "}
+      {openAddToSelection && (
+        <AddToSelections
+          onClose={() => setOpenAddToSelection(false)}
+          idObject={selected}
+          onSuccess={handleAddToSelectionSuccess}
         />
       )}
-      {addClient && <AddClient onClose={() => setAddClient(false)} />}
-    </StyledHeader>
+      <StyledHeader>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            {isFavorite && <BackButton onClick={onIsFavotite} />}
+            <Title selectedCount={selectedCount} title={"Обрано"} />
+          </div>
+          <div className="flex items-center bts">
+            <IconButton
+              Icon={SettingIcon}
+              className={`icon-btn ${isPrevFilter && "alert-btn"}`}
+              active={filterOpen}
+              onClick={() => setFilterOpen(true)}
+            />
+            {handleCheckAccess(data, "clients", "add") ? (
+              <IconButton
+                Icon={PlusIcon}
+                className="icon-btn"
+                onClick={() => setAddClient(true)}
+              />
+            ) : null}
+            <IconButton
+              Icon={StarIcon}
+              className="icon-btn icon-btn-last"
+              active={isFavorite}
+              onClick={onIsFavotite}
+            />
+            <div className="select-wrapper flex items-center justify-end">
+              <SelectItems
+                title="об'єктів"
+                selectedCount={selectedCount}
+                onToggleFavorite={handleToggleFavorites}
+                deleteConfirmTitle="Видалити об'єкт(и)?"
+                onDelete={
+                  handleCheckAccess(data, "objects", "delete")
+                    ? handleDelete
+                    : null
+                }
+                allCount={allCount}
+                onSelectAll={onSelectAll}
+                onAddToSelection={handleAddToSelection}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="select-wrapper-mobile">
+          <SelectItems
+            title="об'єктів"
+            selectedCount={selectedCount}
+            className="mobile-select"
+            onToggleFavorite={handleToggleFavorites}
+            deleteConfirmTitle="Видалити об'єкт(и)?"
+            onDelete={
+              handleCheckAccess(data, "objects", "delete") ? handleDelete : null
+            }
+            allCount={allCount}
+            onSelectAll={onSelectAll}
+            onAddToSelection={handleAddToSelection}
+          />
+        </div>
+        {filterOpen && (
+          <Filter
+            onClose={() => setFilterOpen(false)}
+            filters={filters}
+            onChangeFilter={onChangeFilter}
+            filtersFields={filtersFields}
+            onApplyFilter={handleApplyFilter}
+            filtersOpened={defaultFiltersOpen}
+            onChangeDefaultFiltersOpened={(val) => setDefalultFiltersOpen(val)}
+            isFavorite={isFavorite}
+          />
+        )}
+        {addClient && <AddClient onClose={() => setAddClient(false)} />}
+      </StyledHeader>
+    </>
   );
 };
 

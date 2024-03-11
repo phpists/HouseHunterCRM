@@ -13,13 +13,16 @@ export const Search = ({
   onChangeSearchCodeSecond,
 }) => {
   const [open, setOpen] = useState(false);
+  const prevClientsFilters = localStorage.getItem("clientsFilters");
 
   return (
     <div>
       <IconButton
         Icon={SearchIcon}
         onClick={() => setOpen(true)}
-        className="icon-btn icon-btn--last"
+        className={`icon-btn icon-btn--last ${
+          prevClientsFilters && "alert-btn"
+        }`}
       />
       {open && (
         <Filter

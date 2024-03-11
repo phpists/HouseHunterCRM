@@ -15,6 +15,7 @@ const StyledEmail = styled.div`
   padding: 6px 8px;
   border-radius: 6px;
   background: #444;
+  margin-top: 4px;
   .title {
     color: #fff;
     font-family: Overpass;

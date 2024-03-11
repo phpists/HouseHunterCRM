@@ -21,7 +21,8 @@ export const ProfilleInfo = ({ onOpenInfo, data }) => {
       <Header onOpenInfo={onOpenInfo} data={data} />
       <Divider />
       <Phones
-        className="phones-wrapper notClickable"
+        className="phone-wrap"
+        classNameContent="phones-wrapper notClickable"
         phones={
           !data?.phone
             ? []
@@ -52,9 +53,8 @@ const StyledProfilleInfo = styled.div`
   position: relative;
   margin-right: 10px;
   .phones-wrapper {
-    grid-template-columns: 1fr max-content !important;
-    margin-bottom: 4px;
-    width: calc(100% - 52px);
+    overflow: hidden;
+    width: 240px;
   }
   &:before {
     content: "";
@@ -70,11 +70,23 @@ const StyledProfilleInfo = styled.div`
   }
   @media (max-width: 850px) {
     height: auto;
+    .phones-wrapper {
+      width: 100%;
+      overflow: hidden;
+    }
   }
   @media (min-width: 1400px) {
     width: 280px;
+    .phones-wrapper {
+      overflow: hidden;
+      width: 95px;
+    }
   }
   @media (min-width: 1600px) {
     width: 316px;
+    .phones-wrapper {
+      overflow: hidden;
+      width: 130px;
+    }
   }
 `;

@@ -1,16 +1,14 @@
 import styled from "styled-components";
 import { Phones } from "../../../../Phones/Phones";
-import { useState } from "react";
 import { ShowButton } from "./ShowButton";
 import { useGetPhonesCodesQuery } from "../../../../../store/auth/auth.api";
 
-export const Phone = ({ commentOpen, phones }) => {
+export const Phone = ({ commentOpen, phones, error, onShow }) => {
   const { data } = useGetPhonesCodesQuery();
-  const [show, setShow] = useState(true);
 
   return (
     <StyledPhone className="clickable">
-      {show ? (
+      {phones && !error ? (
         <Phones
           className={commentOpen ? "" : "phones"}
           phones={phones?.map(
@@ -25,16 +23,14 @@ export const Phone = ({ commentOpen, phones }) => {
         />
       ) : (
         <ShowButton
-          onClick={() => setShow(true)}
+          onClick={onShow}
           className={commentOpen ? "" : "mt-2.5 "}
+          error={error}
+          title={error ? "Доступ заборонено" : "Показати контакти"}
         />
       )}
     </StyledPhone>
   );
 };
 
-const StyledPhone = styled.div`
-  .phones {
-    margin-top: 8px;
-  }
-`;
+const StyledPhone = styled.div``;

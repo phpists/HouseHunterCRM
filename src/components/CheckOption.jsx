@@ -7,13 +7,13 @@ export const CheckOption = ({ label, className, value, onChange, error }) => {
       className={`flex items-center justify-between ${className} ${
         error && "error-field"
       }`}
+      onClick={() => (onChange ? onChange(value === "1" ? "0" : "1") : null)}
     >
       <span className="label">{label}</span>
       <button
         className={`flex items-center justify-center ${
           value === "1" && "active"
         }`}
-        onClick={() => (onChange ? onChange(value === "1" ? "0" : "1") : null)}
       >
         <img src={checkboxIcon} alt="" />
       </button>
@@ -32,6 +32,7 @@ const StyledCheckOption = styled.div`
   font-weight: 100;
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
+  cursor: pointer;
   .label {
     text-transform: capitalize;
   }

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Tag = ({ count = 0 }) => (
-  <StyledTag> {Number(count) > 99 ? "+99" : count} нових</StyledTag>
+  <StyledTag> {Number(count) > 1000 ? "+1000" : count} нових</StyledTag>
 );
 
 const StyledTag = styled.div`

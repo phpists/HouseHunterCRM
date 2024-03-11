@@ -69,6 +69,7 @@ const StyledComment = styled.div`
   .value {
     height: 83px !important;
     overflow: auto;
+    word-break: break-all;
   }
   @media (max-width: 1399.9px) {
     width: 100%;

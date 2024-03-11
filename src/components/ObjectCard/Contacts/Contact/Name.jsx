@@ -5,13 +5,17 @@ export const Name = ({ type, name = "-", typeText }) => (
     <div className="name" title={name}>
       {name}
     </div>
-    <div className="role">
+    <div
+      className="role"
+      title={typeText ? typeText : type === "owner" ? "Власник" : "Наш Рієлтор"}
+    >
       {typeText ? typeText : type === "owner" ? "Власник" : "Наш Рієлтор"}
     </div>
   </StyledName>
 );
 
 const StyledName = styled.div`
+  margin-bottom: 8px;
   .name {
     font-family: Overpass;
     font-size: 14px;

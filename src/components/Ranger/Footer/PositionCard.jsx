@@ -6,6 +6,8 @@ export const PositionCard = ({
   className,
   mainType,
   onChange,
+  onBlur,
+  onFocus,
 }) => (
   <StyledPositionCard
     className={` flex items-baseline justify-between select-none ${className}`}
@@ -23,6 +25,8 @@ export const PositionCard = ({
         onChange={(e) =>
           Number(e.target.value) >= 0 ? onChange(Number(e.target.value)) : null
         }
+        onBlur={onBlur}
+        onFocus={onFocus}
       />
       {mainType ? <span>{mainType}</span> : null}
     </div>

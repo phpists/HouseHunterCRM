@@ -11,7 +11,13 @@ export const Price = ({ data, id }) => (
         price={
           Number(data?.price_max ?? "0") === 0
             ? "Не вказана"
-            : `до ${fortmatNumber(Number(data?.price_max ?? "0"))}$`
+            : `до ${fortmatNumber(Number(data?.price_max ?? "0"))}${
+                data?.price_currency === "1"
+                  ? "₴"
+                  : data?.price_currency === "2"
+                  ? "$"
+                  : "€"
+              }`
         }
       />
       <Subtitle subtitle="Бажана ціна" />

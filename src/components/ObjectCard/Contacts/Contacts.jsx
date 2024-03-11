@@ -22,42 +22,25 @@ export const Contacts = ({ className, data }) => {
 
   return (
     <StyledContacts className={`hide-scroll clickable ${className}`}>
-      {/* <Contact type="owner" />
-      <Divider /> */}
-      {!clientData ? (
-        <ShowButton
-          title={error ? "Доступ заборонено" : "Показати контакти"}
-          className="show-client"
-          onClick={handleShowClient}
-          error={error}
-        />
-      ) : clientData ? (
-        <>
-          <Contact
-            type="owner"
-            name={clientData?.contact?.name}
-            phones={
-              clientData?.contact?.phone
-                ? clientData?.contact?.phone
-                : clientData?.contact?.phones
-            }
-            typeText={clientData?.type}
-          />
-          {/* <Divider /> */}
-        </>
-      ) : null}
-      {/* <Contact
-        type="rieltor"
-        phones={data?.phones}
-        name={`${data?.first_name} ${data?.last_name}`}
-      /> */}
+      <Contact
+        type="owner"
+        name={data?.clients_inf?.contact.name}
+        phones={
+          clientData?.contact?.phone
+            ? clientData?.contact?.phone
+            : clientData?.contact?.phones
+        }
+        typeText={data?.clients_inf?.type}
+        error={error}
+        onShow={handleShowClient}
+      />
     </StyledContacts>
   );
 };
 
 const StyledContacts = styled.div`
   height: max-content;
-  width: 250px;
+  width: 300px;
   overflow: auto;
   .show-client {
     padding: 5px 10px 6px;

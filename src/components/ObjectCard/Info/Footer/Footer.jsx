@@ -2,19 +2,23 @@ import styled from "styled-components";
 import { Tag } from "./Tag";
 import { handleFormatDate } from "../../../../utilits";
 
-export const Footer = ({ createDate, dateEdit }) => {
+export const Footer = ({ createDate, dateEdit, id, streetBaseId }) => {
   return (
     <StyledFooter className="flex flex-wrap items-center clickable">
-      {/* <Tag title="ID 47291" />
-      <Tag title="ID xbase 47291" /> */}
+      {id ? <Tag title="ID" value={id} isCopy /> : null}
+      {streetBaseId ? (
+        <Tag title="ID xbase" value={streetBaseId} isCopy />
+      ) : null}
       <Tag
-        title={`Додано ${handleFormatDate(Number(createDate) * 1000, true)}`}
+        title={`Додано/Оновлено  ${handleFormatDate(
+          Number(createDate) * 1000,
+          true
+        )}${
+          dateEdit === "0"
+            ? ""
+            : ` / ${handleFormatDate(Number(dateEdit) * 1000, true)}`
+        }`}
       />
-      {dateEdit === "0" ? null : (
-        <Tag
-          title={`Обновлено ${handleFormatDate(Number(dateEdit) * 1000, true)}`}
-        />
-      )}
     </StyledFooter>
   );
 };

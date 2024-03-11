@@ -35,7 +35,7 @@ const StyledClient = styled.div`
     flex-direction: column;
     align-items: start;
     .phones-wrapper {
-      width: calc(100svw - 180px);
+      width: calc(100svw - 240px);
     }
   }
   @media (min-width: 700px) {
@@ -49,20 +49,20 @@ const StyledClient = styled.div`
     justify-content: space-between;
     width: 200px;
     .phones-wrapper {
-      width: 120px;
+      width: 80px;
     }
   }
   @media (min-width: 1500px) {
     width: 250px;
     .phones-wrapper {
-      width: 180px;
+      width: 120px;
     }
   }
 
   @media (min-width: 1600px) {
     width: max-content;
-    /* .phones-wrapper {
-      width: max-content;
-    } */
+    .phones-wrapper {
+      width: 180px;
+    }
   }
 `;

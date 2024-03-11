@@ -9,7 +9,7 @@ import {
 import { useEffect } from "react";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
-import { handleResponse } from "../../utilits";
+import { checkIsJSON, handleResponse } from "../../utilits";
 import { useAppSelect } from "../../hooks/redux";
 import { useLocation } from "react-router-dom";
 
@@ -39,9 +39,14 @@ const Requests = () => {
   const [isAllPages, setIsAllPages] = useState(false);
   const [selected, setSelected] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [filters, setFilters] = useState(INIT_FILTERS);
+  const prevFilters = localStorage.getItem("requestFilter");
+  const [filters, setFilters] = useState(
+    !!prevFilters && !!checkIsJSON(prevFilters)
+      ? JSON.parse(prevFilters)
+      : INIT_FILTERS
+  );
   const [filtersFields, setFilterFields] = useState([]);
-  const filterActive = useRef(false);
+  const filterActive = useRef(!!prevFilters && !!JSON.parse(prevFilters));
   const [allCount, setAllCount] = useState(0);
   const isFirstRender = useRef(true);
   const [isDefaultFiltersSet, setIsDefaultFiltersSet] = useState(false);
@@ -341,11 +346,13 @@ const Requests = () => {
 
   const handleApplyFilter = (isApply) => {
     filterActive.current = isApply;
+    isApply && localStorage.setItem("requestFilter", JSON.stringify(filters));
     if (!isApply) {
       setFilters(INIT_FILTERS);
       setFilterFields([]);
       currentPage.current = 0;
       setIsAllPages(false);
+      localStorage.removeItem("requestFilter");
     }
     handleGetRequests(true);
   };

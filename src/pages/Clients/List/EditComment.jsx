@@ -54,7 +54,7 @@ export const EditComment = ({ onClose, client, onChange }) => {
 
   return (
     <StyledEditComment>
-      <Modal onClose={onClose} title="Редагування коментаря">
+      <Modal onClose={onClose} title="Редагування коментаря" notCloseOverlay>
         <div className="edit-comment-content hide-scroll">
           <div className="label">Коментар</div>
           <textarea

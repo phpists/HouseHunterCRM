@@ -9,7 +9,11 @@ import {
 } from "../../store/clients/clients.api";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
-import { handleFromInputDate, handleResponse } from "../../utilits";
+import {
+  checkIsJSON,
+  handleFromInputDate,
+  handleResponse,
+} from "../../utilits";
 import cogoToast from "cogo-toast";
 import { SendModal } from "./SendModal";
 
@@ -23,13 +27,20 @@ const Clients = () => {
   const isLoading = useRef(false);
   const listRef = useRef();
   const [isAllPages, setIsAllPages] = useState(false);
-  const [filter, setFilter] = useState({
-    search_key: undefined,
-    search_phone: undefined,
-  });
+  const prevClientsFilters = localStorage.getItem("clientsFilters");
+  const [filter, setFilter] = useState(
+    !!prevClientsFilters && !!JSON.parse(prevClientsFilters)
+      ? JSON.parse(prevClientsFilters)
+      : {
+          search_key: undefined,
+          search_phone: undefined,
+        }
+  );
   const [searchPhoneCode, setSearchPhoneCode] = useState("1");
   const [searchPhoneCodeSecond, setSearchPhoneCodeSecond] = useState("1");
-  const isFilters = useRef(false);
+  const isFilters = useRef(
+    !!prevClientsFilters && !!JSON.parse(prevClientsFilters)
+  );
   const [allCount, setAllCount] = useState(0);
   const [deleteClient] = useLazyDeleteCientQuery();
   const [loading, setLoading] = useState(false);
@@ -39,7 +50,9 @@ const Clients = () => {
   const firstThousand = useRef([]);
   const [sendClients, setSendClients] = useState([]);
   const [actionLoading, setActionLoading] = useState(false);
+  const isFirstRender = useRef(true);
 
+  console.log(filter);
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
 
@@ -178,10 +191,13 @@ const Clients = () => {
 
   const handleApplyFilters = (isApply) => {
     isFilters.current = isApply;
+    isApply && localStorage.setItem("clientsFilters", JSON.stringify(filter));
+    console.log("here");
     if (!isApply) {
       currentPage.current = 0;
       setIsAllPages(false);
       setFilter({ search_key: "", search_phone: "" });
+      localStorage.removeItem("clientsFilters");
     }
     handleGetClients(true);
   };
@@ -219,11 +235,15 @@ const Clients = () => {
   };
 
   useEffect(() => {
-    currentPage.current = 0;
-    setIsAllPages(false);
-    setFilter({});
-    isFilters.current = false;
-    handleGetClients(true);
+    if (!isFirstRender.current) {
+      currentPage.current = 0;
+      setIsAllPages(false);
+      handleApplyFilters(false);
+      isFilters.current = false;
+      handleGetClients(true);
+    } else {
+      isFirstRender.current = false;
+    }
     // eslint-disable-next-line
   }, [favoritesFilter]);
 

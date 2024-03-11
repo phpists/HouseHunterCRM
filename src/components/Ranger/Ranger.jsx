@@ -36,13 +36,21 @@ export const Ranger = ({
   typeValue,
   onChangeType,
   typeError,
+  onBlur,
+  onFocus,
 }) => {
   const { getTrackProps, handles, segments } = useRanger({
     values,
     min,
     max,
     stepSize: 1,
-    onDrag: onChange,
+    onDrag: (val) => {
+      onChange(val);
+      onFocus && onFocus();
+    },
+    onChange: () => {
+      onBlur && onBlur();
+    },
   });
 
   return (
@@ -104,6 +112,8 @@ export const Ranger = ({
         mainType={mainType}
         currencyValue={currencyValue}
         onChangeCurrency={onChangeCurrency}
+        onBlur={onBlur}
+        onFocus={onFocus}
       />
     </StyledRanger>
   );

@@ -12,4 +12,5 @@ const StyledSelected = styled.div`
   font-weight: 100;
   line-height: normal;
   letter-spacing: 0.36px;
+  margin-left: 10px;
 `;

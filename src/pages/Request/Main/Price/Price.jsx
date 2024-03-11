@@ -12,6 +12,8 @@ export const Price = ({
   typeValue,
   onChangeType,
   typeError,
+  onBlur,
+  onFocus,
 }) => {
   return (
     <StyledPrice
@@ -59,6 +61,8 @@ export const Price = ({
         currencyValue={currency}
         onChangeCurrency={(val) => onChangeCurrency(val)}
         typeError={typeError}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
     </StyledPrice>
   );

@@ -27,7 +27,7 @@ export const DesktopContent = ({
   const onChangeCurrency = (val) => setCurrency(val);
 
   return (
-    <StyledDesktopContent className="flex items-center justify-between">
+    <StyledDesktopContent className="flex items-center justify-between clickable">
       <Slider
         photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)}
         data={data}

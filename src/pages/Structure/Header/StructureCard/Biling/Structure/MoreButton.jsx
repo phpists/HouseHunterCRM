@@ -1,7 +1,10 @@
 import styled from "styled-components";
 
-export const MoreButton = ({ count }) => (
-  <StyledMoreButton className="flex items-center justify-center">
+export const MoreButton = ({ count, zIndex }) => (
+  <StyledMoreButton
+    className="flex items-center justify-center"
+    zIndex={zIndex}
+  >
     {count}+
   </StyledMoreButton>
 );
@@ -12,7 +15,7 @@ const StyledMoreButton = styled.div`
   flex-shrink: 0;
   border-radius: 34px;
   border: 1.4px solid #323232;
-  z-index: 10;
+  z-index: ${({ zIndex }) => zIndex};
   font-family: Overpass;
   font-size: 13px;
   font-weight: 500;

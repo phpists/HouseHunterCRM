@@ -90,7 +90,7 @@ export const FieldCard = ({
       />
       <Divider />
       <TagsFilter
-        label="Пошук Пошук виключення"
+        label="Пошук виключення"
         search
         tags={
           Array.isArray(data?.search_key_notlike_json)

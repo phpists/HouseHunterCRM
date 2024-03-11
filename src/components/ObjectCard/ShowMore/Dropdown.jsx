@@ -132,6 +132,16 @@ export const Dropdown = ({
             navigate(`/edit-object/${clientId}/${id}${searchTag ?? ""}`)
           }
           className="flex items-center justify-between"
+          onMouseDown={(e) => {
+            if (window.event?.which === 2) {
+              window
+                .open(
+                  `/#/edit-object/${clientId}/${id}${searchTag ?? ""}`,
+                  "_blank"
+                )
+                .focus();
+            }
+          }}
         >
           <span>Редагувати</span> <Edit />
         </div>
@@ -158,7 +168,7 @@ const StyledDropdown = styled.div`
   font-weight: 400;
   line-height: 118%; /* 14.16px */
   letter-spacing: 0.24px;
-  width: 138px;
+  width: 180px;
   overflow: hidden;
   top: 0;
   right: -5px;
@@ -175,6 +185,7 @@ const StyledDropdown = styled.div`
     transform: all 0.3s;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    white-space: nowrap;
     &:hover {
       background: #fff;
     }

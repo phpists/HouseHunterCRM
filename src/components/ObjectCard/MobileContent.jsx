@@ -26,7 +26,7 @@ export const MobileContent = ({
   searchTag,
   showLike,
 }) => (
-  <StyledMobileContent>
+  <StyledMobileContent className="clickable">
     <Header />
     <CardTitle title={data?.title} />
     <Slider

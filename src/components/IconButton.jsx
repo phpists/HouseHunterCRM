@@ -18,7 +18,6 @@ const StyledIconButton = styled.button`
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(18.5px);
-  transition: all 0.3s;
   g {
     transition: all 0.3s;
   }

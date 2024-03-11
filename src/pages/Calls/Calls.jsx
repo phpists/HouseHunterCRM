@@ -7,7 +7,7 @@ import {
   useLazyGetCallsQuery,
   useLazySetStatusCallQuery,
 } from "../../store/calls/calls.api";
-import { checkIsArray, handleResponse } from "../../utilits";
+import { checkIsArray, checkIsJSON, handleResponse } from "../../utilits";
 import { useActions } from "../../hooks/actions";
 import cogoToast from "cogo-toast";
 import { useLocation } from "react-router-dom";
@@ -31,7 +31,12 @@ const Calls = () => {
   const { saveCallsCount } = useActions();
   const [selected, setSelected] = useState([]);
   const [data, setData] = useState(null);
-  const [filters, setFilters] = useState(INIT_FILTERS);
+  const prevFilters = localStorage.getItem("callsFilter");
+  const [filters, setFilters] = useState(
+    !!prevFilters && !!checkIsJSON(prevFilters)
+      ? JSON.parse(prevFilters)
+      : INIT_FILTERS
+  );
   const isFirstLoad = useRef(true);
   const [isDefaultFilterSet, setIsDefaultFilterSet] = useState(false);
   const currentPage = useRef(0);
@@ -39,7 +44,7 @@ const Calls = () => {
   const listRef = useRef();
   const [isAllPages, setIsAllPages] = useState(false);
   const [loading, setLoading] = useState(false);
-  const isFilter = useRef(false);
+  const isFilter = useRef(!!prevFilters && !!checkIsJSON(prevFilters));
   const allCountRef = useRef(0);
   const [allCount, setAllCount] = useState(0);
   const firstThousand = useRef([]);
@@ -158,7 +163,12 @@ const Calls = () => {
   const handleApplyFilter = (isApply) => {
     currentPage.current = 0;
     isFilter.current = isApply;
-    !isApply && setFilters(INIT_FILTERS);
+    if (isApply) {
+      localStorage.setItem("callsFilter", JSON.stringify(filters));
+    } else {
+      setFilters(INIT_FILTERS);
+      localStorage.removeItem("callsFilter");
+    }
     handleGetCalls(true);
   };
 

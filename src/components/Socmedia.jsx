@@ -24,16 +24,21 @@ export const Socmedia = ({
     <StyledSocmedia
       className={`flex items-center justify-between ${className} ${
         active && "active"
-      }`}
+      } ${phone && "phone"}`}
       onClick={onClick}
       color={TYPES[type].color}
       readOnly={readOnly}
-      href={phone && active ? phoneValue : undefined}
-      target={phone && active && type === "telegram" ? "_blank" : undefined}
+      href={phone ? phoneValue : undefined}
+      target={phone && type === "telegram" ? "_blank" : undefined}
     >
       <img src={TYPES[type].icon} alt="" />
-      <div className="divider" />
-      {open ? <ArrowIcon /> : <CheckIcon />}
+      {phone ? null : (
+        <>
+          {" "}
+          <div className="divider" />
+          {open ? <ArrowIcon /> : <CheckIcon />}
+        </>
+      )}
     </StyledSocmedia>
   );
 };
@@ -81,5 +86,18 @@ const StyledSocmedia = styled.a`
   }
   &.active {
     background: ${({ color }) => color} !important;
+  }
+  &.phone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: #444;
+    padding: 6px;
+    border-radius: 6px;
+    img {
+      transform: translate(0, 0);
+    }
   }
 `;

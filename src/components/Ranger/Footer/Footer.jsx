@@ -10,6 +10,8 @@ export const Footer = ({
   mainType,
   currencyValue = 1,
   onChangeCurrency,
+  onBlur,
+  onFocus,
 }) => {
   const currencies = ["₴", "$", "€"];
 
@@ -23,6 +25,8 @@ export const Footer = ({
         mainType={
           mainType ? mainType : currency ? currencies[currencyValue - 1] : null
         }
+        onBlur={onBlur}
+        onFocus={onFocus}
       />
       <PositionCard
         title="До"
@@ -32,6 +36,8 @@ export const Footer = ({
         mainType={
           mainType ? mainType : currency ? currencies[currencyValue - 1] : null
         }
+        onBlur={onBlur}
+        onFocus={onFocus}
       />
       {currency && (
         <SymbolSelect

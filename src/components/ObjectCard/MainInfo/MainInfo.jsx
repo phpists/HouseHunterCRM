@@ -4,7 +4,7 @@ import { Tags } from "./Tags/Tags";
 
 export const MainInfo = ({ className, data, currency, onChangeCurrency }) => {
   return (
-    <StyledMainInfo className={`${className}`}>
+    <StyledMainInfo className={`${className} clickable`}>
       <Price
         prices={[data?.price_UAH, data?.price_USD, data.price_EUR]}
         priceFor={Number(data?.price_for ?? 1)}

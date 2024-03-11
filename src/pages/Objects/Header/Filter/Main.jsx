@@ -60,6 +60,8 @@ export const Main = ({
   onChangeDefaultFiltersOpened,
   filtersOpened,
   errors,
+  onChangeInputFocus,
+  isInputFocused,
 }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: rubricsList } = useGetRubricsQuery();
@@ -107,14 +109,14 @@ export const Main = ({
         tags={formatedLocations?.filter(
           (l) => !!filters?.id_location?.find((v) => v === l.value)
         )}
-        onChange={(val) =>
+        onChange={(val) => {
           onChangeFilter(
             "id_location",
             filters?.id_location?.find((l) => l === val)
               ? filters?.id_location?.filter((l) => l !== val)
               : [...(filters?.id_location ? filters?.id_location : []), val]
-          )
-        }
+          );
+        }}
         options={formatedLocations}
         showTags
       />
@@ -132,6 +134,8 @@ export const Main = ({
         }
         currency={Number(filters?.price_currency)}
         onChangeCurrency={(val) => onChangeFilter("price_currency", val)}
+        onFocus={() => !isInputFocused && onChangeInputFocus(true)}
+        onBlur={() => onChangeInputFocus(false)}
       />
       <Divider />
       <TagsFilter
@@ -149,7 +153,7 @@ export const Main = ({
       />
       <Divider />
       <TagsFilter
-        label="Пошук Пошук виключення"
+        label="Пошук виключення"
         search
         tags={
           Array.isArray(filters?.search_not_like)
@@ -166,6 +170,8 @@ export const Main = ({
         label="Пошук по id"
         className="field"
         grey
+        onFocus={() => onChangeInputFocus(true)}
+        onBlur={() => onChangeInputFocus(false)}
       />
       <Divider />
       <ProfileField
@@ -178,6 +184,8 @@ export const Main = ({
         phoneCode={filters.search_phone_code}
         onChangePhoneCode={(val) => onChangeFilter("search_phone_code ", val)}
         error={errors?.search_phone}
+        onFocus={() => onChangeInputFocus(true)}
+        onBlur={() => onChangeInputFocus(false)}
       />
       <Divider />
       <ProfileField
@@ -185,6 +193,8 @@ export const Main = ({
         placeholder="Введіть значення..."
         value={filters?.findPhone}
         onChange={(val) => onChangeFilter("findPhone", val)}
+        onFocus={() => onChangeInputFocus(true)}
+        onBlur={() => onChangeInputFocus(false)}
       />
 
       <div className="fields-wrapper">
@@ -232,6 +242,10 @@ export const Main = ({
                             onChangeFilter
                           )
                         }
+                        onFocus={() =>
+                          !isInputFocused && onChangeInputFocus(true)
+                        }
+                        onBlur={() => onChangeInputFocus(false)}
                       />
                     </>
                   );
@@ -268,6 +282,8 @@ export const Main = ({
                         type={
                           field[1]?.type === "int" ? "number" : field[1]?.type
                         }
+                        onFocus={() => onChangeInputFocus(true)}
+                        onBlur={() => onChangeInputFocus(false)}
                       />
                     </>
                   );
@@ -288,6 +304,7 @@ export const Main = ({
             [fieldName]: value,
           })
         }
+        dateAgreement
       />
     </StyledMain>
   );

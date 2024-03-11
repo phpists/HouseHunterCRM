@@ -117,7 +117,7 @@ const StyledMobileContent = styled.div`
 
   @media (max-width: 1000px) {
     .mobile-phones-content-wrapper {
-      width: 20svw;
+      width: 15svw;
       min-width: 200px;
     }
   }
@@ -137,7 +137,7 @@ const StyledMobileContent = styled.div`
       display: flex;
     }
     .mobile-phones-content-wrapper {
-      width: calc(100svw - 150px);
+      width: calc(100svw - 200px);
     }
   }
 `;

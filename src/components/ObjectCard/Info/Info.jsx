@@ -10,7 +10,12 @@ export const Info = ({ className, data }) => {
     >
       <Header data={data} />
       <Text data={data} />
-      <Footer createDate={data?.dt_add} dateEdit={data?.dt_edit} />
+      <Footer
+        createDate={data?.dt_add}
+        dateEdit={data?.dt_edit}
+        id={data?.id}
+        streetBaseId={data?.id_ad_in_source}
+      />
     </StyledInfo>
   );
 };

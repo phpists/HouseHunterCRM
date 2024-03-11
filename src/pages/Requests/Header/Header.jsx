@@ -37,6 +37,7 @@ export const Header = ({
   const [addClientOpen, setAddClientOpen] = useState(false);
   const [addToFavorites] = useLazyAddToFavoriteQuery();
   const { accessData: data } = useAppSelect((state) => state.auth);
+  const isPrevFilter = localStorage.getItem("requestFilter");
 
   const handleToggleFavorites = () => {
     onChangeActionLoading(true);
@@ -91,7 +92,7 @@ export const Header = ({
         <div className="flex items-center bts">
           <IconButton
             Icon={SettingIcon}
-            className="icon-btn"
+            className={`icon-btn ${isPrevFilter && "alert-btn"}`}
             active={filterOpen}
             onClick={() => setFilterOpen(true)}
           />

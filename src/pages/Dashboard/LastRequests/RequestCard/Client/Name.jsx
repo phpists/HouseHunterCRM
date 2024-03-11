@@ -1,8 +1,13 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-export const Name = ({ name }) => <StyledName title={name}>{name}</StyledName>;
+export const Name = ({ name, id }) => (
+  <StyledName title={name} to={`/client/${id}`}>
+    {name}
+  </StyledName>
+);
 
-const StyledName = styled.div`
+const StyledName = styled(NavLink)`
   color: #fff;
   font-family: Overpass;
   font-size: 14px;

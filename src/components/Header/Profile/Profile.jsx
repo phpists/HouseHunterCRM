@@ -224,6 +224,10 @@ export const Profile = () => {
     logout();
     localStorage.removeItem("token");
     localStorage.removeItem("modalClosed");
+    localStorage.removeItem("clientsFilters");
+    localStorage.removeItem("objectsLastFilters");
+    localStorage.removeItem("requestFilter");
+    localStorage.removeItem("callsFilter");
     window.location.href = "/#/auth";
     window.location.reload(true);
   };

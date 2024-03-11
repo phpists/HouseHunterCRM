@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { Main } from "./Main";
 import { Topicality } from "./Topicality";
 import { Characteristics } from "./Characteristics";
+import { useLazyGetAllObjectsQuery } from "../../../../store/objects/objects.api";
+import { handleFromInputDate } from "../../../../utilits";
 
 export const Filter = ({
   onClose,
@@ -16,9 +18,13 @@ export const Filter = ({
   onApplyFilter,
   onChangeDefaultFiltersOpened,
   filtersOpened,
+  isFavorite,
 }) => {
   const controls = useAnimationControls();
   const [errors, setErrors] = useState({});
+  const [getAllObjects, { data }] = useLazyGetAllObjectsQuery();
+  const [total, setTotal] = useState("0");
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
@@ -46,6 +52,62 @@ export const Filter = ({
     }
   };
 
+  const handleGetTotal = () => {
+    let data = {
+      only_favorite: isFavorite ?? undefined,
+      current_page: 1,
+      item_on_page: 10,
+    };
+
+    const { company_object, street_base_object, mls_object, ...otherFilters } =
+      Object.fromEntries(Object.entries(filters)?.filter((f) => f[1] !== "0"));
+
+    data = {
+      ...data,
+      company_object: {
+        ...company_object,
+        dt_end_agreement_to: company_object?.dt_end_agreement_to
+          ? new Date(
+              handleFromInputDate(company_object?.dt_end_agreement_to)
+            )?.getTime() / 1000
+          : null,
+      },
+      street_base_object,
+      mls_object,
+      filters: {
+        ...otherFilters,
+        search_phone_code:
+          filters?.search_phone?.length > 0
+            ? otherFilters?.search_phone_code
+            : undefined,
+        findPhone:
+          filters?.findPhone?.length > 0
+            ? filters?.findPhone
+                ?.replaceAll("-", "")
+                ?.replace("(", "")
+                ?.replace(")", "")
+                ?.replaceAll("_", "")
+            : undefined,
+        search_phone:
+          filters?.search_phone?.length > 0
+            ? filters?.search_phone
+                ?.replaceAll("-", "")
+                ?.replace("(", "")
+                ?.replace(")", "")
+                ?.replaceAll("_", "")
+            : undefined,
+      },
+    };
+
+    getAllObjects({ ...data, only_count_item: "1" }).then((resp) =>
+      setTotal(resp?.data?.count_item ?? "0")
+    );
+  };
+
+  useEffect(() => {
+    !isInputFocused && handleGetTotal();
+  }, [filters, isInputFocused]);
+
   return (
     <>
       <StyledFilter
@@ -63,12 +125,15 @@ export const Filter = ({
             filtersOpened={filtersOpened}
             onChangeDefaultFiltersOpened={onChangeDefaultFiltersOpened}
             errors={errors}
+            onChangeInputFocus={(val) => setIsInputFocused(val)}
+            isInputFocused={isInputFocused}
           />
           {/* <SectionTitle title="Актуальність" />
      <Topicality />
      <SectionTitle title="Характеристики" />
      <Characteristics /> */}
         </div>
+        <div className="total">Знайдено - {total}</div>
         <Footer
           onCancel={() => handleApplyFilters(false)}
           onSubmit={handleApply}
@@ -91,9 +156,21 @@ const StyledFilter = styled(motion.div)`
   z-index: 20;
   .content {
     padding: 0 20px 0px;
-    height: calc(100svh - 157px);
+    height: calc(100svh - 187px);
     overflow: auto;
     border-radius: 9px;
+  }
+  .total {
+    padding: 20px 20px 0;
+    margin-bottom: 6px;
+    color: #fff;
+    font-family: Overpass;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 118%;
+    letter-spacing: 0.28px;
+    text-transform: uppercase;
   }
   .section {
     border-radius: 9px;

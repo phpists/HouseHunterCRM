@@ -9,7 +9,12 @@ import {
 } from "../../store/objects/objects.api";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
-import { checkIsJSON, handleGetRange, handleResponse } from "../../utilits";
+import {
+  checkIsJSON,
+  handleFromInputDate,
+  handleGetRange,
+  handleResponse,
+} from "../../utilits";
 import cogoToast from "cogo-toast";
 import { useLocation, useParams } from "react-router-dom";
 
@@ -122,7 +127,14 @@ const Objects = () => {
 
         data = {
           ...data,
-          company_object,
+          company_object: {
+            ...company_object,
+            dt_end_agreement_to: company_object?.dt_end_agreement_to
+              ? new Date(
+                  handleFromInputDate(company_object?.dt_end_agreement_to)
+                )?.getTime() / 1000
+              : null,
+          },
           street_base_object,
           mls_object,
           filters: {
@@ -242,10 +254,7 @@ const Objects = () => {
       setFilters(INIT_FILTERS);
       filterActive.current = false;
       handleGetObjects(true);
-      localStorage.setItem(
-        "objectsLastFilters",
-        JSON.stringify(DEFAULT_FILTERS)
-      );
+      localStorage.removeItem("objectsLastFilters");
     }
     // eslint-disable-next-line
   }, [isFavorite]);
@@ -255,10 +264,7 @@ const Objects = () => {
     if (!isApply) {
       setFilters(DEFAULT_FILTERS);
       setFilterFields([]);
-      localStorage.setItem(
-        "objectsLastFilters",
-        JSON.stringify(DEFAULT_FILTERS)
-      );
+      localStorage.removeItem("objectsLastFilters");
     }
     currentPage.current = 0;
     setIsAllPages(false);
@@ -315,7 +321,7 @@ const Objects = () => {
 
     setFilters({
       id_rubric,
-      id_location,
+      id_location: [id_location],
       price_min: handleGetRange(Number(price_UAH), true)?.start.toFixed(0),
       price_max: handleGetRange(Number(price_UAH), true)?.end.toFixed(0),
       area_total_min: handleGetRange(Number(area_total), true)?.start.toFixed(
@@ -341,6 +347,18 @@ const Objects = () => {
         0
       ),
       price_currency: "1",
+      company_object: {
+        show_only: "company",
+        actual: "1",
+        given_objects: "1",
+        not_actual: "1",
+        overdue: "1",
+        show_street_base_company: "1",
+      },
+      street_base_object: {
+        sorting_id: "16",
+      },
+      mls_object: {},
     });
     handleGetRubricsFields(id_rubric);
     filterActive.current = true;
@@ -397,7 +415,10 @@ const Objects = () => {
       });
       filterActive.current = true;
       setUpdateData(true);
-    } else if (filterApply === "?prev") {
+    } else if (
+      filterApply === "?prev" ||
+      localStorage.getItem("objectsLastFilters")
+    ) {
       const lastFilters = localStorage.getItem("objectsLastFilters")
         ? checkIsJSON(localStorage.getItem("objectsLastFilters"))
         : DEFAULT_FILTERS;

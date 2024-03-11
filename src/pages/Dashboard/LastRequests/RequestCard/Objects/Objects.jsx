@@ -5,8 +5,16 @@ import { Comments } from "./Comments";
 import { ReactComponent as Arrow } from "../../../../../assets/images/welcome-step-arrow.svg";
 import { CopyLink } from "../../../../../components/CopyLink";
 import { useNavigate } from "react-router-dom";
+import { OpenButton } from "./OpenButton";
+import { MoreButton } from "../../../../../components/MoreButton/MoreButton";
 
-export const Objects = ({ data, id, onOpenChat }) => {
+export const Objects = ({
+  data,
+  id,
+  onOpenChat,
+  onToggleFavorite,
+  onDelete,
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -18,15 +26,20 @@ export const Objects = ({ data, id, onOpenChat }) => {
           <Tag count={data?.count_object} />
         </div>
         <div className="bts flex items-center">
+          <OpenButton onClick={() => navigate(`/selections/${id}`)} />
           <CopyLink
             className="copy-btn"
             link={`https://selection.house-hunter.info/?id=${id}`}
           />
           <Comments onOpenChat={onOpenChat} />
         </div>
-        <Arrow
-          className="arrow-main"
-          onClick={() => navigate(`/selections/${id}`)}
+
+        <MoreButton
+          onDelete={onDelete}
+          onFavorite={onToggleFavorite}
+          editLink={`/#/edit-request/${data?.client_hash}/${id}`}
+          className="more-btn"
+          favorite={data?.favorite}
         />
       </div>
     </StyledObjects>
@@ -68,6 +81,16 @@ const StyledObjects = styled.div`
     transition: all 0.3s;
     margin-right: 4px;
     padding: 4px;
+  }
+  .more-btn {
+    opacity: 1;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    .divider {
+      display: none;
+    }
   }
   @media (max-width: 1100px) {
     .arrow-main {

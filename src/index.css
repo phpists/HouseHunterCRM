@@ -198,3 +198,22 @@ input[type="number"] {
 .PhotoView__Photo {
   transition: all 0s !important;
 }
+
+.alert-btn {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  animation: alert 2s infinite;
+}
+
+@keyframes alert {
+  0% {
+    background: rgba(255, 255, 255, 0);
+  }
+  50% {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    background: rgba(255, 255, 255, 0);
+  }
+}
