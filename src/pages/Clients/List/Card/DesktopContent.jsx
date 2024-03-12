@@ -37,7 +37,6 @@ export const DesktopContent = ({
         telegram,
       }))}
       classNameContent="desktop-phones"
-      notHideArrow
     />
     <Divider />
     <Comment
@@ -82,7 +81,7 @@ const StyledDesktopContent = styled.div`
     display: none;
   }
   .desktop-phones {
-    width: 120px;
+    width: 130px;
   }
   .desktop-comment {
     width: 180px;

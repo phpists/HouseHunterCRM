@@ -8,6 +8,7 @@ export const Phone = ({
   phone,
   isLessThenOne,
   readOnly,
+  hideIcon,
 }) => (
   <StyledPhone
     className={`${className} notClickable ${isLessThenOne && "less-then-one"}`}
@@ -19,7 +20,7 @@ export const Phone = ({
       >
         {phone}
       </div>
-      {readOnly ? (
+      {hideIcon ? null : readOnly ? (
         <img src={phoneIcon} alt="" className="notClickable" />
       ) : (
         <a href={`tel:${phone}`}>

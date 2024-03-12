@@ -95,7 +95,7 @@ const StyledMobileContent = styled.div`
   }
 
   .mobile-phones-content-wrapper {
-    width: 30svw;
+    width: 20vw;
   }
 
   .header-content {

@@ -7,11 +7,8 @@ export const NotificationsDropdown = ({ data, open, closed, onClose }) => {
   const { user } = useAppSelect((state) => state.auth);
 
   return (
-    <StyledNotificationsDropdown
-      className="hide-scroll"
-      open={open && closed?.length < data?.count_notify}
-    >
-      {data?.birthday?.length > 0 && !closed.find((n) => n === "birthday") && (
+    <StyledNotificationsDropdown className="hide-scroll" open={open}>
+      {data?.birthday?.length > 0 && (
         <Card
           type="clients"
           messages={data?.birthday}
@@ -19,7 +16,7 @@ export const NotificationsDropdown = ({ data, open, closed, onClose }) => {
           onClose={() => onClose("birthday")}
         />
       )}
-      {data?.objectDeadline && !closed.find((n) => n === "objectDeadline") && (
+      {data?.objectDeadline && (
         <Card
           type="objects"
           messages={[data?.objectDeadline]}
@@ -27,38 +24,33 @@ export const NotificationsDropdown = ({ data, open, closed, onClose }) => {
           onClose={() => onClose("objectDeadline")}
         />
       )}
-      {data?.objectLiquidity &&
-        !closed.find((n) => n === "objectLiquidity") && (
-          <Card
-            type="objects"
-            messages={[data?.objectLiquidity]}
-            link="/objects?showLiquidity=true"
-            onClose={() => onClose("objectLiquidity")}
-          />
-        )}
-      {data?.needs_moderation_after_adding_from_street_base &&
-        !closed.find(
-          (n) => n === "needs_moderation_after_adding_from_street_base"
-        ) && (
-          <Card
-            type="objects"
-            messages={["Потребують модерації"]}
-            link="/objects?moderationAfterStreetBase=true"
-            onClose={() =>
-              onClose("needs_moderation_after_adding_from_street_base")
-            }
-          />
-        )}
-      {data?.requestDtDeadline &&
-        !closed.find((n) => n === "requestDtDeadline") && (
-          <Card
-            type="requests"
-            messages={[data?.requestDtDeadline]}
-            link="/requests?showDeadline=true"
-            onClose={() => onClose("requestDtDeadline")}
-          />
-        )}
-      {data?.calls && !closed.find((n) => n === "calls") && (
+      {data?.objectLiquidity && (
+        <Card
+          type="objects"
+          messages={[data?.objectLiquidity]}
+          link="/objects?showLiquidity=true"
+          onClose={() => onClose("objectLiquidity")}
+        />
+      )}
+      {data?.needs_moderation_after_adding_from_street_base && (
+        <Card
+          type="objects"
+          messages={["Потребують модерації"]}
+          link="/objects?moderationAfterStreetBase=true"
+          onClose={() =>
+            onClose("needs_moderation_after_adding_from_street_base")
+          }
+        />
+      )}
+      {data?.requestDtDeadline && (
+        <Card
+          type="requests"
+          messages={[data?.requestDtDeadline]}
+          link="/requests?showDeadline=true"
+          onClose={() => onClose("requestDtDeadline")}
+        />
+      )}
+      {data?.calls && (
         <Card
           type="calls"
           messages={[data?.calls]}
@@ -66,7 +58,7 @@ export const NotificationsDropdown = ({ data, open, closed, onClose }) => {
           link="/calls?view=true"
         />
       )}
-      {data?.chatMessege && !closed.find((n) => n === "chatMessege") && (
+      {data?.chatMessege && (
         <Card
           type="requests"
           messages={[data?.chatMessege]}

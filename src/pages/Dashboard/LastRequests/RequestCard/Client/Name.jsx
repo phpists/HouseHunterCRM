@@ -15,9 +15,9 @@ const StyledName = styled(NavLink)`
   font-weight: 100;
   line-height: 118%; /* 16.52px */
   letter-spacing: 0.28px;
-  margin-bottom: 2px;
-  width: 100px;
+  max-width: 80px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  display: block;
 `;

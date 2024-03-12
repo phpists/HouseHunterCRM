@@ -41,4 +41,13 @@ const StyledPeriod = styled.button`
   &:hover {
     background: rgba(255, 255, 255, 0.05);
   }
+  &:focus {
+    .current-value {
+      opacity: 0;
+    }
+    .options {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 `;

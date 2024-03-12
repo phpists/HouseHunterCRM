@@ -9,6 +9,7 @@ import { ObjectCommentHistory } from "../../components/ObjectCommentHistory/Obje
 import { AddToSelections } from "../Objects/AddToSelections";
 import { Client } from "./Client/Client";
 import { useAppSelect } from "../../hooks/redux";
+import { EditObjectComment } from "../../components/EditObjectComment";
 
 export const List = ({
   data,
@@ -24,11 +25,15 @@ export const List = ({
   clientData,
   showClient,
   filters,
+  onChangeComment,
+  currency,
+  onChangeCurrency,
 }) => {
   const { accessData } = useAppSelect((state) => state.auth);
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
   const [openCommentHistoryModal, setOpenCommentHistoryModal] = useState(null);
   const [openAddModal, setOpenAddModal] = useState(null);
+  const [editComment, setEditComment] = useState(false);
 
   return (
     <>
@@ -50,8 +55,15 @@ export const List = ({
           object={openHistoryModal}
         />
       )}
+      {editComment && (
+        <EditObjectComment
+          onClose={() => setEditComment(false)}
+          object={editComment}
+          onChange={onChangeComment}
+        />
+      )}
+      {clientData && showClient ? <Client clientData={clientData} /> : null}
       <StyledList ref={innerRef}>
-        {clientData && showClient ? <Client clientData={clientData} /> : null}
         {data?.length === 0 || actionLoading ? (
           <Empty loading={loading || actionLoading} />
         ) : (
@@ -79,6 +91,11 @@ export const List = ({
               }
               onAddToSelection={() => setOpenAddModal(d?.id)}
               showLike={typeof d?.like === "boolean"}
+              onChangeComment={() =>
+                setEditComment({ id: d?.id, comment: d?.comment })
+              }
+              currency={currency}
+              onChangeCurrency={onChangeCurrency}
             />
           ))
         )}
@@ -101,6 +118,7 @@ const StyledList = styled.div`
   height: calc(100svh - 225px);
   overflow: auto;
   gap: 10px;
+  position: relative;
   @media (max-width: 800px) {
     height: calc(100svh - 200px);
   }

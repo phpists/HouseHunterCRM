@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Title = ({ count }) => (
-  <StyledTitle>{Number(count) > 99 ? "+99" : count} об'єктів</StyledTitle>
+  <StyledTitle>{Number(count) > 1000 ? "+1000" : count} об'єктів</StyledTitle>
 );
 
 const StyledTitle = styled.div`

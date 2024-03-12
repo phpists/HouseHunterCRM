@@ -79,7 +79,7 @@ export const List = ({
           onChange={onChangeComment}
         />
       )}
-      <StyledList className="hide-scroll" ref={innerRef}>
+      <StyledList ref={innerRef}>
         {(data && Object.entries(data)?.length === 0) || actionLoading ? (
           <Empty loading={loading || actionLoading} />
         ) : Object.entries(data)?.length > 0 ? (

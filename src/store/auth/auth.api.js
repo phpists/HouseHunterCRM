@@ -200,6 +200,19 @@ export const auth = createApi({
         );
       },
     }),
+    checkUser: build.query({
+      query: ({ email, password }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "profile",
+          action: "check_user",
+          email,
+          password,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -216,4 +229,5 @@ export const {
   useGetNotificationsQuery,
   useLazyUpdateBannerIdQuery,
   useGetBannersQuery,
+  useLazyCheckUserQuery,
 } = auth;

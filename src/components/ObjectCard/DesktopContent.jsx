@@ -21,11 +21,10 @@ export const DesktopContent = ({
   onDelete,
   searchTag,
   showLike,
+  onChangeComment,
+  currency,
+  onChangeCurrency,
 }) => {
-  const [currency, setCurrency] = useState(1);
-
-  const onChangeCurrency = (val) => setCurrency(val);
-
   return (
     <StyledDesktopContent className="flex items-center justify-between clickable">
       <Slider
@@ -39,7 +38,7 @@ export const DesktopContent = ({
         onChangeCurrency={onChangeCurrency}
       />
       <Info className="desktop-item" data={data} />
-      <Tags data={data} />
+      <Tags data={data} onChangeComment={onChangeComment} />
       <Contacts className="desktop-item" data={data} />
       <ShowMore
         clientId={data?.id_client}

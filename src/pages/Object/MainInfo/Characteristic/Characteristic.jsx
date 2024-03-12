@@ -102,14 +102,6 @@ export const Characteristic = ({ data, onChangeField, fields, errors }) => {
             errors={errors}
           />
         )}
-        {/* {fields?.other_field && (
-          <Categories
-            data={data}
-            onChangeField={onChangeField}
-            fields={fields}
-            errors={errors}
-          />
-        )} */}
       </div>
     </StyledCharacteristic>
   );

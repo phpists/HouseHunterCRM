@@ -24,6 +24,7 @@ export const MobileContent = ({
         lastName={clientData?.last_name ?? data?.usr_last_name}
         idClient={data?.General_field_group?.id_client}
         phones={clientData?.phone ?? data?.General_field_group?.user_phones}
+        dateCreate={data?.General_field_group?.dt_add}
         avatar={
           clientData?.last_name
             ? ""

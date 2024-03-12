@@ -13,6 +13,7 @@ import { ObjectHistory } from "../../components/ObjectHistory/ObjectHistory";
 import { useLazyDeleteObjectQuery } from "../../store/objects/objects.api";
 import cogoToast from "cogo-toast";
 import { useAppSelect } from "../../hooks/redux";
+import { EditObjectComment } from "../../components/EditObjectComment";
 
 export const List = ({
   selected,
@@ -24,15 +25,18 @@ export const List = ({
   loading,
   actionLoading,
   onDeleteSuccess,
+  onChangeComment,
+  currency,
+  onChangeCurrency,
 }) => {
   const { accessData } = useAppSelect((state) => state.auth);
   const [openAddModal, setOpenAddModal] = useState(null);
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
   const [openHistoryPriceModal, setOpenHistoryPriceModal] = useState(null);
   const [openCommentHistoryModal, setOpenCommentHistoryModal] = useState(null);
-  const [currency, setCurrency] = useState(0);
   const [deleteObject] = useLazyDeleteObjectQuery();
   const [deleting, setDeleting] = useState(false);
+  const [editComment, setEditComment] = useState(false);
 
   const handleDelete = (id) => {
     setDeleting(true);
@@ -74,6 +78,13 @@ export const List = ({
           idObject={openAddModal}
         />
       )}
+      {editComment && (
+        <EditObjectComment
+          onClose={() => setEditComment(false)}
+          object={editComment}
+          onChange={onChangeComment}
+        />
+      )}
       <StyledList ref={innerRef}>
         {data?.length === 0 || actionLoading || deleting ? (
           <Empty loading={loading || actionLoading || deleting} />
@@ -102,7 +113,12 @@ export const List = ({
                   setOpenHistoryPriceModal(d?.price_history_json)
                 }
                 onDelete={() => handleDelete(d?.id)}
+                onChangeComment={() =>
+                  setEditComment({ id: d?.id, comment: d?.comment })
+                }
                 searchTag="?objects"
+                currency={currency}
+                onChangeCurrency={onChangeCurrency}
               />
             ))}
           </>

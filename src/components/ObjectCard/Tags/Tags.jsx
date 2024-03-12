@@ -1,24 +1,20 @@
 import styled from "styled-components";
 import { SelectTags } from "../../SelectTags/SelectTags";
-import { ProfileField } from "../../ProfileField";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
   useGetCommentsToFieldsQuery,
   useGetTagsListQuery,
   useLazyAddTagsToObjectsQuery,
-  useLazyAddTagsToStreetBaseObjectsQuery,
 } from "../../../store/objects/objects.api";
 import { handleResponse } from "../../../utilits";
 import { Comment } from "./Comment";
 
-export const Tags = ({ className, data, isAccess }) => {
+export const Tags = ({ className, data, isAccess, onChangeComment }) => {
   const { data: tagsList } = useGetTagsListQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [addTag] = useLazyAddTagsToObjectsQuery();
-  const [addTagStreetBase] = useLazyAddTagsToStreetBaseObjectsQuery();
   const [tags, setTags] = useState([]);
-  const [comment, setComment] = useState("");
 
   const handleSelect = (val) => {
     const isExist = !!tags?.find((t) => t.value === val);
@@ -72,7 +68,11 @@ export const Tags = ({ className, data, isAccess }) => {
         }))}
         onChange={handleSelect}
       />
-      <Comment id={data?.id} comment={data?.comment} />
+      <Comment
+        id={data?.id}
+        comment={data?.comment}
+        onChangeComment={onChangeComment}
+      />
     </StyledTags>
   );
 };

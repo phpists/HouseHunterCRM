@@ -10,8 +10,11 @@ export const Client = ({ data, id }) => (
     <div className="flex items-center">
       <Avatar />
       <div>
-        <Name name={data?.cl_fullname ?? ""} id={data?.client_hash} />
-        <Id id={id} />
+        <div className="flex items-center">
+          <Name name={data?.cl_fullname ?? ""} id={data?.client_hash} />
+          <Id id={id} />
+        </div>
+        <Subtitle subtitle="Cтворено" />
       </div>
     </div>
     <div>

@@ -11,12 +11,11 @@ export const Footer = ({ createDate, dateEdit, id, streetBaseId }) => {
       ) : null}
       <Tag
         title={`Додано/Оновлено  ${handleFormatDate(
-          Number(createDate) * 1000,
-          true
+          Number(createDate) * 1000
         )}${
           dateEdit === "0"
             ? ""
-            : ` / ${handleFormatDate(Number(dateEdit) * 1000, true)}`
+            : ` / ${handleFormatDate(Number(dateEdit) * 1000)}`
         }`}
       />
     </StyledFooter>

@@ -111,7 +111,7 @@ export const LastRequests = () => {
 
       <StyledLastRequests>
         <Title />
-        <div className="list hide-scroll">
+        <div className="list">
           {requests && Object.entries(requests)?.length
             ? Object.entries(requests)?.map((d, i) => {
                 if (typeof d !== "object") {

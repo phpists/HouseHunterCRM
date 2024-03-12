@@ -173,8 +173,8 @@ const Structure = () => {
           noStructure={showNotStructureWorkers}
         />
       )}
-      <div className="structure-content hide-scroll">
-        <div className="structure-cards hide-scroll">
+      <div className="structure-content ">
+        <div className="structure-cards ">
           {loading ? (
             <div className="structure-loader">
               <Loader white className="loader-wrap" />

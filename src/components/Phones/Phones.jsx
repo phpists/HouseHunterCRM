@@ -11,6 +11,7 @@ export const Phones = ({
   classNameContent,
   phones,
   notHideArrow,
+  hideIcon,
 }) => {
   const [open, setOpen] = useState(false);
   const [activePhone, setActivePhone] = useState(0);
@@ -28,6 +29,7 @@ export const Phones = ({
           className={classNameContent}
           phone={phones?.length > 0 ? phones?.[activePhone]?.phone : ""}
           isLessThenOne={phones?.length <= 1}
+          hideIcon={hideIcon}
         />
         {phones?.length <= 1 && !notHideArrow ? null : (
           <Arrow
@@ -47,7 +49,7 @@ export const Phones = ({
       <div className="flex items-center ml-1">
         <Socmedia
           type="viber"
-          active={phones?.[activePhone]?.viber === "0"}
+          active={phones?.[activePhone]?.viber === "1"}
           onClick={() => null}
           className="viber-card mr-1"
           open

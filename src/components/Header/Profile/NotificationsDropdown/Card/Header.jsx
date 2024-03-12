@@ -33,7 +33,7 @@ export const Header = ({ type, info, onClose }) => (
     <div className="flex items-center">
       {/* <div className="subtitle">18.09.2023</div> */}
       {/* <div className="subtitle">11 хв тому</div> */}
-      <CloseIcon onClick={onClose} />
+      {/* <CloseIcon onClick={onClose} /> */}
     </div>
   </StyledHeader>
 );

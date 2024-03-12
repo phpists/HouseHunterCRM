@@ -40,7 +40,7 @@ export const Contacts = ({ className, data }) => {
 
 const StyledContacts = styled.div`
   height: max-content;
-  width: 300px;
+  width: 200px;
   overflow: auto;
   .show-client {
     padding: 5px 10px 6px;
@@ -50,7 +50,7 @@ const StyledContacts = styled.div`
   }
   @media (min-width: 1700px) {
     width: 14svw;
-    max-width: 350px;
+    max-width: 230px;
   }
   @media (min-width: 1900px) {
     width: 20svw;

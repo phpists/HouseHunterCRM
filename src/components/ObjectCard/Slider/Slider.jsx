@@ -100,7 +100,7 @@ export const Slider = ({ photos, data, showLike }) => {
                   <Slide
                     key={i}
                     photo={photo}
-                    active={currentSlide === 1 + i}
+                    active={true}
                     empty={photos?.length === 1}
                     onOpen={() => setOpenView(true)}
                   />

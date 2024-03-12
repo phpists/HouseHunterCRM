@@ -275,7 +275,7 @@ export const Profile = () => {
         <Notification
           active={openNotifications}
           onToggle={handleOpenNotifications}
-          count={data?.count_notify - closed?.length}
+          count={data?.count_notify}
         />
         <NotificationsDropdown
           data={data}

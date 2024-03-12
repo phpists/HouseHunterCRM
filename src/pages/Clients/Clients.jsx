@@ -52,7 +52,6 @@ const Clients = () => {
   const [actionLoading, setActionLoading] = useState(false);
   const isFirstRender = useRef(true);
 
-  console.log(filter);
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
 
@@ -192,7 +191,6 @@ const Clients = () => {
   const handleApplyFilters = (isApply) => {
     isFilters.current = isApply;
     isApply && localStorage.setItem("clientsFilters", JSON.stringify(filter));
-    console.log("here");
     if (!isApply) {
       currentPage.current = 0;
       setIsAllPages(false);

@@ -69,6 +69,7 @@ export const SelectItems = ({
           title={deleteConfirmTitle}
           onClose={() => setDeleteModal(false)}
           onSubmit={() => (onDelete ? onDelete() : null)}
+          passwordCheck={selectedCount > 1}
         />
       )}
       <div className="relative z-300">

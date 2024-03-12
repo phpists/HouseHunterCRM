@@ -23,51 +23,6 @@ export const Categories = ({
 }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
-  const Additional = fields
-    ? [
-        ...(handleCheckIsField(fields, "label_fake")
-          ? [
-              {
-                title: "Фейк",
-                name: "label_fake",
-              },
-            ]
-          : []),
-        ...(handleCheckIsField(fields, "label_without_animals")
-          ? [
-              {
-                title: "Без тварин",
-                name: "label_without_animals",
-              },
-            ]
-          : []),
-        ...(handleCheckIsField(fields, "label_without_children")
-          ? [
-              {
-                title: "Без дітей",
-                name: "label_without_children",
-              },
-            ]
-          : []),
-        ...(handleCheckIsField(fields, "label_without_foreigners")
-          ? [
-              {
-                title: "Без іноземців",
-                name: "label_without_foreigners",
-              },
-            ]
-          : []),
-        ...(handleCheckIsField(fields, "label_without_students")
-          ? [
-              {
-                title: "Без студентів",
-                name: "label_without_students",
-              },
-            ]
-          : []),
-      ]
-    : [];
-
   const handleToggleOption = (opt, categoryName) => {
     let categoryData =
       data[categoryName]?.length > 0 && data[categoryName] !== "0"
@@ -108,9 +63,7 @@ export const Categories = ({
               (category) => commentsToFields?.object[category[0]]?.length > 0
             )
             ?.sort((a, b) => a[1]?.sort - b[1]?.sort)
-            ?.filter((c) =>
-              collapsed ? c?.collapsed === 1 : c?.collapsed === 0
-            )
+            ?.filter((c) => (collapsed ? c?.collapsed === 1 : true))
             ?.filter(
               (category) =>
                 ![
@@ -240,25 +193,6 @@ export const Categories = ({
               </React.Fragment>
             ))
         : null}
-      {Additional?.length > 0 && collapsed ? (
-        <>
-          <Divider title="Додатково" />
-          <div className="options">
-            {Additional.map((opt, i) => (
-              <Option
-                key={i}
-                title={opt.title}
-                className="opt"
-                active={data[opt.name] === "1"}
-                onSelect={() =>
-                  onChangeField(opt.name, data[opt.name] === "1" ? "0" : "1")
-                }
-                error={!!errors.find((e) => e === opt.name)}
-              />
-            ))}
-          </div>
-        </>
-      ) : null}
     </StyledCategories>
   );
 };

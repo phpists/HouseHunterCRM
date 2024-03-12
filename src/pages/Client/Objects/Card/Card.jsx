@@ -30,11 +30,12 @@ export const Card = ({
   const navigate = useNavigate();
 
   const handleClick = (e) => {
-    onSelect();
-    if (window.innerWidth <= 1400) {
-      onOpenInfo();
-    }
-    if (e.target.classList.contains("openMore") && isEdit) {
+    if (e.target.classList.contains("openInfo")) {
+      onSelect();
+      if (window.innerWidth <= 1400) {
+        onOpenInfo();
+      }
+    } else if (e.target.classList.contains("openMore") && isEdit) {
       const url = !isEdit
         ? null
         : isObject

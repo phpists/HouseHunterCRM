@@ -12,6 +12,7 @@ export const fortmatNumber = (num) =>
         .toFixed(2)
         .replace(/\d(?=(\d{3})+\.)/g, "$&,")
         .split(".")[0]
+        ?.replace(",", " ")
     : 0;
 
 export const emailValidation = (value) => {

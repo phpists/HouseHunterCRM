@@ -3,7 +3,14 @@ import { Step } from "./Step";
 import { Info } from "./Info";
 import { Phones } from "../../../../../components/Phones/Phones";
 
-export const Client = ({ firstName, lastName, idClient, phones, avatar }) => {
+export const Client = ({
+  firstName,
+  lastName,
+  idClient,
+  phones,
+  avatar,
+  dateCreate,
+}) => {
   return (
     <StyledClient className="clickable">
       <Info
@@ -11,6 +18,7 @@ export const Client = ({ firstName, lastName, idClient, phones, avatar }) => {
         lastName={lastName}
         idClient={idClient}
         avatar={avatar}
+        dateCreate={dateCreate}
       />
       <Phones
         classNameContent="phones-wrapper"

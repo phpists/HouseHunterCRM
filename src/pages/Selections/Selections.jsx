@@ -15,7 +15,7 @@ import { useActions } from "../../hooks/actions";
 const INIT_FILTERS = {
   id_rubric: "",
   id_location: "",
-  price_currency: "1",
+  price_currency: "2",
   price: "",
   price_max: "",
   price_min: "",
@@ -278,6 +278,13 @@ const Selections = () => {
     // eslint-disable-next-line
   }, [listRef, isLoading.current, isAllPages, objects]);
 
+  const handleChangeComment = (id, comment) => {
+    const updatedData = objects?.map((obj) =>
+      obj?.id === id ? { ...obj, comment } : obj
+    );
+    setObjects(updatedData);
+  };
+
   return (
     <StyledSelections>
       <Header
@@ -312,6 +319,11 @@ const Selections = () => {
         showClient={showClient}
         // onFavorite={handleToggleFavoriteStatus}
         filters={applyedFilters}
+        onChangeComment={handleChangeComment}
+        currency={Number(filters?.price_currency - 1)}
+        onChangeCurrency={(val) =>
+          handleChangeFilter("price_currency", val + 1)
+        }
       />
     </StyledSelections>
   );

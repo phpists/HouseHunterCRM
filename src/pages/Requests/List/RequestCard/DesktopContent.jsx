@@ -30,6 +30,7 @@ export const DesktopContent = ({
           ? data?.usr_img[0]
           : null
       }
+      dateCreate={data?.General_field_group?.dt_add}
     />
     <Date
       category={data?.rubric_name}

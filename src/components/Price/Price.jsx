@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Closed } from "./Closed";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Manage } from "./Manage/Manage";
 import { fortmatNumber } from "../../utilits";
 
@@ -16,15 +16,22 @@ export const Price = ({
 }) => {
   const [open, setOpen] = useState(false);
   const options = ["₴", "$", "€"];
+  const priceRef = useRef(null);
+
+  const handleChangeCurrency = (val) => {
+    onChangeCurrency(val);
+    priceRef.current.blur();
+  };
 
   return (
     <StyledPrice
-      onMouseLeave={() => setOpen(false)}
       className={`${open && "flex items-center"} ${className}`}
+      onBlur={() => setOpen(false)}
+      ref={priceRef}
     >
       {open ? (
         <Manage
-          onChangeCurrency={(val) => onChangeCurrency(val)}
+          onChangeCurrency={handleChangeCurrency}
           activeCurrency={currency}
           priceFor={priceFor}
         />
@@ -52,7 +59,7 @@ export const Price = ({
   );
 };
 
-const StyledPrice = styled.div`
+const StyledPrice = styled.button`
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.1);
   margin-bottom: 8px;

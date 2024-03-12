@@ -38,4 +38,5 @@ const StyledId = styled.div`
   overflow: hidden;
   flex-shrink: 0;
   width: max-content;
+  margin-left: 5px;
 `;

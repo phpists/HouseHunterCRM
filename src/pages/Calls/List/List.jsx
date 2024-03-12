@@ -39,7 +39,7 @@ export const List = ({
   };
 
   return (
-    <StyledList className="hide-scroll" ref={listRef}>
+    <StyledList ref={listRef}>
       {data?.length === 0 ? (
         <Empty />
       ) : (

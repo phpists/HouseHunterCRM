@@ -2,21 +2,51 @@ import styled from "styled-components";
 import bg from "../../assets/images/add-client-bg.svg";
 import { Title } from "./Title";
 import { Button } from "./Button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ReactComponent as Close } from "../../assets/images/close.svg";
 import { motion, useAnimationControls } from "framer-motion";
+import { Field } from "../Field";
+import { useLazyCheckUserQuery } from "../../store/auth/auth.api";
+import { useAppSelect } from "../../hooks/redux";
+import cogoToast from "cogo-toast";
+import { handleResponse } from "../../utilits";
 
-export const Confirm = ({ onClose, onSubmit, title }) => {
+export const Confirm = ({ onClose, onSubmit, title, passwordCheck }) => {
   const controls = useAnimationControls();
+  const [password, setPassword] = useState("");
+  const [checkUser] = useLazyCheckUserQuery();
+  const { user } = useAppSelect((state) => state.auth);
 
   const handleClose = () => {
     controls.start({ opacity: 0, zIndex: -20 });
     setTimeout(onClose, 500);
+    setPassword("");
   };
 
   const handleSubmit = () => {
-    onSubmit();
-    handleClose();
+    if (passwordCheck) {
+      if (password?.length === 0) {
+        cogoToast.error("Введіть пароль для підтвердження", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      } else {
+        checkUser({
+          password,
+          email: user?.email,
+        }).then((resp) =>
+          handleResponse(resp, () => {
+            if (resp?.data?.error === 0) {
+              onSubmit();
+              handleClose();
+            }
+          })
+        );
+      }
+    } else {
+      onSubmit();
+      handleClose();
+    }
   };
 
   useEffect(() => {
@@ -38,6 +68,17 @@ export const Confirm = ({ onClose, onSubmit, title }) => {
       <div className={`modal`}>
         <Close className="close-btn" onClick={handleClose} />
         <Title title={title} />
+        {passwordCheck ? (
+          <div className="checkPassword">
+            <Field
+              label="Пароль"
+              placeholder="Введіть пароль для підтвердження"
+              value={password}
+              onChange={(val) => setPassword(val)}
+              className="passwordValue"
+            />
+          </div>
+        ) : null}
         <div className="buttons">
           <Button title="Ні" cancel onClick={handleClose} />
           <Button title="Так" onClick={handleSubmit} />
@@ -63,10 +104,17 @@ const StyledConfirm = styled(motion.div)`
     border-radius: 10px;
     background: #2b2b2b;
     padding: 40px;
-    width: 280px;
+    max-width: 380px;
+    width: 90%;
     z-index: 2;
     transition: all 0.3s;
     position: relative;
+    .passwordValue {
+      margin: 10px 0;
+      .value {
+        width: 250px;
+      }
+    }
   }
   .close-btn {
     position: absolute;

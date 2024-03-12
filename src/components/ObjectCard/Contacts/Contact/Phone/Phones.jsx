@@ -11,6 +11,7 @@ export const Phone = ({ commentOpen, phones, error, onShow }) => {
       {phones && !error ? (
         <Phones
           className={commentOpen ? "" : "phones"}
+          classNameContent="phones-wrap"
           phones={phones?.map(
             ({ id_phone_code, phone, code, telegram, viber }) => ({
               phone: `${
@@ -20,6 +21,7 @@ export const Phone = ({ commentOpen, phones, error, onShow }) => {
               viber,
             })
           )}
+          hideIcon
         />
       ) : (
         <ShowButton
@@ -33,4 +35,8 @@ export const Phone = ({ commentOpen, phones, error, onShow }) => {
   );
 };
 
-const StyledPhone = styled.div``;
+const StyledPhone = styled.div`
+  .phones-wrap {
+    width: 100px;
+  }
+`;

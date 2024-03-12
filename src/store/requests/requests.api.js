@@ -350,17 +350,21 @@ export const requests = createApi({
       }),
     }),
     editRequestComment: build.query({
-      query: ({ request_group, comment }) => ({
-        url: "",
-        method: "POST",
-        headers: headers(),
-        body: handleToFormData({
-          action: "edit_comment",
-          mod: "requests",
-          request_group,
-          comment,
-        }),
-      }),
+      query: ({ request_group, comment }) => {
+        const data = new FormData();
+
+        data.append("action", "edit_comment");
+        data.append("mod", "requests");
+        data.append("request_group", request_group);
+        data.append("comment", comment);
+
+        return {
+          url: "",
+          method: "POST",
+          headers: headers(),
+          body: data,
+        };
+      },
     }),
   }),
 });

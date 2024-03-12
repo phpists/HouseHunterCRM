@@ -25,7 +25,7 @@ const INIT_DATA = {
   title: "",
   description: "",
   comment: "",
-  obj_is_actual: "0",
+  obj_is_actual: undefined,
   price_currency: 1,
   price_for: "4",
   obj_is_actual_dt: new Date().getTime(),

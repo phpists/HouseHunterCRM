@@ -20,7 +20,7 @@ export const Objects = ({
   return (
     <StyledObjects>
       {/* <LastSeen /> */}
-      <div className="flex items-center">
+      <div className="flex items-center justify-between">
         <div>
           <Title count={data?.count_object} />
           <Tag count={data?.count_object} />
@@ -41,19 +41,20 @@ export const Objects = ({
           className="more-btn"
           favorite={data?.favorite}
         />
+        <div></div>
       </div>
     </StyledObjects>
   );
 };
 
 const StyledObjects = styled.div`
-  padding: 10px;
+  padding: 10px 50px 10px 10px;
   border-radius: 9px;
   background: #363636;
   position: relative;
   cursor: pointer;
   .bts {
-    margin-left: 38px;
+    margin-left: 10px;
   }
   .arrow-main {
     position: absolute;

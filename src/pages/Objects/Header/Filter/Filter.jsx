@@ -3,7 +3,7 @@ import { Header } from "./Header/Header";
 import { SectionTitle } from "./SectionTitle";
 import { Footer } from "./Footer";
 import { motion, useAnimationControls } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Main } from "./Main";
 import { Topicality } from "./Topicality";
 import { Characteristics } from "./Characteristics";
@@ -25,6 +25,7 @@ export const Filter = ({
   const [getAllObjects, { data }] = useLazyGetAllObjectsQuery();
   const [total, setTotal] = useState("0");
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const applying = useRef(false);
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
@@ -38,6 +39,7 @@ export const Filter = ({
   const handleApplyFilters = (isApply) => {
     onApplyFilter(isApply);
     handleClose();
+    applying.current = true;
   };
 
   const handleApply = () => {
@@ -105,7 +107,11 @@ export const Filter = ({
   };
 
   useEffect(() => {
-    !isInputFocused && handleGetTotal();
+    if (!applying.current) {
+      !isInputFocused && handleGetTotal();
+    } else {
+      applying.current = false;
+    }
   }, [filters, isInputFocused]);
 
   return (

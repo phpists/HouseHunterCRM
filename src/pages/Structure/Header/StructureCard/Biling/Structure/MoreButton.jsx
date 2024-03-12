@@ -5,7 +5,7 @@ export const MoreButton = ({ count, zIndex }) => (
     className="flex items-center justify-center"
     zIndex={zIndex}
   >
-    {count}+
+    +{count}
   </StyledMoreButton>
 );
 
