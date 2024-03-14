@@ -1,13 +1,26 @@
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../../assets/images/arrow-right.svg";
 
-export const Closed = ({ onOpen, price = 0, subtitle, notChangeCurrency }) => (
+export const Closed = ({
+  onOpen,
+  price = 0,
+  subtitle,
+  notChangeCurrency,
+  priceFor,
+}) => (
   <StyledClosed
     className="flex items-start justify-between closed-wrappe "
     onClick={notChangeCurrency ? () => null : onOpen}
   >
     <div>
-      <div className="price">{`${price}`}</div>
+      <div className="price">
+        {`${price}`}{" "}
+        {priceFor && (
+          <span className="priceFore">
+            <span>/</span> {priceFor}
+          </span>
+        )}
+      </div>
       {subtitle && <div className="subtitle">{subtitle}</div>}
     </div>
     {!notChangeCurrency && <Arrow className="arrow" />}
@@ -26,6 +39,14 @@ const StyledClosed = styled.div`
     font-weight: 400;
     line-height: 1.7; /* 16.52px */
     letter-spacing: 0.28px;
+    .priceFore {
+      font-size: 11px;
+      font-weight: 200;
+      line-height: 1.8;
+      span {
+        margin: 0 4px;
+      }
+    }
   }
   .subtitle {
     color: #fff;

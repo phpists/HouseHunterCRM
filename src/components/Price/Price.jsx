@@ -53,6 +53,7 @@ export const Price = ({
           title={title}
           subtitle={subtitle}
           notChangeCurrency={notChangeCurrency}
+          priceFor={priceFor}
         />
       )}
     </StyledPrice>
