@@ -10,6 +10,7 @@ export const Info = ({
   areaMin,
   storeyMin,
   storeyMax,
+  currency,
 }) => {
   return (
     <StyledInfo className="hide-scroll clickable">
@@ -17,7 +18,9 @@ export const Info = ({
         title={
           Number(priceMax ?? 0) === 0
             ? "Ціну не обрано"
-            : `до ${fortmatNumber(Number(priceMax ?? 0))}₴`
+            : `до ${fortmatNumber(Number(priceMax ?? 0))}${
+                currency === "1" ? "₴" : currency === "2" ? "$" : "€"
+              }`
         }
         subtitle="Бажана ціна"
         className="price-wrapper"

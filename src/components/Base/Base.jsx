@@ -13,6 +13,8 @@ import {
 } from "../../store/requests/requests.api";
 import { SelectTags } from "../SelectTags/SelectTags";
 import { Field } from "../Field";
+import { Deadline } from "../../pages/Request/Characteristic/Deadline";
+import { ProfileField } from "../ProfileField";
 
 export const Base = ({
   data,
@@ -28,6 +30,8 @@ export const Base = ({
   companyOpen,
   errors = [],
   dateAgreement,
+  dateAgreementFieldName = "dt_end_agreement_to",
+  request,
 }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: companies } = useGetCompaniesQuery();
@@ -160,20 +164,39 @@ export const Base = ({
             error={!!errors.find((e) => e === "company_object_more")}
           />
           {dateAgreement && (
-            <Field
-              placeholder="Звільняється до"
-              value={data?.company_object?.dt_end_agreement_to}
-              onChange={(val) =>
-                onChange("company_object", {
-                  ...data?.company_object,
-                  dt_end_agreement_to: val,
-                })
-              }
-              label="Звільняється до"
-              className="field-wrapper"
-              error={!!errors?.find((e) => e === "dt_end_agreement_to")}
-              type="date"
-            />
+            <>
+              {request ? (
+                <ProfileField
+                  placeholder="Звільняється до"
+                  label="Звільняється до"
+                  value={data?.company_object?.[dateAgreementFieldName]}
+                  onChange={(val) =>
+                    onChange("company_object", {
+                      ...data?.company_object,
+                      [dateAgreementFieldName]: val,
+                    })
+                  }
+                  type="date"
+                  error={!!errors?.find((e) => e === dateAgreementFieldName)}
+                  onlyCalendar
+                />
+              ) : (
+                <Field
+                  placeholder="Звільняється до"
+                  value={data?.company_object?.[dateAgreementFieldName]}
+                  onChange={(val) =>
+                    onChange("company_object", {
+                      ...data?.company_object,
+                      [dateAgreementFieldName]: val,
+                    })
+                  }
+                  label="Звільняється до"
+                  className="field-wrapper"
+                  error={!!errors?.find((e) => e === dateAgreementFieldName)}
+                  type="date"
+                />
+              )}
+            </>
           )}
           <CheckOption
             label="Здані"

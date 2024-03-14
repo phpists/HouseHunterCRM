@@ -66,14 +66,4 @@ const StyledDropdown = styled.button`
       }
     }
   }
-
-  &:focus {
-    .current-value {
-      opacity: 0;
-    }
-    .options {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
 `;

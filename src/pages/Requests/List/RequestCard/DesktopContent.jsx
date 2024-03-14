@@ -38,6 +38,7 @@ export const DesktopContent = ({
       date={data?.General_field_group?.dt_deadline}
     />
     <Info
+      currency={data?.price_currency}
       priceMax={data?.price_max}
       roomMin={data?.room_min}
       roomMax={data?.room_max}

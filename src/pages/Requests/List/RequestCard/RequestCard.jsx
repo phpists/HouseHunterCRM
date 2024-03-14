@@ -46,6 +46,7 @@ export const RequestCard = ({
     }
   }, [data?.General_field_group?.id_client]);
 
+  console.log(data);
   return (
     <StyledRequestCard
       selected={selected}

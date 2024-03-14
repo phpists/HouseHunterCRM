@@ -4,6 +4,7 @@ import { Text } from "./Text";
 import { Footer } from "./Footer/Footer";
 
 export const Info = ({ className, data }) => {
+  console.log(data?.id_ad_in_source, data?.id_source);
   return (
     <StyledInfo
       className={`flex flex-col justify-between hide clickable ${className}`}
@@ -14,7 +15,8 @@ export const Info = ({ className, data }) => {
         createDate={data?.dt_add}
         dateEdit={data?.dt_edit}
         id={data?.id}
-        streetBaseId={data?.id_ad_in_source}
+        idSource={data?.id_ad_in_source}
+        nameSource={data?.id_source}
       />
     </StyledInfo>
   );

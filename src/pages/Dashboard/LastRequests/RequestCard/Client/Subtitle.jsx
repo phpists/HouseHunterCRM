@@ -13,7 +13,7 @@ const StyledSubtitle = styled.div`
   font-weight: 100;
   line-height: 118%; /* 14.16px */
   letter-spacing: 0.24px;
-  width: 100px;
+  width: 140px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;

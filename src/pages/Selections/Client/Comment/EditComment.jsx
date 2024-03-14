@@ -63,6 +63,7 @@ export const EditComment = ({ onClose, comment, onChange }) => {
             onChange={textAreaAdjust}
             placeholder="Введіть значення"
             ref={textareaRef}
+            autoFocus
           />
           <button onClick={handleSave}>Зберегти</button>
         </div>

@@ -1,9 +1,17 @@
 import { styled } from "styled-components";
 import { Dropdown } from "./Dropdown";
+import { useState } from "react";
 
 export const Period = ({ options, value, onChange }) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <StyledPeriod className="flex items-center justify-between">
+    <StyledPeriod
+      className="flex items-center justify-between"
+      onClick={(e) => setOpen(!open)}
+      onBlur={() => setOpen(false)}
+      open={open}
+    >
       <div className="flex flex-col items-start">
         <div className="title">Оберіть</div>
         <div className="subtitle">За який період</div>
@@ -41,13 +49,15 @@ const StyledPeriod = styled.button`
   &:hover {
     background: rgba(255, 255, 255, 0.05);
   }
-  &:focus {
-    .current-value {
+  ${({ open }) =>
+    open &&
+    `
+     .current-value {
       opacity: 0;
     }
     .options {
       opacity: 1;
       visibility: visible;
     }
-  }
+ `}
 `;

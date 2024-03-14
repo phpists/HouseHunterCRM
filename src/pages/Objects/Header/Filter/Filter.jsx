@@ -19,6 +19,7 @@ export const Filter = ({
   onChangeDefaultFiltersOpened,
   filtersOpened,
   isFavorite,
+  allCount,
 }) => {
   const controls = useAnimationControls();
   const [errors, setErrors] = useState({});
@@ -26,6 +27,7 @@ export const Filter = ({
   const [total, setTotal] = useState("0");
   const [isInputFocused, setIsInputFocused] = useState(false);
   const applying = useRef(false);
+  const isFirstRender = useRef(true);
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
@@ -64,15 +66,21 @@ export const Filter = ({
     const { company_object, street_base_object, mls_object, ...otherFilters } =
       Object.fromEntries(Object.entries(filters)?.filter((f) => f[1] !== "0"));
 
+    let dt_end_agreement_to = company_object?.dt_end_agreement_to
+      ? new Date(handleFromInputDate(company_object?.dt_end_agreement_to))
+      : undefined;
+
+    if (dt_end_agreement_to) {
+      dt_end_agreement_to.setHours(23);
+      dt_end_agreement_to.setMinutes(59);
+      dt_end_agreement_to.setSeconds(59);
+    }
+
     data = {
       ...data,
       company_object: {
         ...company_object,
-        dt_end_agreement_to: company_object?.dt_end_agreement_to
-          ? new Date(
-              handleFromInputDate(company_object?.dt_end_agreement_to)
-            )?.getTime() / 1000
-          : null,
+        dt_end_agreement_to: dt_end_agreement_to.getTime(),
       },
       street_base_object,
       mls_object,
@@ -107,7 +115,10 @@ export const Filter = ({
   };
 
   useEffect(() => {
-    if (!applying.current) {
+    if (isFirstRender.current) {
+      setTotal(allCount);
+      isFirstRender.current = false;
+    } else if (!applying.current) {
       !isInputFocused && handleGetTotal();
     } else {
       applying.current = false;

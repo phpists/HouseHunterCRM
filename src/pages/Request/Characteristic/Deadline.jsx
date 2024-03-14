@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ProfileField } from "../../../components/ProfileField";
 
-export const Deadline = ({ value, onChange, error }) => {
+export const Deadline = ({ value, onChange, error ,}) => {
   return (
     <StyledDeadline>
       <ProfileField

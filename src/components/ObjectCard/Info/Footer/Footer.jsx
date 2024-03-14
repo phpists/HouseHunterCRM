@@ -1,13 +1,22 @@
 import styled from "styled-components";
 import { Tag } from "./Tag";
 import { handleFormatDate } from "../../../../utilits";
+import { useGetSourcesQuery } from "../../../../store/objects/objects.api";
 
-export const Footer = ({ createDate, dateEdit, id, streetBaseId }) => {
+export const Footer = ({ createDate, dateEdit, id, idSource, nameSource }) => {
+  const { data } = useGetSourcesQuery();
+
   return (
     <StyledFooter className="flex flex-wrap items-center clickable">
-      {id ? <Tag title="ID" value={id} isCopy /> : null}
-      {streetBaseId ? (
-        <Tag title="ID xbase" value={streetBaseId} isCopy />
+      {id && nameSource === "0" ? (
+        <Tag title="ID" copyValue={id} isCopy />
+      ) : null}
+      {idSource !== "0" ? (
+        <Tag
+          title={`ID ${data?.[nameSource] ?? ""}`}
+          copyValue={idSource}
+          isCopy
+        />
       ) : null}
       <Tag
         title={`Додано/Оновлено  ${handleFormatDate(

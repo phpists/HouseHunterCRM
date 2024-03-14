@@ -64,6 +64,7 @@ export const Confirm = ({ onClose, onSubmit, title, passwordCheck }) => {
       initial={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
       animate={controls}
+      isPassword={password?.length > 0}
     >
       <div className={`modal`}>
         <Close className="close-btn" onClick={handleClose} />
@@ -113,6 +114,7 @@ const StyledConfirm = styled(motion.div)`
       margin: 10px 0;
       .value {
         width: 250px;
+        ${({ isPassword }) => isPassword && "filter: blur(5px);"}
       }
     }
   }

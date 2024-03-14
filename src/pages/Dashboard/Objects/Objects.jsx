@@ -3,39 +3,31 @@ import { CardHeader } from "../CardHeader";
 import { Card } from "../Card/Card";
 import { ReactComponent as HomeIcon } from "../../../assets/images/home-gradient.svg";
 import { InfoList } from "../InfoList/InfoList";
-import {
-  useGetActualObjectsCountQuery,
-  useGetObjectsCountQuery,
-  useGetOverdueObjectsCountQuery,
-  useGetStreetBaseObjectsCountQuery,
-} from "../../../store/objects/objects.api";
 
 export const Objects = ({ statisticData }) => {
-  const { data: objectCount } = useGetObjectsCountQuery();
-  const { data: actualObjectCount } = useGetActualObjectsCountQuery();
-  const { data: overdueObjectCount } = useGetOverdueObjectsCountQuery();
-  const { data: streetBaseObjectCount } = useGetStreetBaseObjectsCountQuery();
-
   return (
     <StyledObjects>
       <CardHeader title="До моїх об’єктів" link="/objects?my_objects=true" />
       <div className="content">
         <Card
           IconImg={HomeIcon}
-          title={objectCount?.count}
+          title={statisticData?.count_objects}
           subtitle="Всього об'єктів "
         />
         <InfoList
           items={[
             {
               title: "Протерміновані",
-              value: overdueObjectCount?.count ?? "-",
+              value: statisticData?.count_objects_overdue ?? "-",
             },
             {
               title: "Об’єкти Street Base",
-              value: streetBaseObjectCount?.count ?? "-",
+              value: statisticData?.count_objects_street_base ?? "-",
             },
-            { title: "Актуальні", value: actualObjectCount?.count ?? "-" },
+            {
+              title: "Актуальні",
+              value: statisticData?.count_objects_actual ?? "-",
+            },
             {
               title: "Не актуальні",
               value: statisticData?.count_objects_not_actual ?? "0",

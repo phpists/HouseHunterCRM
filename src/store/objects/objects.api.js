@@ -359,6 +359,17 @@ export const objects = createApi({
         }),
       }),
     }),
+    getSources: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getSource",
+          mod: "system_info",
+        }),
+      }),
+    }),
   }),
 });
 
@@ -388,4 +399,5 @@ export const {
   useLazyEditObjectCommentQuery,
   useLazyGetObjectCommentHistoryQuery,
   useLazyAddStreetBaseObjectQuery,
+  useGetSourcesQuery,
 } = objects;

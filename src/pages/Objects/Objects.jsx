@@ -31,7 +31,7 @@ const Objects = () => {
   const INIT_FILTERS = {
     id_rubric: "",
     id_location: [],
-    price_currency: "2",
+    price_currency: "1",
     price: "",
     price_max: "",
     price_min: "",
@@ -40,6 +40,7 @@ const Objects = () => {
   };
 
   const DEFAULT_FILTERS = {
+    price_currency: "1",
     company_object: {
       show_only: "only_my",
       actual: "1",
@@ -121,15 +122,22 @@ const Objects = () => {
           Object.entries(filters)?.filter((f) => f[1] !== "0")
         );
 
+        let dt_end_agreement_to = company_object?.dt_end_agreement_to
+          ? new Date(handleFromInputDate(company_object?.dt_end_agreement_to))
+          : undefined;
+
+        if (dt_end_agreement_to) {
+          dt_end_agreement_to.setHours(23);
+          dt_end_agreement_to.setMinutes(59);
+          dt_end_agreement_to.setSeconds(59);
+          dt_end_agreement_to.getTime();
+        }
+
         data = {
           ...data,
           company_object: {
             ...company_object,
-            dt_end_agreement_to: company_object?.dt_end_agreement_to
-              ? new Date(
-                  handleFromInputDate(company_object?.dt_end_agreement_to)
-                )?.getTime() / 1000
-              : null,
+            dt_end_agreement_to: dt_end_agreement_to.getTime(),
           },
           street_base_object,
           mls_object,

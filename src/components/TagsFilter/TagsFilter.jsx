@@ -42,7 +42,7 @@ export const TagsFilter = ({
 
     tags.forEach((t, i) => {
       const tagLength = t?.length >= 50 ? 45 : t?.length;
-      totalCount += tagLength + 5;
+      totalCount += tagLength + 4;
       if (totalCount >= 50) {
         // index =  i;
       } else {

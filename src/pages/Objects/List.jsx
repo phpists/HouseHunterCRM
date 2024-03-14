@@ -5,7 +5,6 @@ import { useGetAccessQuery } from "../../store/auth/auth.api";
 import { handleCheckAccess, handleResponse } from "../../utilits";
 import { useState } from "react";
 import { AddToSelections } from "./AddToSelections";
-
 import { Loader } from "../../components/Loader";
 import { ObjectPriceHistory } from "../../components/ObjectPriceHistory";
 import { ObjectCommentHistory } from "../../components/ObjectCommentHistory/ObjectCommentHistory";
@@ -14,6 +13,7 @@ import { useLazyDeleteObjectQuery } from "../../store/objects/objects.api";
 import cogoToast from "cogo-toast";
 import { useAppSelect } from "../../hooks/redux";
 import { EditObjectComment } from "../../components/EditObjectComment";
+import { Confirm } from "../../components/Confirm/Confirm";
 
 export const List = ({
   selected,
@@ -37,21 +37,27 @@ export const List = ({
   const [deleteObject] = useLazyDeleteObjectQuery();
   const [deleting, setDeleting] = useState(false);
   const [editComment, setEditComment] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
-  const handleDelete = (id) => {
+  const handleDelete = () => {
     setDeleting(true);
-    deleteObject([id]).then((resp) => {
+    deleteObject([deleteId]).then((resp) => {
       handleResponse(resp, () => {
         cogoToast.success(`Обєкт успішно видалено!`, {
           hideAfter: 3,
           position: "top-right",
         });
-        onDeleteSuccess(id);
+        onDeleteSuccess(deleteId);
       });
       setDeleting(false);
     });
   };
 
+  const handleOpenDelete = (id) => {
+    setDeleteModal(true);
+    setDeleteId(id);
+  };
   return (
     <>
       {openCommentHistoryModal && (
@@ -85,6 +91,13 @@ export const List = ({
           onChange={onChangeComment}
         />
       )}
+      {deleteModal && (
+        <Confirm
+          title="Видалити об'єкт"
+          onClose={() => setDeleteModal(false)}
+          onSubmit={handleDelete}
+        />
+      )}
       <StyledList ref={innerRef}>
         {data?.length === 0 || actionLoading || deleting ? (
           <Empty loading={loading || actionLoading || deleting} />
@@ -112,7 +125,7 @@ export const List = ({
                 onOpenPriceHistory={() =>
                   setOpenHistoryPriceModal(d?.price_history_json)
                 }
-                onDelete={() => handleDelete(d?.id)}
+                onDelete={() => handleOpenDelete(d?.id)}
                 onChangeComment={() =>
                   setEditComment({ id: d?.id, comment: d?.comment })
                 }

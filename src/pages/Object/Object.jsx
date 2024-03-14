@@ -109,7 +109,7 @@ const ObjectPage = () => {
         [fieldName]: value,
         obj_is_actual:
           fieldName === "obj_is_actual_dt"
-            ? "0"
+            ? "1"
             : fieldName === "obj_is_actual"
             ? value
             : data.obj_is_actual,

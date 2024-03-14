@@ -5,16 +5,16 @@ import homeIcon from "../assets/images/home-gradient.svg";
 export const ObjectCard = ({ photo, className, date, isObject }) => (
   <StyledObjectCard
     photo={photo}
-    className={`flex flex-col items-center justify-center ${className} openInfo`}
+    className={`flex flex-col items-center justify-center ${className} clickable`}
   >
     {!photo && (
       <>
         <img
           src={isObject ? homeIcon : megafoneIcon}
           alt=""
-          className="0.5 openInfo"
+          className=" clickable 0.5 openInfo"
         />
-        <span className="openInfo date">{date ?? ""}</span>
+        <span className="clickable openInfo date">{date ?? ""}</span>
       </>
     )}
   </StyledObjectCard>

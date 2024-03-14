@@ -24,7 +24,7 @@ export const Phone = ({
         <img src={phoneIcon} alt="" className="notClickable" />
       ) : (
         <a href={`tel:${phone}`}>
-          <img src={phoneIcon} alt="" className="notClickable" />
+          {/* <img src={phoneIcon} alt="" className="notClickable" /> */}
         </a>
       )}
     </div>

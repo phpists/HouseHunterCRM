@@ -333,11 +333,13 @@ const Requests = () => {
   };
 
   useEffect(() => {
+    console.log("isFavorite");
     if (!isFirstRender.current) {
+      console.log("here");
       currentPage.current = 0;
       setIsAllPages(false);
-      setFilters(INIT_FILTERS);
-      filterActive.current = false;
+      //   setFilters(INIT_FILTERS);
+      //   filterActive.current = false;
       handleGetRequests(true);
       // eslint-disable-next-line
     }
@@ -368,7 +370,12 @@ const Requests = () => {
   useEffect(() => {
     filterActive.current = false;
     const filterApply = location?.search?.split("=")[0];
-    if (filterApply === "?showDeadline") {
+    const prevFilters = localStorage.getItem("requestFilter");
+    if (!!prevFilters && !!checkIsJSON(prevFilters)) {
+      filterActive.current = true;
+      setFilters(JSON.parse(prevFilters) ?? INIT_FILTERS);
+      setIsDefaultFiltersSet(true);
+    } else if (filterApply === "?showDeadline") {
       filterActive.current = true;
       setFilters({ showDeadline: "1" });
       setIsDefaultFiltersSet(true);
@@ -377,7 +384,6 @@ const Requests = () => {
       filterActive.current = true;
       setIsDefaultFiltersSet(true);
     } else {
-      isFirstRender.current = false;
       handleGetRequests(true);
     }
     // eslint-disable-next-line

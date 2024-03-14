@@ -125,7 +125,7 @@ export const ObjectsList = ({
               <Card
                 key={`object-${i}`}
                 selected={
-                  active === c[1]?.id ||
+                  //   active === c[1]?.id ||
                   !!selectedItems?.find((s) => s.id === c[1]?.id)
                 }
                 onSelect={() => onSelect({ id: c[1]?.id, type: "object" })}

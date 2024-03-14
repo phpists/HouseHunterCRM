@@ -179,7 +179,8 @@ export const RequestsList = ({
                 <Card
                   key={`request-${i}`}
                   selected={
-                    active === id || !!selectedItems?.find((s) => s.id === id)
+                    // active === id ||
+                    !!selectedItems?.find((s) => s.id === id)
                   }
                   onSelect={() => onSelect({ id: id, type: "request" })}
                   onSelectItem={() => onSelectItem({ id: id, type: "request" })}

@@ -41,6 +41,7 @@ export const MobileContent = ({
         />
         <Info
           priceMax={data?.price_max}
+          currency={data?.price_currency}
           roomMin={data?.room_min}
           roomMax={data?.room_max}
           areaMin={data?.area_total_min}

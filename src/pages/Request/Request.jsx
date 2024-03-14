@@ -162,12 +162,31 @@ const Request = () => {
     );
   };
 
-  const handleChangeField = (fieldName, value) => {
-    const newData = { ...data, [fieldName]: value };
-    setData(newData);
+  const handleChangeField = (fieldName, value, innnerFieldName) => {
+    let newData = { ...data, [fieldName]: value };
+
     if (fieldName === "id_rubric") {
       handleGetRubricsFields(value);
     }
+
+    if (
+      innnerFieldName === "dt_deadline" &&
+      !!data?.general_group?.company_object
+    ) {
+      newData = {
+        ...newData,
+        general_group: {
+          ...newData?.general_group,
+          company_object: {
+            ...newData?.general_group?.company_object,
+            company_given_objects_to: value?.dt_deadline,
+          },
+        },
+      };
+    }
+
+    console.log(newData);
+    setData(newData);
   };
 
   const handleCheckAllFields = () => {
@@ -283,6 +302,20 @@ const Request = () => {
         fields: handleFillEmptyRangeFields(data.fields, fieldsData.current),
         general_group: {
           ...data.general_group,
+          company_object: data.general_group?.company_object
+            ? {
+                ...data.general_group?.company_object,
+                company_given_objects_to: data.general_group?.company_object
+                  ?.company_given_objects_to
+                  ? Math.floor(
+                      new Date(
+                        data.general_group?.company_object
+                          ?.company_given_objects_to ?? 0
+                      ).getTime() / 1000
+                    )
+                  : undefined,
+              }
+            : data.general_group?.company_object,
           id_client: clientId,
           dt_deadline: data?.general_group?.dt_deadline
             ? Math.floor(
@@ -326,7 +359,19 @@ const Request = () => {
           stop_showing,
           folder_empty,
           not_actual,
-          company_object,
+          company_object: company_object
+            ? {
+                ...company_object,
+                company_given_objects_to:
+                  company_object?.company_given_objects_to
+                    ? Math.floor(
+                        new Date(
+                          company_object?.company_given_objects_to ?? 0
+                        ).getTime() / 1000
+                      )
+                    : undefined,
+              }
+            : company_object,
           street_base_object,
           mls_object,
           id_group: id,
@@ -425,7 +470,18 @@ const Request = () => {
               company_object:
                 Object.entries(company_object)?.length === 0
                   ? undefined
-                  : company_object,
+                  : {
+                      ...company_object,
+                      company_given_objects_to: resp?.data[id]
+                        ?.General_field_group?.company_given_objects_to
+                        ? new Date(
+                            Number(
+                              resp?.data[id]?.General_field_group
+                                ?.company_given_objects_to ?? 0
+                            ) * 1000
+                          )
+                        : undefined,
+                    },
               street_base_object:
                 resp?.data[id]?.General_field_group?.show_street_base === "1"
                   ? {
@@ -566,6 +622,9 @@ const Request = () => {
             mlsBaseOpen={data?.general_group?.mls === "1"}
             errors={errors?.find((er) => er?.id === "general")?.errors ?? []}
             className="request-base-wrapper"
+            dateAgreement
+            dateAgreementFieldName="company_given_objects_to"
+            request
           />
           <Contacts />
         </div>

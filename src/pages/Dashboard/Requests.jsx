@@ -3,32 +3,26 @@ import { CardHeader } from "./CardHeader";
 import { Card } from "./Card/Card";
 import { ReactComponent as MegaphoneIcon } from "../../assets/images/megaphone-gradient.svg";
 import { InfoList } from "./InfoList/InfoList";
-import {
-  useGetActualRequestCountQuery,
-  useGetOverdueRequestCountQuery,
-  useGetRequestsCountQuery,
-} from "../../store/requests/requests.api";
 
 export const Requests = ({ statisticData }) => {
-  const { data: requestsCount } = useGetRequestsCountQuery();
-  const { data: actualRequestsCount } = useGetActualRequestCountQuery();
-  const { data: overdueRequestsCount } = useGetOverdueRequestCountQuery();
-
   return (
     <StyledRequests>
       <CardHeader title="До моїх запитів" link="/requests" />
       <div className="content">
         <Card
           IconImg={MegaphoneIcon}
-          title={requestsCount?.count ?? "-"}
+          title={statisticData?.count_request ?? "-"}
           subtitle="Всього запитів "
         />
         <InfoList
           items={[
-            { title: "Актуальні", value: actualRequestsCount?.count ?? "-" },
+            {
+              title: "Актуальні",
+              value: statisticData?.count_request_actual ?? "-",
+            },
             {
               title: "Протерміновані",
-              value: overdueRequestsCount?.count ?? "-",
+              value: statisticData?.count_request_overdue ?? "-",
             },
             {
               title: "Неактуальні ",

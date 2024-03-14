@@ -100,7 +100,6 @@ export const Header = ({
 
   return (
     <>
-      {" "}
       {openAddToSelection && (
         <AddToSelections
           onClose={() => setOpenAddToSelection(false)}
@@ -177,6 +176,7 @@ export const Header = ({
             filtersOpened={defaultFiltersOpen}
             onChangeDefaultFiltersOpened={(val) => setDefalultFiltersOpen(val)}
             isFavorite={isFavorite}
+            allCount={allCount}
           />
         )}
         {addClient && <AddClient onClose={() => setAddClient(false)} />}

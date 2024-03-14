@@ -49,10 +49,14 @@ export const Characteristic = ({
   };
 
   const handleChangeDeadline = (val) => {
-    onChangeField("general_group", {
-      ...data.general_group,
-      dt_deadline: val,
-    });
+    onChangeField(
+      "general_group",
+      {
+        ...data.general_group,
+        dt_deadline: val,
+      },
+      "dt_deadline"
+    );
     onChangeErrors(
       errors
         .map((e) =>
