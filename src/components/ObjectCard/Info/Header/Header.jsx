@@ -9,24 +9,32 @@ export const Header = ({ data }) => {
     }
 
     const now = new Date()?.getTime();
-    const agrementDate = Number(data?.dt_end_agrement) * 1000;
+    const agrementDate = new Date(Number(data?.dt_end_agreement) * 1000);
+    agrementDate.setHours(23);
 
-    return now > agrementDate;
+    return now > agrementDate?.getTime();
   };
 
   return (
     <StyledHeader className="flex flex-wrap items-center clickable">
-      {handleCheckIsEndDateAgrement() ? (
-        <Tag title={"Протерміновано"} color={"red"} />
-      ) : data?.type_object === "street_base" ? null : data?.id_street_base !==
-        "0" ? (
-        <Tag title={"Перенесено з StreetBase"} color={"red"} />
-      ) : data?.dt_end_agreement === "0" || !data?.dt_end_agreement ? (
-        <Tag
-          title={data?.obj_is_actual === "1" ? "Актуально" : "Не актуально"}
-          color={data?.obj_is_actual === "1" ? "green" : "red"}
-        />
-      ) : (
+      {data?.type_object === "street_base" ? (
+        <Tag title="База StreetBase" color="green" />
+      ) : null}
+      {data?.type_object === "street_base"
+        ? null
+        : data?.id_street_base !== "0" && (
+            <Tag title={"Перенесено з StreetBase"} color={"red"} />
+          )}
+
+      {data?.dt_end_agreement === "0" ||
+        (!data?.dt_end_agreement && (
+          <Tag
+            title={data?.obj_is_actual === "1" ? "Актуально" : "Не актуально"}
+            color={data?.obj_is_actual === "1" ? "green" : "red"}
+          />
+        ))}
+
+      {data?.dt_end_agreement !== "0" && (
         <Tag
           title={`здано до  ${handleFormatDate(
             Number(data?.dt_end_agreement) * 1000,
@@ -35,9 +43,9 @@ export const Header = ({ data }) => {
           color="orange"
         />
       )}
-      {data?.type_object === "street_base" ? (
-        <Tag title="База StreetBase" color="green" />
-      ) : null}
+      {handleCheckIsEndDateAgrement() && (
+        <Tag title={"Протерміновано"} color={"red"} />
+      )}
     </StyledHeader>
   );
 };

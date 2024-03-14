@@ -3,15 +3,26 @@ import { Tag } from "./Tag";
 import { handleFormatDate } from "../../../../utilits";
 import { useGetSourcesQuery } from "../../../../store/objects/objects.api";
 
-export const Footer = ({ createDate, dateEdit, id, idSource, nameSource }) => {
+export const Footer = ({
+  createDate,
+  dateEdit,
+  id,
+  idSource,
+  nameSource,
+  typeObject,
+}) => {
   const { data } = useGetSourcesQuery();
 
   return (
     <StyledFooter className="flex flex-wrap items-center clickable">
-      {id && nameSource === "0" ? (
-        <Tag title="ID" copyValue={id} isCopy />
+      {id ? (
+        <Tag
+          title={`ID ${typeObject === "street_base" ? "StreetBase" : ""}`}
+          copyValue={id}
+          isCopy
+        />
       ) : null}
-      {idSource !== "0" ? (
+      {idSource !== "0" && typeObject !== "company" ? (
         <Tag
           title={`ID ${data?.[nameSource] ?? ""}`}
           copyValue={idSource}

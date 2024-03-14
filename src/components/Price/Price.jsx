@@ -66,4 +66,11 @@ const StyledPrice = styled.button`
   width: 100%;
   transition: all 0.3s;
   height: 32px;
+  &:hover {
+    .arrow {
+      g {
+        opacity: 1;
+      }
+    }
+  }
 `;

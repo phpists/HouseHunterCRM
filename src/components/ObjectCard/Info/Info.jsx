@@ -4,10 +4,9 @@ import { Text } from "./Text";
 import { Footer } from "./Footer/Footer";
 
 export const Info = ({ className, data }) => {
-  console.log(data?.id_ad_in_source, data?.id_source);
   return (
     <StyledInfo
-      className={`flex flex-col justify-between hide clickable ${className}`}
+      className={`flex flex-col justify-between hide clickable hide-scroll ${className}`}
     >
       <Header data={data} />
       <Text data={data} />
@@ -17,6 +16,7 @@ export const Info = ({ className, data }) => {
         id={data?.id}
         idSource={data?.id_ad_in_source}
         nameSource={data?.id_source}
+        typeObject={data?.type_object}
       />
     </StyledInfo>
   );

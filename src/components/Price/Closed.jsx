@@ -3,14 +3,14 @@ import { ReactComponent as Arrow } from "../../assets/images/arrow-right.svg";
 
 export const Closed = ({ onOpen, price = 0, subtitle, notChangeCurrency }) => (
   <StyledClosed
-    className="flex items-start justify-between closed-wrapper"
+    className="flex items-start justify-between closed-wrappe "
     onClick={notChangeCurrency ? () => null : onOpen}
   >
     <div>
       <div className="price">{`${price}`}</div>
       {subtitle && <div className="subtitle">{subtitle}</div>}
     </div>
-    {!notChangeCurrency && <Arrow />}
+    {!notChangeCurrency && <Arrow className="arrow" />}
   </StyledClosed>
 );
 

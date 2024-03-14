@@ -130,14 +130,13 @@ const Objects = () => {
           dt_end_agreement_to.setHours(23);
           dt_end_agreement_to.setMinutes(59);
           dt_end_agreement_to.setSeconds(59);
-          dt_end_agreement_to.getTime();
         }
 
         data = {
           ...data,
           company_object: {
             ...company_object,
-            dt_end_agreement_to: dt_end_agreement_to.getTime(),
+            dt_end_agreement_to: dt_end_agreement_to?.getTime(),
           },
           street_base_object,
           mls_object,

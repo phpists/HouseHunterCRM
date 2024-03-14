@@ -21,7 +21,7 @@ export const Period = ({ options, value, onChange }) => {
   );
 };
 
-const StyledPeriod = styled.button`
+const StyledPeriod = styled.div`
   margin-bottom: 6.5px;
   padding: 7px 11px 6px;
   border-radius: 9px;
