@@ -7,6 +7,7 @@ import { Confirm } from "../../../components/Confirm/Confirm";
 import { useLazyDeleteObjectQuery } from "../../../store/objects/objects.api";
 import { handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
+import { PRICES_FOR_TITLE } from "../../../constants";
 
 export const ObjectsList = ({
   onSelect,
@@ -137,6 +138,11 @@ export const ObjectsList = ({
                 title={c[1]?.rubric}
                 location={c[1]?.location}
                 price={c[1]?.price_USD}
+                currency="2"
+                price_for={
+                  PRICES_FOR_TITLE?.find((p) => p.value === c[1]?.price_for)
+                    ?.title ?? undefined
+                }
                 id={c[1]?.id}
                 favorite={c[1]?.favorite}
                 onChangeFavorite={() => handleToggleFavoriteStatus(c[1]?.id)}

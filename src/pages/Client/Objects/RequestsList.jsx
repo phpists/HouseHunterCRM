@@ -182,6 +182,7 @@ export const RequestsList = ({
                     // active === id ||
                     !!selectedItems?.find((s) => s.id === id)
                   }
+                  currency={infoField?.price_currency}
                   onSelect={() => onSelect({ id: id, type: "request" })}
                   onSelectItem={() => onSelectItem({ id: id, type: "request" })}
                   onOpenInfo={() => onOpenInfo(true)}

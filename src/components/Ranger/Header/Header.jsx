@@ -32,5 +32,7 @@ const StyledHeader = styled.div`
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
+    z-index: 10;
+    position: relative;
   }
 `;

@@ -12,7 +12,7 @@ const StyledTag = styled.div`
   background: rgba(88, 175, 255, 0.3);
   color: #58afff;
   font-family: Open Sans;
-  font-size: 11px;
+  font-size: 10px;
   font-style: normal;
   font-weight: 300;
   line-height: 1;

@@ -92,7 +92,7 @@ const StyledTypes = styled.div`
       width: 24px;
       border-radius: 100%;
       z-index: 100;
-      background: #4b4b4b;
+      background: #4e4e4e;
     }
   }
   .second-angle {
@@ -126,7 +126,7 @@ const StyledTypes = styled.div`
       width: 16.3px;
       border-radius: 100%;
       z-index: 100;
-      background: #4b4b4b;
+      background: #4e4e4e;
     }
   }
 `;

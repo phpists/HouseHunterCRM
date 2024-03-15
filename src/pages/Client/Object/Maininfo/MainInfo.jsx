@@ -22,6 +22,7 @@ import {
   fortmatNumber,
   handleGetLocationAllPath,
 } from "../../../../utilits";
+import { PRICES_FOR_TITLE } from "../../../../constants";
 
 export const Maininfo = ({
   data,
@@ -90,15 +91,28 @@ export const Maininfo = ({
         <Field
           value={
             isObject
-              ? Number(data?.price_min ?? 0) === 0
+              ? Number(data?.price_USD ?? 0) === 0
                 ? "Не вказана"
-                : `${fortmatNumber(Number(data?.price_min ?? 0))}$`
+                : `${fortmatNumber(Number(data?.price_USD ?? 0))}$ / ${
+                    PRICES_FOR_TITLE?.find((p) => p.value === data?.price_for)
+                      ?.title ?? undefined
+                  }`
               : Number(data?.price_max ?? 0) === 0 &&
                 Number(data?.price_min ?? 0) === 0
               ? "Не вказана"
-              : `${fortmatNumber(
-                  Number(data?.price_min ?? 0)
-                )}$ - ${fortmatNumber(Number(data?.price_max ?? 0))}$`
+              : `${fortmatNumber(Number(data?.price_min ?? 0))}${
+                  data?.price_currency === "1"
+                    ? "₴"
+                    : data?.price_currency === "2"
+                    ? "$"
+                    : "€"
+                } - ${fortmatNumber(Number(data?.price_max ?? 0))}${
+                  data?.price_currency === "1"
+                    ? "₴"
+                    : data?.price_currency === "2"
+                    ? "$"
+                    : "€"
+                }`
           }
           onChange={(val) => onChangeField("price_min", val)}
           label="Вартість"
@@ -195,7 +209,7 @@ const StyledMaininfo = styled.div`
   }
   .field-group {
     display: grid;
-    grid-template-columns: repeat(2, 50%);
+    grid-template-columns: 60% 40%;
     gap: 6px;
   }
   .tags {

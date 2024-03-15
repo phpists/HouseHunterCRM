@@ -27,7 +27,7 @@ const StyledRequestCard = styled.div`
   padding: 20px;
   border-radius: 9px;
   background: #3d3d3d;
-  @media (max-width: 1100px) {
+  @media (max-width: 1500px) {
     padding: 10px;
   }
 `;

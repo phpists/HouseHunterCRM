@@ -26,15 +26,15 @@ export const List = ({
   showClient,
   filters,
   onChangeComment,
-  currency,
-  onChangeCurrency,
 }) => {
   const { accessData } = useAppSelect((state) => state.auth);
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
   const [openCommentHistoryModal, setOpenCommentHistoryModal] = useState(null);
   const [openAddModal, setOpenAddModal] = useState(null);
   const [editComment, setEditComment] = useState(false);
+  const [currency, setCurrency] = useState(1);
 
+  const onChangeCurrency = (val) => setCurrency(val);
   return (
     <>
       {openAddModal && (

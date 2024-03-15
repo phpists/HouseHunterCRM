@@ -137,7 +137,7 @@ const StyledRanger = styled.div`
   ${({ big }) =>
     big &&
     `
-     background: rgba(255, 255, 255, 0.05);
+     background: rgb(78 78 78);
     .first-angle,
     .second-angle {
       opacity: 1;
@@ -145,7 +145,7 @@ const StyledRanger = styled.div`
   `}
 
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgb(78 78 78);
     .first-angle,
     .second-angle {
       opacity: 1;

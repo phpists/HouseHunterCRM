@@ -136,6 +136,11 @@ export const Main = ({
         onChangeCurrency={(val) => onChangeFilter("price_currency", val)}
         onFocus={() => !isInputFocused && onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
+        isType
+        allTypes
+        rubricId={filters?.id_rubric}
+        typeValue={filters?.price_for}
+        onChangeType={(val) => onChangeFilter("price_for", val)}
       />
       <Divider />
       <TagsFilter

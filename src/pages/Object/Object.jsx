@@ -100,6 +100,14 @@ const ObjectPage = () => {
         dt_end_agreement: data?.dt_end_agreement ?? undefined,
         id_rubric: value,
         id_location: data?.id_location ?? "",
+        price: data?.price ?? undefined,
+        price_currency: data?.price_currency ?? undefined,
+        price_for: data?.price_for ?? undefined,
+        title: data?.title ?? undefined,
+        description: data?.description ?? undefined,
+        comment: data?.comment ?? undefined,
+        obj_is_actual: data?.obj_is_actual ?? undefined,
+        dt_end_agreement: data?.dt_end_agreement ?? undefined,
       };
       setData(newData);
       handleGetRubricsFields(value, newData, true);

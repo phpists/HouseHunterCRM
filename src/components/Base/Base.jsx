@@ -179,6 +179,7 @@ export const Base = ({
                   type="date"
                   error={!!errors?.find((e) => e === dateAgreementFieldName)}
                   onlyCalendar
+                  reset
                 />
               ) : (
                 <Field

@@ -82,6 +82,12 @@ export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
         }
         currency={Number(filters?.price_currency)}
         onChangeCurrency={(val) => onChangeFilter("price_currency", val)}
+        isType
+        allTypes
+        rubricId={filters?.id_rubric}
+        typeValue={filters?.price_for}
+        onChangeType={(val) => onChangeFilter("price_for", val)}
+        
       />
       <Divider />
       {filtersFields && handleGetFieldsOptions(filtersFields, "room_min") && (

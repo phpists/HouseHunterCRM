@@ -1,27 +1,9 @@
 import styled from "styled-components";
 import { Price } from "../../Price/Price";
 import { Tags } from "./Tags/Tags";
+import { PRICES_FOR_TITLE } from "../../../constants";
 
 export const MainInfo = ({ className, data, currency, onChangeCurrency }) => {
-  const PRICES_FOR_TITLE = [
-    {
-      title: "за м²",
-      value: "1",
-    },
-    {
-      title: "за гектар",
-      value: "3",
-    },
-    {
-      title: "за об'єкт",
-      value: "4",
-    },
-    {
-      title: "за сотку",
-      value: "2",
-    },
-  ];
-
   return (
     <StyledMainInfo className={`${className} clickable`}>
       <Price

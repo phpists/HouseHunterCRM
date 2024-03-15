@@ -1,18 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 import { ReactComponent as CheckboxIcon } from "../assets/images/checkbox.svg";
+import { ReactComponent as ClearButton } from "../assets/images/delete-access.svg";
 import {
   handleFormatDate,
   handleFormatInputDate,
   handleRemovePhoneMask,
-  onClickOutside,
 } from "../utilits";
 import { PhoneInput } from "./PhoneInput";
 import { Calendar } from "./Calendar/Calendar";
-import { ReactComponent as CalendarIcon } from "../assets/images/calendar.svg";
 import ReactInputMask from "react-input-mask";
 import { ReactComponent as EditIcon } from "../assets/images/edit-company.svg";
-import { ReactComponent as CheckIcon } from "../assets/images/check.svg";
 
 export const ProfileField = ({
   value,
@@ -37,6 +35,7 @@ export const ProfileField = ({
   onBlur,
   onClick,
   onFocus,
+  reset,
 }) => {
   const fieldRef = useRef();
   const [active, setActive] = useState(false);
@@ -126,6 +125,15 @@ export const ProfileField = ({
           className={`check-icon calendar-icon ${calendarOpen && "active"}`}
         />
       )} */}
+      {!readOnly && reset && (
+        <ClearButton
+          onClick={() => {
+            onChange(undefined);
+            handleToggleActive();
+          }}
+          className="check-icon clear"
+        />
+      )}
       {!readOnly && (
         <CheckboxIcon onClick={handleToggleActive} className="check-icon" />
       )}
@@ -405,6 +413,20 @@ const StyledProfileField = styled.button`
       g {
         opacity: 1;
       }
+    }
+  }
+  .clear {
+    right: 27px;
+    path {
+      opacity: 0.4;
+    }
+    &:hover {
+      path {
+        opacity: 1;
+      }
+    }
+    path {
+      fill: #2c2c2c;
     }
   }
   ${({ active, grey }) =>

@@ -26,8 +26,6 @@ export const List = ({
   actionLoading,
   onDeleteSuccess,
   onChangeComment,
-  currency,
-  onChangeCurrency,
 }) => {
   const { accessData } = useAppSelect((state) => state.auth);
   const [openAddModal, setOpenAddModal] = useState(null);
@@ -39,6 +37,9 @@ export const List = ({
   const [editComment, setEditComment] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const [currency, setCurrency] = useState(1);
+
+  const onChangeCurrency = (val) => setCurrency(val);
 
   const handleDelete = () => {
     setDeleting(true);

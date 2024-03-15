@@ -16,14 +16,19 @@ const StyledOpenButton = styled.button`
   font-family: Overpass;
   font-size: 11px;
   font-style: normal;
-  font-weight: 100;
+  font-weight: 200;
   line-height: 1.8; /* 12.98px */
   letter-spacing: 0.22px;
   transition: all 0.3s;
   height: 34px;
   width: 100%;
+  white-space: nowrap;
   &:hover {
     background: rgba(255, 255, 255, 0.38);
     color: #fff;
+  }
+  @media (max-width: 1520px) {
+    font-size: 9px;
+    padding: 9px 10px;
   }
 `;

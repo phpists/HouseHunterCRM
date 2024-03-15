@@ -270,7 +270,6 @@ export const Profile = () => {
         onClick={(e) =>
           e.target.classList.contains("clickable") && setOpenEdit(true)
         }
-        opennotifications={openNotifications?.toString()}
       >
         <Notification
           active={openNotifications}

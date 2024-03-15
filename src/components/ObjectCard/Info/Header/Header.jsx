@@ -4,15 +4,17 @@ import { handleFormatDate } from "../../../../utilits";
 
 export const Header = ({ data }) => {
   const handleCheckIsEndDateAgrement = () => {
-    if (data?.dt_end_agrement === "0") {
+    if (data?.dt_end_agreement === "0") {
       return false;
     }
 
-    const now = new Date()?.getTime();
-    const agrementDate = new Date(Number(data?.dt_end_agreement) * 1000);
-    agrementDate.setHours(23);
+    const now = new Date();
 
-    return now > agrementDate?.getTime();
+    now.setHours(0);
+    const agrementDate = new Date(Number(data?.dt_end_agreement) * 1000);
+    agrementDate.setHours(0);
+
+    return now?.getTime() > agrementDate?.getTime();
   };
 
   return (
@@ -25,14 +27,14 @@ export const Header = ({ data }) => {
         : data?.id_street_base !== "0" && (
             <Tag title={"Перенесено з StreetBase"} color={"red"} />
           )}
-
-      {data?.dt_end_agreement === "0" ||
-        (!data?.dt_end_agreement && (
+      {data?.dt_end_agreement === "0" &&
+        data?.type_object === "Company" &&
+        data?.id_street_base === "0" && (
           <Tag
             title={data?.obj_is_actual === "1" ? "Актуально" : "Не актуально"}
             color={data?.obj_is_actual === "1" ? "green" : "red"}
           />
-        ))}
+        )}
 
       {data?.dt_end_agreement !== "0" && (
         <Tag

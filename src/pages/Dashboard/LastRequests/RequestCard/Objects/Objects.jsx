@@ -48,7 +48,7 @@ export const Objects = ({
 };
 
 const StyledObjects = styled.div`
-  padding: 10px 50px 10px 10px;
+  padding: 10px 40px 10px 10px;
   border-radius: 9px;
   background: #363636;
   position: relative;

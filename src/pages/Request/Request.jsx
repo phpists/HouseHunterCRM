@@ -14,7 +14,14 @@ import {
 import { useEffect, useRef, useState } from "react";
 import cogoToast from "cogo-toast";
 import { useNavigate, useParams } from "react-router-dom";
-import { checkIsJSON, handleCheckFields, handleResponse } from "../../utilits";
+import {
+  checkIsJSON,
+  handleCheckFields,
+  handleFormatDate,
+  handleFormatInputDate,
+  handleReformatDate,
+  handleResponse,
+} from "../../utilits";
 import { useGetCommentsToFieldsQuery } from "../../store/objects/objects.api";
 import { Base } from "../../components/Base/Base";
 import { Contacts } from "./Contacts";
@@ -162,30 +169,13 @@ const Request = () => {
     );
   };
 
-  const handleChangeField = (fieldName, value, innnerFieldName) => {
+  const handleChangeField = (fieldName, value) => {
     let newData = { ...data, [fieldName]: value };
 
     if (fieldName === "id_rubric") {
       handleGetRubricsFields(value);
     }
 
-    if (
-      innnerFieldName === "dt_deadline" &&
-      !!data?.general_group?.company_object
-    ) {
-      newData = {
-        ...newData,
-        general_group: {
-          ...newData?.general_group,
-          company_object: {
-            ...newData?.general_group?.company_object,
-            company_given_objects_to: value?.dt_deadline,
-          },
-        },
-      };
-    }
-
-    console.log(newData);
     setData(newData);
   };
 
@@ -309,8 +299,10 @@ const Request = () => {
                   ?.company_given_objects_to
                   ? Math.floor(
                       new Date(
-                        data.general_group?.company_object
-                          ?.company_given_objects_to ?? 0
+                        handleReformatDate(
+                          data.general_group?.company_object
+                            ?.company_given_objects_to
+                        )
                       ).getTime() / 1000
                     )
                   : undefined,
@@ -366,7 +358,9 @@ const Request = () => {
                   company_object?.company_given_objects_to
                     ? Math.floor(
                         new Date(
-                          company_object?.company_given_objects_to ?? 0
+                          handleReformatDate(
+                            company_object?.company_given_objects_to
+                          )
                         ).getTime() / 1000
                       )
                     : undefined,
@@ -472,15 +466,19 @@ const Request = () => {
                   ? undefined
                   : {
                       ...company_object,
-                      company_given_objects_to: resp?.data[id]
-                        ?.General_field_group?.company_given_objects_to
-                        ? new Date(
-                            Number(
-                              resp?.data[id]?.General_field_group
-                                ?.company_given_objects_to ?? 0
-                            ) * 1000
-                          )
-                        : undefined,
+                      company_given_objects_to:
+                        resp?.data[id]?.General_field_group
+                          ?.company_given_objects_to !== "0"
+                          ? handleFormatDate(
+                              new Date(
+                                Number(
+                                  resp?.data[id]?.General_field_group
+                                    ?.company_given_objects_to ?? 0
+                                ) * 1000
+                              ),
+                              true
+                            )
+                          : undefined,
                     },
               street_base_object:
                 resp?.data[id]?.General_field_group?.show_street_base === "1"
@@ -624,7 +622,6 @@ const Request = () => {
             className="request-base-wrapper"
             dateAgreement
             dateAgreementFieldName="company_given_objects_to"
-            request
           />
           <Contacts />
         </div>

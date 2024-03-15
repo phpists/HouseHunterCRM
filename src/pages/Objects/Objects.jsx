@@ -37,10 +37,12 @@ const Objects = () => {
     price_min: "",
     id_hash: id ?? "",
     search_phone_code: "1",
+    price_for: "4",
   };
 
   const DEFAULT_FILTERS = {
     price_currency: "1",
+    price_for: "4",
     company_object: {
       show_only: "only_my",
       actual: "1",

@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { Ranger } from "../../../../components/Ranger/Ranger";
+import { PRICES_FOR_TITLE } from "../../../../constants";
 
 export const Price = ({
   values,
@@ -8,6 +9,7 @@ export const Price = ({
   onChangeCurrency = () => null,
   error,
   isType,
+  allTypes,
   rubricId,
   typeValue,
   onChangeType,
@@ -25,6 +27,8 @@ export const Price = ({
         mainTypes={
           !isType
             ? undefined
+            : !rubricId
+            ? PRICES_FOR_TITLE
             : rubricId === "65" || rubricId === "66"
             ? [
                 {

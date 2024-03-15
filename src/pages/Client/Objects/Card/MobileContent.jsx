@@ -23,6 +23,8 @@ export const MobileContent = ({
   id,
   isDelete,
   isEdit,
+  currency,
+  price_for,
 }) => {
   const { id: clientId } = useParams();
 
@@ -37,7 +39,7 @@ export const MobileContent = ({
           <div className="w-max mr-5">
             <div className="flex items-center w-max">
               <Title title={title} />
-              <Price price={price} />
+              <Price price={price} currency={currency} price_for={price_for} />
             </div>
             <CreatedDate date={date} />
           </div>

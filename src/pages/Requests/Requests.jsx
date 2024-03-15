@@ -19,6 +19,7 @@ const INIT_FILTERS = {
   price_currency: "1",
   price_min: "",
   price_max: "",
+  price_for: "4",
   only_company_obj: "0",
   only_street_base_obj: "0",
   only_my_obj: "1",

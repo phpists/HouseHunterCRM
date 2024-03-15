@@ -168,6 +168,7 @@ const StyledLastRequests = styled.div`
     height: calc(100svh - 230px);
     max-height: 620px;
     overflow: auto;
+    overflow-x: hidden;
     display: grid;
     grid-template-columns: 1fr;
     grid-auto-rows: max-content;

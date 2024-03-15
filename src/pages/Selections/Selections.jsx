@@ -19,6 +19,7 @@ const INIT_FILTERS = {
   price: "",
   price_max: "",
   price_min: "",
+  price_for: "4",
   //   obj_is_actual: "1",
   //   show_only: "only_my",
 };

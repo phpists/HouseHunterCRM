@@ -1,12 +1,17 @@
 import { styled } from "styled-components";
 import { fortmatNumber } from "../../../../utilits";
 
-export const Price = ({ price }) => (
+export const Price = ({ price, currency, price_for }) => (
   <StyledPrice className="flex items-center">
     {Number(price ?? 0) === 0
       ? "Не вказана"
       : fortmatNumber(Number(price ?? 0))}
-    {Number(price ?? 0) !== 0 && <span>₴</span>}
+    {Number(price ?? 0) !== 0 && (
+      <span>
+        {currency === "1" ? "₴" : currency === "2" ? "$" : "€"}
+        {price_for}
+      </span>
+    )}
   </StyledPrice>
 );
 
