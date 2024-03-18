@@ -79,7 +79,13 @@ export const Select = ({
         )}
       />
       {open && (
-        <div className="modal-overlay" onClick={() => setOpen(false)}></div>
+        <div
+          className="modal-overlay"
+          onClick={() => setOpen(false)}
+          onWheel={(e) => {
+            setOpen(false);
+          }}
+        ></div>
       )}
     </StyledSelect>
   );
@@ -134,8 +140,7 @@ const StyledSelect = styled.button`
       background: rgba(44, 44, 44, 0.85) !important;
     }
     .selectDropdown {
-      opacity: 1;
-      visibility: visible;
+      display: block;
     }
   }
 `;

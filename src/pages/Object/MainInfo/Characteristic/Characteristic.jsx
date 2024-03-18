@@ -113,7 +113,7 @@ const StyledCharacteristic = styled.div`
   padding: 14px 14px 12px 15px;
   margin-bottom: 11px;
   .content-wrapper {
-    height: calc(100svh - 420px);
+    height: calc(100svh - 425px);
     overflow: auto;
   }
   .characteristic-content {
@@ -123,7 +123,7 @@ const StyledCharacteristic = styled.div`
   }
   @media (max-width: 1300px) {
     .content-wrapper {
-      height: 411px;
+      max-height: 411px;
     }
   }
 

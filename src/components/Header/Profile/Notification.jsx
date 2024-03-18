@@ -19,6 +19,7 @@ const StyledNotification = styled.div`
   cursor: pointer;
   margin-right: 18px;
   position: relative;
+  z-index: 10;
   div {
     position: absolute;
     right: 0px;

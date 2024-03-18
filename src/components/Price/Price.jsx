@@ -8,11 +8,14 @@ export const Price = ({
   title,
   subtitle,
   className,
-  prices,
+  price,
   priceFor,
   currency,
   onChangeCurrency,
   notChangeCurrency,
+  type,
+  onChangeType,
+  rubricId,
 }) => {
   const [open, setOpen] = useState(false);
   const options = ["₴", "$", "€"];
@@ -20,6 +23,11 @@ export const Price = ({
 
   const handleChangeCurrency = (val) => {
     onChangeCurrency(val);
+    priceRef.current.blur();
+  };
+
+  const handleChangeType = (val) => {
+    onChangeType(val);
     priceRef.current.blur();
   };
 
@@ -34,20 +42,19 @@ export const Price = ({
           onChangeCurrency={handleChangeCurrency}
           activeCurrency={currency}
           priceFor={priceFor}
+          type={type}
+          onChangeType={handleChangeType}
+          rubricId={rubricId}
         />
       ) : (
         <Closed
           price={
             title ??
             `${
-              Number(prices[currency]) === 0
+              Number(price) === 0
                 ? "Ціну не обрано"
-                : fortmatNumber(Number(prices[currency]))
-            } ${
-              Number(prices[currency]) === 0
-                ? ""
-                : options[currency] ?? options[0]
-            }`
+                : fortmatNumber(Number(price))
+            } ${Number(price) === 0 ? "" : options[currency] ?? options[0]}`
           }
           onOpen={() => setOpen(true)}
           title={title}

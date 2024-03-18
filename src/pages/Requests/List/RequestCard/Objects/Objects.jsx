@@ -2,11 +2,12 @@ import styled from "styled-components";
 import { SeenTime } from "./SeenTime";
 import { Photos } from "./Photos/Photos";
 import { Title } from "./Title";
-import { Tag } from "./Tag";
+import { Tag } from "./Tags/Tag";
 import { OpenButton } from "./OpenButton";
 import { Buttons } from "./Buttons";
 import { useNavigate } from "react-router-dom";
 import { Name } from "./Name";
+import { Tags } from "./Tags/Tags";
 
 export const Objects = ({ idGroup, onOpenChat, data }) => {
   const navigate = useNavigate();
@@ -18,10 +19,7 @@ export const Objects = ({ idGroup, onOpenChat, data }) => {
         {/* <Photos /> */}
         <div className="clickable objects-info-wrapper">
           <Name name={data?.General_field_group?.name ?? "-"} />
-          <div className="flex items-center clickable object-counts">
-            <Title count={data?.General_field_group?.count_objects} />
-            <Tag count={data?.General_field_group?.count_objects} />
-          </div>
+          <Tags />
           <div className="flex items-center">
             <OpenButton onClick={() => navigate(`/selections/${idGroup}`)} />
             <Buttons

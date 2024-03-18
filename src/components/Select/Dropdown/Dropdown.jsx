@@ -25,8 +25,7 @@ const StyledDropdown = styled.div`
   border-top: 1px solid rgba(0, 0, 0, 0.2);
   z-index: 100;
   scroll-behavior: smooth;
-  opacity: 0;
-  visibility: hidden;
+  display: none;
   .empty-select {
     padding: 10px;
     text-align: center;

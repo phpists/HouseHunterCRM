@@ -8,6 +8,7 @@ export const Calendar = ({
   onChange = () => null,
   onClose,
   onReset,
+  changeOnlyOnMonth,
 }) => {
   const [loading, setLoading] = useState(false);
 

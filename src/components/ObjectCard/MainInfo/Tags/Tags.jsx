@@ -21,7 +21,7 @@ export const Tags = ({ data }) => {
       ? [{ title: `${data?.address_storey}`, icon: stairsIcon }]
       : []),
     ...(data.area_plot_sotka > 0
-      ? [{ title: `${data?.area_plot_sotka} м²`, icon: boxIcon }]
+      ? [{ title: `${data?.area_plot_sotka} соток`, icon: boxIcon }]
       : []),
     // { title: "Купівля-продаж" },
     // { title: "Хрущьовка", icon: homeIcon },

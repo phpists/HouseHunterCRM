@@ -334,9 +334,7 @@ const Requests = () => {
   };
 
   useEffect(() => {
-    console.log("isFavorite");
     if (!isFirstRender.current) {
-      console.log("here");
       currentPage.current = 0;
       setIsAllPages(false);
       //   setFilters(INIT_FILTERS);

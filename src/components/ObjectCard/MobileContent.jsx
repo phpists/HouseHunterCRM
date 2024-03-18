@@ -26,6 +26,8 @@ export const MobileContent = ({
   searchTag,
   showLike,
   onChangeComment,
+  type,
+  onChangeType,
 }) => (
   <StyledMobileContent className="clickable">
     <Header data={data} />
@@ -49,6 +51,8 @@ export const MobileContent = ({
       data={data}
       currency={currency}
       onChangeCurrency={onChangeCurrency}
+      type={type}
+      onChangeType={onChangeType}
     />
     <Tags
       className="mobile-tags"

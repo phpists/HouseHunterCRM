@@ -3,17 +3,30 @@ import { Price } from "../../Price/Price";
 import { Tags } from "./Tags/Tags";
 import { PRICES_FOR_TITLE } from "../../../constants";
 
-export const MainInfo = ({ className, data, currency, onChangeCurrency }) => {
+export const MainInfo = ({
+  className,
+  data,
+  currency,
+  onChangeCurrency,
+  type,
+  onChangeType,
+}) => {
+  const TYPES = ["", "metr", "sotka", "hektar", "object"];
+  const CURRENCIES = ["uah", "usd", "eur"];
+
   return (
     <StyledMainInfo className={`${className} clickable`}>
       <Price
-        prices={[data?.price_UAH, data?.price_USD, data.price_EUR]}
+        price={data?.[`price_per_${TYPES[type]}_${CURRENCIES[currency]}`]}
         currency={currency}
         onChangeCurrency={onChangeCurrency}
         priceFor={
-          PRICES_FOR_TITLE?.find((p) => p.value === data?.price_for)?.title ??
-          undefined
+          PRICES_FOR_TITLE?.find((p) => p.value === (type || data?.price_for))
+            ?.title ?? undefined
         }
+        rubricId={data?.id_rubric}
+        type={type}
+        onChangeType={onChangeType}
       />
       <Tags data={data} />
     </StyledMainInfo>

@@ -265,12 +265,7 @@ export const Profile = () => {
           isEdit={true}
         />
       )}
-      <StyledProfile
-        className="flex items-center clickable profile-header-block"
-        onClick={(e) =>
-          e.target.classList.contains("clickable") && setOpenEdit(true)
-        }
-      >
+      <div className="relative flex items-center">
         <Notification
           active={openNotifications}
           onToggle={handleOpenNotifications}
@@ -289,15 +284,22 @@ export const Profile = () => {
             onClick={() => setOpenNotifications(false)}
           ></div>
         )}
-        <div className="flex items-start clickable">
-          <Status
-            status={user?.struct_level}
-            className="clickable status-tag"
-          />
-          <Info />
-        </div>
-        <Avatar />
-      </StyledProfile>
+        <StyledProfile
+          className="flex items-center clickable profile-header-block"
+          onClick={(e) =>
+            e.target.classList.contains("clickable") && setOpenEdit(true)
+          }
+        >
+          <div className="flex items-start clickable">
+            <Status
+              status={user?.struct_level}
+              className="clickable status-tag"
+            />
+            <Info />
+          </div>
+          <Avatar />
+        </StyledProfile>
+      </div>
     </>
   );
 };

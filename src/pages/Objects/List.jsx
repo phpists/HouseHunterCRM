@@ -38,8 +38,10 @@ export const List = ({
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [currency, setCurrency] = useState(1);
+  const [type, setType] = useState("4");
 
   const onChangeCurrency = (val) => setCurrency(val);
+  const onChangeType = (val) => setType(val);
 
   const handleDelete = () => {
     setDeleting(true);
@@ -133,6 +135,8 @@ export const List = ({
                 searchTag="?objects"
                 currency={currency}
                 onChangeCurrency={onChangeCurrency}
+                type={type}
+                onChangeType={onChangeType}
               />
             ))}
           </>

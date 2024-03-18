@@ -76,6 +76,9 @@ const StyledComment = styled.div`
   }
   @media (min-width: 1400px) {
     width: 15svw;
+    max-width: 140px;
+  }
+  @media (min-width: 1500px) {
     max-width: 170px;
   }
   @media (min-width: 1750px) {

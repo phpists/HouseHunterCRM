@@ -39,6 +39,7 @@ const StyledClosed = styled.div`
     font-weight: 400;
     line-height: 1.7; /* 16.52px */
     letter-spacing: 0.28px;
+    width: max-content;
     .priceFore {
       font-size: 11px;
       font-weight: 200;

@@ -31,6 +31,7 @@ export const Contacts = () => {
         <div className="flex items-center">
           <Phones
             top
+            classNameContent="clientPhones"
             phones={data?.data?.phone?.map(
               ({ code, phone, viber, telegram }) => ({
                 phone: `${code}${phone}`,
@@ -85,6 +86,9 @@ const StyledContacts = styled.div`
     grid-template-columns: max-content;
     gap: 3px;
     margin-right: 10px;
+  }
+  .clientPhones {
+    width: 170px;
   }
   @media (max-width: 1300px) {
     .contacts-wrapper {

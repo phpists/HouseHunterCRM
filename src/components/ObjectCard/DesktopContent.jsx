@@ -24,6 +24,8 @@ export const DesktopContent = ({
   onChangeComment,
   currency,
   onChangeCurrency,
+  type,
+  onChangeType,
 }) => {
   return (
     <StyledDesktopContent className="flex items-center justify-between clickable">
@@ -36,6 +38,8 @@ export const DesktopContent = ({
         data={data}
         currency={currency}
         onChangeCurrency={onChangeCurrency}
+        type={type}
+        onChangeType={onChangeType}
       />
       <Info className="desktop-item" data={data} />
       <Tags data={data} onChangeComment={onChangeComment} />

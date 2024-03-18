@@ -24,6 +24,8 @@ export const ObjectCard = memo(
     searchTag,
     showLike,
     onChangeComment,
+    type,
+    onChangeType,
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
     const { ref, inView } = useInView({ triggerOnce: true });
@@ -64,6 +66,8 @@ export const ObjectCard = memo(
             onOpenPriceHistory={onOpenPriceHistory}
             currency={currency}
             onChangeCurrency={onChangeCurrency}
+            type={type}
+            onChangeType={onChangeType}
             isHideObjects={isHideObjects}
             onOpenCommetHistory={onOpenCommetHistory}
             onDelete={onDelete}
@@ -83,6 +87,8 @@ export const ObjectCard = memo(
             onOpenPriceHistory={onOpenPriceHistory}
             currency={currency}
             onChangeCurrency={onChangeCurrency}
+            type={type}
+            onChangeType={onChangeType}
             isHideObjects={isHideObjects}
             onOpenCommetHistory={onOpenCommetHistory}
             onDelete={onDelete}

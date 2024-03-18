@@ -33,8 +33,11 @@ export const List = ({
   const [openAddModal, setOpenAddModal] = useState(null);
   const [editComment, setEditComment] = useState(false);
   const [currency, setCurrency] = useState(1);
+  const [type, setType] = useState("4");
 
   const onChangeCurrency = (val) => setCurrency(val);
+  const onChangeType = (val) => setType(val);
+
   return (
     <>
       {openAddModal && (
@@ -96,6 +99,8 @@ export const List = ({
               }
               currency={currency}
               onChangeCurrency={onChangeCurrency}
+              type={type}
+              onChangeType={onChangeType}
             />
           ))
         )}

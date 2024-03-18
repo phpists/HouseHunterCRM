@@ -87,6 +87,7 @@ const StyledPrice = styled.div`
   border-radius: 10px;
   background: #3d3d3d;
   padding: 8px 15px;
+  overflow: auto;
   .field {
     flex-shrink: initial;
     width: 150px !important;

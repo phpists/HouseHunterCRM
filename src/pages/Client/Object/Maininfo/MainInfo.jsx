@@ -147,10 +147,17 @@ export const Maininfo = ({
             text={
               isObject ? (
                 <>
-                  {data?.area_total
-                    ? data?.area_total
-                    : data?.area_plot_sotka ?? 0}
-                  м<sup>2</sup>
+                  {data?.area_total ? (
+                    <>
+                      {data?.area_total} м<sup>2</sup>
+                    </>
+                  ) : (
+                    <>{data?.area_plot_sotka} соток</> ?? (
+                      <>
+                        0 м<sup>2</sup>
+                      </>
+                    )
+                  )}
                 </>
               ) : (
                 <>

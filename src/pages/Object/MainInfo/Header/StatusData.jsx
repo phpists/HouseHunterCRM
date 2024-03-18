@@ -33,6 +33,7 @@ export const StatusData = ({ value, onChange }) => {
             onChange={handleChangeDate}
             onClose={() => setOpen(false)}
             onReset={() => onChange("0")}
+            changeOnlyOnMonth
           />
         </div>
       </StyledDate>

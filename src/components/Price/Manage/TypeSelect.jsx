@@ -1,36 +1,54 @@
 import { useState } from "react";
 import { styled } from "styled-components";
+import { PRICES_FOR_TITLE } from "../../../constants";
 
-export const TypeSelect = ({ priceFor }) => {
-  const options = [
-    { title: "За м²", value: 1 },
-    { title: "За Сотку", value: 2 },
-    { title: "За гектар", value: 3 },
-    { title: "За об’єкт", value: 4 },
-  ];
+export const TypeSelect = ({ type, onChangeType, rubricId }) => {
+  const TYPES =
+    rubricId === "65" || rubricId === "66"
+      ? [
+          {
+            title: "Об'єкт",
+            value: "4",
+          },
+          {
+            title: "100",
+            value: "2",
+          },
+          {
+            title: "Га",
+            value: "3",
+          },
+        ]
+      : [
+          {
+            title: "Об'єкт",
+            value: "4",
+          },
+          {
+            title: "м²",
+            value: "1",
+          },
+        ];
 
   return (
     <StyledTypeSelect>
-      {options
-        .filter((opt) => priceFor === opt.value)
-        .map((opt, i) => (
-          <div
-            key={i}
-            className={`flex items-end justify-center ${
-              priceFor === opt.value && "active"
-            }`}
-            //   onClick={() => setActive(i)}
-          >
-            {opt.title}
-          </div>
-        ))}
+      {TYPES.map((opt, i) => (
+        <div
+          key={i}
+          className={`flex items-end justify-center ${
+            type === opt.value && "active"
+          }`}
+          onClick={() => onChangeType(opt.value)}
+        >
+          {opt.title}
+        </div>
+      ))}
     </StyledTypeSelect>
   );
 };
 
 const StyledTypeSelect = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, max-content);
+  display: flex;
   gap: 3px;
   div {
     border-radius: 5px;
@@ -48,6 +66,7 @@ const StyledTypeSelect = styled.div`
     transition: all 0.3s;
     border: 1px solid rgba(255, 255, 255, 0);
     box-sizing: content-box;
+    width: max-content;
     &.active {
       color: #fff;
       border: 1px solid rgba(255, 255, 255, 0.2);

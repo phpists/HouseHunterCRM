@@ -69,6 +69,7 @@ const StyledText = styled.div`
     }
   }
   .desciption {
+    border: 1px solid rgba(255, 255, 255, 0.1);
     .value {
       white-space: unset !important;
       height: 125px;
@@ -82,6 +83,7 @@ const StyledText = styled.div`
     }
   }
   .comment {
+    border: 1px solid rgba(255, 255, 255, 0.1);
     .value {
       white-space: unset !important;
       height: 35px;
