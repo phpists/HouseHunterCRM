@@ -19,7 +19,7 @@ export const Objects = ({ idGroup, onOpenChat, data }) => {
         {/* <Photos /> */}
         <div className="clickable objects-info-wrapper">
           <Name name={data?.General_field_group?.name ?? "-"} />
-          <Tags />
+          <Tags data={data} />
           <div className="flex items-center">
             <OpenButton onClick={() => navigate(`/selections/${idGroup}`)} />
             <Buttons
