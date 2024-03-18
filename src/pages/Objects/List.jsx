@@ -106,39 +106,41 @@ export const List = ({
           <Empty loading={loading || actionLoading || deleting} />
         ) : (
           <>
-            {data.map((d, i) => (
-              <ObjectCard
-                key={d?.id}
-                selected={!!selected.find((j) => j === d?.id)}
-                onSelect={() => onSelect(d?.id)}
-                data={d}
-                onToggleFavoriteStatus={() => toggleFavoriteStatus(d?.id)}
-                onFindSimilar={() => onFindSimilar(d)}
-                isEdit={handleCheckAccess(accessData, "objects", "edit")}
-                onAddToSelection={() => setOpenAddModal(d?.id)}
-                onOpenTagsHistory={() =>
-                  setOpenHistoryModal({
-                    id: d?.id,
-                    isStreetBase: d?.obj_street_base === "1",
-                  })
-                }
-                onOpenCommetHistory={() =>
-                  setOpenCommentHistoryModal({ id: d?.id })
-                }
-                onOpenPriceHistory={() =>
-                  setOpenHistoryPriceModal(d?.price_history_json)
-                }
-                onDelete={() => handleOpenDelete(d?.id)}
-                onChangeComment={() =>
-                  setEditComment({ id: d?.id, comment: d?.comment })
-                }
-                searchTag="?objects"
-                currency={currency}
-                onChangeCurrency={onChangeCurrency}
-                type={type}
-                onChangeType={onChangeType}
-              />
-            ))}
+            {data
+              ?.filter((d) => !d?.acsses_change)
+              .map((d, i) => (
+                <ObjectCard
+                  key={d?.id}
+                  selected={!!selected.find((j) => j === d?.id)}
+                  onSelect={() => onSelect(d?.id)}
+                  data={d}
+                  onToggleFavoriteStatus={() => toggleFavoriteStatus(d?.id)}
+                  onFindSimilar={() => onFindSimilar(d)}
+                  isEdit={handleCheckAccess(accessData, "objects", "edit")}
+                  onAddToSelection={() => setOpenAddModal(d?.id)}
+                  onOpenTagsHistory={() =>
+                    setOpenHistoryModal({
+                      id: d?.id,
+                      isStreetBase: d?.obj_street_base === "1",
+                    })
+                  }
+                  onOpenCommetHistory={() =>
+                    setOpenCommentHistoryModal({ id: d?.id })
+                  }
+                  onOpenPriceHistory={() =>
+                    setOpenHistoryPriceModal(d?.price_history_json)
+                  }
+                  onDelete={() => handleOpenDelete(d?.id)}
+                  onChangeComment={() =>
+                    setEditComment({ id: d?.id, comment: d?.comment })
+                  }
+                  searchTag="?objects"
+                  currency={currency}
+                  onChangeCurrency={onChangeCurrency}
+                  type={type}
+                  onChangeType={onChangeType}
+                />
+              ))}
           </>
         )}
         <div className="loader relative">

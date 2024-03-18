@@ -68,11 +68,19 @@ export const Tags = ({ className, data, isAccess, onChangeComment }) => {
         }))}
         onChange={handleSelect}
       />
-      <Comment
-        id={data?.id}
-        comment={data?.comment}
-        onChangeComment={onChangeComment}
-      />
+      {data?.acsses_change || data?.type_object === "street_base" ? (
+        <Comment
+          id={data?.id}
+          comment={data?.comment}
+          onChangeComment={onChangeComment}
+        />
+      ) : data?.comment?.length > 0 ? (
+        <Comment
+          id={data?.id}
+          comment={data?.comment}
+          onChangeComment={() => null}
+        />
+      ) : null}
     </StyledTags>
   );
 };

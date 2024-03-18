@@ -19,15 +19,17 @@ export const Objects = ({ idGroup, onOpenChat, data }) => {
         {/* <Photos /> */}
         <div className="clickable objects-info-wrapper">
           <Name name={data?.General_field_group?.name ?? "-"} />
-          <Tags data={data} />
-          <div className="flex items-center">
-            <OpenButton onClick={() => navigate(`/selections/${idGroup}`)} />
-            <Buttons
-              onOpenChat={onOpenChat}
-              idGroup={idGroup}
-              isNewMessage={data?.General_field_group?.new_messege === "1"}
-            />
-          </div>
+          <Tags data={data} />{" "}
+          {data?.General_field_group?.acsses_change ? (
+            <div className="flex items-center footer">
+              <OpenButton onClick={() => navigate(`/selections/${idGroup}`)} />
+              <Buttons
+                onOpenChat={onOpenChat}
+                idGroup={idGroup}
+                isNewMessage={data?.General_field_group?.new_messege === "1"}
+              />
+            </div>
+          ) : null}
         </div>
       </div>
     </StyledObjects>
@@ -42,6 +44,9 @@ const StyledObjects = styled.div`
   min-width: 190px;
   .object-counts {
     margin-bottom: 12px;
+  }
+  .footer {
+    margin-top: 12px;
   }
   @media (max-width: 1399.9px) {
     width: 100%;

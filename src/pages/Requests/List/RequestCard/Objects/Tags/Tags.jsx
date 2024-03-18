@@ -24,7 +24,6 @@ export const Tags = ({ data }) => {
 };
 
 const StyledTags = styled.div`
-  margin-bottom: 12px;
   gap: 6px;
   .newTag {
     padding: 1px 6px 2px;
