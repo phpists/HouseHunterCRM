@@ -190,7 +190,9 @@ const Structure = () => {
                   ?.map((worker, i) => (
                     <StructureCard
                       key={worker?.id_user}
-                      onOpenInfo={() => setInfoOpen(worker?.id_user)}
+                      onOpenInfo={() =>
+                        user?.is_director ? setInfoOpen(worker?.id_user) : null
+                      }
                       onNextLevel={() =>
                         handleNextLevel(worker?.structure_worker)
                       }
@@ -213,7 +215,9 @@ const Structure = () => {
             </>
           ) : level === user?.struct_level ? (
             <StructureCard
-              onOpenInfo={() => setInfoOpen(user?.id)}
+              onOpenInfo={() =>
+                user?.is_director ? setInfoOpen(user?.id) : null
+              }
               onNextLevel={() => handleNextLevel(null, user?.id)}
               id={user?.id}
               data={{
@@ -246,7 +250,9 @@ const Structure = () => {
               .map((worker, i) => (
                 <StructureCard
                   key={worker?.id_user}
-                  onOpenInfo={() => setInfoOpen(worker?.id_user)}
+                  onOpenInfo={() =>
+                    user?.is_director ? setInfoOpen(worker?.id_user) : null
+                  }
                   onNextLevel={() =>
                     handleNextLevel(worker?.structure_worker, worker?.id_user)
                   }
