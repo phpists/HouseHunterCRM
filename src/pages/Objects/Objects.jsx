@@ -41,12 +41,12 @@ const Objects = () => {
   };
 
   const DEFAULT_FILTERS = {
-    price_currency: "1",
-    price_for: "4",
-    company_object: {
-      show_only: "only_my",
-      actual: "1",
-    },
+    // price_currency: "1",
+    // price_for: "4",
+    // company_object: {
+    //   show_only: "only_my",
+    //   actual: "1",
+    // },
   };
 
   const [filters, setFilters] = useState(INIT_FILTERS);
@@ -169,10 +169,10 @@ const Objects = () => {
       } else {
         data = {
           ...data,
-          company_object: {
-            show_only: "only_my",
-            actual: "1",
-          },
+          //   company_object: {
+          //     show_only: "only_my",
+          //     actual: "1",
+          //   },
         };
       }
 

@@ -65,9 +65,13 @@ export const SelectTags = ({
               <Tag
                 key={i}
                 title={tag?.title}
-                // isFirst={i === 0}
+                isFirst={
+                  tag.value === "label_is_actual" ||
+                  tag?.value === "label_not_actual"
+                }
                 viewOnly={viewOnly}
                 onRemove={() => onChange(tag.value, tag.title)}
+                type={tag.value === "label_is_actual"}
               />
             ))}
             {!isActive && tags.length - 5 > 0 && (

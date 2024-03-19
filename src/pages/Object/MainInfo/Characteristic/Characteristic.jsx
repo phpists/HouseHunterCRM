@@ -2,14 +2,10 @@ import { styled } from "styled-components";
 import { Header } from "./Header";
 import { Select } from "../../../../components/Select/Select";
 import { DetailPosition } from "./DetailPosition";
-import { Categories } from "./Categories";
 import { Info } from "./Info";
 import { useRef, useState } from "react";
 import { useEffect } from "react";
-import {
-  handleCheckIsField,
-  handleGetLocationAllPath,
-} from "../../../../utilits";
+import { handleGetLocationAllPath } from "../../../../utilits";
 import {
   useGetLocationsQuery,
   useGetRubricsQuery,
@@ -21,6 +17,7 @@ export const Characteristic = ({ data, onChangeField, fields, errors }) => {
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
   const contentRef = useRef(null);
+  const [selectOpened, setSelectOpend] = useState(false);
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -54,6 +51,20 @@ export const Characteristic = ({ data, onChangeField, fields, errors }) => {
     }
   }, [errors]);
 
+  useEffect(() => {
+    if (selectOpened) {
+      setSelectOpend(false);
+      const firstErrorField = document.querySelectorAll(
+        ".object-characteristic-wrapper .selectOpened"
+      );
+      if (firstErrorField[0]) {
+        contentRef.current.scrollTo({
+          top: firstErrorField[0].offsetTop - contentRef.current.offsetTop - 10,
+        });
+      }
+    }
+  }, [selectOpened]);
+
   return (
     <StyledCharacteristic open={open} className="object-characteristic-wrapper">
       <Header open={open} onToggleOpen={() => setOpen(!open)} />
@@ -76,6 +87,7 @@ export const Characteristic = ({ data, onChangeField, fields, errors }) => {
             hideArrowDefault
             error={!!errors.find((e) => e === "id_rubric")}
             isSearch
+            onOpen={() => setSelectOpend(true)}
           />
           <Select
             value={data?.id_location}
@@ -87,6 +99,7 @@ export const Characteristic = ({ data, onChangeField, fields, errors }) => {
             hideArrowDefault
             isSearch
             error={!!errors.find((e) => e === "id_location")}
+            onOpen={() => setSelectOpend(true)}
           />
           <DetailPosition
             data={data}
@@ -100,6 +113,7 @@ export const Characteristic = ({ data, onChangeField, fields, errors }) => {
             data={data}
             onChangeField={onChangeField}
             errors={errors}
+            onOpenSelect={() => setSelectOpend(true)}
           />
         )}
       </div>

@@ -20,12 +20,13 @@ const StyledDropdown = styled.div`
   right: 0;
   background: #fff;
   border-radius: 0 0 6px 6px;
-  max-height: 252px;
+  max-height: 230px;
   overflow: auto;
   border-top: 1px solid rgba(0, 0, 0, 0.2);
   z-index: 100;
   scroll-behavior: smooth;
-  display: none;
+  visibility: hidden;
+  opacity: 0;
   .empty-select {
     padding: 10px;
     text-align: center;

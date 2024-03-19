@@ -21,4 +21,5 @@ const StyledStatus = styled.div`
   width: 40px;
   border-radius: 8px;
   background: ${({ like }) => (like ? "#5A9E49" : "#D15B5B")};
+  z-index: 10;
 `;

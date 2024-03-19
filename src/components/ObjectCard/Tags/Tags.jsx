@@ -9,6 +9,7 @@ import {
 } from "../../../store/objects/objects.api";
 import { handleResponse } from "../../../utilits";
 import { Comment } from "./Comment";
+import { TAGS } from "../../../constants";
 
 export const Tags = ({ className, data, isAccess, onChangeComment }) => {
   const { data: tagsList } = useGetTagsListQuery();
@@ -62,7 +63,7 @@ export const Tags = ({ className, data, isAccess, onChangeComment }) => {
         label="Теги"
         showTags
         tags={tags}
-        options={tagsList?.data?.map((value) => ({
+        options={TAGS?.map((value) => ({
           title: commentsToFields?.object[value] ?? "-",
           value,
         }))}

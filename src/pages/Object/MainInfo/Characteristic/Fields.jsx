@@ -10,6 +10,7 @@ export const Fields = ({
   onChangeField,
   errors,
   collapsed,
+  onOpenSelect,
 }) => {
   return (
     <div className="fields">
@@ -35,6 +36,7 @@ export const Fields = ({
                     labelActive={commentsToFields?.object[field[0]] ?? "-"}
                     hideArrowDefault
                     error={!!errors.find((e) => e === field[0])}
+                    onOpen={onOpenSelect}
                   />
                 );
               } else if (field[1]?.type === "checkbox") {

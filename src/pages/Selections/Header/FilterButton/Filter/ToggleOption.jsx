@@ -6,9 +6,10 @@ export const ToggleOption = ({ label, className, value, onChange }) => {
   return (
     <StyledToggleOption
       className={`flex items-center justify-between ${className}`}
+      onClick={onChange}
     >
       <span>{label}</span>
-      <Toggle value={value} onChange={onChange} />
+      <Toggle value={value} />
     </StyledToggleOption>
   );
 };
@@ -24,6 +25,7 @@ const StyledToggleOption = styled.div`
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   transition: all 0.3s;
+  cursor: pointer;
   &:hover {
     background: rgba(255, 255, 255, 0.1);
   }

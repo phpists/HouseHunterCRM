@@ -20,6 +20,7 @@ export const Categories = ({
   fields,
   errors,
   collapsed,
+  onOpenSelect,
 }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
@@ -43,9 +44,7 @@ export const Categories = ({
   };
 
   const handleGetFieldType = (fieldName) =>
-    handleFormatFields(fields?.other_field)?.find(
-      ({ field }) => field === fieldName
-    )?.type;
+    handleFormatFields(fields)?.find(({ field }) => field === fieldName)?.type;
 
   const handleSelect = (val, field, prevValue) => {
     const isExist = !!prevValue?.find((t) => t === val);
@@ -57,13 +56,15 @@ export const Categories = ({
 
   return (
     <StyledCategories>
-      {fields?.other_field && Object.entries(fields?.other_field)?.length > 0
-        ? [...Object.entries(fields?.other_field)]
+      {fields && Object.entries(fields)?.length > 0
+        ? [...Object.entries(fields)]
             ?.filter(
               (category) => commentsToFields?.object[category[0]]?.length > 0
             )
             ?.sort((a, b) => a[1]?.sort - b[1]?.sort)
-            ?.filter((c) => (collapsed ? c?.collapsed === 1 : true))
+            ?.filter((c) =>
+              collapsed ? c?.[1]?.collapsed === 1 : c?.[1]?.collapsed === 0
+            )
             ?.filter(
               (category) =>
                 ![
@@ -135,6 +136,7 @@ export const Categories = ({
                       labelActive={commentsToFields?.object[category[0]] ?? "-"}
                       hideArrowDefault
                       error={!!errors.find((e) => e === category[0])}
+                      onOpen={onOpenSelect}
                     />
                   ) : Object.entries(category[1]?.field_option)?.length > 0 &&
                     category[1]?.type === "multi_select" ? (

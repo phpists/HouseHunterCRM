@@ -18,6 +18,7 @@ export const Select = ({
   error,
   placeholder,
   isSearch,
+  onOpen,
 }) => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
@@ -29,12 +30,17 @@ export const Select = ({
 
   useEffect(() => {
     !open && setSearch("");
+    if (open && onOpen) {
+      onOpen();
+    }
   }, [open]);
 
   return (
     <StyledSelect
       hideArrowDefault={hideArrowDefault}
-      className={`${className} ${error && "error-field"} ${open && "active"}`}
+      className={`${className} ${error && "error-field"} ${
+        open && "active selectOpened"
+      }`}
       error={error?.toString()}
       onClick={(e) => {
         !open && setOpen(!open);
@@ -140,7 +146,8 @@ const StyledSelect = styled.button`
       background: rgba(44, 44, 44, 0.85) !important;
     }
     .selectDropdown {
-      display: block;
+      visibility: visible;
+      opacity: 1;
     }
   }
 `;

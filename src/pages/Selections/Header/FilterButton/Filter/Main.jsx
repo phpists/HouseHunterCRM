@@ -21,6 +21,7 @@ import {
 import { Price } from "../../../../Request/Main/Price/Price";
 import { ToggleOption } from "./ToggleOption";
 import { CheckOption } from "../../../../../components/CheckOption";
+import { TAGS } from "../../../../../constants";
 
 const notAllowedFields = [
   "comment",
@@ -160,41 +161,7 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
       />
       <Divider /> */}
       <ToggleOption
-        label="Не обрані клієнтом "
-        value={filters?.show_not_choise_objects === "1"}
-        onChange={() =>
-          onChangeFilter(
-            "only_dislike_object",
-            {
-              ...filters,
-              show_not_choise_objects:
-                filters?.show_not_choise_objects === "1" ? undefined : "1",
-              only_dislike_object: undefined,
-              only_like_object: undefined,
-            },
-            true
-          )
-        }
-      />
-      <ToggleOption
-        label="Дізлайкнуті"
-        value={filters?.only_dislike_object === "1"}
-        onChange={() =>
-          onChangeFilter(
-            "only_dislike_object",
-            {
-              ...filters,
-              show_not_choise_objects: undefined,
-              only_dislike_object:
-                filters?.only_dislike_object === "1" ? undefined : "1",
-              only_like_object: undefined,
-            },
-            true
-          )
-        }
-      />
-      <ToggleOption
-        label="Лайкнуті"
+        label="Лайк"
         value={filters?.only_like_object === "1"}
         onChange={() =>
           onChangeFilter(
@@ -211,20 +178,56 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         }
       />
       <Divider />
+      <ToggleOption
+        label="Дизлайк"
+        value={filters?.only_dislike_object === "1"}
+        onChange={() =>
+          onChangeFilter(
+            "only_dislike_object",
+            {
+              ...filters,
+              show_not_choise_objects: undefined,
+              only_dislike_object:
+                filters?.only_dislike_object === "1" ? undefined : "1",
+              only_like_object: undefined,
+            },
+            true
+          )
+        }
+      />
+      <Divider />
+      <ToggleOption
+        label="Не обрані клієнтом "
+        value={filters?.show_not_choise_objects === "1"}
+        onChange={() =>
+          onChangeFilter(
+            "only_dislike_object",
+            {
+              ...filters,
+              show_not_choise_objects:
+                filters?.show_not_choise_objects === "1" ? undefined : "1",
+              only_dislike_object: undefined,
+              only_like_object: undefined,
+            },
+            true
+          )
+        }
+      />
+      <Divider />
       <SelectTags
         label="Теги"
         showTags
         tags={
-          tagsList?.data
-            ? tagsList?.data
-                ?.filter((t) => !!filters?.labels?.find((l) => l === t))
-                ?.map((t) => ({
+          TAGS
+            ? TAGS?.filter((t) => !!filters?.labels?.find((l) => l === t))?.map(
+                (t) => ({
                   title: commentsToFields?.object[t] ?? "-",
                   value: t,
-                }))
+                })
+              )
             : []
         }
-        options={tagsList?.data?.map((value) => ({
+        options={TAGS?.map((value) => ({
           title: commentsToFields?.object[value] ?? "-",
           value,
         }))}

@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { Ranger } from "../../../../components/Ranger/Ranger";
-import { PRICES_FOR_TITLE } from "../../../../constants";
+import { PRICES_FOR_TITLE_FILTERS } from "../../../../constants";
 
 export const Price = ({
   values,
@@ -28,7 +28,7 @@ export const Price = ({
           !isType
             ? undefined
             : !rubricId
-            ? PRICES_FOR_TITLE
+            ? PRICES_FOR_TITLE_FILTERS
             : rubricId === "65" || rubricId === "66"
             ? [
                 {

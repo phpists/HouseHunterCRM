@@ -7,9 +7,12 @@ import { CheckOption } from "../../../../components/CheckOption";
 import { ToggleContent } from "./ToggleContent";
 import { Fields } from "./Fields";
 import { Categories } from "./Categories";
+import { useEffect, useState } from "react";
 
-export const Info = ({ fields, data, onChangeField, errors }) => {
+export const Info = ({ fields, data, onChangeField, errors, onOpenSelect }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
+  const [collapsedFields, setCollapsedFields] = useState({});
+
   const notAllowedFields = [
     "comment",
     "description",
@@ -43,7 +46,7 @@ export const Info = ({ fields, data, onChangeField, errors }) => {
     "dt_end_agreement",
   ];
 
-  const handleCheckIsCollapsed = () => {
+  const handleCheckIsCollapsed = (isSetCollapsedFields) => {
     const mainFields = Object.entries(fields?.main_field)
       ?.filter((field) => !notAllowedFields?.find((f) => f === field[0]))
       ?.filter((field) => field?.[1]?.collapsed === 1);
@@ -57,8 +60,17 @@ export const Info = ({ fields, data, onChangeField, errors }) => {
             ?.filter((c) => c?.[1]?.collapsed === 1)
         : [];
 
+    isSetCollapsedFields &&
+      setCollapsedFields({
+        ...Object.fromEntries(mainFields),
+        ...Object.fromEntries(otherFields),
+      });
     return mainFields?.length > 0 || otherFields?.length > 0;
   };
+
+  useEffect(() => {
+    handleCheckIsCollapsed(true);
+  }, [data]);
 
   return (
     <StyledCategories>
@@ -70,31 +82,25 @@ export const Info = ({ fields, data, onChangeField, errors }) => {
         commentsToFields={commentsToFields}
         onChangeField={onChangeField}
         errors={errors}
+        onOpenSelect={onOpenSelect}
       />
       <Categories
         data={data}
         onChangeField={onChangeField}
-        fields={fields}
+        fields={fields?.other_field}
         errors={errors}
+        onOpenSelect={onOpenSelect}
       />
 
       {handleCheckIsCollapsed() ? (
         <ToggleContent title="Інше">
-          <Fields
-            fields={fields?.main_field}
-            data={data}
-            notAllowedFields={notAllowedFields}
-            commentsToFields={commentsToFields}
-            onChangeField={onChangeField}
-            errors={errors}
-            collapsed
-          />
           <Categories
             data={data}
             onChangeField={onChangeField}
-            fields={fields}
+            fields={collapsedFields}
             errors={errors}
             collapsed
+            onOpenSelect={onOpenSelect}
           />
         </ToggleContent>
       ) : null}

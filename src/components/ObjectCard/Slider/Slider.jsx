@@ -68,11 +68,11 @@ export const Slider = ({ photos, data, showLike }) => {
         empty={(photos?.length < 2).toString()}
       >
         <div className="relative slider">
+          {showLike && <Status data={data} />}
           {photos?.length > 1 ? (
             <Counter current={currentSlide} total={photos.length} />
           ) : null}
           <Tags data={data} />
-          {showLike && <Status data={data} />}
           {photos?.length === 0 ? (
             <Slide photo={noPhoto} active empty onOpen={() => null} />
           ) : (
