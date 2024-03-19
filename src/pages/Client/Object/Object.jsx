@@ -89,7 +89,7 @@ export const ObjectCard = ({ className, selectedObject }) => {
             id_client: resp?.data?.id_client,
             id_rubric: resp?.data?.id_rubric,
             id_location: [resp?.data?.id_location],
-            price_min: resp?.data?.price,
+            price_USD: resp?.data?.price_per_object_usd,
             dt_add: resp?.data?.dt_add
               ? handleFormatDate(Number(resp?.data?.dt_add) * 1000, true)
               : "-",

@@ -19,4 +19,5 @@ const StyledTag = styled.div`
   letter-spacing: 0.22px;
   height: 18px;
   white-space: nowrap;
+  justify-content: center;
 `;

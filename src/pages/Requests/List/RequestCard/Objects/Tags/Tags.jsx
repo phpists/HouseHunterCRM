@@ -9,7 +9,7 @@ export const Tags = ({ data }) => {
     <StyledTags className="flex items-center">
       <Tag
         count={likes}
-        type={dislikes > 0 ? "green" : undefined}
+        type={likes > 0 ? "green" : undefined}
         className="like-tag"
       />
       <Tag count={dislikes} type={dislikes > 0 ? "red" : undefined} />

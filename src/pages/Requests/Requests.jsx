@@ -346,13 +346,13 @@ const Requests = () => {
   }, [isFavorite]);
 
   const handleApplyFilter = (isApply) => {
+    currentPage.current = 0;
+    setIsAllPages(false);
     filterActive.current = isApply;
     isApply && localStorage.setItem("requestFilter", JSON.stringify(filters));
     if (!isApply) {
       setFilters(INIT_FILTERS);
       setFilterFields([]);
-      currentPage.current = 0;
-      setIsAllPages(false);
       localStorage.removeItem("requestFilter");
     }
     handleGetRequests(true);

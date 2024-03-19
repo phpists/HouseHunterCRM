@@ -281,6 +281,8 @@ export const requests = createApi({
         body: handleToFormData({
           action: "get_last_request",
           mod: "requests",
+          item_on_page: 3,
+          current_page: 0,
         }),
       }),
       transformResponse: (response) => {

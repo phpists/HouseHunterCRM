@@ -7,6 +7,7 @@ import { CopyLink } from "../../../../../components/CopyLink";
 import { useNavigate } from "react-router-dom";
 import { OpenButton } from "./OpenButton";
 import { MoreButton } from "../../../../../components/MoreButton/MoreButton";
+import { Tags } from "./Tags/Tags";
 
 export const Objects = ({
   data,
@@ -22,7 +23,7 @@ export const Objects = ({
       {/* <LastSeen /> */}
       <div className="flex items-center justify-between">
         <div>
-          <Title count={data?.count_object} />
+          <Tags data={data} />
           <Tag count={data?.count_object} />
         </div>
         <div className="bts flex items-center">

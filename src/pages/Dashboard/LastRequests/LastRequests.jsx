@@ -109,49 +109,51 @@ export const LastRequests = () => {
         />
       )}
 
-      <StyledLastRequests>
+      <StyledLastRequests className="hide-scroll">
         <Title />
-        <div className="list">
+        <div className="list hide-scroll">
           {requests && Object.entries(requests)?.length
-            ? Object.entries(requests)?.map((d, i) => {
-                if (typeof d !== "object") {
-                  return null;
-                }
+            ? Object.entries(requests)
+                ?.slice(0, 3)
+                ?.map((d, i) => {
+                  if (typeof d !== "object") {
+                    return null;
+                  }
 
-                const id = Object.entries(d[1])?.filter(
-                  (r) => r[0] !== "General_field_group"
-                )[0][0];
-                const generalFields = d[1]?.General_field_group ?? {};
-                const requestData = Object.entries(d[1])?.filter(
-                  (r) => r[0] !== "General_field_group"
-                )[0][1];
+                  const id = Object.entries(d[1])?.filter(
+                    (r) => r[0] !== "General_field_group"
+                  )[0][0];
+                  const generalFields = d[1]?.General_field_group ?? {};
+                  const requestData = Object.entries(d[1])?.filter(
+                    (r) => r[0] !== "General_field_group"
+                  )[0][1];
 
-                return (
-                  <RequestCard
-                    key={i}
-                    data={{
-                      ...requestData,
-                      ...generalFields,
-                      rubric_name:
-                        rubricsList?.find(
-                          (r) => r.id === requestData?.id_rubric
-                        )?.name ?? "-",
-                    }}
-                    id={id}
-                    onOpenChat={() => setSelectedChat(requestData?.id_group)}
-                    onToggleFavorite={() =>
-                      handleToggleFavorites(requestData?.id_group, d[0])
-                    }
-                    onDelete={() => {
-                      setDeleteModal(true);
-                      setDeleteId({
-                        idGroup: requestData?.id_group,
-                        id: d[0],
-                      });
-                    }}
-                  />
-                );
-              })
+                  return (
+                    <RequestCard
+                      key={i}
+                      data={{
+                        ...requestData,
+                        ...generalFields,
+                        rubric_name:
+                          rubricsList?.find(
+                            (r) => r.id === requestData?.id_rubric
+                          )?.name ?? "-",
+                      }}
+                      id={id}
+                      onOpenChat={() => setSelectedChat(requestData?.id_group)}
+                      onToggleFavorite={() =>
+                        handleToggleFavorites(requestData?.id_group, d[0])
+                      }
+                      onDelete={() => {
+                        setDeleteModal(true);
+                        setDeleteId({
+                          idGroup: requestData?.id_group,
+                          id: d[0],
+                        });
+                      }}
+                    />
+                  );
+                })
             : null}
         </div>
       </StyledLastRequests>

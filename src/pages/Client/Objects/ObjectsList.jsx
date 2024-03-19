@@ -137,12 +137,12 @@ export const ObjectsList = ({
                 date={c[1]?.dt_add}
                 title={c[1]?.rubric}
                 location={c[1]?.location}
-                price={c[1]?.price_USD}
+                price={c[1]?.price_per_object_usd}
                 currency="2"
-                price_for={
-                  PRICES_FOR_TITLE?.find((p) => p.value === c[1]?.price_for)
-                    ?.title ?? undefined
-                }
+                // price_for={
+                //   PRICES_FOR_TITLE?.find((p) => p.value === c[1]?.price_for)
+                //     ?.title ?? undefined
+                // }
                 id={c[1]?.id}
                 favorite={c[1]?.favorite}
                 onChangeFavorite={() => handleToggleFavoriteStatus(c[1]?.id)}

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ReactComponent as SettingsIcon } from "../../../../assets/images/setting.svg";
+import { ReactComponent as SettingsIcon } from "../../../../assets/images/search.svg";
 import { useState } from "react";
 import { Filter } from "./Filter/Filter";
 
