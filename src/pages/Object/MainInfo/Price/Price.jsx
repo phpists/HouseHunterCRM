@@ -62,10 +62,10 @@ export const Price = ({
                   title: "Сотка",
                   value: "2",
                 },
-                {
-                  title: "Гектар",
-                  value: "3",
-                },
+                // {
+                //   title: "Гектар",
+                //   value: "3",
+                // },
               ]
             : [
                 {

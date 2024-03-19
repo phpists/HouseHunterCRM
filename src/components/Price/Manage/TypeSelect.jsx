@@ -11,13 +11,13 @@ export const TypeSelect = ({ type, onChangeType, rubricId }) => {
             value: "4",
           },
           {
-            title: "100",
+            title: "Сотка",
             value: "2",
           },
-          {
-            title: "Га",
-            value: "3",
-          },
+          //   {
+          //     title: "Га",
+          //     value: "3",
+          //   },
         ]
       : [
           {
