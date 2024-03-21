@@ -2,13 +2,19 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import { Toggle } from "../../../../components/Toggle";
 
-export const ToggleOption = ({ status, className, onSetCallsStatus }) => {
+export const ToggleOption = ({
+  status,
+  className,
+  onSetCallsStatus,
+  onSend,
+}) => {
   return (
     <StyledToggleOption
       className={` ${className} ${status === "1" && "active"}`}
     >
-      <div onClick={() => onSetCallsStatus("1")}>Опрацьовано</div>
-      <div onClick={() => onSetCallsStatus("0")}>Не опрацьовано</div>
+      <div onClick={() => onSetCallsStatus("1")}>Опрацювати обране</div>
+      {/* <div onClick={() => onSetCallsStatus("0")}>Не опрацьовано</div> */}
+      <div onClick={onSend}>Передати обране</div>
       {/* 
       <Toggle
         value={status === "1"}

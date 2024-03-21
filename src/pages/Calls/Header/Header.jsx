@@ -9,6 +9,7 @@ import { Filter } from "./Filter/Filter";
 import { useState } from "react";
 import { AddClient } from "../../../components/AddClient/AddClient";
 import { SelectItemsDropdown } from "./SelectItemsDropdown/SelectItemsDropdown";
+import { SendModal } from "../../Clients/SendModal";
 
 export const Header = ({
   selectedCount,
@@ -18,13 +19,24 @@ export const Header = ({
   onSetCallsStatus,
   onSelectAll,
   allCount,
+  clients,
 }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClientOpen, setAddClientOpen] = useState(false);
   const prevFilters = localStorage.getItem("callsFilter");
+  const [sendModal, setSendModal] = useState(false);
+
+  const handleSendSelected = () => setSendModal(true);
 
   return (
     <StyledHeader>
+      {sendModal && (
+        <SendModal
+          clients={clients}
+          onClose={() => setSendModal(false)}
+          onSendSuccess={() => null}
+        />
+      )}
       <div className="flex items-center justify-between">
         <Title selectedCount={selectedCount} />
         <div className="flex items-center bts">
@@ -44,6 +56,7 @@ export const Header = ({
                 <SelectItemsDropdown
                   onSetCallsStatus={onSetCallsStatus}
                   status={filters?.status}
+                  onSend={handleSendSelected}
                 />
               }
             />
@@ -59,6 +72,7 @@ export const Header = ({
           <SelectItemsDropdown
             onSetCallsStatus={onSetCallsStatus}
             status={filters?.status}
+            onSend={handleSendSelected}
           />
         }
         className="select-wrapper-mobile"

@@ -21,9 +21,9 @@ const StyledStatus = styled.div`
     background: rgba(255, 255, 255, 0.05);
   }
   @media (min-width: 1400px) {
-    width: 120px;
+    width: 140px;
   }
   @media (min-width: 1600px) {
-    width: 140px;
+    width: 160px;
   }
 `;

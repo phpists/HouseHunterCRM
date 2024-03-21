@@ -48,10 +48,6 @@ export const Period = ({ filters, onChangeFilter }) => {
 };
 
 const StyledPeriod = styled.div`
-  padding: 6px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.1);
-  margin-bottom: 15px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6px;

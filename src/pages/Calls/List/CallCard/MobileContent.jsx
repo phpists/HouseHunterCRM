@@ -3,8 +3,9 @@ import { Type } from "./Type/Type";
 import { Phones } from "./Phones/Phones";
 import { Agent } from "./Agent/Agent";
 import { Field } from "../../../../components/Field";
-import { MoreButton } from "./MoreButton/MoreButton";
+// import { MoreButton } from "./MoreButton/MoreButton";
 import { PhonesMobile } from "./PhonesMobile/PhonesMobile";
+import { ShowMore } from "./ShowMore/ShowMore";
 
 export const MobileContent = ({
   open,
@@ -23,6 +24,9 @@ export const MobileContent = ({
   onSubmitComment,
   level,
   callsData,
+  onAdd,
+  onSend,
+  onEditComment,
 }) => (
   <StyledMobileContent className="flex flex-col items-start clickable">
     <Type callType={callType} />
@@ -42,7 +46,7 @@ export const MobileContent = ({
       />
     </div>
     <div className="footer-mobile-content">
-      <Agent name={name} photo={photo} level={level} />
+      <Agent name={name} photo={photo} workerLevel={level} />
       <Field
         placeholder="Почніть писати"
         label="Коментар"
@@ -53,11 +57,12 @@ export const MobileContent = ({
         onSubmit={onSubmitComment}
       />
     </div>
-    <MoreButton
-      openMore={openMore}
-      onOpenMore={onOpenMore}
+    <ShowMore
       status={status}
       onSetStatus={onSetStatus}
+      onAdd={onAdd}
+      onSend={onSend}
+      onEditComment={onEditComment}
     />
   </StyledMobileContent>
 );

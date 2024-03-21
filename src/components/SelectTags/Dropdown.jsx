@@ -59,7 +59,7 @@ const StyledDropdown = styled.div`
   background: #4b4b4b;
   border-radius: 0 0 9px 9px;
   overflow: auto;
-  z-index: 101;
+  z-index: 159;
   max-height: 250px;
   visibility: hidden;
   opacity: 0;

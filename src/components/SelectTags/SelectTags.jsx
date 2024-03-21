@@ -21,6 +21,8 @@ export const SelectTags = ({
   error,
   className,
   closeOnScroll,
+  emptyTitle,
+  hideArrow,
 }) => {
   const [open, setOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -54,10 +56,11 @@ export const SelectTags = ({
           setIsActive(!open);
         }
       }}
+      hideArrow={hideArrow}
     >
       <div>
         {!value && showTags && tags?.length === 0 && (
-          <div className="value">Пусто</div>
+          <div className="value">{placeholder ?? "Пусто"}</div>
         )}
         {!value && showTags ? (
           <div className="flex flex-wrap tags select-none">
@@ -98,7 +101,7 @@ export const SelectTags = ({
         ) : (
           <div className="flex flex-wrap items-center">
             {!open ? (
-              <div className={`value ${tagValue && "value-tag"}`}>
+              <div className={`value valueTitle ${tagValue && "value-tag"}`}>
                 {initValue
                   ? initValue
                   : !value
@@ -130,7 +133,7 @@ export const SelectTags = ({
         <div className="label">{label}</div>
       </div>
       {(notMultiSelect && !value && showTags) || viewOnly ? null : (
-        <Arrow active={open} innerRef={selectRef} />
+        <Arrow active={open} innerRef={selectRef} className="main-arrow" />
       )}
       <Dropdown
         open={open}
@@ -189,6 +192,9 @@ const StyledSelectTags = styled.button`
       line-height: 118%; /* 17.7px */
       letter-spacing: 0.3px;
     }
+  }
+  .valueTitle {
+    width: max-content;
   }
   input {
     position: relative;
@@ -259,14 +265,15 @@ const StyledSelectTags = styled.button`
     margin-bottom: 4px;
   }
 
-  ${({ showtags }) =>
+  ${({ showtags, hideArrow }) =>
     showtags === "true" &&
+    !hideArrow &&
     `
     background: rgba(255, 255, 255, 0.05);
     .value {
         opacity: 1;
     }
-    svg {
+    .main-arrow {
         opacity: 1;
     }
   `}

@@ -44,6 +44,6 @@ const StyledType = styled.div`
     width: 80px;
   }
   @media (min-width: 1600px) {
-    width: 120px;
+    width: 95px;
   }
 `;

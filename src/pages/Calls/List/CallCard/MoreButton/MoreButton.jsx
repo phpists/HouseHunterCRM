@@ -20,7 +20,7 @@ const StyledMoreButton = styled.button`
   border: 1.4px solid rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(18.5px);
   margin: 14px 0 0 20px;
-  z-index: 20;
+  z-index: 10;
   &:hover,
   &.open {
     border: 1.4px solid rgba(255, 255, 255, 1);

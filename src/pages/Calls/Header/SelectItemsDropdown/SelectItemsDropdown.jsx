@@ -4,10 +4,14 @@ import { Divider } from "./Divider";
 import { SeachInput } from "./SeachInput";
 import { List } from "./List/List";
 
-export const SelectItemsDropdown = ({ onSetCallsStatus, status }) => {
+export const SelectItemsDropdown = ({ onSetCallsStatus, status, onSend }) => {
   return (
     <StyledSelectItemsDropdown>
-      <ToggleOption onSetCallsStatus={onSetCallsStatus} status={status} />
+      <ToggleOption
+        onSetCallsStatus={onSetCallsStatus}
+        status={status}
+        onSend={onSend}
+      />
       {/* <Divider />
       <SeachInput />
       <List /> */}
@@ -26,4 +30,5 @@ const StyledSelectItemsDropdown = styled.div`
   backdrop-filter: blur(18.5px);
   border-top: 1px solid rgba(255, 255, 255, 0.4);
   z-index: 100;
+  text-align: left;
 `;

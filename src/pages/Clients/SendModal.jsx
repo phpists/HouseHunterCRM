@@ -21,26 +21,30 @@ export const SendModal = ({
   const [selectedUser, setSelectedUser] = useState(null);
 
   const handleSubmit = () => {
-    onChangeLoading && onChangeLoading(true);
-    moveClients({
-      id_clients: clients,
-      id_user_to: selectedUser,
-    }).then((resp) =>
-      handleResponse(
-        resp,
-        () => {
-          onSendSuccess();
-          cogoToast.success("Успішно передано", {
-            hideAfter: 3,
-            position: "top-right",
-          });
-          onChangeLoading && onChangeLoading(false);
-        },
-        () => {
-          onChangeLoading && onChangeLoading(false);
-        }
-      )
-    );
+    if (clients?.filter((c) => !!c)?.length > 0) {
+      onChangeLoading && onChangeLoading(true);
+      moveClients({
+        id_clients: clients,
+        id_user_to: selectedUser,
+      }).then((resp) =>
+        handleResponse(
+          resp,
+          () => {
+            onSendSuccess();
+            cogoToast.success("Успішно передано", {
+              hideAfter: 3,
+              position: "top-right",
+            });
+            onChangeLoading && onChangeLoading(false);
+          },
+          () => {
+            onChangeLoading && onChangeLoading(false);
+          }
+        )
+      );
+    } else {
+      onClose();
+    }
   };
 
   return (

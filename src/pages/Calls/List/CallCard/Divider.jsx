@@ -11,6 +11,6 @@ const StyledDivider = styled.div`
     margin: 12px 10px 0;
   }
   @media (min-width: 1600px) {
-    margin: 12px 20px 0;
+    margin: 12px 10px 0;
   }
 `;

@@ -17,8 +17,8 @@ const INIT_FILTERS = {
   //   id_worker_Search: "",
   type_call: [],
   call_my_struct: undefined,
-  status: "0",
-  date_from: Math.floor(new Date().getTime() / 1000 - 2629743),
+  status: undefined,
+  date_from: Math.floor(new Date().getTime() / 1000),
   date_to: Math.floor(new Date().getTime() / 1000),
   view: "0",
 };
@@ -230,6 +230,11 @@ const Calls = () => {
         onSetCallsStatus={handleSetCallsStatus}
         onSelectAll={handleSelectAll}
         allCount={allCount}
+        clients={
+          data
+            ?.filter((c) => selected?.includes(c.id))
+            ?.map((c) => c?.client_id) ?? []
+        }
       />
       <List
         selected={selected}

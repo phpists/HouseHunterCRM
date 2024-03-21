@@ -21,7 +21,7 @@ import cogoToast from "cogo-toast";
 import { useActions } from "../../hooks/actions";
 import { useGetPhonesCodesQuery } from "../../store/auth/auth.api";
 
-export const AddClient = ({ onClose, onAdded }) => {
+export const AddClient = ({ onClose, onAdded, initPhone }) => {
   const [createClient] = useLazyCreateClientQuery();
   const { data: phonesCodes } = useGetPhonesCodesQuery();
   const [success, setSuccess] = useState(false);
@@ -29,7 +29,7 @@ export const AddClient = ({ onClose, onAdded }) => {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(initPhone ?? "");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [getClientCount] = useLazyGetClientsCountQuery();

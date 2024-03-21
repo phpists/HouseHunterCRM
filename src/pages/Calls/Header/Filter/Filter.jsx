@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { Status } from "./Status";
 import { Search } from "./Search/Search";
 import { Period } from "./Period/Period";
+import { SelectTags } from "../../../../components/SelectTags/SelectTags";
+import { Divider } from "./Divider";
 
 export const Filter = ({ onClose, filters, onChangeFilter, onApplyFilter }) => {
   const controls = useAnimationControls();
@@ -35,15 +37,11 @@ export const Filter = ({ onClose, filters, onChangeFilter, onApplyFilter }) => {
       >
         <Header onClose={handleClose} />
         <div className="content hide-scroll">
-          <SectionTitle title="Статус" />
-          <Status
-            value={filters?.status}
-            onChange={(val) => onChangeFilter("status", val)}
-          />
-          <SectionTitle title="Період " />
-          <Period filters={filters} onChangeFilter={onChangeFilter} />
-          <SectionTitle title="Пошук по " />
-          <Search filters={filters} onChangeFilter={onChangeFilter} />
+          <SectionTitle title="Головне" />
+          <div className="section">
+            <Search filters={filters} onChangeFilter={onChangeFilter} />
+            <Divider />
+          </div>
         </div>
         <Footer onApplyFilter={handleApply} />
       </StyledFilter>

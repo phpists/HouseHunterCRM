@@ -5,7 +5,7 @@ import { Phones } from "./Phones/Phones";
 import { Agent } from "./Agent/Agent";
 import { Field } from "../../../../components/Field";
 import { Status } from "./Status/Status";
-import { MoreButton } from "./MoreButton/MoreButton";
+import { ShowMore } from "./ShowMore/ShowMore";
 
 export const DesktopContent = ({
   open,
@@ -24,6 +24,9 @@ export const DesktopContent = ({
   onSubmitComment,
   level,
   callsData,
+  onEditComment,
+  onAdd,
+  onSend,
 }) => (
   <StyledDesktopContent className="flex items-start clickable">
     <Type callType={callType} />
@@ -36,8 +39,7 @@ export const DesktopContent = ({
       callsData={callsData}
     />
     <Divider />
-    <Agent name={name} photo={photo} level={level} />
-    <Divider />
+    <Status status={status} />
     <Field
       placeholder="Почніть писати"
       label="Коментар"
@@ -48,12 +50,13 @@ export const DesktopContent = ({
       onSubmit={onSubmitComment}
     />
     <Divider />
-    <Status status={status} />
-    <MoreButton
-      openMore={openMore}
-      onOpenMore={onOpenMore}
+    <Agent name={name} photo={photo} workerLevel={level} />
+    <ShowMore
       status={status}
       onSetStatus={onSetStatus}
+      onEditComment={onEditComment}
+      onAdd={onAdd}
+      onSend={onSend}
     />
   </StyledDesktopContent>
 );
@@ -61,7 +64,7 @@ export const DesktopContent = ({
 const StyledDesktopContent = styled.div`
   justify-content: space-between;
   .comment {
-    width: 150px;
+    width: 200px;
     height: 60px;
     background: #444;
     .field-content {
@@ -77,12 +80,12 @@ const StyledDesktopContent = styled.div`
   }
   @media (min-width: 1600px) {
     .comment {
-      width: 204px;
+      width: 254px;
     }
   }
   @media (min-width: 1700px) {
     .comment {
-      width: 15svw;
+      width: 20svw;
     }
   }
 `;

@@ -8,6 +8,9 @@ import {
 } from "../../../store/structure/structure.api";
 import { Empty } from "../../../components/Empty";
 import { Loader } from "../../../components/Loader";
+import { SendModal } from "../../Clients/SendModal";
+import { EditComment } from "./EditComment";
+import { AddClient } from "../../../components/AddClient/AddClient";
 
 export const List = ({
   selected,
@@ -22,6 +25,9 @@ export const List = ({
   const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
   const { data: level } = useGetCompanyStructureLevelQuery();
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
+  const [commentModal, setCommentModal] = useState(false);
+  const [sendModal, setSendModal] = useState(false);
+  const [addModal, setAddModal] = useState(false);
 
   const handleGetCurrentLevel = (lvl) => {
     if (levels) {
@@ -40,7 +46,24 @@ export const List = ({
 
   return (
     <StyledList ref={listRef}>
-      {data?.length === 0 ? (
+      {commentModal && (
+        <EditComment
+          call={commentModal}
+          onClose={() => setCommentModal(false)}
+          onChange={onAddComment}
+        />
+      )}
+      {sendModal && (
+        <SendModal
+          clients={[sendModal]}
+          onClose={() => setSendModal(false)}
+          onSendSuccess={() => null}
+        />
+      )}
+      {addModal && (
+        <AddClient onClose={() => setAddModal(false)} initPhone={addModal} />
+      )}
+      {data?.length === 0 && true ? (
         <Empty />
       ) : (
         data.map(
@@ -55,6 +78,7 @@ export const List = ({
               coment,
               status,
               struct_level_user,
+              client_id,
             },
             i
           ) => (
@@ -73,7 +97,10 @@ export const List = ({
               status={status}
               onSetStatus={() => onSetStatus(id, status === "1" ? "0" : "1")}
               onAddComment={(comment) => onAddComment(id, comment)}
-              level={handleGetCurrentLevel(struct_level_user)}
+              level={struct_level_user}
+              onEditComment={() => setCommentModal({ id, coment })}
+              onAdd={() => setAddModal(phone_call)}
+              onSend={client_id ? () => setSendModal(client_id) : null}
             />
           )
         )

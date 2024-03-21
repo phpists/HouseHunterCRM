@@ -1,0 +1,54 @@
+import styled from "styled-components";
+import { Button } from "./Button";
+import { Dropdown } from "./Dropdown";
+import { useRef, useState } from "react";
+
+export const ShowMore = ({
+  status,
+  onSetStatus,
+  onEditComment,
+  onAdd,
+  onSend,
+}) => {
+  const [isFocusedBtn, setIsFocusedBtn] = useState(false);
+  const moreRef = useRef(null);
+
+  const handleCloseDropdown = () => moreRef.current.blur();
+
+  return (
+    <StyledShowMore isfocusedbtn={isFocusedBtn?.toString()} ref={moreRef}>
+      <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />
+      <Dropdown
+        status={status}
+        onSetStatus={onSetStatus}
+        onEditComment={onEditComment}
+        onAdd={onAdd}
+        onSend={onSend}
+        onCloseDropdown={handleCloseDropdown}
+      />
+    </StyledShowMore>
+  );
+};
+
+const StyledShowMore = styled.button`
+  margin-top: 15px;
+  position: relative;
+  ${({ isfocusedbtn }) =>
+    isfocusedbtn === "true" &&
+    `
+   .dropdown {
+      opacity: 1;
+      visibility: visible;
+    }
+`}
+  &:focus  .dropdown {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  @media (max-width: 1399.9px) {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+`;

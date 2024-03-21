@@ -9,6 +9,7 @@ import { Divider } from "./Divider";
 import { useViewCompanyBalanceQuery } from "../../../store/billing/billing.api";
 import { useActions } from "../../../hooks/actions";
 import { useAppSelect } from "../../../hooks/redux";
+import { Tag } from "./Tag";
 
 export const Billing = ({ open, onToggleOpen, onToggleHover }) => {
   const { data: balanceData, refetch } = useViewCompanyBalanceQuery();
@@ -44,6 +45,7 @@ export const Billing = ({ open, onToggleOpen, onToggleHover }) => {
       onTouchStart={() => onToggleHover(true)}
       onTouchEnd={() => onToggleHover(false)}
     >
+      {!open && <Tag procent={15} />}
       {attach && (
         <Download
           download={download}

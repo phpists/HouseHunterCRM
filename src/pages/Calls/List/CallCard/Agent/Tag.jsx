@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
-export const Tag = ({ level }) => (
-  <StyledTag className="clickable" color={level?.color}>
-    {level?.title}
-  </StyledTag>
-);
+export const Tag = ({ level }) => {
+  return (
+    <StyledTag className="clickable" color={level?.color}>
+      {level?.title ?? "Без ролі"}
+    </StyledTag>
+  );
+};
 
 const StyledTag = styled.div`
   padding: 4px 6px;

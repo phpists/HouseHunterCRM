@@ -5,15 +5,6 @@ import {
 } from "../store/structure/structure.api";
 import { useEffect, useState } from "react";
 
-const STATUSES = {
-  1: {
-    title: "Керівник",
-    color: "#58AFFF",
-    background: "rgba(88, 175, 255, 0.3)",
-  },
-  2: { title: "Агент", color: "#58FF5E", background: "rgba(88, 255, 94, 0.3)" },
-};
-
 export const Status = ({ status, className }) => {
   const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -34,7 +25,7 @@ export const Status = ({ status, className }) => {
         return levelRoles?.split(" - ")?.map((role, i) => ({
           title: role,
           color: `${COLORS[i]}`,
-          bg: `${COLORS[i]}17`,
+          bg: `${COLORS[i]}40`,
           level: 1 + i,
         }));
       } else {
@@ -52,7 +43,7 @@ export const Status = ({ status, className }) => {
 
   return (
     <StyledStatus
-      status={STATUSES[status]}
+      status={roles?.find((r) => r.level === status)}
       className={`flex items-center justify-center ${className}`}
     >
       {roles?.find((r) => r.level === status)
@@ -66,7 +57,7 @@ const StyledStatus = styled.div`
   height: 18px;
   padding: 4px 4px 1px;
   color: ${({ status }) => status?.color};
-  background: ${({ status }) => status?.background ?? "#FFFFFF1A"};
+  background: ${({ status }) => status?.bg ?? "#FFFFFF1A"};
   text-align: center;
   font-family: Overpass;
   font-size: 11px;
