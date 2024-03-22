@@ -24,6 +24,7 @@ const StyledToggleOption = styled.div`
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   transition: all 0.3s;
+  cursor: pointer;
   .toggle-active {
     background: #50f835;
   }

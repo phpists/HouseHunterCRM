@@ -2,15 +2,13 @@ import styled from "styled-components";
 import { CallCard } from "./CallCard/CallCard";
 import { useState } from "react";
 import { handleFormatDate } from "../../../utilits";
-import {
-  useGetAllPerimissionsLevelsQuery,
-  useGetCompanyStructureLevelQuery,
-} from "../../../store/structure/structure.api";
+
 import { Empty } from "../../../components/Empty";
 import { Loader } from "../../../components/Loader";
 import { SendModal } from "../../Clients/SendModal";
 import { EditComment } from "./EditComment";
 import { AddClient } from "../../../components/AddClient/AddClient";
+import { SendCall } from "./SendCall";
 
 export const List = ({
   selected,
@@ -20,32 +18,26 @@ export const List = ({
   onAddComment,
   listRef,
   loading,
+  onSendSuccess,
 }) => {
   const [openMore, setOpenMore] = useState(null);
-  const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
-  const { data: level } = useGetCompanyStructureLevelQuery();
-  const { data: levels } = useGetAllPerimissionsLevelsQuery();
   const [commentModal, setCommentModal] = useState(false);
   const [sendModal, setSendModal] = useState(false);
   const [addModal, setAddModal] = useState(false);
-
-  const handleGetCurrentLevel = (lvl) => {
-    if (levels) {
-      const currentLevel = Object.entries(levels)
-        ?.map((l) => l[1])
-        ?.find((l) => Number(l.level) === Number(level));
-
-      if (currentLevel[0]) {
-        const levelsList = currentLevel[0]?.split(" - ");
-        return { title: levelsList[lvl], color: COLORS[lvl], level: lvl };
-      } else {
-        return { title: "-", color: COLORS[0], level: lvl };
-      }
-    }
-  };
+  const [sendCall, setSendCall] = useState(false);
 
   return (
     <StyledList ref={listRef}>
+      {sendCall && (
+        <SendCall
+          onClose={() => setSendCall(false)}
+          callId={sendCall}
+          onSendSuccess={() => {
+            onSendSuccess([sendCall]);
+            setSendCall(false);
+          }}
+        />
+      )}
       {commentModal && (
         <EditComment
           call={commentModal}
@@ -57,7 +49,10 @@ export const List = ({
         <SendModal
           clients={[sendModal]}
           onClose={() => setSendModal(false)}
-          onSendSuccess={() => null}
+          onSendSuccess={() => {
+            onSendSuccess([sendModal]);
+            setSendModal(false);
+          }}
         />
       )}
       {addModal && (
@@ -79,6 +74,8 @@ export const List = ({
               status,
               struct_level_user,
               client_id,
+              client_first_name,
+              client_last_name,
             },
             i
           ) => (
@@ -95,12 +92,18 @@ export const List = ({
               photo={photo}
               comment={coment}
               status={status}
+              clientName={
+                client_id
+                  ? `${client_first_name ?? "-"} ${client_last_name}`
+                  : null
+              }
               onSetStatus={() => onSetStatus(id, status === "1" ? "0" : "1")}
               onAddComment={(comment) => onAddComment(id, comment)}
               level={struct_level_user}
               onEditComment={() => setCommentModal({ id, coment })}
               onAdd={() => setAddModal(phone_call)}
               onSend={client_id ? () => setSendModal(client_id) : null}
+              onSendCall={client_id ? null : () => setSendCall(id)}
             />
           )
         )

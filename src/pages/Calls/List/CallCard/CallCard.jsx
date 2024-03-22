@@ -23,6 +23,8 @@ export const CallCard = ({
   onEditComment,
   onAdd,
   onSend,
+  onSendCall,
+  clientName,
 }) => {
   const [open, setOpen] = useState();
   const [commentEdit, setCommentEdit] = useState(comment);
@@ -78,6 +80,8 @@ export const CallCard = ({
         onEditComment={onEditComment}
         onAdd={onAdd}
         onSend={onSend}
+        onSendCall={onSendCall}
+        clientName={clientName}
       />
       <MobileContent
         open={open}
@@ -99,6 +103,8 @@ export const CallCard = ({
         onEditComment={onEditComment}
         onAdd={onAdd}
         onSend={onSend}
+        onSendCall={onSendCall}
+        clientName={clientName}
       />
     </StyledCallCard>
   );

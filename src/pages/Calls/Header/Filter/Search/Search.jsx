@@ -9,7 +9,12 @@ import { Period } from "../Period/Period";
 import { ProfileField } from "../../../../../components/ProfileField";
 import { useGetPhonesCodesQuery } from "../../../../../store/auth/auth.api";
 
-export const Search = ({ filters, onChangeFilter }) => {
+export const Search = ({
+  filters,
+  onChangeFilter,
+  filterPhoneCode,
+  onChangeFilterPhoneCode,
+}) => {
   const { data: callsType } = useGetCallsTypeQuery();
   const { data: phonesCodes } = useGetPhonesCodesQuery();
 
@@ -26,12 +31,11 @@ export const Search = ({ filters, onChangeFilter }) => {
         label="Пошук по телефону"
         placeholder="Введіть значення..."
         value={filters.search_phone}
-        // onChange={(val) => onChangeFilter("search_phone", val)}
+        onChange={(val) => onChangeFilter("search_phone", val)}
         phone
         phonesCodes={phonesCodes}
-        phoneCode={filters.search_phone_code ?? "1"}
-        // onChangePhoneCode={(val) => onChangeFilter("search_phone_code ", val)}
-        className="notAvaible"
+        phoneCode={filterPhoneCode}
+        onChangePhoneCode={(val) => onChangeFilterPhoneCode(val)}
         // error={errors?.search_phone}
       />
       <Divider />
@@ -39,8 +43,7 @@ export const Search = ({ filters, onChangeFilter }) => {
         label="Пошук по номеру часткове співпадіння"
         placeholder="Введіть значення..."
         value={filters?.findPhone}
-        // onChange={(val) => onChangeFilter("findPhone", val)}
-        className="notAvaible"
+        onChange={(val) => onChangeFilter("findPhone", val)}
       />
       <Divider />
       <Period filters={filters} onChangeFilter={onChangeFilter} />
@@ -93,7 +96,7 @@ export const Search = ({ filters, onChangeFilter }) => {
         hideArrow
       />
       <Divider />
-      <ToggleOption
+      {/* <ToggleOption
         label="Усі дзвінки"
         value={filters?.allCalls?.length >= 0}
         // onChange={() =>
@@ -104,28 +107,16 @@ export const Search = ({ filters, onChangeFilter }) => {
         // }
         className="notAvaible"
       />
-      <Divider />
+      <Divider /> */}
       <ToggleOption
         label="Дзвінки моєї структури"
         value={filters?.call_my_struct?.length >= 0}
-        onChange={() =>
-          onChangeFilter(
-            "call_my_struct",
-            filters?.call_my_struct?.length >= 0 ? undefined : "1"
-          )
-        }
+        onChange={() => onChangeFilter("call_my_struct", "1")}
       />
-      <Divider />
       <ToggleOption
         label="Тільки мої дзвінки"
-        value={filters?.allCalls?.length >= 0}
-        // onChange={() =>
-        //   onChangeFilter(
-        //     "call_my_struct",
-        //     filters?.call_my_struct?.length >= 0 ? undefined : "1"
-        //   )
-        // }
-        className="notAvaible"
+        value={!filters?.call_my_struct}
+        onChange={() => onChangeFilter("call_my_struct", undefined)}
       />
       {/* <Divider /> */}
       {/* <ToggleOption

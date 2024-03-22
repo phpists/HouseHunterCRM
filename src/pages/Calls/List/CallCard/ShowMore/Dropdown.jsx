@@ -1,17 +1,8 @@
-import { NavLink, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { ReactComponent as Star } from "../../../../../assets/images/star-object.svg";
-import { ReactComponent as Search } from "../../../../../assets/images/search-object.svg";
 import { ReactComponent as History } from "../../../../../assets/images/history-object.svg";
-import { ReactComponent as Prices } from "../../../../../assets/images/price-object.svg";
 import { ReactComponent as Selection } from "../../../../../assets/images/home.svg";
-import { ReactComponent as Edit } from "../../../../../assets/images/edit-company.svg";
-import { ReactComponent as Eye } from "../../../../../assets/images/eye-access.svg";
-import { ReactComponent as Link } from "../../../../../assets/images/link.svg";
 import { ReactComponent as Comment } from "../../../../../assets/images/message-object.svg";
-import { ReactComponent as RemoveIcon } from "../../../../../assets/images/remove.svg";
 import { ReactComponent as ToObjectIcon } from "../../../../../assets/images/my-object.svg";
-import cogoToast from "cogo-toast";
 
 export const Dropdown = ({
   status,
@@ -20,9 +11,8 @@ export const Dropdown = ({
   onAdd,
   onSend,
   onCloseDropdown,
+  onSendCall,
 }) => {
-  const navigate = useNavigate();
-
   return (
     <StyledDropdown className="dropdown" onClick={onCloseDropdown}>
       <div className="flex items-center justify-between" onClick={onSetStatus}>
@@ -41,6 +31,12 @@ export const Dropdown = ({
       {onSend && (
         <div className="flex items-center justify-between" onClick={onSend}>
           <span>Передати клієнта</span>{" "}
+          <ToObjectIcon className="selection-icon" />
+        </div>
+      )}
+      {onSendCall && (
+        <div className="flex items-center justify-between" onClick={onSendCall}>
+          <span>Передати дзвінок</span>{" "}
           <ToObjectIcon className="selection-icon" />
         </div>
       )}

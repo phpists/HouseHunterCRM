@@ -45,7 +45,9 @@ export const Billing = ({ open, onToggleOpen, onToggleHover }) => {
       onTouchStart={() => onToggleHover(true)}
       onTouchEnd={() => onToggleHover(false)}
     >
-      {!open && <Tag procent={15} />}
+      {!open && Number(balanceData?.sale) > 0 && (
+        <Tag procent={balanceData?.sale} />
+      )}
       {attach && (
         <Download
           download={download}

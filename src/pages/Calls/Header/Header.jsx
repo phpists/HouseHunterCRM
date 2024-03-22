@@ -20,6 +20,9 @@ export const Header = ({
   onSelectAll,
   allCount,
   clients,
+  filterPhoneCode,
+  onChangeFilterPhoneCode,
+  onSendSuccess,
 }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClientOpen, setAddClientOpen] = useState(false);
@@ -32,9 +35,12 @@ export const Header = ({
     <StyledHeader>
       {sendModal && (
         <SendModal
-          clients={clients}
+          clients={clients?.filter((c) => !!c)}
           onClose={() => setSendModal(false)}
-          onSendSuccess={() => null}
+          onSendSuccess={() => {
+            setSendModal(false);
+            onSendSuccess(clients?.filter((c) => !!c));
+          }}
         />
       )}
       <div className="flex items-center justify-between">
@@ -56,7 +62,11 @@ export const Header = ({
                 <SelectItemsDropdown
                   onSetCallsStatus={onSetCallsStatus}
                   status={filters?.status}
-                  onSend={handleSendSelected}
+                  onSend={
+                    clients?.filter((c) => !!c)?.length > 0
+                      ? handleSendSelected
+                      : null
+                  }
                 />
               }
             />
@@ -72,7 +82,11 @@ export const Header = ({
           <SelectItemsDropdown
             onSetCallsStatus={onSetCallsStatus}
             status={filters?.status}
-            onSend={handleSendSelected}
+            onSend={
+              clients?.filter((c) => !!c)?.length > 0
+                ? handleSendSelected
+                : null
+            }
           />
         }
         className="select-wrapper-mobile"
@@ -83,6 +97,8 @@ export const Header = ({
           filters={filters}
           onChangeFilter={onChangeFilter}
           onApplyFilter={onApplyFilter}
+          filterPhoneCode={filterPhoneCode}
+          onChangeFilterPhoneCode={onChangeFilterPhoneCode}
         />
       )}
       {addClientOpen && <AddClient onClose={() => setAddClientOpen(false)} />}

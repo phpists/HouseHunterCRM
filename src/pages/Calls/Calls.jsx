@@ -11,6 +11,7 @@ import { checkIsArray, checkIsJSON, handleResponse } from "../../utilits";
 import { useActions } from "../../hooks/actions";
 import cogoToast from "cogo-toast";
 import { useLocation } from "react-router-dom";
+import { useGetPhonesCodesQuery } from "../../store/auth/auth.api";
 
 const INIT_FILTERS = {
   search_key: "",
@@ -48,6 +49,10 @@ const Calls = () => {
   const allCountRef = useRef(0);
   const [allCount, setAllCount] = useState(0);
   const firstThousand = useRef([]);
+  const [filterPhoneCode, setFilterPhoneCode] = useState("1");
+  const { data: phonesCodes } = useGetPhonesCodesQuery();
+
+  const handleChangePhoneCode = (val) => setFilterPhoneCode(val);
 
   const handleChangeFilter = (fieldName, value) => {
     setFilters({ ...filters, [fieldName]: value });
@@ -60,6 +65,16 @@ const Calls = () => {
         : [...selected, index]
     );
 
+  const handleFormatFilterDate = (d, isFrom) => {
+    const date = new Date(d * 1000);
+
+    date.setHours(isFrom ? 0 : 23);
+    date.setMinutes(isFrom ? 0 : 59);
+    date.setSeconds(isFrom ? 0 : 59);
+
+    return Math.floor(date?.getTime() / 1000);
+  };
+
   const handleGetCalls = (isReset) => {
     if ((!isLoading.current && !isAllPages) || isReset) {
       if (isReset) {
@@ -71,7 +86,27 @@ const Calls = () => {
       isLoading.current = true;
       setLoading(true);
       getCalls({
-        filters: isFilter.current ? filters : undefined,
+        filters: isFilter.current
+          ? {
+              ...filters,
+              search_phone: filters?.search_phone
+                ? `${
+                    phonesCodes?.find((p) => p.id === filterPhoneCode)?.code ??
+                    ""
+                  }${filters?.search_phone
+                    ?.replaceAll("-", "")
+                    ?.replace("(", "")
+                    ?.replace(")", "")
+                    ?.replaceAll("_", "")}`
+                : undefined,
+              date_from: filters?.date_from
+                ? handleFormatFilterDate(filters?.date_from, true)
+                : undefined,
+              date_to: filters?.date_to
+                ? handleFormatFilterDate(filters?.date_to)
+                : undefined,
+            }
+          : undefined,
         current_page: currentPage.current,
       }).then((resp) => {
         isLoading.current = false;
@@ -220,6 +255,11 @@ const Calls = () => {
     setSelected(isReset ? [] : firstThousand.current);
   };
 
+  const handleSendCliens = (ids = []) => {
+    setSelected([]);
+    setData(data?.filter((d) => !ids.find((s) => s === d.client_id)));
+  };
+
   return (
     <StyledCalls>
       <Header
@@ -235,6 +275,9 @@ const Calls = () => {
             ?.filter((c) => selected?.includes(c.id))
             ?.map((c) => c?.client_id) ?? []
         }
+        filterPhoneCode={filterPhoneCode}
+        onChangeFilterPhoneCode={handleChangePhoneCode}
+        onSendSuccess={handleSendCliens}
       />
       <List
         selected={selected}
@@ -244,6 +287,7 @@ const Calls = () => {
         onAddComment={handleAddComment}
         listRef={listRef}
         loading={loading}
+        onSendSuccess={handleSendCliens}
       />
     </StyledCalls>
   );

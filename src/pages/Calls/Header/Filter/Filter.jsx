@@ -10,7 +10,14 @@ import { Period } from "./Period/Period";
 import { SelectTags } from "../../../../components/SelectTags/SelectTags";
 import { Divider } from "./Divider";
 
-export const Filter = ({ onClose, filters, onChangeFilter, onApplyFilter }) => {
+export const Filter = ({
+  onClose,
+  filters,
+  onChangeFilter,
+  onApplyFilter,
+  filterPhoneCode,
+  onChangeFilterPhoneCode,
+}) => {
   const controls = useAnimationControls();
 
   const handleClose = () => {
@@ -39,7 +46,12 @@ export const Filter = ({ onClose, filters, onChangeFilter, onApplyFilter }) => {
         <div className="content hide-scroll">
           <SectionTitle title="Головне" />
           <div className="section">
-            <Search filters={filters} onChangeFilter={onChangeFilter} />
+            <Search
+              filters={filters}
+              onChangeFilter={onChangeFilter}
+              filterPhoneCode={filterPhoneCode}
+              onChangeFilterPhoneCode={onChangeFilterPhoneCode}
+            />
             <Divider />
           </div>
         </div>

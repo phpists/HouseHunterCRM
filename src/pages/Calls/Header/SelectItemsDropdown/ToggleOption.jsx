@@ -14,7 +14,7 @@ export const ToggleOption = ({
     >
       <div onClick={() => onSetCallsStatus("1")}>Опрацювати обране</div>
       {/* <div onClick={() => onSetCallsStatus("0")}>Не опрацьовано</div> */}
-      <div onClick={onSend}>Передати обране</div>
+      {onSend && <div onClick={onSend}>Передати обране</div>}
       {/* 
       <Toggle
         value={status === "1"}

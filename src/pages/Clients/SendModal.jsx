@@ -21,7 +21,7 @@ export const SendModal = ({
   const [selectedUser, setSelectedUser] = useState(null);
 
   const handleSubmit = () => {
-    if (clients?.filter((c) => !!c)?.length > 0) {
+    if (clients?.length > 0) {
       onChangeLoading && onChangeLoading(true);
       moveClients({
         id_clients: clients,

@@ -70,6 +70,19 @@ export const calls = createApi({
         }),
       }),
     }),
+    moveCall: build.query({
+      query: ({ id_call, id_user_to }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "move_call_to_user",
+          mod: "calls",
+          id_call,
+          id_user_to,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -79,4 +92,5 @@ export const {
   useLazyAddCommentToCallQuery,
   useGetCallsTypeQuery,
   useLazyGetAllCallsPhonesQuery,
+  useLazyMoveCallQuery,
 } = calls;

@@ -27,6 +27,8 @@ export const DesktopContent = ({
   onEditComment,
   onAdd,
   onSend,
+  onSendCall,
+  clientName,
 }) => (
   <StyledDesktopContent className="flex items-start clickable">
     <Type callType={callType} />
@@ -37,6 +39,7 @@ export const DesktopContent = ({
       phone={phone}
       date={date}
       callsData={callsData}
+      clientName={clientName}
     />
     <Divider />
     <Status status={status} />
@@ -57,6 +60,7 @@ export const DesktopContent = ({
       onEditComment={onEditComment}
       onAdd={onAdd}
       onSend={onSend}
+      onSendCall={onSendCall}
     />
   </StyledDesktopContent>
 );
