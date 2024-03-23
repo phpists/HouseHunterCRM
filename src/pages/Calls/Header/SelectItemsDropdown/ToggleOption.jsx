@@ -13,14 +13,7 @@ export const ToggleOption = ({
       className={` ${className} ${status === "1" && "active"}`}
     >
       <div onClick={() => onSetCallsStatus("1")}>Опрацювати обране</div>
-      {/* <div onClick={() => onSetCallsStatus("0")}>Не опрацьовано</div> */}
-      {onSend && <div onClick={onSend}>Передати обране</div>}
-      {/* 
-      <Toggle
-        value={status === "1"}
-        onChange={onSetCallsStatus}
-        className={status === "1" ? "toggle-active" : ""}
-      /> */}
+      {onSend && <div onClick={onSend}>Передати обране </div>}
     </StyledToggleOption>
   );
 };

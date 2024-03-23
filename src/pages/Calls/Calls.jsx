@@ -260,6 +260,11 @@ const Calls = () => {
     setData(data?.filter((d) => !ids.find((s) => s === d.client_id)));
   };
 
+  const handleSendCalls = () => {
+    setData(data?.filter((d) => !selected.find((s) => s === d.id)));
+    setSelected([]);
+  };
+
   return (
     <StyledCalls>
       <Header
@@ -277,7 +282,13 @@ const Calls = () => {
         }
         filterPhoneCode={filterPhoneCode}
         onChangeFilterPhoneCode={handleChangePhoneCode}
-        onSendSuccess={handleSendCliens}
+        onSendSuccess={handleSendCalls}
+        calls={
+          data
+            ?.filter((c) => selected?.includes(c.id))
+            ?.filter((c) => !c?.client_id)
+            ?.map((c) => c?.id) ?? []
+        }
       />
       <List
         selected={selected}

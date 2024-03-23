@@ -10,6 +10,7 @@ import { useState } from "react";
 import { AddClient } from "../../../components/AddClient/AddClient";
 import { SelectItemsDropdown } from "./SelectItemsDropdown/SelectItemsDropdown";
 import { SendModal } from "../../Clients/SendModal";
+import { SendCall } from "../List/SendCall";
 
 export const Header = ({
   selectedCount,
@@ -23,6 +24,7 @@ export const Header = ({
   filterPhoneCode,
   onChangeFilterPhoneCode,
   onSendSuccess,
+  calls,
 }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClientOpen, setAddClientOpen] = useState(false);
@@ -34,13 +36,15 @@ export const Header = ({
   return (
     <StyledHeader>
       {sendModal && (
-        <SendModal
+        <SendCall
           clients={clients?.filter((c) => !!c)}
+          calls={calls}
           onClose={() => setSendModal(false)}
           onSendSuccess={() => {
             setSendModal(false);
-            onSendSuccess(clients?.filter((c) => !!c));
+            onSendSuccess();
           }}
+          massiveAction
         />
       )}
       <div className="flex items-center justify-between">
@@ -62,11 +66,7 @@ export const Header = ({
                 <SelectItemsDropdown
                   onSetCallsStatus={onSetCallsStatus}
                   status={filters?.status}
-                  onSend={
-                    clients?.filter((c) => !!c)?.length > 0
-                      ? handleSendSelected
-                      : null
-                  }
+                  onSend={selectedCount > 0 ? handleSendSelected : null}
                 />
               }
             />
