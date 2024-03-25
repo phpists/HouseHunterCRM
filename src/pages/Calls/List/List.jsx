@@ -76,6 +76,7 @@ export const List = ({
               client_id,
               client_first_name,
               client_last_name,
+              phone_binotel,
             },
             i
           ) => (
@@ -87,6 +88,7 @@ export const List = ({
               onOpenMore={() => setOpenMore(openMore === id ? null : id)}
               callType={call_type}
               phone={phone_call}
+              agentPhone={phone_binotel}
               date={handleFormatDate(Number(dt_incoming) * 1000)}
               name={full_name}
               photo={photo}
@@ -104,6 +106,7 @@ export const List = ({
               onAdd={() => setAddModal(phone_call)}
               onSend={client_id ? () => setSendModal(client_id) : null}
               onSendCall={client_id ? null : () => setSendCall(id)}
+              id={id}
             />
           )
         )

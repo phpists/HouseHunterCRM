@@ -29,9 +29,10 @@ export const MobileContent = ({
   onEditComment,
   onSendCall,
   clientName,
+  agentPhone,
 }) => (
   <StyledMobileContent className="flex flex-col items-start clickable">
-    <Type callType={callType} />
+    <Type callType={callType} agentPhone={agentPhone} />
     <div className="phones-mobile-wrapper w-full">
       <Phones
         open={open}
@@ -78,6 +79,9 @@ const StyledMobileContent = styled.div`
     background: #444;
     .value {
       max-width: 200px;
+    }
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
     }
   }
   .footer-mobile-content {

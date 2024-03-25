@@ -29,9 +29,10 @@ export const DesktopContent = ({
   onSend,
   onSendCall,
   clientName,
+  agentPhone,
 }) => (
   <StyledDesktopContent className="flex items-start clickable">
-    <Type callType={callType} />
+    <Type callType={callType} agentPhone={agentPhone} />
     <Divider />
     <Phones
       open={open}
@@ -76,6 +77,9 @@ const StyledDesktopContent = styled.div`
     }
     .value {
       max-width: 100px;
+    }
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
     }
   }
 

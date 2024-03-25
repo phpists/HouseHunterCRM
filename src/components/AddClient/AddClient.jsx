@@ -66,7 +66,7 @@ export const AddClient = ({ onClose, onAdded, initPhone }) => {
   const handleSubmit = () => {
     setLoading(true);
     createClient({
-      first_name: name,
+      first_name: name?.length === 0 ? "Новий клієнт" : name,
       last_name: lastName,
       email,
       phones_json: JSON.stringify([
@@ -134,7 +134,7 @@ export const AddClient = ({ onClose, onAdded, initPhone }) => {
             <Button
               onClick={handleSubmit}
               disabled={
-                name?.length === 0 ||
+                // name?.length === 0 ||
                 phone?.includes("_") ||
                 phone?.length === 0 ||
                 // email?.length === 0 ||

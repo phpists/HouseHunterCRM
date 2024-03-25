@@ -2,11 +2,12 @@ import styled from "styled-components";
 import phoneIcon from "../../../../../assets/images/small-phone.svg";
 import { ReactComponent as Arrow } from "../../../../../assets/images/call-arrow.svg";
 
-export const PhoneCalls = () => (
+export const PhoneCalls = ({ count = 0 }) => (
   <StyledPhoneCalls className="flex items-center">
     <div>
       <div className="flex items-center title">
-        <img src={phoneIcon} alt="" />-
+        <img src={phoneIcon} alt="" />
+        {count}
       </div>
       <div className="subtitle">Викликів</div>
     </div>

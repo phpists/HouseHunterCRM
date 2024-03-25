@@ -17,9 +17,9 @@ const StyledStatus = styled.div`
   padding: 8px 10px;
   border-radius: 9px;
   transition: all 0.3s;
-  &:hover {
+  /* &:hover {
     background: rgba(255, 255, 255, 0.05);
-  }
+  } */
   @media (min-width: 1400px) {
     width: 140px;
   }

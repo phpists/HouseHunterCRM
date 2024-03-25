@@ -25,6 +25,8 @@ export const CallCard = ({
   onSend,
   onSendCall,
   clientName,
+  agentPhone,
+  id,
 }) => {
   const [open, setOpen] = useState();
   const [commentEdit, setCommentEdit] = useState(comment);
@@ -54,6 +56,10 @@ export const CallCard = ({
     }
   };
 
+  useEffect(() => {
+    getCalls(phone);
+  }, [phone]);
+
   return (
     <StyledCallCard
       className=" clickable"
@@ -82,6 +88,7 @@ export const CallCard = ({
         onSend={onSend}
         onSendCall={onSendCall}
         clientName={clientName}
+        agentPhone={agentPhone}
       />
       <MobileContent
         open={open}
@@ -105,6 +112,7 @@ export const CallCard = ({
         onSend={onSend}
         onSendCall={onSendCall}
         clientName={clientName}
+        agentPhone={agentPhone}
       />
     </StyledCallCard>
   );

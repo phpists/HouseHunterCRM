@@ -20,7 +20,7 @@ export const Phones = ({
         callsData={callsData}
         clientName={clientName}
       />
-      <PhoneCalls />
+      <PhoneCalls count={callsData?.length} />
       <Arrow className="arrow-card" />
     </StyledPhones>
   );

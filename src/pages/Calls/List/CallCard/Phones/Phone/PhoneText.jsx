@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const PhoneText = ({ phone, clientName }) => (
-  <StyledPhoneText>
+  <StyledPhoneText clientName={clientName}>
     <div className="phone">{phone}</div>
-    <div className="subtitle" title={clientName ?? "Новий клієнт"}>
-      {clientName ?? "Новий клієнт"}
+    <div className="subtitle" title={clientName ?? "Відсутній в базі"}>
+      {clientName ?? "Відсутній в базі"}
     </div>
   </StyledPhoneText>
 );
@@ -22,17 +22,27 @@ const StyledPhoneText = styled.div`
     margin-bottom: 2px;
   }
   .subtitle {
-    color: #fff;
+    color: ${({ clientName }) => (clientName ? "#FFF" : "#d0a0ff")};
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
     font-weight: 300;
-    line-height: normal;
+    line-height: 1;
     letter-spacing: 0.22px;
     opacity: 0.4;
-    max-width: 90px;
+    max-width: 100px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    ${({ clientName }) =>
+      !clientName &&
+      `
+        padding: 4px 6px;
+    height: 20px;
+    border-radius: 4px;
+    background: #d0a0ff40;
+    color: #d0a0ff;
+    opacity: 1;
+    `}
   }
 `;
