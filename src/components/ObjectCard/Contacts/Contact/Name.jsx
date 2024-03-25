@@ -25,6 +25,10 @@ const StyledName = styled.div`
     letter-spacing: 0.28px;
     margin-bottom: 2px;
     color: ${({ type }) => (type === "owner" ? "#2FA112" : "#FFF")};
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .role {
     color: #fff;

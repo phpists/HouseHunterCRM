@@ -8,7 +8,7 @@ import { Main } from "./Main";
 import { Topicality } from "./Topicality";
 import { Characteristics } from "./Characteristics";
 import { useLazyGetAllObjectsQuery } from "../../../../store/objects/objects.api";
-import { handleFromInputDate } from "../../../../utilits";
+import { handleFromInputDate, removePhoneMask } from "../../../../utilits";
 
 export const Filter = ({
   onClose,
@@ -20,6 +20,8 @@ export const Filter = ({
   filtersOpened,
   isFavorite,
   allCount,
+  phoneCode,
+  onChangePhoneCode,
 }) => {
   const controls = useAnimationControls();
   const [errors, setErrors] = useState({});
@@ -46,7 +48,7 @@ export const Filter = ({
 
   const handleApply = () => {
     if (
-      filters?.search_phone?.length > 0 &&
+      removePhoneMask(filters?.search_phone)?.length > 0 &&
       filters?.search_phone?.includes("_")
     ) {
       setErrors({ search_phone: true });
@@ -87,24 +89,16 @@ export const Filter = ({
       filters: {
         ...otherFilters,
         search_phone_code:
-          filters?.search_phone?.length > 0
-            ? otherFilters?.search_phone_code
+          removePhoneMask(filters?.search_phone)?.length > 0
+            ? phoneCode
             : undefined,
         findPhone:
-          filters?.findPhone?.length > 0
-            ? filters?.findPhone
-                ?.replaceAll("-", "")
-                ?.replace("(", "")
-                ?.replace(")", "")
-                ?.replaceAll("_", "")
+          removePhoneMask(filters?.findPhone)?.length > 0
+            ? removePhoneMask(filters?.findPhone)
             : undefined,
         search_phone:
-          filters?.search_phone?.length > 0
-            ? filters?.search_phone
-                ?.replaceAll("-", "")
-                ?.replace("(", "")
-                ?.replace(")", "")
-                ?.replaceAll("_", "")
+          removePhoneMask(filters?.search_phone)?.length > 0
+            ? removePhoneMask(filters?.search_phone)
             : undefined,
       },
     };
@@ -144,6 +138,8 @@ export const Filter = ({
             errors={errors}
             onChangeInputFocus={(val) => setIsInputFocused(val)}
             isInputFocused={isInputFocused}
+            phoneCode={phoneCode}
+            onChangePhoneCode={onChangePhoneCode}
           />
           {/* <SectionTitle title="Актуальність" />
      <Topicality />

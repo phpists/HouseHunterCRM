@@ -47,6 +47,7 @@ export const General = ({
         onChange={(val) =>
           onChangeFilter("filters", { ...filter.filters, findPhone: val })
         }
+        type="number"
       />
       <Divider />
       <div className="dates-wrapper">

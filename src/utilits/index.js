@@ -464,3 +464,18 @@ export const checkIsJSON = (data) => {
 };
 
 export const checkIsArray = (arr) => (Array.isArray(arr) ? arr : []);
+
+export const removePhoneMask = (val) =>
+  val?.length > 0
+    ? val
+        ?.replaceAll("-", "")
+        ?.replace("(", "")
+        ?.replace(")", "")
+        ?.replaceAll("_", "")
+    : undefined;
+
+export const getFirstDay = () => {
+  const date = new Date();
+  date.setDate(1);
+  return date;
+};

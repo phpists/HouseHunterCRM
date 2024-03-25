@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { styled } from "styled-components";
 
 export const PositionCard = ({
@@ -8,30 +9,46 @@ export const PositionCard = ({
   onChange,
   onBlur,
   onFocus,
-}) => (
-  <StyledPositionCard
-    className={` flex items-baseline justify-between select-none ${className}`}
-  >
-    <div className="title">{title}</div>
-    <div className="value">
-      <input
-        value={
-          Number(value) === 0 || !value
-            ? ""
-            : Number(value).toString() ?? undefined
-        }
-        type="number"
-        placeholder=""
-        onChange={(e) =>
-          Number(e.target.value) >= 0 ? onChange(Number(e.target.value)) : null
-        }
-        onBlur={onBlur}
-        onFocus={onFocus}
-      />
-      {mainType ? <span>{mainType}</span> : null}
-    </div>
-  </StyledPositionCard>
-);
+}) => {
+  const inputRef = useRef(null);
+
+  const handlePressEnter = (e) => {
+    if (e?.keyCode === 13) {
+      onBlur && onBlur();
+      inputRef.current.blur();
+    }
+  };
+
+  return (
+    <StyledPositionCard
+      className={` flex items-baseline justify-between select-none ${className}`}
+      onClick={() => inputRef.current.focus()}
+    >
+      <div className="title">{title}</div>
+      <div className="value">
+        <input
+          value={
+            Number(value) === 0 || !value
+              ? ""
+              : Number(value).toString() ?? undefined
+          }
+          type="number"
+          placeholder=""
+          onChange={(e) =>
+            Number(e.target.value) >= 0
+              ? onChange(Number(e.target.value))
+              : null
+          }
+          onBlur={onBlur}
+          onFocus={onFocus}
+          ref={inputRef}
+          onKeyDown={handlePressEnter}
+        />
+        {mainType ? <span>{mainType}</span> : null}
+      </div>
+    </StyledPositionCard>
+  );
+};
 
 const StyledPositionCard = styled.div`
   padding: 3px 10px 1px 7px;
@@ -40,6 +57,7 @@ const StyledPositionCard = styled.div`
   min-width: 113px;
   transition: all 0.3s;
   border: 1px solid rgba(255, 255, 255, 0);
+  cursor: pointer;
   .title {
     color: #fff;
     font-family: Open Sans;

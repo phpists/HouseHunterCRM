@@ -77,6 +77,7 @@ export const List = ({
               client_first_name,
               client_last_name,
               phone_binotel,
+              Count_call,
             },
             i
           ) => (
@@ -107,6 +108,7 @@ export const List = ({
               onSend={client_id ? () => setSendModal(client_id) : null}
               onSendCall={client_id ? null : () => setSendCall(id)}
               id={id}
+              callCount={Count_call}
             />
           )
         )

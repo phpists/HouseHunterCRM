@@ -10,6 +10,7 @@ export const Phones = ({
   date,
   callsData,
   clientName,
+  callCount,
 }) => {
   return (
     <StyledPhones onClick={onToggleOpen} open={open}>
@@ -20,7 +21,7 @@ export const Phones = ({
         callsData={callsData}
         clientName={clientName}
       />
-      <PhoneCalls count={callsData?.length} />
+      <PhoneCalls count={callCount} />
       <Arrow className="arrow-card" />
     </StyledPhones>
   );

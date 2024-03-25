@@ -51,7 +51,13 @@ const notAllowedFields = [
   "label_without_children",
   "label_without_foreigners",
   "label_without_students",
+  "type_obj_apartment",
+  "type_obj_house",
+  "type_obj_commerce",
+  "type_obj_garage",
 ];
+
+const notAllowedCategories = ["73", "74"];
 
 export const Main = ({
   filters,
@@ -62,6 +68,8 @@ export const Main = ({
   errors,
   onChangeInputFocus,
   isInputFocused,
+  phoneCode,
+  onChangePhoneCode,
 }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: rubricsList } = useGetRubricsQuery();
@@ -88,6 +96,7 @@ export const Main = ({
     }
   }, [locationsList]);
 
+  console.log(rubricsList);
   return (
     <StyledMain className="section">
       <SelectTags
@@ -99,7 +108,9 @@ export const Main = ({
         }
         options={
           rubricsList
-            ? rubricsList?.map(({ id, name }) => ({ title: name, value: id }))
+            ? rubricsList
+                ?.map(({ id, name }) => ({ title: name, value: id }))
+                ?.filter((c) => !notAllowedCategories.includes(c.value))
             : []
         }
       />
@@ -186,8 +197,8 @@ export const Main = ({
         onChange={(val) => onChangeFilter("search_phone", val)}
         phone
         phonesCodes={phonesCodes}
-        phoneCode={filters.search_phone_code}
-        onChangePhoneCode={(val) => onChangeFilter("search_phone_code ", val)}
+        phoneCode={phoneCode}
+        onChangePhoneCode={(val) => onChangePhoneCode(val)}
         error={errors?.search_phone}
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
@@ -200,6 +211,7 @@ export const Main = ({
         onChange={(val) => onChangeFilter("findPhone", val)}
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
+        type="number"
       />
 
       <div className="fields-wrapper">
@@ -221,6 +233,7 @@ export const Main = ({
                   "rooms",
                   "address_storey",
                   "storey_count",
+                  "area_plot_sotka",
                 ];
 
                 const fieldName = field[0] === "rooms" ? "room" : field[0];

@@ -44,6 +44,7 @@ export const Search = ({
         placeholder="Введіть значення..."
         value={filters?.findPhone}
         onChange={(val) => onChangeFilter("findPhone", val)}
+        type="number"
       />
       <Divider />
       <Period filters={filters} onChangeFilter={onChangeFilter} />

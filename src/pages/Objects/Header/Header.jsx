@@ -33,6 +33,8 @@ export const Header = ({
   allCount,
   onSelectAll,
   onChangeActionLoading,
+  phoneCode,
+  onChangePhoneCode,
 }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClient, setAddClient] = useState(false);
@@ -177,6 +179,8 @@ export const Header = ({
             onChangeDefaultFiltersOpened={(val) => setDefalultFiltersOpen(val)}
             isFavorite={isFavorite}
             allCount={allCount}
+            phoneCode={phoneCode}
+            onChangePhoneCode={onChangePhoneCode}
           />
         )}
         {addClient && <AddClient onClose={() => setAddClient(false)} />}

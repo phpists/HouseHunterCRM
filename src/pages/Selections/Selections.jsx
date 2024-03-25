@@ -194,6 +194,7 @@ const Selections = () => {
     });
     handleGetRubricsFields(id_rubric);
     filterActive.current = true;
+    handleGetSelections(true);
   };
 
   const handleApplyFilter = (isApply) => {

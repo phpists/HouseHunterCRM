@@ -64,7 +64,7 @@ export const SelectTags = ({
         )}
         {!value && showTags ? (
           <div className="flex flex-wrap tags select-none">
-            {tags?.slice(0, isActive ? tags.length : 5)?.map((tag, i) => (
+            {tags?.slice(0, isActive ? tags?.length : 5)?.map((tag, i) => (
               <Tag
                 key={i}
                 title={tag?.title}
@@ -77,8 +77,8 @@ export const SelectTags = ({
                 type={tag.value === "label_is_actual"}
               />
             ))}
-            {!isActive && tags.length - 5 > 0 && (
-              <TagCount count={tags.length - 5} />
+            {!isActive && tags?.length - 5 > 0 && (
+              <TagCount count={tags?.length - 5} />
             )}
             {open && (
               <input

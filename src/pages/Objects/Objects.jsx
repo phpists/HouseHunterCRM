@@ -14,6 +14,7 @@ import {
   handleFromInputDate,
   handleGetRange,
   handleResponse,
+  removePhoneMask,
 } from "../../utilits";
 import cogoToast from "cogo-toast";
 import { useLocation, useParams } from "react-router-dom";
@@ -36,7 +37,6 @@ const Objects = () => {
     price_max: "",
     price_min: "",
     id_hash: id ?? "",
-    search_phone_code: "1",
     price_for: "4",
   };
 
@@ -69,6 +69,9 @@ const Objects = () => {
   const [updateData, setUpdateData] = useState(false);
   const firstThousand = useRef([]);
   const [actionLoading, setActionLoading] = useState(false);
+  const [phoneCode, setPhoneCode] = useState("1");
+
+  const handleChangePhoneCode = (val) => setPhoneCode(val);
 
   const handleChangeFilter = (field, value, isDataUpdate) => {
     if (isDataUpdate) {
@@ -145,24 +148,14 @@ const Objects = () => {
           filters: {
             ...otherFilters,
             search_phone_code:
-              filters?.search_phone?.length > 0
-                ? otherFilters?.search_phone_code
+              removePhoneMask(filters?.search_phone)?.length > 0
+                ? phoneCode
                 : undefined,
             findPhone:
-              filters?.findPhone?.length > 0
-                ? filters?.findPhone
-                    ?.replaceAll("-", "")
-                    ?.replace("(", "")
-                    ?.replace(")", "")
-                    ?.replaceAll("_", "")
-                : undefined,
+              filters?.findPhone?.length > 0 ? filters?.findPhone : undefined,
             search_phone:
-              filters?.search_phone?.length > 0
-                ? filters?.search_phone
-                    ?.replaceAll("-", "")
-                    ?.replace("(", "")
-                    ?.replace(")", "")
-                    ?.replaceAll("_", "")
+              removePhoneMask(filters?.search_phone)?.length > 0
+                ? removePhoneMask(filters?.search_phone)
                 : undefined,
           },
         };
@@ -513,6 +506,8 @@ const Objects = () => {
         allCount={allCount}
         onSelectAll={handleSelectAll}
         onChangeActionLoading={(val) => setActionLoading(val)}
+        phoneCode={phoneCode}
+        onChangePhoneCode={handleChangePhoneCode}
       />
       <List
         selected={selected}

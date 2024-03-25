@@ -27,6 +27,7 @@ export const CallCard = ({
   clientName,
   agentPhone,
   id,
+  callCount,
 }) => {
   const [open, setOpen] = useState();
   const [commentEdit, setCommentEdit] = useState(comment);
@@ -46,19 +47,19 @@ export const CallCard = ({
 
   const handleToggleOpen = () => {
     if (!open) {
-      getCalls(phone).then((resp) =>
-        handleResponse(resp, () => {
-          setOpen(true);
-        })
-      );
+      if (!callsData) {
+        getCalls(phone).then((resp) =>
+          handleResponse(resp, () => {
+            setOpen(true);
+          })
+        );
+      } else {
+        setOpen(true);
+      }
     } else {
       setOpen(!open);
     }
   };
-
-  useEffect(() => {
-    getCalls(phone);
-  }, [phone]);
 
   return (
     <StyledCallCard
@@ -89,6 +90,7 @@ export const CallCard = ({
         onSendCall={onSendCall}
         clientName={clientName}
         agentPhone={agentPhone}
+        callCount={callCount}
       />
       <MobileContent
         open={open}
@@ -113,6 +115,7 @@ export const CallCard = ({
         onSendCall={onSendCall}
         clientName={clientName}
         agentPhone={agentPhone}
+        callCount={callCount}
       />
     </StyledCallCard>
   );

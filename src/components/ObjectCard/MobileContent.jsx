@@ -8,6 +8,7 @@ import { MainInfo } from "./MainInfo/MainInfo";
 import { Tags } from "./Tags/Tags";
 import { Contacts } from "./Contacts/Contacts";
 import { ShowMore } from "./ShowMore/ShowMore";
+import { checkIsArray } from "../../utilits";
 
 export const MobileContent = ({
   data,
@@ -33,7 +34,7 @@ export const MobileContent = ({
     <Header data={data} />
     <CardTitle title={data?.title} />
     <Slider
-      photos={[...data?.img]?.sort((a, b) => b.cover - a.cover)}
+      photos={[...checkIsArray(data?.img)]?.sort((a, b) => b?.cover - a?.cover)}
       data={data}
       showLike={showLike}
     />

@@ -7,7 +7,13 @@ import {
   useLazyGetCallsQuery,
   useLazySetStatusCallQuery,
 } from "../../store/calls/calls.api";
-import { checkIsArray, checkIsJSON, handleResponse } from "../../utilits";
+import {
+  checkIsArray,
+  checkIsJSON,
+  getFirstDay,
+  handleResponse,
+  removePhoneMask,
+} from "../../utilits";
 import { useActions } from "../../hooks/actions";
 import cogoToast from "cogo-toast";
 import { useLocation } from "react-router-dom";
@@ -19,9 +25,8 @@ const INIT_FILTERS = {
   type_call: [],
   call_my_struct: undefined,
   status: undefined,
-  date_from: Math.floor(new Date().getTime() / 1000),
+  date_from: Math.floor(getFirstDay().getTime() / 1000),
   date_to: Math.floor(new Date().getTime() / 1000),
-  view: "0",
 };
 
 const Calls = () => {
@@ -89,16 +94,10 @@ const Calls = () => {
         filters: isFilter.current
           ? {
               ...filters,
-              search_phone: filters?.search_phone
-                ? `${
-                    phonesCodes?.find((p) => p.id === filterPhoneCode)?.code ??
-                    ""
-                  }${filters?.search_phone
-                    ?.replaceAll("-", "")
-                    ?.replace("(", "")
-                    ?.replace(")", "")
-                    ?.replaceAll("_", "")}`
-                : undefined,
+              search_phone:
+                removePhoneMask(filters?.search_phone)?.length > 0
+                  ? removePhoneMask(filters?.search_phone)
+                  : undefined,
               date_from: filters?.date_from
                 ? handleFormatFilterDate(filters?.date_from, true)
                 : undefined,
@@ -106,7 +105,15 @@ const Calls = () => {
                 ? handleFormatFilterDate(filters?.date_to)
                 : undefined,
             }
-          : undefined,
+          : {
+              date_from: handleFormatFilterDate(
+                Math.floor(getFirstDay().getTime() / 1000),
+                true
+              ),
+              date_to: handleFormatFilterDate(
+                Math.floor(new Date().getTime() / 1000)
+              ),
+            },
         current_page: currentPage.current,
       }).then((resp) => {
         isLoading.current = false;
@@ -234,11 +241,17 @@ const Calls = () => {
   useEffect(() => {
     const filterApply = location?.search?.split("=")[0];
     if (filterApply === "?view") {
-      setFilters({ view: "0" });
+      setFilters({
+        view: "0",
+        type_call: [],
+        call_my_struct: undefined,
+        status: undefined,
+        date_from: Math.floor(new Date().getTime() / 1000),
+        date_to: Math.floor(new Date().getTime() / 1000),
+      });
       setIsDefaultFilterSet(true);
     } else {
       handleGetCalls(true);
-      setIsDefaultFilterSet(true);
     } // eslint-disable-next-line
   }, [location.search]);
 
@@ -247,9 +260,10 @@ const Calls = () => {
       const filterApply = location?.search?.split("=")[0];
       isFirstLoad.current = false;
       isFilter.current = !!filterApply;
+      console.log("2");
       handleGetCalls(true);
     } // eslint-disable-next-line
-  }, [filters, isDefaultFilterSet]);
+  }, [isDefaultFilterSet]);
 
   const handleSelectAll = (isReset, count) => {
     setSelected(isReset ? [] : firstThousand.current);

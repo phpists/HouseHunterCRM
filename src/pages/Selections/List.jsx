@@ -79,7 +79,7 @@ export const List = ({
               onToggleFavoriteStatus={
                 onFavorite ? () => onFavorite(d?.id) : null
               }
-              // onFindSimilar={() => onFindSimilar(d)}
+              onFindSimilar={() => onFindSimilar(d)}
               isEdit={handleCheckAccess(accessData, "objects", "edit")}
               onHide={() => onHide(d?.id)}
               isHideObjects={isHideObjects}

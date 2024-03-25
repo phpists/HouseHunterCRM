@@ -4,7 +4,13 @@ import { Value } from "./Value";
 import { ReactComponent as Arrow } from "../../assets/images/arrow-down.svg";
 import { Dropdown } from "./Dropdown/Dropdown";
 
-export const CodeSelect = ({ value, onChange, options, className }) => {
+export const CodeSelect = ({
+  value,
+  onChange,
+  options,
+  className,
+  onFocus,
+}) => {
   const [open, setOpen] = useState(false);
   const handleChange = (val) => {
     onChange(val);

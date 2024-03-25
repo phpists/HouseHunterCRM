@@ -6,6 +6,7 @@ import {
   handleFormatDate,
   handleFormatInputDate,
   handleRemovePhoneMask,
+  removePhoneMask,
 } from "../utilits";
 import { PhoneInput } from "./PhoneInput";
 import { Calendar } from "./Calendar/Calendar";
@@ -149,9 +150,7 @@ export const ProfileField = ({
                 onChange={onChange}
                 inputClassName="value"
                 onKeyDown={handlePressKey}
-                onBlur={() => {
-                  onBlur && onBlur();
-                }}
+                onFocus={onFocus}
               />
             ) : textarea ? (
               <textarea
@@ -238,7 +237,7 @@ export const ProfileField = ({
                     ? phonesCodes?.find(({ id }) => id === phoneCode)?.code
                     : phonesCodes?.find(({ code }) => code === phoneCode)
                         ?.code ?? ""
-                }${handleRemovePhoneMask(value)}`
+                }${removePhoneMask(value)}`
               : type === "number" && Number(value) === 0
               ? placeholder
               : value?.length > 0
