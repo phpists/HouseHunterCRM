@@ -261,7 +261,14 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         onChange={(val) =>
           onChangeFilter(
             "my_object",
-            filters?.my_object === "1" ? undefined : "1"
+            {
+              ...filters,
+              my_object: filters?.my_object === "1" ? undefined : "1",
+              company_object: undefined,
+              street_base_object: undefined,
+              mls_object: undefined,
+            },
+            true
           )
         }
       />
@@ -271,8 +278,15 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         value={filters?.company_object ? "1" : "0"}
         onChange={(val) =>
           onChangeFilter(
-            "company_object",
-            filters?.company_object === "1" ? undefined : "1"
+            "my_object",
+            {
+              ...filters,
+              my_object: undefined,
+              company_object: filters?.company_object === "1" ? undefined : "1",
+              street_base_object: undefined,
+              mls_object: undefined,
+            },
+            true
           )
         }
       />
@@ -282,8 +296,16 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         value={filters?.street_base_object ? "1" : "0"}
         onChange={(val) =>
           onChangeFilter(
-            "street_base_object",
-            filters?.street_base_object === "1" ? undefined : "1"
+            "my_object",
+            {
+              ...filters,
+              my_object: undefined,
+              company_object: undefined,
+              street_base_object:
+                filters?.street_base_object === "1" ? undefined : "1",
+              mls_object: undefined,
+            },
+            true
           )
         }
       />
@@ -293,8 +315,15 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         value={filters?.mls_object ? "1" : "0"}
         onChange={(val) =>
           onChangeFilter(
-            "mls_object",
-            filters?.mls_object === "1" ? undefined : "1"
+            "my_object",
+            {
+              ...filters,
+              my_object: undefined,
+              company_object: undefined,
+              street_base_object: undefined,
+              mls_object: filters?.mls_object === "1" ? undefined : "1",
+            },
+            true
           )
         }
       />

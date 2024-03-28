@@ -25,6 +25,7 @@ export const Card = ({
   isDelete,
   currency,
   price_for,
+  dateTo,
 }) => {
   const { id: clientId } = useParams();
   const [addRequestToFavorites] = useLazyAddToFavoriteQuery();
@@ -87,6 +88,7 @@ export const Card = ({
         isDelete={isDelete}
         currency={currency}
         price_for={price_for}
+        dateTo={dateTo}
       />
       <MobileContent
         date={date}
@@ -102,6 +104,7 @@ export const Card = ({
         isDelete={isDelete}
         currency={currency}
         price_for={price_for}
+        dateTo={dateTo}
       />
     </StyledCard>
   );

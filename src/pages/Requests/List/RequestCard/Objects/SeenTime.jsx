@@ -4,7 +4,7 @@ import { handleFormatDate } from "../../../../../utilits";
 
 export const SeenTime = ({ date }) => (
   <StyledSeenTime className="flex items-center clickable">
-    <img src={clockIcon} alt="" />
+    <img src={clockIcon} alt="" className="clickable" />
     {!date || date === "0"
       ? "не переглянуто"
       : `переглянуто ${handleFormatDate(Number(date) * 1000)}`}

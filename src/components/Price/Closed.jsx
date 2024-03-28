@@ -9,11 +9,11 @@ export const Closed = ({
   priceFor,
 }) => (
   <StyledClosed
-    className="flex items-start justify-between closed-wrappe "
+    className="flex items-start justify-between closed-wrappe closedPrice "
     onClick={notChangeCurrency ? () => null : onOpen}
   >
-    <div>
-      <div className="price">
+    <div className="closedPrice">
+      <div className="price closedPrice">
         {`${price}`}{" "}
         {priceFor && (
           <span className="priceFore">
@@ -21,9 +21,9 @@ export const Closed = ({
           </span>
         )}
       </div>
-      {subtitle && <div className="subtitle">{subtitle}</div>}
+      {subtitle && <div className="subtitle closedPrice">{subtitle}</div>}
     </div>
-    {!notChangeCurrency && <Arrow className="arrow" />}
+    {!notChangeCurrency && <Arrow className="arrow closedPrice" />}
   </StyledClosed>
 );
 

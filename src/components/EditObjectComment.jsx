@@ -60,17 +60,23 @@ export const EditObjectComment = ({ onClose, object, onChange }) => {
 
   return (
     <StyleEditObjectComment>
-      <Modal onClose={onClose} title="Редагування коментаря">
+      <Modal
+        onClose={onClose}
+        title={object?.isEdit ? "Редагування коментаря" : "Перегляд коментаря"}
+      >
         <div className="edit-comment-content hide-scroll">
           <div className="label">Коментар</div>
           <textarea
             value={value}
             onChange={textAreaAdjust}
-            placeholder="Введіть значення"
+            placeholder={object?.isEdit ? "Введіть значення" : "Пусто"}
             ref={textareaRef}
             autoFocus
+            readOnly={!object?.isEdit}
           />
-          <button onClick={handleSave}>Зберегти</button>
+          {object?.isEdit ? (
+            <button onClick={handleSave}>Зберегти</button>
+          ) : null}
         </div>
       </Modal>
     </StyleEditObjectComment>

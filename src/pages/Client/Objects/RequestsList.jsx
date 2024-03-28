@@ -187,9 +187,17 @@ export const RequestsList = ({
                   onSelectItem={() => onSelectItem({ id: id, type: "request" })}
                   onOpenInfo={() => onOpenInfo(true)}
                   date={handleFormatDate(
-                    Number(c[1]?.General_field_group?.dt_deadline) * 1000,
+                    Number(c[1]?.General_field_group?.dt_add) * 1000,
                     true
                   )}
+                  dateTo={
+                    c[1]?.General_field_group?.dt_deadline
+                      ? handleFormatDate(
+                          Number(c[1]?.General_field_group?.dt_deadline) * 1000,
+                          true
+                        )
+                      : undefined
+                  }
                   title={infoField?.rubric}
                   location={handleGetLocation(infoField?.location)}
                   price={infoField?.price_max}

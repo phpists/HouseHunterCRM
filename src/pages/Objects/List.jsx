@@ -130,7 +130,12 @@ export const List = ({
                 }
                 onDelete={() => handleOpenDelete(d?.id)}
                 onChangeComment={() =>
-                  setEditComment({ id: d?.id, comment: d?.comment })
+                  setEditComment({
+                    id: d?.id,
+                    comment: d?.comment,
+                    isEdit:
+                      d?.acsses_change || d?.type_object === "street_base",
+                  })
                 }
                 searchTag="?objects"
                 currency={currency}

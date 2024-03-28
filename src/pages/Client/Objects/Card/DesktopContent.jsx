@@ -25,6 +25,7 @@ export const DesktopContent = ({
   isDelete,
   currency,
   price_for,
+  dateTo,
 }) => {
   const { id: clientId } = useParams();
 
@@ -37,7 +38,7 @@ export const DesktopContent = ({
             <Title title={title} />
             <Price price={price} currency={currency} price_for={price_for} />
           </div>
-          <CreatedDate date={date} />
+          <CreatedDate date={date} dateTo={dateTo} />
         </div>
         <div className="w-max mr-5">
           <div className="flex items-center w-max">

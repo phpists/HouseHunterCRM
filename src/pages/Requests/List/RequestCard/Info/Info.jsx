@@ -23,7 +23,7 @@ export const Info = ({
               }`
         }
         subtitle="Бажана ціна"
-        className="price-wrapper"
+        className="price-wrapper clickable"
         notChangeCurrency
       />
       <Tags

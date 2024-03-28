@@ -18,10 +18,17 @@ export const RequestCard = ({
   onChangeComment,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
-  const handleClick = (e) =>
-    e.target.classList.contains("clickable") && onSelect();
   const [getClient, { data: clientData }] = useLazyGetClientQuery();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1400);
+
+  const handleClick = (e) => {
+    if (
+      e.target.classList.contains("clickable") ||
+      e.target.classList.contains("closedPrice")
+    ) {
+      onSelect();
+    }
+  };
 
   const handleResize = () => {
     const currentWidth = window.innerWidth;

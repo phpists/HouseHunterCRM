@@ -25,6 +25,7 @@ export const MobileContent = ({
   isEdit,
   currency,
   price_for,
+  dateTo,
 }) => {
   const { id: clientId } = useParams();
 
@@ -41,7 +42,7 @@ export const MobileContent = ({
               <Title title={title} />
               <Price price={price} currency={currency} price_for={price_for} />
             </div>
-            <CreatedDate date={date} />
+            <CreatedDate date={date} dateTo={dateTo} />
           </div>
           <Divider />
           <div className="w-max mr-5">

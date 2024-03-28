@@ -33,6 +33,7 @@ export const Dropdown = ({
   onDelete,
   isStreetBase,
   searchTag,
+  onFocus,
 }) => {
   const [addStreetBaseObject] = useLazyAddStreetBaseObjectQuery();
   const [added, setAdded] = useState(false);
@@ -127,11 +128,14 @@ export const Dropdown = ({
         </div>
       )}
       {isEdit && (
-        <div
-          onClick={() =>
-            navigate(`/edit-object/${clientId}/${id}${searchTag ?? ""}`)
-          }
+        <NavLink
+          onClick={() => onFocus()}
+          to={`/edit-object/${clientId}/${id}${searchTag ?? ""}`}
           className="flex items-center justify-between"
+          onFocus={(e) => {
+            e.preventDefault();
+            onFocus();
+          }}
           onMouseDown={(e) => {
             if (window.event?.which === 2) {
               window
@@ -143,8 +147,8 @@ export const Dropdown = ({
             }
           }}
         >
-          <span>Редагувати</span> <Edit />
-        </div>
+          <span>Редагувати </span> <Edit />
+        </NavLink>
       )}
       {onDelete && (
         <div className="flex items-center justify-between" onClick={onDelete}>

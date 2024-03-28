@@ -126,6 +126,12 @@ const StyledCharacteristic = styled.div`
   background: #3d3d3d;
   padding: 14px 14px 12px 15px;
   margin-bottom: 11px;
+  .field {
+    .value {
+      max-width: 100px;
+      text-overflow: ellipsis;
+    }
+  }
   .content-wrapper {
     height: calc(100svh - 425px);
     overflow: auto;

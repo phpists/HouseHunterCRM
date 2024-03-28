@@ -93,6 +93,29 @@ export const LastRequests = () => {
     });
   };
 
+  const handleOpenChat = (id_group, id) => {
+    setSelectedChat(id_group);
+    setRequests(
+      Object.fromEntries(
+        Object.entries(requests)?.map((r) => {
+          if (r[0] === id) {
+            return [
+              r[0],
+              {
+                ...r[1],
+                General_field_group: {
+                  ...r[1]?.General_field_group,
+                  new_messege: "0",
+                },
+              },
+            ];
+          }
+
+          return r;
+        })
+      )
+    );
+  };
   return (
     <>
       {deleteModal && (
@@ -140,7 +163,9 @@ export const LastRequests = () => {
                           )?.name ?? "-",
                       }}
                       id={id}
-                      onOpenChat={() => setSelectedChat(requestData?.id_group)}
+                      onOpenChat={() =>
+                        handleOpenChat(requestData?.id_group, d[0])
+                      }
                       onToggleFavorite={() =>
                         handleToggleFavorites(requestData?.id_group, d[0])
                       }

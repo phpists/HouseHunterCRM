@@ -17,7 +17,7 @@ export const DesktopContent = ({
   clientData,
   onChangeComment,
 }) => (
-  <StyledDesktopContent>
+  <StyledDesktopContent className="clickable">
     <Client
       firstName={clientData?.first_name ?? data?.usr_first_name}
       lastName={clientData?.last_name ?? data?.usr_last_name}

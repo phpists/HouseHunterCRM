@@ -32,6 +32,7 @@ export const Base = ({
   dateAgreement,
   dateAgreementFieldName = "dt_end_agreement_to",
   request,
+  idAdInSource,
 }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: companies } = useGetCompaniesQuery();
@@ -286,6 +287,20 @@ export const Base = ({
                 : []
             }
           />
+          {idAdInSource ? (
+            <Field
+              placeholder="Введіть значення..."
+              value={data?.street_base_object?.id_ad_in_source}
+              onChange={(val) =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  id_ad_in_source: val,
+                })
+              }
+              label="Id на ресурсі"
+              className="field-wrapper"
+            />
+          ) : null}
           <CheckOption
             label="Вимкнути «Без співпраці»"
             className="check-opt"

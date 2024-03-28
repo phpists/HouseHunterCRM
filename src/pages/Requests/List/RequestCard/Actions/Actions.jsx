@@ -35,7 +35,7 @@ export const Actions = ({
   };
 
   return (
-    <StyledActions>
+    <StyledActions className="clickable">
       <Button
         Icon={StarIcon}
         className="mb-2.5"

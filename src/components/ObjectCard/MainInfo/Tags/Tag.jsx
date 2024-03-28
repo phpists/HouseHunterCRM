@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Tag = ({ icon, title }) => (
-  <StyledTag className="flex items-center clickable select-none">
+  <StyledTag className="flex items-center clickable select-none" title={title}>
     {icon && <img src={icon} alt="" />}
     <div className="title clickable">{title}</div>
   </StyledTag>
@@ -21,6 +21,12 @@ const StyledTag = styled.div`
   line-height: 1;
   letter-spacing: 0.22px;
   height: max-content;
+  .title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 170px;
+    overflow: hidden;
+  }
   img {
     margin-right: 4px;
     height: 12px;

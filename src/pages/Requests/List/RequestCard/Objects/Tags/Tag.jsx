@@ -9,7 +9,10 @@ const COLORS = {
 };
 
 export const Tag = ({ count = 0, title = "", className, type }) => (
-  <StyledTag className={className} type={COLORS[type] ?? COLORS?.default}>
+  <StyledTag
+    className={`${className} clickable`}
+    type={COLORS[type] ?? COLORS?.default}
+  >
     {type !== "blue" && (
       <Like
         className={type === "green" ? "like" : type === "red" ? "dislike" : ""}

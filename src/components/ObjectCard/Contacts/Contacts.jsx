@@ -22,18 +22,41 @@ export const Contacts = ({ className, data }) => {
 
   return (
     <StyledContacts className={`hide-scroll clickable ${className}`}>
-      <Contact
-        type="owner"
-        name={data?.clients_inf?.contact.name}
-        phones={
-          clientData?.contact?.phone
-            ? clientData?.contact?.phone
-            : clientData?.contact?.phones
-        }
-        typeText={data?.clients_inf?.type}
-        error={error}
-        onShow={handleShowClient}
-      />
+      {data?.clients_inf?.contact?.owner &&
+      data?.clients_inf?.contact?.owner?.phone ? (
+        <Contact
+          type="rieltor"
+          name={data?.clients_inf?.contact?.owner?.name}
+          phones={
+            data?.clients_inf?.contact?.owner?.phone
+              ? data?.clients_inf?.contact?.owner?.phone
+              : data?.clients_inf?.contact?.owner?.phones
+          }
+          typeText="Власник"
+          error={error}
+          onShow={handleShowClient}
+          className="mb-4"
+        />
+      ) : null}
+      {data?.clients_inf ? (
+        <Contact
+          type="owner"
+          name={
+            data?.clients_inf?.contact?.name ??
+            data?.clients_inf?.contact?.name_client
+          }
+          phones={
+            data?.clients_inf?.contact?.phones
+              ? data?.clients_inf?.contact?.phones
+              : clientData?.contact?.phone
+              ? clientData?.contact?.phone
+              : clientData?.contact?.phones
+          }
+          typeText={data?.clients_inf?.type}
+          error={error}
+          onShow={handleShowClient}
+        />
+      ) : null}
     </StyledContacts>
   );
 };

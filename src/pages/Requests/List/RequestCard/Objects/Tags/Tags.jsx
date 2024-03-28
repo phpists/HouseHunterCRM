@@ -6,7 +6,7 @@ export const Tags = ({ data }) => {
   const dislikes = data?.General_field_group?.countDislike ?? 0;
 
   return (
-    <StyledTags className="flex items-center">
+    <StyledTags className="flex items-center clickable">
       <Tag
         count={likes}
         type={likes > 0 ? "green" : undefined}

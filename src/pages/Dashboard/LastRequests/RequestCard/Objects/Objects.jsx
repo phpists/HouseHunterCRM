@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { OpenButton } from "./OpenButton";
 import { MoreButton } from "../../../../../components/MoreButton/MoreButton";
 import { Tags } from "./Tags/Tags";
+import { useEffect, useState } from "react";
 
 export const Objects = ({
   data,
@@ -15,6 +16,7 @@ export const Objects = ({
   onOpenChat,
   onToggleFavorite,
   onDelete,
+  isNew,
 }) => {
   const navigate = useNavigate();
 
@@ -32,7 +34,7 @@ export const Objects = ({
             className="copy-btn"
             link={`https://selection.house-hunter.info/?id=${id}`}
           />
-          <Comments onOpenChat={onOpenChat} />
+          <Comments onOpenChat={onOpenChat} isNew={data?.new_messege === "1"} />
         </div>
 
         <MoreButton

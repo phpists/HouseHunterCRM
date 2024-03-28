@@ -322,6 +322,7 @@ export const Main = ({
           })
         }
         dateAgreement
+        idAdInSource
       />
     </StyledMain>
   );

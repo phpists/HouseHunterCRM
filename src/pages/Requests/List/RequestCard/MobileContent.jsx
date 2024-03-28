@@ -17,7 +17,7 @@ export const MobileContent = ({
   clientData,
   onChangeComment,
 }) => (
-  <StyledMobileContent className="flex ">
+  <StyledMobileContent className="flex clickable">
     <div className="w-full">
       <Client
         firstName={clientData?.first_name ?? data?.usr_first_name}

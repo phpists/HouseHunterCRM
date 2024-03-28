@@ -37,6 +37,8 @@ export const ShowMore = ({
     handleCloseDropdown();
   };
 
+  const handleFocus = () => moreRef.current.focus();
+
   return (
     <StyledShowMore isfocusedbtn={isFocusedBtn?.toString()} ref={moreRef}>
       <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />
@@ -57,6 +59,7 @@ export const ShowMore = ({
         onDelete={onDelete && isAccess ? handleDelete : null}
         isStreetBase={isStreetBase}
         searchTag={searchTag}
+        onFocus={handleFocus}
       />
     </StyledShowMore>
   );

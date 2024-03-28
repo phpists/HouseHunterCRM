@@ -10,7 +10,12 @@ import { Tag } from "./Tag";
 export const Tags = ({ data }) => {
   const TAGS = [
     { title: data?.rubric_name },
-    { title: data?.location_name, icon: homeIcon },
+    {
+      title: `${data?.location_name} ${
+        data?.street?.length > 0 ? `/ ${data?.street}` : ""
+      }`,
+      icon: homeIcon,
+    },
     ...(data?.rooms > 0
       ? [{ title: `${data?.rooms} кімнати`, icon: doorIcon }]
       : []),

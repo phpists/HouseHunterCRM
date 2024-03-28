@@ -95,7 +95,11 @@ export const List = ({
               onAddToSelection={() => setOpenAddModal(d?.id)}
               showLike={typeof d?.like === "boolean"}
               onChangeComment={() =>
-                setEditComment({ id: d?.id, comment: d?.comment })
+                setEditComment({
+                  id: d?.id,
+                  comment: d?.comment,
+                  isEdit: d?.acsses_change || d?.type_object === "street_base",
+                })
               }
               currency={currency}
               onChangeCurrency={onChangeCurrency}

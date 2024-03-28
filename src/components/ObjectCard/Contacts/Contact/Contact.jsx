@@ -5,11 +5,19 @@ import { useState } from "react";
 import { CommentButton } from "./CommentButton";
 import { ProfileField } from "../../../ProfileField";
 
-export const Contact = ({ type, phones, name, typeText, error, onShow }) => {
+export const Contact = ({
+  type,
+  phones,
+  name,
+  typeText,
+  error,
+  onShow,
+  className,
+}) => {
   const [commentOpen, setCommentOpen] = useState(false);
 
   return (
-    <StyledContact className="clickable">
+    <StyledContact className={`${className} clickable`}>
       <div className="flex items-center clickable">
         {/* <CommentButton
           active={commentOpen}

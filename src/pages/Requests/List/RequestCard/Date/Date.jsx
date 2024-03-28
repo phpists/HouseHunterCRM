@@ -49,7 +49,7 @@ export const Date = ({ category, location, date }) => {
       <TagsFilter
         label="Локація"
         tags={handleGetLocation()}
-        className="tags-wrapper"
+        className="tags-wrapper clickable"
         noEdit
       />
     </StyledDate>

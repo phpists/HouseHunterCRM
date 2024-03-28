@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { SelectTags } from "../../SelectTags/SelectTags";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useEffect } from "react";
 import {
   useGetCommentsToFieldsQuery,
@@ -18,6 +18,7 @@ export const Tags = ({ className, data, isAccess, onChangeComment }) => {
   const [tags, setTags] = useState([]);
   const [actualDate, setActualDate] = useState(null);
   const actualTags = ["label_is_actual", "label_not_actual"];
+  const isFirstRender = useRef(true);
 
   const handleSelect = (val) => {
     const isExist = !!tags?.find((t) => t.value === val);
@@ -52,7 +53,10 @@ export const Tags = ({ className, data, isAccess, onChangeComment }) => {
             ? tags?.filter((t) => t.value !== val)
             : [
                 ...tags?.filter((t) =>
-                  actualTags?.includes(val) ? !actualTags?.includes(val) : true
+                  actualTags?.includes(val)
+                    ? t.value !== "label_is_actual" &&
+                      t.value !== "label_not_actual"
+                    : true
                 ),
                 {
                   title: commentsToFields?.object[val]
@@ -98,9 +102,10 @@ export const Tags = ({ className, data, isAccess, onChangeComment }) => {
   };
 
   useEffect(() => {
-    if (data && tagsList && commentsToFields) {
+    if (data && tagsList && commentsToFields && isFirstRender.current) {
       handleGetInitTags();
       handleSetActualTagsDate();
+      isFirstRender.current = false;
     }
   }, [data, tagsList, commentsToFields]);
 
@@ -126,7 +131,7 @@ export const Tags = ({ className, data, isAccess, onChangeComment }) => {
         <Comment
           id={data?.id}
           comment={data?.comment}
-          onChangeComment={() => null}
+          onChangeComment={onChangeComment}
         />
       ) : null}
     </StyledTags>
@@ -137,14 +142,14 @@ const StyledTags = styled.div`
   padding: 8px;
   border-radius: 9px;
   background: rgba(50, 50, 50, 0.8);
-  width: 200px;
+  width: 230px;
   margin-right: 10px;
   height: 200px;
   @media (min-width: 1400px) {
-    width: 195px;
+    width: 230px;
   }
   @media (min-width: 1600px) {
-    width: 200px;
+    width: 230px;
   }
   @media (min-width: 1700px) {
     width: 18svw;
