@@ -14,30 +14,17 @@ export const MobileContent = ({
   isDelete,
   isEdit,
   onOpenChat,
-  clientData,
   onChangeComment,
 }) => (
   <StyledMobileContent className="flex clickable">
     <div className="w-full">
-      <Client
-        firstName={clientData?.first_name ?? data?.usr_first_name}
-        lastName={clientData?.last_name ?? data?.usr_last_name}
-        idClient={data?.General_field_group?.id_client}
-        phones={clientData?.phone ?? data?.General_field_group?.user_phones}
-        dateCreate={data?.General_field_group?.dt_add}
-        avatar={
-          clientData?.last_name
-            ? ""
-            : data?.usr_img?.[0]?.length > 0
-            ? data?.usr_img[0]
-            : null
-        }
-      />
+      <Client data={data} />
       <div className="mobile-content-wrapper">
         <Date
           category={data?.rubric_name}
           location={data?.id_location}
           date={data?.General_field_group?.dt_deadline}
+          dateCreate={data?.General_field_group?.dt_add}
         />
         <Info
           priceMax={data?.price_max}

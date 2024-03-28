@@ -8,8 +8,9 @@ import {
   checkIsJSON,
   handleGetLocationAllPath,
 } from "../../../../../utilits";
+import { CreatedAt } from "./CreatedAt";
 
-export const Date = ({ category, location, date }) => {
+export const Date = ({ category, location, date, dateCreate }) => {
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
 
@@ -45,6 +46,7 @@ export const Date = ({ category, location, date }) => {
 
   return (
     <StyledDate className="hide-scroll clickable">
+      <CreatedAt dateCreate={dateCreate} />
       <InfoCard category={category} date={date} />
       <TagsFilter
         label="Локація"
@@ -60,10 +62,10 @@ const StyledDate = styled.div`
   border-radius: 9px;
   background: rgba(50, 50, 50, 0.6);
   padding: 10px;
-  width: 310px;
-  height: 136px;
+  width: 320px;
   overflow: auto;
   text-align: left;
+  height: 170px;
   .tags-wrapper {
     padding-top: 0;
     background: none;
@@ -71,10 +73,13 @@ const StyledDate = styled.div`
   @media (max-width: 1399.9px) {
     width: 100%;
   }
-  /* @media (min-width: 1400px) {
-    width: 156px;
-  } */
+  @media (min-width: 1400px) {
+    width: 290px;
+  }
   @media (min-width: 1550px) {
-    width: 310px;
+    width: 350px;
+  }
+  @media (min-width: 1600px) {
+    width: 390px;
   }
 `;

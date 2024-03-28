@@ -17,6 +17,7 @@ export const Socmedia = ({
   open,
   readOnly,
   phone,
+  activeColor,
 }) => {
   const phoneValue =
     type === "viber" ? `viber://chat?number=${phone}` : `https://t.me/${phone}`;
@@ -26,7 +27,7 @@ export const Socmedia = ({
         active && "active"
       } ${phone && "phone"}`}
       onClick={onClick}
-      color={TYPES[type].color}
+      color={activeColor ?? TYPES[type].color}
       readOnly={readOnly}
       href={phone ? phoneValue : undefined}
       target={phone && type === "telegram" ? "_blank" : undefined}

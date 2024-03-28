@@ -217,3 +217,19 @@ input[type="number"] {
     background: rgba(255, 255, 255, 0);
   }
 }
+
+.socmediaCardSmallPhone {
+  width: 32px !important;
+  height: 32px !important;
+  border: 1px solid #5b5b5b;
+  background: none !important;
+}
+
+.socmediaCardSmallPhone img {
+  height: 16px;
+  width: 16px;
+}
+
+.request-phone.socmediaCardSmallPhone.active {
+  border: none;
+}

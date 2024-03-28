@@ -18,7 +18,6 @@ export const RequestCard = ({
   onChangeComment,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
-  const [getClient, { data: clientData }] = useLazyGetClientQuery();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1400);
 
   const handleClick = (e) => {
@@ -45,14 +44,6 @@ export const RequestCard = ({
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobile]);
 
-  useEffect(() => {
-    const ownerId = data?.General_field_group?.id_user;
-    if (ownerId === user?.id) {
-      const clientId = data?.General_field_group?.id_client;
-      getClient(clientId);
-    }
-  }, [data?.General_field_group?.id_client]);
-
   return (
     <StyledRequestCard
       selected={selected}
@@ -68,7 +59,6 @@ export const RequestCard = ({
           isEdit={isEdit}
           isDelete={isDelete}
           onOpenChat={onOpenChat}
-          clientData={clientData?.data}
           onChangeComment={onChangeComment}
         />
       ) : (
@@ -80,7 +70,6 @@ export const RequestCard = ({
           isEdit={isEdit}
           isDelete={isDelete}
           onOpenChat={onOpenChat}
-          clientData={clientData?.data}
           onChangeComment={onChangeComment}
         />
       )}

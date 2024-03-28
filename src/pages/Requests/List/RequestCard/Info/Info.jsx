@@ -41,7 +41,6 @@ const StyledInfo = styled.div`
   border-radius: 9px;
   background: rgba(50, 50, 50, 0.6);
   padding: 10px;
-  height: 136px;
   overflow: auto;
   /* width: 264px; */
   .price-wrapper {
@@ -55,11 +54,11 @@ const StyledInfo = styled.div`
     }
   }
   @media (min-width: 1400px) {
-    height: 136px;
+    /* height: 136px; */
     width: 180px;
   }
   @media (min-width: 1600px) {
-    height: 136px;
+    /* height: 136px; */
   }
   @media (max-width: 1399.9px) {
     width: 100%;

@@ -14,28 +14,15 @@ export const DesktopContent = ({
   isEdit,
   isDelete,
   onOpenChat,
-  clientData,
   onChangeComment,
 }) => (
   <StyledDesktopContent className="clickable">
-    <Client
-      firstName={clientData?.first_name ?? data?.usr_first_name}
-      lastName={clientData?.last_name ?? data?.usr_last_name}
-      idClient={data?.General_field_group?.id_client}
-      phones={clientData?.phone ?? data?.General_field_group?.user_phones}
-      avatar={
-        clientData?.last_name
-          ? null
-          : data?.usr_img?.length > 0
-          ? data?.usr_img[0]
-          : null
-      }
-      dateCreate={data?.General_field_group?.dt_add}
-    />
+    <Client data={data} />
     <Date
       category={data?.rubric_name}
       location={data?.id_location}
       date={data?.General_field_group?.dt_deadline}
+      dateCreate={data?.General_field_group?.dt_add}
     />
     <Info
       currency={data?.price_currency}
@@ -69,7 +56,7 @@ export const DesktopContent = ({
 const StyledDesktopContent = styled.div`
   display: none;
   grid-template-columns: repeat(6, max-content);
-  gap: 14px;
+  gap: 8px;
   justify-content: inherit;
   @media (min-width: 1400px) {
     display: grid;
