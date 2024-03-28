@@ -21,9 +21,9 @@ export const CodeSelect = ({
     <StyledSelect
       open={open}
       className={`${className}`}
-      onFocus={() => setOpen(true)}
+      onClick={() => setOpen(!open)}
       onBlur={() => setOpen(false)}
-      onClick={(e) => !open && e.target.focus()}
+      //   onClick={(e) => !open && e.target.focus()}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center">

@@ -2,34 +2,51 @@ import styled from "styled-components";
 import emptyAvatar from "../../../../../assets/images/small-avatar.svg";
 import { Id } from "./Id";
 import { handleFormatDate } from "../../../../../utilits";
+import { useNavigate } from "react-router-dom";
 
-export const Info = ({ firstName, lastName, idClient, avatar, dateCreate }) => (
-  <StyledInfo
-    className="flex items-center clickable"
-    avatar={avatar?.length === 0 || !avatar ? emptyAvatar : avatar}
-  >
-    <div className="avatar clickable" />
-    <div>
-      <div className="flex items-center">
-        <div
-          className="name clickable"
-          title={`${firstName ?? ""} ${lastName ?? ""}`}
-        >
-          {firstName ?? ""} {lastName ?? ""}
+export const Info = ({ firstName, lastName, idClient, avatar, dateCreate }) => {
+  const navigate = useNavigate();
+
+  const handleOpenClient = (e) => {
+    if (!e.target.classList?.contains("id")) {
+      navigate(`/client/${idClient}`);
+    }
+  };
+
+  return (
+    <StyledInfo
+      className="flex items-center"
+      avatar={avatar?.length === 0 || !avatar ? emptyAvatar : avatar}
+      onClick={handleOpenClient}
+    >
+      <div className="avatar" />
+      <div>
+        <div className="clientCard flex items-center">
+          <div className="name" title={`${firstName ?? ""} ${lastName ?? ""}`}>
+            {firstName ?? ""} {lastName ?? ""}
+          </div>
+          <div className="id">
+            <Id id={idClient} />
+          </div>
         </div>
-        <div className=" clickable">
-          <Id id={idClient} />
+        <div className="name date">
+          Створено {handleFormatDate(Number(dateCreate) * 1000, true)}
         </div>
       </div>
-      <div className="name date">
-        Створено {handleFormatDate(Number(dateCreate) * 1000, true)}
-      </div>
-    </div>
-  </StyledInfo>
-);
+    </StyledInfo>
+  );
+};
 
 const StyledInfo = styled.div`
   margin-bottom: 8px;
+  padding: 1px;
+  border-radius: 9px;
+  padding: 3px 5px;
+  transition: all 0.3s;
+  &:hover {
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.05);
+  }
   .avatar {
     margin-right: 8px;
     height: 35px;

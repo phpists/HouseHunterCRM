@@ -232,7 +232,7 @@ const StyledSelectTags = styled.button`
 
   &.empty {
     .value {
-      opacity: 0.6;
+      /* opacity: 0.6; */
     }
   }
 

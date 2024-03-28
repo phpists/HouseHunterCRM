@@ -7,7 +7,7 @@ import {
   useGetTagsListQuery,
   useLazyAddTagsToObjectsQuery,
 } from "../../../store/objects/objects.api";
-import { handleResponse } from "../../../utilits";
+import { handleFormatDate, handleResponse } from "../../../utilits";
 import { Comment } from "./Comment";
 import { TAGS } from "../../../constants";
 
@@ -16,6 +16,8 @@ export const Tags = ({ className, data, isAccess, onChangeComment }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [addTag] = useLazyAddTagsToObjectsQuery();
   const [tags, setTags] = useState([]);
+  const [actualDate, setActualDate] = useState(null);
+  const actualTags = ["label_is_actual", "label_not_actual"];
 
   const handleSelect = (val) => {
     const isExist = !!tags?.find((t) => t.value === val);
@@ -26,12 +28,42 @@ export const Tags = ({ className, data, isAccess, onChangeComment }) => {
       id_object: data?.id,
     }).then((resp) =>
       handleResponse(resp, () => {
+        if (actualTags?.includes(val)) {
+          setActualDate(isExist ? new Date() : null);
+          if (
+            !!tags.find((t) =>
+              actualTags?.filter((a) => a !== val).includes(t.value)
+            ) &&
+            !isExist
+          ) {
+            addTag({
+              actions: "0",
+              tags:
+                val === "label_is_actual"
+                  ? "label_not_actual"
+                  : "label_is_actual",
+              id_object: data?.id,
+            });
+          }
+        }
+
         setTags(
           isExist
             ? tags?.filter((t) => t.value !== val)
             : [
-                ...tags,
-                { title: commentsToFields?.object[val] ?? "-", value: val },
+                ...tags?.filter((t) =>
+                  actualTags?.includes(val) ? !actualTags?.includes(val) : true
+                ),
+                {
+                  title: commentsToFields?.object[val]
+                    ? `${commentsToFields?.object[val]} ${
+                        actualTags.includes(val)
+                          ? handleFormatDate(new Date())
+                          : ""
+                      }`
+                    : "-",
+                  value: val,
+                },
               ]
         );
       })
@@ -43,7 +75,14 @@ export const Tags = ({ className, data, isAccess, onChangeComment }) => {
 
     data?.tags?.forEach((tag) => {
       initTags.push({
-        title: commentsToFields?.object[tag] ?? "-",
+        title:
+          `${commentsToFields?.object[tag]} ${
+            actualTags.includes(tag)
+              ? data?.dt_add_tags_actuals
+                ? handleFormatDate(Number(data?.dt_add_tags_actuals) * 1000)
+                : ""
+              : ""
+          }` ?? "-",
         value: tag,
       });
     });
@@ -51,9 +90,17 @@ export const Tags = ({ className, data, isAccess, onChangeComment }) => {
     setTags(initTags);
   };
 
+  const handleSetActualTagsDate = () => {
+    const date = data?.dt_add_tags_actuals;
+    if (date && date !== 0) {
+      setActualDate(new Date(Number(date) * 1000));
+    }
+  };
+
   useEffect(() => {
     if (data && tagsList && commentsToFields) {
       handleGetInitTags();
+      handleSetActualTagsDate();
     }
   }, [data, tagsList, commentsToFields]);
 

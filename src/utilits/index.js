@@ -131,7 +131,9 @@ export const handleFormatDate = (d, isShort) => {
     ? "--.--.----"
     : isShort
     ? `${addZero(day)}.${addZero(month)}.${year}`
-    : `${addZero(day)}.${addZero(month)}.${year} ${hours}:${minutes}`;
+    : `${addZero(day)}.${addZero(month)}.${year} ${addZero(hours)}:${addZero(
+        minutes
+      )}`;
 };
 
 export const handleFormatInputDate = (d) => {

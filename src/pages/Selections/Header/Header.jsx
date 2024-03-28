@@ -31,6 +31,7 @@ export const Header = ({
   onChangeActionLoading,
   showClient,
   onToggleShowClient,
+  newMessege,
 }) => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -79,7 +80,7 @@ export const Header = ({
               className="copy-btn"
               link={`https://selection.house-hunter.info/?id=${id}`}
             />
-            <ChatButton />
+            <ChatButton newMessege={newMessege} />
           </div>
           <div className="action-btns flex items-center">
             <ShowButton

@@ -12,13 +12,16 @@ export const calls = createApi({
         url: "",
         method: "POST",
         headers: headers(),
-        body: handleToFormData({
-          action: "get_all_calls",
-          mod: "calls",
-          filters,
-          current_page,
-          item_on_page: 10,
-        }),
+        body: handleToFormData(
+          {
+            action: "get_all_calls",
+            mod: "calls",
+            filters,
+            current_page,
+            item_on_page: 10,
+          },
+          undefined
+        ),
       }),
     }),
     setStatusCall: build.query({

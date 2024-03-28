@@ -10,8 +10,14 @@ export const Phone = ({ commentOpen, phones, error, onShow }) => {
     <StyledPhone className="clickable">
       {phones && !error ? (
         <Phones
-          className={commentOpen ? "" : "phones"}
-          classNameContent="phones-wrap"
+          className={`${commentOpen ? "" : "phones"} ${
+            phones?.length > 1
+              ? "phones-object-wrapper-many"
+              : "phones-object-wrapper"
+          }`}
+          classNameContent={
+            phones?.length > 1 ? "phones-wrap-many" : "phones-wrap"
+          }
           phones={phones?.map(
             ({ id_phone_code, phone, code, telegram, viber }) => ({
               phone: `${
@@ -38,5 +44,19 @@ export const Phone = ({ commentOpen, phones, error, onShow }) => {
 const StyledPhone = styled.div`
   .phones-wrap {
     width: 100px;
+  }
+  .phones-wrap-many {
+    width: 80px;
+  }
+  .phones-object-wrapper .phone {
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .phones-object-wrapper-many .phone {
+    width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;

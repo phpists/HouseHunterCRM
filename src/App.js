@@ -47,7 +47,7 @@ export const App = () => {
       loginUser(resp?.data?.data);
       setLoad(true);
       setTimeout(() => setLoading(false), 1500);
-      refetchCompanyInfo();
+      //   refetchCompanyInfo();
       data && refetch();
     });
   };

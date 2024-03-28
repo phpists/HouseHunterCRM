@@ -16,7 +16,7 @@ export const Id = ({ id }) => {
   };
 
   return (
-    <StyledId onClick={handleCopy} className="clickable">
+    <StyledId onClick={handleCopy} className="id">
       ID
     </StyledId>
   );

@@ -96,7 +96,6 @@ export const Main = ({
     }
   }, [locationsList]);
 
-  console.log(rubricsList);
   return (
     <StyledMain className="section">
       <SelectTags

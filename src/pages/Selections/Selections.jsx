@@ -116,6 +116,7 @@ const Selections = () => {
           client: resp?.data?.client_info ?? null,
           name_group: resp?.data?.name_group,
           comment_group: resp?.data?.comment_group,
+          new_messege: resp?.data?.new_messege,
         });
         handleResponse(
           resp,
@@ -306,6 +307,7 @@ const Selections = () => {
         onChangeActionLoading={(val) => setActionLoading(val)}
         showClient={showClient}
         onToggleShowClient={(val) => setShowClient(val)}
+        newMessege={clientData?.new_messege}
       />
       <List
         data={objects}

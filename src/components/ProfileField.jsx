@@ -64,7 +64,7 @@ export const ProfileField = ({
 
   const handleChangePhoneCode = (cod) => {
     onChangePhoneCode(cod);
-    onChange("");
+    // onChange("");
   };
 
   const handleChangeValue = (val) => {
