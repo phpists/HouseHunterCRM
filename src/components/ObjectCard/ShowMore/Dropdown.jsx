@@ -58,7 +58,10 @@ export const Dropdown = ({
   return (
     <StyledDropdown className="dropdown">
       {link?.length > 0 && (
-        <div onClick={() => window.open(link, "_blank")}>
+        <div
+          className="flex items-center justify-between"
+          onClick={() => window.open(link, "_blank")}
+        >
           Перейти на першоджерело
           <Link className="selection-icon" />
         </div>
@@ -172,7 +175,7 @@ const StyledDropdown = styled.div`
   font-weight: 400;
   line-height: 118%; /* 14.16px */
   letter-spacing: 0.24px;
-  width: 180px;
+  width: 210px;
   overflow: hidden;
   top: 0;
   right: -5px;

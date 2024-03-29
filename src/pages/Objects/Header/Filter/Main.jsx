@@ -235,13 +235,27 @@ export const Main = ({
                   "area_plot_sotka",
                 ];
 
+                const labels = {
+                  room_min: "Кількість кімнат/Приміщень",
+                  storey_count_min: "Поверховість",
+                  area_total_min:
+                    commentsToFields?.object?.area_total ?? "Площа",
+                  area_plot_sotka_min:
+                    commentsToFields?.object?.area_plot_sotka ??
+                    "Площа ділянки",
+                  address_storey_min: "Поверх від/до",
+                };
+
                 const fieldName = field[0] === "rooms" ? "room" : field[0];
 
                 if (rangeFields.includes(field[0])) {
                   return (
                     <>
                       <Ranger
-                        label={commentsToFields?.object[field[0]]}
+                        label={
+                          labels?.[field[0]] ??
+                          commentsToFields?.object[field[0]]
+                        }
                         max={100}
                         values={[
                           filters[`${fieldName}_min`] ?? 0,

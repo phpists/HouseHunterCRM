@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import { ProfileField } from "../../../components/ProfileField";
 import { useEffect, useRef } from "react";
+import { Tags } from "./Tags";
 
 export const Text = ({ data, onChangeField, errors }) => {
   const textRef = useRef(null);
@@ -48,6 +49,7 @@ export const Text = ({ data, onChangeField, errors }) => {
         className="title comment"
         textarea
       />
+      <Tags data={data} />
     </StyledText>
   );
 };

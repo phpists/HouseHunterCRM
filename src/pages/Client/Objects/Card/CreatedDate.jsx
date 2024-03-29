@@ -2,12 +2,7 @@ import { styled } from "styled-components";
 
 export const CreatedDate = ({ date, dateTo }) => (
   <StyledCreatedDate>
-    Створений {date}
-    {dateTo ? (
-      <>
-        <span>•</span> до {dateTo}
-      </>
-    ) : null}
+    {dateTo ? <>До {dateTo}</> : <> Створений {date}</>}
   </StyledCreatedDate>
 );
 

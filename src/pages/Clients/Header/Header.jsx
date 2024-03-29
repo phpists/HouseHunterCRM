@@ -69,7 +69,7 @@ export const Header = ({
     <StyledHeader>
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          {favoritesFilter && <BackButton onClick={() => navigate(-1)} />}
+          {favoritesFilter && <BackButton onClick={onToggleFavoriteFilter} />}
           <Title
             title={`${newClientsCount ?? "-"} нових клієнтів за сьогодні`}
           />

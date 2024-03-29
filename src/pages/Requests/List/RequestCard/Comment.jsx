@@ -53,7 +53,7 @@ export const Comment = ({ comment = "", id, onOpenEdit }) => {
 };
 
 const StyledComment = styled.div`
-  width: 200px;
+  width: 280px;
   .field {
     border-radius: 9px;
     background: #363636;
@@ -78,12 +78,20 @@ const StyledComment = styled.div`
     width: 15svw;
     max-width: 140px;
   }
-  @media (min-width: 1500px) {
+  @media (min-width: 1250px) {
+    width: 15svw;
     max-width: 170px;
+  }
+  @media (min-width: 1450px) {
+    width: 15svw;
+    max-width: 170px;
+  }
+  @media (min-width: 1500px) {
+    max-width: 200px;
   }
   @media (min-width: 1750px) {
     width: 25svw;
-    max-width: 600px;
+    max-width: 400px;
   }
   @media (min-width: 1900px) {
     width: 30svw;

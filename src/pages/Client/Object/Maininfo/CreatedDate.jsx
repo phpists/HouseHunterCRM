@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 
-export const CreatedDate = ({ date }) => (
+export const CreatedDate = ({ date, deadline }) => (
   <StyledCreatedDate>
-    <div className="title">{date}</div>
-    <div className="subtitle">Коли додана</div>
+    <div className="title">{deadline ?? date}</div>
+    <div className="subtitle">{deadline ? "Дата дедлайну" : "Коли додана"}</div>
   </StyledCreatedDate>
 );
 

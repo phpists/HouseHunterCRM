@@ -8,7 +8,7 @@ export const BackButton = () => {
   return (
     <StyledBackButton
       className="flex items-center justify-center"
-      onClick={() => navigate(-1)}
+      //   onClick={() => navigate(-1)}
     >
       <Arrow />
     </StyledBackButton>

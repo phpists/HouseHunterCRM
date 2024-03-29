@@ -17,14 +17,20 @@ export const NavBar = ({ accessData }) => {
       ? [{ icon: UsersIcon, link: "/clients", childrenLinks: ["client"] }]
       : []),
     ...(handleCheckAccess(accessData, "objects", "view")
-      ? [{ icon: HomeIcon, link: "/objects", childrenLinks: ["create-object"] }]
+      ? [
+          {
+            icon: HomeIcon,
+            link: "/objects",
+            childrenLinks: ["create-object", "edit-object"],
+          },
+        ]
       : []),
     ...(handleCheckAccess(accessData, "requests", "view")
       ? [
           {
             icon: MegaphoneIcon,
             link: "/requests",
-            childrenLinks: ["edit-request"],
+            childrenLinks: ["create-request", "edit-request"],
           },
         ]
       : []),

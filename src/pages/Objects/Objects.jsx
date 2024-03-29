@@ -196,15 +196,14 @@ const Objects = () => {
         handleResponse(
           resp,
           () => {
-            firstThousand.current = resp?.data?.first_1000;
             const objectsResp = resp?.data?.objects
               ? Object.entries(resp?.data?.objects)?.map((obj) => obj[1])
               : [];
-            // const updatedCount = isReset
-            //   ? objectsResp?.length
-            //   : allCountRef.current + objectsResp?.length;
-            allCountRef.current = resp?.data?.all_item;
-            setAllCount(resp?.data?.all_item);
+            const updatedCount = isReset
+              ? objectsResp?.length
+              : allCountRef.current + objectsResp?.length;
+            allCountRef.current = updatedCount;
+            setAllCount(updatedCount);
 
             const updatedObjects = isReset
               ? objectsResp
@@ -247,9 +246,6 @@ const Objects = () => {
   };
 
   const handleDeleteSuccess = () => {
-    firstThousand.current = firstThousand.current.filter(
-      (c) => !selected.find((sc) => sc === c)
-    );
     const updatedCount = allCount - selected?.length;
     allCountRef.current = updatedCount;
     saveObjectsCount(updatedCount);
@@ -296,7 +292,7 @@ const Objects = () => {
   }, [filters]);
 
   const handleSelectAll = (isReset, count) => {
-    const objectsIds = firstThousand.current;
+    const objectsIds = objects?.map((o) => o.id);
     setSelected(isReset ? [] : objectsIds);
   };
 

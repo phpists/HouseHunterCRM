@@ -119,7 +119,7 @@ export const Maininfo = ({
           className="price-field"
           viewOnly
         />
-        <CreatedDate date={data?.dt_add} />
+        <CreatedDate date={data?.dt_add} deadline={data?.dt_deadline} />
       </div>
       <Divider />
       <div className="flex flex-wrap items-center tags">

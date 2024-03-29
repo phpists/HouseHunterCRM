@@ -55,7 +55,7 @@ export const DesktopContent = ({
 
 const StyledDesktopContent = styled.div`
   display: none;
-  grid-template-columns: repeat(6, max-content);
+  grid-template-columns: max-content max-content 1fr max-content max-content max-content;
   gap: 8px;
   justify-content: inherit;
   @media (min-width: 1400px) {

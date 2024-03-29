@@ -53,7 +53,6 @@ const Calls = () => {
   const isFilter = useRef(!!prevFilters && !!checkIsJSON(prevFilters));
   const allCountRef = useRef(0);
   const [allCount, setAllCount] = useState(0);
-  const firstThousand = useRef([]);
   const [filterPhoneCode, setFilterPhoneCode] = useState("1");
   const { data: phonesCodes } = useGetPhonesCodesQuery();
 
@@ -127,9 +126,12 @@ const Calls = () => {
                 : [...checkIsArray(data), ...resp?.data?.data]
             );
             saveCallsCount(resp?.data?.all_item ?? 0);
-            allCountRef.current = resp?.data?.all_item;
-            setAllCount(resp?.data?.all_item);
-            firstThousand.current = resp?.data?.first_1000;
+            const respItemsCount = resp?.data?.data?.length;
+            const updatedCount = isReset
+              ? respItemsCount
+              : allCountRef.current + respItemsCount;
+            allCountRef.current = updatedCount;
+            setAllCount(updatedCount);
           },
           () => {
             setIsAllPages(true);
@@ -231,7 +233,7 @@ const Calls = () => {
       )
     ).then((resp) => {
       setData(data?.filter((call) => !selected.find((s) => s === call?.id)));
-      const updatedCount = allCountRef.current - selected;
+      const updatedCount = allCountRef.current - selected?.length;
       saveCallsCount(updatedCount);
       allCountRef.current = updatedCount;
       setAllCount(updatedCount);
@@ -266,7 +268,7 @@ const Calls = () => {
   }, [isDefaultFilterSet]);
 
   const handleSelectAll = (isReset, count) => {
-    setSelected(isReset ? [] : firstThousand.current);
+    setSelected(isReset ? [] : data?.map((c) => c.id));
   };
 
   const handleSendCliens = (ids = []) => {

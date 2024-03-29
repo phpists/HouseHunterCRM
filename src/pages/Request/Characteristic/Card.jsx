@@ -38,9 +38,9 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
                 {i > 0 && <Divider />}
                 <SelectTags
                   label={
-                    commentsToFields?.object[field]
-                      ? commentsToFields?.object[field]
-                      : commentsToFields?.request[field] ?? ""
+                    commentsToFields?.request[field]
+                      ? commentsToFields?.request[field]
+                      : commentsToFields?.object[field] ?? ""
                   }
                   placeholder="Оберіть"
                   notMultiSelect
@@ -58,8 +58,9 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
             const labels = {
               room_min: "Кількість кімнат/Приміщень",
               storey_count_min: "Поверховість",
-              area_total_min: "Площа",
-              area_plot_sotka_min: "Площа ділянки",
+              area_total_min: commentsToFields?.object?.area_total ?? "Площа",
+              area_plot_sotka_min:
+                commentsToFields?.object?.area_plot_sotka ?? "Площа ділянки",
               address_storey_min: "Поверх від/до",
             };
             const maxFieldName = field?.replace("_min", "_max");

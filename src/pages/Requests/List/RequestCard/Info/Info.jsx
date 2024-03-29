@@ -55,7 +55,7 @@ const StyledInfo = styled.div`
   }
   @media (min-width: 1400px) {
     /* height: 136px; */
-    width: 180px;
+    /* width: 180px; */
   }
   @media (min-width: 1600px) {
     /* height: 136px; */

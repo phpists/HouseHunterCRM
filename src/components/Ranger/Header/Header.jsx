@@ -34,5 +34,6 @@ const StyledHeader = styled.div`
     opacity: 0.4;
     z-index: 10;
     position: relative;
+    text-transform: capitalize;
   }
 `;

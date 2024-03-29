@@ -74,6 +74,7 @@ export const Input = ({
         disabled={loading}
         onKeyDown={(e) => e?.keyCode === 13 && !e?.shiftKey && onSend()}
         ref={textareaRef}
+        autoFocus
       />
       {!selectedMessage && (
         <>

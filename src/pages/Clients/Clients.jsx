@@ -119,17 +119,17 @@ const Clients = () => {
       }).then((resp) => {
         isLoading.current = false;
         setLoading(false);
-        firstThousand.current = resp?.data?.data?.first_1000;
+        // firstThousand.current = resp?.data?.data?.first_1000;
         handleResponse(
           resp,
           () => {
             if (resp?.data?.error === 0 && resp?.data.data?.clients?.length) {
-              //   const respItemsCount = resp?.data?.data?.clients?.length;
-              //   const updatedCount = isReset
-              //     ? respItemsCount
-              //     : allCountRef.current + respItemsCount;
-              //   allCountRef.current = updatedCount;
-              setAllCount(resp?.data?.data?.all_item ?? 0);
+              const respItemsCount = resp?.data?.data?.clients?.length;
+              const updatedCount = isReset
+                ? respItemsCount
+                : allCountRef.current + respItemsCount;
+              allCountRef.current = updatedCount;
+              setAllCount(updatedCount ?? 0);
               saveClientsCount(resp?.data?.data?.all_item ?? 0);
               const updatedClients = isReset
                 ? resp?.data?.data?.clients
@@ -201,14 +201,11 @@ const Clients = () => {
   };
 
   const handleSelectAll = (isReset, count) => {
-    const clientsIds = firstThousand.current;
+    const clientsIds = clients?.map((c) => c.id);
     setSelected(isReset ? [] : clientsIds);
   };
 
   const handleDeleteClients = () => {
-    firstThousand.current = firstThousand.current.filter(
-      (c) => !selected.find((sc) => sc === c)
-    );
     saveClientsCount(allCount - selected?.length);
     setAllCount(allCount - selected?.length);
     setClients(clients.filter((c) => !selected.find((sc) => sc === c.id)));
@@ -223,9 +220,6 @@ const Clients = () => {
           position: "top-right",
         });
         setClients(clients.filter((c) => c.id !== clientId));
-        firstThousand.current = firstThousand.current.filter(
-          (c) => c !== clientId
-        );
         saveClientsCount(allCount - 1);
         setAllCount(allCount - 1);
       });

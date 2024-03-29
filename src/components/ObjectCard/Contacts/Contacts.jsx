@@ -32,7 +32,7 @@ export const Contacts = ({ className, data }) => {
               ? data?.clients_inf?.contact?.owner?.phone
               : data?.clients_inf?.contact?.owner?.phones
           }
-          typeText="Власник"
+          typeText="Агент"
           error={error}
           onShow={handleShowClient}
           className="mb-4"

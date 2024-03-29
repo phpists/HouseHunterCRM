@@ -59,12 +59,18 @@ export const ObjectCard = ({ className, selectedObject }) => {
               area_total: field?.area_total,
               comment: field?.comment,
               not_actual: field?.not_actual,
-              dt_deadline: Object.entries(resp?.data)[0][1]?.dt_deadline,
               deleted: field?.deleted,
               dt_add:
                 generalInfo?.length > 0 && generalInfo[1]?.dt_add
                   ? handleFormatDate(
                       Number(generalInfo[1]?.dt_add) * 1000,
+                      true
+                    )
+                  : "-",
+              dt_deadline:
+                generalInfo?.length > 0 && generalInfo[1]?.dt_deadline
+                  ? handleFormatDate(
+                      Number(generalInfo[1]?.dt_deadline) * 1000,
                       true
                     )
                   : "-",

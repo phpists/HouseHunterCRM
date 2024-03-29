@@ -14,7 +14,7 @@ export const Client = ({ data }) => {
       data?.General_field_group?.contacts?.owner?.phones ? (
         <Card
           name={data?.General_field_group?.contacts?.owner?.name ?? ""}
-          role="Власник"
+          role="Агент"
           id={data?.General_field_group?.id_user}
           // avatar={avatar}
           phones={data?.General_field_group?.contacts?.owner?.phones?.map(
@@ -46,6 +46,7 @@ export const Client = ({ data }) => {
               telegram,
             })
           )}
+          link={`/client/${data?.General_field_group?.id_client}`}
         />
       ) : null}
       {/* <Info

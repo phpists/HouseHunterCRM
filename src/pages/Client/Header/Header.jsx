@@ -81,7 +81,7 @@ export const Header = ({ favorite }) => {
       <StyledHeader className="flex items-center justify-between">
         <div
           className="flex items-center cursor-pointer"
-          onClick={() => navigate("/clients")}
+          onClick={() => navigate(-1)}
         >
           <BackButton />
           <Title />
