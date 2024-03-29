@@ -14,6 +14,7 @@ export const TagsFilter = ({
   tags,
   onChange,
   error,
+  showAll,
 }) => {
   const [isActive, setIsActive] = useState(false);
   const [value, setValue] = useState("");
@@ -67,7 +68,14 @@ export const TagsFilter = ({
       <div className="flex items-center justify-between">
         <div className="tags-wrapper flex flex-wrap">
           {tags
-            ?.slice(0, isActive ? tags.length : handleCalculateTagsFirstLine())
+            ?.slice(
+              0,
+              showAll
+                ? tags.length
+                : isActive
+                ? tags.length
+                : handleCalculateTagsFirstLine()
+            )
             ?.map((tag, i) => (
               <Tag
                 key={i}
@@ -77,9 +85,13 @@ export const TagsFilter = ({
                 noEdit={noEdit}
               />
             ))}
-          {!isActive && tags?.length > handleCalculateTagsFirstLine() && (
-            <Count count={tags?.slice(handleCalculateTagsFirstLine()).length} />
-          )}
+          {!isActive &&
+            !showAll &&
+            tags?.length > handleCalculateTagsFirstLine() && (
+              <Count
+                count={tags?.slice(handleCalculateTagsFirstLine()).length}
+              />
+            )}
           {!noEdit && (
             <motion.input
               initial={{ opacity: 0 }}

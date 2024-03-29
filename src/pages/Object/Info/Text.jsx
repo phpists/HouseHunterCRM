@@ -2,9 +2,11 @@ import { styled } from "styled-components";
 import { ProfileField } from "../../../components/ProfileField";
 import { useEffect, useRef } from "react";
 import { Tags } from "./Tags";
+import { useParams } from "react-router-dom";
 
-export const Text = ({ data, onChangeField, errors }) => {
+export const Text = ({ data, onChangeField, errors, objectData }) => {
   const textRef = useRef(null);
+  const { clientId, id } = useParams();
 
   useEffect(() => {
     if (
@@ -49,7 +51,7 @@ export const Text = ({ data, onChangeField, errors }) => {
         className="title comment"
         textarea
       />
-      <Tags data={data} />
+      {id && <Tags data={objectData} />}
     </StyledText>
   );
 };

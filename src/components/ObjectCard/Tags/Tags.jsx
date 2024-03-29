@@ -120,6 +120,7 @@ export const Tags = ({ className, data, isAccess, onChangeComment }) => {
           value,
         }))}
         onChange={handleSelect}
+        hide
       />
       {data?.acsses_change || data?.type_object === "street_base" ? (
         <Comment

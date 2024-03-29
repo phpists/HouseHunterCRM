@@ -139,27 +139,6 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         onChangeType={(val) => onChangeFilter("price_for", val)}
       />
       <Divider />
-      {/* <ToggleOption
-        label="Актуальні"
-        value={filters?.obj_is_actual === "1"}
-        onChange={() =>
-          onChangeFilter(
-            "obj_is_actual",
-            filters?.obj_is_actual === "1" ? undefined : "1"
-          )
-        }
-      />
-      <ToggleOption
-        label="Не актуальні"
-        value={filters?.obj_is_actual === "0"}
-        onChange={() =>
-          onChangeFilter(
-            "obj_is_actual",
-            filters?.obj_is_actual === "0" ? undefined : "0"
-          )
-        }
-      />
-      <Divider /> */}
       <ToggleOption
         label="Лайк"
         value={filters?.only_like_object === "1"}
@@ -235,25 +214,6 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
       />
       <Divider />
 
-      {/* <Divider />
-      <CheckOption
-        label="Об’єкти компанії"
-        className="check-opt"
-        value={filters?.only_company_obj}
-        onChange={(val) =>
-          onChangeFilter(
-            "only_company_obj",
-            {
-              ...filters,
-              only_company_obj: "1",
-              only_street_base_obj: "0",
-              only_my_obj: "0",
-              only_my_structure: "0",
-            },
-            true
-          )
-        }
-      /> */}
       <CheckOption
         label="Мої об'єкти"
         className="check-opt"
@@ -328,7 +288,7 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         }
       />
       <Divider />
-      {filtersFields?.main_field
+      {/* {filtersFields?.main_field
         ? Object.entries(filtersFields?.main_field)
             .filter((field) => !notAllowedFields?.find((f) => f === field[0]))
             ?.filter((field) => commentsToFields?.object[field[0]]?.length > 0)
@@ -371,7 +331,7 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
                 );
               }
             })
-        : null}
+        : null} */}
     </StyledMain>
   );
 };

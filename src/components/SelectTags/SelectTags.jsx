@@ -23,6 +23,7 @@ export const SelectTags = ({
   closeOnScroll,
   emptyTitle,
   hideArrow,
+  hide,
 }) => {
   const [open, setOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -135,16 +136,31 @@ export const SelectTags = ({
       {(notMultiSelect && !value && showTags) || viewOnly ? null : (
         <Arrow active={open} innerRef={selectRef} className="main-arrow" />
       )}
-      <Dropdown
-        open={open}
-        notMultiSelect={notMultiSelect}
-        Component={Component}
-        options={options}
-        onChange={handleChangeValue}
-        activeValue={value}
-        search={search}
-        tags={tags}
-      />
+      {hide ? (
+        open ? (
+          <Dropdown
+            open={open}
+            notMultiSelect={notMultiSelect}
+            Component={Component}
+            options={options}
+            onChange={handleChangeValue}
+            activeValue={value}
+            search={search}
+            tags={tags}
+          />
+        ) : null
+      ) : (
+        <Dropdown
+          open={open}
+          notMultiSelect={notMultiSelect}
+          Component={Component}
+          options={options}
+          onChange={handleChangeValue}
+          activeValue={value}
+          search={search}
+          tags={tags}
+        />
+      )}
       {open && (
         <div
           className="modal-overlay"

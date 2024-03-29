@@ -60,7 +60,7 @@ const Selections = () => {
     } else {
       setFilters({ ...filters, [field]: value });
       if (field === "id_rubric") {
-        handleGetRubricsFields(value);
+        // handleGetRubricsFields(value);
         setFilters({
           id_rubric: value,
           id_location: filters?.id_location,
@@ -129,7 +129,12 @@ const Selections = () => {
                 ? objectsResp?.length
                 : Number(allCount) + objectsResp?.length
             );
-            saveSelectionsCount(resp?.data?.all_item ?? "0");
+            if (isReset || currentPage.current === 0) {
+              getSelections({
+                ...sendData,
+                only_count_item: "1",
+              }).then((resp) => saveSelectionsCount(resp?.data?.all_item ?? 0));
+            }
           },
           () => {
             isLoading.current = false;

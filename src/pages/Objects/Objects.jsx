@@ -18,6 +18,7 @@ import {
 } from "../../utilits";
 import cogoToast from "cogo-toast";
 import { useLocation, useParams } from "react-router-dom";
+import { useAppSelect } from "../../hooks/redux";
 
 const Objects = () => {
   const { id } = useParams();
@@ -48,7 +49,7 @@ const Objects = () => {
     //   actual: "1",
     // },
   };
-
+  const { objectsCount } = useAppSelect((state) => state.objects);
   const [filters, setFilters] = useState(INIT_FILTERS);
   const [filtersFields, setFilterFields] = useState([]);
   const filterActive = useRef(!!id);
@@ -63,6 +64,7 @@ const Objects = () => {
   const listRef = useRef();
   const [isAllPages, setIsAllPages] = useState(false);
   const isFirstRender = useRef(true);
+  const isFirstRequest = useRef(true);
   const [loading, setLoading] = useState(false);
   const dataRef = useRef([]);
   const allCountRef = useRef(0);
@@ -210,7 +212,13 @@ const Objects = () => {
               : [...dataRef.current, ...objectsResp];
             dataRef.current = updatedObjects;
             setObjects(updatedObjects);
-            saveObjectsCount(resp?.data?.all_item);
+
+            if (isFirstRequest.current) {
+              isFirstRequest.current = false;
+              getAllObjects({ ...data, only_count_item: "1" }).then((resp) =>
+                saveObjectsCount(resp?.data?.count_item ?? 0)
+              );
+            }
           },
           () => {
             setIsAllPages(true);
@@ -241,14 +249,18 @@ const Objects = () => {
     const updatedCount = isFavorite ? allCount - selected.length : allCount;
     allCountRef.current = updatedCount;
     setAllCount(updatedCount);
-    saveObjectsCount(updatedCount);
+    const updatedAllCount = isFavorite
+      ? (objectsCount || 0) - selected.length
+      : objectsCount;
+    saveObjectsCount(updatedAllCount);
     setSelected([]);
   };
 
   const handleDeleteSuccess = () => {
     const updatedCount = allCount - selected?.length;
     allCountRef.current = updatedCount;
-    saveObjectsCount(updatedCount);
+    const updatedAllCount = (objectsCount || 0) - selected.length;
+    saveObjectsCount(updatedAllCount);
     setAllCount(updatedCount);
     const updatedData = objects.filter(
       (obj) => !selected.find((s) => s === obj.id)
@@ -309,7 +321,8 @@ const Objects = () => {
         const updatedCount = isFavorite ? allCount - 1 : allCount;
         allCountRef.current = updatedCount;
         setAllCount(updatedCount);
-        saveObjectsCount(updatedCount);
+        const updatedAllCount = (objectsCount || 0) - 1;
+        saveObjectsCount(updatedAllCount);
 
         cogoToast.success("Статус успішно змінено!", {
           hideAfter: 3,

@@ -38,7 +38,7 @@ const ObjectPage = () => {
   const [editObject] = useLazyEditObjectQuery();
   const [getRubricFields] = useLazyGetRubricFieldsQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
-  const [getObject] = useLazyGetObjectQuery();
+  const [getObject, { data: objectData }] = useLazyGetObjectQuery();
   const [data, setData] = useState(INIT_DATA);
   const [fields, setFields] = useState([]);
   const [favorite, setFavorite] = useState(false);
@@ -391,7 +391,12 @@ const ObjectPage = () => {
           fields={fields}
           errors={errors}
         />
-        <Info data={data} onChangeField={handleChangeField} errors={errors} />
+        <Info
+          data={data}
+          onChangeField={handleChangeField}
+          errors={errors}
+          objectData={objectData}
+        />
       </div>
     </StyledObject>
   );

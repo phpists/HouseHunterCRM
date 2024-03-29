@@ -27,7 +27,7 @@ const StyledInfo = styled.div`
   height: max-content;
   overflow: auto;
   @media (min-width: 1400px) {
-    width: 240px;
+    width: 210px;
   }
   @media (min-width: 1500px) {
     width: 300px;

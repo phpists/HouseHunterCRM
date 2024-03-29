@@ -50,7 +50,9 @@ export const ObjectCard = memo(
 
     return (
       <StyledObjectCard
-        className={` clickable ${selected && "selected"}`}
+        className={` clickable ${selected && "selected"} ${
+          !inView && "notInView"
+        }`}
         onClick={handleClick}
         ref={ref}
       >
@@ -109,9 +111,12 @@ const StyledObjectCard = styled.div`
   position: relative;
   border: 1px solid transparent;
   cursor: pointer;
-  min-height: 500px;
+  min-height: 200px;
   &.selected {
     border: 1px solid #fff;
+  }
+  &.notInView {
+    min-height: 600px !important;
   }
   @media (min-width: 800px) {
     min-height: 360px;
@@ -119,5 +124,8 @@ const StyledObjectCard = styled.div`
   @media (min-width: 1400px) {
     padding: 20px;
     min-height: 240px;
+  }
+  .tagsSelectDropdown {
+    max-height: 150px;
   }
 `;

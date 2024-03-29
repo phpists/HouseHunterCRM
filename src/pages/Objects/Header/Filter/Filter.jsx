@@ -9,6 +9,8 @@ import { Topicality } from "./Topicality";
 import { Characteristics } from "./Characteristics";
 import { useLazyGetAllObjectsQuery } from "../../../../store/objects/objects.api";
 import { handleFromInputDate, removePhoneMask } from "../../../../utilits";
+import { useActions } from "../../../../hooks/actions";
+import { useAppSelect } from "../../../../hooks/redux";
 
 export const Filter = ({
   onClose,
@@ -30,6 +32,8 @@ export const Filter = ({
   const [isInputFocused, setIsInputFocused] = useState(false);
   const applying = useRef(false);
   const isFirstRender = useRef(true);
+  const { saveObjectsCount } = useActions();
+  const { objectsCount } = useAppSelect((state) => state.objects);
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
@@ -44,6 +48,9 @@ export const Filter = ({
     onApplyFilter(isApply);
     handleClose();
     applying.current = true;
+    if (isApply) {
+      saveObjectsCount(total);
+    }
   };
 
   const handleApply = () => {
@@ -122,13 +129,13 @@ export const Filter = ({
     }
 
     getAllObjects({ ...data, only_count_item: "1" }).then((resp) =>
-      setTotal(resp?.data?.count_item ?? "0")
+      setTotal(resp?.data?.count_item ?? 0)
     );
   };
 
   useEffect(() => {
     if (isFirstRender.current) {
-      setTotal(allCount);
+      setTotal(objectsCount ?? 0);
       isFirstRender.current = false;
     } else if (!applying.current) {
       !isInputFocused && handleGetTotal();

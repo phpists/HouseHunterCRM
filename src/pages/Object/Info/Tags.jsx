@@ -9,15 +9,16 @@ import {
 import { handleFormatDate, handleResponse } from "../../../utilits";
 import { TAGS } from "../../../constants";
 import { SelectTags } from "../../../components/SelectTags/SelectTags";
+import { useParams } from "react-router-dom";
 
 export const Tags = ({ className, data, isAccess }) => {
+  const { id } = useParams();
   const { data: tagsList } = useGetTagsListQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [addTag] = useLazyAddTagsToObjectsQuery();
   const [tags, setTags] = useState([]);
   const [actualDate, setActualDate] = useState(null);
   const actualTags = ["label_is_actual", "label_not_actual"];
-  const isFirstRender = useRef(true);
 
   const handleSelect = (val) => {
     const isExist = !!tags?.find((t) => t.value === val);
@@ -25,7 +26,7 @@ export const Tags = ({ className, data, isAccess }) => {
     addTag({
       actions: isExist ? "0" : "1",
       tags: val,
-      id_object: data?.id,
+      id_object: id,
     }).then((resp) =>
       handleResponse(resp, () => {
         if (actualTags?.includes(val)) {
@@ -75,8 +76,14 @@ export const Tags = ({ className, data, isAccess }) => {
 
   const handleGetInitTags = () => {
     let initTags = [];
+    const tagsValue = data
+      ? Object?.entries(data)
+          ?.filter((f) => TAGS.includes(f[0]))
+          ?.filter((f) => f[1] === "1")
+          ?.map((f) => f[0])
+      : [];
 
-    data?.tags?.forEach((tag) => {
+    tagsValue?.forEach((tag) => {
       initTags.push({
         title:
           `${commentsToFields?.object[tag]} ${
@@ -101,10 +108,9 @@ export const Tags = ({ className, data, isAccess }) => {
   };
 
   useEffect(() => {
-    if (data && tagsList && commentsToFields && isFirstRender.current) {
+    if (data && tagsList && commentsToFields) {
       handleGetInitTags();
       handleSetActualTagsDate();
-      isFirstRender.current = false;
     }
   }, [data, tagsList, commentsToFields]);
 
