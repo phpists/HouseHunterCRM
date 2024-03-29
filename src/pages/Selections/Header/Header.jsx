@@ -92,6 +92,7 @@ export const Header = ({
               onChangeFilter={onChangeFilter}
               filtersFields={filtersFields}
               onApplyFilter={onApplyFilter}
+              showObjectHide={showObjectHide}
             />
           </div>
           <div className="select-items-wrapper">

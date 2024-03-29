@@ -41,6 +41,7 @@ const Selections = () => {
   const currentPage = useRef(0);
   const isLoading = useRef(false);
   const listRef = useRef();
+  const isFirstRequest = useRef(true);
   const [isAllPages, setIsAllPages] = useState(false);
   const [loading, setLoading] = useState(false);
   //   const firstThousend = useRef(null);
@@ -79,7 +80,7 @@ const Selections = () => {
         : [...selected, index]
     );
 
-  const handleGetSelections = (isReset) => {
+  const handleGetSelections = (isReset, isUpdateCount) => {
     if ((!isLoading.current && !isAllPages) || isReset) {
       isLoading.current = true;
       let sendData = {
@@ -109,6 +110,14 @@ const Selections = () => {
 
       setLoading(true);
 
+      if (isFirstRequest.current || isUpdateCount) {
+        isFirstRequest.current = false;
+        getSelections({
+          ...sendData,
+          only_count_item: "1",
+        }).then((resp) => saveSelectionsCount(resp?.data?.all_item ?? 0));
+      }
+
       getSelections(sendData).then((resp) => {
         isLoading.current = false;
         setLoading(false);
@@ -129,12 +138,6 @@ const Selections = () => {
                 ? objectsResp?.length
                 : Number(allCount) + objectsResp?.length
             );
-            if (isReset || currentPage.current === 0) {
-              getSelections({
-                ...sendData,
-                only_count_item: "1",
-              }).then((resp) => saveSelectionsCount(resp?.data?.all_item ?? 0));
-            }
           },
           () => {
             isLoading.current = false;
@@ -212,7 +215,7 @@ const Selections = () => {
       setFilters(INIT_FILTERS);
       setFilterFields([]);
     }
-    handleGetSelections(true);
+    handleGetSelections(true, true);
   };
 
   const handleSelectAll = (isReset, count) => {

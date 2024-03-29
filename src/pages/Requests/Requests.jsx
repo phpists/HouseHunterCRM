@@ -127,6 +127,13 @@ const Requests = () => {
       }
 
       setLoading(true);
+
+      if (currentPage.current === 0 || isReset) {
+        getRequests({ ...data, only_count_item: "1" }).then((resp) =>
+          saveRequestsCount(Number(resp?.data?.all_item ?? 0))
+        );
+      }
+
       getRequests(data).then((resp) => {
         isLoading.current = false;
         setLoading(false);
@@ -134,7 +141,7 @@ const Requests = () => {
           resp,
           () => {
             if (resp?.data?.requests) {
-              saveRequestsCount(resp?.data.all_item ?? 0);
+              //   saveRequestsCount(resp?.data.all_item ?? 0);
               if (Object.entries(resp?.data?.requests)?.length) {
                 const updatedCount = isReset
                   ? Object.entries(resp?.data?.requests)?.length
@@ -163,7 +170,7 @@ const Requests = () => {
             if (isReset) {
               setRequests([]);
               setAllCount(0);
-              saveRequestsCount(0);
+              //   saveRequestsCount(0);
               dataRef.current = [];
               allCountRef.current = 0;
             }
@@ -282,7 +289,7 @@ const Requests = () => {
       const updatedCount = allCount - selected.length;
       allCountRef.current = updatedCount;
       setAllCount(updatedCount);
-      saveRequestsCount(updatedCount);
+      saveRequestsCount(requestsCount - selected.length);
     }
     setSelected([]);
   };

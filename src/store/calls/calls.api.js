@@ -8,7 +8,7 @@ export const calls = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (build) => ({
     getCalls: build.query({
-      query: ({ filters, current_page }) => ({
+      query: ({ filters, current_page, only_count_item }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -19,6 +19,7 @@ export const calls = createApi({
             filters,
             current_page,
             item_on_page: 10,
+            only_count_item,
           },
           undefined
         ),

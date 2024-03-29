@@ -139,7 +139,13 @@ export const requests = createApi({
       }),
     }),
     getRequests: build.query({
-      query: ({ current_page, item_on_page, only_favorite, ...filters }) => ({
+      query: ({
+        current_page,
+        item_on_page,
+        only_favorite,
+        only_count_item,
+        ...filters
+      }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -149,6 +155,7 @@ export const requests = createApi({
           current_page,
           item_on_page,
           only_favorite,
+          only_count_item,
           ...filters,
         }),
       }),
@@ -158,22 +165,24 @@ export const requests = createApi({
           () => {
             return {
               ...response,
-              requests: Object.fromEntries(
-                Object.entries(response?.requests)?.map((r) => [
-                  r[0],
-                  Object.fromEntries(
-                    Object.entries(r[1])?.map((req) => [
-                      req[0],
-                      {
-                        ...req[1],
-                        id_location: checkIsArray(
-                          checkIsJSON(req[1]?.id_location)
-                        ),
-                      },
+              requests: response?.requests
+                ? Object.fromEntries(
+                    Object.entries(response?.requests)?.map((r) => [
+                      r[0],
+                      Object.fromEntries(
+                        Object.entries(r[1])?.map((req) => [
+                          req[0],
+                          {
+                            ...req[1],
+                            id_location: checkIsArray(
+                              checkIsJSON(req[1]?.id_location)
+                            ),
+                          },
+                        ])
+                      ),
                     ])
-                  ),
-                ])
-              ),
+                  )
+                : undefined,
             };
           },
           () => null,

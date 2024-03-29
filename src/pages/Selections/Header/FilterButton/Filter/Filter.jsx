@@ -3,10 +3,14 @@ import { Header } from "./Header/Header";
 import { SectionTitle } from "./SectionTitle";
 import { Footer } from "./Footer";
 import { motion, useAnimationControls } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Main } from "./Main";
 import { Topicality } from "./Topicality";
 import { Characteristics } from "./Characteristics";
+import { useAppSelect } from "../../../../../hooks/redux";
+import { useActions } from "../../../../../hooks/actions";
+import { useParams } from "react-router-dom";
+import { useLazyGetSelectionsQuery } from "../../../../../store/selections/selections.api";
 
 export const Filter = ({
   onClose,
@@ -14,8 +18,43 @@ export const Filter = ({
   onChangeFilter,
   filtersFields,
   onApplyFilter,
+  showObjectHide,
 }) => {
+  const { id } = useParams();
   const controls = useAnimationControls();
+  const [total, setTotal] = useState("0");
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const applying = useRef(false);
+  const isFirstRender = useRef(true);
+  const { saveSelectionsCount } = useActions();
+  const { selectionsCount } = useAppSelect((state) => state.selections);
+  const [getSelections] = useLazyGetSelectionsQuery();
+
+  const handleGetTotal = (isClose) => {
+    let sendData = {
+      id_requst_group: id,
+      current_page: 0,
+      item_on_page: 30,
+      filters,
+    };
+
+    if (showObjectHide === "1") {
+      sendData = {
+        ...sendData,
+        filters: { ...filters, show_object_hide: "1" },
+      };
+    } else if (showObjectHide) {
+      sendData = { ...sendData, filters: { show_object_hide: "1" } };
+    }
+
+    getSelections({
+      ...sendData,
+      only_count_item: "1",
+    }).then((resp) => {
+      setTotal(resp?.data?.all_item);
+      isClose && handleClose();
+    });
+  };
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
@@ -26,10 +65,25 @@ export const Filter = ({
     controls.start({ opacity: 1, translateX: 0 });
   }, []);
 
-  const handleApplyFilter = (isApply) => {
+  const handleApplyFilters = (isApply) => {
     onApplyFilter(isApply);
     handleClose();
+    applying.current = true;
+    if (isApply) {
+      saveSelectionsCount(total);
+    }
   };
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      setTotal(selectionsCount ?? 0);
+      isFirstRender.current = false;
+    } else if (!applying.current) {
+      !isInputFocused && handleGetTotal();
+    } else {
+      applying.current = false;
+    }
+  }, [filters, isInputFocused]);
 
   return (
     <>
@@ -51,9 +105,10 @@ export const Filter = ({
       <SectionTitle title="Характеристики" />
       <Characteristics /> */}
         </div>
+        <div className="total">Знайдено - {total}</div>
         <Footer
-          onCancel={() => handleApplyFilter(false)}
-          onSubmit={() => handleApplyFilter(true)}
+          onCancel={() => handleApplyFilters(false)}
+          onSubmit={() => handleApplyFilters(true)}
         />
       </StyledFilter>
       <div className="modal-overlay" onClick={handleClose}></div>
@@ -73,7 +128,7 @@ const StyledFilter = styled(motion.div)`
   z-index: 20;
   .content {
     padding: 0 20px 20px;
-    height: calc(100svh - 157px);
+    height: calc(100svh - 187px);
     overflow: auto;
     border-radius: 9px;
   }
@@ -82,6 +137,18 @@ const StyledFilter = styled(motion.div)`
     background: rgba(255, 255, 255, 0.1);
     margin-bottom: 25px;
     padding: 8px;
+  }
+  .total {
+    padding: 20px 20px 0;
+    margin-bottom: 6px;
+    color: #fff;
+    font-family: Overpass;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 118%;
+    letter-spacing: 0.28px;
+    text-transform: uppercase;
   }
   @media (max-width: 800px) {
     width: 100%;

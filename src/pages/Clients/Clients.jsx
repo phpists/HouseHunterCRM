@@ -80,8 +80,7 @@ const Clients = () => {
       }
 
       setLoading(true);
-
-      getClients({
+      const sendData = {
         current_page: currentPage.current,
         item_on_page: 10,
         show_favorite: favoritesFilter ? "1" : undefined,
@@ -116,7 +115,15 @@ const Clients = () => {
               },
             }
           : []),
-      }).then((resp) => {
+      };
+
+      if (currentPage.current === 0 || isReset) {
+        getClients({ ...sendData, only_count_item: "1" }).then((resp) =>
+          saveClientsCount(resp?.data?.all_item ?? 0)
+        );
+      }
+
+      getClients(sendData).then((resp) => {
         isLoading.current = false;
         setLoading(false);
         // firstThousand.current = resp?.data?.data?.first_1000;
@@ -130,7 +137,6 @@ const Clients = () => {
                 : allCountRef.current + respItemsCount;
               allCountRef.current = updatedCount;
               setAllCount(updatedCount ?? 0);
-              saveClientsCount(resp?.data?.data?.all_item ?? 0);
               const updatedClients = isReset
                 ? resp?.data?.data?.clients
                 : [...dataRef.current, ...resp?.data.data?.clients];
@@ -142,7 +148,6 @@ const Clients = () => {
             setIsAllPages(true);
             if (isReset) {
               setAllCount(0);
-              saveClientsCount(0);
               setClients([]);
               dataRef.current = [];
               allCountRef.current = 0;

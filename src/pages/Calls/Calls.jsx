@@ -18,6 +18,7 @@ import { useActions } from "../../hooks/actions";
 import cogoToast from "cogo-toast";
 import { useLocation } from "react-router-dom";
 import { useGetPhonesCodesQuery } from "../../store/auth/auth.api";
+import { useAppSelect } from "../../hooks/redux";
 
 const INIT_FILTERS = {
   search_key: "",
@@ -55,6 +56,7 @@ const Calls = () => {
   const [allCount, setAllCount] = useState(0);
   const [filterPhoneCode, setFilterPhoneCode] = useState("1");
   const { data: phonesCodes } = useGetPhonesCodesQuery();
+  const { callsCount } = useAppSelect((state) => state.calls);
 
   const handleChangePhoneCode = (val) => setFilterPhoneCode(val);
 
@@ -89,7 +91,7 @@ const Calls = () => {
       }
       isLoading.current = true;
       setLoading(true);
-      getCalls({
+      const sendData = {
         filters: isFilter.current
           ? {
               ...filters,
@@ -114,7 +116,15 @@ const Calls = () => {
               ),
             },
         current_page: currentPage.current,
-      }).then((resp) => {
+      };
+
+      if (currentPage.current === 0 || isReset) {
+        getCalls({ ...sendData, only_count_item: "1" }).then((resp) =>
+          saveCallsCount(Number(resp?.data?.all_item ?? 0))
+        );
+      }
+
+      getCalls(sendData).then((resp) => {
         isLoading.current = false;
         setLoading(false);
         handleResponse(
@@ -125,7 +135,7 @@ const Calls = () => {
                 ? resp?.data?.data
                 : [...checkIsArray(data), ...resp?.data?.data]
             );
-            saveCallsCount(resp?.data?.all_item ?? 0);
+            // saveCallsCount(resp?.data?.all_item ?? 0);
             const respItemsCount = resp?.data?.data?.length;
             const updatedCount = isReset
               ? respItemsCount
@@ -137,7 +147,7 @@ const Calls = () => {
             setIsAllPages(true);
             if (isReset) {
               setData([]);
-              saveCallsCount(0);
+              //   saveCallsCount(0);
               allCountRef.current = 0;
               setAllCount(0);
             }
@@ -175,7 +185,7 @@ const Calls = () => {
       handleResponse(resp, () => {
         setData(data?.filter((call) => call.id !== id_call));
         const updatedCount = allCountRef.current - 1;
-        saveCallsCount(updatedCount);
+        saveCallsCount(callsCount - 1);
         allCountRef.current = updatedCount;
         setAllCount(updatedCount);
         cogoToast.success("Статус успішно змінено!", {
@@ -234,7 +244,7 @@ const Calls = () => {
     ).then((resp) => {
       setData(data?.filter((call) => !selected.find((s) => s === call?.id)));
       const updatedCount = allCountRef.current - selected?.length;
-      saveCallsCount(updatedCount);
+      saveCallsCount(callsCount - selected?.length);
       allCountRef.current = updatedCount;
       setAllCount(updatedCount);
     });
@@ -262,7 +272,6 @@ const Calls = () => {
       const filterApply = location?.search?.split("=")[0];
       isFirstLoad.current = false;
       isFilter.current = !!filterApply;
-      console.log("2");
       handleGetCalls(true);
     } // eslint-disable-next-line
   }, [isDefaultFilterSet]);

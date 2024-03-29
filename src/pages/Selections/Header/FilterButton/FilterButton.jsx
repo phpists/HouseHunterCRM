@@ -8,6 +8,7 @@ export const FilterButton = ({
   onChangeFilter,
   filtersFields,
   onApplyFilter,
+  showObjectHide,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -20,6 +21,7 @@ export const FilterButton = ({
           onChangeFilter={onChangeFilter}
           filtersFields={filtersFields}
           onApplyFilter={onApplyFilter}
+          showObjectHide={showObjectHide}
         />
       )}
       <StyledFilterButton onClick={() => setOpen(!open)}>
