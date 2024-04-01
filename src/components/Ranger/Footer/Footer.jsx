@@ -14,6 +14,7 @@ export const Footer = ({
   onFocus,
 }) => {
   const currencies = ["₴", "$", "€"];
+  const [isChanged, setIsChanged] = useState(false);
   const [fromInputFocused, setFromInputFocused] = useState(false);
   const [toInputFocused, setToInputFocused] = useState(false);
 
@@ -31,8 +32,9 @@ export const Footer = ({
   };
 
   useEffect(() => {
-    if (!toInputFocused && !fromInputFocused) {
+    if (!toInputFocused && !fromInputFocused && isChanged) {
       onBlur && onBlur();
+      setIsChanged(false);
     }
   }, [fromInputFocused, toInputFocused]);
 
@@ -40,7 +42,10 @@ export const Footer = ({
     <StyledFooter className="flex items-center">
       <PositionCard
         title="Від"
-        onChange={(val) => onChange([val, values[1]])}
+        onChange={(val) => {
+          onChange([val, values[1]]);
+          setIsChanged(true);
+        }}
         value={values[0]}
         className="from-card"
         mainType={
@@ -51,7 +56,10 @@ export const Footer = ({
       />
       <PositionCard
         title="До"
-        onChange={(val) => onChange([values[0], val])}
+        onChange={(val) => {
+          onChange([values[0], val]);
+          setIsChanged(true);
+        }}
         value={values[1]}
         className="to-card"
         mainType={
