@@ -7,7 +7,7 @@ export const NotificationsDropdown = ({ data, open, closed, onClose }) => {
   const { user } = useAppSelect((state) => state.auth);
 
   return (
-    <StyledNotificationsDropdown className="hide-scroll" open={open}>
+    <StyledNotificationsDropdown open={open}>
       {data?.birthday?.length > 0 && (
         <Card
           type="clients"

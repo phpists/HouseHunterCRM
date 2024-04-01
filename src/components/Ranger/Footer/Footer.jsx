@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { PositionCard } from "./PositionCard";
 import { SymbolSelect } from "./SymbolSelect";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const Footer = ({
   currency,
@@ -14,6 +14,27 @@ export const Footer = ({
   onFocus,
 }) => {
   const currencies = ["₴", "$", "€"];
+  const [fromInputFocused, setFromInputFocused] = useState(false);
+  const [toInputFocused, setToInputFocused] = useState(false);
+
+  const handleBlur = (type) => {
+    setTimeout(() => {
+      type === "from" && setFromInputFocused(false);
+      type === "to" && setToInputFocused(false);
+    }, 500);
+  };
+
+  const handleFocus = (type) => {
+    onFocus && onFocus();
+    setFromInputFocused(type === "from");
+    setToInputFocused(type === "to");
+  };
+
+  useEffect(() => {
+    if (!toInputFocused && !fromInputFocused) {
+      onBlur();
+    }
+  }, [fromInputFocused, toInputFocused]);
 
   return (
     <StyledFooter className="flex items-center">
@@ -25,8 +46,8 @@ export const Footer = ({
         mainType={
           mainType ? mainType : currency ? currencies[currencyValue - 1] : null
         }
-        onBlur={onBlur}
-        onFocus={onFocus}
+        onBlur={() => handleBlur("from")}
+        onFocus={() => handleFocus("from")}
       />
       <PositionCard
         title="До"
@@ -36,8 +57,8 @@ export const Footer = ({
         mainType={
           mainType ? mainType : currency ? currencies[currencyValue - 1] : null
         }
-        onBlur={onBlur}
-        onFocus={onFocus}
+        onBlur={() => handleBlur("to")}
+        onFocus={() => handleFocus("to")}
       />
       {currency && (
         <SymbolSelect

@@ -26,7 +26,7 @@ const INIT_FILTERS = {
   type_call: [],
   call_my_struct: undefined,
   status: undefined,
-  date_from: Math.floor(getFirstDay().getTime() / 1000),
+  date_from: Math.floor(getFirstDay(true).getTime() / 1000),
   date_to: Math.floor(new Date().getTime() / 1000),
 };
 
@@ -91,6 +91,9 @@ const Calls = () => {
       }
       isLoading.current = true;
       setLoading(true);
+      if (currentPage.current === 0) {
+        setData([]);
+      }
       const sendData = {
         filters: isFilter.current
           ? {
@@ -107,13 +110,8 @@ const Calls = () => {
                 : undefined,
             }
           : {
-              date_from: handleFormatFilterDate(
-                Math.floor(getFirstDay().getTime() / 1000),
-                true
-              ),
-              date_to: handleFormatFilterDate(
-                Math.floor(new Date().getTime() / 1000)
-              ),
+              date_from: Math.floor(getFirstDay(true).getTime() / 1000),
+              date_to: Math.floor(new Date().getTime() / 1000),
             },
         current_page: currentPage.current,
       };

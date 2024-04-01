@@ -476,8 +476,11 @@ export const removePhoneMask = (val) =>
         ?.replaceAll("_", "")
     : undefined;
 
-export const getFirstDay = () => {
+export const getFirstDay = (isPrevMonth) => {
   const date = new Date();
   date.setDate(1);
+  if (isPrevMonth) {
+    date.setMonth(date.getMonth() - 1);
+  }
   return date;
 };

@@ -1,10 +1,17 @@
 import styled from "styled-components";
 import activityIcon from "../assets/images/activity.svg";
+import { Loader } from "./Loader";
 
-export const Empty = ({ noSubtitle, className }) => (
+export const Empty = ({ noSubtitle, className, loading }) => (
   <StyledEmpty className={className}>
-    <img src={activityIcon} alt="icon" />
-    <div className="title">Упс, тут пусто!</div>
+    {loading ? (
+      <Loader white className="loaderComponent" />
+    ) : (
+      <>
+        <img src={activityIcon} alt="icon" />
+        <div className="title">Упс, тут пусто!</div>
+      </>
+    )}
   </StyledEmpty>
 );
 
@@ -36,5 +43,8 @@ const StyledEmpty = styled.div`
     font-weight: 200;
     line-height: normal;
     letter-spacing: 0.28px;
+  }
+  .loaderComponent {
+    height: 40px;
   }
 `;

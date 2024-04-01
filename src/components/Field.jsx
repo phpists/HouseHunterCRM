@@ -131,7 +131,13 @@ export const Field = ({
         </div>
       )}
       {edit && (
-        <div className="modal-overlay" onClick={() => setEdit(false)}></div>
+        <div
+          className="modal-overlay"
+          onClick={() => {
+            setEdit(false);
+            onSubmit && onSubmit();
+          }}
+        ></div>
       )}
     </StyleField>
   );

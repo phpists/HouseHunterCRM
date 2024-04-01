@@ -383,7 +383,7 @@ const Requests = () => {
       setIsDefaultFiltersSet(true);
     } else if (filterApply === "?showUnreadMessege") {
       setFilters({
-        only_my_structure: "1",
+        only_my_obj: "1",
         showUnreadMessege: "1",
       });
       filterActive.current = true;

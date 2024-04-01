@@ -8,6 +8,8 @@ import { ToggleOption } from "../ToggleOption";
 import { Period } from "../Period/Period";
 import { ProfileField } from "../../../../../components/ProfileField";
 import { useGetPhonesCodesQuery } from "../../../../../store/auth/auth.api";
+import { useGetWorkerToMoveClientsQuery } from "../../../../../store/clients/clients.api";
+import { Select } from "../../../../../components/Select/Select";
 
 export const Search = ({
   filters,
@@ -17,6 +19,7 @@ export const Search = ({
 }) => {
   const { data: callsType } = useGetCallsTypeQuery();
   const { data: phonesCodes } = useGetPhonesCodesQuery();
+  const { data: workers } = useGetWorkerToMoveClientsQuery();
 
   return (
     <StyledSearch>
@@ -43,8 +46,26 @@ export const Search = ({
         label="Пошук по номеру часткове співпадіння"
         placeholder="Введіть значення..."
         value={filters?.findPhone}
-        onChange={(val) => onChangeFilter("findPhone", val)}
-        type="number"
+        onChange={(val) =>
+          onChangeFilter("findPhone", val.replace(/[^0-9]/g, ""))
+        }
+      />
+      <Divider />
+      <SelectTags
+        label="Пошук по id працівника"
+        placeholder="Оберіть працівника"
+        options={
+          workers?.users
+            ? workers?.users?.map(({ id_user, full_name }) => ({
+                title: full_name,
+                value: id_user,
+              }))
+            : []
+        }
+        value={filters?.id_worker_Search}
+        onChange={(val) => onChangeFilter("id_worker_Search", val)}
+        isSearch
+        notMultiSelect
       />
       <Divider />
       <Period filters={filters} onChangeFilter={onChangeFilter} />
@@ -119,7 +140,17 @@ export const Search = ({
         value={!filters?.call_my_struct}
         onChange={() => onChangeFilter("call_my_struct", undefined)}
       />
-      {/* <Divider /> */}
+      <Divider />
+      <ToggleOption
+        label="Відсутній в базі"
+        value={filters?.missing_client}
+        onChange={() =>
+          onChangeFilter(
+            "missing_client",
+            filters?.missing_client ? undefined : "1"
+          )
+        }
+      />
       {/* <ToggleOption
         label="Переглянуті"
         value={filters?.view === "1"}

@@ -128,6 +128,7 @@ export const Tags = ({ className, data, isAccess, onToggleOpen }) => {
         }))}
         onChange={handleSelect}
         onToggleOpen={onToggleOpen}
+        hide
       />
     </StyledTags>
   );
