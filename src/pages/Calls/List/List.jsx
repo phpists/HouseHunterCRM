@@ -58,7 +58,7 @@ export const List = ({
       {addModal && (
         <AddClient onClose={() => setAddModal(false)} initPhone={addModal} />
       )}
-      {data?.length === 0 || loading ? (
+      {data?.length === 0 ? (
         <Empty loading={loading} />
       ) : (
         data.map(

@@ -87,6 +87,17 @@ export const calls = createApi({
         }),
       }),
     }),
+    getWorkerMyStructure: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getWorkerMystrcutrue",
+          mod: "system_info",
+        }),
+      }),
+    }),
   }),
 });
 
@@ -97,4 +108,5 @@ export const {
   useGetCallsTypeQuery,
   useLazyGetAllCallsPhonesQuery,
   useLazyMoveCallQuery,
+  useGetWorkerMyStructureQuery,
 } = calls;

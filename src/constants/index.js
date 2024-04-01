@@ -47,3 +47,9 @@ export const TAGS = [
   "label_without_students",
   "label_without_foreigners",
 ];
+
+export const SELECTION_TAGS = [
+  { title: "Топ", value: "label_top" },
+  { title: "Рекомендовано", value: "label_recomendation" },
+  { title: "Показ", value: "label_showing" },
+];

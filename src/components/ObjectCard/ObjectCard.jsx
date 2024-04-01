@@ -26,6 +26,7 @@ export const ObjectCard = memo(
     onChangeComment,
     type,
     onChangeType,
+    selections,
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
     const { ref, inView } = useInView({ triggerOnce: true });
@@ -76,6 +77,7 @@ export const ObjectCard = memo(
             searchTag={searchTag}
             showLike={showLike}
             onChangeComment={onChangeComment}
+            selections={selections}
           />
         ) : (
           <MobileContent
@@ -97,6 +99,7 @@ export const ObjectCard = memo(
             searchTag={searchTag}
             showLike={showLike}
             onChangeComment={onChangeComment}
+            selections={selections}
           />
         )}
       </StyledObjectCard>

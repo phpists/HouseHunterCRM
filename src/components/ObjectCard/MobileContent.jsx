@@ -29,6 +29,7 @@ export const MobileContent = ({
   onChangeComment,
   type,
   onChangeType,
+  selections,
 }) => (
   <StyledMobileContent className="clickable">
     <Header data={data} />
@@ -59,6 +60,7 @@ export const MobileContent = ({
       className="mobile-tags"
       data={data}
       onChangeComment={onChangeComment}
+      selections={selections}
     />
     <Contacts data={data} />
     <ShowMore

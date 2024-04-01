@@ -5,8 +5,6 @@ import { Footer } from "./Footer";
 import { motion, useAnimationControls } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Main } from "./Main";
-import { Topicality } from "./Topicality";
-import { Characteristics } from "./Characteristics";
 import { useAppSelect } from "../../../../../hooks/redux";
 import { useActions } from "../../../../../hooks/actions";
 import { useParams } from "react-router-dom";
@@ -106,10 +104,6 @@ export const Filter = ({
             onChangeInputFocus={(val) => setIsInputFocused(val)}
             isInputFocused={isInputFocused}
           />
-          {/* <SectionTitle title="Актуальність" />
-      <Topicality />
-      <SectionTitle title="Характеристики" />
-      <Characteristics /> */}
         </div>
         <div className="total">
           Знайдено -{" "}

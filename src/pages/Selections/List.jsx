@@ -105,6 +105,7 @@ export const List = ({
               onChangeCurrency={onChangeCurrency}
               type={type}
               onChangeType={onChangeType}
+              selections
             />
           ))
         )}

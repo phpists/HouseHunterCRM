@@ -3,13 +3,16 @@ import { SelectTags } from "../../../../../components/SelectTags/SelectTags";
 import { Divider } from "../Divider";
 import { Field } from "../../../../../components/Field";
 import { Avatar } from "./Avatar";
-import { useGetCallsTypeQuery } from "../../../../../store/calls/calls.api";
+import {
+  useGetCallsTypeQuery,
+  useGetWorkerMyStructureQuery,
+} from "../../../../../store/calls/calls.api";
 import { ToggleOption } from "../ToggleOption";
 import { Period } from "../Period/Period";
 import { ProfileField } from "../../../../../components/ProfileField";
 import { useGetPhonesCodesQuery } from "../../../../../store/auth/auth.api";
-import { useGetWorkerToMoveClientsQuery } from "../../../../../store/clients/clients.api";
 import { Select } from "../../../../../components/Select/Select";
+import { useEffect } from "react";
 
 export const Search = ({
   filters,
@@ -19,7 +22,13 @@ export const Search = ({
 }) => {
   const { data: callsType } = useGetCallsTypeQuery();
   const { data: phonesCodes } = useGetPhonesCodesQuery();
-  const { data: workers } = useGetWorkerToMoveClientsQuery();
+  const { data: workers } = useGetWorkerMyStructureQuery();
+
+  useEffect(() => {
+    if (!filters?.call_my_struct) {
+      onChangeFilter("id_worker_Search", undefined);
+    }
+  }, [filters?.call_my_struct]);
 
   return (
     <StyledSearch>
@@ -51,23 +60,28 @@ export const Search = ({
         }
       />
       <Divider />
-      <SelectTags
-        label="Пошук по id працівника"
-        placeholder="Оберіть працівника"
-        options={
-          workers?.users
-            ? workers?.users?.map(({ id_user, full_name }) => ({
-                title: full_name,
-                value: id_user,
-              }))
-            : []
-        }
-        value={filters?.id_worker_Search}
-        onChange={(val) => onChangeFilter("id_worker_Search", val)}
-        isSearch
-        notMultiSelect
-      />
-      <Divider />
+      {filters?.call_my_struct?.length >= 0 ? (
+        <>
+          {" "}
+          <SelectTags
+            label="Пошук по працівнику"
+            placeholder="Оберіть працівника"
+            options={
+              workers?.data
+                ? workers?.data?.map(({ id, first_name, last_name }) => ({
+                    title: `${first_name} ${last_name}`,
+                    value: id,
+                  }))
+                : []
+            }
+            value={filters?.id_worker_Search}
+            onChange={(val) => onChangeFilter("id_worker_Search", val)}
+            isSearch
+            notMultiSelect
+          />
+          <Divider />
+        </>
+      ) : null}
       <Period filters={filters} onChangeFilter={onChangeFilter} />
       <Divider />
       <SelectTags
@@ -118,18 +132,6 @@ export const Search = ({
         hideArrow
       />
       <Divider />
-      {/* <ToggleOption
-        label="Усі дзвінки"
-        value={filters?.allCalls?.length >= 0}
-        // onChange={() =>
-        //   onChangeFilter(
-        //     "call_my_struct",
-        //     filters?.call_my_struct?.length >= 0 ? undefined : "1"
-        //   )
-        // }
-        className="notAvaible"
-      />
-      <Divider /> */}
       <ToggleOption
         label="Дзвінки моєї структури"
         value={filters?.call_my_struct?.length >= 0}

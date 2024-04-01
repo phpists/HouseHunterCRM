@@ -5,16 +5,26 @@ import { useEffect } from "react";
 import {
   useGetCommentsToFieldsQuery,
   useGetTagsListQuery,
+  useLazyAddNotepadTagQuery,
   useLazyAddTagsToObjectsQuery,
 } from "../../../store/objects/objects.api";
 import { handleFormatDate, handleResponse } from "../../../utilits";
 import { Comment } from "./Comment";
-import { TAGS } from "../../../constants";
+import { TAGS, SELECTION_TAGS } from "../../../constants";
+import { useParams } from "react-router-dom";
 
-export const Tags = ({ className, data, isAccess, onChangeComment }) => {
-  const { data: tagsList } = useGetTagsListQuery();
+export const Tags = ({
+  className,
+  data,
+  isAccess,
+  onChangeComment,
+  selections,
+}) => {
+  const { id } = useParams();
+  const { data: tagsList } = useGetTagsListQuery({ only_notepad: "1" });
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [addTag] = useLazyAddTagsToObjectsQuery();
+  const [addNotepadTag] = useLazyAddNotepadTagQuery();
   const [tags, setTags] = useState([]);
   const [actualDate, setActualDate] = useState(null);
   const actualTags = ["label_is_actual", "label_not_actual"];
@@ -22,56 +32,74 @@ export const Tags = ({ className, data, isAccess, onChangeComment }) => {
 
   const handleSelect = (val) => {
     const isExist = !!tags?.find((t) => t.value === val);
+    const isSelectionTag = SELECTION_TAGS?.find((t) => t.value === val);
 
-    addTag({
-      actions: isExist ? "0" : "1",
-      tags: val,
-      id_object: data?.id,
-    }).then((resp) =>
-      handleResponse(resp, () => {
-        if (actualTags?.includes(val)) {
-          setActualDate(isExist ? new Date() : null);
-          if (
-            !!tags.find((t) =>
-              actualTags?.filter((a) => a !== val).includes(t.value)
-            ) &&
-            !isExist
-          ) {
-            addTag({
-              actions: "0",
-              tags:
-                val === "label_is_actual"
-                  ? "label_not_actual"
-                  : "label_is_actual",
-              id_object: data?.id,
-            });
+    if (isSelectionTag) {
+      addNotepadTag({
+        // actions: isExist ? "0" : "1",
+        label_name: val,
+        id_object: data?.id,
+        id_request_group: id,
+      }).then((resp) =>
+        handleResponse(resp, () => {
+          setTags(
+            isExist
+              ? tags?.filter((t) => t.value !== val)
+              : [...tags, isSelectionTag]
+          );
+        })
+      );
+    } else {
+      addTag({
+        actions: isExist ? "0" : "1",
+        tags: val,
+        id_object: data?.id,
+      }).then((resp) =>
+        handleResponse(resp, () => {
+          if (actualTags?.includes(val)) {
+            setActualDate(isExist ? new Date() : null);
+            if (
+              !!tags.find((t) =>
+                actualTags?.filter((a) => a !== val).includes(t.value)
+              ) &&
+              !isExist
+            ) {
+              addTag({
+                actions: "0",
+                tags:
+                  val === "label_is_actual"
+                    ? "label_not_actual"
+                    : "label_is_actual",
+                id_object: data?.id,
+              });
+            }
           }
-        }
 
-        setTags(
-          isExist
-            ? tags?.filter((t) => t.value !== val)
-            : [
-                ...tags?.filter((t) =>
-                  actualTags?.includes(val)
-                    ? t.value !== "label_is_actual" &&
-                      t.value !== "label_not_actual"
-                    : true
-                ),
-                {
-                  title: commentsToFields?.object[val]
-                    ? `${commentsToFields?.object[val]} ${
-                        actualTags.includes(val)
-                          ? handleFormatDate(new Date())
-                          : ""
-                      }`
-                    : "-",
-                  value: val,
-                },
-              ]
-        );
-      })
-    );
+          setTags(
+            isExist
+              ? tags?.filter((t) => t.value !== val)
+              : [
+                  ...tags?.filter((t) =>
+                    actualTags?.includes(val)
+                      ? t.value !== "label_is_actual" &&
+                        t.value !== "label_not_actual"
+                      : true
+                  ),
+                  {
+                    title: commentsToFields?.object[val]
+                      ? `${commentsToFields?.object[val]} ${
+                          actualTags.includes(val)
+                            ? handleFormatDate(new Date())
+                            : ""
+                        }`
+                      : "-",
+                    value: val,
+                  },
+                ]
+          );
+        })
+      );
+    }
   };
 
   const handleGetInitTags = () => {
@@ -90,6 +118,28 @@ export const Tags = ({ className, data, isAccess, onChangeComment }) => {
         value: tag,
       });
     });
+
+    if (data?.tags_folder) {
+      Object.entries(data?.tags_folder)
+        ?.filter((t) => t[1])
+        ?.map((t) => t[0])
+        ?.forEach((tag) => {
+          initTags.push({
+            title:
+              `${
+                SELECTION_TAGS.find((t) => t.value === tag)?.title ??
+                commentsToFields?.object[tag]
+              } ${
+                actualTags.includes(tag)
+                  ? data?.dt_add_tags_actuals
+                    ? handleFormatDate(Number(data?.dt_add_tags_actuals) * 1000)
+                    : ""
+                  : ""
+              }` ?? "-",
+            value: tag,
+          });
+        });
+    }
 
     setTags(initTags);
   };
@@ -115,10 +165,13 @@ export const Tags = ({ className, data, isAccess, onChangeComment }) => {
         label="Теги"
         showTags
         tags={tags}
-        options={TAGS?.map((value) => ({
-          title: commentsToFields?.object[value] ?? "-",
-          value,
-        }))}
+        options={[
+          ...TAGS?.map((value) => ({
+            title: commentsToFields?.object[value] ?? "-",
+            value,
+          })),
+          ...(selections ? SELECTION_TAGS : []),
+        ]}
         onChange={handleSelect}
         hide
       />

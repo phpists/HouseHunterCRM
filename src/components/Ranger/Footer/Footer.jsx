@@ -32,7 +32,7 @@ export const Footer = ({
 
   useEffect(() => {
     if (!toInputFocused && !fromInputFocused) {
-      onBlur();
+      onBlur && onBlur();
     }
   }, [fromInputFocused, toInputFocused]);
 

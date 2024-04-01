@@ -244,13 +244,14 @@ export const objects = createApi({
       }),
     }),
     getTagsList: build.query({
-      query: () => ({
+      query: ({ only_notepad }) => ({
         url: "",
         method: "POST",
         headers: headers(),
         body: handleToFormData({
           action: "get_tags_label",
           mod: "system_info",
+          only_notepad,
         }),
       }),
     }),
@@ -264,6 +265,20 @@ export const objects = createApi({
           mod: "objects",
           actions,
           tags,
+          id_object,
+        }),
+      }),
+    }),
+    addNotepadTag: build.query({
+      query: ({ label_name, id_request_group, id_object }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "addNotepadtags",
+          mod: "requests",
+          label_name,
+          id_request_group,
           id_object,
         }),
       }),
@@ -400,4 +415,5 @@ export const {
   useLazyGetObjectCommentHistoryQuery,
   useLazyAddStreetBaseObjectQuery,
   useGetSourcesQuery,
+  useLazyAddNotepadTagQuery,
 } = objects;

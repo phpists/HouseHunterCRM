@@ -21,7 +21,7 @@ import {
 import { Price } from "../../../../Request/Main/Price/Price";
 import { ToggleOption } from "./ToggleOption";
 import { CheckOption } from "../../../../../components/CheckOption";
-import { TAGS } from "../../../../../constants";
+import { SELECTION_TAGS, TAGS } from "../../../../../constants";
 
 const notAllowedFields = [
   "comment",
@@ -86,15 +86,26 @@ export const Main = ({
     }
   }, [locationsList]);
 
-  const handleSelectTag = (val) => {
-    const isExist = !!filters?.labels?.find((t) => t === val);
+  const handleSelectTag = (val, fieldName) => {
+    const isSelectionTag = SELECTION_TAGS.find((t) => t.value === val);
 
-    onChangeFilter(
-      "labels",
-      isExist
-        ? filters?.labels?.filter((t) => t !== val)
-        : [...checkIsArray(filters?.labels), val]
-    );
+    if (!!isSelectionTag) {
+      const isExist = !!filters?.folder_tags?.find((t) => t === val);
+      onChangeFilter(
+        "folder_tags",
+        isExist
+          ? filters?.folder_tags?.filter((t) => t !== val)
+          : [...checkIsArray(filters?.folder_tags), val]
+      );
+    } else {
+      const isExist = !!filters?.labels?.find((t) => t === val);
+      onChangeFilter(
+        fieldName,
+        isExist
+          ? filters?.labels?.filter((t) => t !== val)
+          : [...checkIsArray(filters?.labels), val]
+      );
+    }
   };
 
   return (
@@ -206,19 +217,27 @@ export const Main = ({
         showTags
         tags={
           TAGS
-            ? TAGS?.filter((t) => !!filters?.labels?.find((l) => l === t))?.map(
-                (t) => ({
+            ? [
+                ...TAGS?.filter(
+                  (t) => !!filters?.labels?.find((l) => l === t)
+                )?.map((t) => ({
                   title: commentsToFields?.object[t] ?? "-",
                   value: t,
-                })
-              )
+                })),
+                ...SELECTION_TAGS?.filter(
+                  (t) => !!filters?.folder_tags?.find((l) => l === t.value)
+                ),
+              ]
             : []
         }
-        options={TAGS?.map((value) => ({
-          title: commentsToFields?.object[value] ?? "-",
-          value,
-        }))}
-        onChange={handleSelectTag}
+        options={[
+          ...TAGS?.map((value) => ({
+            title: commentsToFields?.object[value] ?? "-",
+            value,
+          })),
+          ...SELECTION_TAGS,
+        ]}
+        onChange={(val) => handleSelectTag(val, "labels")}
       />
       <Divider />
 

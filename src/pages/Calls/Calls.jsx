@@ -91,9 +91,7 @@ const Calls = () => {
       }
       isLoading.current = true;
       setLoading(true);
-      if (currentPage.current === 0) {
-        setData([]);
-      }
+
       const sendData = {
         filters: isFilter.current
           ? {
@@ -117,6 +115,7 @@ const Calls = () => {
       };
 
       if (currentPage.current === 0 || isReset) {
+        setData([]);
         getCalls({ ...sendData, only_count_item: "1" }).then((resp) =>
           saveCallsCount(Number(resp?.data?.all_item ?? 0))
         );
