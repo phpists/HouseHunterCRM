@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { Arrow } from "./Arrow";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Dropdown } from "./Dropdown";
 import { TagCount } from "./TagCount";
 import { Tag } from "./Tag";
@@ -24,6 +24,7 @@ export const SelectTags = ({
   emptyTitle,
   hideArrow,
   hide,
+  onToggleOpen,
 }) => {
   const [open, setOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -44,9 +45,15 @@ export const SelectTags = ({
     setSearch("");
   };
 
+  useEffect(() => {
+    if (onToggleOpen) {
+      onToggleOpen(open);
+    }
+  }, [open]);
+
   return (
     <StyledSelectTags
-      className={`flex items-center justify-between ${!value && "empty"} ${
+      className={`flex items-center justify-between  ${!value && "empty"} ${
         open && "open"
       } ${isActive && "active"} ${error && "error-field"} ${className}`}
       showtags={showTags?.toString()}

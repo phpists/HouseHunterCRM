@@ -54,7 +54,13 @@ const notAllowedFields = [
   "label_without_students",
 ];
 
-export const Main = ({ filters, onChangeFilter, filtersFields }) => {
+export const Main = ({
+  filters,
+  onChangeFilter,
+  filtersFields,
+  onChangeInputFocus,
+  isInputFocused,
+}) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: rubricsList } = useGetRubricsQuery();
   const { data: locationsList } = useGetLocationsQuery();
@@ -137,6 +143,8 @@ export const Main = ({ filters, onChangeFilter, filtersFields }) => {
         rubricId={filters?.id_rubric}
         typeValue={filters?.price_for}
         onChangeType={(val) => onChangeFilter("price_for", val)}
+        onFocus={() => !isInputFocused && onChangeInputFocus(true)}
+        onBlur={() => onChangeInputFocus(false)}
       />
       <Divider />
       <ToggleOption

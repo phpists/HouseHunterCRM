@@ -11,6 +11,8 @@ import { useLazyGetAllObjectsQuery } from "../../../../store/objects/objects.api
 import { handleFromInputDate, removePhoneMask } from "../../../../utilits";
 import { useActions } from "../../../../hooks/actions";
 import { useAppSelect } from "../../../../hooks/redux";
+import { Spinner } from "../../../../components/Spinner";
+import { Loader } from "../../../../components/Loader";
 
 export const Filter = ({
   onClose,
@@ -34,6 +36,7 @@ export const Filter = ({
   const isFirstRender = useRef(true);
   const { saveObjectsCount } = useActions();
   const { objectsCount } = useAppSelect((state) => state.objects);
+  const [loading, setLoading] = useState(false);
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
@@ -128,9 +131,11 @@ export const Filter = ({
       };
     }
 
-    getAllObjects({ ...data, only_count_item: "1" }).then((resp) =>
-      setTotal(resp?.data?.count_item ?? 0)
-    );
+    setLoading(true);
+    getAllObjects({ ...data, only_count_item: "1" }).then((resp) => {
+      setTotal(resp?.data?.count_item ?? 0);
+      setLoading(false);
+    });
   };
 
   useEffect(() => {
@@ -171,7 +176,10 @@ export const Filter = ({
      <SectionTitle title="Характеристики" />
      <Characteristics /> */}
         </div>
-        <div className="total">Знайдено - {total}</div>
+        <div className="total">
+          Знайдено -{" "}
+          {loading ? <Loader white className="totalLoader" /> : total}
+        </div>
         <Footer
           onCancel={() => handleApplyFilters(false)}
           onSubmit={handleApply}
@@ -199,6 +207,8 @@ const StyledFilter = styled(motion.div)`
     border-radius: 9px;
   }
   .total {
+    display: flex;
+    align-items: center;
     padding: 20px 20px 0;
     margin-bottom: 6px;
     color: #fff;
@@ -209,6 +219,11 @@ const StyledFilter = styled(motion.div)`
     line-height: 118%;
     letter-spacing: 0.28px;
     text-transform: uppercase;
+  }
+  .totalLoader {
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
   }
   .section {
     border-radius: 9px;

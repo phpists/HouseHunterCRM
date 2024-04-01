@@ -46,6 +46,13 @@ export const Input = ({
     handleResizeTextarea();
   }, [value]);
 
+  const handlePressEnter = (e) => {
+    if (e?.keyCode === 13 && !e?.shiftKey) {
+      onSend();
+      textareaRef.current.click();
+    }
+  };
+
   const textAreaAdjust = (e) => {
     e.target.style.height = "1px";
     e.target.style.height = e.target.scrollHeight + "px";
@@ -71,10 +78,10 @@ export const Input = ({
         value={value}
         onChange={textAreaAdjust}
         placeholder="Повідомлення"
-        disabled={loading}
-        onKeyDown={(e) => e?.keyCode === 13 && !e?.shiftKey && onSend()}
+        onKeyDown={handlePressEnter}
         ref={textareaRef}
         autoFocus
+        onBlur={(e) => e.target.focus()}
       />
       {!selectedMessage && (
         <>

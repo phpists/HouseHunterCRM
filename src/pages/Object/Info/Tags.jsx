@@ -11,7 +11,7 @@ import { TAGS } from "../../../constants";
 import { SelectTags } from "../../../components/SelectTags/SelectTags";
 import { useParams } from "react-router-dom";
 
-export const Tags = ({ className, data, isAccess }) => {
+export const Tags = ({ className, data, isAccess, onToggleOpen }) => {
   const { id } = useParams();
   const { data: tagsList } = useGetTagsListQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
@@ -115,7 +115,9 @@ export const Tags = ({ className, data, isAccess }) => {
   }, [data, tagsList, commentsToFields]);
 
   return (
-    <StyledTags className={`flex flex-col hide-scroll clickable ${className}`}>
+    <StyledTags
+      className={`flex flex-col hide-scroll clickable selectTagsWrapper ${className}`}
+    >
       <SelectTags
         label="Теги"
         showTags
@@ -125,6 +127,7 @@ export const Tags = ({ className, data, isAccess }) => {
           value,
         }))}
         onChange={handleSelect}
+        onToggleOpen={onToggleOpen}
       />
     </StyledTags>
   );

@@ -11,6 +11,7 @@ import { useAppSelect } from "../../../../../hooks/redux";
 import { useActions } from "../../../../../hooks/actions";
 import { useParams } from "react-router-dom";
 import { useLazyGetSelectionsQuery } from "../../../../../store/selections/selections.api";
+import { Loader } from "../../../../../components/Loader";
 
 export const Filter = ({
   onClose,
@@ -29,6 +30,7 @@ export const Filter = ({
   const { saveSelectionsCount } = useActions();
   const { selectionsCount } = useAppSelect((state) => state.selections);
   const [getSelections] = useLazyGetSelectionsQuery();
+  const [loading, setLoading] = useState(false);
 
   const handleGetTotal = (isClose) => {
     let sendData = {
@@ -47,12 +49,14 @@ export const Filter = ({
       sendData = { ...sendData, filters: { show_object_hide: "1" } };
     }
 
+    setLoading(true);
     getSelections({
       ...sendData,
       only_count_item: "1",
     }).then((resp) => {
       setTotal(resp?.data?.all_item);
       isClose && handleClose();
+      setLoading(false);
     });
   };
 
@@ -99,13 +103,18 @@ export const Filter = ({
             filters={filters}
             onChangeFilter={onChangeFilter}
             filtersFields={filtersFields}
+            onChangeInputFocus={(val) => setIsInputFocused(val)}
+            isInputFocused={isInputFocused}
           />
           {/* <SectionTitle title="Актуальність" />
       <Topicality />
       <SectionTitle title="Характеристики" />
       <Characteristics /> */}
         </div>
-        <div className="total">Знайдено - {total}</div>
+        <div className="total">
+          Знайдено -{" "}
+          {loading ? <Loader white className="totalLoader" /> : total}
+        </div>
         <Footer
           onCancel={() => handleApplyFilters(false)}
           onSubmit={() => handleApplyFilters(true)}
@@ -138,7 +147,14 @@ const StyledFilter = styled(motion.div)`
     margin-bottom: 25px;
     padding: 8px;
   }
+  .totalLoader {
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
+  }
   .total {
+    display: flex;
+    align-items: center;
     padding: 20px 20px 0;
     margin-bottom: 6px;
     color: #fff;

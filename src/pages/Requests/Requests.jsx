@@ -377,17 +377,20 @@ const Requests = () => {
     filterActive.current = false;
     const filterApply = location?.search?.split("=")[0];
     const prevFilters = localStorage.getItem("requestFilter");
-    if (!!prevFilters && !!checkIsJSON(prevFilters)) {
-      filterActive.current = true;
-      setFilters(JSON.parse(prevFilters) ?? INIT_FILTERS);
-      setIsDefaultFiltersSet(true);
-    } else if (filterApply === "?showDeadline") {
+    if (filterApply === "?showDeadline") {
       filterActive.current = true;
       setFilters({ showDeadline: "1" });
       setIsDefaultFiltersSet(true);
     } else if (filterApply === "?showUnreadMessege") {
-      setFilters({ showUnreadMessege: "1" });
+      setFilters({
+        only_my_structure: "1",
+        showUnreadMessege: "1",
+      });
       filterActive.current = true;
+      setIsDefaultFiltersSet(true);
+    } else if (!!prevFilters && !!checkIsJSON(prevFilters)) {
+      filterActive.current = true;
+      setFilters(JSON.parse(prevFilters) ?? INIT_FILTERS);
       setIsDefaultFiltersSet(true);
     } else {
       handleGetRequests(true);

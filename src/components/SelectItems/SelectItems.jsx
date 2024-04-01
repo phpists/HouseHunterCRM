@@ -27,6 +27,10 @@ export const SelectItems = ({
   const [deleteModal, setDeleteModal] = useState(false);
 
   useEffect(() => {
+    setType(selectedCount === allCount ? 2 : 1);
+  }, [allCount]);
+
+  useEffect(() => {
     if (selectedCount > 0) {
       setType(selectedCount === allCount ? 2 : 1);
     } else {

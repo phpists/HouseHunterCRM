@@ -53,7 +53,6 @@ export const Date = ({ category, location, date, dateCreate }) => {
         tags={handleGetLocation()}
         className="tags-wrapper clickable"
         noEdit
-        showAll
       />
     </StyledDate>
   );

@@ -23,6 +23,21 @@ export const Text = ({ data, onChangeField, errors, objectData }) => {
     }
   }, [errors]);
 
+  const handleOpenTags = (isOpen) => {
+    const tags = document.querySelector(".selectTagsWrapper .open");
+    if (tags) {
+      textRef.current.scrollTo({
+        top: isOpen ? tags?.offsetTop - textRef.current.offsetTop - 10 : 0,
+        behavior: "smooth",
+      });
+    } else if (!isOpen) {
+      textRef.current.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <StyledText className="hide-scroll" ref={textRef}>
       <ProfileField
@@ -51,7 +66,7 @@ export const Text = ({ data, onChangeField, errors, objectData }) => {
         className="title comment"
         textarea
       />
-      {id && <Tags data={objectData} />}
+      {id && <Tags data={objectData} onToggleOpen={handleOpenTags} />}
     </StyledText>
   );
 };
@@ -76,14 +91,14 @@ const StyledText = styled.div`
     border: 1px solid rgba(255, 255, 255, 0.1);
     .value {
       white-space: unset !important;
-      height: 125px;
+      height: 85px;
       overflow: auto;
       text-overflow: unset;
       width: 100%;
       word-wrap: break-word;
     }
     textarea {
-      height: 128px !important;
+      height: 85px !important;
     }
   }
   .comment {

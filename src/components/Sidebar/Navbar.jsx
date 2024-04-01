@@ -30,7 +30,7 @@ export const NavBar = ({ accessData }) => {
           {
             icon: MegaphoneIcon,
             link: "/requests",
-            childrenLinks: ["create-request", "edit-request"],
+            childrenLinks: ["create-request", "edit-request", "selections"],
           },
         ]
       : []),
