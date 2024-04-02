@@ -1,0 +1,172 @@
+import styled from "styled-components";
+import { Modal } from "../Modal/Modal";
+import { useEffect, useState } from "react";
+import { CheckOption } from "../CheckOption";
+import { Field } from "../Field";
+import { Select } from "../Select/Select";
+import { ProfileField } from "../ProfileField";
+import {
+  useGetAgenciesQuery,
+  useLazyAddOherAgencyQuery,
+  useLazyAddPicaroonQuery,
+  useLazyCleanObjectMarksQuery,
+  useLazyGetPhoneObjectQuery,
+} from "../../store/objects/objects.api";
+import { Button } from "../Button";
+import { handleResponse } from "../../utilits";
+import cogoToast from "cogo-toast";
+
+export const MarkObjectPhones = ({ onClose, object, onSuccess }) => {
+  const { data: agencies } = useGetAgenciesQuery();
+  const [type, setType] = useState(0);
+  const [name, setName] = useState("");
+  const [agency, setAgency] = useState("");
+  const [addPicatoon] = useLazyAddPicaroonQuery();
+  const [addOtherAgency] = useLazyAddOherAgencyQuery();
+  const [cleanObjectMarks] = useLazyCleanObjectMarksQuery();
+  const [getClient] = useLazyGetPhoneObjectQuery();
+
+  const handleChangeType = (t) => {
+    if (t !== type) {
+      setType(t);
+      setName("");
+      setAgency("");
+    }
+  };
+
+  const handleSave = () => {
+    if (type === 0) {
+      cleanObjectMarks(object?.id).then((resp) => {
+        handleResponse(resp, () => {
+          cogoToast.success("Успішно збережено", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          getClient(object?.id).then((resp) => {
+            onSuccess && onSuccess(object?.id, resp?.data);
+            onClose();
+          });
+        });
+      });
+    } else if (type === 2) {
+      addPicatoon(object?.id).then((resp) => {
+        handleResponse(resp, () => {
+          cogoToast.success("Успішно збережено", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          onSuccess &&
+            onSuccess(object?.id, {
+              type: "ШАХРАЙ",
+              contact: {
+                name: "ШАХРАЙ",
+              },
+              error: 0,
+            });
+        });
+        onClose();
+      });
+    } else if (type === 1) {
+      addOtherAgency({
+        id_object: object?.id,
+        agency_name: name,
+        rieltor_name: agency,
+      }).then((resp) => {
+        handleResponse(resp, () => {
+          cogoToast.success("Успішно збережено", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          onSuccess &&
+            onSuccess(object?.id, {
+              type: "Стороння агенція",
+              contact: {
+                name: name,
+                party_agency: agency,
+              },
+              error: 0,
+            });
+        });
+        onClose();
+      });
+    }
+  };
+
+  useEffect(() => {
+    const isAgency = object?.clients_inf?.contact?.party_agency;
+    const type = object?.clients_inf?.type;
+    console.log(object);
+    if (isAgency) {
+      setType(1);
+      setName(object?.clients_inf?.contact?.name);
+      setAgency(isAgency);
+    } else if (type === "ШАХРАЙ") {
+      setType(2);
+    }
+  }, [object]);
+
+  return (
+    <StyledMarkObjectPhones>
+      <Modal onClose={onClose} title="Мітка номерів об'єкту">
+        <div className="markPhonesContent">
+          <CheckOption
+            label="Не визначено"
+            value={type === 0 ? "1" : "0"}
+            onChange={() => handleChangeType(0)}
+          />
+          <CheckOption
+            label="Стороння агенція"
+            value={type === 1 ? "1" : "0"}
+            onChange={() => handleChangeType(1)}
+          />
+          {type === 1 ? (
+            <>
+              <ProfileField
+                label="Ім'я агента"
+                value={name}
+                onChange={(val) => setName(val)}
+                placeholder="Введіть значення"
+              />
+              <Select
+                label="Назва агенції"
+                value={agency}
+                onChange={(val) => setAgency(val)}
+                options={
+                  agencies?.data
+                    ? agencies?.data?.map(({ agency_name }) => ({
+                        title: agency_name,
+                        value: agency_name,
+                      }))
+                    : []
+                }
+                editValue
+                isSearch
+              />
+            </>
+          ) : null}
+          <CheckOption
+            label="Шахрай"
+            value={type === 2 ? "1" : "0"}
+            onChange={() => handleChangeType(2)}
+          />
+          <Button
+            onClick={handleSave}
+            title="Зберегти"
+            disabled={
+              type === 1 ? agency?.length === 0 || name?.length === 0 : false
+            }
+          />
+        </div>
+      </Modal>
+    </StyledMarkObjectPhones>
+  );
+};
+
+const StyledMarkObjectPhones = styled.div`
+  .markPhonesContent {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: max-content;
+    gap: 5px;
+  }
+`;

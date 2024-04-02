@@ -296,6 +296,13 @@ const Selections = () => {
     setObjects(updatedData);
   };
 
+  const handleChangeContacts = (id, clients_inf) => {
+    const updatedData = objects?.map((obj) =>
+      obj?.id === id ? { ...obj, clients_inf } : obj
+    );
+    setObjects(updatedData);
+  };
+
   return (
     <StyledSelections>
       <Header
@@ -336,6 +343,7 @@ const Selections = () => {
         onChangeCurrency={(val) =>
           handleChangeFilter("price_currency", val + 1)
         }
+        onChangeContacts={handleChangeContacts}
       />
     </StyledSelections>
   );

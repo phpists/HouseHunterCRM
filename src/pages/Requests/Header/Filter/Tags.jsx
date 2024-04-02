@@ -17,7 +17,13 @@ import { Price } from "../../../Request/Main/Price/Price";
 import { Ranger } from "../../../../components/Ranger/Ranger";
 import { ToggleOption } from "./ToggleOption";
 
-export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
+export const Tags = ({
+  filters,
+  onChangeFilter,
+  filtersFields,
+  onChangeInputFocus,
+  isInputFocused,
+}) => {
   const { data: rubricsList } = useGetRubricsQuery();
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
@@ -87,7 +93,8 @@ export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
         rubricId={filters?.id_rubric}
         typeValue={filters?.price_for}
         onChangeType={(val) => onChangeFilter("price_for", val)}
-        
+        onFocus={() => !isInputFocused && onChangeInputFocus(true)}
+        onBlur={() => onChangeInputFocus(false)}
       />
       <Divider />
       {filtersFields && handleGetFieldsOptions(filtersFields, "room_min") && (
@@ -103,6 +110,8 @@ export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
               onChangeFilter
             )
           }
+          onFocus={() => !isInputFocused && onChangeInputFocus(true)}
+          onBlur={() => onChangeInputFocus(false)}
         />
       )}
       {filtersFields &&
@@ -131,6 +140,8 @@ export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
                   onChangeFilter
                 )
               }
+              onFocus={() => !isInputFocused && onChangeInputFocus(true)}
+              onBlur={() => onChangeInputFocus(false)}
             />
           </>
         )}
@@ -153,6 +164,8 @@ export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
                   onChangeFilter
                 )
               }
+              onFocus={() => !isInputFocused && onChangeInputFocus(true)}
+              onBlur={() => onChangeInputFocus(false)}
             />
           </>
         )}
@@ -178,6 +191,8 @@ export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
                   onChangeFilter
                 )
               }
+              onFocus={() => !isInputFocused && onChangeInputFocus(true)}
+              onBlur={() => onChangeInputFocus(false)}
             />
           </>
         )}
@@ -309,24 +324,6 @@ export const Tags = ({ filters, onChangeFilter, filtersFields }) => {
           )
         }
       />
-      {/* <CheckOption
-        label="Запити STREET BASE"
-        className="check-opt"
-        value={filters?.only_street_base_obj}
-        onChange={(val) =>
-          onChangeFilter(
-            "only_street_base_obj",
-            {
-              ...filters,
-              only_company_obj: "0",
-              only_street_base_obj: "1",
-              only_my_obj: "0",
-              only_my_structure: "0",
-            },
-            true
-          )
-        }
-      /> */}
       <CheckOption
         label="Запити моєї структури"
         className="check-opt"

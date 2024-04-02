@@ -17,7 +17,7 @@ export const Contact = ({
   const [commentOpen, setCommentOpen] = useState(false);
 
   return (
-    <StyledContact className={`${className} clickable`}>
+    <StyledContact className={`${className} clickable `}>
       <div className="flex items-center clickable">
         {/* <CommentButton
           active={commentOpen}

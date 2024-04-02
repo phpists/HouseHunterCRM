@@ -42,13 +42,14 @@ export const App = () => {
     saveAccess(data);
   }, [data]);
 
-  const handleGetUserData = () => {
+  const handleGetUserData = (noLoading) => {
     getProfile().then((resp) => {
       loginUser(resp?.data?.data);
-      setLoad(true);
-      setTimeout(() => setLoading(false), 1500);
-      //   refetchCompanyInfo();
-      data && refetch();
+      if (!noLoading) {
+        setLoad(true);
+        setTimeout(() => setLoading(false), 1500);
+        data && refetch();
+      }
     });
   };
 
@@ -63,6 +64,10 @@ export const App = () => {
     } else {
       setLoad(true);
       setTimeout(() => setLoading(false), 1500);
+    }
+
+    if (user && token) {
+      handleGetUserData(true);
     }
     // eslint-disable-next-line
   }, [location]);

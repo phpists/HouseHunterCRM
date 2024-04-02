@@ -10,6 +10,7 @@ import { AddToSelections } from "../Objects/AddToSelections";
 import { Client } from "./Client/Client";
 import { useAppSelect } from "../../hooks/redux";
 import { EditObjectComment } from "../../components/EditObjectComment";
+import { MarkObjectPhones } from "../../components/MarkObjectPhones/MarkObjectPhones";
 
 export const List = ({
   data,
@@ -26,6 +27,7 @@ export const List = ({
   showClient,
   filters,
   onChangeComment,
+  onChangeContacts,
 }) => {
   const { accessData } = useAppSelect((state) => state.auth);
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
@@ -34,12 +36,20 @@ export const List = ({
   const [editComment, setEditComment] = useState(false);
   const [currency, setCurrency] = useState(1);
   const [type, setType] = useState("4");
+  const [markPhoneModal, setMarkPhoneModal] = useState(false);
 
   const onChangeCurrency = (val) => setCurrency(val);
   const onChangeType = (val) => setType(val);
 
   return (
     <>
+      {markPhoneModal && (
+        <MarkObjectPhones
+          onClose={() => setMarkPhoneModal(null)}
+          object={markPhoneModal}
+          onSuccess={onChangeContacts}
+        />
+      )}
       {openAddModal && (
         <AddToSelections
           onClose={() => setOpenAddModal(false)}
@@ -106,6 +116,11 @@ export const List = ({
               type={type}
               onChangeType={onChangeType}
               selections
+              onMarkPhone={
+                d?.type_object === "street_base"
+                  ? () => setMarkPhoneModal(d)
+                  : null
+              }
             />
           ))
         )}

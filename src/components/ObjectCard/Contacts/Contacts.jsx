@@ -52,7 +52,9 @@ export const Contacts = ({ className, data }) => {
               ? clientData?.contact?.phone
               : clientData?.contact?.phones
           }
-          typeText={data?.clients_inf?.type}
+          typeText={
+            data?.clients_inf?.contact?.party_agency ?? data?.clients_inf?.type
+          }
           error={error}
           onShow={handleShowClient}
         />
@@ -63,7 +65,7 @@ export const Contacts = ({ className, data }) => {
 
 const StyledContacts = styled.div`
   height: max-content;
-  width: 200px;
+  width: 230px;
   overflow: auto;
   .show-client {
     padding: 5px 10px 6px;

@@ -9,6 +9,7 @@ export const Phone = ({
   isLessThenOne,
   readOnly,
   hideIcon,
+  small,
 }) => (
   <StyledPhone
     className={`${className} notClickable ${isLessThenOne && "less-then-one"}`}
@@ -28,7 +29,7 @@ export const Phone = ({
         </a>
       )}
     </div>
-    <div className="subtitle notClickable">Телефон</div>
+    {!small ? <div className="subtitle notClickable">Телефон</div> : null}
   </StyledPhone>
 );
 

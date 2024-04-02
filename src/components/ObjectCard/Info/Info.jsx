@@ -27,15 +27,15 @@ const StyledInfo = styled.div`
   height: max-content;
   overflow: auto;
   @media (min-width: 1400px) {
-    width: 210px;
+    width: 180px;
   }
   @media (min-width: 1500px) {
-    width: 300px;
+    width: 280px;
   }
   @media (min-width: 1550px) {
-    width: 350px;
+    width: 320px;
   }
-  @media (min-width: 1600px) {
+  @media (min-width: 1660px) {
     width: auto;
   }
 `;

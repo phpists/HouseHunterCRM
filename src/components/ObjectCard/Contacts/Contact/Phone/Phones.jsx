@@ -28,6 +28,7 @@ export const Phone = ({ commentOpen, phones, error, onShow }) => {
             })
           )}
           hideIcon
+          small
         />
       ) : (
         <ShowButton
@@ -43,19 +44,19 @@ export const Phone = ({ commentOpen, phones, error, onShow }) => {
 
 const StyledPhone = styled.div`
   .phones-wrap {
-    width: 100px;
+    width: 153px;
   }
   .phones-wrap-many {
-    width: 80px;
+    width: 130px;
   }
   .phones-object-wrapper .phone {
-    width: 100px;
+    width: 120px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .phones-object-wrapper-many .phone {
-    width: 80px;
+    width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
   }

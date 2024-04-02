@@ -5,6 +5,8 @@ import { Label } from "./Label";
 import { ReactComponent as Arrow } from "../../assets/images/arrow-down.svg";
 import { Dropdown } from "./Dropdown/Dropdown";
 import { SelectIcon } from "./SelectIcon";
+import { ReactComponent as CheckboxIcon } from "../../assets/images/checkbox.svg";
+import { ProfileField } from "../ProfileField";
 
 export const Select = ({
   label,
@@ -19,6 +21,7 @@ export const Select = ({
   placeholder,
   isSearch,
   onOpen,
+  editValue,
 }) => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
@@ -35,65 +38,108 @@ export const Select = ({
     }
   }, [open]);
 
+  const handleSearch = (val) => {
+    setSearch(val);
+    editValue && onChange(val);
+  };
+
+  useEffect(() => {
+    if (editValue) {
+      setSearch(value);
+    }
+  }, [open, editValue]);
+
+  const handleGetFilteredOptions = () =>
+    options?.filter(({ title }) =>
+      isSearch && search?.length > 0
+        ? title?.toLowerCase().includes(search.toLowerCase())
+        : true
+    );
+
+  const handlePressEnter = (e) => {
+    if (e?.keyCode === 13 && editValue) {
+      setOpen(false);
+    }
+  };
+
+  const handleChangeField = (val) => {
+    onChange(val);
+    setSearch(val);
+  };
+
   return (
-    <StyledSelect
-      hideArrowDefault={hideArrowDefault}
-      className={`${className} ${error && "error-field"} ${
-        open && "active selectOpened"
-      }`}
-      error={error?.toString()}
-      onClick={(e) => {
-        !open && setOpen(!open);
-      }}
-    >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          {Icon && <SelectIcon Icon={Icon} />}
-          <div>
-            {open && isSearch ? (
-              <input
-                type="text"
-                placeholder="Пошук"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                autoFocus
-              />
-            ) : (
-              <Value
-                value={options?.find((opt) => opt.value === value)?.title}
-                placeholder={placeholder}
-              />
-            )}
-            {open ? null : <Label label={open ? labelActive : label} />}
-          </div>
-        </div>
-        <button
+    <>
+      {handleGetFilteredOptions()?.length === 0 && editValue ? (
+        <ProfileField
+          label={label}
+          value={value}
+          onChange={handleChangeField}
+          initOpen={open}
+          placeholder="Введіть значення"
+        />
+      ) : (
+        <StyledSelect
+          hideArrowDefault={hideArrowDefault}
+          className={`${className} ${error && "error-field"} ${
+            open && "active selectOpened"
+          } `}
+          error={error?.toString()}
           onClick={(e) => {
-            setOpen(!open);
+            !open && setOpen(!open);
           }}
         >
-          <Arrow className="arrow" />
-        </button>
-      </div>
-      <Dropdown
-        open={open}
-        onChange={handleChange}
-        options={options?.filter(({ title }) =>
-          isSearch && search?.length > 0
-            ? title?.toLowerCase().includes(search.toLowerCase())
-            : true
-        )}
-      />
-      {open && (
-        <div
-          className="modal-overlay"
-          onClick={() => setOpen(false)}
-          onWheel={(e) => {
-            setOpen(false);
-          }}
-        ></div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              {Icon && <SelectIcon Icon={Icon} />}
+              <div>
+                {open && isSearch ? (
+                  <input
+                    type="text"
+                    placeholder="Пошук"
+                    value={search}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    autoFocus
+                    onKeyDown={handlePressEnter}
+                  />
+                ) : (
+                  <Value
+                    value={
+                      editValue
+                        ? value
+                        : options?.find((opt) => opt.value === value)?.title
+                    }
+                    placeholder={placeholder}
+                  />
+                )}
+                {open ? null : <Label label={label} />}
+              </div>
+            </div>
+            <button
+              onClick={(e) => {
+                setOpen(!open);
+              }}
+            >
+              <Arrow className="arrow" />
+            </button>
+          </div>
+          <Dropdown
+            open={open}
+            onChange={handleChange}
+            options={handleGetFilteredOptions()}
+            editValue={editValue}
+          />
+          {open && (
+            <div
+              className="modal-overlay"
+              onClick={() => setOpen(false)}
+              onWheel={(e) => {
+                setOpen(false);
+              }}
+            ></div>
+          )}
+        </StyledSelect>
       )}
-    </StyledSelect>
+    </>
   );
 };
 

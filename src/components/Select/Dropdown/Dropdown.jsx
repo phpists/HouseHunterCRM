@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 import { Option } from "./Option";
 
-export const Dropdown = ({ open, onChange, options }) => (
+export const Dropdown = ({ open, onChange, options, editValue }) => (
   <StyledDropdown className="hide-scroll select-none selectDropdown">
-    {options?.length === 0 ? (
+    {options?.length === 0 && editValue ? null : options?.length === 0 ? (
       <div className="empty-select">Пусто</div>
     ) : (
       options?.map(({ title, value }, i) => (

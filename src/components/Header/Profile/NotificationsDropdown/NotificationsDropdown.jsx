@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { Card } from "./Card/Card";
 import { useEffect, useState } from "react";
 import { useAppSelect } from "../../../../hooks/redux";
+import { useLocation } from "react-router-dom";
 
 export const NotificationsDropdown = ({ data, open, closed, onClose }) => {
   const { user } = useAppSelect((state) => state.auth);
+  const { search } = useLocation();
 
   return (
     <StyledNotificationsDropdown open={open}>
@@ -46,7 +48,11 @@ export const NotificationsDropdown = ({ data, open, closed, onClose }) => {
         <Card
           type="requests"
           messages={[data?.requestDtDeadline]}
-          link="/requests?showDeadline=true"
+          link={
+            search === "?showDeadline=true"
+              ? "/requests?showDeadline=refresh"
+              : "/requests?showDeadline=true"
+          }
           onClose={() => onClose("requestDtDeadline")}
         />
       )}

@@ -27,6 +27,7 @@ export const ObjectCard = memo(
     type,
     onChangeType,
     selections,
+    onMarkPhone,
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
     const { ref, inView } = useInView({ triggerOnce: true });
@@ -78,6 +79,7 @@ export const ObjectCard = memo(
             showLike={showLike}
             onChangeComment={onChangeComment}
             selections={selections}
+            onMarkPhone={onMarkPhone}
           />
         ) : (
           <MobileContent
@@ -100,6 +102,7 @@ export const ObjectCard = memo(
             showLike={showLike}
             onChangeComment={onChangeComment}
             selections={selections}
+            onMarkPhone={onMarkPhone}
           />
         )}
       </StyledObjectCard>

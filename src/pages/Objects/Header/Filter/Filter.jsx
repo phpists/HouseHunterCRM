@@ -113,7 +113,12 @@ export const Filter = ({
       },
     };
 
-    if (!company_object && !street_base_object && !mls_object) {
+    if (
+      !company_object &&
+      !street_base_object &&
+      !mls_object &&
+      Object.entries(filters)?.filter((f) => f?.[1])?.length > 0
+    ) {
       data = {
         ...data,
         company_object: {

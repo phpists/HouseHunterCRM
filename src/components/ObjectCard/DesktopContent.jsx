@@ -28,6 +28,7 @@ export const DesktopContent = ({
   type,
   onChangeType,
   selections,
+  onMarkPhone,
 }) => {
   return (
     <StyledDesktopContent className="flex items-center justify-between clickable">
@@ -70,6 +71,7 @@ export const DesktopContent = ({
         onDelete={onDelete}
         isStreetBase={data?.obj_street_base === "1"}
         searchTag={searchTag}
+        onMarkPhone={onMarkPhone}
       />
       <div className="mobile-footer w-full">
         <Info data={data} />

@@ -3,10 +3,10 @@ import { styled } from "styled-components";
 export const Info = ({ requestsCount, objectsCount }) => (
   <StyledInfo>
     <div className="flex items-center">
-      <span className="orange">{requestsCount}</span> Запитiв
+      <span className="green">{requestsCount}</span> Запитiв
     </div>
     <div className="flex items-center">
-      <span className="blue">{objectsCount}</span> Об'єкта
+      <span className="purple">{objectsCount}</span> Об'єкта
     </div>
   </StyledInfo>
 );
@@ -19,21 +19,21 @@ const StyledInfo = styled.div`
   font-family: Overpass;
   font-size: 11px;
   font-style: normal;
-  font-weight: 100;
+  font-weight: 200;
   line-height: 118%;
   letter-spacing: 0.22px;
   div {
     padding: 5px 8px 2px 7px;
     border-radius: 3px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
   }
   span {
     margin-right: 5px;
   }
-  .orange {
-    color: #ffaf50;
+  .purple {
+    color: #c765eb;
   }
-  .blue {
-    color: #44ebe1;
+  .green {
+    color: #2df47d;
   }
 `;

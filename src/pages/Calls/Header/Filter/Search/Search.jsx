@@ -60,28 +60,6 @@ export const Search = ({
         }
       />
       <Divider />
-      {filters?.call_my_struct?.length >= 0 ? (
-        <>
-          {" "}
-          <SelectTags
-            label="Пошук по працівнику"
-            placeholder="Оберіть працівника"
-            options={
-              workers?.data
-                ? workers?.data?.map(({ id, first_name, last_name }) => ({
-                    title: `${first_name} ${last_name}`,
-                    value: id,
-                  }))
-                : []
-            }
-            value={filters?.id_worker_Search}
-            onChange={(val) => onChangeFilter("id_worker_Search", val)}
-            isSearch
-            notMultiSelect
-          />
-          <Divider />
-        </>
-      ) : null}
       <Period filters={filters} onChangeFilter={onChangeFilter} />
       <Divider />
       <SelectTags
@@ -137,6 +115,27 @@ export const Search = ({
         value={filters?.call_my_struct?.length >= 0}
         onChange={() => onChangeFilter("call_my_struct", "1")}
       />
+      {filters?.call_my_struct?.length >= 0 ? (
+        <>
+          <SelectTags
+            label="Пошук по працівнику"
+            placeholder="Оберіть працівника"
+            options={
+              workers?.data
+                ? workers?.data?.map(({ id, first_name, last_name }) => ({
+                    title: `${first_name} ${last_name}`,
+                    value: id,
+                  }))
+                : []
+            }
+            value={filters?.id_worker_Search}
+            onChange={(val) => onChangeFilter("id_worker_Search", val)}
+            isSearch
+            notMultiSelect
+          />
+          <Divider />
+        </>
+      ) : null}
       <ToggleOption
         label="Тільки мої дзвінки"
         value={!filters?.call_my_struct}

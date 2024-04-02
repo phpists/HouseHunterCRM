@@ -145,6 +145,7 @@ export const Header = ({
           onChangeFilter={onChangeFilter}
           filtersFields={filtersFields}
           onApplyFilter={onApplyFilter}
+          isFavorite={isFavorite}
         />
       )}
       {addClientOpen && <AddClient onClose={() => setAddClientOpen(false)} />}

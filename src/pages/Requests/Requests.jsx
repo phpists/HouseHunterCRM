@@ -55,6 +55,7 @@ const Requests = () => {
   const dataRef = useRef([]);
   const allCountRef = useRef(0);
   const [actionLoading, setActionLoading] = useState(false);
+  const firstRequest = useRef(true);
 
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => {
@@ -99,7 +100,7 @@ const Requests = () => {
     );
   };
 
-  const handleGetRequests = (isReset) => {
+  const handleGetRequests = (isReset, isGetCount) => {
     if ((!isLoading.current && !isAllPages) || isReset) {
       if (isReset) {
         listRef.current.scroll({ top: 0 });
@@ -128,7 +129,8 @@ const Requests = () => {
 
       setLoading(true);
 
-      if (currentPage.current === 0 || isReset) {
+      if (isGetCount || firstRequest.current) {
+        firstRequest.current = false;
         getRequests({ ...data, only_count_item: "1" }).then((resp) =>
           saveRequestsCount(Number(resp?.data?.all_item ?? 0))
         );
@@ -362,7 +364,7 @@ const Requests = () => {
       setFilterFields([]);
       localStorage.removeItem("requestFilter");
     }
-    handleGetRequests(true);
+    handleGetRequests(true, !isApply);
   };
 
   const handleSelectAll = (isReset, count) => {
@@ -377,6 +379,10 @@ const Requests = () => {
     filterActive.current = false;
     const filterApply = location?.search?.split("=")[0];
     const prevFilters = localStorage.getItem("requestFilter");
+    setIsDefaultFiltersSet(false);
+    filterActive.current = false;
+    isFirstRender.current = true;
+    firstRequest.current = true;
     if (filterApply === "?showDeadline") {
       filterActive.current = true;
       setFilters({ showDeadline: "1" });

@@ -162,7 +162,12 @@ const Objects = () => {
           },
         };
 
-        if (!company_object && !street_base_object && !mls_object) {
+        if (
+          !company_object &&
+          !street_base_object &&
+          !mls_object &&
+          Object.entries(filters)?.filter((f) => f?.[1])?.length > 0
+        ) {
           data = {
             ...data,
             company_object: {
@@ -179,14 +184,6 @@ const Objects = () => {
             mls_object: {},
           };
         }
-      } else {
-        data = {
-          ...data,
-          //   company_object: {
-          //     show_only: "only_my",
-          //     actual: "1",
-          //   },
-        };
       }
 
       setLoading(true);
@@ -335,6 +332,14 @@ const Objects = () => {
   const handleChangeComment = (id, comment) => {
     const updatedData = objects?.map((obj) =>
       obj?.id === id ? { ...obj, comment } : obj
+    );
+    dataRef.current = updatedData;
+    setObjects(updatedData);
+  };
+
+  const handleChangeContacts = (id, clients_inf) => {
+    const updatedData = objects?.map((obj) =>
+      obj?.id === id ? { ...obj, clients_inf } : obj
     );
     dataRef.current = updatedData;
     setObjects(updatedData);
@@ -551,6 +556,7 @@ const Objects = () => {
         onChangeCurrency={(val) =>
           handleChangeFilter("price_currency", val + 1)
         }
+        onChangeContancts={handleChangeContacts}
       />
     </StyledObjects>
   );

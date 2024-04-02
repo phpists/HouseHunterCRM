@@ -12,6 +12,7 @@ export const Phones = ({
   phones,
   notHideArrow,
   hideIcon,
+  small,
 }) => {
   const [open, setOpen] = useState(false);
   const [activePhone, setActivePhone] = useState(0);
@@ -30,6 +31,7 @@ export const Phones = ({
           phone={phones?.length > 0 ? phones?.[activePhone]?.phone : ""}
           isLessThenOne={phones?.length <= 1}
           hideIcon={hideIcon}
+          small={small}
         />
         {phones?.length <= 1 && !notHideArrow ? null : (
           <Arrow
@@ -51,10 +53,11 @@ export const Phones = ({
           type="viber"
           active={phones?.[activePhone]?.viber === "1"}
           onClick={() => null}
-          className="viber-card mr-1"
+          className={`viber-card mr-1 ${small && "socmediaCardSmallPhone"}`}
           open
           phone={`${phones?.[activePhone]?.phone}`}
           readOnly
+          activeColor={small ? "#646464" : undefined}
         />
         <Socmedia
           type="telegram"
@@ -63,6 +66,8 @@ export const Phones = ({
           open
           phone={`${phones?.[activePhone]?.phone}`}
           readOnly
+          className={` ${small && "socmediaCardSmallPhone"}`}
+          activeColor={small ? "#646464" : undefined}
         />
       </div>
     </div>

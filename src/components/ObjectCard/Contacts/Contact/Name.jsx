@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Name = ({ type, name = "-", typeText }) => (
-  <StyledName type={type}>
+  <StyledName type={type} isError={typeText === "ШАХРАЙ"}>
     <div className="name" title={name}>
       {name}
     </div>
@@ -24,7 +24,8 @@ const StyledName = styled.div`
     line-height: 118%; /* 16.52px */
     letter-spacing: 0.28px;
     margin-bottom: 2px;
-    color: ${({ type }) => (type === "owner" ? "#2FA112" : "#FFF")};
+    color: ${({ type, isError }) =>
+      isError ? "#f94343" : type === "owner" ? "#2FA112" : "#FFF"};
     max-width: 170px;
     overflow: hidden;
     text-overflow: ellipsis;

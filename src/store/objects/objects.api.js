@@ -385,6 +385,67 @@ export const objects = createApi({
         }),
       }),
     }),
+    downloadObject: build.query({
+      query: (id_object) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "donwloadInfo",
+          mod: "objects",
+          id_object,
+        }),
+      }),
+    }),
+    getAgencies: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_party_agency",
+          mod: "objects",
+        }),
+      }),
+    }),
+    addPicaroon: build.query({
+      query: (id_object) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "add_picaroon",
+          mod: "objects",
+          id_object,
+        }),
+      }),
+    }),
+    addOherAgency: build.query({
+      query: ({ id_object, agency_name, rieltor_name }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "add_other_agency",
+          mod: "objects",
+          id_object,
+          agency_name,
+          rieltor_name,
+        }),
+      }),
+    }),
+    cleanObjectMarks: build.query({
+      query: (id_object) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "cleaning_object",
+          mod: "objects",
+          id_object,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -416,4 +477,9 @@ export const {
   useLazyAddStreetBaseObjectQuery,
   useGetSourcesQuery,
   useLazyAddNotepadTagQuery,
+  useLazyDownloadObjectQuery,
+  useGetAgenciesQuery,
+  useLazyAddPicaroonQuery,
+  useLazyAddOherAgencyQuery,
+  useLazyCleanObjectMarksQuery,
 } = objects;

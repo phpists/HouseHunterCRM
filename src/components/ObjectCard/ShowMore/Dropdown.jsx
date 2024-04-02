@@ -10,8 +10,13 @@ import { ReactComponent as Eye } from "../../../assets/images/eye-access.svg";
 import { ReactComponent as Link } from "../../../assets/images/link.svg";
 import { ReactComponent as Comment } from "../../../assets/images/message-object.svg";
 import { ReactComponent as RemoveIcon } from "../../../assets/images/remove.svg";
+import { ReactComponent as DownloadIcon } from "../../../assets/images/file.svg";
 import { ReactComponent as ToObjectIcon } from "../../../assets/images/my-object.svg";
-import { useLazyAddStreetBaseObjectQuery } from "../../../store/objects/objects.api";
+import { ReactComponent as PhoneIcon } from "../../../assets/images/phone-menu.svg";
+import {
+  useLazyAddStreetBaseObjectQuery,
+  useLazyDownloadObjectQuery,
+} from "../../../store/objects/objects.api";
 import { handleResponse } from "../../../utilits";
 import { useEffect, useState } from "react";
 import cogoToast from "cogo-toast";
@@ -34,10 +39,13 @@ export const Dropdown = ({
   isStreetBase,
   searchTag,
   onFocus,
+  onMarkPhone,
+  onClose,
 }) => {
   const [addStreetBaseObject] = useLazyAddStreetBaseObjectQuery();
   const [added, setAdded] = useState(false);
   const navigate = useNavigate();
+  const [downloadObject] = useLazyDownloadObjectQuery();
 
   useEffect(() => {
     setAdded(false);
@@ -53,6 +61,24 @@ export const Dropdown = ({
         setAdded(true);
       })
     );
+  };
+
+  const handleDownloadFile = (url) => {
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = url;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  const handleDownload = () => {
+    downloadObject(id).then((resp) => {
+      handleResponse(resp, () => {
+        const link = resp?.data?.link;
+        link && handleDownloadFile(link);
+      });
+    });
   };
 
   return (
@@ -156,6 +182,24 @@ export const Dropdown = ({
       {onDelete && (
         <div className="flex items-center justify-between" onClick={onDelete}>
           <span>Видалити</span> <RemoveIcon className="selection-icon" />
+        </div>
+      )}
+      <div
+        className="flex items-center justify-between"
+        onClick={handleDownload}
+      >
+        <span>Завантажити</span> <DownloadIcon className="selection-icon" />
+      </div>
+      {onMarkPhone && (
+        <div
+          className="flex items-center justify-between"
+          onClick={() => {
+            onMarkPhone();
+            onClose();
+          }}
+        >
+          <span>Мітка номерів об'єкту</span>{" "}
+          <PhoneIcon className="selection-icon" />
         </div>
       )}
     </StyledDropdown>

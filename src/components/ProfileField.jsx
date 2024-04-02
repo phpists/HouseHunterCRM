@@ -37,10 +37,11 @@ export const ProfileField = ({
   onClick,
   onFocus,
   reset,
+  initOpen,
 }) => {
   const fieldRef = useRef();
-  const [active, setActive] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(initOpen);
+  const [open, setOpen] = useState(initOpen);
   const textareaRef = useRef(null);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [dateInput, setDateInput] = useState(value);

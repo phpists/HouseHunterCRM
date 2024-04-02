@@ -14,6 +14,7 @@ import cogoToast from "cogo-toast";
 import { useAppSelect } from "../../hooks/redux";
 import { EditObjectComment } from "../../components/EditObjectComment";
 import { Confirm } from "../../components/Confirm/Confirm";
+import { MarkObjectPhones } from "../../components/MarkObjectPhones/MarkObjectPhones";
 
 export const List = ({
   selected,
@@ -26,6 +27,7 @@ export const List = ({
   actionLoading,
   onDeleteSuccess,
   onChangeComment,
+  onChangeContancts,
 }) => {
   const { accessData } = useAppSelect((state) => state.auth);
   const [openAddModal, setOpenAddModal] = useState(null);
@@ -39,6 +41,7 @@ export const List = ({
   const [deleteId, setDeleteId] = useState(null);
   const [currency, setCurrency] = useState(1);
   const [type, setType] = useState("4");
+  const [markPhoneModal, setMarkPhoneModal] = useState(false);
 
   const onChangeCurrency = (val) => setCurrency(val);
   const onChangeType = (val) => setType(val);
@@ -63,6 +66,13 @@ export const List = ({
   };
   return (
     <>
+      {markPhoneModal && (
+        <MarkObjectPhones
+          onClose={() => setMarkPhoneModal(null)}
+          object={markPhoneModal}
+          onSuccess={onChangeContancts}
+        />
+      )}
       {openCommentHistoryModal && (
         <ObjectCommentHistory
           onClose={() => setOpenCommentHistoryModal(null)}
@@ -142,6 +152,11 @@ export const List = ({
                 onChangeCurrency={onChangeCurrency}
                 type={type}
                 onChangeType={onChangeType}
+                onMarkPhone={
+                  d?.type_object === "street_base"
+                    ? () => setMarkPhoneModal(d)
+                    : null
+                }
               />
             ))}
           </>
