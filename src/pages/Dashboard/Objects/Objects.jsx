@@ -36,6 +36,10 @@ export const Objects = ({ statisticData }) => {
               title: "Здані",
               value: statisticData?.count_objects_surrendered ?? "0",
             },
+            {
+              title: "Видалені",
+              value: statisticData?.count_objects_deleted ?? "0",
+            },
           ]}
         />
       </div>

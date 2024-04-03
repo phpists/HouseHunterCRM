@@ -20,10 +20,12 @@ export const List = ({
   onSend,
   actionLoading,
   onChangeComment,
+  onRestore,
+  isDeleted,
 }) => {
   const [deleteModal, setDeleteModal] = useState(null);
   const [editComment, setEditComment] = useState(false);
-  const { accessData } = useAppSelect((state) => state.auth);
+  const { accessData, user } = useAppSelect((state) => state.auth);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
 
   const handleOpenDeleteModal = (id) => setDeleteModal(id);
@@ -37,9 +39,12 @@ export const List = ({
     <>
       {deleteModal && (
         <Confirm
-          title="Видалити клієнта?"
+          title={
+            isDeleted ? "Видалити клієнта остаточно?" : "Видалити клієнта?"
+          }
           onSubmit={handleDelete}
           onClose={() => setDeleteModal(null)}
+          passwordCheck={isDeleted}
         />
       )}
       {editComment && (
@@ -68,6 +73,7 @@ export const List = ({
                 favorite,
                 agent,
                 email,
+                deleted,
               },
               i
             ) => (
@@ -88,7 +94,11 @@ export const List = ({
                 objectsCount={all_obj}
                 comment={comment}
                 onDelete={() => handleOpenDeleteModal(id)}
-                isDelete={handleCheckAccess(accessData, "clients", "delete")}
+                isDelete={
+                  isDeleted
+                    ? user?.struct_level === 1
+                    : handleCheckAccess(accessData, "clients", "delete")
+                }
                 onAddToFavorite={() => onAddToFavorite(id)}
                 onSend={() => onSend(id)}
                 favorite={favorite}
@@ -102,6 +112,8 @@ export const List = ({
                 lastName={last_name}
                 email={email}
                 onEditComment={() => setEditComment({ comment, id })}
+                isDeleted={deleted === "1"}
+                onRestore={() => onRestore([id])}
               />
             )
           )

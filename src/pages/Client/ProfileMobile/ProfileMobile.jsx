@@ -39,11 +39,6 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
   }, [accessData]);
 
   const handleRefreshData = () => {
-    getClientPhotos(id).then((resp) => {
-      setPhotos(
-        resp?.data ? resp?.data?.filter((p) => typeof p === "object") : []
-      );
-    });
     onRefreshClientData();
   };
 
@@ -60,11 +55,7 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
 
     setUpdatedData(formatedDate);
     lastData.current = formatedDate;
-    getClientPhotos(id).then((resp) => {
-      setPhotos(
-        resp?.data ? resp?.data?.filter((p) => typeof p === "object") : []
-      );
-    });
+    setPhotos(data?.documents ?? []);
   }, [data, phonesCodes]);
 
   const handleSaveChanges = () => {

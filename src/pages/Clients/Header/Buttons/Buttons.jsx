@@ -28,10 +28,12 @@ export const Buttons = ({
   searchPhoneCodeSecond,
   onChangeSearchCodeSecond,
   onSendClients,
+  isDeleted,
+  onRestore,
 }) => {
   const { search } = useLocation();
   const [addClient, setAddClient] = useState(false);
-  const { accessData: data } = useAppSelect((state) => state.auth);
+  const { accessData: data, user } = useAppSelect((state) => state.auth);
 
   useEffect(() => {
     setAddClient(search === "?create=true");
@@ -74,10 +76,15 @@ export const Buttons = ({
         selectedCount={selectedCount}
         allCount={allCount}
         onSelectAll={onSelectAll}
-        onToggleFavorite={onFavorite}
-        onDelete={onDelete}
+        onToggleFavorite={isDeleted ? null : onFavorite}
+        onDelete={
+          isDeleted ? (user?.struct_level === 1 ? onDelete : null) : onDelete
+        }
         deleteConfirmTitle={deleteConfirmTitle}
-        onSend={onSendClients}
+        onSend={isDeleted ? null : onSendClients}
+        passwordCheck={isDeleted}
+        noFavorite={isDeleted}
+        onRestore={onRestore}
       />
     </StyledButtons>
   );

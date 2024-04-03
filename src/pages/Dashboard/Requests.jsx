@@ -28,6 +28,10 @@ export const Requests = ({ statisticData }) => {
               title: "Неактуальні ",
               value: statisticData?.count_request_not_actual ?? "0",
             },
+            {
+              title: "Видалені",
+              value: statisticData?.count_request_deleted ?? "0",
+            },
           ]}
         />
       </div>

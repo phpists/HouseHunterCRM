@@ -79,22 +79,6 @@ export const General = ({
           )
         }
       />
-      {/* <Divider />
-      <ToggleOption
-        label="Клієнти до видалення"
-        value={filter?.XXXX === "1"}
-        onChange={() =>
-          onChangeFilter("XXXX", filter?.XXXX === "1" ? "0" : "1")
-        }
-      /> */}
-      {/* <Divider />
-      <ToggleOption
-        label="Клієнти моєї структури"
-        value={filter?.XXXX === "1"}
-        onChange={() =>
-          onChangeFilter("XXXX", filter?.XXXX === "1" ? "0" : "1")
-        }
-      /> */}
       <Divider />
       <ToggleOption
         label="Клієнти без об'єктів та запитів"
@@ -131,41 +115,18 @@ export const General = ({
           })
         }
       />
-      {/* <Divider />
+      <Divider />
       <ToggleOption
-        label="Тільки делеговані клієнти"
-        value={filter?.XXXX === "1"}
+        label="Клієнти до видалення"
+        value={filter?.filters?.show_deleted === "1"}
         onChange={() =>
-          onChangeFilter("XXXX", filter?.XXXX === "1" ? "0" : "1")
+          onChangeFilter("filters", {
+            ...filter.filters,
+            show_deleted:
+              filter?.filters?.show_deleted === "1" ? undefined : "1",
+          })
         }
-      /> */}
-
-      {/* <Select
-        label="Категорія"
-        labelActive="Оберіть категорію"
-        value="Оренда квартир"
       />
-      <Divider />
-      <Select
-        label="Локація"
-        labelActive="Локація"
-        value="Оберіть локацію"
-        Icon={LocationIcon}
-      />
-      <Divider />
-      <Ranger
-        label="Ціна"
-        types={["$", "₴"]}
-        max={50000}
-        defaultStart={9000}
-        defaultEnd={22000}
-      />
-      <Divider />
-      <Select
-        label="Кількість кімнат"
-        labelActive="Оберіть кількість кімнат"
-        value="2, 3, 4 – кімнатна"
-      /> */}
     </StyledGeneral>
   );
 };

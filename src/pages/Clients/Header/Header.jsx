@@ -33,13 +33,14 @@ export const Header = ({
   onFavorite,
   onSendClients,
   onChangeActionLoading,
+  onRestore,
 }) => {
   const navigate = useNavigate();
   const [getNewClientsCount] = useLazyGetNewClientsCountQuery();
   const { saveNewClientsCount } = useActions();
   const { newClientsCount } = useAppSelect((state) => state.clients);
   const [deleteClient] = useLazyDeleteCientQuery();
-  const { accessData } = useAppSelect((state) => state.auth);
+  const { accessData, user } = useAppSelect((state) => state.auth);
 
   useEffect(() => {
     getNewClientsCount().then((resp) => saveNewClientsCount(resp?.data?.count));
@@ -48,14 +49,20 @@ export const Header = ({
   const handleDeleteClients = () => {
     if (selected?.length > 0) {
       onChangeActionLoading(true);
-      deleteClient({ id_client: selected }).then((resp) => {
+      deleteClient({
+        id_client: selected,
+        final_remove: filter?.filters?.show_deleted ? "1" : undefined,
+      }).then((resp) => {
         handleResponse(
           resp,
           () => {
-            cogoToast.success("Клієнтів успішно видалено", {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            cogoToast.success(
+              `Клієнт${selected?.length === 1 ? "a" : "ів"} успішно видалено`,
+              {
+                hideAfter: 3,
+                position: "top-right",
+              }
+            );
             onDelete();
             onChangeActionLoading(false);
           },
@@ -96,27 +103,38 @@ export const Header = ({
           }
           deleteConfirmTitle={`Видалити клієнт${
             selected?.length > 1 ? "ів" : "а"
-          }`}
+          } ${filter?.filters?.show_deleted === "1" ? "остаточно" : ""}?`}
           onFavorite={onFavorite}
           onSendClients={onSendClients}
+          isDeleted={filter?.filters?.show_deleted === "1"}
+          onRestore={filter?.filters?.show_deleted === "1" ? onRestore : null}
         />
       </div>
       <SelectItems
         deleteConfirmTitle={`Видалити клієнт${
           selected?.length > 1 ? "ів" : "а"
-        }`}
+        } ${filter?.filters?.show_deleted === "1" ? "остаточно" : ""}?`}
         title="клієнтів"
         className="select-wrapper-mobile"
         selectedCount={selectedCount}
         allCount={allCount}
         onSelectAll={onSelectAll}
-        onToggleFavorite={onFavorite}
+        onToggleFavorite={
+          filter?.filters?.show_deleted === "1" ? null : onFavorite
+        }
+        noFavorite={filter?.filters?.show_deleted === "1"}
         onDelete={
-          handleCheckAccess(accessData, "clients", "delete")
+          filter?.filters?.show_deleted === "1"
+            ? user?.struct_level === 1
+              ? handleDeleteClients
+              : null
+            : handleCheckAccess(accessData, "clients", "delete")
             ? handleDeleteClients
             : null
         }
-        onSend={onSendClients}
+        onSend={filter?.filters?.show_deleted === "1" ? null : onSendClients}
+        passwordCheck={filter?.filters?.show_deleted === "1"}
+        onRestore={filter?.filters?.show_deleted === "1" ? onRestore : null}
       />
     </StyledHeader>
   );

@@ -161,7 +161,7 @@ export const clients = createApi({
       }),
     }),
     deleteCient: build.query({
-      query: ({ id_client }) => ({
+      query: ({ id_client, final_remove }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -169,6 +169,7 @@ export const clients = createApi({
           action: "delete",
           mod: "clients",
           id_client,
+          final_remove,
         }),
       }),
     }),
@@ -303,6 +304,18 @@ export const clients = createApi({
         }),
       }),
     }),
+    restoreClients: build.query({
+      query: (id_client) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "remove_client",
+          mod: "clients",
+          id_client,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -323,4 +336,5 @@ export const {
   useGetWorkerToMoveClientsQuery,
   useLazyMoveClientsQuery,
   useLazyEditClientCommentQuery,
+  useLazyRestoreClientsQuery,
 } = clients;

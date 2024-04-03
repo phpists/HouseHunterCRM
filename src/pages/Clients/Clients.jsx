@@ -6,6 +6,7 @@ import {
   useLazyAddClientToFavoriteQuery,
   useLazyDeleteCientQuery,
   useLazyGetClientsQuery,
+  useLazyRestoreClientsQuery,
 } from "../../store/clients/clients.api";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
@@ -51,6 +52,7 @@ const Clients = () => {
   const [sendClients, setSendClients] = useState([]);
   const [actionLoading, setActionLoading] = useState(false);
   const isFirstRender = useRef(true);
+  const [restoreClients] = useLazyRestoreClientsQuery();
 
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
@@ -210,15 +212,11 @@ const Clients = () => {
     setSelected(isReset ? [] : clientsIds);
   };
 
-  const handleDeleteClients = () => {
-    saveClientsCount(allCount - selected?.length);
-    setAllCount(allCount - selected?.length);
-    setClients(clients.filter((c) => !selected.find((sc) => sc === c.id)));
-    setSelected([]);
-  };
-
   const handleDeleteClient = (clientId) => {
-    deleteClient({ id_client: [clientId] }).then((resp) => {
+    deleteClient({
+      id_client: [clientId],
+      final_remove: filter?.filters?.show_deleted ? "1" : undefined,
+    }).then((resp) => {
       handleResponse(resp, () => {
         cogoToast.success("Клієнта успішно видалено", {
           hideAfter: 3,
@@ -320,6 +318,30 @@ const Clients = () => {
     setClients(updatedClients);
   };
 
+  const handleDeleteClients = (ids, isSelected) => {
+    saveClientsCount(allCount - ids?.length);
+    setAllCount(allCount - ids?.length);
+    setClients(clients.filter((c) => !ids.find((sc) => sc === c.id)));
+    isSelected && setSelected([]);
+  };
+
+  const handleRestore = (ids, isSelected) => {
+    if (ids?.length > 0) {
+      restoreClients(ids).then((resp) =>
+        handleResponse(resp, () => {
+          handleDeleteClients(ids, isSelected);
+          cogoToast.success(
+            `Клієнт${ids?.length === 1 ? "а" : "ів"} успішно відновлено`,
+            {
+              hideAfter: 3,
+              position: "top-right",
+            }
+          );
+        })
+      );
+    }
+  };
+
   return (
     <StyledClients>
       {sendClients?.length > 0 ? (
@@ -345,10 +367,11 @@ const Clients = () => {
         allCount={allCount}
         onSelectAll={handleSelectAll}
         selected={selected}
-        onDelete={handleDeleteClients}
+        onDelete={() => handleDeleteClients(selected, true)}
         onFavorite={handleAddClientsToFavorite}
         onSendClients={() => setSendClients(selected)}
         onChangeActionLoading={(val) => setActionLoading(val)}
+        onRestore={() => handleRestore(selected, true)}
       />
       <List
         selected={selected}
@@ -361,6 +384,8 @@ const Clients = () => {
         onSend={handleSendClient}
         actionLoading={actionLoading}
         onChangeComment={handleChangeComment}
+        onRestore={handleRestore}
+        isDeleted={filter?.filters?.show_deleted}
       />
     </StyledClients>
   );

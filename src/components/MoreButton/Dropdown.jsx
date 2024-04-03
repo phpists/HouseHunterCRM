@@ -3,6 +3,7 @@ import { ReactComponent as StarIcon } from "../../assets/images/card-star.svg";
 import { ReactComponent as UserIcon } from "../../assets/images/card-user.svg";
 import { ReactComponent as RemoveIcon } from "../../assets/images/remove.svg";
 import { ReactComponent as EditIcon } from "../../assets/images/edit-company.svg";
+import { ReactComponent as RestoreIcon } from "../../assets/images/refresh-icon.svg";
 
 export const Dropdown = ({
   onDelete,
@@ -12,46 +13,75 @@ export const Dropdown = ({
   noFavorite,
   noDelete,
   onSend,
+  isDeleted,
+  onRestore,
 }) => (
   <StyledDropdown className="dropdown noClickable">
-    {!noFavorite && (
-      <div
-        className="flex items-center justify-between noClickable"
-        onClick={onFavorite}
-      >
-        <span className="noClickable">
-          {favorite ? "З улюбленого" : "В улюблене"}
-        </span>
-        <StarIcon className={`star-icon ${favorite && "active"} noClickable`} />
-      </div>
-    )}
-    {onSend && (
-      <div
-        className="flex items-center justify-between noClickable"
-        onClick={onSend}
-      >
-        <span className="noClickable">Передати</span>
-        <UserIcon className="user-icon noClickable" />
-      </div>
-    )}
-    {editLink && (
-      <a
-        className="flex items-center justify-between noClickable"
-        href={editLink}
-        rel="noreferrer"
-      >
-        <span className="noClickable">Редагувати</span>
-        <EditIcon className="noClickable" />
-      </a>
-    )}
-    {!noDelete && (
-      <div
-        className="flex items-center justify-between noClickable"
-        onClick={onDelete}
-      >
-        <span className="noClickable">Видалити</span>
-        <RemoveIcon className="remove-icon noClickable" />
-      </div>
+    {isDeleted ? (
+      <>
+        {onRestore && (
+          <div
+            className="flex items-center justify-between noClickable"
+            onClick={onRestore}
+          >
+            <span className="noClickable">Відновити</span>
+            <RestoreIcon className="refresh noClickable" />
+          </div>
+        )}
+        {!noDelete && (
+          <div
+            className="flex items-center justify-between noClickable"
+            onClick={onDelete}
+          >
+            <span className="noClickable">Видалити</span>
+            <RemoveIcon className="remove-icon noClickable" />
+          </div>
+        )}
+      </>
+    ) : (
+      <>
+        {!noFavorite && (
+          <div
+            className="flex items-center justify-between noClickable"
+            onClick={onFavorite}
+          >
+            <span className="noClickable">
+              {favorite ? "З улюбленого" : "В улюблене"}
+            </span>
+            <StarIcon
+              className={`star-icon ${favorite && "active"} noClickable`}
+            />
+          </div>
+        )}
+        {onSend && (
+          <div
+            className="flex items-center justify-between noClickable"
+            onClick={onSend}
+          >
+            <span className="noClickable">Передати</span>
+            <UserIcon className="user-icon noClickable" />
+          </div>
+        )}
+        {editLink && (
+          <a
+            className="flex items-center justify-between noClickable"
+            href={editLink}
+            rel="noreferrer"
+          >
+            <span className="noClickable">Редагувати</span>
+            <EditIcon className="noClickable" />
+          </a>
+        )}
+        {!noDelete && (
+          <div
+            className="flex items-center justify-between noClickable"
+            onClick={onDelete}
+          >
+            <span className="noClickable">Видалити</span>
+            <RemoveIcon className="remove-icon noClickable" />
+          </div>
+        )}
+      </>
     )}
   </StyledDropdown>
 );
@@ -105,5 +135,10 @@ const StyledDropdown = styled.div`
   }
   .remove-icon path {
     fill: #f14040;
+  }
+  .refresh {
+    path {
+      fill: #3e46fb;
+    }
   }
 `;

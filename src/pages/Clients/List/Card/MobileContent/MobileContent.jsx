@@ -25,6 +25,8 @@ export const MobileContent = ({
   lastName,
   email,
   onEditComment,
+  isDeleted,
+  onRestore,
 }) => (
   <StyledMobileContent className="flex items-center hide-scroll card">
     <div className="w-full">
@@ -69,6 +71,8 @@ export const MobileContent = ({
       onAddToFavorite={onAddToFavorite}
       favorite={favorite}
       onSend={onSend}
+      isDeleted={isDeleted}
+      onRestore={onRestore}
     />
   </StyledMobileContent>
 );
@@ -118,7 +122,7 @@ const StyledMobileContent = styled.div`
   @media (max-width: 1000px) {
     .mobile-phones-content-wrapper {
       width: 15svw;
-      min-width: 200px;
+      min-width: 150px;
     }
   }
   @media (max-width: 850px) {

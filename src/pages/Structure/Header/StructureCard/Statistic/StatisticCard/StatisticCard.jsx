@@ -17,7 +17,7 @@ const StyledStatisticCard = styled.div`
   @media (max-width: 1399.9px) {
     width: 100%;
     height: auto;
-    overflow: unset;
+    /* overflow: unset; */
   }
   @media (min-width: 1400px) {
     width: 170px;

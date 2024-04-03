@@ -27,6 +27,8 @@ export const DesktopContent = ({
   lastName,
   email,
   onEditComment,
+  isDeleted,
+  onRestore,
 }) => (
   <StyledDesktopContent className="flex items-center justify-between hide-scroll card">
     <MainInfo name={name} id={id} dateCreate={dateCreate} />
@@ -59,8 +61,10 @@ export const DesktopContent = ({
         onFavorite={onAddToFavorite}
         favorite={favorite}
         onSend={onSend}
+        isDeleted={isDeleted}
+        onRestore={onRestore}
       />
-      <Arrow id={id} />
+      {isDeleted ? null : <Arrow id={id} />}
     </div>
   </StyledDesktopContent>
 );

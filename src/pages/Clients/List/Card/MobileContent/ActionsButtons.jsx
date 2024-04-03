@@ -10,9 +10,11 @@ export const ActionsButtons = ({
   onAddToFavorite,
   favorite,
   onSend,
+  isDeleted,
+  onRestore,
 }) => (
   <StyledActionsButtons className={`flex flex-col items-center ${className}`}>
-    <Arrow id={id} />
+    {isDeleted ? null : <Arrow id={id} />}
     <MoreButton
       className="more-btn"
       onFavorite={onAddToFavorite}
@@ -20,6 +22,8 @@ export const ActionsButtons = ({
       noDelete={noDelete}
       favorite={favorite}
       onSend={onSend}
+      isDeleted={isDeleted}
+      onRestore={onRestore}
     />
   </StyledActionsButtons>
 );

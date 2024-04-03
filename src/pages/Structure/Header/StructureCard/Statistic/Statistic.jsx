@@ -29,6 +29,10 @@ export const Statistic = ({ onClick, statisticData }) => (
           title: "Без запитів і об’єктів",
           value: statisticData?.count_not_object_and_request ?? "0",
         },
+        {
+          title: "Видалені",
+          value: statisticData?.count_deleted_client ?? "0",
+        },
       ]}
     />
     <Divider />
@@ -50,6 +54,10 @@ export const Statistic = ({ onClick, statisticData }) => (
         {
           title: "Протерміновані",
           value: statisticData?.count_request_overdue ?? "0",
+        },
+        {
+          title: "Видалені",
+          value: statisticData?.count_request_deleted ?? "0",
         },
       ]}
     />
@@ -79,6 +87,10 @@ export const Statistic = ({ onClick, statisticData }) => (
         {
           title: "Не актуальні",
           value: statisticData?.count_objects_not_actual ?? "0",
+        },
+        {
+          title: "Видалені",
+          value: statisticData?.count_objects_deleted ?? "0",
         },
       ]}
     />

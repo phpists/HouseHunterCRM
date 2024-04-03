@@ -39,11 +39,6 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
   }, [accessData]);
 
   const handleRefreshData = () => {
-    getClientPhotos(id).then((resp) => {
-      setPhotos(
-        resp?.data ? resp?.data?.filter((p) => typeof p === "object") : []
-      );
-    });
     onRefreshClientData();
   };
 
@@ -59,11 +54,7 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
           }
         : null
     );
-    getClientPhotos(id).then((resp) => {
-      setPhotos(
-        resp?.data ? resp?.data?.filter((p) => typeof p === "object") : []
-      );
-    });
+    setPhotos(data?.documents ?? []);
   }, [data, phonesCodes]);
 
   const handleChangeField = (fieldName, value) => {

@@ -13,8 +13,14 @@ export const MoreButton = ({
   noFavorite,
   noDelete,
   onSend,
+  isDeleted,
+  onRestore,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
+
+  if (isDeleted && !onSend && noDelete) {
+    return false;
+  }
 
   return (
     <StyledMoreButton
@@ -31,9 +37,11 @@ export const MoreButton = ({
           noFavorite={noFavorite}
           noDelete={noDelete}
           onSend={onSend}
+          isDeleted={isDeleted}
+          onRestore={onRestore}
         />
       </div>
-      <Divider />
+      {isDeleted ? null : <Divider />}
     </StyledMoreButton>
   );
 };

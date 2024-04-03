@@ -263,7 +263,7 @@ export const Base = ({
           />
           {showDeleted ? (
             <CheckOption
-              label="Видалені об'єкти"
+              label="Об'єкти до видалення"
               className="check-opt"
               value={data?.company_object?.show_deleted}
               onChange={() =>
