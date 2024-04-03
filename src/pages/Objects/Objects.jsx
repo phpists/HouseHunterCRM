@@ -6,6 +6,7 @@ import {
   useLazyAddToFavoritesQuery,
   useLazyGetAllObjectsQuery,
   useLazyGetRubricFieldsQuery,
+  useLazyRestoreObjectsQuery,
 } from "../../store/objects/objects.api";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
@@ -72,6 +73,7 @@ const Objects = () => {
   const firstThousand = useRef([]);
   const [actionLoading, setActionLoading] = useState(false);
   const [phoneCode, setPhoneCode] = useState("1");
+  const [restoreObjects] = useLazyRestoreObjectsQuery();
 
   const handleChangePhoneCode = (val) => setPhoneCode(val);
 
@@ -251,21 +253,6 @@ const Objects = () => {
       : objectsCount;
     saveObjectsCount(updatedAllCount);
     setSelected([]);
-  };
-
-  const handleDeleteSuccess = () => {
-    const updatedCount = allCount - selected?.length;
-    allCountRef.current = updatedCount;
-    const updatedAllCount = (objectsCount || 0) - selected.length;
-    saveObjectsCount(updatedAllCount);
-    setAllCount(updatedCount);
-    const updatedData = objects.filter(
-      (obj) => !selected.find((s) => s === obj.id)
-    );
-    dataRef.current = updateData;
-    setObjects(updatedData);
-    setSelected([]);
-    handleGetObjects();
   };
 
   useEffect(() => {
@@ -510,16 +497,45 @@ const Objects = () => {
   }, []);
 
   const handleDeleteObjectSuccess = (id) => {
-    firstThousand.current = firstThousand.current.filter((c) => c !== id);
     const updatedCount = allCount - 1;
     allCountRef.current = updatedCount;
-    saveObjectsCount(updatedCount);
+    saveObjectsCount(objectsCount - 1);
     setAllCount(updatedCount);
     const updatedData = objects.filter((obj) => obj.id !== id);
     dataRef.current = updatedData;
     setObjects(updatedData);
     setSelected([]);
-    handleGetObjects();
+    // handleGetObjects();
+  };
+
+  const handleDeleteObjectsFilterByIds = (ids, isSelected) => {
+    const updatedCount = allCount - ids?.length;
+    allCountRef.current = updatedCount;
+    const updatedAllCount = (objectsCount || 0) - ids.length;
+    saveObjectsCount(updatedAllCount);
+    setAllCount(updatedCount);
+    const updatedData = objects.filter((obj) => !ids.find((s) => s === obj.id));
+    dataRef.current = updateData;
+    setObjects(updatedData);
+    isSelected && setSelected([]);
+    // handleGetObjects();
+  };
+
+  const handleRestoreObjects = (ids, isSelected) => {
+    if (ids?.length > 0) {
+      restoreObjects(ids).then((resp) =>
+        handleResponse(resp, () => {
+          cogoToast.success(
+            `Oб'єкт${ids?.length === 1 ? "" : "и"} успішно відновлено`,
+            {
+              hideAfter: 3,
+              position: "top-right",
+            }
+          );
+          handleDeleteObjectsFilterByIds(ids, isSelected);
+        })
+      );
+    }
   };
 
   return (
@@ -530,7 +546,7 @@ const Objects = () => {
         onFavorite={handleToggleFavoritesStatus}
         isFavorite={isFavorite}
         onIsFavotite={() => setIsFavorite(!isFavorite)}
-        onDelete={handleDeleteSuccess}
+        onDelete={() => handleDeleteObjectsFilterByIds(selected, true)}
         filters={filters}
         onChangeFilter={handleChangeFilter}
         filtersFields={filtersFields}
@@ -540,6 +556,7 @@ const Objects = () => {
         onChangeActionLoading={(val) => setActionLoading(val)}
         phoneCode={phoneCode}
         onChangePhoneCode={handleChangePhoneCode}
+        onRestore={() => handleRestoreObjects(selected, true)}
       />
       <List
         selected={selected}
@@ -557,6 +574,8 @@ const Objects = () => {
           handleChangeFilter("price_currency", val + 1)
         }
         onChangeContancts={handleChangeContacts}
+        onRestore={handleRestoreObjects}
+        isDeleted={filters?.company_object?.show_deleted === "1"}
       />
     </StyledObjects>
   );

@@ -60,7 +60,7 @@ export const objects = createApi({
       },
     }),
     deleteObject: build.query({
-      query: (id_objects) => ({
+      query: ({ id_objects, final_remove }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -68,6 +68,7 @@ export const objects = createApi({
           action: "delete",
           mod: "objects",
           id_objects,
+          final_remove,
         }),
       }),
     }),
@@ -446,6 +447,18 @@ export const objects = createApi({
         }),
       }),
     }),
+    restoreObjects: build.query({
+      query: (id_objects) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "restore_objects",
+          mod: "objects",
+          id_objects,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -482,4 +495,5 @@ export const {
   useLazyAddPicaroonQuery,
   useLazyAddOherAgencyQuery,
   useLazyCleanObjectMarksQuery,
+  useLazyRestoreObjectsQuery,
 } = objects;

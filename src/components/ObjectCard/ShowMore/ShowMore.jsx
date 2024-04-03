@@ -22,6 +22,8 @@ export const ShowMore = ({
   isStreetBase,
   searchTag,
   onMarkPhone,
+  isDeleted,
+  onRestore,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -39,6 +41,10 @@ export const ShowMore = ({
   };
 
   const handleFocus = () => moreRef.current.focus();
+
+  if (isDeleted && !onRestore && !onDelete) {
+    return null;
+  }
 
   return (
     <StyledShowMore isfocusedbtn={isFocusedBtn?.toString()} ref={moreRef}>
@@ -63,6 +69,8 @@ export const ShowMore = ({
         onFocus={handleFocus}
         onMarkPhone={onMarkPhone}
         onClose={handleCloseDropdown}
+        isDeleted={isDeleted}
+        onRestore={onRestore}
       />
     </StyledShowMore>
   );

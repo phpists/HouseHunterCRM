@@ -22,6 +22,7 @@ export const SelectItems = ({
   isHideObjects,
   onAddToSelection,
   onRestore,
+  passwordCheck,
 }) => {
   const [type, setType] = useState(null);
   const [open, setOpen] = useState(false);
@@ -85,7 +86,7 @@ export const SelectItems = ({
           title={deleteConfirmTitle}
           onClose={() => setDeleteModal(false)}
           onSubmit={() => (onDelete ? onDelete() : null)}
-          passwordCheck={selectedCount > 1}
+          passwordCheck={passwordCheck || selectedCount > 1}
         />
       )}
       <div className="relative z-300">

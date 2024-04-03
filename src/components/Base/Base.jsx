@@ -33,6 +33,7 @@ export const Base = ({
   dateAgreementFieldName = "dt_end_agreement_to",
   request,
   idAdInSource,
+  showDeleted,
 }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: companies } = useGetCompaniesQuery();
@@ -260,6 +261,23 @@ export const Base = ({
             }
             error={!!errors.find((e) => e === "company_object_more")}
           />
+          {showDeleted ? (
+            <CheckOption
+              label="Видалені об'єкти"
+              className="check-opt"
+              value={data?.company_object?.show_deleted}
+              onChange={() =>
+                onChange("company_object", {
+                  ...data?.company_object,
+                  show_deleted:
+                    data?.company_object?.show_deleted === "1"
+                      ? undefined
+                      : "1",
+                })
+              }
+              error={!!errors.find((e) => e === "company_object_more")}
+            />
+          ) : null}
         </>
       ) : null}
       <TitleDivider title="street base" />

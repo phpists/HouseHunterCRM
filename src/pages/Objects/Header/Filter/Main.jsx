@@ -348,6 +348,7 @@ export const Main = ({
         }
         dateAgreement
         idAdInSource
+        showDeleted
       />
     </StyledMain>
   );

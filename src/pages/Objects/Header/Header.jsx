@@ -35,7 +35,9 @@ export const Header = ({
   onChangeActionLoading,
   phoneCode,
   onChangePhoneCode,
+  onRestore,
 }) => {
+  const { user } = useAppSelect((state) => state.auth);
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClient, setAddClient] = useState(false);
   const [addToFavorites] = useLazyAddToFavoritesQuery();
@@ -72,7 +74,11 @@ export const Header = ({
   const handleDelete = () => {
     if (selected?.length > 0) {
       onChangeActionLoading(true);
-      deleteObject(selected).then((resp) => {
+      deleteObject({
+        id_objects: selected,
+        final_remove:
+          filters?.company_object?.show_deleted === "1" ? "1" : undefined,
+      }).then((resp) => {
         handleResponse(resp, () => {
           cogoToast.success(
             `Обєкт${selectedCount === 1 ? "" : "и"} успішно видалено!`,
@@ -139,16 +145,40 @@ export const Header = ({
               <SelectItems
                 title="об'єктів"
                 selectedCount={selectedCount}
-                onToggleFavorite={handleToggleFavorites}
-                deleteConfirmTitle="Видалити об'єкт(и)?"
+                onToggleFavorite={
+                  filters?.company_object?.show_deleted === "1"
+                    ? null
+                    : handleToggleFavorites
+                }
+                noFavorite={filters?.company_object?.show_deleted === "1"}
+                deleteConfirmTitle={
+                  filters?.company_object?.show_deleted === "1"
+                    ? "Видалити об'єкт(и) остаточно?"
+                    : "Видалити об'єкт(и)?"
+                }
                 onDelete={
-                  handleCheckAccess(data, "objects", "delete")
+                  filters?.company_object?.show_deleted === "1"
+                    ? user?.struct_level === 1
+                      ? handleDelete
+                      : null
+                    : handleCheckAccess(data, "objects", "delete")
                     ? handleDelete
                     : null
                 }
                 allCount={allCount}
                 onSelectAll={onSelectAll}
-                onAddToSelection={handleAddToSelection}
+                onAddToSelection={
+                  filters?.company_object?.show_deleted === "1"
+                    ? null
+                    : handleAddToSelection
+                }
+                passwordCheck
+                onRestore={
+                  filters?.company_object?.show_deleted === "1" &&
+                  user?.struct_level === 1
+                    ? onRestore
+                    : null
+                }
               />
             </div>
           </div>
@@ -158,14 +188,40 @@ export const Header = ({
             title="об'єктів"
             selectedCount={selectedCount}
             className="mobile-select"
-            onToggleFavorite={handleToggleFavorites}
-            deleteConfirmTitle="Видалити об'єкт(и)?"
+            onToggleFavorite={
+              filters?.company_object?.show_deleted === "1"
+                ? null
+                : handleToggleFavorites
+            }
+            noFavorite={filters?.company_object?.show_deleted === "1"}
+            deleteConfirmTitle={
+              filters?.company_object?.show_deleted === "1"
+                ? "Видалити об'єкт(и) остаточно?"
+                : "Видалити об'єкт(и)?"
+            }
             onDelete={
-              handleCheckAccess(data, "objects", "delete") ? handleDelete : null
+              filters?.company_object?.show_deleted === "1"
+                ? user?.struct_level === 1
+                  ? handleDelete
+                  : null
+                : handleCheckAccess(data, "objects", "delete")
+                ? handleDelete
+                : null
             }
             allCount={allCount}
             onSelectAll={onSelectAll}
-            onAddToSelection={handleAddToSelection}
+            onAddToSelection={
+              filters?.company_object?.show_deleted === "1"
+                ? null
+                : handleAddToSelection
+            }
+            passwordCheck
+            onRestore={
+              filters?.company_object?.show_deleted === "1" &&
+              user?.struct_level === 1
+                ? onRestore
+                : null
+            }
           />
         </div>
         {filterOpen && (

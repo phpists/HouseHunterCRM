@@ -13,6 +13,7 @@ import { ReactComponent as RemoveIcon } from "../../../assets/images/remove.svg"
 import { ReactComponent as DownloadIcon } from "../../../assets/images/file.svg";
 import { ReactComponent as ToObjectIcon } from "../../../assets/images/my-object.svg";
 import { ReactComponent as PhoneIcon } from "../../../assets/images/phone-menu.svg";
+import { ReactComponent as RestoreIcon } from "../../../assets/images/refresh-icon.svg";
 import {
   useLazyAddStreetBaseObjectQuery,
   useLazyDownloadObjectQuery,
@@ -41,6 +42,8 @@ export const Dropdown = ({
   onFocus,
   onMarkPhone,
   onClose,
+  isDeleted,
+  onRestore,
 }) => {
   const [addStreetBaseObject] = useLazyAddStreetBaseObjectQuery();
   const [added, setAdded] = useState(false);
@@ -83,124 +86,152 @@ export const Dropdown = ({
 
   return (
     <StyledDropdown className="dropdown">
-      {link?.length > 0 && (
-        <div
-          className="flex items-center justify-between"
-          onClick={() => window.open(link, "_blank")}
-        >
-          Перейти на першоджерело
-          <Link className="selection-icon" />
-        </div>
-      )}
-      {onToggleFavoriteStatus && (
-        <div
-          className="flex items-center justify-between"
-          onClick={onToggleFavoriteStatus}
-        >
-          <span> {isFavorite ? "Із" : "До"} улюблених</span> <Star />
-        </div>
-      )}
-      {onFindSimilar ? (
-        <div
-          className="flex items-center justify-between"
-          onClick={onFindSimilar}
-        >
-          <span>Знайти схожі</span> <Search />
-        </div>
-      ) : null}
-      {onOpenTagsHistory && (
-        <div
-          className="flex items-center justify-between"
-          onClick={onOpenTagsHistory}
-        >
-          <span>Історія тегів</span> <History />
-        </div>
-      )}
-      {onOpenCommetHistory && (
-        <div
-          className="flex items-center justify-between"
-          onClick={onOpenCommetHistory}
-        >
-          <span>Історія коментарів</span> <Comment className="selection-icon" />
-        </div>
-      )}
-      {onOpenPriceHistory && (
-        <div
-          className="flex items-center justify-between"
-          onClick={onOpenPriceHistory}
-        >
-          <span>Графік змін цін</span> <Prices />
-        </div>
-      )}
-      {onAddToSelection && (
-        <div
-          className="flex items-center justify-between"
-          onClick={onAddToSelection}
-        >
-          <span>Додати в підбірку</span>{" "}
-          <Selection className="selection-icon" />
-        </div>
-      )}
-      {isStreetBase && !added && (
-        <div
-          className="flex items-center justify-between"
-          onClick={handleAddStreetBaseObject}
-        >
-          <span>Додати обєкт до себе</span>{" "}
-          <ToObjectIcon className="selection-icon" />
-        </div>
-      )}
-      {onHide && (
-        <div className="flex items-center justify-between" onClick={onHide}>
-          <span>{isHideObjects ? "Показати" : "Приховати"}</span>{" "}
-          <Eye className="selection-icon" />
-        </div>
-      )}
-      {isEdit && (
-        <NavLink
-          onClick={() => onFocus()}
-          to={`/edit-object/${clientId}/${id}${searchTag ?? ""}`}
-          className="flex items-center justify-between"
-          onFocus={(e) => {
-            e.preventDefault();
-            onFocus();
-          }}
-          onMouseDown={(e) => {
-            if (window.event?.which === 2) {
-              window
-                .open(
-                  `/#/edit-object/${clientId}/${id}${searchTag ?? ""}`,
-                  "_blank"
-                )
-                .focus();
-            }
-          }}
-        >
-          <span>Редагувати </span> <Edit />
-        </NavLink>
-      )}
-      {onDelete && (
-        <div className="flex items-center justify-between" onClick={onDelete}>
-          <span>Видалити</span> <RemoveIcon className="selection-icon" />
-        </div>
-      )}
-      <div
-        className="flex items-center justify-between"
-        onClick={handleDownload}
-      >
-        <span>Завантажити</span> <DownloadIcon className="selection-icon" />
-      </div>
-      {onMarkPhone && (
-        <div
-          className="flex items-center justify-between"
-          onClick={() => {
-            onMarkPhone();
-            onClose();
-          }}
-        >
-          <span>Мітка номерів об'єкту</span>{" "}
-          <PhoneIcon className="selection-icon" />
-        </div>
+      {isDeleted ? (
+        <>
+          {onRestore && (
+            <div
+              className="flex items-center justify-between"
+              onClick={onRestore}
+            >
+              <span>Відновити </span> <RestoreIcon className="selection-icon" />
+            </div>
+          )}
+          {onDelete && (
+            <div
+              className="flex items-center justify-between"
+              onClick={onDelete}
+            >
+              <span>Видалити</span> <RemoveIcon className="selection-icon" />
+            </div>
+          )}
+        </>
+      ) : (
+        <>
+          {" "}
+          {link?.length > 0 && (
+            <div
+              className="flex items-center justify-between"
+              onClick={() => window.open(link, "_blank")}
+            >
+              Перейти на першоджерело
+              <Link className="selection-icon" />
+            </div>
+          )}
+          {onToggleFavoriteStatus && (
+            <div
+              className="flex items-center justify-between"
+              onClick={onToggleFavoriteStatus}
+            >
+              <span> {isFavorite ? "Із" : "До"} улюблених</span> <Star />
+            </div>
+          )}
+          {onFindSimilar ? (
+            <div
+              className="flex items-center justify-between"
+              onClick={onFindSimilar}
+            >
+              <span>Знайти схожі</span> <Search />
+            </div>
+          ) : null}
+          {onOpenTagsHistory && (
+            <div
+              className="flex items-center justify-between"
+              onClick={onOpenTagsHistory}
+            >
+              <span>Історія тегів</span> <History />
+            </div>
+          )}
+          {onOpenCommetHistory && (
+            <div
+              className="flex items-center justify-between"
+              onClick={onOpenCommetHistory}
+            >
+              <span>Історія коментарів</span>{" "}
+              <Comment className="selection-icon" />
+            </div>
+          )}
+          {onOpenPriceHistory && (
+            <div
+              className="flex items-center justify-between"
+              onClick={onOpenPriceHistory}
+            >
+              <span>Графік змін цін</span> <Prices />
+            </div>
+          )}
+          {onAddToSelection && (
+            <div
+              className="flex items-center justify-between"
+              onClick={onAddToSelection}
+            >
+              <span>Додати в підбірку</span>{" "}
+              <Selection className="selection-icon" />
+            </div>
+          )}
+          {isStreetBase && !added && (
+            <div
+              className="flex items-center justify-between"
+              onClick={handleAddStreetBaseObject}
+            >
+              <span>Додати обєкт до себе</span>{" "}
+              <ToObjectIcon className="selection-icon" />
+            </div>
+          )}
+          {onHide && (
+            <div className="flex items-center justify-between" onClick={onHide}>
+              <span>{isHideObjects ? "Показати" : "Приховати"}</span>{" "}
+              <Eye className="selection-icon" />
+            </div>
+          )}
+          {isEdit && (
+            <NavLink
+              onClick={() => onFocus()}
+              to={`/edit-object/${clientId}/${id}${searchTag ?? ""}`}
+              className="flex items-center justify-between"
+              onFocus={(e) => {
+                e.preventDefault();
+                onFocus();
+              }}
+              onMouseDown={(e) => {
+                if (window.event?.which === 2) {
+                  window
+                    .open(
+                      `/#/edit-object/${clientId}/${id}${searchTag ?? ""}`,
+                      "_blank"
+                    )
+                    .focus();
+                }
+              }}
+            >
+              <span>Редагувати </span> <Edit />
+            </NavLink>
+          )}
+          {onDelete && (
+            <div
+              className="flex items-center justify-between"
+              onClick={onDelete}
+            >
+              <span>Видалити</span> <RemoveIcon className="selection-icon" />
+            </div>
+          )}
+          <div
+            className="flex items-center justify-between"
+            onClick={handleDownload}
+          >
+            <span>Завантажити</span> <DownloadIcon className="selection-icon" />
+          </div>
+          {onMarkPhone && (
+            <div
+              className="flex items-center justify-between"
+              onClick={() => {
+                onMarkPhone();
+                onClose();
+              }}
+            >
+              <span>Мітка номерів об'єкту</span>{" "}
+              <PhoneIcon className="selection-icon" />
+            </div>
+          )}
+        </>
       )}
     </StyledDropdown>
   );

@@ -25,7 +25,7 @@ export const Header = ({ onSave, favorite, onToggleFavorite, loading }) => {
   const { accessData } = useAppSelect((state) => state.auth);
 
   const handleDeleteRequest = () => {
-    deleteObject([id]).then((resp) =>
+    deleteObject({ id_objects: [id] }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Заявку успішно видалено!", {
           hideAfter: 3,

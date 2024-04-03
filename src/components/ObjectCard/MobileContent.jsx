@@ -31,6 +31,8 @@ export const MobileContent = ({
   onChangeType,
   selections,
   onMarkPhone,
+  isDeleted,
+  onRestore,
 }) => (
   <StyledMobileContent className="clickable">
     <Header data={data} />
@@ -83,6 +85,8 @@ export const MobileContent = ({
       isStreetBase={data?.obj_street_base === "1"}
       searchTag={searchTag}
       onMarkPhone={onMarkPhone}
+      isDeleted={isDeleted}
+      onRestore={onRestore}
     />
   </StyledMobileContent>
 );

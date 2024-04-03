@@ -95,7 +95,7 @@ export const ObjectsList = ({
   };
 
   const handleDeleteObject = () => {
-    deleteObject([selectedCard]).then((resp) =>
+    deleteObject({ id_objects: [selectedCard] }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Об'єкт успішно видалено!", {
           hideAfter: 3,

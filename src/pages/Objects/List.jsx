@@ -28,7 +28,10 @@ export const List = ({
   onDeleteSuccess,
   onChangeComment,
   onChangeContancts,
+  onRestore,
+  isDeleted,
 }) => {
+  const { user } = useAppSelect((state) => state.auth);
   const { accessData } = useAppSelect((state) => state.auth);
   const [openAddModal, setOpenAddModal] = useState(null);
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
@@ -48,7 +51,10 @@ export const List = ({
 
   const handleDelete = () => {
     setDeleting(true);
-    deleteObject([deleteId]).then((resp) => {
+    deleteObject({
+      id_objects: [deleteId],
+      final_remove: isDeleted ? "1" : undefined,
+    }).then((resp) => {
       handleResponse(resp, () => {
         cogoToast.success(`Обєкт успішно видалено!`, {
           hideAfter: 3,
@@ -106,9 +112,10 @@ export const List = ({
       )}
       {deleteModal && (
         <Confirm
-          title="Видалити об'єкт"
+          title={isDeleted ? "Видалити об'єкт остаточно?" : "Видалити об'єкт?"}
           onClose={() => setDeleteModal(false)}
           onSubmit={handleDelete}
+          passwordCheck={isDeleted}
         />
       )}
       <StyledList ref={innerRef}>
@@ -138,7 +145,13 @@ export const List = ({
                 onOpenPriceHistory={() =>
                   setOpenHistoryPriceModal(d?.price_history_json)
                 }
-                onDelete={() => handleOpenDelete(d?.id)}
+                onDelete={
+                  d?.deleted === "1"
+                    ? user?.struct_level === 1
+                      ? () => handleOpenDelete(d?.id)
+                      : null
+                    : () => handleOpenDelete(d?.id)
+                }
                 onChangeComment={() =>
                   setEditComment({
                     id: d?.id,
@@ -155,6 +168,12 @@ export const List = ({
                 onMarkPhone={
                   d?.type_object === "street_base"
                     ? () => setMarkPhoneModal(d)
+                    : null
+                }
+                isDeleted={d?.deleted === "1"}
+                onRestore={
+                  user?.struct_level === 1 || data?.acsses_change
+                    ? () => onRestore([d?.id])
                     : null
                 }
               />
