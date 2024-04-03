@@ -127,7 +127,7 @@ export const requests = createApi({
       },
     }),
     deleteRequest: build.query({
-      query: (id_groups) => ({
+      query: ({ id_groups, final_remove }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -135,6 +135,7 @@ export const requests = createApi({
           action: "delete",
           mod: "requests",
           id_groups,
+          final_remove,
         }),
       }),
     }),
@@ -377,6 +378,18 @@ export const requests = createApi({
         };
       },
     }),
+    restoreRequests: build.query({
+      query: (id_groups) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "restore_request",
+          mod: "requests",
+          id_groups,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -400,4 +413,5 @@ export const {
   useGetCompaniesQuery,
   useGetSortingObjectQuery,
   useLazyEditRequestCommentQuery,
+  useLazyRestoreRequestsQuery,
 } = requests;

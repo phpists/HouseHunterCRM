@@ -78,7 +78,7 @@ export const LastRequests = () => {
   };
 
   const handleDelete = () => {
-    deleteRequest([deleteId?.id]).then((resp) => {
+    deleteRequest({ id_groups: [deleteId?.id] }).then((resp) => {
       handleResponse(resp, () => {
         cogoToast.success(`Заявку успішно видалено!`, {
           hideAfter: 3,

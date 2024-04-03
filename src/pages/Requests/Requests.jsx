@@ -5,6 +5,7 @@ import { useState } from "react";
 import {
   useLazyGetRequestsQuery,
   useLazyGetRubricsFieldsQuery,
+  useLazyRestoreRequestsQuery,
 } from "../../store/requests/requests.api";
 import { useEffect } from "react";
 import { useActions } from "../../hooks/actions";
@@ -12,6 +13,7 @@ import { useRef } from "react";
 import { checkIsJSON, handleResponse } from "../../utilits";
 import { useAppSelect } from "../../hooks/redux";
 import { useLocation } from "react-router-dom";
+import cogoToast from "cogo-toast";
 
 const INIT_FILTERS = {
   id_rubric: "",
@@ -31,6 +33,7 @@ const Requests = () => {
   const location = useLocation();
   const [getRequests] = useLazyGetRequestsQuery();
   const [getRubricField] = useLazyGetRubricsFieldsQuery();
+  const [restoreRequests] = useLazyRestoreRequestsQuery();
   const { saveRequestsCount } = useActions();
   const { requestsCount } = useAppSelect((state) => state.requests);
   const [requests, setRequests] = useState([]);
@@ -205,6 +208,29 @@ const Requests = () => {
     // eslint-disable-next-line
   }, [listRef, isLoading.current, isAllPages, requests]);
 
+  const handleChangeRequestDeleted = (id, value) => {
+    const updatedData = Object.fromEntries(
+      Object.entries(requests).map((req) => {
+        const reqId = req[0];
+
+        if (reqId === id) {
+          const request = {
+            ...req[1],
+            General_field_group: {
+              ...req[1].General_field_group,
+              deleted: value,
+            },
+          };
+
+          return [reqId, request];
+        }
+        return req;
+      })
+    );
+    dataRef.current = updatedData;
+    setRequests(updatedData);
+  };
+
   const handleDeleteRequestsSuccess = () => {
     setRequests(
       Object.fromEntries(
@@ -219,6 +245,7 @@ const Requests = () => {
     }
 
     saveRequestsCount(requestsCount - selected?.length);
+    setAllCount(allCount - selected?.length);
     setSelected([]);
   };
 
@@ -229,6 +256,7 @@ const Requests = () => {
       )
     );
     saveRequestsCount(requestsCount - 1);
+    setAllCount(allCount - 1);
   };
 
   const handleToggleFavoriteStatus = (id) => {
@@ -412,6 +440,18 @@ const Requests = () => {
     // eslint-disable-next-line
   }, [filters, isDefaultFiltersSet]);
 
+  const handleRestoreRequest = (id, idGroup) => {
+    restoreRequests([idGroup]).then((resp) =>
+      handleResponse(resp, () => {
+        handleDeleteRequestSuccess(id);
+        cogoToast.success("Запит успішно відновлено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      })
+    );
+  };
+
   return (
     <StyledRequests>
       <Header
@@ -440,6 +480,8 @@ const Requests = () => {
         actionLoading={actionLoading}
         onChangeComment={handleChangeComment}
         onOpenChat={handleOpenChat}
+        onRestore={handleRestoreRequest}
+        isDeletedRequests={filters?.show_deleted === "1"}
       />
     </StyledRequests>
   );

@@ -12,7 +12,7 @@ export const SelectItems = ({
   dropdown,
   className,
   deleteConfirmTitle,
-  onToggleFavorite = () => null,
+  onToggleFavorite,
   onDelete,
   allCount = 0,
   onSelectAll,
@@ -21,6 +21,7 @@ export const SelectItems = ({
   onSend,
   isHideObjects,
   onAddToSelection,
+  onRestore,
 }) => {
   const [type, setType] = useState(null);
   const [open, setOpen] = useState(false);
@@ -44,22 +45,33 @@ export const SelectItems = ({
     if (opt === "delete") {
       setDeleteModal(true);
     } else if (opt === "favorite") {
-      onToggleFavorite();
+      onToggleFavorite && onToggleFavorite();
     } else if (opt === "send") {
       onSend();
     } else if (opt === "hide") {
       onHide();
     } else if (opt === "selection") {
       onAddToSelection();
+    } else if (opt === "restore") {
+      onRestore();
     }
   };
 
   const handleChangeType = (val) => {
     if (allCount > 0) {
       const isTheSame = type === val;
-      setType(isTheSame ? null : val);
+      val !== 2 && setType(isTheSame ? null : val);
       if (val === 2) {
-        onSelectAll && onSelectAll(isTheSame);
+        if (
+          onDelete ||
+          onHide ||
+          onToggleFavorite ||
+          onSend ||
+          onAddToSelection ||
+          onRestore
+        ) {
+          onSelectAll && onSelectAll(isTheSame);
+        }
       } else if (val === 1 && onSelectAll) {
         onSelectAll(isTheSame, selectedCount === 0 ? 10 : undefined);
       }
@@ -107,6 +119,7 @@ export const SelectItems = ({
                   onSend={onSend}
                   isHideObjects={isHideObjects}
                   onAddToSelection={onAddToSelection}
+                  onRestore={onRestore}
                 />
               )}
             </>

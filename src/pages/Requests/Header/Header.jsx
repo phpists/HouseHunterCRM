@@ -11,6 +11,7 @@ import { AddClient } from "../../../components/AddClient/AddClient";
 import {
   useLazyAddToFavoriteQuery,
   useLazyDeleteRequestQuery,
+  useLazyRestoreRequestsQuery,
 } from "../../../store/requests/requests.api";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
@@ -32,12 +33,14 @@ export const Header = ({
   onSelectAll,
   onChangeActionLoading,
 }) => {
+  const { user } = useAppSelect((state) => state.auth);
   const [deleteRequest] = useLazyDeleteRequestQuery();
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClientOpen, setAddClientOpen] = useState(false);
   const [addToFavorites] = useLazyAddToFavoriteQuery();
   const { accessData: data } = useAppSelect((state) => state.auth);
   const isPrevFilter = localStorage.getItem("requestFilter");
+  const [restoreRequests] = useLazyRestoreRequestsQuery();
 
   const handleToggleFavorites = () => {
     onChangeActionLoading(true);
@@ -63,10 +66,13 @@ export const Header = ({
   const handleDelete = () => {
     if (selected?.length > 0) {
       onChangeActionLoading(true);
-      deleteRequest(selected).then((resp) => {
+      deleteRequest({
+        id_groups: selected,
+        final_remove: filters?.show_deleted ? "1" : undefined,
+      }).then((resp) => {
         handleResponse(resp, () => {
           cogoToast.success(
-            `Заявк${selectedCount === 1 ? "у" : "и"} успішно видалено!`,
+            `Запит${selectedCount === 1 ? "" : "и"} успішно видалено!`,
             {
               hideAfter: 3,
               position: "top-right",
@@ -77,6 +83,21 @@ export const Header = ({
         onChangeActionLoading(false);
       });
     }
+  };
+
+  const handleRestore = () => {
+    restoreRequests(selected).then((resp) =>
+      handleResponse(resp, () => {
+        cogoToast.success(
+          `Запит${selected?.length > 1 ? "и" : ""} успішно відновлено`,
+          {
+            hideAfter: 3,
+            position: "top-right",
+          }
+        );
+        onDelete();
+      })
+    );
   };
 
   return (
@@ -113,15 +134,26 @@ export const Header = ({
             <SelectItems
               title="запитів"
               selectedCount={selectedCount}
-              deleteConfirmTitle="Видалити запит(и)?"
+              deleteConfirmTitle={
+                filters?.show_deleted
+                  ? "Видалити запит(и) остаточно?"
+                  : "Видалити запит(и)?"
+              }
               onDelete={
+                !filters?.show_deleted &&
                 handleCheckAccess(data, "requests", "delete")
+                  ? handleDelete
+                  : user?.struct_level === 1 && filters?.show_deleted
                   ? handleDelete
                   : null
               }
-              onToggleFavorite={handleToggleFavorites}
+              onToggleFavorite={
+                filters?.show_deleted ? null : handleToggleFavorites
+              }
+              noFavorite={filters?.show_deleted}
               allCount={allCount}
               onSelectAll={onSelectAll}
+              //   onRestore={filters?.show_deleted ? handleRestore : null}
             />
           </div>
         </div>
@@ -130,13 +162,24 @@ export const Header = ({
         title="об'єктів"
         selectedCount={selectedCount}
         className="select-wrapper-mobile"
-        deleteConfirmTitle="Видалити запит(и)?"
+        deleteConfirmTitle={
+          filters?.show_deleted
+            ? "Видалити запит(и) остаточно?"
+            : "Видалити запит(и)?"
+        }
         onDelete={
-          handleCheckAccess(data, "requests", "delete") ? handleDelete : null
+          !filters?.show_deleted &&
+          handleCheckAccess(data, "requests", "delete")
+            ? handleDelete
+            : user?.struct_level === 1
+            ? handleDelete
+            : null
         }
         allCount={allCount}
         onSelectAll={onSelectAll}
         onToggleFavorite={handleToggleFavorites}
+        noFavorite={filters?.show_deleted}
+        // onRestore={filters?.show_deleted ? handleRestore : null}
       />
       {filterOpen && (
         <Filter

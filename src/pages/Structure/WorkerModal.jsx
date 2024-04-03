@@ -324,9 +324,12 @@ export const WorkerModal = ({
     <>
       {deleteModal && (
         <Confirm
-          title={"Видалити працівника?"}
+          title={
+            "При видаленні агента видаляться всі його клієнти, об'єкти та запити впевнені?"
+          }
           onClose={() => setDeleteModal(false)}
           onSubmit={handleDeleteWorker}
+          passwordCheck
         />
       )}
       <UserInfoCard

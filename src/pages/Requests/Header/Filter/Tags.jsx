@@ -348,8 +348,13 @@ export const Tags = ({
         active={filters?.showDeadline === "1"}
         onChange={() =>
           onChangeFilter(
-            "showDeadline",
-            filters?.showDeadline === "1" ? "0" : "1"
+            "showUnreadMessege",
+            {
+              ...filters,
+              show_deleted: undefined,
+              showDeadline: filters?.showDeadline === "1" ? "0" : "1",
+            },
+            true
           )
         }
       />
@@ -360,7 +365,29 @@ export const Tags = ({
         onChange={() =>
           onChangeFilter(
             "showUnreadMessege",
-            filters?.showUnreadMessege === "1" ? "0" : "1"
+            {
+              ...filters,
+              show_deleted: undefined,
+              showUnreadMessege: filters?.showUnreadMessege === "1" ? "0" : "1",
+            },
+            true
+          )
+        }
+      />
+      <Divider />
+      <ToggleOption
+        label="Запити до видалення"
+        active={filters?.show_deleted === "1"}
+        onChange={() =>
+          onChangeFilter(
+            "showUnreadMessege",
+            {
+              ...filters,
+              show_deleted: filters?.show_deleted === "1" ? undefined : "1",
+              showUnreadMessege: "0",
+              showDeadline: "0",
+            },
+            true
           )
         }
       />

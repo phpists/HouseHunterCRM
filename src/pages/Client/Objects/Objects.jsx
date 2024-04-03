@@ -69,7 +69,7 @@ export const Objects = ({ selected, onSelect }) => {
   };
 
   const handleDeleteRequest = (requests) => {
-    deleteRequests(requests).then((resp) =>
+    deleteRequests({ id_groups: requests }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success(
           `Заявк${requests?.length === 1 ? "у" : "и"} успішно видалено!`,

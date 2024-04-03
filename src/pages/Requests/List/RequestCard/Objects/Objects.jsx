@@ -12,6 +12,7 @@ import { Tags } from "./Tags/Tags";
 export const Objects = ({ idGroup, onOpenChat, data }) => {
   const navigate = useNavigate();
 
+  console.log(data?.General_field_group?.deleted);
   return (
     <StyledObjects className="clickable">
       <SeenTime date={data?.General_field_group?.dt_view_client} />
@@ -22,7 +23,9 @@ export const Objects = ({ idGroup, onOpenChat, data }) => {
           <Tags data={data} />{" "}
           <div
             className={`flex items-center footer ${
-              !data?.General_field_group?.acsses_change && "footer-hide"
+              (!data?.General_field_group?.acsses_change ||
+                data?.General_field_group?.deleted === "1") &&
+              "footer-hide"
             }`}
           >
             <OpenButton onClick={() => navigate(`/selections/${idGroup}`)} />

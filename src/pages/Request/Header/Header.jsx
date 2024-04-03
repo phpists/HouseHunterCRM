@@ -34,7 +34,7 @@ export const Header = ({
   const { accessData } = useAppSelect((state) => state.auth);
 
   const handleDeleteRequest = () => {
-    deleteRequest([id]).then((resp) =>
+    deleteRequest({ id_groups: [id]}).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Заявку успішно видалено!", {
           hideAfter: 3,

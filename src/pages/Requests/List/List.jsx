@@ -22,6 +22,8 @@ export const List = ({
   actionLoading,
   onChangeComment,
   onOpenChat,
+  onRestore,
+  isDeletedRequests,
 }) => {
   const [deleteRequest] = useLazyDeleteRequestQuery();
   const [deleteModal, setDeleteModal] = useState(false);
@@ -40,7 +42,10 @@ export const List = ({
   };
 
   const handleDeleteRequest = () => {
-    deleteRequest([selectedCard]).then((resp) =>
+    deleteRequest({
+      id_groups: [selectedCard],
+      final_remove: isDeletedRequests ? "1" : undefined,
+    }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Заявку успішно видалено!", {
           hideAfter: 3,
@@ -61,9 +66,12 @@ export const List = ({
     <>
       {deleteModal && (
         <Confirm
-          title="Видалити запит?"
+          title={
+            isDeletedRequests ? "Видалити запит остаточно?" : "Видалити запит?"
+          }
           onClose={handleCancelDeleteRequest}
           onSubmit={handleDeleteRequest}
+          passwordCheck={isDeletedRequests}
         />
       )}
       {selectedChat && (
@@ -103,6 +111,7 @@ export const List = ({
                     comment: d[1]?.General_field_group?.comment_group,
                   })
                 }
+                onRestore={() => onRestore(d[0], d[1]?.id_group)}
               />
             );
           })

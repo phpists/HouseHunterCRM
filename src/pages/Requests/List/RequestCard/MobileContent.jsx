@@ -15,6 +15,7 @@ export const MobileContent = ({
   isEdit,
   onOpenChat,
   onChangeComment,
+  onRestore,
 }) => (
   <StyledMobileContent className="flex clickable">
     <div className="w-full">
@@ -53,6 +54,9 @@ export const MobileContent = ({
       isDelete={isDelete}
       isEdit={isEdit}
       isAccess={data?.General_field_group?.acsses_change}
+      isDeleted={data?.General_field_group?.deleted === "1"}
+      onRestore={onRestore}
+      userId={data?.General_field_group?.id_user}
     />
   </StyledMobileContent>
 );

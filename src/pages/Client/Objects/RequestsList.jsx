@@ -142,7 +142,7 @@ export const RequestsList = ({
   };
 
   const handleDeleteRequest = () => {
-    deleteRequest([selectedCard]).then((resp) =>
+    deleteRequest({ id_groups: [selectedCard] }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Заявку успішно видалено!", {
           hideAfter: 3,

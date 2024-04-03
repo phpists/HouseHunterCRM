@@ -15,6 +15,7 @@ export const DesktopContent = ({
   isDelete,
   onOpenChat,
   onChangeComment,
+  onRestore,
 }) => (
   <StyledDesktopContent className="clickable">
     <Client data={data} />
@@ -49,6 +50,9 @@ export const DesktopContent = ({
       isEdit={isEdit}
       isDelete={isDelete}
       isAccess={data?.General_field_group?.acsses_change}
+      isDeleted={data?.General_field_group?.deleted === "1"}
+      onRestore={onRestore}
+      userId={data?.General_field_group?.id_user}
     />
   </StyledDesktopContent>
 );
