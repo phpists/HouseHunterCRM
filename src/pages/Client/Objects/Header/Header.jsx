@@ -20,6 +20,7 @@ export const Header = ({
           selectedCount={selectedCount}
           onDelete={onDelete}
           onToggleFavorite={onToggleFavorite}
+          noFavorite={!onToggleFavorite}
           allCount={objectsCount + requestsCount}
           title="запитів"
           deleteConfirmTitle="Видалити обрані заявку(ки)/ об'єкт(и)?"

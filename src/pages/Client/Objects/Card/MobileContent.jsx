@@ -26,6 +26,8 @@ export const MobileContent = ({
   currency,
   price_for,
   dateTo,
+  isDeleted,
+  onRestore,
 }) => {
   const { id: clientId } = useParams();
 
@@ -42,7 +44,7 @@ export const MobileContent = ({
               <Title title={title} />
               <Price price={price} currency={currency} price_for={price_for} />
             </div>
-            <CreatedDate date={date} dateTo={dateTo} />
+            <CreatedDate date={date} dateTo={dateTo} isDeleted={isDeleted} />
           </div>
           <Divider />
           <div className="w-max mr-5">
@@ -68,6 +70,8 @@ export const MobileContent = ({
                 : `/#/edit-request/${clientId}/${id}`
             }
             noDelete={!isDelete}
+            isDeleted={isDeleted}
+            onRestore={onRestore}
           />
           <button className="arrow-more openMore">
             <ArrowIcon className="openMore" />

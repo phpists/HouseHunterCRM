@@ -4,7 +4,10 @@ import { useLazyGetClientsObjectsQuery } from "../../../store/clients/clients.ap
 // import { useLazyDeleteRequestQuery } from "../../../store/objects/objects.api";
 import { Card } from "./Card/Card";
 import { Confirm } from "../../../components/Confirm/Confirm";
-import { useLazyDeleteObjectQuery } from "../../../store/objects/objects.api";
+import {
+  useLazyDeleteObjectQuery,
+  useLazyRestoreObjectsQuery,
+} from "../../../store/objects/objects.api";
 import { handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
 import { PRICES_FOR_TITLE } from "../../../constants";
@@ -29,6 +32,7 @@ export const ObjectsList = ({
   const objectsCurrentPage = useRef(0);
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [restoreObjects] = useLazyRestoreObjectsQuery();
 
   const handleGetClientsObjects = () => {
     getClientsObjects({
@@ -39,13 +43,11 @@ export const ObjectsList = ({
       const data = resp?.data?.data;
       if (data) {
         onSelect({
-          id: Object.entries(data)[0][1]?.id ?? null,
+          id: data?.[0]?.id ?? null,
           type: "object",
         });
         setObjects(data);
-        onSelectAll(
-          Object.entries(data)?.map((o) => ({ id: o?.[1]?.id, type: "object" }))
-        );
+        onSelectAll(data?.map((o) => ({ id: o.id, type: "object" })));
       }
     });
   };
@@ -62,25 +64,13 @@ export const ObjectsList = ({
   }, [isRefresh]);
 
   const handleDeleteObjectSuccess = (id) => {
-    setObjects(
-      Object.fromEntries(
-        Object.entries(objects).filter((req) => id !== req[1]?.id)
-      )
-    );
+    setObjects(objects.filter((o) => id !== o?.id));
   };
 
   const handleToggleFavoriteStatus = (id) => {
     setObjects(
-      Object.fromEntries(
-        Object.entries(objects).map((req) => {
-          if (req[1]?.id === id) {
-            let request = [];
-            request[0] = req[0];
-            request[1] = { ...req[1], favorite: !req[1]?.favorite };
-            return request;
-          }
-          return req;
-        })
+      objects.map((obj) =>
+        obj?.id === id ? { ...obj, favorite: !obj?.favorite } : obj
       )
     );
   };
@@ -94,63 +84,99 @@ export const ObjectsList = ({
     setSelectedCard(id);
   };
 
+  const handleGetObjectById = (id) => objects?.find((o) => o?.id === id);
+
+  const handleToggleDeletedStatus = (id, value) =>
+    setObjects(
+      objects?.map((o) => (o?.id === id ? { ...o, deleted: value } : o))
+    );
+
   const handleDeleteObject = () => {
-    deleteObject({ id_objects: [selectedCard] }).then((resp) =>
+    deleteObject({
+      id_objects: [selectedCard],
+      final_remove:
+        handleGetObjectById(selectedCard)?.deleted === "1" ? "1" : undefined,
+    }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Об'єкт успішно видалено!", {
           hideAfter: 3,
           position: "top-right",
         });
-        handleDeleteObjectSuccess(selectedCard);
+        handleGetObjectById(selectedCard)?.deleted === "1"
+          ? handleDeleteObjectSuccess(selectedCard)
+          : handleToggleDeletedStatus(selectedCard, "1");
         setSelectedCard(null);
       })
     );
   };
 
   useEffect(() => {
-    onChangeObjectsCount(Object.entries(objects)?.length ?? 0);
+    onChangeObjectsCount(objects?.length ?? 0);
   }, [objects]);
+
+  const handleRestoreObject = (id) => {
+    restoreObjects([id]).then((resp) =>
+      handleResponse(resp, () => {
+        cogoToast.success(`Oб'єкт успішно відновлено`, {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        handleToggleDeletedStatus(id, "0");
+      })
+    );
+  };
 
   return (
     <>
       {deleteModal && (
         <Confirm
-          title="Видалити об'єкт?"
+          title={
+            handleGetObjectById(selectedCard)?.deleted === "1"
+              ? "Видалити об'єкт остаточно?"
+              : "Видалити об'єкт?"
+          }
           onClose={handleCancelDeleteRequest}
           onSubmit={handleDeleteObject}
+          passwordCheck={handleGetObjectById(selectedCard)?.deleted === "1"}
         />
       )}
       <div>
-        {objects && Object.entries(objects)?.length
-          ? Object.entries(objects).map((c, i) => (
+        {objects && objects.length
+          ? objects.map((c, i) => (
               <Card
                 key={`object-${i}`}
                 selected={
-                  //   active === c[1]?.id ||
-                  !!selectedItems?.find((s) => s.id === c[1]?.id)
+                  //   active === c?.id ||
+                  !!selectedItems?.find((s) => s.id === c?.id)
                 }
-                onSelect={() => onSelect({ id: c[1]?.id, type: "object" })}
+                onSelect={() => onSelect({ id: c?.id, type: "object" })}
                 onSelectItem={() =>
-                  onSelectItem({ id: c[1]?.id, type: "object" })
+                  onSelectItem({
+                    id: c?.id,
+                    type: "object",
+                    isDeleted: c?.deleted === "1",
+                  })
                 }
                 onOpenInfo={() => onOpenInfo(true)}
-                date={c[1]?.dt_add}
-                title={c[1]?.rubric}
-                location={c[1]?.location}
-                price={c[1]?.price_per_object_usd}
+                date={c?.dt_add}
+                title={c?.rubric}
+                location={c?.location}
+                price={c?.price_per_object_usd}
                 currency="2"
+                isDeleted={c?.deleted === "1"}
                 // price_for={
-                //   PRICES_FOR_TITLE?.find((p) => p.value === c[1]?.price_for)
+                //   PRICES_FOR_TITLE?.find((p) => p.value === c?.price_for)
                 //     ?.title ?? undefined
                 // }
-                id={c[1]?.id}
-                favorite={c[1]?.favorite}
-                onChangeFavorite={() => handleToggleFavoriteStatus(c[1]?.id)}
-                onDelete={() => handleOnDeleteRequest(c[1]?.id)}
+                id={c?.id}
+                favorite={c?.favorite}
+                onChangeFavorite={() => handleToggleFavoriteStatus(c?.id)}
+                onDelete={() => handleOnDeleteRequest(c?.id)}
                 photo=""
                 isObject={true}
                 isDelete={isDelete}
                 isEdit={isEdit}
+                onRestore={() => handleRestoreObject(c?.id)}
               />
             ))
           : null}

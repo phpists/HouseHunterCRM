@@ -363,6 +363,8 @@ const ObjectPage = () => {
         favorite={favorite}
         onToggleFavorite={() => setFavorite(!favorite)}
         loading={loading}
+        isDeleted={data?.deleted === "1"}
+        onChangeRestoreObject={(deleted) => setData({ ...data, deleted })}
       />
       <Header
         className="mobile-header"

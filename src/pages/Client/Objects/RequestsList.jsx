@@ -4,6 +4,7 @@ import { useLazyGetClientsRequestQuery } from "../../../store/clients/clients.ap
 import {
   useGetLocationsQuery,
   useLazyDeleteRequestQuery,
+  useLazyRestoreRequestsQuery,
 } from "../../../store/requests/requests.api";
 import {
   checkIsArray,
@@ -33,6 +34,7 @@ export const RequestsList = ({
   const [requests, setRequests] = useState([]);
   const [getClientsRequests] = useLazyGetClientsRequestQuery();
   const [deleteRequest] = useLazyDeleteRequestQuery();
+  const [restoreRequests] = useLazyRestoreRequestsQuery();
   const requestsCurrentPage = useRef(0);
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
@@ -141,14 +143,54 @@ export const RequestsList = ({
     setSelectedCard(id);
   };
 
+  const handleGetRequestById = (id) =>
+    !id
+      ? null
+      : Object.fromEntries(
+          Object.entries(requests).filter(
+            (req) => Object.entries(req[1])[1][1]?.id_group === id
+          )
+        )?.[id] ?? undefined;
+
+  const handleToggleDeleteStatus = (id, val) => {
+    setRequests(
+      Object.fromEntries(
+        Object.entries(requests).map((req) => {
+          const reqId = Object.entries(req[1])[1][1]?.id_group;
+          if (reqId === id) {
+            let request = [];
+            request[0] = req[0];
+            request[1] = {
+              ...req[1],
+              General_field_group: {
+                ...req[1].General_field_group,
+                deleted: val,
+              },
+            };
+            return request;
+          }
+          return req;
+        })
+      )
+    );
+  };
+
   const handleDeleteRequest = () => {
-    deleteRequest({ id_groups: [selectedCard] }).then((resp) =>
+    deleteRequest({
+      id_groups: [selectedCard],
+      final_remove:
+        handleGetRequestById(selectedCard)?.General_field_group?.deleted === "1"
+          ? "1"
+          : undefined,
+    }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Заявку успішно видалено!", {
           hideAfter: 3,
           position: "top-right",
         });
-        handleDeleteRequestSuccess(selectedCard);
+        handleGetRequestById(selectedCard)?.General_field_group?.deleted === "1"
+          ? handleDeleteRequestSuccess(selectedCard)
+          : handleToggleDeleteStatus(selectedCard, "1");
         setSelectedCard(null);
       })
     );
@@ -158,13 +200,34 @@ export const RequestsList = ({
     onChangeRequestsCount(Object.entries(requests)?.length ?? 0);
   }, [requests]);
 
+  const handleRestoreRequest = (id, idGroup) => {
+    restoreRequests([idGroup]).then((resp) =>
+      handleResponse(resp, () => {
+        cogoToast.success("Запит успішно відновлено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        handleToggleDeleteStatus(id, "0");
+      })
+    );
+  };
+
   return (
     <>
       {deleteModal && (
         <Confirm
-          title="Видалити запит?"
+          title={
+            handleGetRequestById(selectedCard)?.General_field_group?.deleted ===
+            "1"
+              ? "Видалити запит остаточно?"
+              : "Видалити запит?"
+          }
           onClose={handleCancelDeleteRequest}
           onSubmit={handleDeleteRequest}
+          passwordCheck={
+            handleGetRequestById(selectedCard)?.General_field_group?.deleted ===
+            "1"
+          }
         />
       )}
       <div>
@@ -183,8 +246,19 @@ export const RequestsList = ({
                     !!selectedItems?.find((s) => s.id === id)
                   }
                   currency={infoField?.price_currency}
-                  onSelect={() => onSelect({ id: id, type: "request" })}
-                  onSelectItem={() => onSelectItem({ id: id, type: "request" })}
+                  onSelect={() =>
+                    onSelect({
+                      id: id,
+                      type: "request",
+                    })
+                  }
+                  onSelectItem={() =>
+                    onSelectItem({
+                      id: id,
+                      type: "request",
+                      isDeleted: c[1]?.General_field_group?.deleted === "1",
+                    })
+                  }
                   onOpenInfo={() => onOpenInfo(true)}
                   date={handleFormatDate(
                     Number(c[1]?.General_field_group?.dt_add) * 1000,
@@ -207,6 +281,10 @@ export const RequestsList = ({
                   onDelete={() => handleOnDeleteRequest(id)}
                   isDelete={isDelete}
                   isEdit={isEdit}
+                  isDeleted={c[1]?.General_field_group?.deleted === "1"}
+                  onRestore={() =>
+                    handleRestoreRequest(id, infoField?.id_group)
+                  }
                 />
               );
             })

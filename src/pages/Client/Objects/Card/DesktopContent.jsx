@@ -26,6 +26,8 @@ export const DesktopContent = ({
   currency,
   price_for,
   dateTo,
+  isDeleted,
+  onRestore,
 }) => {
   const { id: clientId } = useParams();
 
@@ -38,7 +40,7 @@ export const DesktopContent = ({
             <Title title={title} />
             <Price price={price} currency={currency} price_for={price_for} />
           </div>
-          <CreatedDate date={date} dateTo={dateTo} />
+          <CreatedDate date={date} dateTo={dateTo} isDeleted={isDeleted} />
         </div>
         <div className="w-max mr-5">
           <div className="flex items-center w-max">
@@ -63,6 +65,8 @@ export const DesktopContent = ({
                 : `/#/edit-request/${clientId}/${id}`
             }
             noDelete={!isDelete}
+            isDeleted={isDeleted}
+            onRestore={onRestore}
           />
           <button className="arrow-more openMore">
             <ArrowIcon className="openMore" />

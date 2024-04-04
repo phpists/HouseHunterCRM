@@ -153,11 +153,7 @@ export const Header = ({
               noFavorite={filters?.show_deleted}
               allCount={allCount}
               onSelectAll={onSelectAll}
-              onRestore={
-                filters?.show_deleted && user?.struct_level === 1
-                  ? handleRestore
-                  : null
-              }
+              onRestore={handleRestore}
             />
           </div>
         </div>
@@ -183,11 +179,7 @@ export const Header = ({
         onSelectAll={onSelectAll}
         onToggleFavorite={handleToggleFavorites}
         noFavorite={filters?.show_deleted}
-        onRestore={
-          filters?.show_deleted && user?.struct_level === 1
-            ? handleRestore
-            : null
-        }
+        onRestore={handleRestore}
       />
       {filterOpen && (
         <Filter

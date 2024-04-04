@@ -69,6 +69,7 @@ const Request = () => {
   const [errors, setErrors] = useState([]);
   const contentRef = useRef();
   const [loading, setLoading] = useState(false);
+  const [deleted, setDeleted] = useState(false);
 
   const handleGetRubricsFields = (id, title) => {
     getRubricField(id).then((resp) => {
@@ -399,6 +400,7 @@ const Request = () => {
     if (id) {
       getRequest(id).then((resp) => {
         handleResponse(resp, () => {
+          setDeleted(resp?.data[id]?.General_field_group?.deleted === "1");
           setFavorite(!!!resp?.data[id].General_field_group?.favorite);
           setCategories([]);
           categoriesData.current = [];
@@ -582,6 +584,8 @@ const Request = () => {
         data={data}
         onChangeField={handleChangeField}
         loading={loading}
+        isDeleted={deleted}
+        onToggleDeleted={(val) => setDeleted(val)}
       />
       <div className="request-content" ref={contentRef}>
         <div>

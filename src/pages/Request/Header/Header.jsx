@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { SaveButton } from "./SaveButton";
 import { ReactComponent as StarIcon } from "../../../assets/images/card-star.svg";
 import { ReactComponent as RemoveIcon } from "../../../assets/images/remove.svg";
+import { ReactComponent as RestoreIcon } from "../../../assets/images/refresh-icon.svg";
 import { IconButton } from "../../../components/IconButton";
 import { Title } from "./Title";
 import { Button } from "./Button";
@@ -9,6 +10,7 @@ import { MoreButton } from "./MoreButton/MoreButton";
 import {
   useLazyAddToFavoriteQuery,
   useLazyDeleteRequestQuery,
+  useLazyRestoreRequestsQuery,
 } from "../../../store/requests/requests.api";
 import { useState } from "react";
 import { Confirm } from "../../../components/Confirm/Confirm";
@@ -25,22 +27,28 @@ export const Header = ({
   data,
   onChangeField,
   loading,
+  isDeleted,
+  onToggleDeleted,
 }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [addToFavorites] = useLazyAddToFavoriteQuery();
   const [deleteRequest] = useLazyDeleteRequestQuery();
+  const [restoreRequests] = useLazyRestoreRequestsQuery();
   const [deleteModal, setDeleteModal] = useState(false);
-  const { accessData } = useAppSelect((state) => state.auth);
+  const { accessData, user } = useAppSelect((state) => state.auth);
 
   const handleDeleteRequest = () => {
-    deleteRequest({ id_groups: [id]}).then((resp) =>
+    deleteRequest({
+      id_groups: [id],
+      final_remove: isDeleted ? "1" : undefined,
+    }).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Заявку успішно видалено!", {
+        cogoToast.success("Запит успішно видалено!", {
           hideAfter: 3,
           position: "top-right",
         });
-        navigate("/requests");
+        isDeleted ? navigate("/requests") : onToggleDeleted(true);
       })
     );
   };
@@ -57,13 +65,26 @@ export const Header = ({
     });
   };
 
+  const handleRestoreRequest = () => {
+    restoreRequests([id]).then((resp) =>
+      handleResponse(resp, () => {
+        onToggleDeleted(false);
+        cogoToast.success("Запит успішно відновлено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      })
+    );
+  };
+
   return (
     <StyledHeader className="flex items-center justify-between">
       {deleteModal && (
         <Confirm
-          title="Видалити запит?"
+          title={isDeleted ? "Видалити запит остаточно?" : "Видалити запит?"}
           onClose={() => setDeleteModal(false)}
           onSubmit={handleDeleteRequest}
+          passwordCheck={isDeleted}
         />
       )}
       <div className="flex title-wrapper">
@@ -98,56 +119,80 @@ export const Header = ({
         </div>
       </div>
       <div className="flex items-center bts">
-        <SaveButton onClick={onSave} loading={loading} />
-        <Button
-          title="Призупинити показ"
-          active={Number(data?.general_group?.stop_showing) > 0}
-          onClick={() =>
-            onChangeField("general_group", {
-              ...data.general_group,
-              stop_showing:
-                Number(data?.general_group?.stop_showing) <= 0 ? "1" : "0",
-            })
-          }
-        />
-        <Button
-          title="Пуста підбірка"
-          active={data?.general_group?.folder_empty === "1"}
-          onClick={() =>
-            onChangeField("general_group", {
-              ...data.general_group,
-              folder_empty:
-                data?.general_group?.folder_empty === "0" ? "1" : "0",
-            })
-          }
-        />
-        <Button
-          title={
-            data?.general_group?.not_actual === "0"
-              ? "Актуально"
-              : "Неактуально"
-          }
-          onClick={() =>
-            onChangeField("general_group", {
-              ...data.general_group,
-              not_actual: data?.general_group?.not_actual === "0" ? "1" : "0",
-            })
-          }
-        />
+        {isDeleted ? null : (
+          <>
+            <SaveButton onClick={onSave} loading={loading} />
+            <Button
+              title="Призупинити показ"
+              active={Number(data?.general_group?.stop_showing) > 0}
+              onClick={() =>
+                onChangeField("general_group", {
+                  ...data.general_group,
+                  stop_showing:
+                    Number(data?.general_group?.stop_showing) <= 0 ? "1" : "0",
+                })
+              }
+            />
+            <Button
+              title="Пуста підбірка"
+              active={data?.general_group?.folder_empty === "1"}
+              onClick={() =>
+                onChangeField("general_group", {
+                  ...data.general_group,
+                  folder_empty:
+                    data?.general_group?.folder_empty === "0" ? "1" : "0",
+                })
+              }
+            />
+            <Button
+              title={
+                data?.general_group?.not_actual === "0"
+                  ? "Актуально"
+                  : "Неактуально"
+              }
+              onClick={() =>
+                onChangeField("general_group", {
+                  ...data.general_group,
+                  not_actual:
+                    data?.general_group?.not_actual === "0" ? "1" : "0",
+                })
+              }
+            />
+          </>
+        )}
         {id && (
           <div className="desktop-action-btns flex items-center">
-            <IconButton
-              Icon={StarIcon}
-              className="icon-btn"
-              onClick={handleToggleFavorites}
-              active={favorite}
-            />
-            {handleCheckAccess(accessData, "requests", "delete") && (
-              <IconButton
-                Icon={RemoveIcon}
-                className="icon-btn remove-btn"
-                onClick={() => setDeleteModal(true)}
-              />
+            {isDeleted ? (
+              <>
+                <IconButton
+                  Icon={RestoreIcon}
+                  className="icon-btn restore-btn"
+                  onClick={handleRestoreRequest}
+                />
+                {user?.struct_level === 1 ? (
+                  <IconButton
+                    Icon={RemoveIcon}
+                    className="icon-btn remove-btn"
+                    onClick={() => setDeleteModal(true)}
+                  />
+                ) : null}
+              </>
+            ) : (
+              <>
+                <IconButton
+                  Icon={StarIcon}
+                  className="icon-btn"
+                  onClick={handleToggleFavorites}
+                  active={favorite}
+                />
+                {handleCheckAccess(accessData, "requests", "delete") && (
+                  <IconButton
+                    Icon={RemoveIcon}
+                    className="icon-btn remove-btn"
+                    onClick={() => setDeleteModal(true)}
+                  />
+                )}
+              </>
             )}
           </div>
         )}
@@ -168,6 +213,17 @@ const StyledHeader = styled.div`
   }
   .mobile-action-btns {
     display: none;
+  }
+  .restore-btn {
+    path {
+      opacity: 0.5;
+      transition: all 0.3s;
+    }
+    &:hover {
+      path {
+        opacity: 1;
+      }
+    }
   }
   @media (max-width: 1250px) {
     flex-direction: column;

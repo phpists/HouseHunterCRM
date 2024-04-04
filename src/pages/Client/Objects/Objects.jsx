@@ -32,7 +32,7 @@ export const Objects = ({ selected, onSelect }) => {
   const [addRequestsToFavorites] = useLazyAddToFavoriteQuery();
   const [refreshObjects, setRefreshObjects] = useState(false);
   const [refreshRequests, setRefreshRequests] = useState(false);
-  const { accessData } = useAppSelect((state) => state.auth);
+  const { accessData, user } = useAppSelect((state) => state.auth);
   const [allObjectsIds, setAllOjectsIds] = useState([]);
   const [allRequestsIds, setAllRequestsIds] = useState([]);
 
@@ -48,6 +48,9 @@ export const Objects = ({ selected, onSelect }) => {
 
   const handleGetSelectedItemsByType = (type) =>
     selectedItems.filter((s) => s.type === type)?.map(({ id }) => id);
+
+  const handleGetDeletedSelectedItems = () =>
+    selectedItems?.filter(({ isDeleted }) => isDeleted)?.length > 0;
 
   const handleClearSelectedItemsByType = (type) =>
     setSelectedItems(selectedItems?.filter((s) => s.type !== type));
@@ -79,7 +82,7 @@ export const Objects = ({ selected, onSelect }) => {
           }
         );
         handleClearSelectedItemsByType("request");
-        handleRefreshRequests(true);
+        // handleRefreshRequests(true);
       })
     );
   };
@@ -149,8 +152,18 @@ export const Objects = ({ selected, onSelect }) => {
         requestsCount={requestsCount}
         objectsCount={objectsCount}
         selectedCount={selectedItems?.length}
-        onDelete={handleDeleteItems}
-        onToggleFavorite={handleToggleItemsFavoriteStatus}
+        onDelete={
+          handleGetDeletedSelectedItems()
+            ? user?.struct_level === 1
+              ? handleDeleteItems
+              : null
+            : handleDeleteItems
+        }
+        onToggleFavorite={
+          handleGetDeletedSelectedItems()
+            ? null
+            : handleToggleItemsFavoriteStatus
+        }
         onSelectAll={handleSelectAll}
       />
       <div className="objects-content hide-scroll">
@@ -161,9 +174,21 @@ export const Objects = ({ selected, onSelect }) => {
           className="mobile-select"
           selectedCount={selectedItems?.length}
           deleteConfirmTitle="Видалити обрані заявку(ки)/ об'єкт(и)?"
-          onDelete={handleDeleteItems}
-          onToggleFavorite={handleToggleItemsFavoriteStatus}
+          onDelete={
+            handleGetDeletedSelectedItems()
+              ? user?.struct_level === 1
+                ? handleDeleteItems
+                : null
+              : handleDeleteItems
+          }
+          onToggleFavorite={
+            handleGetDeletedSelectedItems()
+              ? null
+              : handleToggleItemsFavoriteStatus
+          }
+          noFavorite={handleGetDeletedSelectedItems()}
           onSelectAll={handleSelectAll}
+          passwordCheck
         />
         {handleCheckAccess(accessData, "objects", "view") && (
           <ObjectsList

@@ -41,7 +41,7 @@ export const MoreButton = ({
           onRestore={onRestore}
         />
       </div>
-      {isDeleted ? null : <Divider />}
+      <Divider />
     </StyledMoreButton>
   );
 };

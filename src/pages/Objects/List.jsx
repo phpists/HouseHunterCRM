@@ -171,11 +171,7 @@ export const List = ({
                     : null
                 }
                 isDeleted={d?.deleted === "1"}
-                onRestore={
-                  user?.struct_level === 1 || data?.acsses_change
-                    ? () => onRestore([d?.id])
-                    : null
-                }
+                onRestore={() => onRestore([d?.id])}
               />
             ))}
           </>

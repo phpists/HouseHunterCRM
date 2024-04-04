@@ -173,12 +173,7 @@ export const Header = ({
                     : handleAddToSelection
                 }
                 passwordCheck
-                onRestore={
-                  filters?.company_object?.show_deleted === "1" &&
-                  user?.struct_level === 1
-                    ? onRestore
-                    : null
-                }
+                onRestore={onRestore}
               />
             </div>
           </div>
@@ -216,12 +211,7 @@ export const Header = ({
                 : handleAddToSelection
             }
             passwordCheck
-            onRestore={
-              filters?.company_object?.show_deleted === "1" &&
-              user?.struct_level === 1
-                ? onRestore
-                : null
-            }
+            onRestore={onRestore}
           />
         </div>
         {filterOpen && (
