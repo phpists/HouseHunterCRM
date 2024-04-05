@@ -187,7 +187,7 @@ export const RequestsList = ({
           : undefined,
     }).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Заявку успішно видалено!", {
+        cogoToast.success("Запит успішно видалено!", {
           hideAfter: 3,
           position: "top-right",
         });

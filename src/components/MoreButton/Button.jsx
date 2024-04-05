@@ -3,12 +3,12 @@ import { ReactComponent as OptionsIcon } from "../../assets/images/options.svg";
 
 export const Button = ({ onChangeFocus }) => (
   <StyledButton
-    className="flex items-center justify-center more-btn"
+    className="flex items-center justify-center more-btn noClickable"
     onFocus={() => onChangeFocus(true)}
     onBlur={() => onChangeFocus(false)}
     onClick={(e) => e.currentTarget.focus()}
   >
-    <OptionsIcon />
+    <OptionsIcon className="noClickable" />
   </StyledButton>
 );
 

@@ -57,8 +57,8 @@ export const MobileContent = ({
           </div>
         </div>
       </div>
-      <div className="flex items-center more-btn-wrapper">
-        <div className="relative flex items-center">
+      <div className="flex items-center more-btn-wrapper openMore">
+        <div className="relative flex items-center openMore">
           <MoreButton
             onFavorite={onFavorite}
             favorite={favorite}
@@ -74,6 +74,7 @@ export const MobileContent = ({
             isDeleted={isDeleted}
             onRestore={onRestore}
             onDeleteFinally={onDeleteFinally}
+            className="openMore"
           />
           <button className="arrow-more openMore">
             <ArrowIcon className="openMore" />
@@ -114,6 +115,7 @@ const StyledMobileContent = styled.div`
     opacity: 1;
     margin-left: 12px;
     transform: translateX(0px);
+    padding: 10px;
   }
   .location {
     max-width: 300px;

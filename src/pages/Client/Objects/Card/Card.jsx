@@ -38,7 +38,11 @@ export const Card = ({
   const handleClick = (e) => {
     onSelect();
 
-    if (e.target.classList.contains("openMore") && isEdit) {
+    if (
+      !e.target.classList.contains("noClickable") &&
+      e.target.classList.contains("openMore") &&
+      isEdit
+    ) {
       const url = !isEdit
         ? null
         : isObject

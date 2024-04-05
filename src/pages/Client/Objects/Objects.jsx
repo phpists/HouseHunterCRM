@@ -233,7 +233,7 @@ export const Objects = ({
             : handleToggleItemsFavoriteStatus
         }
         onSelectAll={handleSelectAll}
-        onRestore={handleGetDeletedSelectedItems() ? handleRestoreItems : null}
+        onRestore={handleRestoreItems}
       />
       <div className="objects-content hide-scroll">
         {isDeleted ? null : <Actions accessData={accessData} />}
