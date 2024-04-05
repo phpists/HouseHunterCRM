@@ -37,9 +37,6 @@ export const Card = ({
 
   const handleClick = (e) => {
     onSelect();
-    if (window.innerWidth <= 1400) {
-      onOpenInfo();
-    }
 
     if (e.target.classList.contains("openMore") && isEdit) {
       const url = !isEdit
@@ -50,6 +47,9 @@ export const Card = ({
       url && navigate(url);
     } else if (!e.target.classList.contains("noClickable")) {
       onSelectItem();
+      if (window.innerWidth <= 1400) {
+        onOpenInfo();
+      }
     }
   };
 

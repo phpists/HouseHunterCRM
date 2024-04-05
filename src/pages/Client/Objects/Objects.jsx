@@ -12,10 +12,12 @@ import { ObjectsList } from "./ObjectsList";
 import {
   useLazyAddToFavoritesQuery,
   useLazyDeleteObjectQuery,
+  useLazyRestoreObjectsQuery,
 } from "../../../store/objects/objects.api";
 import {
   useLazyAddToFavoriteQuery,
   useLazyDeleteRequestQuery,
+  useLazyRestoreRequestsQuery,
 } from "../../../store/requests/requests.api";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
@@ -41,6 +43,8 @@ export const Objects = ({
   const { accessData, user } = useAppSelect((state) => state.auth);
   const [allObjectsIds, setAllOjectsIds] = useState([]);
   const [allRequestsIds, setAllRequestsIds] = useState([]);
+  const [restoreRequests] = useLazyRestoreRequestsQuery();
+  const [restoreObjects] = useLazyRestoreObjectsQuery();
 
   const handleRefreshObjects = (val) => setRefreshObjects(val);
   const handleRefreshRequests = (val) => setRefreshRequests(val);
@@ -96,14 +100,14 @@ export const Objects = ({
     }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success(
-          `Заявк${requests?.length === 1 ? "у" : "и"} успішно видалено!`,
+          `Запит${requests?.length === 1 ? "" : "и"} успішно видалено!`,
           {
             hideAfter: 3,
             position: "top-right",
           }
         );
         handleClearSelectedItemsByType("request");
-        // handleRefreshRequests(true);
+        handleRefreshRequests(true);
       })
     );
   };
@@ -160,6 +164,46 @@ export const Objects = ({
     setSelectedItems(isReset ? [] : [...allObjectsIds, ...allRequestsIds]);
   };
 
+  const handleRestoreObjects = (objects) => {
+    restoreObjects(objects).then((resp) =>
+      handleResponse(resp, () => {
+        cogoToast.success(
+          `Обєкт${objects?.length === 1 ? "" : "и"} успішно відновлено!`,
+          {
+            hideAfter: 3,
+            position: "top-right",
+          }
+        );
+        handleRefreshObjects(true);
+        handleClearSelectedItemsByType("object");
+      })
+    );
+  };
+
+  const handleRestoreRequests = (requests, isFinally) => {
+    restoreRequests(requests).then((resp) =>
+      handleResponse(resp, () => {
+        cogoToast.success(
+          `Запит${requests?.length === 1 ? "" : "и"} успішно відновлено`,
+          {
+            hideAfter: 3,
+            position: "top-right",
+          }
+        );
+        handleClearSelectedItemsByType("request");
+        handleRefreshRequests(true);
+      })
+    );
+  };
+
+  const handleRestoreItems = () => {
+    const objects = handleGetSelectedItemsByType("object");
+    const requests = handleGetSelectedItemsByType("request");
+
+    objects?.length > 0 && handleRestoreObjects(objects);
+    requests?.length > 0 && handleRestoreRequests(requests);
+  };
+
   return (
     <StyledObjects>
       {openInfo && (
@@ -189,6 +233,7 @@ export const Objects = ({
             : handleToggleItemsFavoriteStatus
         }
         onSelectAll={handleSelectAll}
+        onRestore={handleGetDeletedSelectedItems() ? handleRestoreItems : null}
       />
       <div className="objects-content hide-scroll">
         {isDeleted ? null : <Actions accessData={accessData} />}

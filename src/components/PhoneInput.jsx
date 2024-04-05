@@ -45,6 +45,9 @@ export const PhoneInput = ({
   const handleFocus = (e) => {
     onFocus && onFocus();
     handleSetRangeInTheStart(e);
+    if (e.target.scrollLeft) {
+      e.target.scrollLeft = 0;
+    }
   };
 
   return (
@@ -71,6 +74,7 @@ export const PhoneInput = ({
         onPaste={handlePaste}
         onFocus={handleFocus}
         ref={inputRef}
+        onClick={handleSetRangeInTheStart}
       />
     </div>
   );
