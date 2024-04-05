@@ -65,10 +65,6 @@ export const App = () => {
       setLoad(true);
       setTimeout(() => setLoading(false), 1500);
     }
-
-    if (user && token) {
-      handleGetUserData(true);
-    }
     // eslint-disable-next-line
   }, [location]);
 

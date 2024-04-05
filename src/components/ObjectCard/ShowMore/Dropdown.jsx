@@ -44,6 +44,7 @@ export const Dropdown = ({
   onClose,
   isDeleted,
   onRestore,
+  onDeleteFinally,
 }) => {
   const [addStreetBaseObject] = useLazyAddStreetBaseObjectQuery();
   const [added, setAdded] = useState(false);
@@ -88,6 +89,29 @@ export const Dropdown = ({
     <StyledDropdown className="dropdown">
       {isDeleted ? (
         <>
+          {isEdit && (
+            <NavLink
+              onClick={() => onFocus()}
+              to={`/edit-object/${clientId}/${id}${searchTag ?? ""}`}
+              className="flex items-center justify-between"
+              onFocus={(e) => {
+                e.preventDefault();
+                onFocus();
+              }}
+              onMouseDown={(e) => {
+                if (window.event?.which === 2) {
+                  window
+                    .open(
+                      `/#/edit-object/${clientId}/${id}${searchTag ?? ""}`,
+                      "_blank"
+                    )
+                    .focus();
+                }
+              }}
+            >
+              <span>Редагувати </span> <Edit />
+            </NavLink>
+          )}
           {onRestore && (
             <div
               className="flex items-center justify-between"
@@ -232,6 +256,15 @@ export const Dropdown = ({
             </div>
           )}
         </>
+      )}
+      {onDeleteFinally && (
+        <div
+          className="flex items-center justify-between"
+          onClick={onDeleteFinally}
+        >
+          <span>Видалити остаточно</span>{" "}
+          <RemoveIcon className="selection-icon" />
+        </div>
       )}
     </StyledDropdown>
   );

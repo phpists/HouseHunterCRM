@@ -24,14 +24,18 @@ export const List = ({
   isDeleted,
 }) => {
   const [deleteModal, setDeleteModal] = useState(null);
+  const [isDeleteFinally, setIsDeleteFinally] = useState(null);
   const [editComment, setEditComment] = useState(false);
   const { accessData, user } = useAppSelect((state) => state.auth);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
 
-  const handleOpenDeleteModal = (id) => setDeleteModal(id);
+  const handleOpenDeleteModal = (id, isFinally) => {
+    setDeleteModal(id);
+    setIsDeleteFinally(isFinally);
+  };
 
   const handleDelete = () => {
-    onDelete(deleteModal);
+    onDelete(deleteModal, isDeleteFinally);
     setDeleteModal(null);
   };
 
@@ -40,11 +44,13 @@ export const List = ({
       {deleteModal && (
         <Confirm
           title={
-            isDeleted ? "Видалити клієнта остаточно?" : "Видалити клієнта?"
+            isDeleteFinally || isDeleted
+              ? "Видалити клієнта остаточно?"
+              : "Видалити клієнта?"
           }
           onSubmit={handleDelete}
           onClose={() => setDeleteModal(null)}
-          passwordCheck={isDeleted}
+          passwordCheck={isDeleted || isDeleteFinally}
         />
       )}
       {editComment && (
@@ -114,6 +120,11 @@ export const List = ({
                 onEditComment={() => setEditComment({ comment, id })}
                 isDeleted={deleted === "1"}
                 onRestore={() => onRestore([id])}
+                onDeleteFinally={
+                  user?.struct_level === 1
+                    ? () => handleOpenDeleteModal(id, true)
+                    : null
+                }
               />
             )
           )

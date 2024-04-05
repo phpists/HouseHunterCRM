@@ -27,6 +27,7 @@ export const MobileContent = ({
   onEditComment,
   isDeleted,
   onRestore,
+  onDeleteFinally,
 }) => (
   <StyledMobileContent className="flex items-center hide-scroll card">
     <div className="w-full">
@@ -73,6 +74,7 @@ export const MobileContent = ({
       onSend={onSend}
       isDeleted={isDeleted}
       onRestore={onRestore}
+      onDeleteFinally={onDeleteFinally}
     />
   </StyledMobileContent>
 );

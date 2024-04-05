@@ -456,6 +456,15 @@ export const handleCopy = (text) => {
   });
 };
 
+export const isJson = (data) => {
+  try {
+    const formatedData = JSON.parse(data);
+    return !!formatedData;
+  } catch {
+    return false;
+  }
+};
+
 export const checkIsJSON = (data) => {
   try {
     const formatedData = JSON.parse(data);

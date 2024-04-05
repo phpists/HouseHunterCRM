@@ -14,6 +14,7 @@ const Client = () => {
   const [getClient, { data: clientData }] = useLazyGetClientQuery(id);
   const [selectedObject, setSelectedObject] = useState(null);
   const navigate = useNavigate();
+  const [isDeleted, setIsDeleted] = useState(false);
 
   const handleGetClient = () => getClient(id);
 
@@ -26,13 +27,21 @@ const Client = () => {
     // eslint-disable-next-line
   }, [id]);
 
+  useEffect(() => {
+    setIsDeleted(clientData?.data?.deleted === "1");
+  }, [clientData?.data]);
+
   if (!clientData?.data) {
     return null;
   }
 
   return (
     <StyledClient isEmpty={!selectedObject} className="hide-scroll">
-      <Header favorite={clientData?.data?.favorite_client} />
+      <Header
+        favorite={clientData?.data?.favorite_client}
+        isDeleted={isDeleted}
+        onToggleIsDeleted={(val) => setIsDeleted(val)}
+      />
       <ProfileMobile
         data={clientData?.data}
         onRefreshClientData={handleGetClient}

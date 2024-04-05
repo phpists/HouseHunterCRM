@@ -25,6 +25,7 @@ export const Card = ({
   onEditComment,
   isDeleted,
   onRestore,
+  onDeleteFinally,
 }) => {
   const handleClick = (e) => {
     e.target.classList.contains("card") && onSelect();
@@ -57,6 +58,7 @@ export const Card = ({
         onEditComment={onEditComment}
         isDeleted={isDeleted}
         onRestore={onRestore}
+        onDeleteFinally={onDeleteFinally}
       />
       <MobileContent
         name={name}
@@ -79,6 +81,7 @@ export const Card = ({
         onEditComment={onEditComment}
         isDeleted={isDeleted}
         onRestore={onRestore}
+        onDeleteFinally={onDeleteFinally}
       />
     </StyledCard>
   );

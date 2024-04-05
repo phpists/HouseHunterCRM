@@ -29,6 +29,7 @@ export const DesktopContent = ({
   onEditComment,
   isDeleted,
   onRestore,
+  onDeleteFinally,
 }) => (
   <StyledDesktopContent className="flex items-center justify-between hide-scroll card">
     <MainInfo name={name} id={id} dateCreate={dateCreate} />
@@ -63,8 +64,9 @@ export const DesktopContent = ({
         onSend={onSend}
         isDeleted={isDeleted}
         onRestore={onRestore}
+        onDeleteFinally={onDeleteFinally}
       />
-      {isDeleted ? null : <Arrow id={id} />}
+      <Arrow id={id} />{" "}
     </div>
   </StyledDesktopContent>
 );

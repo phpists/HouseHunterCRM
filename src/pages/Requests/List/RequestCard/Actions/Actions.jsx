@@ -23,6 +23,7 @@ export const Actions = ({
   isDeleted,
   onRestore,
   userId,
+  onDeleteFinally,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const navigate = useNavigate();
@@ -72,6 +73,14 @@ export const Actions = ({
       {isDeleted && user?.struct_level === 1 && (
         <Button Icon={RemoveIcon} className="remove-btn" onClick={onDelete} />
       )}
+
+      {onDeleteFinally && (
+        <Button
+          Icon={RemoveIcon}
+          className="remove-btn removeFinally mt-2.5"
+          onClick={onDeleteFinally}
+        />
+      )}
     </StyledActions>
   );
 };
@@ -89,6 +98,12 @@ const StyledActions = styled.div`
       path {
         fill: #ff6c6c;
       }
+    }
+  }
+  .removeFinally {
+    border: 1px solid rgba(255, 101, 101, 0.2);
+    path {
+      fill: #ff6c6c;
     }
   }
   @media (max-width: 1399.9px) {

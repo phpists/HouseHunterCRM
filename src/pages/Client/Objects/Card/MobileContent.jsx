@@ -28,6 +28,7 @@ export const MobileContent = ({
   dateTo,
   isDeleted,
   onRestore,
+  onDeleteFinally,
 }) => {
   const { id: clientId } = useParams();
 
@@ -72,6 +73,7 @@ export const MobileContent = ({
             noDelete={!isDelete}
             isDeleted={isDeleted}
             onRestore={onRestore}
+            onDeleteFinally={onDeleteFinally}
           />
           <button className="arrow-more openMore">
             <ArrowIcon className="openMore" />

@@ -29,22 +29,23 @@ export const List = ({
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedChat, setSelectedChat] = useState(null);
-  const { accessData } = useAppSelect((state) => state.auth);
+  const { accessData, user } = useAppSelect((state) => state.auth);
   const [editComment, setEditComment] = useState(false);
 
   const handleCancelDeleteRequest = () => {
     setDeleteModal(false);
   };
 
-  const handleOnDeleteRequest = (id) => {
-    setDeleteModal(true);
+  const handleOnDeleteRequest = (id, isFinally) => {
+    setDeleteModal(isFinally ? "finally" : true);
     setSelectedCard(id);
   };
 
   const handleDeleteRequest = () => {
     deleteRequest({
       id_groups: [selectedCard],
-      final_remove: isDeletedRequests ? "1" : undefined,
+      final_remove:
+        isDeletedRequests || deleteModal === "finally" ? "1" : undefined,
     }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Заявку успішно видалено!", {
@@ -67,11 +68,13 @@ export const List = ({
       {deleteModal && (
         <Confirm
           title={
-            isDeletedRequests ? "Видалити запит остаточно?" : "Видалити запит?"
+            isDeletedRequests || deleteModal === "finally"
+              ? "Видалити запит остаточно?"
+              : "Видалити запит?"
           }
           onClose={handleCancelDeleteRequest}
           onSubmit={handleDeleteRequest}
-          passwordCheck={isDeletedRequests}
+          passwordCheck={isDeletedRequests || deleteModal === "finally"}
         />
       )}
       {selectedChat && (
@@ -101,6 +104,7 @@ export const List = ({
                 data={d[1]}
                 id={id}
                 onDelete={() => handleOnDeleteRequest(d[0])}
+                onDeleteFinally={() => handleOnDeleteRequest(d[0], true)}
                 onFavorite={onFavorite}
                 isEdit={handleCheckAccess(accessData, "requests", "edit")}
                 isDelete={handleCheckAccess(accessData, "requests", "delete")}

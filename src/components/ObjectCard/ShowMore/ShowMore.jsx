@@ -24,6 +24,7 @@ export const ShowMore = ({
   onMarkPhone,
   isDeleted,
   onRestore,
+  onDeleteFinally,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -71,6 +72,7 @@ export const ShowMore = ({
         onClose={handleCloseDropdown}
         isDeleted={isDeleted}
         onRestore={onRestore}
+        onDeleteFinally={onDeleteFinally}
       />
     </StyledShowMore>
   );

@@ -12,7 +12,6 @@ import { Tags } from "./Tags/Tags";
 export const Objects = ({ idGroup, onOpenChat, data }) => {
   const navigate = useNavigate();
 
-  console.log(data?.General_field_group?.deleted);
   return (
     <StyledObjects className="clickable">
       <SeenTime date={data?.General_field_group?.dt_view_client} />

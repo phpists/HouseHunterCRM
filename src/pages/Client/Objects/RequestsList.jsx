@@ -16,6 +16,7 @@ import {
 import cogoToast from "cogo-toast";
 import { Card } from "./Card/Card";
 import { Confirm } from "../../../components/Confirm/Confirm";
+import { useAppSelect } from "../../../hooks/redux";
 
 export const RequestsList = ({
   onSelect,
@@ -40,6 +41,7 @@ export const RequestsList = ({
   const [selectedCard, setSelectedCard] = useState(null);
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
+  const { user } = useAppSelect((state) => state.auth);
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -138,8 +140,8 @@ export const RequestsList = ({
     setDeleteModal(false);
   };
 
-  const handleOnDeleteRequest = (id) => {
-    setDeleteModal(true);
+  const handleOnDeleteRequest = (id, isFinally) => {
+    setDeleteModal(isFinally ? "finally" : true);
     setSelectedCard(id);
   };
 
@@ -179,7 +181,8 @@ export const RequestsList = ({
     deleteRequest({
       id_groups: [selectedCard],
       final_remove:
-        handleGetRequestById(selectedCard)?.General_field_group?.deleted === "1"
+        handleGetRequestById(selectedCard)?.General_field_group?.deleted ===
+          "1" || deleteModal === "finally"
           ? "1"
           : undefined,
     }).then((resp) =>
@@ -218,7 +221,7 @@ export const RequestsList = ({
         <Confirm
           title={
             handleGetRequestById(selectedCard)?.General_field_group?.deleted ===
-            "1"
+              "1" || deleteModal === "finally"
               ? "Видалити запит остаточно?"
               : "Видалити запит?"
           }
@@ -226,7 +229,7 @@ export const RequestsList = ({
           onSubmit={handleDeleteRequest}
           passwordCheck={
             handleGetRequestById(selectedCard)?.General_field_group?.deleted ===
-            "1"
+              "1" || deleteModal === "finally"
           }
         />
       )}
@@ -284,6 +287,11 @@ export const RequestsList = ({
                   isDeleted={c[1]?.General_field_group?.deleted === "1"}
                   onRestore={() =>
                     handleRestoreRequest(id, infoField?.id_group)
+                  }
+                  onDeleteFinally={
+                    user?.struct_level === 1
+                      ? () => handleOnDeleteRequest(id, true)
+                      : null
                   }
                 />
               );

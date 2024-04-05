@@ -17,6 +17,7 @@ export const RequestCard = ({
   onOpenChat,
   onChangeComment,
   onRestore,
+  onDeleteFinally,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1400);
@@ -62,6 +63,7 @@ export const RequestCard = ({
           onOpenChat={onOpenChat}
           onChangeComment={onChangeComment}
           onRestore={onRestore}
+          onDeleteFinally={onDeleteFinally}
         />
       ) : (
         <DesktopContent
@@ -74,6 +76,7 @@ export const RequestCard = ({
           onOpenChat={onOpenChat}
           onChangeComment={onChangeComment}
           onRestore={onRestore}
+          onDeleteFinally={onDeleteFinally}
         />
       )}
     </StyledRequestCard>

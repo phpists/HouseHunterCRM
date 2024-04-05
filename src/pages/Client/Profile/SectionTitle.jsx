@@ -1,7 +1,9 @@
 import { styled } from "styled-components";
 
-export const SectionTitle = ({ title }) => (
-  <StyledSectionTitle>{title}</StyledSectionTitle>
+export const SectionTitle = ({ title, Icon, onClick }) => (
+  <StyledSectionTitle className="flex items-center justify-between">
+    {title} {Icon ? <Icon onClick={onClick} /> : null}
+  </StyledSectionTitle>
 );
 
 const StyledSectionTitle = styled.div`
@@ -16,4 +18,12 @@ const StyledSectionTitle = styled.div`
   text-transform: uppercase;
   opacity: 0.4;
   margin-left: 6px;
+  svg {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    path {
+      fill: #fff;
+    }
+  }
 `;

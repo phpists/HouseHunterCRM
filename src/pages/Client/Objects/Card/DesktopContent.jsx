@@ -28,6 +28,7 @@ export const DesktopContent = ({
   dateTo,
   isDeleted,
   onRestore,
+  onDeleteFinally,
 }) => {
   const { id: clientId } = useParams();
 
@@ -67,6 +68,7 @@ export const DesktopContent = ({
             noDelete={!isDelete}
             isDeleted={isDeleted}
             onRestore={onRestore}
+            onDeleteFinally={onDeleteFinally}
           />
           <button className="arrow-more openMore">
             <ArrowIcon className="openMore" />

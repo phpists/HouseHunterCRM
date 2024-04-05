@@ -38,7 +38,7 @@ export const Profile = () => {
   const [editProfile] = useLazyEditProfileQuery();
   const [deleteAvatar] = useLazyDeleteAvatarQuery();
   const [errors, setErrors] = useState([]);
-  const { data } = useGetNotificationsQuery();
+  const { data, refetch } = useGetNotificationsQuery();
   const [logout] = useLazyLogoutQuery();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -74,6 +74,10 @@ export const Profile = () => {
     user && handleCheckIsRefresh();
     // eslint-disable-next-line
   }, [user]);
+
+  useEffect(() => {
+    data && refetch();
+  }, [pathname]);
 
   const handleCheckAllFields = () => {
     const { first_name, last_name, email, phones } = profileData;

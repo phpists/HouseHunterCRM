@@ -33,6 +33,7 @@ export const MobileContent = ({
   onMarkPhone,
   isDeleted,
   onRestore,
+  onDeleteFinally,
 }) => (
   <StyledMobileContent className="clickable">
     <Header data={data} />
@@ -87,6 +88,7 @@ export const MobileContent = ({
       onMarkPhone={onMarkPhone}
       isDeleted={isDeleted}
       onRestore={onRestore}
+      onDeleteFinally={onDeleteFinally}
     />
   </StyledMobileContent>
 );

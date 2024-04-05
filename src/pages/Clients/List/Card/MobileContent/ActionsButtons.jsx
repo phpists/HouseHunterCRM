@@ -12,6 +12,7 @@ export const ActionsButtons = ({
   onSend,
   isDeleted,
   onRestore,
+  onDeleteFinally,
 }) => (
   <StyledActionsButtons className={`flex flex-col items-center ${className}`}>
     {isDeleted ? null : <Arrow id={id} />}
@@ -24,6 +25,7 @@ export const ActionsButtons = ({
       onSend={onSend}
       isDeleted={isDeleted}
       onRestore={onRestore}
+      onDeleteFinally={onDeleteFinally}
     />
   </StyledActionsButtons>
 );

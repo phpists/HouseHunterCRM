@@ -73,7 +73,7 @@ export const Billing = ({ open, onToggleOpen, onToggleHover }) => {
         />
         <Subtitle subtitle={open ? "Сума поповнення" : null} />
       </div>
-      {open ? (
+      {/* {open ? (
         <Paying
           onClose={handleClose}
           attach={attach}
@@ -84,7 +84,7 @@ export const Billing = ({ open, onToggleOpen, onToggleHover }) => {
         />
       ) : (
         <BillButton onClick={() => onToggleOpen(true)} />
-      )}
+      )} */}
       <Divider />
     </StyledBilling>
   );
@@ -97,7 +97,7 @@ const StyledBilling = styled.div`
   position: relative;
   margin-right: 10px;
   &:hover {
-    padding: 12px 187px 11px 13px;
+    /* padding: 12px 187px 11px 13px;*/
     border-radius: 12px;
     background: #474747;
     border: none;

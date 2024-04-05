@@ -95,7 +95,6 @@ export const MarkObjectPhones = ({ onClose, object, onSuccess }) => {
   useEffect(() => {
     const isAgency = object?.clients_inf?.contact?.party_agency;
     const type = object?.clients_inf?.type;
-    console.log(object);
     if (isAgency) {
       setType(1);
       setName(object?.clients_inf?.contact?.name);

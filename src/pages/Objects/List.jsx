@@ -53,7 +53,7 @@ export const List = ({
     setDeleting(true);
     deleteObject({
       id_objects: [deleteId],
-      final_remove: isDeleted ? "1" : undefined,
+      final_remove: isDeleted || deleteModal === "finally" ? "1" : undefined,
     }).then((resp) => {
       handleResponse(resp, () => {
         cogoToast.success(`Обєкт успішно видалено!`, {
@@ -66,8 +66,8 @@ export const List = ({
     });
   };
 
-  const handleOpenDelete = (id) => {
-    setDeleteModal(true);
+  const handleOpenDelete = (id, isFinally) => {
+    setDeleteModal(isFinally ? "finally" : true);
     setDeleteId(id);
   };
   return (
@@ -112,10 +112,14 @@ export const List = ({
       )}
       {deleteModal && (
         <Confirm
-          title={isDeleted ? "Видалити об'єкт остаточно?" : "Видалити об'єкт?"}
+          title={
+            isDeleted || deleteModal === "finally"
+              ? "Видалити об'єкт остаточно?"
+              : "Видалити об'єкт?"
+          }
           onClose={() => setDeleteModal(false)}
           onSubmit={handleDelete}
-          passwordCheck={isDeleted}
+          passwordCheck={isDeleted || deleteModal === "finally"}
         />
       )}
       <StyledList ref={innerRef}>
@@ -151,6 +155,11 @@ export const List = ({
                       ? () => handleOpenDelete(d?.id)
                       : null
                     : () => handleOpenDelete(d?.id)
+                }
+                onDeleteFinally={
+                  user?.struct_level === 1
+                    ? () => handleOpenDelete(d?.id, true)
+                    : null
                 }
                 onChangeComment={() =>
                   setEditComment({

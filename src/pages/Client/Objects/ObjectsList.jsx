@@ -11,6 +11,7 @@ import {
 import { handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
 import { PRICES_FOR_TITLE } from "../../../constants";
+import { useAppSelect } from "../../../hooks/redux";
 
 export const ObjectsList = ({
   onSelect,
@@ -33,6 +34,7 @@ export const ObjectsList = ({
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [restoreObjects] = useLazyRestoreObjectsQuery();
+  const { user } = useAppSelect((state) => state.auth);
 
   const handleGetClientsObjects = () => {
     getClientsObjects({
@@ -79,8 +81,8 @@ export const ObjectsList = ({
     setDeleteModal(false);
   };
 
-  const handleOnDeleteRequest = (id) => {
-    setDeleteModal(true);
+  const handleOnDeleteRequest = (id, isFinally) => {
+    setDeleteModal(isFinally ? "finally" : true);
     setSelectedCard(id);
   };
 
@@ -131,13 +133,17 @@ export const ObjectsList = ({
       {deleteModal && (
         <Confirm
           title={
-            handleGetObjectById(selectedCard)?.deleted === "1"
+            handleGetObjectById(selectedCard)?.deleted === "1" ||
+            deleteModal === "finally"
               ? "Видалити об'єкт остаточно?"
               : "Видалити об'єкт?"
           }
           onClose={handleCancelDeleteRequest}
           onSubmit={handleDeleteObject}
-          passwordCheck={handleGetObjectById(selectedCard)?.deleted === "1"}
+          passwordCheck={
+            handleGetObjectById(selectedCard)?.deleted === "1" ||
+            deleteModal === "finally"
+          }
         />
       )}
       <div>
@@ -172,6 +178,11 @@ export const ObjectsList = ({
                 favorite={c?.favorite}
                 onChangeFavorite={() => handleToggleFavoriteStatus(c?.id)}
                 onDelete={() => handleOnDeleteRequest(c?.id)}
+                onDeleteFinally={
+                  user?.struct_level === 1
+                    ? () => handleOnDeleteRequest(c?.id, true)
+                    : null
+                }
                 photo=""
                 isObject={true}
                 isDelete={isDelete}

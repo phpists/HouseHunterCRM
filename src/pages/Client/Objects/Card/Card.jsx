@@ -28,6 +28,7 @@ export const Card = ({
   dateTo,
   isDeleted,
   onRestore,
+  onDeleteFinally,
 }) => {
   const { id: clientId } = useParams();
   const [addRequestToFavorites] = useLazyAddToFavoriteQuery();
@@ -93,6 +94,7 @@ export const Card = ({
         dateTo={dateTo}
         isDeleted={isDeleted}
         onRestore={onRestore}
+        onDeleteFinally={onDeleteFinally}
       />
       <MobileContent
         date={date}
@@ -111,6 +113,7 @@ export const Card = ({
         dateTo={dateTo}
         isDeleted={isDeleted}
         onRestore={onRestore}
+        onDeleteFinally={onDeleteFinally}
       />
     </StyledCard>
   );

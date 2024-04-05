@@ -212,10 +212,11 @@ const Clients = () => {
     setSelected(isReset ? [] : clientsIds);
   };
 
-  const handleDeleteClient = (clientId) => {
+  const handleDeleteClient = (clientId, isFinally) => {
     deleteClient({
       id_client: [clientId],
-      final_remove: filter?.filters?.show_deleted ? "1" : undefined,
+      final_remove:
+        filter?.filters?.show_deleted || isFinally ? "1" : undefined,
     }).then((resp) => {
       handleResponse(resp, () => {
         cogoToast.success("Клієнта успішно видалено", {

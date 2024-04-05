@@ -15,6 +15,7 @@ export const Dropdown = ({
   onSend,
   isDeleted,
   onRestore,
+  onDeleteFinally,
 }) => (
   <StyledDropdown className="dropdown noClickable">
     {isDeleted ? (
@@ -83,6 +84,15 @@ export const Dropdown = ({
         )}
       </>
     )}
+    {onDeleteFinally && (
+      <div
+        className="flex items-center justify-between noClickable"
+        onClick={onDeleteFinally}
+      >
+        <span className="noClickable">Видалити остаточно</span>
+        <RemoveIcon className="remove-icon noClickable" />
+      </div>
+    )}
   </StyledDropdown>
 );
 
@@ -99,7 +109,7 @@ const StyledDropdown = styled.div`
   font-weight: 400;
   line-height: 118%; /* 14.16px */
   letter-spacing: 0.24px;
-  width: 138px;
+  width: 188px;
   overflow: hidden;
   top: -28px;
   right: 0px;

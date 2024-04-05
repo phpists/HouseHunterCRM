@@ -15,13 +15,17 @@ import {
 import { useParams } from "react-router-dom";
 import cogoToast from "cogo-toast";
 import {
+  checkIsJSON,
   handleCheckAccess,
   handleRemovePhoneMask,
   handleResponse,
+  isJson,
 } from "../../../utilits";
 import { Footer } from "./Footer";
 import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
 import { useAppSelect } from "../../../hooks/redux";
+import { ReactComponent as History } from "../../../assets/images/history-object.svg";
+import { PhoneHistory } from "../PhoneHistory/PhoneHistory";
 
 export const Profile = ({ className, data, onRefreshClientData }) => {
   const { id } = useParams();
@@ -33,6 +37,7 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
   const [photos, setPhotos] = useState([]);
   const [isAccess, setIsAccess] = useState(false);
   const { accessData } = useAppSelect((state) => state.auth);
+  const [phoneModal, setPhoneModal] = useState(false);
 
   useEffect(() => {
     setIsAccess(handleCheckAccess(accessData, "clients", "edit"));
@@ -94,6 +99,12 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
         name={`${data?.first_name ?? ""} ${data?.last_name ?? ""}`}
         email={updatedData?.email}
       />
+      {phoneModal && (
+        <PhoneHistory
+          data={checkIsJSON(data?.phone_history)}
+          onClose={() => setPhoneModal(false)}
+        />
+      )}
       <Divider />
       <div className="profile-content hide-scroll">
         <div className="main-info-wrapper hide-scroll">
@@ -105,7 +116,11 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
             readOnly={!isAccess}
           />
 
-          <SectionTitle title="Контакти" />
+          <SectionTitle
+            title="Контакти"
+            Icon={isJson(data?.phone_history) ? History : null}
+            onClick={() => setPhoneModal(true)}
+          />
           <Contact
             phones={updatedData?.phone ?? []}
             email={updatedData?.email}
