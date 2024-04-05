@@ -21,7 +21,13 @@ import { handleCheckAccess, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
 import { useAppSelect } from "../../../hooks/redux";
 
-export const Objects = ({ selected, onSelect }) => {
+export const Objects = ({
+  selected,
+  onSelect,
+  isRefetch,
+  onToggleIsRefetch,
+  isDeleted,
+}) => {
   const [openInfo, setOpenInfo] = useState(false);
   const [requestsCount, setRequestCount] = useState(0);
   const [objectsCount, setObjectsCount] = useState(0);
@@ -39,6 +45,15 @@ export const Objects = ({ selected, onSelect }) => {
   const handleRefreshObjects = (val) => setRefreshObjects(val);
   const handleRefreshRequests = (val) => setRefreshRequests(val);
 
+  useEffect(() => {
+    if (isRefetch) {
+      handleRefreshObjects(true);
+      handleRefreshRequests(true);
+      onToggleIsRefetch(false);
+    }
+  }, [isRefetch]);
+
+  useEffect(() => {});
   const handleSelectItem = (item) =>
     setSelectedItems(
       !!selectedItems.find((s) => s.id === item.id)
@@ -55,8 +70,11 @@ export const Objects = ({ selected, onSelect }) => {
   const handleClearSelectedItemsByType = (type) =>
     setSelectedItems(selectedItems?.filter((s) => s.type !== type));
 
-  const handleDeleteObjects = (objects) => {
-    deleteObjects(objects).then((resp) =>
+  const handleDeleteObjects = (objects, isFinally) => {
+    deleteObjects({
+      id_objects: objects,
+      final_remove: isFinally ? "1" : undefined,
+    }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success(
           `Обєкт${objects?.length === 1 ? "" : "и"} успішно видалено!`,
@@ -71,8 +89,11 @@ export const Objects = ({ selected, onSelect }) => {
     );
   };
 
-  const handleDeleteRequest = (requests) => {
-    deleteRequests({ id_groups: requests }).then((resp) =>
+  const handleDeleteRequest = (requests, isFinally) => {
+    deleteRequests({
+      id_groups: requests,
+      final_remove: isFinally ? "1" : undefined,
+    }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success(
           `Заявк${requests?.length === 1 ? "у" : "и"} успішно видалено!`,
@@ -87,12 +108,12 @@ export const Objects = ({ selected, onSelect }) => {
     );
   };
 
-  const handleDeleteItems = () => {
+  const handleDeleteItems = (isFinally) => {
     const objects = handleGetSelectedItemsByType("object");
     const requests = handleGetSelectedItemsByType("request");
 
-    objects?.length > 0 && handleDeleteObjects(objects);
-    requests?.length > 0 && handleDeleteRequest(requests);
+    objects?.length > 0 && handleDeleteObjects(objects, isFinally);
+    requests?.length > 0 && handleDeleteRequest(requests, isFinally);
   };
 
   const handleToggleObjectsFavorites = (objects) => {
@@ -159,6 +180,9 @@ export const Objects = ({ selected, onSelect }) => {
               : null
             : handleDeleteItems
         }
+        onDeleteFinally={
+          user?.struct_level === 1 ? () => handleDeleteItems(true) : null
+        }
         onToggleFavorite={
           handleGetDeletedSelectedItems()
             ? null
@@ -167,10 +191,10 @@ export const Objects = ({ selected, onSelect }) => {
         onSelectAll={handleSelectAll}
       />
       <div className="objects-content hide-scroll">
-        <Actions accessData={accessData} />
+        {isDeleted ? null : <Actions accessData={accessData} />}
         <MobileHeader />
         <SelectItems
-          title="запитів"
+          title="обрано"
           className="mobile-select"
           selectedCount={selectedItems?.length}
           deleteConfirmTitle="Видалити обрані заявку(ки)/ об'єкт(и)?"
@@ -189,6 +213,9 @@ export const Objects = ({ selected, onSelect }) => {
           noFavorite={handleGetDeletedSelectedItems()}
           onSelectAll={handleSelectAll}
           passwordCheck
+          onDeleteFinally={
+            user?.struct_level === 1 ? () => handleDeleteItems(true) : null
+          }
         />
         {handleCheckAccess(accessData, "objects", "view") && (
           <ObjectsList

@@ -71,13 +71,12 @@ export const Header = ({
     });
   };
 
-  const handleDelete = () => {
+  const handleDelete = (isFinally) => {
     if (selected?.length > 0) {
       onChangeActionLoading(true);
       deleteObject({
         id_objects: selected,
-        final_remove:
-          filters?.company_object?.show_deleted === "1" ? "1" : undefined,
+        final_remove: isFinally ? "1" : undefined,
       }).then((resp) => {
         handleResponse(resp, () => {
           cogoToast.success(
@@ -151,10 +150,10 @@ export const Header = ({
                     : handleToggleFavorites
                 }
                 noFavorite={filters?.company_object?.show_deleted === "1"}
-                deleteConfirmTitle={
-                  filters?.company_object?.show_deleted === "1"
-                    ? "Видалити об'єкт(и) остаточно?"
-                    : "Видалити об'єкт(и)?"
+                deleteConfirmTitle={"Видалити об'єкт(и)?"}
+                finalDeleteConfirmTitle="Видалити об'єкт(и) остаточно?"
+                onDeleteFinally={
+                  user?.struct_level === 1 ? () => handleDelete(true) : null
                 }
                 onDelete={
                   filters?.company_object?.show_deleted === "1"

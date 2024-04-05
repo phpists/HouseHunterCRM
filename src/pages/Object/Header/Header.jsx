@@ -25,6 +25,7 @@ export const Header = ({
   loading,
   isDeleted,
   onChangeRestoreObject,
+  isData,
 }) => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -92,7 +93,7 @@ export const Header = ({
       <StyledHeader className="flex items-center justify-between">
         <BackButton />
         <div className="btns-header flex items-center">
-          {isDeleted ? (
+          {!isData ? null : isDeleted ? (
             <>
               <IconButton
                 Icon={RestoreIcon}
@@ -112,19 +113,24 @@ export const Header = ({
               <SaveButton onClick={onSave} loading={loading} />
               {/* <SendClientButton /> */}
               <ToClientButton />
-              <IconButton
-                Icon={StarIcon}
-                className="icon-btn"
-                onClick={handleToggleFavorites}
-                active={favorite}
-              />
-              {handleCheckAccess(accessData, "objects", "delete") && (
-                <IconButton
-                  Icon={RemoveIcon}
-                  className="icon-btn remove-btn"
-                  onClick={() => setDeleteModal(true)}
-                />
-              )}
+              {id ? (
+                <>
+                  {" "}
+                  <IconButton
+                    Icon={StarIcon}
+                    className="icon-btn"
+                    onClick={handleToggleFavorites}
+                    active={favorite}
+                  />
+                  {handleCheckAccess(accessData, "objects", "delete") && (
+                    <IconButton
+                      Icon={RemoveIcon}
+                      className="icon-btn remove-btn"
+                      onClick={() => setDeleteModal(true)}
+                    />
+                  )}
+                </>
+              ) : null}
             </>
           )}
         </div>

@@ -1,6 +1,7 @@
 import ReactInputMask from "react-input-mask";
 import { CodeSelect } from "./Select copy/CodeSelect";
 import { removePhoneMask } from "../utilits";
+import { useRef } from "react";
 
 export const PhoneInput = ({
   phoneCode,
@@ -13,6 +14,8 @@ export const PhoneInput = ({
   onKeyDown,
   onFocus,
 }) => {
+  const inputRef = useRef(null);
+
   const handlePaste = (e) => {
     let paste =
       e.clipboardData.getData("text/plain") ||
@@ -31,6 +34,17 @@ export const PhoneInput = ({
     } else {
       onChange(e.target.value);
     }
+  };
+
+  const handleSetRangeInTheStart = (e) => {
+    if (e?.target?.setSelectionRange) {
+      e?.target?.setSelectionRange(0, 0);
+    }
+  };
+
+  const handleFocus = (e) => {
+    onFocus && onFocus();
+    handleSetRangeInTheStart(e);
   };
 
   return (
@@ -55,7 +69,8 @@ export const PhoneInput = ({
         onKeyDown={onKeyDown}
         alwaysShowMask
         onPaste={handlePaste}
-        onFocus={onFocus}
+        onFocus={handleFocus}
+        ref={inputRef}
       />
     </div>
   );

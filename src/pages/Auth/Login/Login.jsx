@@ -22,11 +22,11 @@ export const Login = ({ onForgotPassword, onSuccess, onRegister }) => {
 
   const handleChangeEmail = (val) => {
     setEmail(val);
-    setErrors({ email: emailValidation(val) });
+    // setErrors({ email: emailValidation(val) });
   };
 
   const handleSubmit = () => {
-    if (email?.length === 0 || errors?.email || password?.length === 0) {
+    if (email?.length === 0 || password?.length === 0) {
       setErrors({
         email: emailValidation(email) || email?.length === 0,
         password: password?.length === 0,

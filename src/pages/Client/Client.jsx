@@ -15,6 +15,7 @@ const Client = () => {
   const [selectedObject, setSelectedObject] = useState(null);
   const navigate = useNavigate();
   const [isDeleted, setIsDeleted] = useState(false);
+  const [isRefetch, setIsRefetch] = useState(false);
 
   const handleGetClient = () => getClient(id);
 
@@ -35,26 +36,36 @@ const Client = () => {
     return null;
   }
 
+  const handleChangeIsDeleted = (val) => {
+    setIsDeleted(val);
+    setIsRefetch(true);
+  };
+
   return (
     <StyledClient isEmpty={!selectedObject} className="hide-scroll">
       <Header
         favorite={clientData?.data?.favorite_client}
         isDeleted={isDeleted}
-        onToggleIsDeleted={(val) => setIsDeleted(val)}
+        onToggleIsDeleted={handleChangeIsDeleted}
       />
       <ProfileMobile
         data={clientData?.data}
         onRefreshClientData={handleGetClient}
+        isDeleted={isDeleted}
       />
       <div className="client-content hide-scroll">
         <Profile
           className="item-desktop"
           data={clientData?.data}
           onRefreshClientData={handleGetClient}
+          isDeleted={isDeleted}
         />
         <Objects
           selected={selectedObject}
           onSelect={(value) => setSelectedObject(value)}
+          isRefetch={isRefetch}
+          onToggleIsRefetch={(val) => setIsRefetch(val)}
+          isDeleted={isDeleted}
         />
         {selectedObject?.id ? (
           <ObjectCard

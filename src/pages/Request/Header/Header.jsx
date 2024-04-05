@@ -29,6 +29,7 @@ export const Header = ({
   loading,
   isDeleted,
   onToggleDeleted,
+  isDataLoading,
 }) => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -93,33 +94,54 @@ export const Header = ({
           <Title />
         </div>
         <div className="mobile-action-btns flex items-center">
-          <SaveButton
-            className="desktop-save-btn"
-            onClick={onSave}
-            loading={loading}
-          />
-          {id && (
+          {isDataLoading ? null : isDeleted ? (
             <>
+              {" "}
               <IconButton
-                Icon={StarIcon}
-                className="icon-btn"
-                onClick={handleToggleFavorites}
-                active={favorite}
+                Icon={RestoreIcon}
+                className="icon-btn restore-btn ml-auto"
+                onClick={handleRestoreRequest}
               />
-              {handleCheckAccess(accessData, "requests", "delete") && (
+              {user?.struct_level === 1 ? (
                 <IconButton
                   Icon={RemoveIcon}
                   className="icon-btn remove-btn"
                   onClick={() => setDeleteModal(true)}
                 />
+              ) : null}
+            </>
+          ) : (
+            <>
+              <SaveButton
+                className="desktop-save-btn"
+                onClick={onSave}
+                loading={loading}
+              />
+              {id && (
+                <>
+                  <IconButton
+                    Icon={StarIcon}
+                    className="icon-btn"
+                    onClick={handleToggleFavorites}
+                    active={favorite}
+                  />
+
+                  {handleCheckAccess(accessData, "requests", "delete") && (
+                    <IconButton
+                      Icon={RemoveIcon}
+                      className="icon-btn remove-btn"
+                      onClick={() => setDeleteModal(true)}
+                    />
+                  )}
+                  <MoreButton />
+                </>
               )}
-              <MoreButton />
             </>
           )}
         </div>
       </div>
       <div className="flex items-center bts">
-        {isDeleted ? null : (
+        {isDataLoading ? null : isDeleted ? null : (
           <>
             <SaveButton onClick={onSave} loading={loading} />
             <Button
@@ -160,7 +182,7 @@ export const Header = ({
             />
           </>
         )}
-        {id && (
+        {id && !isDataLoading && (
           <div className="desktop-action-btns flex items-center">
             {isDeleted ? (
               <>

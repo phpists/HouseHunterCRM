@@ -120,7 +120,7 @@ export const Dropdown = ({
               <span>Відновити </span> <RestoreIcon className="selection-icon" />
             </div>
           )}
-          {onDelete && (
+          {onDelete && !onDeleteFinally && (
             <div
               className="flex items-center justify-between"
               onClick={onDelete}

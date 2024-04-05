@@ -23,6 +23,8 @@ export const SelectItems = ({
   onAddToSelection,
   onRestore,
   passwordCheck,
+  onDeleteFinally,
+  finalDeleteConfirmTitle,
 }) => {
   const [type, setType] = useState(null);
   const [open, setOpen] = useState(false);
@@ -55,6 +57,8 @@ export const SelectItems = ({
       onAddToSelection();
     } else if (opt === "restore") {
       onRestore();
+    } else if (opt === "deleteFinally") {
+      setDeleteModal("finally");
     }
   };
 
@@ -83,10 +87,22 @@ export const SelectItems = ({
     <>
       {deleteModal && (
         <Confirm
-          title={deleteConfirmTitle}
+          title={
+            deleteModal === "finally"
+              ? finalDeleteConfirmTitle
+              : deleteConfirmTitle
+          }
           onClose={() => setDeleteModal(false)}
-          onSubmit={() => (onDelete ? onDelete() : null)}
-          passwordCheck={passwordCheck || selectedCount > 1}
+          onSubmit={() => {
+            if (deleteModal === "finally") {
+              onDeleteFinally && onDeleteFinally();
+            } else {
+              onDelete && onDelete();
+            }
+          }}
+          passwordCheck={
+            passwordCheck || selectedCount > 1 || deleteModal === "finally"
+          }
         />
       )}
       <div className="relative z-300">
@@ -121,6 +137,7 @@ export const SelectItems = ({
                   isHideObjects={isHideObjects}
                   onAddToSelection={onAddToSelection}
                   onRestore={onRestore}
+                  onDeleteFinally={onDeleteFinally}
                 />
               )}
             </>

@@ -70,6 +70,7 @@ const Request = () => {
   const contentRef = useRef();
   const [loading, setLoading] = useState(false);
   const [deleted, setDeleted] = useState(false);
+  const [isDataLoading, setIsDataLoading] = useState(!!id);
 
   const handleGetRubricsFields = (id, title) => {
     getRubricField(id).then((resp) => {
@@ -398,7 +399,9 @@ const Request = () => {
 
   useEffect(() => {
     if (id) {
+      setIsDataLoading(true);
       getRequest(id).then((resp) => {
+        setIsDataLoading(false);
         handleResponse(resp, () => {
           setDeleted(resp?.data[id]?.General_field_group?.deleted === "1");
           setFavorite(!!!resp?.data[id].General_field_group?.favorite);
@@ -586,6 +589,7 @@ const Request = () => {
         loading={loading}
         isDeleted={deleted}
         onToggleDeleted={(val) => setDeleted(val)}
+        isDataLoading={isDataLoading}
       />
       <div className="request-content" ref={contentRef}>
         <div>

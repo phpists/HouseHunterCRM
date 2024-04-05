@@ -46,12 +46,12 @@ export const Header = ({
     getNewClientsCount().then((resp) => saveNewClientsCount(resp?.data?.count));
   }, []);
 
-  const handleDeleteClients = () => {
+  const handleDeleteClients = (isFinal) => {
     if (selected?.length > 0) {
       onChangeActionLoading(true);
       deleteClient({
         id_client: selected,
-        final_remove: filter?.filters?.show_deleted ? "1" : undefined,
+        final_remove: isFinal ? "1" : undefined,
       }).then((resp) => {
         handleResponse(
           resp,
@@ -103,17 +103,23 @@ export const Header = ({
           }
           deleteConfirmTitle={`Видалити клієнт${
             selected?.length > 1 ? "ів" : "а"
-          } ${filter?.filters?.show_deleted === "1" ? "остаточно" : ""}?`}
+          }?`}
+          finalDeleteConfirmTitle={`Видалити клієнт${
+            selected?.length > 1 ? "ів" : "а"
+          } остаточно?`}
           onFavorite={onFavorite}
           onSendClients={onSendClients}
           isDeleted={filter?.filters?.show_deleted === "1"}
           onRestore={filter?.filters?.show_deleted === "1" ? onRestore : null}
+          onDeleteFinally={
+            user?.struct_level === 1 ? () => handleDeleteClients(true) : null
+          }
         />
       </div>
       <SelectItems
         deleteConfirmTitle={`Видалити клієнт${
           selected?.length > 1 ? "ів" : "а"
-        } ${filter?.filters?.show_deleted === "1" ? "остаточно" : ""}?`}
+        }?`}
         title="клієнтів"
         className="select-wrapper-mobile"
         selectedCount={selectedCount}
@@ -135,6 +141,12 @@ export const Header = ({
         onSend={filter?.filters?.show_deleted === "1" ? null : onSendClients}
         passwordCheck={filter?.filters?.show_deleted === "1"}
         onRestore={filter?.filters?.show_deleted === "1" ? onRestore : null}
+        onDeleteFinally={
+          user?.struct_level === 1 ? () => handleDeleteClients(true) : null
+        }
+        finalDeleteConfirmTitle={`Видалити клієнт${
+          selected?.length > 1 ? "ів" : "а"
+        } остаточно?`}
       />
     </StyledHeader>
   );

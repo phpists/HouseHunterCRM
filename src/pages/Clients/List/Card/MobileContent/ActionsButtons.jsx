@@ -15,7 +15,7 @@ export const ActionsButtons = ({
   onDeleteFinally,
 }) => (
   <StyledActionsButtons className={`flex flex-col items-center ${className}`}>
-    {isDeleted ? null : <Arrow id={id} />}
+    <Arrow id={id} />
     <MoreButton
       className="more-btn"
       onFavorite={onAddToFavorite}

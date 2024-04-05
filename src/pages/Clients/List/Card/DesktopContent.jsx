@@ -32,7 +32,12 @@ export const DesktopContent = ({
   onDeleteFinally,
 }) => (
   <StyledDesktopContent className="flex items-center justify-between hide-scroll card">
-    <MainInfo name={name} id={id} dateCreate={dateCreate} />
+    <MainInfo
+      name={name}
+      id={id}
+      dateCreate={dateCreate}
+      isDeleted={isDeleted}
+    />
     <Phones
       phones={phones?.map(({ phone, viber, telegram }) => ({
         phone,

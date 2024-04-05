@@ -74,6 +74,7 @@ export const Maininfo = ({
             : []
         }
         viewOnly
+        hide
       />
       <Divider />
       <SelectTags
@@ -85,6 +86,7 @@ export const Maininfo = ({
         options={formatedLocations}
         viewOnly
         showTags
+        hide
       />
       <Divider />
       <div className="field-group">

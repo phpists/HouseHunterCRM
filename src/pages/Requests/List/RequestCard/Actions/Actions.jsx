@@ -70,7 +70,7 @@ export const Actions = ({
       {isDelete && isAccess && !isDeleted && (
         <Button Icon={RemoveIcon} className="remove-btn" onClick={onDelete} />
       )}
-      {isDeleted && user?.struct_level === 1 && (
+      {isDeleted && user?.struct_level === 1 && !onDeleteFinally && (
         <Button Icon={RemoveIcon} className="remove-btn" onClick={onDelete} />
       )}
 

@@ -21,7 +21,7 @@ import { useRef } from "react";
 import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
 import { useAppSelect } from "../../../hooks/redux";
 
-export const ProfileMobile = ({ data, onRefreshClientData }) => {
+export const ProfileMobile = ({ data, onRefreshClientData, isDeleted }) => {
   const [open, setOpen] = useState(false);
   const { id } = useParams();
   const [updatedData, setUpdatedData] = useState({});
@@ -140,7 +140,7 @@ export const ProfileMobile = ({ data, onRefreshClientData }) => {
           onRefreshClientData={handleRefreshData}
           photos={photos}
           onChangePhotos={(val) => setPhotos(val)}
-          isAccess={isAccess}
+          isAccess={isAccess && !isDeleted}
         />
       )}
     </>

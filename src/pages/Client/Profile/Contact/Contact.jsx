@@ -55,12 +55,22 @@ export const Contact = ({ phones, email, onChangeField, readOnly }) => {
           <Divider />
         </React.Fragment>
       ))}
-      <ProfileField
-        value={email}
-        label="Пошта"
-        onChange={(val) => onChangeField("email", val)}
-        readOnly={readOnly}
-      />
+
+      {!readOnly ? (
+        <ProfileField
+          value={email}
+          label="Пошта"
+          onChange={(val) => onChangeField("email", val)}
+          readOnly={readOnly}
+        />
+      ) : readOnly && email?.length > 0 ? (
+        <ProfileField
+          value={email}
+          label="Пошта"
+          onChange={(val) => onChangeField("email", val)}
+          readOnly={readOnly}
+        />
+      ) : null}
     </StyledContact>
   );
 };

@@ -12,7 +12,7 @@ export const Selected = ({
     {selectedCount > 0 && selectedCount < allCount ? (
       <div onClick={() => onChnage(1)} className={`${value === 1 && "active"}`}>
         {selectedCount > 0 ? selectedCount : 10}
-        {title}
+        <span className="ml-0.5"> {title}</span>
       </div>
     ) : null}
     <div onClick={() => onChnage(2)} className={`${value === 2 && "active"}`}>

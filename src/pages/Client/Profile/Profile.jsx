@@ -27,7 +27,12 @@ import { useAppSelect } from "../../../hooks/redux";
 import { ReactComponent as History } from "../../../assets/images/history-object.svg";
 import { PhoneHistory } from "../PhoneHistory/PhoneHistory";
 
-export const Profile = ({ className, data, onRefreshClientData }) => {
+export const Profile = ({
+  className,
+  data,
+  onRefreshClientData,
+  isDeleted,
+}) => {
   const { id } = useParams();
   const [updatedData, setUpdatedData] = useState({});
   const [editClient] = useLazyEditClientQuery();
@@ -113,7 +118,7 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
             firstName={updatedData?.first_name}
             lastName={updatedData?.last_name}
             onChangeField={handleChangeField}
-            readOnly={!isAccess}
+            readOnly={!isAccess || isDeleted}
           />
 
           <SectionTitle
@@ -125,15 +130,15 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
             phones={updatedData?.phone ?? []}
             email={updatedData?.email}
             onChangeField={handleChangeField}
-            readOnly={!isAccess}
+            readOnly={!isAccess || isDeleted}
           />
-          {isAccess ? (
+          {isAccess && !isDeleted ? (
             <>
               <SectionTitle title="Коментар" />
               <Comment
                 comment={updatedData?.comment}
                 onChange={(val) => handleChangeField("comment", val)}
-                readOnly={!isAccess}
+                readOnly={!isAccess || isDeleted}
               />
             </>
           ) : data?.comment?.length > 0 ? (
@@ -142,11 +147,11 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
               <Comment
                 comment={updatedData?.comment}
                 onChange={(val) => handleChangeField("comment", val)}
-                readOnly={!isAccess}
+                readOnly={!isAccess || isDeleted}
               />
             </>
           ) : null}
-          {isAccess ? (
+          {isAccess && !isDeleted ? (
             <>
               <SectionTitle title="Фото / Додатково" />
               <OtherInfo
@@ -168,7 +173,7 @@ export const Profile = ({ className, data, onRefreshClientData }) => {
             </>
           ) : null}
         </div>
-        {isAccess && (
+        {isAccess && !isDeleted && (
           <Footer
             onSave={handleSaveChanges}
             onReset={handleReset}

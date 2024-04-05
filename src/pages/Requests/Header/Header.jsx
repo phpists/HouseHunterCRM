@@ -63,12 +63,12 @@ export const Header = ({
       .catch(() => onChangeActionLoading(false));
   };
 
-  const handleDelete = () => {
+  const handleDelete = (isFinally) => {
     if (selected?.length > 0) {
       onChangeActionLoading(true);
       deleteRequest({
         id_groups: selected,
-        final_remove: filters?.show_deleted ? "1" : undefined,
+        final_remove: isFinally ? "1" : undefined,
       }).then((resp) => {
         handleResponse(resp, () => {
           cogoToast.success(
@@ -134,11 +134,8 @@ export const Header = ({
             <SelectItems
               title="запитів"
               selectedCount={selectedCount}
-              deleteConfirmTitle={
-                filters?.show_deleted
-                  ? "Видалити запит(и) остаточно?"
-                  : "Видалити запит(и)?"
-              }
+              deleteConfirmTitle={"Видалити запит(и)?"}
+              finalDeleteConfirmTitle="Видалити запит(и) остаточно?"
               onDelete={
                 !filters?.show_deleted &&
                 handleCheckAccess(data, "requests", "delete")
@@ -154,6 +151,9 @@ export const Header = ({
               allCount={allCount}
               onSelectAll={onSelectAll}
               onRestore={handleRestore}
+              onDeleteFinally={
+                user?.struct_level === 1 ? () => handleDelete(true) : null
+              }
             />
           </div>
         </div>
@@ -162,11 +162,7 @@ export const Header = ({
         title="об'єктів"
         selectedCount={selectedCount}
         className="select-wrapper-mobile"
-        deleteConfirmTitle={
-          filters?.show_deleted
-            ? "Видалити запит(и) остаточно?"
-            : "Видалити запит(и)?"
-        }
+        deleteConfirmTitle={"Видалити запит(и)?"}
         onDelete={
           !filters?.show_deleted &&
           handleCheckAccess(data, "requests", "delete")
@@ -180,6 +176,10 @@ export const Header = ({
         onToggleFavorite={handleToggleFavorites}
         noFavorite={filters?.show_deleted}
         onRestore={handleRestore}
+        onDeleteFinally={
+          user?.struct_level === 1 ? () => handleDelete(true) : null
+        }
+        finalDeleteConfirmTitle="Видалити запит(и) остаточно?"
       />
       {filterOpen && (
         <Filter

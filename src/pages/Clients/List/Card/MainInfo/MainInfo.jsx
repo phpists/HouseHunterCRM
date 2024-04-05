@@ -5,7 +5,7 @@ import { Id } from "./Id";
 import { CreatedAt } from "./CreatedAt";
 import smallAvatar from "../../../../../assets/images/small-avarar-orange.svg";
 
-export const MainInfo = ({ name, id, dateCreate }) => {
+export const MainInfo = ({ name, id, dateCreate, isDeleted }) => {
   return (
     <StyledMainInfo className="flex items-center">
       <img src={smallAvatar} alt="" className="small-avatar" />
@@ -14,7 +14,7 @@ export const MainInfo = ({ name, id, dateCreate }) => {
           <Name name={name} />
           <Id id={id} />
         </div>
-        <CreatedAt dateCreate={dateCreate} />
+        <CreatedAt dateCreate={dateCreate} isDeleted={isDeleted} />
       </div>
     </StyledMainInfo>
   );

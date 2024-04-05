@@ -180,7 +180,7 @@ export const List = ({
                     : null
                 }
                 isDeleted={d?.deleted === "1"}
-                onRestore={() => onRestore([d?.id])}
+                onRestore={d?.acsses_change ? () => onRestore([d?.id]) : null}
               />
             ))}
           </>

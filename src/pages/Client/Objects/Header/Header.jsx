@@ -9,6 +9,7 @@ export const Header = ({
   onDelete,
   onToggleFavorite,
   onSelectAll,
+  onDeleteFinally,
 }) => {
   return (
     <StyledHeader className="flex items-center justify-between">
@@ -22,9 +23,11 @@ export const Header = ({
           onToggleFavorite={onToggleFavorite}
           noFavorite={!onToggleFavorite}
           allCount={objectsCount + requestsCount}
-          title="запитів"
+          title="Обрано"
           deleteConfirmTitle="Видалити обрані заявку(ки)/ об'єкт(и)?"
+          finalDeleteConfirmTitle="Видалити обрані заявку(ки)/ об'єкт(и) остаточно?"
           onSelectAll={onSelectAll}
+          onDeleteFinally={onDeleteFinally}
         />
       </div>
     </StyledHeader>

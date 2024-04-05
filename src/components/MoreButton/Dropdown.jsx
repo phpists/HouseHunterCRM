@@ -29,7 +29,7 @@ export const Dropdown = ({
             <RestoreIcon className="refresh noClickable" />
           </div>
         )}
-        {!noDelete && (
+        {!noDelete && !onDeleteFinally && (
           <div
             className="flex items-center justify-between noClickable"
             onClick={onDelete}

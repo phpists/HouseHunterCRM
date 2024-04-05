@@ -30,6 +30,8 @@ export const Buttons = ({
   onSendClients,
   isDeleted,
   onRestore,
+  onDeleteFinally,
+  finalDeleteConfirmTitle,
 }) => {
   const { search } = useLocation();
   const [addClient, setAddClient] = useState(false);
@@ -85,6 +87,8 @@ export const Buttons = ({
         passwordCheck={isDeleted}
         noFavorite={isDeleted}
         onRestore={onRestore}
+        onDeleteFinally={onDeleteFinally}
+        finalDeleteConfirmTitle={finalDeleteConfirmTitle}
       />
     </StyledButtons>
   );

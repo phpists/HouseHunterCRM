@@ -46,6 +46,7 @@ const ObjectPage = () => {
   const [errors, setErrors] = useState([]);
   const contentRef = useRef();
   const [loading, setLoading] = useState(false);
+  const [isLoadingData, setIsLoadingData] = useState(!!id);
 
   const handleChangePhotos = (p) => setPhotos(p);
 
@@ -140,6 +141,7 @@ const ObjectPage = () => {
 
   const handleGetObject = () => {
     if (id) {
+      setIsLoadingData(true);
       getObject(id).then((resp) => {
         const objectData = {
           ...handleFormatDatesToTimestamp(resp?.data, true),
@@ -166,6 +168,7 @@ const ObjectPage = () => {
               cover: photo?.cover,
             })) ?? []
         );
+        setIsLoadingData(false);
       });
     }
   };
@@ -365,6 +368,7 @@ const ObjectPage = () => {
         loading={loading}
         isDeleted={data?.deleted === "1"}
         onChangeRestoreObject={(deleted) => setData({ ...data, deleted })}
+        isData={!isLoadingData}
       />
       <Header
         className="mobile-header"

@@ -35,7 +35,12 @@ export const MobileContent = ({
         <div className="w-full row-wrapper">
           <div className="flex items-center main-info-wrapper">
             <div className="flex items-center justify-between w-full">
-              <MainInfo name={name} id={id} dateCreate={dateCreate} />
+              <MainInfo
+                name={name}
+                id={id}
+                dateCreate={dateCreate}
+                isDeleted={isDeleted}
+              />
               <ActionsButtons className="mobile-actions" id={id} />
             </div>
             <Phones

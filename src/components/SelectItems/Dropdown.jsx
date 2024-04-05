@@ -10,18 +10,22 @@ export const Dropdown = ({
   isHideObjects,
   onAddToSelection,
   onRestore,
+  onDeleteFinally,
 }) => {
   const OPTIONS = [
     { title: "Додати в улюблене", value: "favorite" },
     ...(onSend ? [{ title: "Передати", value: "send" }] : []),
+    ...(onRestore ? [{ title: "Відновити", value: "restore" }] : []),
     ...(onDelete ? [{ title: "Видалити", value: "delete" }] : []),
+    ...(onDeleteFinally
+      ? [{ title: "Видалити остаточно", value: "deleteFinally" }]
+      : []),
     ...(onHide
       ? [{ title: isHideObjects ? "Показати" : "Приховати", value: "hide" }]
       : []),
     ...(onAddToSelection
       ? [{ title: "Додати до підбірки", value: "selection" }]
       : []),
-    ...(onRestore ? [{ title: "Відновити", value: "restore" }] : []),
   ];
 
   return (
