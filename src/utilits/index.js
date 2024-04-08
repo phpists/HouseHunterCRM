@@ -117,7 +117,11 @@ export const handleToFormData = (
 };
 
 export const handleRemovePhoneMask = (phone, removeFirstLetters = 3) =>
-  phone.replaceAll("(", "").replaceAll(")", "").replaceAll("-", "");
+  phone
+    .replaceAll("(", "")
+    .replaceAll(")", "")
+    .replaceAll("-", "")
+    .replaceAll("_", "");
 
 export const handleFormatDate = (d, isShort) => {
   const date = new Date(d);

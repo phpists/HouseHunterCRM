@@ -118,7 +118,11 @@ export const Header = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             {isFavorite && <BackButton onClick={onIsFavotite} />}
-            <Title selectedCount={selectedCount} title={"Обрано"} />
+            <Title
+              selectedCount={selectedCount}
+              title={"Обрано"}
+              isdDeleted={filters?.company_object?.show_deleted === "1"}
+            />
           </div>
           <div className="flex items-center bts">
             <IconButton
@@ -156,11 +160,7 @@ export const Header = ({
                   user?.struct_level === 1 ? () => handleDelete(true) : null
                 }
                 onDelete={
-                  filters?.company_object?.show_deleted === "1"
-                    ? user?.struct_level === 1
-                      ? handleDelete
-                      : null
-                    : handleCheckAccess(data, "objects", "delete")
+                  handleCheckAccess(data, "objects", "delete")
                     ? handleDelete
                     : null
                 }

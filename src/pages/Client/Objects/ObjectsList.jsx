@@ -133,17 +133,13 @@ export const ObjectsList = ({
       {deleteModal && (
         <Confirm
           title={
-            handleGetObjectById(selectedCard)?.deleted === "1" ||
             deleteModal === "finally"
               ? "Видалити об'єкт остаточно?"
               : "Видалити об'єкт?"
           }
           onClose={handleCancelDeleteRequest}
           onSubmit={handleDeleteObject}
-          passwordCheck={
-            handleGetObjectById(selectedCard)?.deleted === "1" ||
-            deleteModal === "finally"
-          }
+          passwordCheck={deleteModal === "finally"}
         />
       )}
       <div>

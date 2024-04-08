@@ -1,6 +1,6 @@
 import ReactInputMask from "react-input-mask";
 import { CodeSelect } from "./Select copy/CodeSelect";
-import { removePhoneMask } from "../utilits";
+import { handleRemovePhoneMask, removePhoneMask } from "../utilits";
 import { useRef } from "react";
 
 export const PhoneInput = ({
@@ -32,13 +32,25 @@ export const PhoneInput = ({
   const handleChange = (e) => {
     if (e.nativeEvent.inputType === "insertFromPaste") {
     } else {
-      onChange(e.target.value);
+      onChange(handleRemovePhoneMask(e.target.value)?.replace(/\s/g, ""));
     }
   };
 
+  const handleGetValueStartIndex = (e) => {
+    const inputValue = e?.target.value;
+    let valueStart = 0;
+    inputValue.split("").forEach((str, i) => {
+      if (!isNaN(str)) {
+        valueStart = 1 + i;
+      }
+    });
+
+    return valueStart;
+  };
   const handleSetRangeInTheStart = (e) => {
     if (e?.target?.setSelectionRange) {
-      e?.target?.setSelectionRange(0, 0);
+      const valueStart = handleGetValueStartIndex(e);
+      e?.target?.setSelectionRange(valueStart, valueStart);
     }
   };
 
@@ -47,6 +59,15 @@ export const PhoneInput = ({
     handleSetRangeInTheStart(e);
     if (e.target.scrollLeft) {
       e.target.scrollLeft = 0;
+    }
+  };
+
+  const handleSetRange = (e) => {
+    const start = e.target.selectionStart;
+    const valueStart = handleGetValueStartIndex(e);
+
+    if (start > valueStart) {
+      handleSetRangeInTheStart(e);
     }
   };
 
@@ -74,7 +95,8 @@ export const PhoneInput = ({
         onPaste={handlePaste}
         onFocus={handleFocus}
         ref={inputRef}
-        onClick={handleSetRangeInTheStart}
+        onClick={handleSetRange}
+        maskPlaceholder
       />
     </div>
   );

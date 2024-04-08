@@ -23,6 +23,7 @@ import {
   handleGetLocationAllPath,
 } from "../../../../utilits";
 import { PRICES_FOR_TITLE } from "../../../../constants";
+import { Status } from "./Status";
 
 export const Maininfo = ({
   data,
@@ -192,9 +193,17 @@ export const Maininfo = ({
             </>
           )}
       </div>
+      <Divider />
+      <Status
+        status={data?.isActual}
+        date={
+          data?.dateEndAggrement !== "0" ? data?.dateEndAggrement : undefined
+        }
+      />
 
       {data?.comment?.length > 0 ? (
         <>
+          <Divider />
           <Field
             value={data?.comment}
             onChange={(val) => onChangeField("comment", val)}

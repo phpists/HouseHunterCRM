@@ -173,6 +173,30 @@ const ObjectPage = () => {
     }
   };
 
+  const handleCheckNumber = (num) => (!num ? 0 : isNaN(num) ? 0 : Number(num));
+
+  const handleCheckArea = () => {
+    const { area_total, area_kitchen, area_dwelling_place, area_plot_sotka } =
+      data;
+
+    const sum =
+      handleCheckNumber(area_total) -
+      (handleCheckNumber(area_kitchen) +
+        handleCheckNumber(area_dwelling_place) +
+        +handleCheckNumber(area_plot_sotka));
+
+    if (sum >= 0) {
+      return true;
+    } else {
+      cogoToast.error("Площа не може бути більшою за загальну", {
+        hideAfter: 3,
+        position: "top-right",
+      });
+
+      return false;
+    }
+  };
+
   const handleCreate = () => {
     if (fields?.main_field) {
     }
@@ -214,7 +238,7 @@ const ObjectPage = () => {
       },
     });
 
-    if (isEmptyFields?.length === 0) {
+    if (isEmptyFields?.length === 0 && handleCheckArea()) {
       setLoading(true);
       createObject({
         field: {
@@ -290,7 +314,7 @@ const ObjectPage = () => {
       },
     });
 
-    if (isEmptyFields?.length === 0) {
+    if (isEmptyFields?.length === 0 && handleCheckArea()) {
       setLoading(true);
       editObject({
         id_object: id,

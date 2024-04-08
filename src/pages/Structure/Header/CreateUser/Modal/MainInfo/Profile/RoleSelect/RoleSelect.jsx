@@ -12,29 +12,6 @@ import {
 } from "../../../../../../../../store/structure/structure.api";
 import { useEffect } from "react";
 
-const ROLES = [
-  {
-    title: "Керівник",
-    color: "#7ECEFD",
-    bg: "rgba(126, 206, 253, 0.25)",
-  },
-  {
-    title: "Структурний",
-    color: "#D0A0FF",
-    bg: "rgba(208, 160, 255, 0.25)",
-  },
-  {
-    title: "Регіональний",
-    color: "#59D8E6",
-    bg: "rgba(89, 216, 230, 0.25)",
-  },
-  {
-    title: "Агент",
-    color: "#B1FF91",
-    bg: "rgba(177, 255, 145, 0.25)",
-  },
-];
-
 export const RoleSelect = ({ value, onChange, error }) => {
   const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
   const { data: permissionsList } = useGetAllPerimissionsQuery();

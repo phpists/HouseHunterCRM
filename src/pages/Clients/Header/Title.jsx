@@ -1,20 +1,23 @@
 import { styled } from "styled-components";
 
-export const Title = ({ title }) => (
-  <StyledTitle>
-    <div className="full">{title} </div>
+export const Title = ({ title, isDeleted }) => (
+  <StyledTitle isDeleted={isDeleted}>
+    <div className="full">
+      {isDeleted ? "Автоматичне остаточне видалення протягом місяця" : title}{" "}
+    </div>
     <span className="mobile">Обрано 0</span>
   </StyledTitle>
 );
 
 const StyledTitle = styled.div`
-  color: #fff;
+  color: ${({ isDeleted }) =>
+    isDeleted ? "#f94343" : "rgba(255, 255, 255, 0.9)"};
+  font-weight: ${({ isDeleted }) => (isDeleted ? 300 : 200)};
   font-family: Overpass;
-  font-size: 20px;
+  font-size: 18px;
   font-style: normal;
-  font-weight: 200;
-  line-height: 118%; /* 23.6px */
-  letter-spacing: 0.4px;
+  line-height: normal;
+  letter-spacing: 0.36px;
   .mobile {
     display: none;
   }

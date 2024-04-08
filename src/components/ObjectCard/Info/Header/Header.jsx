@@ -19,6 +19,7 @@ export const Header = ({ data }) => {
 
   return (
     <StyledHeader className="flex flex-wrap items-center clickable">
+      {data?.deleted === "1" ? <Tag title="Видалений" color="red" /> : null}
       {data?.type_object === "street_base" ? (
         <Tag title="База StreetBase" color="green" />
       ) : null}

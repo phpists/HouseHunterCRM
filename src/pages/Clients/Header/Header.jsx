@@ -79,6 +79,7 @@ export const Header = ({
           {favoritesFilter && <BackButton onClick={onToggleFavoriteFilter} />}
           <Title
             title={`${newClientsCount ?? "-"} нових клієнтів за сьогодні`}
+            isDeleted={filter?.filters?.show_deleted}
           />
           {/* {favoritesFilter && <Subtitle subtitle="54 обрано" />} */}
         </div>

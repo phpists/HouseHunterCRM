@@ -189,7 +189,7 @@ export const Main = ({
         onBlur={() => onChangeInputFocus(false)}
       />
       <Divider />
-      <ProfileField
+      {/* <ProfileField
         placeholder="Введіть значення"
         value={filters?.id_ad_in_source}
         onChange={(val) => onChangeFilter("id_ad_in_source", val)}
@@ -199,7 +199,7 @@ export const Main = ({
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
       />
-      <Divider />
+      <Divider /> */}
       <ProfileField
         label="Пошук по телефону"
         placeholder="Введіть значення..."
@@ -349,6 +349,7 @@ export const Main = ({
         dateAgreement
         idAdInSource
         showDeleted
+        workersSearch
       />
     </StyledMain>
   );

@@ -8,6 +8,7 @@ import { Buttons } from "./Buttons";
 import { useNavigate } from "react-router-dom";
 import { Name } from "./Name";
 import { Tags } from "./Tags/Tags";
+import { Deleted } from "./Deleted";
 
 export const Objects = ({ idGroup, onOpenChat, data }) => {
   const navigate = useNavigate();
@@ -19,7 +20,11 @@ export const Objects = ({ idGroup, onOpenChat, data }) => {
         {/* <Photos /> */}
         <div className="clickable objects-info-wrapper">
           <Name name={data?.General_field_group?.name ?? "-"} />
-          <Tags data={data} />{" "}
+          {data?.General_field_group?.deleted === "1" ? (
+            <Deleted date={data?.General_field_group?.dt_start_delete} />
+          ) : (
+            <Tags data={data} />
+          )}
           <div
             className={`flex items-center footer ${
               (!data?.General_field_group?.acsses_change ||

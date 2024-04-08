@@ -15,6 +15,12 @@ import { SelectTags } from "../SelectTags/SelectTags";
 import { Field } from "../Field";
 import { Deadline } from "../../pages/Request/Characteristic/Deadline";
 import { ProfileField } from "../ProfileField";
+import { useGetWorkerMyStructureQuery } from "../../store/calls/calls.api";
+import { useAppSelect } from "../../hooks/redux";
+import {
+  useGetAllPerimissionsLevelsQuery,
+  useGetCompanyStructureLevelQuery,
+} from "../../store/structure/structure.api";
 
 export const Base = ({
   data,
@@ -34,7 +40,9 @@ export const Base = ({
   request,
   idAdInSource,
   showDeleted,
+  workersSearch,
 }) => {
+  const { user } = useAppSelect((state) => state.auth);
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: companies } = useGetCompaniesQuery();
   const { data: sortingPeriods } = useGetSortingObjectQuery();
@@ -43,6 +51,9 @@ export const Base = ({
     !!data.street_base_object || streetBaseOpen
   );
   const [mlsBase, setMlsBase] = useState(!!data.mls_object || mlsBaseOpen);
+  const { data: workers } = useGetWorkerMyStructureQuery();
+  const { data: level, refetch } = useGetCompanyStructureLevelQuery();
+  const { data: levels } = useGetAllPerimissionsLevelsQuery();
 
   useEffect(() => {
     setMlsBase(mlsBaseOpen);
@@ -119,24 +130,58 @@ export const Base = ({
               onChange("company_object", {
                 ...data?.company_object,
                 show_only: "company",
+                id_worker_Search: undefined,
               })
             }
             error={!!errors.find((e) => e === "show_only")}
           />
-          <CheckOption
-            label="Об'єкти моєї структури"
-            className="check-opt"
-            value={
-              data?.company_object?.show_only === "my_structure" ? "1" : "0"
-            }
-            onChange={() =>
-              onChange("company_object", {
-                ...data?.company_object,
-                show_only: "my_structure",
-              })
-            }
-            error={!!errors.find((e) => e === "show_only")}
-          />
+          {Number(user?.struct_level) !== Number(level) ? (
+            <>
+              {" "}
+              <CheckOption
+                label="Об'єкти моєї структури"
+                className="check-opt"
+                value={
+                  data?.company_object?.show_only === "my_structure" ? "1" : "0"
+                }
+                onChange={() =>
+                  onChange("company_object", {
+                    ...data?.company_object,
+                    show_only: "my_structure",
+                  })
+                }
+                error={!!errors.find((e) => e === "show_only")}
+              />
+              {data?.company_object?.show_only === "my_structure" ? (
+                <>
+                  <SelectTags
+                    label="Пошук по працівнику"
+                    placeholder="Оберіть працівника"
+                    options={
+                      workers?.data
+                        ? workers?.data?.map(
+                            ({ id, first_name, last_name }) => ({
+                              title: `${first_name} ${last_name}`,
+                              value: id,
+                            })
+                          )
+                        : []
+                    }
+                    value={data?.company_object?.id_worker_Search}
+                    onChange={(val) =>
+                      onChange("company_object", {
+                        ...data?.company_object,
+                        id_worker_Search: val,
+                      })
+                    }
+                    isSearch
+                    notMultiSelect
+                  />
+                  <Divider />
+                </>
+              ) : null}{" "}
+            </>
+          ) : null}
           <CheckOption
             label="Тільки мої об'єкти"
             className="check-opt"
@@ -145,6 +190,7 @@ export const Base = ({
               onChange("company_object", {
                 ...data?.company_object,
                 show_only: "only_my",
+                id_worker_Search: undefined,
               })
             }
             error={!!errors.find((e) => e === "show_only")}

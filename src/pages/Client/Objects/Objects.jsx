@@ -217,13 +217,7 @@ export const Objects = ({
         requestsCount={requestsCount}
         objectsCount={objectsCount}
         selectedCount={selectedItems?.length}
-        onDelete={
-          handleGetDeletedSelectedItems()
-            ? user?.struct_level === 1
-              ? handleDeleteItems
-              : null
-            : handleDeleteItems
-        }
+        onDelete={handleDeleteItems}
         onDeleteFinally={
           user?.struct_level === 1 ? () => handleDeleteItems(true) : null
         }

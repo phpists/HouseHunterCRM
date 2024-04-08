@@ -38,7 +38,11 @@ export const NotificationsDropdown = ({ data, open, closed, onClose }) => {
         <Card
           type="objects"
           messages={["Є об'єкти перенесені з StreetBase"]}
-          link="/objects?moderationAfterStreetBase=true"
+          link={
+            search === "?moderationAfterStreetBase=true"
+              ? "/objects?moderationAfterStreetBase=refresh"
+              : "/objects?moderationAfterStreetBase=true"
+          }
           onClose={() =>
             onClose("needs_moderation_after_adding_from_street_base")
           }

@@ -3,6 +3,7 @@ import { ReactComponent as History } from "../../../../../assets/images/history-
 import { ReactComponent as Selection } from "../../../../../assets/images/home.svg";
 import { ReactComponent as Comment } from "../../../../../assets/images/message-object.svg";
 import { ReactComponent as ToObjectIcon } from "../../../../../assets/images/my-object.svg";
+import { useNavigate } from "react-router-dom";
 
 export const Dropdown = ({
   status,
@@ -12,16 +13,29 @@ export const Dropdown = ({
   onSend,
   onCloseDropdown,
   onSendCall,
+  clientId,
 }) => {
+  const navigate = useNavigate();
+
   return (
     <StyledDropdown className="dropdown" onClick={onCloseDropdown}>
       <div className="flex items-center justify-between" onClick={onSetStatus}>
         <span>{status === "1" ? "Не опрацьовано" : "Опрацьовано"}</span>
         <History className="selection-icon" />
       </div>
-      <div className="flex items-center justify-between" onClick={onAdd}>
-        <span>Додати клієнта</span> <Selection className="selection-icon" />
-      </div>
+      {clientId?.length > 0 ? (
+        <div
+          className="flex items-center justify-between"
+          onClick={() => navigate(`/client/${clientId}`)}
+        >
+          <span>Редагувати клієнта</span>{" "}
+          <Selection className="selection-icon" />
+        </div>
+      ) : (
+        <div className="flex items-center justify-between" onClick={onAdd}>
+          <span>Додати клієнта</span> <Selection className="selection-icon" />
+        </div>
+      )}
       <div
         className="flex items-center justify-between"
         onClick={onEditComment}

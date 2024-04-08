@@ -31,6 +31,7 @@ export const MobileContent = ({
   clientName,
   agentPhone,
   callCount,
+  clientId,
 }) => (
   <StyledMobileContent className="flex flex-col items-start clickable">
     <Type callType={callType} agentPhone={agentPhone} />
@@ -70,6 +71,7 @@ export const MobileContent = ({
       onSend={onSend}
       onEditComment={onEditComment}
       onSendCall={onSendCall}
+      clientId={clientId}
     />
   </StyledMobileContent>
 );

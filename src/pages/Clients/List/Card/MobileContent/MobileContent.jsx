@@ -28,6 +28,7 @@ export const MobileContent = ({
   isDeleted,
   onRestore,
   onDeleteFinally,
+  deleteDate,
 }) => (
   <StyledMobileContent className="flex items-center hide-scroll card">
     <div className="w-full">
@@ -40,6 +41,7 @@ export const MobileContent = ({
                 id={id}
                 dateCreate={dateCreate}
                 isDeleted={isDeleted}
+                deleteDate={deleteDate}
               />
               <ActionsButtons className="mobile-actions" id={id} />
             </div>

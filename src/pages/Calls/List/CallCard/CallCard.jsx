@@ -28,6 +28,7 @@ export const CallCard = ({
   agentPhone,
   id,
   callCount,
+  clientId,
 }) => {
   const [open, setOpen] = useState();
   const [commentEdit, setCommentEdit] = useState(comment);
@@ -37,8 +38,10 @@ export const CallCard = ({
     e.target.classList.contains("clickable") && onSelect();
 
   const handleSubmitComment = () => {
-    onAddComment(commentEdit);
-    setCommentEdit(comment);
+    if (commentEdit !== comment) {
+      onAddComment(commentEdit);
+      setCommentEdit(comment);
+    }
   };
 
   useEffect(() => {
@@ -91,6 +94,7 @@ export const CallCard = ({
         clientName={clientName}
         agentPhone={agentPhone}
         callCount={callCount}
+        clientId={clientId}
       />
       <MobileContent
         open={open}
@@ -116,6 +120,7 @@ export const CallCard = ({
         clientName={clientName}
         agentPhone={agentPhone}
         callCount={callCount}
+        clientId={clientId}
       />
     </StyledCallCard>
   );

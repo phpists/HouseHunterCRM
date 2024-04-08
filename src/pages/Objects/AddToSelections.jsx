@@ -23,7 +23,9 @@ export const AddToSelections = ({ onClose, idObject, onSuccess }) => {
     }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success(
-          `Об'єкт${checkIsArray(idObject)?.length > 0 && "и"} успішно добалено`,
+          `Об'єкт ${
+            checkIsArray(idObject)?.length > 0 ? "и" : ""
+          } успішно добалено`,
           {
             hideAfter: 3,
             position: "top-right",

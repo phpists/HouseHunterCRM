@@ -74,6 +74,7 @@ export const ObjectCard = ({ className, selectedObject }) => {
                       true
                     )
                   : "-",
+              isActual: generalInfo[1]?.not_actual === "0",
             }))
           );
         }
@@ -103,6 +104,8 @@ export const ObjectCard = ({ className, selectedObject }) => {
             area_plot_sotka: resp?.data?.area_plot_sotka,
             rooms: resp?.data?.rooms,
             price_for: resp?.data?.price_for,
+            isActual: resp?.data?.obj_is_actual === "1",
+            dateEndAggrement: resp?.data?.dt_end_agreement,
           },
         ]);
       });

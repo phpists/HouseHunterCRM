@@ -31,6 +31,7 @@ export const DesktopContent = ({
   clientName,
   agentPhone,
   callCount,
+  clientId
 }) => (
   <StyledDesktopContent className="flex items-start clickable">
     <Type callType={callType} agentPhone={agentPhone} />

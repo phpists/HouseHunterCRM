@@ -108,6 +108,7 @@ export const Header = ({
           <Title
             selectedCount={selectedCount}
             title={isFavorite ? "Обрано:" : "Обрано запитів "}
+            isDeleted={filters?.show_deleted}
           />
         </div>
         <div className="flex items-center bts">

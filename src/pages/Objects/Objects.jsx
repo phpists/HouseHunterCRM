@@ -361,8 +361,8 @@ const Objects = () => {
         Number(area_plot_sotka),
         true
       )?.end.toFixed(0),
-      room_min: handleGetRange(Number(rooms))?.start.toFixed(0),
-      room_max: handleGetRange(Number(rooms))?.end.toFixed(0),
+      room_min: rooms,
+      room_max: rooms,
       storey_count_min: handleGetRange(Number(storey_count))?.start.toFixed(0),
       storey_count_max: handleGetRange(Number(storey_count))?.end.toFixed(0),
       address_storey_min: handleGetRange(Number(address_storey))?.start.toFixed(
@@ -400,6 +400,8 @@ const Objects = () => {
 
   useEffect(() => {
     filterActive.current = false;
+    isFirstRender.current = false;
+
     const filterApply = location?.search?.split("=")[0];
     if (id) {
       setFilters({

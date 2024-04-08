@@ -65,17 +65,15 @@ const StyledBreadcrumbs = styled.div`
     color: rgba(255, 255, 255, 0.4);
     font-family: Overpass;
     font-style: normal;
-    font-weight: 100;
+    font-weight: 200;
     line-height: normal;
     letter-spacing: 0.36px;
+    font-size: 18px;
+
     cursor: pointer;
     &.active {
       color: rgba(255, 255, 255, 0.9);
       font-family: Overpass;
-      font-style: normal;
-      font-weight: 100;
-      line-height: normal;
-      letter-spacing: 0.36px;
     }
   }
   .divider {

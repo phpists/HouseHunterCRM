@@ -4,8 +4,8 @@ export const CreatedDate = ({ date, deadline }) => (
   <StyledCreatedDate>
     <div className="title">{deadline ?? date}</div>
     <div className="subtitle">
-      Дата дедлайну
-      {/* {deadline ? "Дата дедлайну" : "Коли додана"} */}
+      {/* Дата дедлайну */}
+      {deadline ? "Дата дедлайну" : "Коли додана"}
     </div>
   </StyledCreatedDate>
 );

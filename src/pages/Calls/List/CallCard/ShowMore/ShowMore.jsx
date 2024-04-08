@@ -10,6 +10,7 @@ export const ShowMore = ({
   onAdd,
   onSend,
   onSendCall,
+  clientId,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -27,6 +28,7 @@ export const ShowMore = ({
         onSend={onSend}
         onCloseDropdown={handleCloseDropdown}
         onSendCall={onSendCall}
+        clientId={clientId}
       />
     </StyledShowMore>
   );

@@ -109,6 +109,7 @@ export const List = ({
               onSendCall={client_id ? null : () => setSendCall(id)}
               id={id}
               callCount={Count_call}
+              clientId={client_id}
             />
           )
         )

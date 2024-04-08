@@ -80,6 +80,7 @@ export const List = ({
                 agent,
                 email,
                 deleted,
+                dt_start_delete,
               },
               i
             ) => (
@@ -125,6 +126,7 @@ export const List = ({
                     ? () => handleOpenDeleteModal(id, true)
                     : null
                 }
+                deleteDate={dt_start_delete}
               />
             )
           )

@@ -10,6 +10,7 @@ export const Footer = ({
   idSource,
   nameSource,
   typeObject,
+  dateDelete,
 }) => {
   const { data } = useGetSourcesQuery();
 
@@ -38,6 +39,16 @@ export const Footer = ({
             : ` / ${handleFormatDate(Number(dateEdit) * 1000)}`
         }`}
       />
+
+      {dateDelete !== "0" ? (
+        <Tag
+          title={`Остаточне видалення - ${handleFormatDate(
+            Number(dateDelete) * 1000,
+            true
+          )}`}
+          red
+        />
+      ) : null}
     </StyledFooter>
   );
 };
