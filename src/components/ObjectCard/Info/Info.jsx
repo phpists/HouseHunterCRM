@@ -17,7 +17,6 @@ export const Info = ({ className, data }) => {
         idSource={data?.id_ad_in_source}
         nameSource={data?.id_source}
         typeObject={data?.type_object}
-        dateDelete={data?.dt_start_delete}
       />
     </StyledInfo>
   );

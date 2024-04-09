@@ -188,10 +188,29 @@ const ObjectPage = () => {
     if (sum >= 0) {
       return true;
     } else {
-      cogoToast.error("Площа не може бути більшою за загальну", {
-        hideAfter: 3,
-        position: "top-right",
-      });
+      const fieldsError = [
+        ...(handleCheckNumber(area_kitchen) > 0 ? ["area_kitchen"] : []),
+        ...(handleCheckNumber(area_dwelling_place) > 0
+          ? ["area_dwelling_place"]
+          : []),
+        ...(handleCheckNumber(area_plot_sotka) > 0 ? ["area_plot_sotka"] : []),
+      ];
+      setErrors(["area_total", ...fieldsError, "updated"]);
+
+      cogoToast.error(
+        `${fieldsError
+          ?.map(
+            (f) =>
+              `${commentsToFields?.object[f]
+                ?.substring(0, 1)
+                ?.toUpperCase()}${commentsToFields?.object[f]?.substring(1)}`
+          )
+          ?.join(", \n")}  не може бути більшою за загальну`,
+        {
+          hideAfter: 3,
+          position: "top-right",
+        }
+      );
 
       return false;
     }
@@ -239,6 +258,7 @@ const ObjectPage = () => {
     });
 
     if (isEmptyFields?.length === 0 && handleCheckArea()) {
+      setErrors([]);
       setLoading(true);
       createObject({
         field: {
@@ -270,6 +290,7 @@ const ObjectPage = () => {
           navigate(`/client/${clientId}`);
         });
       });
+    } else if (!handleCheckArea()) {
     } else {
       setErrors([...isEmptyFields, "updated"]);
     }
@@ -315,6 +336,7 @@ const ObjectPage = () => {
     });
 
     if (isEmptyFields?.length === 0 && handleCheckArea()) {
+      setErrors([]);
       setLoading(true);
       editObject({
         id_object: id,
@@ -351,6 +373,7 @@ const ObjectPage = () => {
           handleGetObject();
         });
       });
+    } else if (!handleCheckArea()) {
     } else {
       setErrors(isEmptyFields);
       setErrors([...isEmptyFields, "updated"]);

@@ -29,7 +29,7 @@ export const Dropdown = ({
             <RestoreIcon className="refresh noClickable" />
           </div>
         )}
-        {!noDelete && !onDeleteFinally && (
+        {/* {!noDelete && !onDeleteFinally && (
           <div
             className="flex items-center justify-between noClickable"
             onClick={onDelete}
@@ -37,7 +37,7 @@ export const Dropdown = ({
             <span className="noClickable">Видалити</span>
             <RemoveIcon className="remove-icon noClickable" />
           </div>
-        )}
+        )} */}
       </>
     ) : (
       <>

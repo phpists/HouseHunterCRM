@@ -152,7 +152,8 @@ export const Base = ({
                 }
                 error={!!errors.find((e) => e === "show_only")}
               />
-              {data?.company_object?.show_only === "my_structure" ? (
+              {data?.company_object?.show_only === "my_structure" &&
+              workersSearch ? (
                 <>
                   <SelectTags
                     label="Пошук по працівнику"

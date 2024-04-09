@@ -58,7 +58,7 @@ export const Dropdown = ({
   const handleAddStreetBaseObject = () => {
     addStreetBaseObject(id).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Об'єкт успішно добавлено", {
+        cogoToast.success("Об'єкт успішно додано", {
           hideAfter: 3,
           position: "top-right",
         });

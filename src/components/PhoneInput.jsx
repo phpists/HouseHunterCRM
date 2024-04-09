@@ -2,6 +2,7 @@ import ReactInputMask from "react-input-mask";
 import { CodeSelect } from "./Select copy/CodeSelect";
 import { handleRemovePhoneMask, removePhoneMask } from "../utilits";
 import { useRef } from "react";
+import { IMaskInput } from "react-imask";
 
 export const PhoneInput = ({
   phoneCode,
@@ -47,29 +48,29 @@ export const PhoneInput = ({
 
     return valueStart;
   };
-  const handleSetRangeInTheStart = (e) => {
-    if (e?.target?.setSelectionRange) {
-      const valueStart = handleGetValueStartIndex(e);
-      e?.target?.setSelectionRange(valueStart, valueStart);
-    }
-  };
+  //   const handleSetRangeInTheStart = (e) => {
+  //     if (e?.target?.setSelectionRange) {
+  //       const valueStart = handleGetValueStartIndex(e);
+  //       e?.target?.setSelectionRange(valueStart, valueStart);
+  //     }
+  //   };
 
   const handleFocus = (e) => {
     onFocus && onFocus();
-    handleSetRangeInTheStart(e);
-    if (e.target.scrollLeft) {
-      e.target.scrollLeft = 0;
-    }
+    //   handleSetRangeInTheStart(e);
+    //   if (e.target.scrollLeft) {
+    //     e.target.scrollLeft = 0;
+    //   }
   };
 
-  const handleSetRange = (e) => {
-    const start = e.target.selectionStart;
-    const valueStart = handleGetValueStartIndex(e);
+  //   const handleSetRange = (e) => {
+  //     const start = e.target.selectionStart;
+  //     const valueStart = handleGetValueStartIndex(e);
 
-    if (start > valueStart) {
-      handleSetRangeInTheStart(e);
-    }
-  };
+  //     if (start > valueStart) {
+  //       handleSetRangeInTheStart(e);
+  //     }
+  //   };
 
   return (
     <div className="flex items-center relative">
@@ -80,23 +81,21 @@ export const PhoneInput = ({
         onChange={onChangePhoneCode}
         onFocus={onFocus}
       />
-      <ReactInputMask
+      <IMaskInput
         className={inputClassName}
         mask={phonesCodes
           ?.find(({ id }) => id === phoneCode)
           ?.format?.split(" ")
-          .join("")}
+          .join("")
+          ?.replaceAll("9", "0")}
         value={value}
-        onChange={handleChange}
+        unmask={true} // true|false|'typed'
+        inputRef={inputRef} // access to nested input
+        onAccept={(value, mask) => onChange(value)}
         autoFocus
+        onFocus={handleFocus}
         onBlur={onBlur}
         onKeyDown={onKeyDown}
-        alwaysShowMask
-        onPaste={handlePaste}
-        onFocus={handleFocus}
-        ref={inputRef}
-        onClick={handleSetRange}
-        maskPlaceholder
       />
     </div>
   );

@@ -20,6 +20,15 @@ export const Header = ({ data }) => {
   return (
     <StyledHeader className="flex flex-wrap items-center clickable">
       {data?.deleted === "1" ? <Tag title="Видалений" color="red" /> : null}
+      {data?.dt_start_delete !== "0" && data?.deleted === "1" ? (
+        <Tag
+          title={`Остаточне видалення - ${handleFormatDate(
+            Number(data?.dt_start_delete) * 1000,
+            true
+          )}`}
+          color="red"
+        />
+      ) : null}
       {data?.type_object === "street_base" ? (
         <Tag title="База StreetBase" color="green" />
       ) : null}
