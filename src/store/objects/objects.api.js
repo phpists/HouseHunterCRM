@@ -134,7 +134,9 @@ export const objects = createApi({
         headers: headers(),
         body: handleToFormData(
           { action: "edit", mod: "objects", field, id_object },
-          { photos }
+          { photos },
+          [],
+          true
         ),
       }),
     }),

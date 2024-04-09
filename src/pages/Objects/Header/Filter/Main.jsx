@@ -189,17 +189,6 @@ export const Main = ({
         onBlur={() => onChangeInputFocus(false)}
       />
       <Divider />
-      {/* <ProfileField
-        placeholder="Введіть значення"
-        value={filters?.id_ad_in_source}
-        onChange={(val) => onChangeFilter("id_ad_in_source", val)}
-        label="Пошук по id на ресурсі "
-        className="field"
-        grey
-        onFocus={() => onChangeInputFocus(true)}
-        onBlur={() => onChangeInputFocus(false)}
-      />
-      <Divider /> */}
       <ProfileField
         label="Пошук по телефону"
         placeholder="Введіть значення..."
@@ -350,6 +339,7 @@ export const Main = ({
         idAdInSource
         showDeleted
         workersSearch
+        potentialOwner
       />
     </StyledMain>
   );

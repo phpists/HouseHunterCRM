@@ -191,9 +191,10 @@ export const Profile = () => {
     if (profileData?.photo?.type) {
       handleChangeField("photo", null);
     } else {
-      deleteAvatar().then((resp) =>
-        handleResponse(resp, () => handleChangeField("photo", null))
-      );
+      deleteAvatar().then((resp) => {
+        handleResponse(resp, () => handleChangeField("photo", null));
+        handleGetUserData();
+      });
     }
   };
 

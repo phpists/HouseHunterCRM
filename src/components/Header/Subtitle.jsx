@@ -21,7 +21,7 @@ export const Subtitle = () => {
   const handleGetSubtitle = () => {
     switch (pathname) {
       case "/":
-        return "Що нового трапилося за сьгодні";
+        return "Що нового трапилося за сьогодні";
       case "/clients":
         return `Всього ${clientsCount} клієнт${handleGetEnding(clientsCount)}`;
       case "/requests":

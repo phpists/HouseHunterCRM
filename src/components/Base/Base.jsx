@@ -41,8 +41,10 @@ export const Base = ({
   idAdInSource,
   showDeleted,
   workersSearch,
+  potentialOwner,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
+  const { data: level } = useGetCompanyStructureLevelQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: companies } = useGetCompaniesQuery();
   const { data: sortingPeriods } = useGetSortingObjectQuery();
@@ -52,8 +54,6 @@ export const Base = ({
   );
   const [mlsBase, setMlsBase] = useState(!!data.mls_object || mlsBaseOpen);
   const { data: workers } = useGetWorkerMyStructureQuery();
-  const { data: level, refetch } = useGetCompanyStructureLevelQuery();
-  const { data: levels } = useGetAllPerimissionsLevelsQuery();
 
   useEffect(() => {
     setMlsBase(mlsBaseOpen);
@@ -375,6 +375,20 @@ export const Base = ({
                 ...data?.street_base_object,
                 disable_cooperation:
                   data?.street_base_object?.disable_cooperation === "1"
+                    ? undefined
+                    : "1",
+              })
+            }
+          />
+          <CheckOption
+            label="Потенційний власник"
+            className="check-opt"
+            value={data?.street_base_object?.potential_owner}
+            onChange={() =>
+              onChange("street_base_object", {
+                ...data?.street_base_object,
+                potential_owner:
+                  data?.street_base_object?.potential_owner === "1"
                     ? undefined
                     : "1",
               })

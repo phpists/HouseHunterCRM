@@ -13,6 +13,7 @@ import { useActions } from "../../../../hooks/actions";
 import { useAppSelect } from "../../../../hooks/redux";
 import { Spinner } from "../../../../components/Spinner";
 import { Loader } from "../../../../components/Loader";
+import { useGetPhonesCodesQuery } from "../../../../store/auth/auth.api";
 
 export const Filter = ({
   onClose,
@@ -37,6 +38,7 @@ export const Filter = ({
   const { saveObjectsCount } = useActions();
   const { objectsCount } = useAppSelect((state) => state.objects);
   const [loading, setLoading] = useState(false);
+  const { data: phonesCodes } = useGetPhonesCodesQuery();
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
@@ -57,9 +59,13 @@ export const Filter = ({
   };
 
   const handleApply = () => {
+    const phoneLength =
+      removePhoneMask(
+        phonesCodes?.find((p) => p.id === phoneCode)?.format
+      )?.replace(/\s/g, "")?.length ?? 0;
     if (
       removePhoneMask(filters?.search_phone)?.length > 0 &&
-      filters?.search_phone?.includes("_")
+      removePhoneMask(filters?.search_phone)?.length < phoneLength
     ) {
       setErrors({ search_phone: true });
     } else {
@@ -176,10 +182,6 @@ export const Filter = ({
             phoneCode={phoneCode}
             onChangePhoneCode={onChangePhoneCode}
           />
-          {/* <SectionTitle title="Актуальність" />
-     <Topicality />
-     <SectionTitle title="Характеристики" />
-     <Characteristics /> */}
         </div>
         <div className="total">
           Знайдено -{" "}

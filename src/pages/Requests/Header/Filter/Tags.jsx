@@ -16,6 +16,8 @@ import { Divider } from "./Divider";
 import { Price } from "../../../Request/Main/Price/Price";
 import { Ranger } from "../../../../components/Ranger/Ranger";
 import { ToggleOption } from "./ToggleOption";
+import { useGetCompanyStructureLevelQuery } from "../../../../store/structure/structure.api";
+import { useAppSelect } from "../../../../hooks/redux";
 
 export const Tags = ({
   filters,
@@ -27,6 +29,8 @@ export const Tags = ({
   const { data: rubricsList } = useGetRubricsQuery();
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
+  const { user } = useAppSelect((state) => state.auth);
+  const { data: level } = useGetCompanyStructureLevelQuery();
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -324,25 +328,29 @@ export const Tags = ({
           )
         }
       />
-      <CheckOption
-        label="Запити моєї структури"
-        className="check-opt"
-        value={filters?.only_my_structure}
-        onChange={(val) =>
-          onChangeFilter(
-            "only_my_structure",
-            {
-              ...filters,
-              only_company_obj: "0",
-              only_street_base_obj: "0",
-              only_my_obj: "0",
-              only_my_structure: "1",
-            },
-            true
-          )
-        }
-      />
-      <Divider />
+      {Number(user?.struct_level) !== Number(level) ? (
+        <>
+          <CheckOption
+            label="Запити моєї структури"
+            className="check-opt"
+            value={filters?.only_my_structure}
+            onChange={(val) =>
+              onChangeFilter(
+                "only_my_structure",
+                {
+                  ...filters,
+                  only_company_obj: "0",
+                  only_street_base_obj: "0",
+                  only_my_obj: "0",
+                  only_my_structure: "1",
+                },
+                true
+              )
+            }
+          />
+          <Divider />
+        </>
+      ) : null}
       <ToggleOption
         label="Протерміновані запити"
         active={filters?.showDeadline === "1"}

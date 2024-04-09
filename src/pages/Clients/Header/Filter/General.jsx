@@ -7,6 +7,8 @@ import { ProfileField } from "../../../../components/ProfileField";
 import { useGetPhonesCodesQuery } from "../../../../store/auth/auth.api";
 import { ToggleOption } from "./ToggleOption";
 import { Field } from "../../../../components/Field";
+import { useAppSelect } from "../../../../hooks/redux";
+import { useGetCompanyStructureLevelQuery } from "../../../../store/structure/structure.api";
 
 export const General = ({
   filter,
@@ -18,6 +20,8 @@ export const General = ({
   errors,
 }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
+  const { user } = useAppSelect((state) => state.auth);
+  const { data: level } = useGetCompanyStructureLevelQuery();
 
   return (
     <StyledGeneral>
@@ -69,17 +73,21 @@ export const General = ({
         />
       </div>
       <Divider />
-      <ToggleOption
-        label="Моя структура"
-        value={filter?.my_struct === "1"}
-        onChange={() =>
-          onChangeFilter(
-            "my_struct",
-            filter?.my_struct === "1" ? undefined : "1"
-          )
-        }
-      />
-      <Divider />
+      {Number(user?.struct_level) !== Number(level) ? (
+        <>
+          <ToggleOption
+            label="Моя структура"
+            value={filter?.my_struct === "1"}
+            onChange={() =>
+              onChangeFilter(
+                "my_struct",
+                filter?.my_struct === "1" ? undefined : "1"
+              )
+            }
+          />
+          <Divider />
+        </>
+      ) : null}
       <ToggleOption
         label="Клієнти без об'єктів та запитів"
         value={filter?.filters?.clientNotItem === "1"}
