@@ -37,6 +37,7 @@ export const List = ({
   const [currency, setCurrency] = useState(1);
   const [type, setType] = useState("4");
   const [markPhoneModal, setMarkPhoneModal] = useState(false);
+  const [showContactId, setShowContactId] = useState(null);
 
   const onChangeCurrency = (val) => setCurrency(val);
   const onChangeType = (val) => setType(val);
@@ -121,6 +122,8 @@ export const List = ({
                   ? () => setMarkPhoneModal(d)
                   : null
               }
+              showContactId={showContactId}
+              onShowContact={() => setShowContactId(d?.id)}
             />
           ))
         )}

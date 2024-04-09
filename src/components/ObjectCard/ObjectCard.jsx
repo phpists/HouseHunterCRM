@@ -31,6 +31,8 @@ export const ObjectCard = memo(
     isDeleted,
     onRestore,
     onDeleteFinally,
+    showContactId,
+    onShowContact,
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
     const { ref, inView } = useInView({ triggerOnce: true });
@@ -86,6 +88,8 @@ export const ObjectCard = memo(
             isDeleted={isDeleted}
             onRestore={onRestore}
             onDeleteFinally={onDeleteFinally}
+            showContactId={showContactId}
+            onShowContact={onShowContact}
           />
         ) : (
           <MobileContent
@@ -112,6 +116,8 @@ export const ObjectCard = memo(
             isDeleted={isDeleted}
             onRestore={onRestore}
             onDeleteFinally={onDeleteFinally}
+            showContactId={showContactId}
+            onShowContact={onShowContact}
           />
         )}
       </StyledObjectCard>

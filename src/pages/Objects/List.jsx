@@ -45,6 +45,7 @@ export const List = ({
   const [currency, setCurrency] = useState(1);
   const [type, setType] = useState("4");
   const [markPhoneModal, setMarkPhoneModal] = useState(false);
+  const [showContactId, setShowContactId] = useState(null);
 
   const onChangeCurrency = (val) => setCurrency(val);
   const onChangeType = (val) => setType(val);
@@ -181,6 +182,8 @@ export const List = ({
                 }
                 isDeleted={d?.deleted === "1"}
                 onRestore={d?.acsses_change ? () => onRestore([d?.id]) : null}
+                showContactId={showContactId}
+                onShowContact={() => setShowContactId(d?.id)}
               />
             ))}
           </>

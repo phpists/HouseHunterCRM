@@ -2,23 +2,33 @@ import styled from "styled-components";
 import { Contact } from "./Contact/Contact";
 import { Divider } from "./Divider";
 import { useLazyGetPhoneObjectQuery } from "../../../store/objects/objects.api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ShowButton } from "./Contact/Phone/ShowButton";
 import { handleResponse } from "../../../utilits";
 
-export const Contacts = ({ className, data }) => {
-  const [getClient, { data: clientData }] = useLazyGetPhoneObjectQuery();
+export const Contacts = ({ className, data, showContactId, onShowContact }) => {
+  const [getClient] = useLazyGetPhoneObjectQuery();
   const [error, setError] = useState(false);
+  const [clientData, setClientData] = useState(undefined);
 
   const handleShowClient = () => {
     getClient(data?.id).then((resp) =>
       handleResponse(
         resp,
-        () => null,
+        () => {
+          setClientData(resp?.data);
+          onShowContact && onShowContact();
+        },
         () => setError(true)
       )
     );
   };
+
+  useEffect(() => {
+    if (showContactId !== data?.id) {
+      setClientData(undefined);
+    }
+  }, [showContactId]);
 
   return (
     <StyledContacts className={`hide-scroll clickable ${className}`}>

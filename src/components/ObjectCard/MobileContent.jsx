@@ -34,6 +34,8 @@ export const MobileContent = ({
   isDeleted,
   onRestore,
   onDeleteFinally,
+  showContactId,
+  onShowContact,
 }) => (
   <StyledMobileContent className="clickable">
     <Header data={data} />
@@ -66,7 +68,11 @@ export const MobileContent = ({
       onChangeComment={onChangeComment}
       selections={selections}
     />
-    <Contacts data={data} />
+    <Contacts
+      data={data}
+      showContactId={showContactId}
+      onShowContact={onShowContact}
+    />
     <ShowMore
       clientId={data?.id_client}
       id={data?.id}
