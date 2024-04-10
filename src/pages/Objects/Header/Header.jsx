@@ -86,7 +86,7 @@ export const Header = ({
               position: "top-right",
             }
           );
-          onDelete();
+          !filters?.company_object?.show_deleted === "1" && onDelete();
         });
         onChangeActionLoading(false);
       });
