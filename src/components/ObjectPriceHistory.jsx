@@ -19,9 +19,16 @@ export const ObjectPriceHistory = ({ onClose, data }) => {
       const dates = JSON.parse(data);
       if (Object.entries(dates)?.length > 1) {
         try {
-          return dates?.map((date) =>
-            handleFormatDate(Number(Object.entries(date)[0][0]) * 1000, true)
-          );
+          return Array.isArray(dates)
+            ? dates?.map((date) =>
+                handleFormatDate(
+                  Number(Object.entries(date)[0][0]) * 1000,
+                  true
+                )
+              )
+            : Object.entries(dates)?.map((date) =>
+                handleFormatDate(Number(date[0]) * 1000, true)
+              );
         } catch {
           return [];
         }
@@ -44,12 +51,13 @@ export const ObjectPriceHistory = ({ onClose, data }) => {
   const handleGetPrices = () => {
     if (isJsonString(data)) {
       const dates = JSON.parse(data);
-
       if (Object.entries(dates)?.length > 1) {
         try {
-          return dates?.map(
-            (date) => Number(Object.entries(date)[0][1]?.price) ?? 0
-          );
+          return Object.entries(dates)?.map((date) => {
+            return Object.entries(date?.[1])?.[0]?.[1]?.price
+              ? Number(Object.entries(date[1])?.[0]?.[1]?.price)
+              : Number(date?.[1]?.price) ?? 0;
+          });
         } catch {
           return [];
         }
