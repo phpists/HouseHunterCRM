@@ -113,9 +113,13 @@ const ObjectPage = () => {
       setData(newData);
       handleGetRubricsFields(value, newData, true);
     } else {
+      const fieldType =
+        fields?.main_field?.[fieldName]?.type ??
+        fields?.other_field?.[fieldName]?.type;
+
       const newData = {
         ...data,
-        [fieldName]: value,
+        [fieldName]: fieldType === "int" && value?.length === 0 ? "0" : value,
         obj_is_actual:
           fieldName === "obj_is_actual_dt"
             ? "1"

@@ -381,7 +381,7 @@ export const Base = ({
             }
           />
           <CheckOption
-            label="Потенційний власник"
+            label="Потенційнці власники"
             className="check-opt"
             value={data?.street_base_object?.potential_owner}
             onChange={() =>

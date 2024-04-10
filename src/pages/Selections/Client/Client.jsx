@@ -18,7 +18,7 @@ export const Client = ({ clientData }) => {
 
   const handleGoToClient = (e) =>
     e.target.classList.contains("openClient") &&
-    navigate(`/client/${clientData?.client?.id}`);
+    navigate(`/client/${clientData?.client?.id_client}`);
 
   useEffect(() => {
     saveSelectionName(clientData?.name_group);
@@ -32,7 +32,7 @@ export const Client = ({ clientData }) => {
       <div className="flex items-center user-info openClient mr-2">
         <img src={smallAvatar} alt="" className="small-avatar openClient" />
         <div className="name openClient">{clientData?.client?.name ?? "-"}</div>
-        <Id id={clientData?.client?.id} />
+        <Id id={clientData?.client?.id_client} />
       </div>
       <Phones
         classNameContent="phone-wrapp"

@@ -96,6 +96,7 @@ export const PhoneInput = ({
         onFocus={handleFocus}
         onBlur={onBlur}
         onKeyDown={onKeyDown}
+        onPaste={handlePaste}
       />
     </div>
   );
