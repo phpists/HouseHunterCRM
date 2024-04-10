@@ -25,6 +25,8 @@ export const Field = ({
   onChange = () => null,
   onSubmit,
   type,
+  onFocus,
+  onBlur,
 }) => {
   const [edit, setEdit] = useState(false);
 
@@ -90,6 +92,8 @@ export const Field = ({
                 onChange={(e) => onChange(e.target.value)}
                 autoFocus
                 onKeyDown={handlePressEnter}
+                onFocus={onFocus}
+                onBlur={onBlur}
               />
             ) : (
               <input
@@ -102,6 +106,8 @@ export const Field = ({
                 type={type === "date" ? "text" : type ?? "text"}
                 autoFocus
                 onKeyDown={handlePressEnter}
+                onFocus={onFocus}
+                onBlur={onBlur}
               />
             )}
           </>

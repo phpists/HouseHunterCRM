@@ -51,6 +51,7 @@ export const Buttons = ({
         onApplyFilters={onApplyFilters}
         searchPhoneCodeSecond={searchPhoneCodeSecond}
         onChangeSearchCodeSecond={onChangeSearchCodeSecond}
+        favoritesFilter={favoritesFilter}
       />
       {addClient && (
         <AddClient
@@ -84,7 +85,6 @@ export const Buttons = ({
         }
         deleteConfirmTitle={deleteConfirmTitle}
         onSend={isDeleted ? null : onSendClients}
-        passwordCheck={isDeleted}
         noFavorite={isDeleted}
         onRestore={onRestore}
         onDeleteFinally={onDeleteFinally}

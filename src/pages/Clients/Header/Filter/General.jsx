@@ -18,6 +18,7 @@ export const General = ({
   searchPhoneCodeSecond,
   onChangeSearchCodeSecond,
   errors,
+  onToggleInputFocused,
 }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
   const { user } = useAppSelect((state) => state.auth);
@@ -30,6 +31,8 @@ export const General = ({
         placeholder="Введіть значення..."
         value={filter.search_key}
         onChange={(val) => onChangeFilter("search_key", val)}
+        onFocus={() => onToggleInputFocused(true)}
+        onBlur={() => onToggleInputFocused(false)}
       />
       <Divider />
       <ProfileField
@@ -42,6 +45,8 @@ export const General = ({
         phoneCode={searchPhoneCode}
         onChangePhoneCode={(val) => onChangeSearchCode(val)}
         error={errors?.search_phone}
+        onFocus={() => onToggleInputFocused(true)}
+        onBlur={() => onToggleInputFocused(false)}
       />
       <Divider />
       <ProfileField
@@ -52,6 +57,8 @@ export const General = ({
           onChangeFilter("filters", { ...filter.filters, findPhone: val })
         }
         type="number"
+        onFocus={() => onToggleInputFocused(true)}
+        onBlur={() => onToggleInputFocused(false)}
       />
       <Divider />
       <div className="dates-wrapper">
@@ -62,6 +69,8 @@ export const General = ({
           onChange={(val) =>
             onChangeFilter("filters", { ...filter.filters, dt_reg_from: val })
           }
+          onFocus={() => onToggleInputFocused(true)}
+          onBlur={() => onToggleInputFocused(false)}
         />
         <Field
           label="Дата реєстрації до"
@@ -70,6 +79,8 @@ export const General = ({
           onChange={(val) =>
             onChangeFilter("filters", { ...filter.filters, dt_reg_to: val })
           }
+          onFocus={() => onToggleInputFocused(true)}
+          onBlur={() => onToggleInputFocused(false)}
         />
       </div>
       <Divider />
@@ -96,6 +107,8 @@ export const General = ({
             ...filter.filters,
             clientNotItem:
               filter?.filters?.clientNotItem === "1" ? undefined : "1",
+            clietnHasObject: undefined,
+            clietnHasRequest: undefined,
           })
         }
       />
@@ -106,6 +119,8 @@ export const General = ({
         onChange={() =>
           onChangeFilter("filters", {
             ...filter.filters,
+            clientNotItem: undefined,
+            clietnHasRequest: undefined,
             clietnHasObject:
               filter?.filters?.clietnHasObject === "1" ? undefined : "1",
           })
@@ -118,6 +133,8 @@ export const General = ({
         onChange={() =>
           onChangeFilter("filters", {
             ...filter.filters,
+            clientNotItem: undefined,
+            clietnHasObject: undefined,
             clietnHasRequest:
               filter?.filters?.clietnHasRequest === "1" ? undefined : "1",
           })

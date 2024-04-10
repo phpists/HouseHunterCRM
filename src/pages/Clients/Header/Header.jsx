@@ -140,7 +140,6 @@ export const Header = ({
             : null
         }
         onSend={filter?.filters?.show_deleted === "1" ? null : onSendClients}
-        passwordCheck={filter?.filters?.show_deleted === "1"}
         onRestore={filter?.filters?.show_deleted === "1" ? onRestore : null}
         onDeleteFinally={
           user?.struct_level === 1 ? () => handleDeleteClients(true) : null

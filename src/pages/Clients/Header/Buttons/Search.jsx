@@ -11,6 +11,7 @@ export const Search = ({
   onApplyFilters,
   searchPhoneCodeSecond,
   onChangeSearchCodeSecond,
+  favoritesFilter,
 }) => {
   const [open, setOpen] = useState(false);
   const prevClientsFilters = localStorage.getItem("clientsFilters");
@@ -34,6 +35,7 @@ export const Search = ({
           onApplyFilters={onApplyFilters}
           searchPhoneCodeSecond={searchPhoneCodeSecond}
           onChangeSearchCodeSecond={onChangeSearchCodeSecond}
+          favoritesFilter={favoritesFilter}
         />
       )}
     </div>

@@ -48,10 +48,10 @@ const Clients = () => {
   const dataRef = useRef([]);
   const allCountRef = useRef(0);
   const [addClientToFavorite] = useLazyAddClientToFavoriteQuery();
-  const firstThousand = useRef([]);
   const [sendClients, setSendClients] = useState([]);
   const [actionLoading, setActionLoading] = useState(false);
   const isFirstRender = useRef(true);
+  const isFirstRequest = useRef(true);
   const [restoreClients] = useLazyRestoreClientsQuery();
 
   const handleChangeFilter = (field, value) =>
@@ -67,7 +67,7 @@ const Clients = () => {
     return date?.getTime() / 1000;
   };
 
-  const handleGetClients = (isReset) => {
+  const handleGetClients = (isReset, isFilter) => {
     if ((!isLoading.current && !isAllPages) || isReset) {
       isLoading.current = true;
 
@@ -119,7 +119,8 @@ const Clients = () => {
           : []),
       };
 
-      if (currentPage.current === 0 || isReset) {
+      if (isFirstRequest.current || !isFilter) {
+        isFirstRequest.current = false;
         getClients({ ...sendData, only_count_item: "1" }).then((resp) =>
           saveClientsCount(resp?.data?.all_item ?? 0)
         );
@@ -204,7 +205,7 @@ const Clients = () => {
       setFilter({ search_key: "", search_phone: "" });
       localStorage.removeItem("clientsFilters");
     }
-    handleGetClients(true);
+    handleGetClients(true, isApply);
   };
 
   const handleSelectAll = (isReset, count) => {
