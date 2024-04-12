@@ -28,6 +28,7 @@ export const List = ({
   filters,
   onChangeComment,
   onChangeContacts,
+  onChangeTags,
 }) => {
   const { accessData } = useAppSelect((state) => state.auth);
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
@@ -124,6 +125,9 @@ export const List = ({
               }
               showContactId={showContactId}
               onShowContact={() => setShowContactId(d?.id)}
+              onChangeTags={(fieldName, val) =>
+                onChangeTags(d?.id, fieldName, val)
+              }
             />
           ))
         )}

@@ -80,6 +80,8 @@ const ObjectPage = () => {
       }
     });
 
+    delete updatedData.img;
+    delete updatedData.photos_json;
     return updatedData;
   };
 
@@ -189,7 +191,7 @@ const ObjectPage = () => {
         handleCheckNumber(area_dwelling_place) +
         +handleCheckNumber(area_plot_sotka));
 
-    if (sum >= 0) {
+    if (sum >= 0 || area_plot_sotka) {
       return true;
     } else {
       const fieldsError = [
@@ -361,9 +363,6 @@ const ObjectPage = () => {
                 )?.getTime() / 1000
               )
             : "0",
-          img: null,
-
-          photos_json: null,
         },
         photos: photos.filter((p) => p?.status !== "old").map((p) => p.file),
       }).then((resp) => {

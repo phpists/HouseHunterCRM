@@ -2,9 +2,12 @@ import { styled } from "styled-components";
 import { DesktopContent } from "./DesktopContent";
 import { MobileContent } from "./MobileContent";
 import { useLazyAddToFavoriteQuery } from "../../../../store/requests/requests.api";
-import { handleResponse } from "../../../../utilits";
+import { handleDownloadFile, handleResponse } from "../../../../utilits";
 import cogoToast from "cogo-toast";
-import { useLazyAddToFavoritesQuery } from "../../../../store/objects/objects.api";
+import {
+  useLazyAddToFavoritesQuery,
+  useLazyDownloadObjectQuery,
+} from "../../../../store/objects/objects.api";
 import { useNavigate, useParams } from "react-router-dom";
 
 export const Card = ({
@@ -34,6 +37,7 @@ export const Card = ({
   const [addRequestToFavorites] = useLazyAddToFavoriteQuery();
   const [addObjectToFavorites] = useLazyAddToFavoritesQuery();
   const navigate = useNavigate();
+  const [downloadObject] = useLazyDownloadObjectQuery();
 
   const handleClick = (e) => {
     onSelect();
@@ -79,6 +83,15 @@ export const Card = ({
         });
   };
 
+  const handleDownload = () => {
+    downloadObject(id).then((resp) => {
+      handleResponse(resp, () => {
+        const link = resp?.data?.link;
+        link && handleDownloadFile(link);
+      });
+    });
+  };
+
   return (
     <StyledCard onClick={handleClick} selected={selected}>
       <DesktopContent
@@ -99,6 +112,7 @@ export const Card = ({
         isDeleted={isDeleted}
         onRestore={onRestore}
         onDeleteFinally={onDeleteFinally}
+        onDownload={isObject ? handleDownload : null}
       />
       <MobileContent
         date={date}
@@ -118,6 +132,7 @@ export const Card = ({
         isDeleted={isDeleted}
         onRestore={onRestore}
         onDeleteFinally={onDeleteFinally}
+        onDownload={isObject ? handleDownload : null}
       />
     </StyledCard>
   );

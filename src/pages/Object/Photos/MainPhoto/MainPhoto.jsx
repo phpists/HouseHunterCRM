@@ -6,24 +6,34 @@ import { ReactComponent as Remove } from "../../../../assets/images/remove.svg";
 import { memo } from "react";
 
 export const MainPhoto = memo(
-  ({ photo, photosCount, onRemove, isPhoto, isCover, onMakeMain }) => (
-    <StyledMainPhoto
-      photo={photo?.url?.length > 0 ? photo?.url : noPhoto}
-      photosCount={photosCount}
-    >
-      {photosCount > 1 && <Counter photosCount={photosCount} />}
-      <div className="btns-wrapper flex items-center">
-        {isPhoto && (
-          <>
-            <Tag isCover={isCover} onMakeMain={onMakeMain} />
-            <div className="remove-btn" onClick={onRemove}>
-              <Remove />
-            </div>
-          </>
-        )}
-      </div>
-    </StyledMainPhoto>
-  )
+  ({ photo, photosCount, onRemove, isPhoto, isCover, onMakeMain, onOpen }) => {
+    const handleOpen = (e) => {
+      if (e.target.classList?.contains("openInfo")) {
+        onOpen();
+      }
+    };
+
+    return (
+      <StyledMainPhoto
+        photo={photo?.url?.length > 0 ? photo?.url : noPhoto}
+        photosCount={photosCount}
+        onClick={handleOpen}
+        className="openInfo"
+      >
+        {photosCount > 1 && <Counter photosCount={photosCount} />}
+        <div className="btns-wrapper flex items-center openInfo">
+          {isPhoto && (
+            <>
+              <Tag isCover={isCover} onMakeMain={onMakeMain} />
+              <div className="remove-btn" onClick={onRemove}>
+                <Remove />
+              </div>
+            </>
+          )}
+        </div>
+      </StyledMainPhoto>
+    );
+  }
 );
 
 const StyledMainPhoto = styled.div`

@@ -30,6 +30,7 @@ export const List = ({
   onChangeContancts,
   onRestore,
   isDeleted,
+  onChangeTags,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { accessData } = useAppSelect((state) => state.auth);
@@ -184,6 +185,9 @@ export const List = ({
                 onRestore={d?.acsses_change ? () => onRestore([d?.id]) : null}
                 showContactId={showContactId}
                 onShowContact={() => setShowContactId(d?.id)}
+                onChangeTags={(fieldName, val) =>
+                  onChangeTags(d?.id, fieldName, val)
+                }
               />
             ))}
           </>

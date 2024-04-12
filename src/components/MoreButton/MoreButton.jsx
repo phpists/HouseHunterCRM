@@ -16,6 +16,7 @@ export const MoreButton = ({
   isDeleted,
   onRestore,
   onDeleteFinally,
+  onDownload,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
 
@@ -41,6 +42,7 @@ export const MoreButton = ({
           isDeleted={isDeleted}
           onRestore={onRestore}
           onDeleteFinally={onDeleteFinally}
+          onDownload={onDownload}
         />
       </div>
       <Divider />

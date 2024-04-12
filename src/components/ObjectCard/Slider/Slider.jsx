@@ -30,6 +30,7 @@ export const Slider = ({ photos, data, showLike }) => {
   const slickRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(1);
   const [openView, setOpenView] = useState(false);
+  const [sortPhotos, setSortPhotos] = useState(null);
 
   const handleChangeSlide = (val, open) => {
     setOpenView(!!open);
@@ -40,16 +41,28 @@ export const Slider = ({ photos, data, showLike }) => {
     slickRef.current && slickRef.current.slickGoTo(0);
   }, []);
 
+  const handleOpen = () => {
+    setSortPhotos(
+      photos
+        .map(({ name }, key) => ({
+          src: name,
+          key: key + 1 === currentSlide ? 100 : 2,
+        }))
+        ?.sort((a, b) => b?.key - a?.key)
+    );
+    setOpenView(true);
+  };
+
+  const handleClose = () => {
+    setOpenView(false);
+    setSortPhotos(null);
+  };
+
   return (
     <>
-      {openView && (
+      {openView && sortPhotos && (
         <PhotoSlider
-          images={photos
-            .map(({ name }, key) => ({
-              src: name,
-              key: key + 1 === currentSlide ? 100 : 2,
-            }))
-            ?.sort((a, b) => b?.key - a?.key)}
+          images={sortPhotos}
           visible={openView}
           onClose={() => setOpenView(false)}
           // index={currentSlide - 1}
@@ -102,7 +115,7 @@ export const Slider = ({ photos, data, showLike }) => {
                     photo={photo}
                     active={true}
                     empty={photos?.length === 1}
-                    onOpen={() => setOpenView(true)}
+                    onOpen={handleOpen}
                   />
                 ))}
             </SlickSlider>

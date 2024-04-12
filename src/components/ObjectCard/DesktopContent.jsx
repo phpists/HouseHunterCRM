@@ -34,6 +34,7 @@ export const DesktopContent = ({
   onDeleteFinally,
   showContactId,
   onShowContact,
+  onChangeTags,
 }) => {
   return (
     <StyledDesktopContent className="flex items-center justify-between clickable">
@@ -56,6 +57,7 @@ export const DesktopContent = ({
         data={data}
         onChangeComment={onChangeComment}
         selections={selections}
+        onChangeTags={onChangeTags}
       />
       <Contacts
         className="desktop-item"

@@ -5,16 +5,23 @@ import noPhoto from "../../../../assets/images/no-photo.svg";
 import { memo } from "react";
 import { useInView } from "react-intersection-observer";
 
-export const Photo = memo(({ photo, onRemove, onMakeMain, isFile }) => {
+export const Photo = memo(({ photo, onRemove, onMakeMain, isFile, onOpen }) => {
   const { ref, inView } = useInView({ triggerOnce: true });
+
+  const handleOpen = (e) => {
+    if (e.target.classList?.contains("openInfo")) {
+      onOpen();
+    }
+  };
 
   return (
     <StyledPhoto
       photo={!inView ? "" : photo?.url?.length > 0 ? photo?.url : noPhoto}
-      className="flex flex-col items-center justify-center"
+      className="flex flex-col items-center justify-center openInfo"
       ref={ref}
+      onClick={handleOpen}
     >
-      <div className="photo-content flex flex-col items-center justify-center">
+      <div className="photo-content flex flex-col items-center justify-cente openInfo">
         {!isFile && <Tag onClick={onMakeMain} />}
         <Remove onClick={onRemove} />
       </div>

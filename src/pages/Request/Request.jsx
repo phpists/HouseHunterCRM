@@ -581,7 +581,7 @@ const Request = () => {
   return (
     <StyledRequest>
       <Header
-        onSave={() => (id ? handleEditRequest() : handleCreateRequest())}
+        onSave={id ? handleEditRequest : handleCreateRequest}
         favorite={favorite}
         onToggleFavorite={() => setFavorite(!favorite)}
         data={data}

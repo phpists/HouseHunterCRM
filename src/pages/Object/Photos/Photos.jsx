@@ -3,7 +3,7 @@ import { MainPhoto } from "./MainPhoto/MainPhoto";
 import { AddPhoto } from "./AddPhoto";
 import { Photo } from "./Photo/Photo";
 import noPhoto from "../../../assets/images/no-photo.svg";
-import { memo } from "react";
+import { memo, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   useLazyDeleteObjectPhotoQuery,
@@ -12,11 +12,15 @@ import {
 import { handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
 import { useEffect } from "react";
+import { PhotoSlider } from "react-photo-view";
+import "react-photo-view/dist/react-photo-view.css";
 
 export const Photos = ({ photos, onChange }) => {
   const { id } = useParams();
   const [setCoverPhoto] = useLazySetCoverPhotoQuery();
   const [deletePhoto] = useLazyDeleteObjectPhotoQuery();
+  const [currentSlide, setCurrentSlide] = useState(1);
+  const [openView, setOpenView] = useState(false);
 
   const handleDelete = (id_img) => {
     deletePhoto({ id_object: id, id_img }).then((resp) =>
@@ -56,65 +60,91 @@ export const Photos = ({ photos, onChange }) => {
     }
   };
 
+  const handleOpenPhoto = (index) => {
+    setOpenView(true);
+    setCurrentSlide(index);
+  };
+
   return (
-    <StyledPhotos photosCount={photos.length}>
-      <MainPhoto
-        photo={photos[0]}
-        photosCount={photos.length === 0 ? 1 : photos.length}
-        onRemove={() => handleDeletePhoto(0, photos[0])}
-        isPhoto={!!photos[0]}
-        isCover={photos[0]?.cover ?? 0}
-        onMakeMain={() => handleSetPhotoCover(0, photos[0])}
-      />
-
-      {photos.length > 1 && (
-        <>
-          {photos.length === 2 ? (
-            <div className="photos photos-grid hide-scroll">
-              {photos.slice(1, photos.length).map((p, i) => (
-                <Photo
-                  key={i}
-                  photo={p}
-                  onRemove={() => handleDeletePhoto(i, p)}
-                  onMakeMain={() => handleSetPhotoCover(1 + i, p)}
-                  isFile={!!p?.file}
-                />
-              ))}
-              {photos.length === 2 && (
-                <AddPhoto
-                  small
-                  onAdd={(files) => onChange([...photos, ...files])}
-                />
-              )}
-            </div>
-          ) : (
-            <div className="photos photos-more hide-scroll">
-              {/* <DraggableList width={207} height={211} rowSize={2}> */}
-              {photos.slice(1, photos.length).map((p, i) => (
-                <Photo
-                  key={i}
-                  photo={p}
-                  onRemove={() => handleDeletePhoto(i, p)}
-                  onMakeMain={() => handleSetPhotoCover(1 + i, p)}
-                  isFile={!!p?.file}
-                />
-              ))}
-              {/* </DraggableList> */}
-              {photos.length === 2 && (
-                <AddPhoto
-                  small
-                  onAdd={(files) => onChange([...photos, ...files])}
-                />
-              )}
-            </div>
-          )}
-        </>
+    <>
+      {openView && (
+        <PhotoSlider
+          images={photos
+            .map(({ url }, key) => ({
+              src: url,
+              key: key + 1 === currentSlide ? 100 : 2,
+            }))
+            ?.sort((a, b) => b?.key - a?.key)}
+          visible={openView}
+          onClose={() => setOpenView(false)}
+          speed={() => 0}
+          easing={(type) =>
+            type === 2
+              ? "cubic-bezier(0.36, 0, 0.66, -0.56)"
+              : "cubic-bezier(0.34, 1.56, 0.64, 1)"
+          }
+        />
       )}
-
-      {photos.length !== 2 && (
-        <AddPhoto onAdd={(files) => onChange([...photos, ...files])} />
-      )}
-    </StyledPhotos>
+      <StyledPhotos photosCount={photos.length}>
+        <MainPhoto
+          photo={photos[0]}
+          photosCount={photos.length === 0 ? 1 : photos.length}
+          onRemove={() => handleDeletePhoto(0, photos[0])}
+          isPhoto={!!photos[0]}
+          isCover={photos[0]?.cover ?? 0}
+          onMakeMain={() => handleSetPhotoCover(0, photos[0])}
+          onOpen={() => handleOpenPhoto(0)}
+        />
+        {photos.length > 1 && (
+          <>
+            {photos.length === 2 ? (
+              <div className="photos photos-grid hide-scroll">
+                {photos.slice(1, photos.length).map((p, i) => (
+                  <Photo
+                    key={i}
+                    photo={p}
+                    onRemove={() => handleDeletePhoto(i, p)}
+                    onMakeMain={() => handleSetPhotoCover(1 + i, p)}
+                    isFile={!!p?.file}
+                    onOpen={() => handleOpenPhoto(2 + i)}
+                  />
+                ))}
+                {photos.length === 2 && (
+                  <AddPhoto
+                    small
+                    onAdd={(files) => onChange([...photos, ...files])}
+                  />
+                )}
+              </div>
+            ) : (
+              <div className="photos photos-more ">
+                {/* <DraggableList width={207} height={211} rowSize={2}> */}
+                {photos.slice(1, photos.length).map((p, i) => (
+                  <Photo
+                    key={i}
+                    photo={p}
+                    onRemove={() => handleDeletePhoto(i, p)}
+                    onMakeMain={() => handleSetPhotoCover(1 + i, p)}
+                    isFile={!!p?.file}
+                    onOpen={() => handleOpenPhoto(2 + i)}
+                  />
+                ))}
+                {/* </DraggableList> */}
+                {photos.length === 2 && (
+                  <AddPhoto
+                    small
+                    onAdd={(files) => onChange([...photos, ...files])}
+                  />
+                )}
+              </div>
+            )}
+          </>
+        )}
+        {photos.length !== 2 && (
+          <AddPhoto onAdd={(files) => onChange([...photos, ...files])} />
+        )}
+      </StyledPhotos>
+    </>
   );
 };
 
@@ -132,6 +162,7 @@ const StyledPhotos = styled.div`
     margin: 0 auto;
     position: relative;
     ${({ photosCount }) => photosCount > 2 && "margin-bottom: 10px;"}
+    overflow-x: hidden;
   }
 
   .photos-more {

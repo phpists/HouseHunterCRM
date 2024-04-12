@@ -24,6 +24,7 @@ import {
 } from "../../../../utilits";
 import { PRICES_FOR_TITLE } from "../../../../constants";
 import { Status } from "./Status";
+import { Id } from "../Id";
 
 export const Maininfo = ({
   data,
@@ -31,6 +32,7 @@ export const Maininfo = ({
   requestData,
   isObject,
   objectFields,
+  id,
 }) => {
   const { data: rubricsList } = useGetRubricsQuery();
   const { data: locationsList } = useGetLocationsQuery();
@@ -64,19 +66,22 @@ export const Maininfo = ({
           <Divider />
         </>
       )}
-      <SelectTags
-        label="Категорія"
-        notMultiSelect
-        value={data.id_rubric}
-        onChange={(val) => onChangeField("id_rubric", val)}
-        options={
-          rubricsList
-            ? rubricsList?.map(({ id, name }) => ({ title: name, value: id }))
-            : []
-        }
-        viewOnly
-        hide
-      />
+      <div className="flex items-center">
+        <SelectTags
+          label="Категорія"
+          notMultiSelect
+          value={data.id_rubric}
+          onChange={(val) => onChangeField("id_rubric", val)}
+          options={
+            rubricsList
+              ? rubricsList?.map(({ id, name }) => ({ title: name, value: id }))
+              : []
+          }
+          viewOnly
+          hide
+        />{" "}
+        <Id id={id} />
+      </div>
       <Divider />
       <SelectTags
         label="Локація"

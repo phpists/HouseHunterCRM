@@ -89,7 +89,7 @@ export const handleToFormData = (
             }
             // *
           } else {
-            (fField[1] || fField[1]?.length > 0) &&
+            (fField[1] || fField[1]?.length > 0 || allowEmptyValue) &&
               formData.append(`${field[0]}[${fField[0]}]`, fField[1]);
           }
         });
@@ -496,4 +496,13 @@ export const getFirstDay = (isPrevMonth) => {
     date.setMonth(date.getMonth() - 1);
   }
   return date;
+};
+
+export const handleDownloadFile = (url) => {
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = url;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 };

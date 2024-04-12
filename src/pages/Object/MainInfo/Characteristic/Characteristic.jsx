@@ -128,7 +128,7 @@ const StyledCharacteristic = styled.div`
   margin-bottom: 11px;
   .field {
     .value {
-      max-width: 100px;
+      max-width: 350px;
       text-overflow: ellipsis;
     }
   }

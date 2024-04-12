@@ -27,6 +27,7 @@ export const Field = ({
   type,
   onFocus,
   onBlur,
+  onClick,
 }) => {
   const [edit, setEdit] = useState(false);
 
@@ -58,7 +59,13 @@ export const Field = ({
       hide={hide}
       full={full}
       error={error?.toString()}
-      onClick={() => !edit && !viewOnly && setEdit(true)}
+      onClick={() => {
+        if (onClick) {
+          onClick();
+        } else {
+          !edit && !viewOnly && setEdit(true);
+        }
+      }}
     >
       <div className="field-content">
         {edit ? (
@@ -98,10 +105,22 @@ export const Field = ({
             ) : (
               <input
                 className="value"
-                value={type === "date" ? handleFormatDate(value, true) : value}
+                value={
+                  type === "date"
+                    ? handleFormatDate(value, true)
+                    : type === "number" && Number(value) === 0
+                    ? ""
+                    : value
+                }
                 placeholder={placeholder}
                 onChange={(e) =>
-                  onChange && type !== "date" ? onChange(e.target.value) : null
+                  type === "number"
+                    ? Number(e.target.value) >= 0
+                      ? onChange(e.target.value)
+                      : null
+                    : onChange && type !== "date"
+                    ? onChange(e.target.value)
+                    : null
                 }
                 type={type === "date" ? "text" : type ?? "text"}
                 autoFocus

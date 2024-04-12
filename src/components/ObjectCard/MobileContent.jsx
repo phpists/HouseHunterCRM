@@ -36,6 +36,7 @@ export const MobileContent = ({
   onDeleteFinally,
   showContactId,
   onShowContact,
+  onChangeTags,
 }) => (
   <StyledMobileContent className="clickable">
     <Header data={data} />
@@ -67,6 +68,7 @@ export const MobileContent = ({
       data={data}
       onChangeComment={onChangeComment}
       selections={selections}
+      onChangeTags={onChangeTags}
     />
     <Contacts
       data={data}

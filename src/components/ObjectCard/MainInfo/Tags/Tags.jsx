@@ -10,12 +10,16 @@ import { Tag } from "./Tag";
 export const Tags = ({ data }) => {
   const TAGS = [
     { title: data?.rubric_name },
-    {
-      title: `${data?.location_name} ${
-        data?.street?.length > 0 ? `/ ${data?.street}` : ""
-      }`,
-      icon: homeIcon,
-    },
+    ...(data?.location_name
+      ? [
+          {
+            title: `${data?.location_name} ${
+              data?.street?.length > 0 ? `/ ${data?.street}` : ""
+            }`,
+            icon: homeIcon,
+          },
+        ]
+      : []),
     ...(data?.rooms > 0
       ? [{ title: `${data?.rooms} кімнати`, icon: doorIcon }]
       : []),
@@ -23,10 +27,18 @@ export const Tags = ({ data }) => {
       ? [{ title: `${data?.area_total} м²`, icon: expandIcon }]
       : []),
     ...(data?.address_storey > 0
-      ? [{ title: `${data?.address_storey}`, icon: stairsIcon }]
+      ? [
+          {
+            title: `${data?.address_storey} / ${data?.storey_count}`,
+            icon: stairsIcon,
+          },
+        ]
       : []),
     ...(data.area_plot_sotka > 0
       ? [{ title: `${data?.area_plot_sotka} соток`, icon: boxIcon }]
+      : []),
+    ...(data.area_kitchen > 0
+      ? [{ title: `${data?.area_kitchen} м² кухні`, icon: expandIcon }]
       : []),
     // { title: "Купівля-продаж" },
     // { title: "Хрущьовка", icon: homeIcon },

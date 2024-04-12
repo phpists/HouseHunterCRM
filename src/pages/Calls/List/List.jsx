@@ -78,6 +78,7 @@ export const List = ({
               client_last_name,
               phone_binotel,
               Count_call,
+              type,
             },
             i
           ) => (
@@ -96,7 +97,9 @@ export const List = ({
               comment={coment}
               status={status}
               clientName={
-                client_id
+                type?.type_agent
+                  ? type?.type_agent
+                  : client_id
                   ? `${client_first_name ?? "-"} ${client_last_name}`
                   : null
               }

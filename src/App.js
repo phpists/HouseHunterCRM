@@ -82,6 +82,18 @@ export const App = () => {
     } // eslint-disable-next-line
   }, [companyInfo]);
 
+  const handleClearCacheData = () => {
+    caches.keys().then((names) => {
+      names.forEach((name) => {
+        caches.delete(name);
+      });
+    });
+  };
+
+  useEffect(() => {
+    handleClearCacheData();
+  }, []);
+  
   return (
     <>
       <ErrorBoundary

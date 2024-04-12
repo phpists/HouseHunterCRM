@@ -143,6 +143,7 @@ export const ObjectCard = ({ className, selectedObject }) => {
             requestData={requestData}
             isObject={selectedObject?.type === "object"}
             objectFields={objectFields}
+            id={selectedObject?.id}
           />
           {/* {started ? (
          <>

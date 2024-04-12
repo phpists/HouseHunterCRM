@@ -18,7 +18,7 @@ import {
   useLazyAddStreetBaseObjectQuery,
   useLazyDownloadObjectQuery,
 } from "../../../store/objects/objects.api";
-import { handleResponse } from "../../../utilits";
+import { handleDownloadFile, handleResponse } from "../../../utilits";
 import { useEffect, useState } from "react";
 import cogoToast from "cogo-toast";
 
@@ -65,15 +65,6 @@ export const Dropdown = ({
         setAdded(true);
       })
     );
-  };
-
-  const handleDownloadFile = (url) => {
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = url;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
   };
 
   const handleDownload = () => {

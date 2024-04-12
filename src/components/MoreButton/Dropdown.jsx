@@ -4,6 +4,7 @@ import { ReactComponent as UserIcon } from "../../assets/images/card-user.svg";
 import { ReactComponent as RemoveIcon } from "../../assets/images/remove.svg";
 import { ReactComponent as EditIcon } from "../../assets/images/edit-company.svg";
 import { ReactComponent as RestoreIcon } from "../../assets/images/refresh-icon.svg";
+import { ReactComponent as DownloadIcon } from "../../assets/images/file.svg";
 
 export const Dropdown = ({
   onDelete,
@@ -16,6 +17,7 @@ export const Dropdown = ({
   isDeleted,
   onRestore,
   onDeleteFinally,
+  onDownload,
 }) => (
   <StyledDropdown className="dropdown noClickable">
     {isDeleted ? (
@@ -80,6 +82,15 @@ export const Dropdown = ({
           >
             <span className="noClickable">Видалити</span>
             <RemoveIcon className="remove-icon noClickable" />
+          </div>
+        )}
+        {onDownload && (
+          <div
+            className="flex items-center justify-between noClickable"
+            onClick={onDownload}
+          >
+            <span className="noClickable">Завантажити</span>
+            <DownloadIcon className="noClickable user-icon" />
           </div>
         )}
       </>

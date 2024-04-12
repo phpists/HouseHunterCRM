@@ -44,7 +44,7 @@ const Objects = () => {
 
   const DEFAULT_FILTERS = {
     // price_currency: "1",
-    // price_for: "4",
+    price_for: "4",
     // company_object: {
     //   show_only: "only_my",
     //   actual: "1",
@@ -332,6 +332,14 @@ const Objects = () => {
     setObjects(updatedData);
   };
 
+  const handleChangeTags = (id, fieldName, value) => {
+    const updatedData = objects?.map((obj) =>
+      obj?.id === id ? { ...obj, [fieldName]: value } : obj
+    );
+    dataRef.current = updatedData;
+    setObjects(updatedData);
+  };
+
   const handleFindSimilarTo = (obj) => {
     const {
       id_location,
@@ -606,6 +614,7 @@ const Objects = () => {
         onChangeContancts={handleChangeContacts}
         onRestore={handleRestoreObjects}
         isDeleted={filters?.company_object?.show_deleted === "1"}
+        onChangeTags={handleChangeTags}
       />
     </StyledObjects>
   );

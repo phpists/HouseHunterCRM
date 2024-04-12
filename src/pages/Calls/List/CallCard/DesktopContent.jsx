@@ -55,6 +55,8 @@ export const DesktopContent = ({
       value={comment}
       onChange={onChangeComment}
       onSubmit={onSubmitComment}
+      viewOnly
+      onClick={onEditComment}
     />
     <Divider />
     <Agent name={name} photo={photo} workerLevel={level} />
@@ -80,7 +82,10 @@ const StyledDesktopContent = styled.div`
       width: 70%;
     }
     .value {
-      max-width: 100px;
+      max-width: 150px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     &:hover {
       background: rgba(255, 255, 255, 0.1);

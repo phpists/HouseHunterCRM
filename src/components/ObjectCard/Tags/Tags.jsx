@@ -19,6 +19,7 @@ export const Tags = ({
   isAccess,
   onChangeComment,
   selections,
+  onChangeTags,
 }) => {
   const { id } = useParams();
   const { data: tagsList } = useGetTagsListQuery({ only_notepad: "1" });
@@ -75,27 +76,31 @@ export const Tags = ({
             }
           }
 
-          setTags(
-            isExist
-              ? tags?.filter((t) => t.value !== val)
-              : [
-                  ...tags?.filter((t) =>
-                    actualTags?.includes(val)
-                      ? t.value !== "label_is_actual" &&
-                        t.value !== "label_not_actual"
-                      : true
-                  ),
-                  {
-                    title: commentsToFields?.object[val]
-                      ? `${commentsToFields?.object[val]} ${
-                          actualTags.includes(val)
-                            ? handleFormatDate(new Date())
-                            : ""
-                        }`
-                      : "-",
-                    value: val,
-                  },
-                ]
+          const updatedTags = isExist
+            ? tags?.filter((t) => t.value !== val)
+            : [
+                ...tags?.filter((t) =>
+                  actualTags?.includes(val)
+                    ? t.value !== "label_is_actual" &&
+                      t.value !== "label_not_actual"
+                    : true
+                ),
+                {
+                  title: commentsToFields?.object[val]
+                    ? `${commentsToFields?.object[val]} ${
+                        actualTags.includes(val)
+                          ? handleFormatDate(new Date())
+                          : ""
+                      }`
+                    : "-",
+                  value: val,
+                },
+              ];
+
+          setTags(updatedTags);
+          onChangeTags(
+            "tags",
+            updatedTags?.map((t) => t.value)
           );
         })
       );

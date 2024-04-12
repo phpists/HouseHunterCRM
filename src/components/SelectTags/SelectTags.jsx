@@ -60,6 +60,7 @@ export const SelectTags = ({
       error={error?.toString()}
       onClick={(e) => {
         if (!e.target.classList.contains("notClickable") && !viewOnly) {
+          console.log("here");
           setOpen(!open);
           setIsActive(!open);
         }
@@ -90,7 +91,7 @@ export const SelectTags = ({
             )}
             {open && (
               <input
-                className="value"
+                className="value notClickable"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={
@@ -118,7 +119,7 @@ export const SelectTags = ({
               </div>
             ) : (
               <input
-                className="value"
+                className="value notClickable"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={

@@ -1,0 +1,39 @@
+import cogoToast from "cogo-toast";
+import { styled } from "styled-components";
+
+export const Id = ({ id }) => {
+  const handleCopy = () => {
+    const link = document.createElement("input");
+    link.value = id;
+    document.body.appendChild(link);
+    link.select();
+    document.execCommand("copy");
+    document.body.removeChild(link);
+    cogoToast.success("Успішно скопійовано", {
+      hideAfter: 3,
+      position: "top-right",
+    });
+  };
+
+  return <StyledId onClick={handleCopy}>ID</StyledId>;
+};
+
+const StyledId = styled.div`
+  padding: 1px 6px 2px;
+  border-radius: 5px;
+  background: rgba(88, 175, 255, 0.3);
+  color: #58afff;
+  font-family: Open Sans;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.22px;
+  max-width: 100px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-left: 10px;
+  cursor: pointer;
+`;

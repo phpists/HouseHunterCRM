@@ -63,7 +63,8 @@ export const Header = ({
                 position: "top-right",
               }
             );
-            !filter?.filters?.show_deleted === "1" && onDelete();
+
+            !filter?.filters?.show_deleted && onDelete();
             onChangeActionLoading(false);
           },
           () => onChangeActionLoading(false)

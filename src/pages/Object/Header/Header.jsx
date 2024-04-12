@@ -17,6 +17,7 @@ import {
 } from "../../../store/objects/objects.api";
 import { ToClientButton } from "./ToClientButton";
 import { useAppSelect } from "../../../hooks/redux";
+import { DownloadButton } from "./DownloadButton";
 
 export const Header = ({
   onSave,
@@ -115,7 +116,7 @@ export const Header = ({
               <ToClientButton />
               {id ? (
                 <>
-                  {" "}
+                 <DownloadButton />
                   <IconButton
                     Icon={StarIcon}
                     className="icon-btn"

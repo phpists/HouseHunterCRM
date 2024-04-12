@@ -20,6 +20,10 @@ export const TotalInfo = ({ open, onToggleOpen, id }) => {
     id && getStatistic({ id_worker: id, period });
   }, [id, period]);
 
+  const handleChangePeriod = (val) => {
+    setPeriod(val);
+    setActive(false);
+  };
   return (
     <StyledTotalInfo
       active={active}
@@ -31,7 +35,7 @@ export const TotalInfo = ({ open, onToggleOpen, id }) => {
         active={active}
         onToggleActive={() => setActive(!active && open)}
         period={period}
-        onChangePeriod={(val) => setPeriod(val)}
+        onChangePeriod={handleChangePeriod}
         onToggleOpen={onToggleOpen}
       />
       <div className="cards clickable notClickable">

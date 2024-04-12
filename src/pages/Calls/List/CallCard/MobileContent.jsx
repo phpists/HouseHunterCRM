@@ -62,6 +62,8 @@ export const MobileContent = ({
         value={comment}
         onChange={onChangeComment}
         onSubmit={onSubmitComment}
+        viewOnly
+        onClick={onEditComment}
       />
     </div>
     <ShowMore
@@ -82,7 +84,10 @@ const StyledMobileContent = styled.div`
     height: 60px;
     background: #444;
     .value {
-      max-width: 200px;
+      max-width: 150px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     &:hover {
       background: rgba(255, 255, 255, 0.1);
