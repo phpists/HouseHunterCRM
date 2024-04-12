@@ -9,8 +9,10 @@ import { Tag } from "./Tag";
 
 export const Tags = ({ data }) => {
   const TAGS = [
-    { title: data?.rubric_name },
-    ...(data?.location_name
+    ...(data?.rubric_name && data?.rubric_name?.length > 0
+      ? [{ title: data?.rubric_name }]
+      : []),
+    ...(data?.location_name && data?.location_name?.length > 0
       ? [
           {
             title: `${data?.location_name} ${

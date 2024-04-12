@@ -172,7 +172,10 @@ export const Base = ({
                     onChange={(val) =>
                       onChange("company_object", {
                         ...data?.company_object,
-                        id_worker_Search: val,
+                        id_worker_Search:
+                          val === data?.company_object?.id_worker_Search
+                            ? undefined
+                            : val,
                       })
                     }
                     isSearch

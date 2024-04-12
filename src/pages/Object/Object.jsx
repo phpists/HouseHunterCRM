@@ -154,25 +154,30 @@ const ObjectPage = () => {
           obj_is_actual_dt:
             !resp?.data?.obj_is_actual_dt ||
             Number(resp?.data?.obj_is_actual_dt) === 0
-              ? undefined
+              ? new Date()
               : new Date(Number(resp?.data?.obj_is_actual_dt) * 1000),
           dt_end_agreement:
+            !resp?.data?.dt_end_agreement ||
             Number(resp?.data?.dt_end_agreement) === 0
               ? undefined
               : new Date(Number(resp?.data?.dt_end_agreement) * 1000),
         };
+
         setData(objectData);
-        handleGetRubricsFields(resp?.data?.id_rubric, objectData, true);
+        resp?.data &&
+          handleGetRubricsFields(resp?.data?.id_rubric, objectData, true);
         setPhotos(
-          Object.entries(resp?.data?.img)
-            .map((p) => ({ ...p[1], id: p[0] }))
-            ?.sort((a, b) => b.cover - a.cover)
-            .map((photo, i) => ({
-              url: photo?.url,
-              status: "old",
-              id: photo?.id,
-              cover: photo?.cover,
-            })) ?? []
+          !resp?.data?.img
+            ? []
+            : Object.entries(resp?.data?.img)
+                .map((p) => ({ ...p[1], id: p[0] }))
+                ?.sort((a, b) => b.cover - a.cover)
+                .map((photo, i) => ({
+                  url: photo?.url,
+                  status: "old",
+                  id: photo?.id,
+                  cover: photo?.cover,
+                })) ?? []
         );
         setIsLoadingData(false);
       });

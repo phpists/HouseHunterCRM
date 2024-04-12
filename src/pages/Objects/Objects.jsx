@@ -43,7 +43,7 @@ const Objects = () => {
   };
 
   const DEFAULT_FILTERS = {
-    // price_currency: "1",
+    price_currency: "1",
     price_for: "4",
     // company_object: {
     //   show_only: "only_my",
@@ -351,17 +351,6 @@ const Objects = () => {
       area_total,
       storey_count,
     } = obj;
-
-    console.log({
-      id_location,
-      id_rubric,
-      price_UAH,
-      rooms,
-      address_storey,
-      area_plot_sotka,
-      area_total,
-      storey_count,
-    });
     setFilters({
       id_rubric,
       id_location: [id_location],

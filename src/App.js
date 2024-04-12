@@ -83,17 +83,18 @@ export const App = () => {
   }, [companyInfo]);
 
   const handleClearCacheData = () => {
-    caches.keys().then((names) => {
-      names.forEach((name) => {
-        caches.delete(name);
+    if (caches) {
+      caches.keys().then(async function (names) {
+        await Promise.all(names.map((name) => caches.delete(name)));
+        // window.location.reload();
       });
-    });
+    }
   };
 
   useEffect(() => {
     handleClearCacheData();
   }, []);
-  
+
   return (
     <>
       <ErrorBoundary

@@ -136,7 +136,12 @@ export const Search = ({
                     : []
                 }
                 value={filters?.id_worker_Search}
-                onChange={(val) => onChangeFilter("id_worker_Search", val)}
+                onChange={(val) =>
+                  onChangeFilter(
+                    "id_worker_Search",
+                    val === filters?.id_worker_Search ? undefined : val
+                  )
+                }
                 isSearch
                 notMultiSelect
               />

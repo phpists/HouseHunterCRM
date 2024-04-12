@@ -15,7 +15,7 @@ import { useActions } from "../../hooks/actions";
 const INIT_FILTERS = {
   id_rubric: "",
   id_location: "",
-  price_currency: "2",
+  price_currency: "1",
   price: "",
   price_max: "",
   price_min: "",

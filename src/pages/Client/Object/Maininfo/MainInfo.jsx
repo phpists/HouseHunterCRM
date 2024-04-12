@@ -206,7 +206,7 @@ export const Maininfo = ({
         }
       />
 
-      {data?.comment?.length > 0 ? (
+      {data?.comment?.length > 0 && data?.comment ? (
         <>
           <Divider />
           <Field
@@ -215,6 +215,7 @@ export const Maininfo = ({
             label="Коментар"
             textarea
             className="title-field"
+            viewOnly
           />
         </>
       ) : null}
