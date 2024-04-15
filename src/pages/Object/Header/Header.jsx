@@ -18,6 +18,7 @@ import {
 import { ToClientButton } from "./ToClientButton";
 import { useAppSelect } from "../../../hooks/redux";
 import { DownloadButton } from "./DownloadButton";
+import { Id } from "../../../components/Id";
 
 export const Header = ({
   onSave,
@@ -116,7 +117,7 @@ export const Header = ({
               <ToClientButton />
               {id ? (
                 <>
-                 <DownloadButton />
+                  <DownloadButton />
                   <IconButton
                     Icon={StarIcon}
                     className="icon-btn"
@@ -130,6 +131,7 @@ export const Header = ({
                       onClick={() => setDeleteModal(true)}
                     />
                   )}
+                  <Id id={id} />
                 </>
               ) : null}
             </>

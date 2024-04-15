@@ -1,7 +1,10 @@
 import { styled } from "styled-components";
 import { TitleDivider } from "./TitleDivider";
 import { CheckOption } from "../CheckOption";
-import { useGetCommentsToFieldsQuery } from "../../store/objects/objects.api";
+import {
+  useGetCommentsToFieldsQuery,
+  useGetSourcesQuery,
+} from "../../store/objects/objects.api";
 import { useEffect, useState } from "react";
 import { Select } from "../Select/Select";
 import { Period } from "./Period/Period";
@@ -42,6 +45,7 @@ export const Base = ({
   showDeleted,
   workersSearch,
   potentialOwner,
+  idSource,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -54,6 +58,7 @@ export const Base = ({
   );
   const [mlsBase, setMlsBase] = useState(!!data.mls_object || mlsBaseOpen);
   const { data: workers } = useGetWorkerMyStructureQuery();
+  const { data: sources } = useGetSourcesQuery();
 
   useEffect(() => {
     setMlsBase(mlsBaseOpen);
@@ -397,6 +402,32 @@ export const Base = ({
               })
             }
           />
+          {idSource ? (
+            <SelectTags
+              label="Пошук по ресурсу"
+              placeholder="Оберіть ресурс"
+              options={
+                typeof sources === "object"
+                  ? Object?.entries(sources)?.map((e) => ({
+                      value: e[0],
+                      title: e[1],
+                    }))
+                  : []
+              }
+              value={data?.street_base_object?.id_source}
+              onChange={(val) =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  id_source:
+                    val === data?.street_base_object?.id_source
+                      ? undefined
+                      : val,
+                })
+              }
+              isSearch
+              notMultiSelect
+            />
+          ) : null}
         </>
       ) : null}
       <TitleDivider title="mls base" />

@@ -340,6 +340,7 @@ export const Main = ({
         showDeleted
         workersSearch
         potentialOwner
+        idSource
       />
     </StyledMain>
   );

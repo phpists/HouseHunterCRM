@@ -60,14 +60,13 @@ export const SelectTags = ({
       error={error?.toString()}
       onClick={(e) => {
         if (!e.target.classList.contains("notClickable") && !viewOnly) {
-          console.log("here");
           setOpen(!open);
           setIsActive(!open);
         }
       }}
       hideArrow={hideArrow}
     >
-      <div>
+      <div className="w-full">
         {!value && showTags && tags?.length === 0 && (
           <div className="value">{placeholder ?? "Пусто"}</div>
         )}

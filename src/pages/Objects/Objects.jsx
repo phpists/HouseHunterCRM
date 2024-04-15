@@ -43,12 +43,10 @@ const Objects = () => {
   };
 
   const DEFAULT_FILTERS = {
-    price_currency: "1",
-    price_for: "4",
-    // company_object: {
-    //   show_only: "only_my",
-    //   actual: "1",
-    // },
+    company_object: {
+      show_only: "only_my",
+      actual: "1",
+    },
   };
   const { objectsCount } = useAppSelect((state) => state.objects);
   const [filters, setFilters] = useState(INIT_FILTERS);
@@ -82,7 +80,15 @@ const Objects = () => {
       setFilters(value);
       localStorage.setItem("objectsLastFilters", JSON.stringify(value));
     } else {
-      const updatedFilters = { ...filters, [field]: value };
+      let updatedFilters = { ...filters, [field]: value };
+
+      if (field === "price_max" || field === "price_min") {
+        updatedFilters = {
+          ...updatedFilters,
+          price_currency: updatedFilters?.price_currency ?? "1",
+          price_for: updatedFilters?.price_for ?? "4",
+        };
+      }
       setFilters(updatedFilters);
       localStorage.setItem(
         "objectsLastFilters",

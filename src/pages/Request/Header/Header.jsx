@@ -19,6 +19,7 @@ import { handleCheckAccess, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
 import { BackButton } from "../../../components/BackButton";
 import { useAppSelect } from "../../../hooks/redux";
+import { Id } from "../../../components/Id";
 
 export const Header = ({
   onSave,
@@ -133,6 +134,7 @@ export const Header = ({
                       onClick={() => setDeleteModal(true)}
                     />
                   )}
+                  {/* <Id id={id} /> */}
                   <MoreButton />
                 </>
               )}
@@ -214,6 +216,7 @@ export const Header = ({
                     onClick={() => setDeleteModal(true)}
                   />
                 )}
+                <Id id={id} />
               </>
             )}
           </div>
