@@ -41,6 +41,7 @@ export const Header = ({
   const { accessData: data } = useAppSelect((state) => state.auth);
   const isPrevFilter = localStorage.getItem("requestFilter");
   const [restoreRequests] = useLazyRestoreRequestsQuery();
+  const isAllActions = filters?.only_company_obj !== "1";
 
   const handleToggleFavorites = () => {
     onChangeActionLoading(true);
@@ -138,8 +139,10 @@ export const Header = ({
               deleteConfirmTitle={"Видалити запит(и)?"}
               finalDeleteConfirmTitle="Видалити запит(и) остаточно?"
               onDelete={
-                !filters?.show_deleted &&
-                handleCheckAccess(data, "requests", "delete")
+                !isAllActions
+                  ? null
+                  : !filters?.show_deleted &&
+                    handleCheckAccess(data, "requests", "delete")
                   ? handleDelete
                   : user?.struct_level === 1 && filters?.show_deleted
                   ? handleDelete
@@ -151,9 +154,13 @@ export const Header = ({
               noFavorite={filters?.show_deleted}
               allCount={allCount}
               onSelectAll={onSelectAll}
-              onRestore={handleRestore}
+              onRestore={!isAllActions ? null : handleRestore}
               onDeleteFinally={
-                user?.struct_level === 1 ? () => handleDelete(true) : null
+                !isAllActions
+                  ? null
+                  : user?.struct_level === 1
+                  ? () => handleDelete(true)
+                  : null
               }
             />
           </div>
@@ -165,8 +172,10 @@ export const Header = ({
         className="select-wrapper-mobile"
         deleteConfirmTitle={"Видалити запит(и)?"}
         onDelete={
-          !filters?.show_deleted &&
-          handleCheckAccess(data, "requests", "delete")
+          !isAllActions
+            ? null
+            : !filters?.show_deleted &&
+              handleCheckAccess(data, "requests", "delete")
             ? handleDelete
             : user?.struct_level === 1
             ? handleDelete
@@ -176,9 +185,13 @@ export const Header = ({
         onSelectAll={onSelectAll}
         onToggleFavorite={handleToggleFavorites}
         noFavorite={filters?.show_deleted}
-        onRestore={handleRestore}
+        onRestore={!isAllActions ? null : handleRestore}
         onDeleteFinally={
-          user?.struct_level === 1 ? () => handleDelete(true) : null
+          !isAllActions
+            ? null
+            : user?.struct_level === 1
+            ? () => handleDelete(true)
+            : null
         }
         finalDeleteConfirmTitle="Видалити запит(и) остаточно?"
       />

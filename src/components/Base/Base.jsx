@@ -370,7 +370,7 @@ export const Base = ({
                   id_ad_in_source: val,
                 })
               }
-              label="Id на ресурсі"
+              label="Пошук по Id на ресурсі"
               className="field-wrapper"
             />
           ) : null}

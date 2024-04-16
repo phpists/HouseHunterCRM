@@ -18,6 +18,7 @@ import { BackButton } from "../../Clients/Header/BackButton";
 import { useGetAccessQuery } from "../../../store/auth/auth.api";
 import { useAppSelect } from "../../../hooks/redux";
 import { AddToSelections } from "../AddToSelections";
+import { SendModal } from "../../Clients/SendModal";
 
 export const Header = ({
   selectedCount,
@@ -36,6 +37,7 @@ export const Header = ({
   phoneCode,
   onChangePhoneCode,
   onRestore,
+  selectedClients,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -47,7 +49,12 @@ export const Header = ({
     company: true,
   });
   const [openAddToSelection, setOpenAddToSelection] = useState(false);
+  const [openSendClient, setOpenSendClient] = useState(false);
   const isPrevFilter = localStorage.getItem("objectsLastFilters");
+  const isAllActions =
+    !filters?.street_base_object &&
+    !filters?.mls_object &&
+    ["my_structure", "only_my"]?.includes(filters?.company_object?.show_only);
 
   useEffect(() => {
     setDefalultFiltersOpen({
@@ -105,8 +112,25 @@ export const Header = ({
   const handleAddToSelection = () => setOpenAddToSelection(true);
   const handleAddToSelectionSuccess = () => onSelectAll(true);
 
+  const handleSendClients = () => {
+    setOpenSendClient(true);
+  };
+
+  const handleSendClientsSuccess = () => {
+    onSelectAll(true);
+    setOpenSendClient(false);
+  };
+
   return (
     <>
+      {openSendClient > 0 ? (
+        <SendModal
+          onSendSuccess={handleSendClientsSuccess}
+          onClose={() => setOpenSendClient(false)}
+          clients={selectedClients}
+          onChangeLoading={(val) => null}
+        />
+      ) : null}
       {openAddToSelection && (
         <AddToSelections
           onClose={() => setOpenAddToSelection(false)}
@@ -157,10 +181,16 @@ export const Header = ({
                 deleteConfirmTitle={"Видалити об'єкт(и)?"}
                 finalDeleteConfirmTitle="Видалити об'єкт(и) остаточно?"
                 onDeleteFinally={
-                  user?.struct_level === 1 ? () => handleDelete(true) : null
+                  !isAllActions
+                    ? null
+                    : user?.struct_level === 1
+                    ? () => handleDelete(true)
+                    : null
                 }
                 onDelete={
-                  handleCheckAccess(data, "objects", "delete")
+                  !isAllActions
+                    ? null
+                    : handleCheckAccess(data, "objects", "delete")
                     ? handleDelete
                     : null
                 }
@@ -172,7 +202,10 @@ export const Header = ({
                     : handleAddToSelection
                 }
                 passwordCheck
-                onRestore={onRestore}
+                onRestore={!isAllActions ? null : onRestore}
+                onSendClients={
+                  selectedClients?.length > 0 ? handleSendClients : null
+                }
               />
             </div>
           </div>
@@ -194,12 +227,21 @@ export const Header = ({
                 : "Видалити об'єкт(и)?"
             }
             onDelete={
-              filters?.company_object?.show_deleted === "1"
+              !isAllActions
+                ? null
+                : filters?.company_object?.show_deleted === "1"
                 ? user?.struct_level === 1
                   ? handleDelete
                   : null
                 : handleCheckAccess(data, "objects", "delete")
                 ? handleDelete
+                : null
+            }
+            onDeleteFinally={
+              !isAllActions
+                ? null
+                : user?.struct_level === 1
+                ? () => handleDelete(true)
                 : null
             }
             allCount={allCount}
@@ -210,7 +252,10 @@ export const Header = ({
                 : handleAddToSelection
             }
             passwordCheck
-            onRestore={onRestore}
+            onRestore={!isAllActions ? null : onRestore}
+            onSendClients={
+              selectedClients?.length > 0 ? handleSendClients : null
+            }
           />
         </div>
         {filterOpen && (

@@ -182,7 +182,7 @@ export const Main = ({
         placeholder="Введіть значення"
         value={filters?.id_hash}
         onChange={(val) => onChangeFilter("id_hash", val)}
-        label="Пошук по id"
+        label="Пошук по id системи"
         className="field"
         grey
         onFocus={() => onChangeInputFocus(true)}

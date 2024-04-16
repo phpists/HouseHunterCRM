@@ -18,17 +18,16 @@ export const Footer = ({
     <StyledFooter className="flex flex-wrap items-center clickable">
       {id ? (
         <Tag
-          title={`ID ${typeObject === "street_base" ? "StreetBase" : ""}`}
+          title={`ID ${typeObject === "street_base" ? "Системи" : ""}`}
           copyValue={id}
           isCopy
         />
       ) : null}
       {idSource !== "0" && typeObject !== "company" ? (
-        <Tag
-          title={`ID ${data?.[nameSource] ?? ""}`}
-          copyValue={idSource}
-          isCopy
-        />
+        <>
+          <Tag title={`ID на ресурсі`} copyValue={idSource} isCopy />{" "}
+          <Tag title={data?.[nameSource] ?? ""} />
+        </>
       ) : null}
       <Tag
         title={`Додано/Оновлено  ${handleFormatDate(

@@ -25,6 +25,7 @@ export const SelectItems = ({
   passwordCheck,
   onDeleteFinally,
   finalDeleteConfirmTitle,
+  onSendClients,
 }) => {
   const [type, setType] = useState(null);
   const [open, setOpen] = useState(false);
@@ -59,6 +60,8 @@ export const SelectItems = ({
       onRestore();
     } else if (opt === "deleteFinally") {
       setDeleteModal("finally");
+    } else if (opt === "sendClients") {
+      onSendClients();
     }
   };
 
@@ -138,6 +141,7 @@ export const SelectItems = ({
                   onAddToSelection={onAddToSelection}
                   onRestore={onRestore}
                   onDeleteFinally={onDeleteFinally}
+                  onSendClients={onSendClients}
                 />
               )}
             </>

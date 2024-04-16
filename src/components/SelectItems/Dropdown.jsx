@@ -11,10 +11,14 @@ export const Dropdown = ({
   onAddToSelection,
   onRestore,
   onDeleteFinally,
+  onSendClients,
 }) => {
   const OPTIONS = [
     { title: "Додати в улюблене", value: "favorite" },
     ...(onSend ? [{ title: "Передати", value: "send" }] : []),
+    ...(onSendClients
+      ? [{ title: "Передати клієнта", value: "sendClients" }]
+      : []),
     ...(onRestore ? [{ title: "Відновити", value: "restore" }] : []),
     ...(onDelete ? [{ title: "Видалити", value: "delete" }] : []),
     ...(onDeleteFinally

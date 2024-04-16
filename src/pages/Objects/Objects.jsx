@@ -590,6 +590,14 @@ const Objects = () => {
         phoneCode={phoneCode}
         onChangePhoneCode={handleChangePhoneCode}
         onRestore={() => handleRestoreObjects(selected, true)}
+        selectedClients={[
+          ...new Set(
+            objects
+              ?.filter((o) => selected?.includes(o.id))
+              ?.map((o) => o?.id_client)
+              ?.filter((clientId) => !!clientId)
+          ),
+        ]}
       />
       <List
         selected={selected}
