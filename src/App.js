@@ -195,7 +195,9 @@ export const App = () => {
                   {handleCheckAccess(data, "structure", "view") && (
                     <Route path="/structure" element={<Structure />} />
                   )}
-                  {true && <Route path="/calls" element={<Calls />} />}
+                  {handleCheckAccess(data, "calls", "view") && (
+                    <Route path="/calls" element={<Calls />} />
+                  )}
                   {user?.struct_level === 1 && (
                     <Route path="/company" element={<Company />} />
                   )}

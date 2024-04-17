@@ -28,11 +28,15 @@ export const Tags = ({ data }) => {
     ...(data?.area_total > 0
       ? [{ title: `${data?.area_total} м²`, icon: expandIcon }]
       : []),
-    ...(data?.address_storey > 0
+    ...(data?.address_storey > 0 &&
+    data?.storey_count > 0 &&
+    data?.storey_count &&
+    data?.address_storey
       ? [
           {
             title: `${data?.address_storey} / ${data?.storey_count}`,
             icon: stairsIcon,
+            hoverTitle: `${data?.address_storey} поверх / ${data?.storey_count} поверховість`,
           },
         ]
       : []),
@@ -49,8 +53,8 @@ export const Tags = ({ data }) => {
 
   return (
     <StyledTags className="flex flex-wrap hide-scroll clickable">
-      {TAGS.map(({ title, icon }, i) => (
-        <Tag key={i} title={title} icon={icon} />
+      {TAGS.map(({ title, icon, hoverTitle }, i) => (
+        <Tag key={i} title={title} icon={icon} hoverTitle={hoverTitle} />
       ))}
     </StyledTags>
   );

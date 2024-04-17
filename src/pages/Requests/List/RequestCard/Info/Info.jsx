@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Price } from "../../../../../components/Price/Price";
 import { Tags } from "./Tags/Tags";
 import { fortmatNumber } from "../../../../../utilits";
+import { SuspendTitle } from "./SuspendTitle";
 
 export const Info = ({
   priceMax,
@@ -11,9 +12,11 @@ export const Info = ({
   storeyMin,
   storeyMax,
   currency,
+  isStopShowing,
 }) => {
   return (
     <StyledInfo className="hide-scroll clickable">
+      {isStopShowing ? <SuspendTitle /> : null}
       <Price
         title={
           Number(priceMax ?? 0) === 0

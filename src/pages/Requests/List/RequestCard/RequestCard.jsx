@@ -18,6 +18,7 @@ export const RequestCard = ({
   onChangeComment,
   onRestore,
   onDeleteFinally,
+  onChangeNewCount,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1400);
@@ -64,6 +65,7 @@ export const RequestCard = ({
           onChangeComment={onChangeComment}
           onRestore={onRestore}
           onDeleteFinally={onDeleteFinally}
+          onChangeNewCount={onChangeNewCount}
         />
       ) : (
         <DesktopContent
@@ -77,6 +79,7 @@ export const RequestCard = ({
           onChangeComment={onChangeComment}
           onRestore={onRestore}
           onDeleteFinally={onDeleteFinally}
+          onChangeNewCount={onChangeNewCount}
         />
       )}
     </StyledRequestCard>

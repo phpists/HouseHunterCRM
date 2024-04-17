@@ -17,6 +17,7 @@ export const MobileContent = ({
   onChangeComment,
   onRestore,
   onDeleteFinally,
+  onChangeNewCount = { onChangeNewCount },
 }) => (
   <StyledMobileContent className="flex clickable">
     <div className="w-full">
@@ -36,13 +37,19 @@ export const MobileContent = ({
           areaMin={data?.area_total_min}
           storeyMin={data?.address_storey_min}
           storeyMax={data?.address_storey_max}
+          isStopShowing={data?.General_field_group?.stop_showing !== "0"}
         />
         <Comment
           comment={data?.General_field_group?.comment_group}
           id={data?.id_group}
           onOpenEdit={onChangeComment}
         />
-        <Objects data={data} idGroup={data?.id_group} onOpenChat={onOpenChat} />
+        <Objects
+          data={data}
+          idGroup={data?.id_group}
+          onOpenChat={onOpenChat}
+          onChangeNewCount={onChangeNewCount}
+        />
       </div>
     </div>
     <Actions

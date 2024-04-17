@@ -16,7 +16,7 @@ export const Address = ({ address, onEdit }) => {
   };
 
   return (
-    <StyledAddress className="flex items-end">
+    <StyledAddress className="flex items-end" onClick={() => setEdit(true)}>
       <LocationIcon />
       {edit ? (
         <input
@@ -28,7 +28,9 @@ export const Address = ({ address, onEdit }) => {
           onKeyDown={(e) => e?.keyCode === 13 && handleSave(e, true)}
         />
       ) : (
-        <span>{address?.length > 0 ? address : "Введіть значення адреси"}</span>
+        <span title={address}>
+          {address?.length > 0 ? address : "Введіть значення адреси"}
+        </span>
       )}
       <img
         src={edit ? saveIcon : editIcon}
@@ -49,11 +51,17 @@ const StyledAddress = styled.div`
   font-weight: 200;
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
-  width: 100%;
+  width: 50%;
   transition: all 0.3s;
   cursor: pointer;
   position: relative;
-  white-space: nowrap;
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 80%;
+    max-width: 200px;
+  }
   svg {
     margin-right: 7px;
   }
@@ -79,6 +87,9 @@ const StyledAddress = styled.div`
       visibility: visible;
       transform: translateX(0px);
     }
+  }
+  input {
+    width: 90%;
   }
   @media (max-width: 600px) {
     padding: 8px 11px;

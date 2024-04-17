@@ -10,7 +10,7 @@ import { Name } from "./Name";
 import { Tags } from "./Tags/Tags";
 import { Deleted } from "./Deleted";
 
-export const Objects = ({ idGroup, onOpenChat, data }) => {
+export const Objects = ({ idGroup, onOpenChat, data, onChangeNewCount }) => {
   const navigate = useNavigate();
 
   return (
@@ -23,7 +23,7 @@ export const Objects = ({ idGroup, onOpenChat, data }) => {
           {data?.General_field_group?.deleted === "1" ? (
             <Deleted date={data?.General_field_group?.dt_start_delete} />
           ) : (
-            <Tags data={data} />
+            <Tags data={data} onChangeNewCount={onChangeNewCount} />
           )}
           <div
             className={`flex items-center footer ${

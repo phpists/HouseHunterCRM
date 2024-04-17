@@ -16,7 +16,7 @@ export const WebSite = ({ webSite, onEdit }) => {
   };
 
   return (
-    <StyledWebSite className="flex items-end">
+    <StyledWebSite className="flex items-end" onClick={() => setEdit(true)}>
       <WebsiteIcon />
       {edit ? (
         <input
@@ -28,7 +28,7 @@ export const WebSite = ({ webSite, onEdit }) => {
           onKeyDown={(e) => e?.keyCode === 13 && handleSave(e, true)}
         />
       ) : (
-        <span>
+        <span title={webSite}>
           {webSite?.length > 0 ? webSite : "Введіть значення вебсайту"}
         </span>
       )}
@@ -51,7 +51,7 @@ const StyledWebSite = styled.div`
   font-weight: 200;
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
-  width: 225px;
+  width: 50%;
   transition: all 0.3s;
   flex-shrink: 0;
   cursor: pointer;
@@ -60,6 +60,7 @@ const StyledWebSite = styled.div`
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    max-width: 250px;
   }
   svg {
     margin-right: 7px;
@@ -75,6 +76,9 @@ const StyledWebSite = styled.div`
     top: 9px;
     right: 9px;
     transform: translateX(-10px);
+  }
+  input {
+    width: 90%;
   }
   &:hover {
     color: #fff;

@@ -63,7 +63,9 @@ export const Dropdown = ({ open, filter, onFilterChange }) => {
         <Option
           key={i}
           title={role}
-          active={filter?.roles?.find((r) => r === i.toString())}
+          active={
+            filter?.roles?.find((r) => r === i.toString()) ? "true" : "false"
+          }
           onSelect={() =>
             onFilterChange(
               "roles",

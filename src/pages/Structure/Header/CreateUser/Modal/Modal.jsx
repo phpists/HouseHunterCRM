@@ -57,7 +57,12 @@ export const Modal = ({ onClose, onCreatedUser }) => {
   }, []);
 
   const handleChangeField = (fieldName, value) => {
-    const newData = { ...data, [fieldName]: value };
+    let newData = { ...data, [fieldName]: value };
+
+    if (fieldName === "id_permision") {
+      newData = { ...newData, structure_parent: undefined };
+    }
+
     setData(newData);
     let updatedErrors = errors?.filter((e) => e !== fieldName);
 

@@ -43,6 +43,8 @@ const Objects = () => {
   };
 
   const DEFAULT_FILTERS = {
+    price_for: "4",
+    price_currency: "1",
     company_object: {
       show_only: "only_my",
       actual: "1",
@@ -88,6 +90,17 @@ const Objects = () => {
           price_currency: updatedFilters?.price_currency ?? "1",
           price_for: updatedFilters?.price_for ?? "4",
         };
+      }
+
+      if (field === "street_base_object") {
+        const isEmpty =
+          Object.entries(updatedFilters?.street_base_object)?.length > 0 &&
+          Object.entries(updatedFilters?.street_base_object)?.[0]?.[1]
+            ?.length === 0;
+
+        if (isEmpty) {
+          updatedFilters = { ...updatedFilters, street_base_object: {} };
+        }
       }
       setFilters(updatedFilters);
       localStorage.setItem(
@@ -192,6 +205,13 @@ const Objects = () => {
             mls_object: {},
           };
         }
+      } else {
+        const { company_object, ...filters } = DEFAULT_FILTERS;
+        data = {
+          ...data,
+          company_object,
+          filters,
+        };
       }
 
       setLoading(true);

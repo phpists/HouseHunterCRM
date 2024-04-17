@@ -104,6 +104,9 @@ const StyledCard = styled.div`
   .subtitle-wrapper {
     position: relative;
   }
+  svg {
+    height: 18px;
+  }
   svg,
   g,
   path {

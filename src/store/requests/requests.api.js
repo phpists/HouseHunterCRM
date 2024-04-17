@@ -390,6 +390,18 @@ export const requests = createApi({
         }),
       }),
     }),
+    recountNewobjectRequest: build.query({
+      query: (id_hash) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "recountNewobjectRequest",
+          mod: "requests",
+          id_hash,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -414,4 +426,5 @@ export const {
   useGetSortingObjectQuery,
   useLazyEditRequestCommentQuery,
   useLazyRestoreRequestsQuery,
+  useLazyRecountNewobjectRequestQuery,
 } = requests;

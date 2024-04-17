@@ -1,7 +1,10 @@
 import styled from "styled-components";
 
-export const Tag = ({ icon, title }) => (
-  <StyledTag className="flex items-center clickable select-none" title={title}>
+export const Tag = ({ icon, title, hoverTitle }) => (
+  <StyledTag
+    className="flex items-center clickable select-none"
+    title={hoverTitle ?? title}
+  >
     {icon && <img src={icon} alt="" />}
     <div className="title clickable">{title}</div>
   </StyledTag>

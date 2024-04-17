@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { ReactComponent as Like } from "../../../../../../assets/images/like.svg";
+import { ReactComponent as Loader } from "../../../../../../assets/images/refresh-icon.svg";
 
 const COLORS = {
   green: { color: "#50F835", bg: "rgba(80, 248, 53, 0.3)" },
@@ -8,10 +9,18 @@ const COLORS = {
   default: { color: "#919191", bg: "#5A5A5A" },
 };
 
-export const Tag = ({ count = 0, title = "", className, type }) => (
+export const Tag = ({
+  count = 0,
+  title = "",
+  className,
+  type,
+  onClick,
+  loading,
+}) => (
   <StyledTag
     className={`${className} clickable`}
     type={COLORS[type] ?? COLORS?.default}
+    onClick={onClick}
   >
     {type !== "blue" && (
       <Like
@@ -19,6 +28,9 @@ export const Tag = ({ count = 0, title = "", className, type }) => (
       />
     )}
     {Number(count) > 1000 ? "+1000" : count} {title}
+    {onClick ? (
+      <Loader className={`refreshIcon ${loading && "active"}`} />
+    ) : null}
   </StyledTag>
 );
 
@@ -52,6 +64,24 @@ const StyledTag = styled.div`
     &.dislike {
       path {
         stroke: #f93a3a;
+      }
+    }
+  }
+  .refreshIcon {
+    margin-left: 5px;
+    path {
+      fill: ${({ type }) => type.color};
+      stroke: none;
+    }
+    &.active {
+      animation: 2s infinite load linear;
+      @keyframes load {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
       }
     }
   }

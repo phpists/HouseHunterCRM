@@ -47,6 +47,7 @@ export const Field = ({
     if (e?.keyCode === 13) {
       setEdit(false);
       onSubmit && onSubmit();
+      onBlur && onBlur();
     }
   };
 

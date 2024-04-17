@@ -79,6 +79,10 @@ export const WorkerModal = ({
       newData = { ...newData, structure_parent: undefined };
     }
 
+    if (fieldName === "id_permision") {
+      newData = { ...newData, structure_parent: undefined };
+    }
+
     setProfileData(newData);
 
     let updatedErrors = errors?.filter((e) => e !== fieldName);

@@ -1,9 +1,25 @@
 import styled from "styled-components";
 import { Tag } from "./Tag";
+import { useLazyRecountNewobjectRequestQuery } from "../../../../../../store/requests/requests.api";
+import { useState } from "react";
 
-export const Tags = ({ data }) => {
+export const Tags = ({ data, onChangeNewCount }) => {
   const likes = data?.General_field_group?.countLike ?? 0;
   const dislikes = data?.General_field_group?.countDislike ?? 0;
+  const [recoutNewObjects] = useLazyRecountNewobjectRequestQuery();
+  const [loading, setLoading] = useState(false);
+
+  const handleRecountNewObjects = () => {
+    setLoading(true);
+    recoutNewObjects(data?.id_group).then((resp) => {
+      const newCount = resp?.data?.count;
+      setLoading(false);
+
+      if (newCount) {
+        onChangeNewCount(newCount);
+      }
+    });
+  };
 
   return (
     <StyledTags className="flex items-center clickable">
@@ -18,6 +34,8 @@ export const Tags = ({ data }) => {
         title="нових"
         className="newTag"
         type="blue"
+        onClick={handleRecountNewObjects}
+        loading={loading}
       />
     </StyledTags>
   );
@@ -26,7 +44,6 @@ export const Tags = ({ data }) => {
 const StyledTags = styled.div`
   gap: 6px;
   .newTag {
-    padding: 1px 6px 2px;
     margin-left: 8px;
   }
   .like-tag {

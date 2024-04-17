@@ -3,7 +3,7 @@ import { Card } from "./Card/Card";
 import { ReactComponent as CalendarIcon } from "../../../../assets/images/calendar-card.svg";
 import { ReactComponent as UsersIcon } from "../../../../assets/images/card-user.svg";
 import { ReactComponent as MegafonIcon } from "../../../../assets/images/card-megafon.svg";
-import { ReactComponent as StarIcon } from "../../../../assets/images/card-star.svg";
+import { ReactComponent as HomeIcon } from "../../../../assets/images/home-sidebar.svg";
 import backgrondBlue from "../../../../assets/images/blue-card-mask.svg";
 import backgrondPink from "../../../../assets/images/pink-card-mask.svg";
 
@@ -46,10 +46,10 @@ export const Cards = ({ data, onEdit }) => (
       title={data?.all_obj_copmany ?? "-"}
       subtitle={
         <>
-          Кількість <br /> оголошень
+          Кількість <br /> обєктів
         </>
       }
-      Icon={MegafonIcon}
+      Icon={HomeIcon}
       hoverBackground={backgrondBlue}
     />
     {/* <Card

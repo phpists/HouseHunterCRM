@@ -110,7 +110,7 @@ const ObjectPage = () => {
         description: data?.description ?? undefined,
         comment: data?.comment ?? undefined,
         obj_is_actual: data?.obj_is_actual ?? undefined,
-        dt_end_agreement: data?.dt_end_agreement ?? undefined,
+        mls: data?.mls ?? undefined,
       };
       setData(newData);
       handleGetRubricsFields(value, newData, true);

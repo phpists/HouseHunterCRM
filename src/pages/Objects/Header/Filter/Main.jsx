@@ -341,6 +341,8 @@ export const Main = ({
         workersSearch
         potentialOwner
         idSource
+        onFocus={() => onChangeInputFocus(true)}
+        onBlur={() => onChangeInputFocus(false)}
       />
     </StyledMain>
   );

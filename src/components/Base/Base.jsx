@@ -46,6 +46,8 @@ export const Base = ({
   workersSearch,
   potentialOwner,
   idSource,
+  onFocus,
+  onBlur,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -111,6 +113,47 @@ export const Base = ({
     if (onChangeDefaultFiltersOpened) {
       onChangeDefaultFiltersOpened("mls_object", !mlsBase);
     }
+  };
+
+  const handleChangeCompany = (val) => {
+    const newValue = !!data?.mls_object?.[companiesFieldName]?.find(
+      (c) => c === val
+    )
+      ? data?.mls_object?.[companiesFieldName]?.filter((c) => c !== val)
+      : [
+          ...(Array.isArray(data?.mls_object?.[companiesFieldName])
+            ? data?.mls_object?.[companiesFieldName]
+            : []),
+          val,
+        ];
+
+    const isValues = newValue?.length > 0 || data?.mls_object?.invert_company;
+
+    onChange(
+      "mls_object",
+      !isValues
+        ? {}
+        : {
+            ...data?.mls_object,
+            [companiesFieldName]: newValue,
+          }
+    );
+  };
+
+  const handleChangeInvertCompany = () => {
+    const newValue = data?.mls_object?.invert_company === "1" ? undefined : "1";
+    const isValues =
+      data?.mls_object?.[companiesFieldName]?.length > 0 || newValue;
+
+    onChange(
+      "mls_object",
+      !isValues
+        ? {}
+        : {
+            ...data?.mls_object,
+            invert_company: newValue,
+          }
+    );
   };
 
   return (
@@ -252,6 +295,8 @@ export const Base = ({
                   className="field-wrapper"
                   error={!!errors?.find((e) => e === dateAgreementFieldName)}
                   type="date"
+                  onFocus={onFocus}
+                  onBlur={onBlur}
                 />
               )}
             </>
@@ -372,6 +417,8 @@ export const Base = ({
               }
               label="Пошук по Id на ресурсі"
               className="field-wrapper"
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
           ) : null}
           <CheckOption
@@ -448,23 +495,7 @@ export const Base = ({
                   )
                 : false
             )}
-            onChange={(val) =>
-              onChange("mls_object", {
-                ...data?.mls_object,
-                [companiesFieldName]: !!data?.mls_object?.[
-                  companiesFieldName
-                ]?.find((c) => c === val)
-                  ? data?.mls_object?.[companiesFieldName]?.filter(
-                      (c) => c !== val
-                    )
-                  : [
-                      ...(Array.isArray(data?.mls_object?.[companiesFieldName])
-                        ? data?.mls_object?.[companiesFieldName]
-                        : []),
-                      val,
-                    ],
-              })
-            }
+            onChange={handleChangeCompany}
             options={handleGetFormatCompanies()}
             showTags
             className="companySelect"
@@ -473,13 +504,7 @@ export const Base = ({
           <ToggleOption
             label="Все крім цього"
             value={data?.mls_object?.invert_company}
-            onChange={() =>
-              onChange("mls_object", {
-                ...data?.mls_object,
-                invert_company:
-                  data?.mls_object?.invert_company === "1" ? undefined : "1",
-              })
-            }
+            onChange={handleChangeInvertCompany}
           />
         </>
       ) : null}

@@ -52,8 +52,11 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
               </>
             );
           } else if (
-            field?.includes("_min") &&
-            fields?.find((f) => f.field === field?.replace("_min", "_max"))
+            (field?.includes("_min") &&
+              fields?.find(
+                (f) => f.field === field?.replace("_min", "_max")
+              )) ||
+            ["address_storey", "storey_count"]?.includes(field)
           ) {
             const labels = {
               room_min: "Кількість кімнат/Приміщень",
@@ -63,25 +66,34 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
                 commentsToFields?.object?.area_plot_sotka ?? "Площа ділянки",
               address_storey_min: "Поверх від/до",
             };
-            const maxFieldName = field?.replace("_min", "_max");
+            const minFieldName = ["address_storey", "storey_count"]?.includes(
+              field
+            )
+              ? `${field}_min`
+              : field;
+            const maxFieldName = ["address_storey", "storey_count"]?.includes(
+              field
+            )
+              ? `${field}_max`
+              : field?.replace("_min", "_max");
 
             return (
               <>
                 {i > 0 && <Divider />}
                 <Ranger
-                  label={labels[field] ?? ""}
+                  label={labels[minFieldName] ?? ""}
                   max={100}
-                  values={[data[field] ?? 0, data[maxFieldName] ?? 0]}
+                  values={[data[minFieldName] ?? 0, data[maxFieldName] ?? 0]}
                   onChange={(values) =>
                     handleChangeRange(
                       values,
-                      [data[field] ?? 0, data[maxFieldName] ?? 0],
-                      [field, maxFieldName],
+                      [data[minFieldName] ?? 0, data[maxFieldName] ?? 0],
+                      [minFieldName, maxFieldName],
                       onChangeField
                     )
                   }
                   error={
-                    !!errors?.find((e) => e === field) ||
+                    !!errors?.find((e) => e === minFieldName) ||
                     !!errors?.find((e) => e === maxFieldName)
                   }
                 />

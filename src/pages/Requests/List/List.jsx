@@ -24,6 +24,7 @@ export const List = ({
   onOpenChat,
   onRestore,
   isDeletedRequests,
+  onChangeNewCount,
 }) => {
   const [deleteRequest] = useLazyDeleteRequestQuery();
   const [deleteModal, setDeleteModal] = useState(false);
@@ -116,6 +117,7 @@ export const List = ({
                   })
                 }
                 onRestore={() => onRestore(d[0], d[1]?.id_group)}
+                onChangeNewCount={(count) => onChangeNewCount(count, d[0])}
               />
             );
           })

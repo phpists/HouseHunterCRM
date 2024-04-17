@@ -347,6 +347,29 @@ const Requests = () => {
     setRequests(updatedData);
   };
 
+  const handleChangeNewCount = (count_objects, id) => {
+    const updatedData = Object.fromEntries(
+      Object.entries(requests).map((req) => {
+        const reqId = req[0];
+
+        if (reqId === id) {
+          const request = {
+            ...req[1],
+            General_field_group: {
+              ...req[1].General_field_group,
+              count_objects,
+            },
+          };
+
+          return [reqId, request];
+        }
+        return req;
+      })
+    );
+    dataRef.current = updatedData;
+    setRequests(updatedData);
+  };
+
   const handleOpenChat = (id) => {
     const updatedData = Object.fromEntries(
       Object.entries(requests).map((req) => {
@@ -482,6 +505,7 @@ const Requests = () => {
         onOpenChat={handleOpenChat}
         onRestore={handleRestoreRequest}
         isDeletedRequests={filters?.show_deleted === "1"}
+        onChangeNewCount={handleChangeNewCount}
       />
     </StyledRequests>
   );
