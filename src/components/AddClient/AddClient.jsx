@@ -21,7 +21,7 @@ import cogoToast from "cogo-toast";
 import { useActions } from "../../hooks/actions";
 import { useGetPhonesCodesQuery } from "../../store/auth/auth.api";
 
-export const AddClient = ({ onClose, onAdded, initPhone }) => {
+export const AddClient = ({ onClose, onAdded, initPhone, callId }) => {
   const [createClient] = useLazyCreateClientQuery();
   const { data: phonesCodes } = useGetPhonesCodesQuery();
   const [success, setSuccess] = useState(false);
@@ -65,9 +65,12 @@ export const AddClient = ({ onClose, onAdded, initPhone }) => {
 
   const handleSubmit = () => {
     setLoading(true);
-    createClient({
+    const mainData = {
       first_name: name?.length === 0 ? "Новий клієнт" : name,
       last_name: lastName,
+    };
+    createClient({
+      ...mainData,
       email,
       phones_json: JSON.stringify([
         {
@@ -87,7 +90,12 @@ export const AddClient = ({ onClose, onAdded, initPhone }) => {
           position: "top-right",
         });
         handleGetClientsCount();
-        onAdded && onAdded();
+        onAdded &&
+          onAdded(callId, {
+            client_id: resp?.data?.id_client,
+            client_first_name: mainData.first_name,
+            client_last_name: mainData.last_name,
+          });
       });
     });
   };

@@ -2,6 +2,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { styled } from "styled-components";
 import { useAppSelect } from "../../hooks/redux";
 import { useEffect } from "react";
+import { handleCheckAccess } from "../../utilits";
 
 export const Subtitle = () => {
   const { pathname } = useLocation();
@@ -15,6 +16,7 @@ export const Subtitle = () => {
   const { workersCount: companyWorkers } = useAppSelect(
     (state) => state.billing
   );
+  const { accessData } = useAppSelect((state) => state.auth);
 
   const handleGetEnding = (val) => (val > 0 && val < 8 ? "а" : "ів");
 
@@ -39,7 +41,9 @@ export const Subtitle = () => {
       case "/request":
         return "Запит об'єкта";
       case "/calls":
-        return `Всього ${callsCount} дзвінків`;
+        return handleCheckAccess(accessData, "calls", "view")
+          ? `Всього ${callsCount} дзвінків`
+          : "";
       default:
         return pathname.split("/")[1] === "client"
           ? "Створенний  03.10.2022  13:19"

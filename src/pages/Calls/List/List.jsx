@@ -19,6 +19,7 @@ export const List = ({
   listRef,
   loading,
   onSendSuccess,
+  onAddClient,
 }) => {
   const [openMore, setOpenMore] = useState(null);
   const [commentModal, setCommentModal] = useState(false);
@@ -56,7 +57,12 @@ export const List = ({
         />
       )}
       {addModal && (
-        <AddClient onClose={() => setAddModal(false)} initPhone={addModal} />
+        <AddClient
+          onClose={() => setAddModal(false)}
+          initPhone={addModal?.phone_call}
+          callId={addModal?.id}
+          onAdded={onAddClient}
+        />
       )}
       {data?.length === 0 ? (
         <Empty loading={loading} />
@@ -107,7 +113,7 @@ export const List = ({
               onAddComment={(comment) => onAddComment(id, comment)}
               level={struct_level_user}
               onEditComment={() => setCommentModal({ id, coment })}
-              onAdd={() => setAddModal(phone_call)}
+              onAdd={() => setAddModal({ phone_call, id })}
               onSend={client_id ? () => setSendModal(client_id) : null}
               onSendCall={client_id ? null : () => setSendCall(id)}
               id={id}

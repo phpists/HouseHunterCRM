@@ -92,6 +92,7 @@ export const Card = ({
     });
   };
 
+  console.log(currency);
   return (
     <StyledCard onClick={handleClick} selected={selected}>
       <DesktopContent

@@ -141,6 +141,7 @@ const Requests = () => {
 
       getRequests(data).then((resp) => {
         isLoading.current = false;
+        isFirstRender.current = false;
         setLoading(false);
         handleResponse(
           resp,

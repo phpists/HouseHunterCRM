@@ -37,6 +37,7 @@ export const Maininfo = ({
   const { data: rubricsList } = useGetRubricsQuery();
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
+  const TYPES = ["", "metr", "sotka", "hektar", "object"];
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -57,6 +58,9 @@ export const Maininfo = ({
     }
     // eslint-disable-next-line
   }, [locationsList]);
+
+  const handleGetPriceCurrency = (price_currency) =>
+    price_currency === "1" ? "₴" : price_currency === "2" ? "$" : "€";
 
   return (
     <StyledMaininfo>
@@ -101,26 +105,32 @@ export const Maininfo = ({
             isObject
               ? Number(data?.price_USD ?? 0) === 0
                 ? "Не вказана"
-                : `${fortmatNumber(Number(data?.price_USD ?? 0))}$ / ${
+                : `${fortmatNumber(
+                    Number(
+                      data?.[
+                        `price_per_${TYPES[data?.price_for]}_${
+                          data?.price_currency === "1"
+                            ? "uah"
+                            : data?.price_currency === "2"
+                            ? "usd"
+                            : "eur"
+                        }`
+                      ] ?? 0
+                    )
+                  )}${handleGetPriceCurrency(data?.price_currency)} / ${
                     PRICES_FOR_TITLE?.find((p) => p.value === data?.price_for)
                       ?.title ?? undefined
                   }`
               : Number(data?.price_max ?? 0) === 0 &&
                 Number(data?.price_min ?? 0) === 0
               ? "Не вказана"
-              : `${fortmatNumber(Number(data?.price_min ?? 0))}${
-                  data?.price_currency === "1"
-                    ? "₴"
-                    : data?.price_currency === "2"
-                    ? "$"
-                    : "€"
-                } - ${fortmatNumber(Number(data?.price_max ?? 0))}${
-                  data?.price_currency === "1"
-                    ? "₴"
-                    : data?.price_currency === "2"
-                    ? "$"
-                    : "€"
-                }`
+              : `${fortmatNumber(
+                  Number(data?.price_min ?? 0)
+                )}${handleGetPriceCurrency(
+                  data?.price_currency
+                )} - ${fortmatNumber(
+                  Number(data?.price_max ?? 0)
+                )}${handleGetPriceCurrency(data?.price_currency)}`
           }
           onChange={(val) => onChangeField("price_min", val)}
           label="Вартість"

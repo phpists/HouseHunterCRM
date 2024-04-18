@@ -22,7 +22,9 @@ export const PhoneInput = ({
       e.clipboardData.getData("text/plain") ||
       window.clipboardData.getData("text");
 
-    if (paste?.length > 1) {
+    if (value?.length > 0) {
+      onChange(e.target.value);
+    } else if (paste?.length > 1) {
       const { code } = phonesCodes?.find((c) => c.id === phoneCode);
       onChange(paste?.replace(code, "")?.replace(/\s/g, ""));
     } else {

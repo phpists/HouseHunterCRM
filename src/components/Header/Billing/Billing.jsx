@@ -98,7 +98,7 @@ const StyledBilling = styled.div`
   margin-right: 10px;
   &:hover {
     /* padding: 12px 187px 11px 13px;*/
-    border-radius: 12px;
+    /* border-radius: 12px;
     background: #474747;
     border: none;
     & > .bill-btn {
@@ -106,7 +106,7 @@ const StyledBilling = styled.div`
     }
     .divider {
       opacity: 0;
-    }
+    } */
   }
 
   ${({ open }) =>
@@ -134,14 +134,14 @@ const StyledBilling = styled.div`
 
 @media (max-width: 1200px) {
     &:hover {
-      padding: 12px 160px 11px 13px;
+      /* padding: 12px 160px 11px 13px; */
     }
   }
 
   @media (max-width: 600px) {
     padding: 0 20px 0 12px;
     &:hover {
-      padding: 14px 130px 11px 13px;
+      /* padding: 14px 130px 11px 13px; */
       background: none;
     }
     ${({ open }) =>

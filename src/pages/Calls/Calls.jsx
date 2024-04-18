@@ -287,6 +287,14 @@ const Calls = () => {
     setSelected([]);
   };
 
+  const handleClientAdded = (id_call, callData) => {
+    setData(
+      data?.map((call) =>
+        call.id === id_call ? { ...call, ...callData } : call
+      )
+    );
+  };
+
   return (
     <StyledCalls>
       <Header
@@ -321,6 +329,7 @@ const Calls = () => {
         listRef={listRef}
         loading={loading}
         onSendSuccess={handleSendCliens}
+        onAddClient={handleClientAdded}
       />
     </StyledCalls>
   );

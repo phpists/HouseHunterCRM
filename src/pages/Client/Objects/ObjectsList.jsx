@@ -26,6 +26,7 @@ export const ObjectsList = ({
   isDelete,
   onSelectAll,
 }) => {
+  const TYPES = ["", "metr", "sotka", "hektar", "object"];
   const { id } = useParams();
   const [objects, setObjects] = useState([]);
   const [getClientsObjects] = useLazyGetClientsObjectsQuery();
@@ -128,6 +129,7 @@ export const ObjectsList = ({
     );
   };
 
+  console.log(objects);
   return (
     <>
       {deleteModal && (
@@ -163,8 +165,18 @@ export const ObjectsList = ({
                 date={c?.dt_add}
                 title={c?.rubric}
                 location={c?.location}
-                price={c?.price_per_object_usd}
-                currency="2"
+                price={
+                  c?.[
+                    `price_per_${TYPES[c?.price_for]}_${
+                      c?.price_currency === "1"
+                        ? "uah"
+                        : c?.price_currency === "2"
+                        ? "usd"
+                        : "eur"
+                    }`
+                  ]
+                }
+                currency={c?.price_currency}
                 isDeleted={c?.deleted === "1"}
                 // price_for={
                 //   PRICES_FOR_TITLE?.find((p) => p.value === c?.price_for)

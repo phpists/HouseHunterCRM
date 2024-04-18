@@ -9,6 +9,8 @@ import { ToggleOption } from "./ToggleOption";
 import { Field } from "../../../../components/Field";
 import { useAppSelect } from "../../../../hooks/redux";
 import { useGetCompanyStructureLevelQuery } from "../../../../store/structure/structure.api";
+import { useGetWorkerMyStructureQuery } from "../../../../store/calls/calls.api";
+import { SelectTags } from "../../../../components/SelectTags/SelectTags";
 
 export const General = ({
   filter,
@@ -23,6 +25,7 @@ export const General = ({
   const { data: phonesCodes } = useGetPhonesCodesQuery();
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
+  const { data: workers } = useGetWorkerMyStructureQuery();
 
   return (
     <StyledGeneral>
@@ -96,6 +99,30 @@ export const General = ({
               )
             }
           />
+          {filter?.my_struct === "1" ? (
+            <SelectTags
+              label="Пошук по працівнику"
+              placeholder="Оберіть працівника"
+              options={
+                workers?.data
+                  ? workers?.data?.map(({ id, first_name, last_name }) => ({
+                      title: `${first_name} ${last_name}`,
+                      value: id,
+                    }))
+                  : []
+              }
+              value={filter?.filters?.id_worker_Search}
+              onChange={(val) =>
+                onChangeFilter("filters", {
+                  ...filter.filters,
+                  id_worker_Search:
+                    val === filter?.filters?.id_worker_Search ? undefined : val,
+                })
+              }
+              isSearch
+              notMultiSelect
+            />
+          ) : null}
           <Divider />
         </>
       ) : null}

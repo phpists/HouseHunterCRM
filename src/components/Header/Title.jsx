@@ -1,10 +1,11 @@
 import { useLocation } from "react-router-dom";
 import { styled } from "styled-components";
 import { useAppSelect } from "../../hooks/redux";
+import { handleCheckAccess } from "../../utilits";
 
 export const Title = () => {
   const { pathname } = useLocation();
-  const { user } = useAppSelect((state) => state.auth);
+  const { user, accessData } = useAppSelect((state) => state.auth);
   const { selectionName } = useAppSelect((state) => state.selections);
 
   const handleGetHour = () => new Date().getHours();
@@ -47,7 +48,7 @@ export const Title = () => {
       case "/request":
         return "Створення нового запиту";
       case "/calls":
-        return "Дзвінки";
+        return handleCheckAccess(accessData, "calls", "view") ? "Дзвінки" : "";
       default:
         return pathname.split("/")[1] === "client"
           ? "Клієнт"

@@ -38,6 +38,7 @@ export const Header = ({
   onChangePhoneCode,
   onRestore,
   selectedClients,
+  isDeleted,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -145,7 +146,7 @@ export const Header = ({
             <Title
               selectedCount={selectedCount}
               title={"Обрано"}
-              isdDeleted={filters?.company_object?.show_deleted === "1"}
+              isdDeleted={isDeleted}
             />
           </div>
           <div className="flex items-center bts">

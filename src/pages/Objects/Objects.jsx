@@ -74,6 +74,7 @@ const Objects = () => {
   const [actionLoading, setActionLoading] = useState(false);
   const [phoneCode, setPhoneCode] = useState("1");
   const [restoreObjects] = useLazyRestoreObjectsQuery();
+  const [isDeleted, setIsDeleted] = useState(false);
 
   const handleChangePhoneCode = (val) => setPhoneCode(val);
 
@@ -120,7 +121,7 @@ const Objects = () => {
         : [...selected, index]
     );
 
-  const handleGetObjects = (isReset) => {
+  const handleGetObjects = (isReset, isApply) => {
     isFirstRender.current = false;
     if ((!isLoading.current && !isAllPages) || isReset) {
       if (isReset) {
@@ -238,7 +239,7 @@ const Objects = () => {
             dataRef.current = updatedObjects;
             setObjects(updatedObjects);
 
-            if (isFirstRequest.current) {
+            if (isFirstRequest.current || !isApply) {
               isFirstRequest.current = false;
               getAllObjects({ ...data, only_count_item: "1" }).then((resp) =>
                 saveObjectsCount(resp?.data?.count_item ?? 0)
@@ -302,7 +303,10 @@ const Objects = () => {
     }
     currentPage.current = 0;
     setIsAllPages(false);
-    handleGetObjects(true);
+    handleGetObjects(true, isApply);
+    setIsDeleted(
+      isApply ? filters?.company_object?.show_deleted === "1" : false
+    );
   };
 
   useEffect(() => {
@@ -493,6 +497,16 @@ const Objects = () => {
       });
       filterActive.current = true;
       setUpdateData(true);
+    } else if (filterApply === "?moderationAfterStreetBase") {
+      setFilters({
+        company_object: {
+          show_only: "only_my",
+          show_street_base_company: "1",
+          not_actual: "1",
+        },
+      });
+      filterActive.current = true;
+      setUpdateData(true);
     } else if (
       filterApply === "?prev" ||
       localStorage.getItem("objectsLastFilters")
@@ -502,16 +516,7 @@ const Objects = () => {
         : DEFAULT_FILTERS;
 
       setFilters(lastFilters);
-      filterActive.current = true;
-      setUpdateData(true);
-    } else if (filterApply === "?moderationAfterStreetBase") {
-      setFilters({
-        company_object: {
-          show_only: "only_my",
-          show_street_base_company: "1",
-          not_actual: "1",
-        },
-      });
+      setIsDeleted(lastFilters?.company_object?.show_deleted === "1");
       filterActive.current = true;
       setUpdateData(true);
     } else {
@@ -618,6 +623,7 @@ const Objects = () => {
               ?.filter((clientId) => !!clientId)
           ),
         ]}
+        isDeleted={isDeleted}
       />
       <List
         selected={selected}
