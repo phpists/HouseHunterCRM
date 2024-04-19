@@ -34,6 +34,7 @@ export const Header = ({
   onSendClients,
   onChangeActionLoading,
   onRestore,
+  isDeleted,
 }) => {
   const navigate = useNavigate();
   const [getNewClientsCount] = useLazyGetNewClientsCountQuery();
@@ -44,7 +45,7 @@ export const Header = ({
 
   useEffect(() => {
     getNewClientsCount().then((resp) => saveNewClientsCount(resp?.data?.count));
-  }, []);
+  }, [isDeleted]);
 
   const handleDeleteClients = (isFinal) => {
     if (selected?.length > 0) {
@@ -64,7 +65,9 @@ export const Header = ({
               }
             );
 
-            !filter?.filters?.show_deleted && onDelete();
+            if (isFinal || !filter?.filters?.show_deleted) {
+              onDelete();
+            }
             onChangeActionLoading(false);
           },
           () => onChangeActionLoading(false)
@@ -80,7 +83,7 @@ export const Header = ({
           {favoritesFilter && <BackButton onClick={onToggleFavoriteFilter} />}
           <Title
             title={`${newClientsCount ?? "-"} нових клієнтів за сьогодні`}
-            isDeleted={filter?.filters?.show_deleted}
+            isDeleted={isDeleted}
           />
           {/* {favoritesFilter && <Subtitle subtitle="54 обрано" />} */}
         </div>

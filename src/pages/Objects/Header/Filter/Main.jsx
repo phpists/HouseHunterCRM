@@ -13,7 +13,10 @@ import {
 } from "../../../../utilits";
 import { useEffect } from "react";
 import { ProfileField } from "../../../../components/ProfileField";
-import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.api";
+import {
+  useGetCommentsToFieldsQuery,
+  useGetSortObjectViewQuery,
+} from "../../../../store/objects/objects.api";
 import { Price } from "../../../Request/Main/Price/Price";
 import { ToggleOption } from "./ToggleOption";
 import { CheckOption } from "../../../../components/CheckOption";
@@ -76,6 +79,7 @@ export const Main = ({
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
+  const { data: sortData } = useGetSortObjectViewQuery();
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -212,7 +216,17 @@ export const Main = ({
         onBlur={() => onChangeInputFocus(false)}
         type="number"
       />
-
+      <Divider />
+      <SelectTags
+        notMultiSelect
+        options={sortData?.map((opt) => ({
+          value: opt.id?.toString(),
+          title: opt.name,
+        }))}
+        onChange={(val) => onChangeFilter("sorting", val)}
+        value={filters?.sorting}
+        label="Cортування"
+      />
       <div className="fields-wrapper">
         {filtersFields?.main_field
           ? Object.entries(filtersFields?.main_field)

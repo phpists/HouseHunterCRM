@@ -38,6 +38,7 @@ export const ProfileField = ({
   onFocus,
   reset,
   initOpen,
+  onClickOnIconEdit,
 }) => {
   const fieldRef = useRef();
   const [active, setActive] = useState(initOpen);
@@ -54,6 +55,7 @@ export const ProfileField = ({
 
   const handleToggleActive = () => {
     setActive(!active);
+    setOpen(!open);
     active && onSave && onSave();
   };
 
@@ -107,9 +109,12 @@ export const ProfileField = ({
       big={big}
       error={error?.toString()}
       ref={fieldRef}
-      onClick={() => {
+      onClick={(e) => {
         onClick && onClick();
-        if (!active && !readOnly) {
+        if (onClickOnIconEdit && e.target.classList.contains("edit-icon")) {
+          setActive(false);
+          setOpen(false);
+        } else if (!active && !readOnly) {
           setActive(true);
           setOpen(true);
           onFocus && onFocus();
@@ -251,7 +256,10 @@ export const ProfileField = ({
         {readOnly || open ? null : (
           <div
             className="edit-btn flex items-center justify-center"
-            // onClick={handleToggleEdit}
+            onClick={() => {
+              onClickOnIconEdit && onClickOnIconEdit();
+              handleToggleActive();
+            }}
           >
             <EditIcon className="edit-icon" />
           </div>

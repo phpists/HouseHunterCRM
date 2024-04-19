@@ -1,12 +1,14 @@
 import { styled } from "styled-components";
 import { ProfileField } from "../../../components/ProfileField";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Tags } from "./Tags";
 import { useParams } from "react-router-dom";
+import { DescriptionModal } from "./DescriptionModal";
 
 export const Text = ({ data, onChangeField, errors, objectData }) => {
   const textRef = useRef(null);
   const { clientId, id } = useParams();
+  const [descrModal, setDescrModal] = useState(false);
 
   useEffect(() => {
     if (
@@ -38,8 +40,16 @@ export const Text = ({ data, onChangeField, errors, objectData }) => {
     }
   };
 
+  const handleCloseDescModal = (val) => {
+    setDescrModal(false);
+    if (val) {
+      onChangeField("description", val);
+    }
+  };
+
   return (
     <StyledText className="hide-scroll" ref={textRef}>
+      {descrModal && <DescriptionModal onClose={handleCloseDescModal} />}
       <ProfileField
         value={data?.title}
         placeholder="Введіть заголовок"
@@ -57,6 +67,7 @@ export const Text = ({ data, onChangeField, errors, objectData }) => {
         contentHeight
         label="Опис"
         error={!!errors.find((e) => e === "description")}
+        onClickOnIconEdit={() => setDescrModal(true)}
       />
       <ProfileField
         value={data?.comment}

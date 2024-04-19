@@ -32,6 +32,7 @@ export const Header = ({
   allCount,
   onSelectAll,
   onChangeActionLoading,
+  isDeleted,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const [deleteRequest] = useLazyDeleteRequestQuery();
@@ -109,7 +110,7 @@ export const Header = ({
           <Title
             selectedCount={selectedCount}
             title={isFavorite ? "Обрано:" : "Обрано запитів "}
-            isDeleted={filters?.show_deleted}
+            isDeleted={isDeleted}
           />
         </div>
         <div className="flex items-center bts">

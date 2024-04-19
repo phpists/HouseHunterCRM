@@ -33,6 +33,7 @@ const StyledSidebar = styled.div`
   height: 100svh;
   overflow: auto;
   transition: all 0.3s;
+
   @media (max-width: 1200px) {
     position: fixed;
     top: 0;

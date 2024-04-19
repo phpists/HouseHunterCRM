@@ -52,11 +52,8 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
               </>
             );
           } else if (
-            (field?.includes("_min") &&
-              fields?.find(
-                (f) => f.field === field?.replace("_min", "_max")
-              )) ||
-            ["address_storey", "storey_count"]?.includes(field)
+            field?.includes("_min") &&
+            fields?.find((f) => f.field === field?.replace("_min", "_max"))
           ) {
             const labels = {
               room_min: "Кількість кімнат/Приміщень",

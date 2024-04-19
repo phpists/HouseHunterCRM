@@ -59,6 +59,7 @@ const Requests = () => {
   const allCountRef = useRef(0);
   const [actionLoading, setActionLoading] = useState(false);
   const firstRequest = useRef(true);
+  const [isDeleted, setIsDeleted] = useState(filters?.show_deleted === "1");
 
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => {
@@ -416,6 +417,7 @@ const Requests = () => {
       setFilterFields([]);
       localStorage.removeItem("requestFilter");
     }
+    setIsDeleted(isApply ? filters?.show_deleted === "1" : false);
     handleGetRequests(true, !isApply);
   };
 
@@ -492,6 +494,7 @@ const Requests = () => {
         allCount={allCount}
         onSelectAll={handleSelectAll}
         onChangeActionLoading={(val) => setActionLoading(val)}
+        isDeleted={isDeleted}
       />
       <List
         selected={selected}

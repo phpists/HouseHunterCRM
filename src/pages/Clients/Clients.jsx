@@ -53,6 +53,7 @@ const Clients = () => {
   const isFirstRender = useRef(true);
   const isFirstRequest = useRef(true);
   const [restoreClients] = useLazyRestoreClientsQuery();
+  const [isDeleted, setIsDeleted] = useState(filter?.filters?.show_deleted);
 
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
@@ -206,6 +207,7 @@ const Clients = () => {
       localStorage.removeItem("clientsFilters");
     }
     handleGetClients(true, isApply);
+    setIsDeleted(isApply ? filter?.filters?.show_deleted : false);
   };
 
   const handleSelectAll = (isReset, count) => {
@@ -374,6 +376,7 @@ const Clients = () => {
         onSendClients={() => setSendClients(selected)}
         onChangeActionLoading={(val) => setActionLoading(val)}
         onRestore={() => handleRestore(selected, true)}
+        isDeleted={isDeleted}
       />
       <List
         selected={selected}

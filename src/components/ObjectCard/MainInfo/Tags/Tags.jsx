@@ -39,6 +39,14 @@ export const Tags = ({ data }) => {
             hoverTitle: `${data?.address_storey} поверх / ${data?.storey_count} поверховість`,
           },
         ]
+      : data?.address_storey && data?.address_storey?.length > 0
+      ? [
+          {
+            title: `${data?.address_storey}`,
+            icon: stairsIcon,
+            hoverTitle: `${data?.address_storey} поверх`,
+          },
+        ]
       : []),
     ...(data.area_plot_sotka > 0
       ? [{ title: `${data?.area_plot_sotka} соток`, icon: boxIcon }]

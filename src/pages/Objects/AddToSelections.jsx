@@ -12,7 +12,7 @@ import { Modal } from "../../components/Modal/Modal";
 import { SelectionsSelect } from "../../components/SelectionsSelect/SelectionsSelect";
 
 export const AddToSelections = ({ onClose, idObject, onSuccess }) => {
-  const { data } = useGetFoldersListQuery();
+  const { data, refetch } = useGetFoldersListQuery();
   const [addObjectToSelections] = useLazyAddObjectToSelectionsQuery();
   const [selectedRequest, setSelectedRequest] = useState(null);
 
@@ -36,6 +36,10 @@ export const AddToSelections = ({ onClose, idObject, onSuccess }) => {
       })
     );
   };
+
+  useEffect(() => {
+    data && refetch();
+  }, []);
 
   return (
     <StyledAddToSelections>

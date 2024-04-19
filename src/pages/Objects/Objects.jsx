@@ -31,6 +31,7 @@ const Objects = () => {
   const [selected, setSelected] = useState([]);
   const [objects, setObjects] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
+
   const INIT_FILTERS = {
     id_rubric: "",
     id_location: [],
@@ -40,11 +41,13 @@ const Objects = () => {
     price_min: "",
     id_hash: id ?? "",
     price_for: "4",
+    sorting: "0",
   };
 
   const DEFAULT_FILTERS = {
     price_for: "4",
     price_currency: "1",
+    sorting: "0",
     company_object: {
       show_only: "only_my",
       actual: "1",

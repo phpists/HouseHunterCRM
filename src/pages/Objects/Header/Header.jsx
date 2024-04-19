@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { AddClient } from "../../../components/AddClient/AddClient";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
 import {
+  useGetSortObjectViewQuery,
   useLazyAddToFavoritesQuery,
   useLazyDeleteObjectQuery,
 } from "../../../store/objects/objects.api";
@@ -291,6 +292,15 @@ const StyledHeader = styled.div`
 
   .select-wrapper-mobile {
     display: none;
+  }
+  .sort-select {
+    height: 40px;
+    padding-left: 10px;
+    margin-right: 10px;
+    width: 150px;
+    .arrow {
+      height: 25px;
+    }
   }
   @media (max-width: 600px) {
     .select-wrapper {

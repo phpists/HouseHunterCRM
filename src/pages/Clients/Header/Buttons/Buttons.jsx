@@ -108,7 +108,7 @@ const StyledButtons = styled.div`
       display: none;
     }
     .icon-btn--last {
-      margin: 0;
+      /* margin: 0; */
     }
   }
 `;

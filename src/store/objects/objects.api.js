@@ -461,6 +461,17 @@ export const objects = createApi({
         }),
       }),
     }),
+    getSortObjectView: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "get_sort_object_view",
+          mod: "system_info",
+        }),
+      }),
+    }),
   }),
 });
 
@@ -498,4 +509,5 @@ export const {
   useLazyAddOherAgencyQuery,
   useLazyCleanObjectMarksQuery,
   useLazyRestoreObjectsQuery,
+  useGetSortObjectViewQuery,
 } = objects;

@@ -144,6 +144,17 @@ export const billing = createApi({
         }),
       }),
     }),
+    deleteCompanyImg: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "delete_company_img",
+          mod: "profile",
+        }),
+      }),
+    }),
   }),
 });
 
@@ -159,4 +170,5 @@ export const {
   useGetCompanyInfoQuery,
   useLazyEditCompanyInfoQuery,
   useLazyToggleActiveWorkerStatusQuery,
+  useLazyDeleteCompanyImgQuery,
 } = billing;

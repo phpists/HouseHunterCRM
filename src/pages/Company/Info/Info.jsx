@@ -63,6 +63,7 @@ export const Info = ({ tarifOpen, onCloseTarif }) => {
           tarifOpen={tarifOpen}
           data={data?.data}
           onEdit={handleEditCompanyField}
+          onRefreshData={refetch}
         />
         {!tarifOpen && (
           <>

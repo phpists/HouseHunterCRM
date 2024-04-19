@@ -1,17 +1,39 @@
 import styled from "styled-components";
 import { ReactComponent as OfficeIcon } from "../assets/images/office.svg";
 import { NavLink, useNavigate } from "react-router-dom";
+import { ReactComponent as DeleteIcon } from "../assets/images/delete-access.svg";
+import { useLazyDeleteCompanyImgQuery } from "../store/billing/billing.api";
+import { handleResponse } from "../utilits";
+import cogoToast from "cogo-toast";
 
-export const CompanyLogo = ({ value, onEdit }) => {
+export const CompanyLogo = ({ value, onEdit, onRefreshData }) => {
   const navigate = useNavigate();
+  const [deleteImg] = useLazyDeleteCompanyImgQuery();
 
+  const handleDelete = () => {
+    deleteImg().then((resp) =>
+      handleResponse(resp, () => {
+        onRefreshData();
+        cogoToast.success("Зображення успішно видалено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      })
+    );
+  };
   return (
     <StyledCompanyLogo
       className="flex justify-center items-center cursor-pointer"
       value={value}
       onClick={() => (onEdit ? null : navigate("/company"))}
     >
-      {value ? null : <OfficeIcon />}
+      {value && onEdit ? (
+        <button className="delete" onClick={handleDelete}>
+          <DeleteIcon />
+        </button>
+      ) : value ? null : (
+        <OfficeIcon />
+      )}
       {onEdit ? (
         <input
           type="file"
@@ -44,10 +66,22 @@ const StyledCompanyLogo = styled.div`
   g {
     transition: all 0.3s;
   }
+  .delete {
+    padding: 10px;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 12;
+  }
   &:hover {
     border: 1px solid #fff;
     g {
       opacity: 1;
+    }
+    .delete {
+      opacity: 0.8;
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 `;

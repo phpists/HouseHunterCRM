@@ -5,7 +5,7 @@ import { Date } from "./Date";
 import { Owner } from "./Owner/Owner";
 import { handleFormatDate } from "../../../../utilits";
 
-export const Header = ({ tarifOpen, data, onEdit }) => {
+export const Header = ({ tarifOpen, data, onEdit, onRefreshData }) => {
   return (
     <StyledHeader
       className="flex items-center justify-between hover-effect-to-right"
@@ -15,6 +15,7 @@ export const Header = ({ tarifOpen, data, onEdit }) => {
         <CompanyLogo
           value={data?.copmany_img}
           onEdit={(val) => onEdit("img", val)}
+          onRefreshData={onRefreshData}
         />
         <div className="flex flex-col items-start ml-2.5">
           <Title title={data?.company_name} onEdit={onEdit} />
