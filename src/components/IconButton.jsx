@@ -11,7 +11,7 @@ export const IconButton = ({ Icon, onClick, className, active }) => (
   </StyledIconButton>
 );
 
-const StyledIconButton = styled.button`
+const StyledIconButton = styled.div`
   width: 32px;
   height: 32px;
   flex-shrink: 0;

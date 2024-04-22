@@ -64,7 +64,7 @@ export const Actions = ({
         <Button
           Icon={EditIcon}
           className="edit-btn mb-2.5"
-          onClick={() => navigate(`/edit-request/${clientId}/${idGroup}`)}
+          link={`/edit-request/${clientId}/${idGroup}`}
         />
       )}
       {isDelete && isAccess && !isDeleted && (

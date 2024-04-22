@@ -39,6 +39,7 @@ export const Filter = ({
   const { objectsCount } = useAppSelect((state) => state.objects);
   const [loading, setLoading] = useState(false);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
+  const notRefresh = useRef(false);
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
@@ -153,13 +154,21 @@ export const Filter = ({
     if (isFirstRender.current) {
       setTotal(objectsCount ?? 0);
       isFirstRender.current = false;
-    } else if (!applying.current) {
+    } else if (!applying.current && !notRefresh.current) {
       !isInputFocused && handleGetTotal();
     } else {
       applying.current = false;
     }
   }, [filters, isInputFocused]);
 
+  const handleChangeFilter = (field, value, isDataUpdate) => {
+    onChangeFilter(field, value, isDataUpdate);
+    if (field === "sorting") {
+      notRefresh.current = true;
+    } else {
+      notRefresh.current = false;
+    }
+  };
   return (
     <>
       <StyledFilter
@@ -172,7 +181,7 @@ export const Filter = ({
           <SectionTitle title="Головне" />
           <Main
             filters={filters}
-            onChangeFilter={onChangeFilter}
+            onChangeFilter={handleChangeFilter}
             filtersFields={filtersFields}
             filtersOpened={filtersOpened}
             onChangeDefaultFiltersOpened={onChangeDefaultFiltersOpened}

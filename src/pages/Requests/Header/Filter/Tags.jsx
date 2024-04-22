@@ -18,6 +18,7 @@ import { Ranger } from "../../../../components/Ranger/Ranger";
 import { ToggleOption } from "./ToggleOption";
 import { useGetCompanyStructureLevelQuery } from "../../../../store/structure/structure.api";
 import { useAppSelect } from "../../../../hooks/redux";
+import { useGetWorkerMyStructureQuery } from "../../../../store/calls/calls.api";
 
 export const Tags = ({
   filters,
@@ -31,6 +32,7 @@ export const Tags = ({
   const [formatedLocations, setFormatedLocations] = useState([]);
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
+  const { data: workers } = useGetWorkerMyStructureQuery();
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -305,24 +307,7 @@ export const Tags = ({
               only_street_base_obj: "0",
               only_my_obj: "0",
               only_my_structure: "0",
-            },
-            true
-          )
-        }
-      />
-      <CheckOption
-        label="Мої запити"
-        className="check-opt"
-        value={filters?.only_my_obj}
-        onChange={(val) =>
-          onChangeFilter(
-            "only_my_obj",
-            {
-              ...filters,
-              only_company_obj: "0",
-              only_street_base_obj: "0",
-              only_my_obj: "1",
-              only_my_structure: "0",
+              id_worker_Search: undefined,
             },
             true
           )
@@ -348,9 +333,48 @@ export const Tags = ({
               )
             }
           />
-          <Divider />
+          {filters?.only_my_structure === "1" ? (
+            <>
+              <SelectTags
+                label="Пошук по працівнику"
+                placeholder="Оберіть працівника"
+                options={
+                  workers?.data
+                    ? workers?.data?.map(({ id, first_name, last_name }) => ({
+                        title: `${first_name} ${last_name}`,
+                        value: id,
+                      }))
+                    : []
+                }
+                value={filters?.id_worker_Search}
+                onChange={(val) => onChangeFilter("id_worker_Search", val)}
+                isSearch
+                notMultiSelect
+              />
+            </>
+          ) : null}
         </>
       ) : null}
+      <CheckOption
+        label="Мої запити"
+        className="check-opt"
+        value={filters?.only_my_obj}
+        onChange={(val) =>
+          onChangeFilter(
+            "only_my_obj",
+            {
+              ...filters,
+              only_company_obj: "0",
+              only_street_base_obj: "0",
+              only_my_obj: "1",
+              only_my_structure: "0",
+              id_worker_Search: undefined,
+            },
+            true
+          )
+        }
+      />
+      <Divider />
       <ToggleOption
         label="Протерміновані запити"
         active={filters?.showDeadline === "1"}

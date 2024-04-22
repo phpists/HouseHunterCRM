@@ -20,4 +20,14 @@ const StyledName = styled.div`
   overflow: hidden;
   white-space: nowrap;
   max-width: 100px;
+  @media (min-width: 1400px) {
+    width: 150px;
+    max-width: 100%;
+    flex-shrink: 0;
+  }
+  @media (min-width: 1600px) {
+    width: 180px;
+    max-width: 100%;
+    flex-shrink: 0;
+  }
 `;

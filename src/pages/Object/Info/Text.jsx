@@ -49,7 +49,12 @@ export const Text = ({ data, onChangeField, errors, objectData }) => {
 
   return (
     <StyledText className="hide-scroll" ref={textRef}>
-      {descrModal && <DescriptionModal onClose={handleCloseDescModal} />}
+      {descrModal && (
+        <DescriptionModal
+          onClose={handleCloseDescModal}
+          initValue={data?.description}
+        />
+      )}
       <ProfileField
         value={data?.title}
         placeholder="Введіть заголовок"

@@ -4,12 +4,21 @@ import { useEffect, useState } from "react";
 import { useAppSelect } from "../../../../hooks/redux";
 import { useLocation } from "react-router-dom";
 
-export const NotificationsDropdown = ({ data, open, closed, onClose }) => {
+export const NotificationsDropdown = ({
+  data,
+  open,
+  closed,
+  onClose,
+  onToggleOpen,
+}) => {
   const { user } = useAppSelect((state) => state.auth);
   const { search } = useLocation();
 
   return (
-    <StyledNotificationsDropdown open={open}>
+    <StyledNotificationsDropdown
+      open={open}
+      onClick={() => onToggleOpen(false)}
+    >
       {data?.birthday?.length > 0 && (
         <Card
           type="clients"

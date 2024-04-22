@@ -138,22 +138,24 @@ const Objects = () => {
 
       isLoading.current = true;
 
+      const {
+        company_object,
+        street_base_object,
+        mls_object,
+        sorting,
+        ...otherFilters
+      } = Object.fromEntries(
+        Object.entries(filters)?.filter((f) => f[1] !== "0")
+      );
+
       let data = {
         only_favorite: isFavorite ?? undefined,
         current_page: currentPage.current,
         item_on_page: 10,
+        sorting,
       };
 
       if (filterActive.current) {
-        const {
-          company_object,
-          street_base_object,
-          mls_object,
-          ...otherFilters
-        } = Object.fromEntries(
-          Object.entries(filters)?.filter((f) => f[1] !== "0")
-        );
-
         let dt_end_agreement_to = company_object?.dt_end_agreement_to
           ? new Date(handleFromInputDate(company_object?.dt_end_agreement_to))
           : undefined;
@@ -172,6 +174,7 @@ const Objects = () => {
           },
           street_base_object,
           mls_object,
+          sorting,
           filters: {
             ...otherFilters,
             search_phone_code:
@@ -320,6 +323,13 @@ const Objects = () => {
     }
   }, [filters]);
 
+  useEffect(() => {
+    if (!isFirstRender.current) {
+      currentPage.current = 0;
+      handleGetObjects(true);
+    }
+  }, [filters.sorting]);
+
   const handleSelectAll = (isReset, count) => {
     const objectsIds = objects?.map((o) => o.id);
     setSelected(isReset ? [] : objectsIds);
@@ -459,7 +469,8 @@ const Objects = () => {
   useEffect(() => {
     filterActive.current = false;
     isFirstRender.current = false;
-
+    setIsDeleted(false);
+    setFilterFields([]);
     const filterApply = location?.search?.split("=")[0];
     if (id) {
       setFilters({
@@ -505,7 +516,6 @@ const Objects = () => {
         company_object: {
           show_only: "only_my",
           show_street_base_company: "1",
-          not_actual: "1",
         },
       });
       filterActive.current = true;

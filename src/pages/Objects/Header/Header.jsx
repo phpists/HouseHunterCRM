@@ -20,6 +20,7 @@ import { useGetAccessQuery } from "../../../store/auth/auth.api";
 import { useAppSelect } from "../../../hooks/redux";
 import { AddToSelections } from "../AddToSelections";
 import { SendModal } from "../../Clients/SendModal";
+import { SortButton } from "./SortButton/SortButton";
 
 export const Header = ({
   selectedCount,
@@ -151,6 +152,10 @@ export const Header = ({
             />
           </div>
           <div className="flex items-center bts">
+            <SortButton
+              value={filters?.sorting}
+              onChange={(val) => onChangeFilter("sorting", val)}
+            />
             <IconButton
               Icon={SettingIcon}
               className={`icon-btn ${isPrevFilter && "alert-btn"}`}

@@ -14,6 +14,7 @@ export const Profile = ({
   onRemoveAvatar,
   rolesOnlyView,
   noStructure,
+  userProfile,
 }) => (
   <StyledProfile>
     <LastDate data={data?.last_active ?? ""} />
@@ -27,7 +28,10 @@ export const Profile = ({
       />
       <div className="w-full">
         <div className="flex items-center justify-between">
-          <Title title={`${data?.first_name ?? ""} ${data?.last_name ?? ""}`} />
+          <Title
+            title={`${data?.first_name ?? ""} ${data?.last_name ?? ""}`}
+            isProfile={userProfile}
+          />
           {profile ? null : (
             <RoleSelect
               isProfile={isProfile}

@@ -268,6 +268,7 @@ export const Profile = () => {
           onLogout={() => setOpenLogout(true)}
           loading={loading}
           isEdit={true}
+          userProfile
         />
       )}
       <div className="relative flex items-center">

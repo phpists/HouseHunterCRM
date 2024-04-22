@@ -37,6 +37,7 @@ const StyledOption = styled.div`
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   transition: all 0.3s;
+  cursor: pointer;
   background: rgba(255, 255, 255, 0.2);
   background: linear-gradient(
       to left,

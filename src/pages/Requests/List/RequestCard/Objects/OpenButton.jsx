@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-export const OpenButton = ({ onClick }) => (
-  <StyledOpenButton onClick={onClick}>Перейти в добірку</StyledOpenButton>
+export const OpenButton = ({ link }) => (
+  <StyledOpenButton href={link}>Перейти в добірку</StyledOpenButton>
 );
 
-const StyledOpenButton = styled.button`
-margin-right: 20px;
+const StyledOpenButton = styled.a`
+  margin-right: 20px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.18);
   padding: 9px 18px 10px 18px;

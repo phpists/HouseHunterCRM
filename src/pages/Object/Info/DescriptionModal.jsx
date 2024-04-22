@@ -19,7 +19,7 @@ export const DescriptionModal = ({ onClose, initValue }) => {
           label="Опис"
         />
         <div className="footer">
-          <Button title="Відмінити" cancel onClick={onClose} />
+          <Button title="Відмінити" cancel onClick={() => onClose()} />
           <Button title="Зберігти" onClick={() => onClose(value)} />
         </div>
       </Modal>
