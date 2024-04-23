@@ -32,6 +32,7 @@ export const MobileContent = ({
   agentPhone,
   callCount,
   clientId,
+  commentDate,
 }) => (
   <StyledMobileContent className="flex flex-col items-start clickable">
     <Type callType={callType} agentPhone={agentPhone} />
@@ -56,7 +57,7 @@ export const MobileContent = ({
       <Agent name={name} photo={photo} workerLevel={level} />
       <Field
         placeholder="Почніть писати"
-        label="Коментар"
+        label={`Коментар ${commentDate}`}
         className="comment"
         full
         value={comment}

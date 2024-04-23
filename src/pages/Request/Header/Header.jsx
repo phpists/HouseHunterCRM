@@ -135,7 +135,7 @@ export const Header = ({
                     />
                   )}
                   {/* <Id id={id} /> */}
-                  <MoreButton />
+                  <MoreButton data={data} onChangeField={onChangeField} />
                 </>
               )}
             </>

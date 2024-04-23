@@ -32,6 +32,7 @@ export const DesktopContent = ({
   agentPhone,
   callCount,
   clientId,
+  commentDate,
 }) => (
   <StyledDesktopContent className="flex items-start clickable">
     <Type callType={callType} agentPhone={agentPhone} />
@@ -49,7 +50,7 @@ export const DesktopContent = ({
     <Status status={status} />
     <Field
       placeholder="Почніть писати"
-      label="Коментар"
+      label={`Коментар ${commentDate}`}
       className="comment"
       full
       value={comment}

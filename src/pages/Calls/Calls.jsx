@@ -255,8 +255,6 @@ const Calls = () => {
         type_call: [],
         call_my_struct: undefined,
         status: undefined,
-        date_from: Math.floor(new Date().getTime() / 1000),
-        date_to: Math.floor(new Date().getTime() / 1000),
       });
       setIsDefaultFilterSet(true);
     } else {

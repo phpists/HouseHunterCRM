@@ -2,35 +2,60 @@ import { styled } from "styled-components";
 import { useState } from "react";
 import { Toggle } from "../../../../components/Toggle";
 
-export const Dropdown = ({ open }) => {
-  const [stopShow, setStopShow] = useState(false);
-  const [empty, setEmpty] = useState(false);
-  const [noActual, setNotActual] = useState(false);
-
+export const Dropdown = ({ open, data, onChangeField }) => {
   return (
     <StyledDropdown open={open}>
       <div className="flex items-center justify-between toggle-wrapper">
         <span>Призупинити показ</span>
         <Toggle
-          value={stopShow}
-          onChange={() => setStopShow(!stopShow)}
-          className={stopShow ? "toggle--active " : "toggle"}
+          value={Number(data?.general_group?.stop_showing) > 0}
+          onChange={() =>
+            onChangeField("general_group", {
+              ...data.general_group,
+              stop_showing:
+                Number(data?.general_group?.stop_showing) <= 0 ? "1" : "0",
+            })
+          }
+          className={
+            Number(data?.general_group?.stop_showing) > 0
+              ? "toggle--active "
+              : "toggle"
+          }
         />
       </div>
       <div className="flex items-center justify-between toggle-wrapper">
         <span>Пуста підбірка</span>
         <Toggle
-          value={empty}
-          onChange={() => setEmpty(!empty)}
-          className={empty ? "toggle--active " : "toggle"}
+          value={data?.general_group?.folder_empty === "1"}
+          onChange={() =>
+            onChangeField("general_group", {
+              ...data.general_group,
+              folder_empty:
+                data?.general_group?.folder_empty === "0" ? "1" : "0",
+            })
+          }
+          className={
+            data?.general_group?.folder_empty === "1"
+              ? "toggle--active "
+              : "toggle"
+          }
         />
       </div>
       <div className="flex items-center justify-between toggle-wrapper">
         <span>Неактуально</span>
         <Toggle
-          value={noActual}
-          onChange={() => setNotActual(!noActual)}
-          className={noActual ? "toggle--active " : "toggle"}
+          value={data?.general_group?.not_actual === "1"}
+          onChange={() =>
+            onChangeField("general_group", {
+              ...data.general_group,
+              not_actual: data?.general_group?.not_actual === "0" ? "1" : "0",
+            })
+          }
+          className={
+            data?.general_group?.not_actual === "1"
+              ? "toggle--active "
+              : "toggle"
+          }
         />
       </div>
     </StyledDropdown>

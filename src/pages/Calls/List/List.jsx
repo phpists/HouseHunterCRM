@@ -85,6 +85,7 @@ export const List = ({
               phone_binotel,
               Count_call,
               type,
+              comment_date,
             },
             i
           ) => (
@@ -119,6 +120,7 @@ export const List = ({
               id={id}
               callCount={Count_call}
               clientId={client_id}
+              commentDate={comment_date}
             />
           )
         )

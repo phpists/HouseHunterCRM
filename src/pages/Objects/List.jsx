@@ -159,7 +159,9 @@ export const List = ({
                     : () => handleOpenDelete(d?.id)
                 }
                 onDeleteFinally={
-                  d?.type_object !== "street_base" && user?.struct_level === 1
+                  d?.type_object !== "street_base" &&
+                  d?.type_object !== "mls" &&
+                  user?.struct_level === 1
                     ? () => handleOpenDelete(d?.id, true)
                     : null
                 }

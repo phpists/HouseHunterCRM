@@ -82,15 +82,45 @@ export const App = () => {
     } // eslint-disable-next-line
   }, [companyInfo]);
 
-  const handleClearCacheData = () => {
+  const handleRefreshData = () => {
+    navigator?.serviceWorker?.getRegistrations().then((registrations) => {
+      registrations.forEach((registration) => {
+        registration.unregister();
+      });
+    });
     try {
-      if (caches) {
-        caches.keys().then(async function (names) {
-          await Promise.all(names.map((name) => caches.delete(name)));
-          // window.location.reload();
-        });
-      }
-    } catch {}
+      caches.keys().then((keyList) => {
+        return Promise.all(
+          keyList.map((key) => {
+            return caches.delete(key);
+          })
+        );
+      });
+      setTimeout(() => {
+        window.location.reload(true);
+      }, 1000);
+    } catch {
+      window.location.reload(true);
+    }
+  };
+
+  const handleClearCacheData = () => {
+    fetch("/meta.json")
+      ?.then((res) => res.json())
+      ?.then((resp) => {
+        const buildDate = resp?.buildDate;
+        const lastUpdate = localStorage.getItem("buildDate");
+        const token = localStorage.getItem("token");
+        const isNewBuild = Number(buildDate) > Number(lastUpdate);
+
+        if (lastUpdate && isNewBuild) {
+          handleRefreshData();
+        } else if (!lastUpdate && token) {
+          handleRefreshData();
+        }
+
+        localStorage.setItem("buildDate", buildDate);
+      });
   };
 
   useEffect(() => {

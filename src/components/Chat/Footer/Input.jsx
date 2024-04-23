@@ -91,7 +91,7 @@ export const Input = ({
             value=""
             className="file-input"
             onChange={handleUploadPhoto}
-            accept="image/png, image/jpg, image/jpeg"
+            accept="image/png, image/jpg, image/jpeg, image/jpeg, image/png,image/webp,image/heic"
           />
           <img src={imageIcon} alt="" onClick={handleSelectPhoto} />
         </>

@@ -3,7 +3,7 @@ import { ReactComponent as OptionsIcon } from "../../../../assets/images/options
 import { useState } from "react";
 import { Dropdown } from "./Dropdown";
 
-export const MoreButton = () => {
+export const MoreButton = ({ data, onChangeField }) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="relative">
@@ -13,7 +13,7 @@ export const MoreButton = () => {
       >
         <OptionsIcon />
       </StyledMoreButton>
-      <Dropdown open={open} />
+      <Dropdown open={open} data={data} onChangeField={onChangeField} />
     </div>
   );
 };

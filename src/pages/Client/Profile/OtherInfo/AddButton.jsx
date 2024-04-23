@@ -9,7 +9,7 @@ export const AddButton = ({ onAdd }) => (
       type="file"
       name=""
       id=""
-      accept="image/png, image/jpg, image/jpeg"
+      accept="image/png, image/jpg, image/jpeg, image/jpeg, image/png,image/webp,image/heic"
       value=""
       onChange={(e) => onAdd(e.target.files)}
       multiple
