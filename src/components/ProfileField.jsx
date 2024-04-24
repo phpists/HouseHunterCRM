@@ -39,6 +39,7 @@ export const ProfileField = ({
   reset,
   initOpen,
   onClickOnIconEdit,
+  alwaysOpen,
 }) => {
   const fieldRef = useRef();
   const [active, setActive] = useState(initOpen);
@@ -54,9 +55,11 @@ export const ProfileField = ({
   };
 
   const handleToggleActive = () => {
-    setActive(!active);
-    setOpen(!open);
-    active && onSave && onSave();
+    if (!alwaysOpen) {
+      setActive(!active);
+      setOpen(!open);
+      active && onSave && onSave();
+    }
   };
 
   useEffect(() => {
@@ -81,8 +84,10 @@ export const ProfileField = ({
   }, [value]);
 
   const handleClose = () => {
-    setActive(false);
-    setOpen(false);
+    if (!alwaysOpen) {
+      setActive(false);
+      setOpen(false);
+    }
   };
 
   const handlePressKey = (e) => {
@@ -141,7 +146,7 @@ export const ProfileField = ({
           className="check-icon clear"
         />
       )}
-      {!readOnly && (
+      {!readOnly && !alwaysOpen && (
         <CheckboxIcon onClick={handleToggleActive} className="check-icon" />
       )}
       <div className="flex items-center justify-between">
@@ -161,7 +166,7 @@ export const ProfileField = ({
             ) : textarea ? (
               <textarea
                 className="value hide-scroll"
-                defaultValue={value}
+                value={value}
                 ref={textareaRef}
                 onChange={textAreaAdjust}
                 placeholder={placeholder}
@@ -271,7 +276,7 @@ export const ProfileField = ({
           <div className="label label-hover">{label}</div>
         </>
       )}
-      {open && active && (
+      {open && active && !alwaysOpen && (
         <div
           className="modal-overlay"
           onClick={() => {

@@ -35,6 +35,8 @@ export const DesktopContent = ({
   showContactId,
   onShowContact,
   onChangeTags,
+  editable,
+  onEdit,
 }) => {
   return (
     <StyledDesktopContent className="flex items-center justify-between clickable">
@@ -52,7 +54,12 @@ export const DesktopContent = ({
         type={type}
         onChangeType={onChangeType}
       />
-      <Info className="desktop-item" data={data} />
+      <Info
+        className="desktop-item"
+        data={data}
+        editable={editable}
+        onEdit={onEdit}
+      />
       <Tags
         data={data}
         onChangeComment={onChangeComment}
@@ -89,7 +96,7 @@ export const DesktopContent = ({
         onDeleteFinally={onDeleteFinally}
       />
       <div className="mobile-footer w-full">
-        <Info data={data} />
+        <Info data={data} editable={editable} onEdit={onEdit} />
         <Contacts data={data} />
       </div>
     </StyledDesktopContent>

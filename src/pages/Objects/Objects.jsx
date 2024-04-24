@@ -45,13 +45,13 @@ const Objects = () => {
   };
 
   const DEFAULT_FILTERS = {
-    price_for: "4",
-    price_currency: "1",
-    sorting: "0",
-    company_object: {
-      show_only: "only_my",
-      actual: "1",
-    },
+    // price_for: "4",
+    // price_currency: "1",
+    // sorting: "0",
+    // company_object: {
+    //   show_only: "only_my",
+    //   actual: "1",
+    // },
   };
   const { objectsCount } = useAppSelect((state) => state.objects);
   const [filters, setFilters] = useState(INIT_FILTERS);

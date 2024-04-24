@@ -116,6 +116,25 @@ export const selections = createApi({
         }),
       }),
     }),
+    addNewDescriptionRequst: build.query({
+      query: ({ id_request_group, description, title, id_obj }) => {
+        const data = new FormData();
+
+        data.append("action", "addNewDescriptionRequst");
+        data.append("mod", "requests");
+        data.append("id_request_group", id_request_group);
+        data.append("description", description);
+        data.append("title", title);
+        data.append("id_obj", id_obj);
+
+        return {
+          url: "",
+          method: "POST",
+          headers: headers(),
+          body: data,
+        };
+      },
+    }),
   }),
 });
 
@@ -128,4 +147,5 @@ export const {
   useLazyShowChatClientQuery,
   useLazyAddMessageQuery,
   useLazyAddMessageClientQuery,
+  useLazyAddNewDescriptionRequstQuery,
 } = selections;

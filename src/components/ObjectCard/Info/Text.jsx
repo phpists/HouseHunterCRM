@@ -1,10 +1,19 @@
 import styled from "styled-components";
+import editIcon from "../../../assets/images/edit.svg";
 
-export const Text = ({ data }) => {
+export const Text = ({ data, editable, onEdit }) => {
   return (
     <StyledText className="hide-scroll clickable">
       <div className="title clickable">
         {data?.title?.length > 0 ? data?.title : "-"}
+        {editable ? (
+          <div
+            className="edit-icon flex items-center justify-center"
+            onClick={onEdit}
+          >
+            <img src={editIcon} alt="" />
+          </div>
+        ) : null}
       </div>
       <div className="descr clickable">
         {data?.description?.length > 0 ? data?.description : "-"}
@@ -18,6 +27,31 @@ const StyledText = styled.div`
   max-height: 130px;
   overflow: auto;
   margin-bottom: 15px;
+  position: relative;
+  .edit-icon {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    opacity: 0.4;
+    border-radius: 8px;
+    width: 28px;
+    transition: all 0.3s;
+    height: 28px;
+    cursor: pointer;
+    margin-left: 10px;
+    z-index: 10;
+    flex-shrink: 0;
+    opacity: 0;
+    &:hover {
+      background: rgba(255, 255, 255, 0.2) !important;
+      opacity: 1 !important;
+    }
+  }
+  &:hover {
+    .edit-icon {
+      opacity: 0.4;
+    }
+  }
   .title {
     color: #fff;
     /* H3 */

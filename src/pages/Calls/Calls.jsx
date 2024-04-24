@@ -11,6 +11,7 @@ import {
   checkIsArray,
   checkIsJSON,
   getFirstDay,
+  handleFormatDate,
   handleResponse,
   removePhoneMask,
 } from "../../utilits";
@@ -204,7 +205,13 @@ const Calls = () => {
         });
         setData(
           data?.map((call) =>
-            call.id === id_call ? { ...call, coment: comment } : call
+            call.id === id_call
+              ? {
+                  ...call,
+                  coment: comment,
+                  comment_date: handleFormatDate(new Date(), true),
+                }
+              : call
           )
         );
       })

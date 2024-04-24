@@ -3,13 +3,13 @@ import { Header } from "./Header/Header";
 import { Text } from "./Text";
 import { Footer } from "./Footer/Footer";
 
-export const Info = ({ className, data }) => {
+export const Info = ({ className, data, editable, onEdit }) => {
   return (
     <StyledInfo
       className={`flex flex-col justify-between hide clickable hide-scroll ${className}`}
     >
       <Header data={data} />
-      <Text data={data} />
+      <Text data={data} editable={editable} onEdit={onEdit} />
       <Footer
         createDate={data?.dt_add}
         dateEdit={data?.dt_edit}

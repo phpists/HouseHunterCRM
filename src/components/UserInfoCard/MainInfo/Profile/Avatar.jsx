@@ -37,7 +37,7 @@ export const Avatar = ({
           type="file"
           name=""
           id=""
-          accept="image/png, image/jpg, image/jpeg, image/jpeg, image/png,image/webp,image/heic"
+          accept="image/png, image/jpg, image/jpeg, image/jpeg, image/png,image/webp,image/heic, image/heif"
           value=""
           onChange={(e) => handleAddPhoto(e.target.files[0])}
           ref={inputRef}

@@ -310,6 +310,13 @@ const Selections = () => {
     setObjects(updatedData);
   };
 
+  const handleChangeObject = (id, newData) => {
+    const updatedData = objects?.map((obj) =>
+      obj?.id === id ? { ...obj, ...newData } : obj
+    );
+    setObjects(updatedData);
+  };
+
   return (
     <StyledSelections>
       <Header
@@ -352,6 +359,7 @@ const Selections = () => {
         }
         onChangeContacts={handleChangeContacts}
         onChangeTags={handleChangeTags}
+        onChangeObject={handleChangeObject}
       />
     </StyledSelections>
   );

@@ -11,6 +11,7 @@ import { Client } from "./Client/Client";
 import { useAppSelect } from "../../hooks/redux";
 import { EditObjectComment } from "../../components/EditObjectComment";
 import { MarkObjectPhones } from "../../components/MarkObjectPhones/MarkObjectPhones";
+import { EditObject } from "./EditObject";
 
 export const List = ({
   data,
@@ -29,6 +30,7 @@ export const List = ({
   onChangeComment,
   onChangeContacts,
   onChangeTags,
+  onChangeObject,
 }) => {
   const { accessData } = useAppSelect((state) => state.auth);
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
@@ -39,12 +41,22 @@ export const List = ({
   const [type, setType] = useState("4");
   const [markPhoneModal, setMarkPhoneModal] = useState(false);
   const [showContactId, setShowContactId] = useState(null);
+  const [editObject, setEditObject] = useState(false);
 
   const onChangeCurrency = (val) => setCurrency(val);
   const onChangeType = (val) => setType(val);
 
+  const handleCloseEditObjectModal = () => setEditObject(false);
+
   return (
     <>
+      {editObject && (
+        <EditObject
+          data={editObject}
+          onClose={handleCloseEditObjectModal}
+          onSuccess={onChangeObject}
+        />
+      )}
       {markPhoneModal && (
         <MarkObjectPhones
           onClose={() => setMarkPhoneModal(null)}
@@ -87,7 +99,14 @@ export const List = ({
               key={d?.id}
               selected={!!selected.find((j) => j === d?.id)}
               onSelect={() => onSelect(d?.id)}
-              data={d}
+              data={{
+                ...d,
+                title: d?.title_agent?.length > 0 ? d?.title_agent : d?.title,
+                description:
+                  d?.description_agent?.length > 0
+                    ? d?.description_agent
+                    : d?.description,
+              }}
               onToggleFavoriteStatus={
                 onFavorite ? () => onFavorite(d?.id) : null
               }
@@ -128,6 +147,8 @@ export const List = ({
               onChangeTags={(fieldName, val) =>
                 onChangeTags(d?.id, fieldName, val)
               }
+              editable={d?.type_object === "street_base"}
+              onEdit={() => setEditObject(d)}
             />
           ))
         )}

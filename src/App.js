@@ -88,6 +88,13 @@ export const App = () => {
         registration.unregister();
       });
     });
+
+    localStorage.removeItem("modalClosed");
+    localStorage.removeItem("clientsFilters");
+    localStorage.removeItem("objectsLastFilters");
+    localStorage.removeItem("requestFilter");
+    localStorage.removeItem("callsFilter");
+
     try {
       caches.keys().then((keyList) => {
         return Promise.all(
