@@ -131,7 +131,7 @@ export const Header = ({ favorite, isDeleted, onToggleIsDeleted }) => {
           ) : (
             <>
               <ActionButton
-                title="Передати кліента"
+                title="Передати клієнта"
                 smallTitle="Передати"
                 onClick={() => setSendClient(id)}
                 className="mr-2.5 icon-btn send-client-btn"

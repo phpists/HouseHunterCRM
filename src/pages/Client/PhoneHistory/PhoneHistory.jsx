@@ -14,7 +14,10 @@ export const PhoneHistory = ({ onClose, data }) => {
           {data?.map(({ code, phone, time }, i) => (
             <Card
               key={i}
-              title={`${phonesCodes?.find((c) => c.id === code)?.code}${phone}`}
+              title={`${
+                phonesCodes?.find((c) => c.id?.toString() === code?.toString())
+                  ?.code
+              }${phone}`}
               date={handleFormatDate(Number(time) * 1000)}
             />
           ))}
