@@ -91,6 +91,9 @@ const StyledModal = styled(motion.div)`
   backdrop-filter: blur(12.5px);
   width: 438px;
   z-index: 10;
+  @supports (-webkit-touch-callout: none) {
+    background: #2c2c2c;
+  }
   .modal-content {
     padding: 0 45px 20px 20px;
     height: calc(100svh - 82px);

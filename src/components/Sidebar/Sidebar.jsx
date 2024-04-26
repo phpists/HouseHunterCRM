@@ -33,7 +33,9 @@ const StyledSidebar = styled.div`
   height: 100svh;
   overflow: auto;
   transition: all 0.3s;
-
+  @supports (-webkit-touch-callout: none) {
+    background: #2c2c2c;
+  }
   @media (max-width: 1200px) {
     position: fixed;
     top: 0;

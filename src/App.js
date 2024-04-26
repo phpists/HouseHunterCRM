@@ -132,6 +132,9 @@ export const App = () => {
 
   useEffect(() => {
     handleClearCacheData();
+    document.addEventListener("gesturestart", function (e) {
+      e.preventDefault();
+    });
   }, []);
 
   return (

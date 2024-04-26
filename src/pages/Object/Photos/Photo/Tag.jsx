@@ -22,5 +22,8 @@ const StyledTag = styled.div`
   cursor: pointer;
   &:hover {
     background: rgba(44, 44, 44, 0.8);
+    @supports (-webkit-touch-callout: none) {
+      background: #2c2c2c;
+    }
   }
 `;

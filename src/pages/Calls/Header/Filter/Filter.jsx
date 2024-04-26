@@ -73,6 +73,9 @@ const StyledFilter = styled(motion.div)`
   background: rgba(44, 44, 44, 0.8);
   backdrop-filter: blur(12.5px);
   z-index: 25;
+  @supports (-webkit-touch-callout: none) {
+    background: #2c2c2c;
+  }
   .content {
     padding: 0 20px 20px;
     height: calc(100svh - 157px);

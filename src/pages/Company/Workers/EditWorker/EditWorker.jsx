@@ -66,6 +66,9 @@ const StyledEditWorker = styled(motion.div)`
   top: 106px;
   width: 361px;
   overflow: auto;
+  @supports (-webkit-touch-callout: none) {
+    background: #2c2c2c;
+  }
   .content {
     padding: 15px 11px;
     overflow: auto;

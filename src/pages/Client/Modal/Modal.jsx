@@ -37,6 +37,9 @@ const StyledModal = styled(motion.div)`
   background: rgba(44, 44, 44, 0.8);
   backdrop-filter: blur(12.5px);
   z-index: 50;
+  @supports (-webkit-touch-callout: none) {
+    background: #2c2c2c;
+  }
   .modal-content {
     padding: 20px;
     height: calc(100svh - 224px);

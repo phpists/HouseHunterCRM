@@ -145,6 +145,9 @@ const StyledUserInfoCard = styled(motion.div)`
   backdrop-filter: blur(12.5px);
   width: 361px;
   z-index: 1088;
+  @supports (-webkit-touch-callout: none) {
+    background: #2c2c2c;
+  }
   .modal-content {
     padding: 0 10px 15px 11px;
     height: calc(100svh - ${({ logout }) => (logout ? 200 : 160)}px);

@@ -75,5 +75,8 @@ const StyledEditProfile = styled(motion.div)`
       overflow: auto;
       overflow-x: hidden;
     }
+    @supports (-webkit-touch-callout: none) {
+      background: #2c2c2c;
+    }
   }
 `;
