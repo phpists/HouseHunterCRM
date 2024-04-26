@@ -43,4 +43,8 @@ const StyledShowButton = styled.button`
     background: rgba(255, 67, 67, 0.3) !important;
     cursor: not-allowed;
   `}
+
+  @media (max-width: 500px) {
+    width: max-content;
+  }
 `;

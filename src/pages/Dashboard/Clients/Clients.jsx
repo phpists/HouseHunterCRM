@@ -25,4 +25,7 @@ const StyledClients = styled.div`
   @media (max-width: 1100px) {
     margin-bottom: 10px;
   }
+  @media (max-width: 500px) {
+    padding: 5px;
+  }
 `;

@@ -63,4 +63,7 @@ const StyledHeader = styled.div`
         }
     `}
   }
+  @media (max-width: 500px) {
+    padding: 10px;
+  }
 `;

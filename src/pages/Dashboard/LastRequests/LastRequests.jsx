@@ -213,4 +213,7 @@ const StyledLastRequests = styled.div`
       grid-template-columns: 1fr;
     }
   }
+  @media (max-width: 500px) {
+    padding: 5px;
+  }
 `;

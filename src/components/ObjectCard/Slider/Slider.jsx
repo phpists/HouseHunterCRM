@@ -180,16 +180,24 @@ const StyledSlider = styled.div`
       visibility: visible;
     }
   }
-  @media (max-width: 1399.9px) {
-    flex-direction: column;
-    height: auto;
-  }
+
   @media (max-width: 800px) {
     flex-direction: row;
     margin: 0;
     .slider {
-      width: calc(100svw - -4px - 8px - 44px - 24px - 39px);
+      width: calc(100svw - 4px - 8px - 50px - 24px - 39px);
     }
+  }
+
+  @media (max-width: 500px) {
+    .slider {
+      width: calc(100svw - 4px - 8px - 10px - 24px - 39px);
+    }
+  }
+
+  @media (max-width: 1399.9px) {
+    flex-direction: column;
+    height: auto;
   }
 
   @media (min-width: 1400px) {

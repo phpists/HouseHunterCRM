@@ -20,4 +20,8 @@ const StyledBurgerButton = styled.button`
   @media (min-width: 1200px) {
     display: none;
   }
+  @media (max-width: 500px) {
+    width: 40px;
+    height: 40px;
+  }
 `;

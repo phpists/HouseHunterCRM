@@ -31,4 +31,8 @@ const StyledOpenButton = styled.button`
     font-size: 9px;
     padding: 9px 10px;
   }
+  @media (max-width: 500px) {
+    padding: 5px;
+    font-size: 7px;
+  }
 `;

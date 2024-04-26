@@ -8,7 +8,7 @@ import { handleFormatDate } from "../../../../../utilits";
 
 export const Client = ({ data, id }) => (
   <StyledClient className="flex items-center justify-between">
-    <div className="flex items-center">
+    <div className="flex items-center clientName">
       <Avatar />
       <div>
         <div className="flex items-center mb-1">
@@ -23,7 +23,7 @@ export const Client = ({ data, id }) => (
         />
       </div>
     </div>
-    <div>
+    <div className="category">
       <Rent category={data?.rubric_name} />
       <Subtitle subtitle="Категорія" />
     </div>
@@ -33,4 +33,13 @@ export const Client = ({ data, id }) => (
 const StyledClient = styled.div`
   height: 40px;
   margin-bottom: 10px;
+  @media (max-width: 500px) {
+    flex-direction: column;
+    gap: 10px;
+    height: max-content;
+    .clientName,
+    .category {
+      width: 100%;
+    }
+  }
 `;

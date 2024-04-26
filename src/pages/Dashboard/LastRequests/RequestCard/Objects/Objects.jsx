@@ -105,5 +105,6 @@ const StyledObjects = styled.div`
     .bts {
       margin-left: 8px;
     }
+    padding-right: 30px;
   }
 `;

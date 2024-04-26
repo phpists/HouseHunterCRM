@@ -112,7 +112,7 @@ const StyledBilling = styled.div`
   ${({ open }) =>
     open &&
     `
-    padding: 11px 165px 11px 14px !important;
+    // padding: 11px 165px 11px 14px !important;
     border-radius: 12px;
     background: #474747;
     border: none;
@@ -126,7 +126,7 @@ const StyledBilling = styled.div`
   ${({ attach }) =>
     attach === "true" &&
     `
-    padding: 4px 20px 4px 4px !important;
+    // padding: 4px 20px 4px 4px !important;
     .main-text {
         margin: 0 0 0 0;
     }
@@ -139,7 +139,8 @@ const StyledBilling = styled.div`
   }
 
   @media (max-width: 600px) {
-    padding: 0 20px 0 12px;
+    padding: 0 10px;
+    /* padding: 0 20px 0 12px; */
     &:hover {
       /* padding: 14px 130px 11px 13px; */
       background: none;
@@ -156,7 +157,7 @@ const StyledBilling = styled.div`
     ${({ attach }) =>
       attach &&
       `
-    padding: 4px 20px 4px 4px !important;
+    // padding: 4px 20px 4px 4px !important;
   `}
   }
 `;

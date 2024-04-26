@@ -667,6 +667,9 @@ const StyledObjects = styled.div`
   background: #323232;
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   position: relative;
+  @media (max-width: 500px) {
+    padding: 10px;
+  }
 `;
 
 export default Objects;

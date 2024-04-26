@@ -24,4 +24,8 @@ const StyledAvatar = styled.div`
   flex-shrink: 0;
   border-radius: 10px;
   background: url(${({ avataricon }) => avataricon}) center/cover no-repeat;
+  @media (max-width: 500px) {
+    width: 40px;
+    height: 40px;
+  }
 `;

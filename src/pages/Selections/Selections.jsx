@@ -370,6 +370,9 @@ const StyledSelections = styled.div`
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   padding: 15px 20px;
   position: relative;
+  @media (max-width: 500px) {
+    padding: 10px;
+  }
 `;
 
 export default Selections;

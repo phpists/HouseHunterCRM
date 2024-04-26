@@ -50,4 +50,7 @@ const StyledRequests = styled.div`
       background: rgba(68, 172, 238, 0.1);
     }
   }
+  @media (max-width: 500px) {
+    padding: 5px;
+  }
 `;

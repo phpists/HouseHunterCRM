@@ -153,4 +153,7 @@ const StyledList = styled.div`
   @media (max-width: 1400px) {
     height: calc(100svh - 302px + 68px);
   }
+  @media (max-width: 500px) {
+    height: calc(100svh - 302px + 98px);
+  }
 `;

@@ -27,4 +27,7 @@ const StyledTitle = styled.div`
   @media (max-width: 1200px) {
     font-size: 15px !important;
   }
+  @media (max-width: 500px) {
+    font-size: 12px !important;
+  }
 `;

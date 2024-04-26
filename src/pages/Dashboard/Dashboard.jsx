@@ -134,6 +134,11 @@ const StyledDashboard = styled.div`
       display: flex;
     }
   }
+  @media (max-width: 500px) {
+    .dashboard-content {
+      height: calc(100svh - 29px - 40px);
+    }
+  }
 `;
 
 export default Dashboard;

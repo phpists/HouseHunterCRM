@@ -525,6 +525,10 @@ const StyledRequests = styled.div`
     margin-left: -24px;
     padding: 20px 24px;
   }
+  @media (max-width: 500px) {
+    padding: 10px;
+    margin-left: -10px;
+  }
 `;
 
 export default Requests;

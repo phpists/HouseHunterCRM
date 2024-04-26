@@ -26,6 +26,7 @@ const StyledSlide = styled.div`
   @media (max-width: 800px) {
     width: 100%;
     height: 250px;
+    width: calc(100svw - 4px - 8px - 10px - 24px - 39px);
   }
   @media (max-width: 1399.9px) {
     height: 250px;

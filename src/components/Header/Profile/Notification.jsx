@@ -49,4 +49,7 @@ const StyledNotification = styled.div`
   @media (max-width: 1200px) {
     margin-right: 14px;
   }
+  @media (max-width: 500px) {
+    margin-right: 0px;
+  }
 `;
