@@ -191,10 +191,34 @@ const StyledSlider = styled.div`
 
   @media (max-width: 500px) {
     .slider {
-      width: calc(100svw - 4px - 8px - 10px - 24px - 39px);
+      width: 350px;
     }
   }
-
+  @media (max-width: 450px) {
+    .slider {
+      width: 320px;
+    }
+  }
+  @media (max-width: 400px) {
+    .slider {
+      width: 300px;
+    }
+  }
+  @media (max-width: 380px) {
+    .slider {
+      width: 280px;
+    }
+  }
+  @media (max-width: 360px) {
+    .slider {
+      width: 270px;
+    }
+  }
+  @media (max-width: 340px) {
+    .slider {
+      width: 250px;
+    }
+  }
   @media (max-width: 1399.9px) {
     flex-direction: column;
     height: auto;

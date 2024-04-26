@@ -37,6 +37,6 @@ const StyledSubtitle = styled.div`
     font-weight: 400;
   }
   @media (max-width: 500px) {
-    font-size: 9px !important;
+    font-size: 7px !important;
   }
 `;
