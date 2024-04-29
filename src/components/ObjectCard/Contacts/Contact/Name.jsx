@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
-export const Name = ({ type, name = "-", typeText }) => (
+export const Name = ({
+  type,
+  name = "-",
+  typeText,
+  subtitle,
+  onClickOnSubtitle,
+}) => (
   <StyledName type={type} isError={typeText === "ШАХРАЙ"}>
     <div className="name" title={name}>
       {name}
@@ -11,6 +17,11 @@ export const Name = ({ type, name = "-", typeText }) => (
     >
       {typeText ? typeText : type === "owner" ? "Власник" : "Наш Рієлтор"}
     </div>
+    {subtitle ? (
+      <div className="role" onClick={onClickOnSubtitle}>
+        {subtitle}
+      </div>
+    ) : null}
   </StyledName>
 );
 

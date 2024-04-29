@@ -10,9 +10,11 @@ export const Phone = ({
   readOnly,
   hideIcon,
   small,
+  onClick,
 }) => (
   <StyledPhone
     className={`${className} notClickable ${isLessThenOne && "less-then-one"}`}
+    onClick={onClick}
   >
     <div className="flex items-center notClickable">
       <div

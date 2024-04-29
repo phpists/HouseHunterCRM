@@ -24,6 +24,8 @@ import {
   useGetAllPerimissionsLevelsQuery,
   useGetCompanyStructureLevelQuery,
 } from "../../store/structure/structure.api";
+import { Ranger } from "../Ranger/Ranger";
+import { handleChangeRange } from "../../utilits";
 
 export const Base = ({
   data,
@@ -48,6 +50,8 @@ export const Base = ({
   idSource,
   onFocus,
   onBlur,
+  objMls,
+  countObjectOwner,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -361,6 +365,21 @@ export const Base = ({
             }
             error={!!errors.find((e) => e === "company_object_more")}
           />
+          {objMls ? (
+            <CheckOption
+              label="Обєкти MLS"
+              className="check-opt"
+              value={data?.company_object?.obj_mls}
+              onChange={() =>
+                onChange("company_object", {
+                  ...data?.company_object,
+                  obj_mls:
+                    data?.company_object?.obj_mls === "1" ? undefined : "1",
+                })
+              }
+              error={!!errors.find((e) => e === "company_object_more")}
+            />
+          ) : null}
           {showDeleted ? (
             <CheckOption
               label="Об'єкти до видалення"
@@ -417,6 +436,33 @@ export const Base = ({
               }
               label="Пошук по Id на ресурсі"
               className="field-wrapper"
+              onFocus={onFocus}
+              onBlur={onBlur}
+            />
+          ) : null}
+          {countObjectOwner ? (
+            <Ranger
+              label="Кількість об'єктів"
+              max={1000}
+              values={[
+                data?.street_base_object?.count_object_owner_from ?? 0,
+                data?.street_base_object?.count_object_owner_to ?? 0,
+              ]}
+              onChange={(values) =>
+                handleChangeRange(
+                  values,
+                  [
+                    data?.street_base_object?.count_object_owner_from ?? 0,
+                    data?.street_base_object?.count_object_owner_to ?? 0,
+                  ],
+                  ["count_object_owner_from", "count_object_owner_to"],
+                  (field, value) =>
+                    onChange("street_base_object", {
+                      ...data?.street_base_object,
+                      [field]: value,
+                    })
+                )
+              }
               onFocus={onFocus}
               onBlur={onBlur}
             />

@@ -62,6 +62,7 @@ export const Header = ({
               selectedCount={selectedCount}
               allCount={allCount}
               onSelectAll={onSelectAll}
+              allowSelectAll
               dropdown={
                 <SelectItemsDropdown
                   onSetCallsStatus={onSetCallsStatus}
@@ -78,6 +79,7 @@ export const Header = ({
         selectedCount={selectedCount}
         allCount={allCount}
         onSelectAll={onSelectAll}
+        allowSelectAll
         dropdown={
           <SelectItemsDropdown
             onSetCallsStatus={onSetCallsStatus}

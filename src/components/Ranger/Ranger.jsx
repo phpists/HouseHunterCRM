@@ -49,7 +49,7 @@ export const Ranger = ({
       onFocus && onFocus();
     },
     onChange: () => {
-      onBlur && onBlur();
+      setTimeout(() => onBlur && onBlur(), 400);
     },
   });
 

@@ -169,6 +169,8 @@ export const Filter = ({
       notRefresh.current = false;
     }
   };
+
+  console.log(isInputFocused);
   return (
     <>
       <StyledFilter

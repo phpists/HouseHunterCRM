@@ -279,6 +279,7 @@ const Calls = () => {
   }, [isDefaultFilterSet]);
 
   const handleSelectAll = (isReset, count) => {
+
     setSelected(isReset ? [] : data?.map((c) => c.id));
   };
 

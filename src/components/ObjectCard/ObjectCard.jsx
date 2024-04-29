@@ -36,6 +36,7 @@ export const ObjectCard = memo(
     onChangeTags,
     editable,
     onEdit,
+    onOpenPhonesModal,
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
     const { ref, inView } = useInView({ triggerOnce: true });
@@ -96,6 +97,7 @@ export const ObjectCard = memo(
             onChangeTags={onChangeTags}
             editable={editable}
             onEdit={onEdit}
+            onOpenPhonesModal={onOpenPhonesModal}
           />
         ) : (
           <MobileContent
@@ -127,6 +129,7 @@ export const ObjectCard = memo(
             onChangeTags={onChangeTags}
             editable={editable}
             onEdit={onEdit}
+            onOpenPhonesModal={onOpenPhonesModal}
           />
         )}
       </StyledObjectCard>

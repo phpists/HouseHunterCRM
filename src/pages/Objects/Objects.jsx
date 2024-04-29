@@ -472,6 +472,8 @@ const Objects = () => {
     setIsDeleted(false);
     setFilterFields([]);
     const filterApply = location?.search?.split("=")[0];
+    const filterApplyValue = location?.search?.split("=")[1];
+    console.log(filterApplyValue);
     if (id) {
       setFilters({
         id_hash: id,
@@ -516,6 +518,15 @@ const Objects = () => {
         company_object: {
           show_only: "only_my",
           show_street_base_company: "1",
+        },
+      });
+      filterActive.current = true;
+      setUpdateData(true);
+    } else if (filterApply === "?findClientsObjects") {
+      setFilters({
+        search_phone: filterApplyValue,
+        street_base_object: {
+          sorting_id: "16",
         },
       });
       filterActive.current = true;

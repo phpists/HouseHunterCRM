@@ -341,6 +341,8 @@ export const Main = ({
         workersSearch
         potentialOwner
         idSource
+        objMls
+        countObjectOwner
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
       />

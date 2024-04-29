@@ -37,6 +37,7 @@ export const DesktopContent = ({
   onChangeTags,
   editable,
   onEdit,
+  onOpenPhonesModal,
 }) => {
   return (
     <StyledDesktopContent className="flex items-center justify-between clickable">
@@ -71,6 +72,7 @@ export const DesktopContent = ({
         data={data}
         showContactId={showContactId}
         onShowContact={onShowContact}
+        onOpenPhonesModal={onOpenPhonesModal}
       />
       <ShowMore
         clientId={data?.id_client}
@@ -97,7 +99,12 @@ export const DesktopContent = ({
       />
       <div className="mobile-footer w-full">
         <Info data={data} editable={editable} onEdit={onEdit} />
-        <Contacts data={data} />
+        <Contacts
+          data={data}
+          showContactId={showContactId}
+          onShowContact={onShowContact}
+          onOpenPhonesModal={onOpenPhonesModal}
+        />
       </div>
     </StyledDesktopContent>
   );

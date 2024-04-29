@@ -229,7 +229,7 @@ const Selections = () => {
   const handleHideObject = (id_object) => {
     hideObject({ id_request_group: id, id_objects: [id_object] }).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Об'єкт успішно приховано", {
+        cogoToast.success("Статус об'єкта успішно обновлено", {
           hideAfter: 3,
           position: "top-right",
         });

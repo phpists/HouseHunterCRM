@@ -13,6 +13,8 @@ export const Contact = ({
   error,
   onShow,
   className,
+  subtitle,
+  onClickOnSubtitle,
 }) => {
   const [commentOpen, setCommentOpen] = useState(false);
 
@@ -23,7 +25,13 @@ export const Contact = ({
           active={commentOpen}
           onClick={() => setCommentOpen(!commentOpen)}
         /> */}
-        <Name type={type} name={name} typeText={typeText} />
+        <Name
+          type={type}
+          name={name}
+          typeText={typeText}
+          subtitle={subtitle}
+          onClickOnSubtitle={onClickOnSubtitle}
+        />
       </div>
       {commentOpen && (
         <div className="comment-wrapper">

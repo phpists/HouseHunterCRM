@@ -15,6 +15,7 @@ import { useAppSelect } from "../../hooks/redux";
 import { EditObjectComment } from "../../components/EditObjectComment";
 import { Confirm } from "../../components/Confirm/Confirm";
 import { MarkObjectPhones } from "../../components/MarkObjectPhones/MarkObjectPhones";
+import { FindClientsObjects } from "./FindClientsObjects";
 
 export const List = ({
   selected,
@@ -47,6 +48,7 @@ export const List = ({
   const [type, setType] = useState("4");
   const [markPhoneModal, setMarkPhoneModal] = useState(false);
   const [showContactId, setShowContactId] = useState(null);
+  const [clientModal, setClientModal] = useState(null);
 
   const onChangeCurrency = (val) => setCurrency(val);
   const onChangeType = (val) => setType(val);
@@ -124,6 +126,12 @@ export const List = ({
           passwordCheck={isDeleted || deleteModal === "finally"}
         />
       )}
+      {clientModal ? (
+        <FindClientsObjects
+          onClose={() => setClientModal(null)}
+          id={clientModal}
+        />
+      ) : null}
       <StyledList ref={innerRef}>
         {data?.length === 0 || actionLoading || deleting ? (
           <Empty loading={loading || actionLoading || deleting} />
@@ -190,6 +198,7 @@ export const List = ({
                 onChangeTags={(fieldName, val) =>
                   onChangeTags(d?.id, fieldName, val)
                 }
+                onOpenPhonesModal={() => setClientModal(d?.id)}
               />
             ))}
           </>

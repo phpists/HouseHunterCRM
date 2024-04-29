@@ -26,6 +26,7 @@ export const SelectItems = ({
   onDeleteFinally,
   finalDeleteConfirmTitle,
   onSendClients,
+  allowSelectAll,
 }) => {
   const [type, setType] = useState(null);
   const [open, setOpen] = useState(false);
@@ -76,7 +77,9 @@ export const SelectItems = ({
           onToggleFavorite ||
           onSend ||
           onAddToSelection ||
-          onRestore
+          onRestore ||
+          onSendClients ||
+          allowSelectAll
         ) {
           onSelectAll && onSelectAll(isTheSame);
         }

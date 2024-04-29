@@ -6,7 +6,13 @@ import { useEffect, useState } from "react";
 import { ShowButton } from "./Contact/Phone/ShowButton";
 import { handleResponse } from "../../../utilits";
 
-export const Contacts = ({ className, data, showContactId, onShowContact }) => {
+export const Contacts = ({
+  className,
+  data,
+  showContactId,
+  onShowContact,
+  onOpenPhonesModal,
+}) => {
   const [getClient] = useLazyGetPhoneObjectQuery();
   const [error, setError] = useState(false);
   const [clientData, setClientData] = useState(undefined);
@@ -65,6 +71,20 @@ export const Contacts = ({ className, data, showContactId, onShowContact }) => {
           typeText={
             data?.clients_inf?.contact?.party_agency ?? data?.clients_inf?.type
           }
+          subtitle={
+            data?.type_object === "street_base"
+              ? `${data?.Count_object ?? 0} об'єкт${
+                  data?.Count_object === 0
+                    ? "ів"
+                    : data?.Count_object === 1
+                    ? ""
+                    : data?.Count_object < 5
+                    ? "а"
+                    : "ів"
+                } у цього клієнта`
+              : null
+          }
+          onClickOnSubtitle={onOpenPhonesModal}
           error={error}
           onShow={handleShowClient}
         />
