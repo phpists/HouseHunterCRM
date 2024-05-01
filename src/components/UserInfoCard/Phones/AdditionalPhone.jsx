@@ -53,7 +53,7 @@ const StyledAdditionalPhone = styled.div`
   .divider {
     width: 1px;
     height: 22px;
-    background: #fff;
+    background: var(--active-bg);
     margin: 0 6px 0 5px;
     transition: all 0.3s;
     opacity: 0;
@@ -78,7 +78,7 @@ const StyledAdditionalPhone = styled.div`
       transition: all 0.3s;
     }
     &:hover {
-      background: rgba(255, 255, 255, 0.2) !important;
+      background: var(--bg-20) !important;
       opacity: 1 !important;
       g {
         opacity: 1;
@@ -89,7 +89,7 @@ const StyledAdditionalPhone = styled.div`
     .field {
       background: none;
     }
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
     .remove-btn {
       opacity: 0.4;
       transform: translateX(0px);

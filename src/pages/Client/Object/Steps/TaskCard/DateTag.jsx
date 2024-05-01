@@ -13,12 +13,12 @@ const StyledDateTag = styled.div`
   background: rgba(0, 0, 0, 0.15);
   padding: 2px 6px 2px 2px;
   overflow: hidden;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--second-color);
   text-overflow: ellipsis;
   font-family: Overpass;
   font-size: 12px;
   font-style: normal;
-  font-weight: 100;
+  font-weight: var(--font-weight-100);
   line-height: 118%; /* 14.16px */
   letter-spacing: 0.24px;
   img {

@@ -20,7 +20,7 @@ const StyledCommentButton = styled.button`
   border-radius: 9px;
   margin-right: 8px;
   background: ${({ active }) =>
-    active ? "rgba(93, 99, 255, 0.70)" : "rgba(255, 255, 255, 0.18)"};
+    active ? "rgba(93, 99, 255, 0.70)" : "var(--btn-transparent-bg)"};
   transition: all 0.3s;
   &:hover {
     background: ${({ active }) =>

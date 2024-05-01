@@ -38,14 +38,18 @@ export const Header = ({
 
 const StyledHeader = styled.div`
   padding: 10px 10px 11px 18px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--bg-10);
   .header-btn {
     margin-right: 15px;
   }
 
+  @media (max-width: 1400px) {
+    margin: 10px 0;
+  }
+
   @media (max-width: 700px) {
     padding: 20px 0;
-    margin-bottom: 10px;
+    margin: 10px 0;
 
     .header-btns {
       display: none;

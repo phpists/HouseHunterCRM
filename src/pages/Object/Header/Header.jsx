@@ -154,7 +154,7 @@ const StyledHeader = styled.div`
   }
 
   .icon-btn {
-    border: 1.4px solid rgba(255, 255, 255, 0.2) !important;
+    border: 1.4px solid var(--bg-20) !important;
     &:hover {
       border: 1.4px solid rgba(255, 255, 255, 0) !important;
     }

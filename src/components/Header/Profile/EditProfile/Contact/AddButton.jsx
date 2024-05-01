@@ -19,6 +19,6 @@ const StyledAddButton = styled.div`
   transition: all 0.3s;
   &:hover {
     border: 1px solid #fff;
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
   }
 `;

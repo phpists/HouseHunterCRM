@@ -24,7 +24,7 @@ const StyledDropdown = styled.div`
   right: 0;
   bottom: 0;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--bg-20);
   backdrop-filter: blur(18.5px);
   width: 220px;
   z-index: 2;

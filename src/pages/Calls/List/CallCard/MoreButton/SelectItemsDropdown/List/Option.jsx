@@ -10,17 +10,17 @@ export const Option = () => (
 
 const StyledOption = styled.div`
   padding: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--bg-10);
   .avatar {
     width: 24px;
     height: 24px;
     border-radius: 24px;
-    border: 1px solid #b1ff91;
+    border: 1px solid var(--green-light);
     margin-right: 8px;
     background: url(${({ img }) => img}) center/cover no-repeat;
   }
   .name {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;

@@ -94,7 +94,7 @@ export const Info = ({ tarifOpen, onCloseTarif }) => {
 };
 
 const StyledInfo = styled.div`
-  background: #323232;
+  background: var(--dark-card-bg);
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   margin-bottom: 30px;
   .info-content {

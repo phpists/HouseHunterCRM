@@ -48,7 +48,7 @@ const StyledDropdown = styled.div`
   .empty {
     padding: 10px;
     border-radius: 6px;
-    background: #474747;
+    background: var(--second-bg);
     width: 100%;
     text-align: center;
     font-family: Overpass;
@@ -56,7 +56,7 @@ const StyledDropdown = styled.div`
     font-weight: 200;
     line-height: 17px;
     letter-spacing: 0em;
-    color: #ffff;
+    var(--main-color)f;
     margin-bottom: 15px;
   }
 `;

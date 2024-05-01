@@ -22,7 +22,7 @@ const StyledDropdown = styled.div`
   right: -20px;
   overflow: hidden;
   border-radius: 9px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--bg-10);
   background: #4b4b4b;
   border-radius: 9px;
   width: 254px;

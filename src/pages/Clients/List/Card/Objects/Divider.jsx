@@ -7,7 +7,7 @@ const StyledDivider = styled.div`
   width: 1px;
   height: 42px;
   opacity: 0.1;
-  background: #fff;
+  background: var(--active-bg);
   @media (max-width: 1600px) {
     margin: 0 4px 0;
   }

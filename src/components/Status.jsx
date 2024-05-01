@@ -6,7 +6,7 @@ import {
 import { useEffect, useState } from "react";
 
 export const Status = ({ status, className }) => {
-  const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
+  const COLORS = ["#7ecefd", "var(--green-light)", "#d0a0ff", "#7ecefd"];
   const { data: level } = useGetCompanyStructureLevelQuery();
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
   const [roles, setRoles] = useState([]);
@@ -62,7 +62,7 @@ const StyledStatus = styled.div`
   font-family: Overpass;
   font-size: 11px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: 118%; /* 12.98px */
   letter-spacing: 0.22px;
   text-transform: uppercase;

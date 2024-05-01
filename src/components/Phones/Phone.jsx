@@ -36,9 +36,9 @@ export const Phone = ({
 );
 
 const StyledPhone = styled.div`
-  color: #fff;
+  color: var(--main-color);
   transition: all 0.3s;
-  background: #444;
+  background: var(--card-bg-3);
   padding: 7px 7.51px 6px;
   border-radius: 6px 0px 0px 6px;
   display: block !important;
@@ -49,7 +49,7 @@ const StyledPhone = styled.div`
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     margin-bottom: 1px;
@@ -58,7 +58,7 @@ const StyledPhone = styled.div`
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
@@ -70,7 +70,7 @@ const StyledPhone = styled.div`
     transition: all 0.3s;
   }
   &:hover {
-    background: #535252;
+    background: var(--hover-card-2);
     img {
       opacity: 1;
       visibility: visible;

@@ -99,7 +99,10 @@ export const Profile = ({
   const handleReset = () => setUpdatedData(data);
 
   return (
-    <StyledProfile maskBackground={maskBackground} className={className}>
+    <StyledProfile
+      maskBackground={maskBackground}
+      className={`profile-desktop ${className}`}
+    >
       <Header
         name={`${data?.first_name ?? ""} ${data?.last_name ?? ""}`}
         email={updatedData?.email}
@@ -178,6 +181,7 @@ export const Profile = ({
             onSave={handleSaveChanges}
             onReset={handleReset}
             loading={loading}
+            className="profile-desktop"
           />
         )}
       </div>
@@ -189,7 +193,7 @@ const StyledProfile = styled.div`
   width: 316px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: #3d3d3d;
+  background: var(--card-bg);
   position: relative;
   .profile-content {
     padding: 0 10px 10px;
@@ -213,6 +217,11 @@ const StyledProfile = styled.div`
       no-repeat;
     background-size: 200%;
     background-position: -192px -507px;
+  }
+  .profile-desktop {
+    .btn {
+      background: var(--client-btn) !important;
+    }
   }
   @media (min-width: 1400px) {
     width: 290px;

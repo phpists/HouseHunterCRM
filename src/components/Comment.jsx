@@ -74,16 +74,16 @@ export const Comment = ({ className, comment, id, onEditComment }) => {
 const StyledComment = styled.div`
   padding: 6px 6px 6px 8px;
   border-radius: 6px;
-  background: #444;
+  background: var(--card-bg-3);
   transition: all 0.3s;
-  color: #fff;
+  color: var(--main-color);
   cursor: pointer;
   flex-shrink: 0;
   .value {
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     margin-bottom: 1px;
@@ -102,7 +102,7 @@ const StyledComment = styled.div`
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
@@ -114,7 +114,7 @@ const StyledComment = styled.div`
     transition: all 0.3s;
   }
   &:hover {
-    background: #535252;
+    background: var(--hover-card-2);
     img {
       transform: translateX(0px);
       opacity: 1;

@@ -15,7 +15,7 @@ const StyledText = styled.div`
     position: relative;
   }
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 17px;
     font-style: normal;
@@ -27,7 +27,7 @@ const StyledText = styled.div`
     opacity: ${({ paying }) => (paying ? 0 : 1)};
     transform: translateX(${({ paying }) => (paying ? -10 : 0)}px);
     &.success {
-      color: #81fb21;
+      color: var(--green);
       position: absolute;
       top: 0;
       width: max-content;
@@ -38,11 +38,11 @@ const StyledText = styled.div`
     }
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;

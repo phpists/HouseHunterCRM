@@ -83,7 +83,7 @@ const StyledStatistic = styled.div`
   z-index: 80;
   align-items: end;
   div {
-    background: #3d3d3d;
+    background: var(--card-bg);
     height: 100%;
     width: 100%;
   }

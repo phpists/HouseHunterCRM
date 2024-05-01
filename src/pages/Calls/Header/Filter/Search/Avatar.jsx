@@ -7,7 +7,7 @@ const StyledAvatar = styled.div`
   width: 24px;
   height: 24px;
   border-radius: 24px;
-  border: 1px solid #b1ff91;
+  border: 1px solid var(--green-light);
   margin-right: 8px;
   background: url(${({ avatar }) => avatar}) center/cover no-repeat;
 `;

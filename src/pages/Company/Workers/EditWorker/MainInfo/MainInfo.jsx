@@ -18,7 +18,7 @@ export const MainInfo = ({ isScrolled }) => (
 
 const StyledMainInfo = styled.div`
   padding: 42px 0 32px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid var(--bg-20);
   transition: all 0.5s;
   ${({ isScrolled }) =>
     isScrolled &&

@@ -23,14 +23,14 @@ export const Owner = ({ data }) => {
 const StyledOwner = styled.div`
   padding: 3px 3px 3px 6px;
   border-radius: 17px;
-  background: #323232;
+  background: var(--dark-card-bg);
   .name {
     margin: 0 7px 0 9px;
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: 118%; /* 16.52px */
     letter-spacing: 0.28px;
   }

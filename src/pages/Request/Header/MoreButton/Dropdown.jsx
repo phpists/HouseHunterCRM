@@ -69,14 +69,14 @@ const StyledDropdown = styled.div`
   width: 320px;
   padding: 6px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   z-index: 6;
   overflow: hidden;
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s;
   backdrop-filter: blur(18.5px);
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
@@ -85,11 +85,11 @@ const StyledDropdown = styled.div`
   letter-spacing: 0.3px;
   .toggle-wrapper {
     padding: 8px 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--bg-10);
     gap: 10px;
   }
   .toggle {
-    background: #323232;
+    background: var(--dark-card-bg);
   }
   .toggle--active {
     background: #35c511;

@@ -27,7 +27,7 @@ const StyledArrow = styled.button`
     fill: #fff;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
     g {
       opacity: 1;
     }

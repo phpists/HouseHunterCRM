@@ -135,7 +135,7 @@ const StyledDropdown = styled.div`
     transform: all 0.3s;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     &:hover {
-      background: #fff;
+      background: var(--active-bg);
     }
   }
   div:first-child {

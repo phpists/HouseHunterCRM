@@ -25,20 +25,20 @@ const StyledList = styled.button`
   .list {
     border-radius: 9px;
     width: 100%;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
     margin-right: 14px;
     div {
       display: grid;
       grid-template-columns: 1fr 1fr;
       padding: 7px 10px 5px;
-      color: #fff;
+      color: var(--main-color);
       font-family: Overpass;
       font-size: 15px;
       font-style: normal;
-      font-weight: 100;
+      font-weight: var(--font-weight-100);
       line-height: 118%; /* 17.7px */
       letter-spacing: 0.3px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid var(--bg-10);
       text-align: left;
       .price {
         font-weight: 400;

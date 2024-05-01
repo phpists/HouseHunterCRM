@@ -12,7 +12,7 @@ export const Tag = ({ Icon, text, className, onHover }) => (
 );
 
 const StyledTag = styled.div`
-  color: #fff;
+  color: var(--main-color);
   font-family: Open Sans;
   font-size: 13px;
   font-style: normal;

@@ -430,7 +430,7 @@ export const Tags = ({
 const StyledTags = styled.div`
   padding: 8px;
   border-radius: 9px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   margin-bottom: 25px;
   display: grid;
   grid-template-columns: 1fr;

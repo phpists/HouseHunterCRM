@@ -27,7 +27,7 @@ const StyledPhoto = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
-    background: rgba(44, 44, 44, 0.5);
+    background: var(--bg-5);
     opacity: 0;
     transition: all 0.3s;
     backdrop-filter: blur(1px);

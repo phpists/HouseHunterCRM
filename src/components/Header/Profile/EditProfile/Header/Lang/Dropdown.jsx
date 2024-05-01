@@ -19,9 +19,9 @@ const StyledDropdown = styled.div`
   transition: all 0.3s;
   .lang {
     border-radius: 0px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--bg-10);
     &:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--bg-10);
     }
     &:last-child {
       border-radius: 0px 0px 5px 5px;

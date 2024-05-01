@@ -38,12 +38,12 @@ const StyledAction = styled(NavLink)`
   overflow: hidden;
   position: relative;
   span {
-    color: #fff;
+    color: var(--main-color);
     text-align: center;
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     opacity: 0.4;

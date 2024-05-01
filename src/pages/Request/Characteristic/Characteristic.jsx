@@ -101,7 +101,7 @@ export const Characteristic = ({
 const StyledCharacteristic = styled.div`
   padding: 8px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   .toggle-opt {
     margin-top: 6.5px;
   }

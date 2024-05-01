@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import activityIcon from "../../../../assets/images/activity.svg";
+import { ReactComponent as Icon } from "../../../../assets/images/activity.svg";
 
 export const Empty = ({ noSubtitle, className }) => (
   <StyledEmpty className={className}>
-    <img src={activityIcon} alt="icon" />
+    <Icon />
     <div className="title">Упс, тут пусто!</div>
   </StyledEmpty>
 );
@@ -14,11 +14,11 @@ const StyledEmpty = styled.div`
   justify-content: center;
   flex-direction: column;
   height: 100%;
-  img {
+  svg {
     margin-bottom: 4px;
   }
   .title {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--dark-90);
     font-family: Overpass;
     font-size: 18px;
     font-style: normal;
@@ -28,7 +28,7 @@ const StyledEmpty = styled.div`
     margin-bottom: 10px;
   }
   .subtitle {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--second-color);
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;

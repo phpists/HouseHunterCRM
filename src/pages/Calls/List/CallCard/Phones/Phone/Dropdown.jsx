@@ -13,11 +13,11 @@ export const Dropdown = ({ callsData }) => (
 
 const StyledDropdown = styled.div`
   width: 360px;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--white-color);
   font-family: Overpass;
   font-size: 14px;
   font-style: normal;
-  font-weight: 100;
+  font-weight: var(--font-weight-100);
   line-height: 118%; /* 16.52px */
   letter-spacing: 0.28px;
   border-radius: 0 0 9px 9px;
@@ -28,8 +28,8 @@ const StyledDropdown = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 6px 31px 6px 15px;
-    background: rgba(50, 50, 50, 0.8);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-80);
+    border-bottom: 1px solid var(--bg-10);
   }
 
   @media (max-width: 1600px) {

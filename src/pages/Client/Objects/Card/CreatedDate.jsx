@@ -13,7 +13,7 @@ export const CreatedDate = ({ date, dateTo, isDeleted }) => (
 );
 
 const StyledCreatedDate = styled.div`
-  color: ${({ isDeleted }) => (isDeleted ? "#f94343" : "#fff")};
+  color: ${({ isDeleted }) => (isDeleted ? "#f94343" : "var(--main-color)")};
   font-family: Open Sans;
   font-size: 11px;
   font-style: normal;
@@ -23,7 +23,7 @@ const StyledCreatedDate = styled.div`
   opacity: ${({ isDeleted }) => (isDeleted ? 1 : 0.4)};
   margin-top: 2px;
   span {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--second-color);
     margin: 0 1px;
   }
 `;

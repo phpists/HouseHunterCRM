@@ -53,7 +53,7 @@ export const Objects = ({
 const StyledObjects = styled.div`
   padding: 10px 40px 10px 10px;
   border-radius: 9px;
-  background: #363636;
+  background: var(--element-inside-bg);
   position: relative;
   cursor: pointer;
   .bts {
@@ -81,7 +81,7 @@ const StyledObjects = styled.div`
     height: 32px;
     flex-shrink: 0;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.18);
+    background: var(--btn-transparent-bg);
     transition: all 0.3s;
     margin-right: 4px;
     padding: 4px;

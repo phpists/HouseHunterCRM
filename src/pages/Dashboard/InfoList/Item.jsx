@@ -9,26 +9,26 @@ export const Item = ({ title, value }) => (
 
 const StyledItem = styled.div`
   .title {
-    color: #fff;
+    color: var(--main-color);
     leading-trim: both;
     text-edge: cap;
     font-family: Open Sans;
     font-size: 14px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.28px;
     opacity: 0.6;
   }
   .value {
     margin-left: 8px;
-    color: #fff;
+    color: var(--main-color);
     leading-trim: both;
     text-edge: cap;
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
   }

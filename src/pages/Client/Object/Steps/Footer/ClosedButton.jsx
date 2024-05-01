@@ -7,7 +7,7 @@ export const ClosedButton = () => (
 const StyledClosedButton = styled.div`
   border-radius: 14px;
   border: 1.6px solid #ea2c2c;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   padding: 13px 10px 12px;
   color: #ff5959;
   text-align: center;

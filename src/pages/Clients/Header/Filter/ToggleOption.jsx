@@ -17,7 +17,7 @@ export const ToggleOption = ({ label, className, value, onChange }) => {
 const StyledToggleOption = styled.div`
   padding: 7px 7px 7px 11px;
   border-radius: 6px;
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
@@ -27,6 +27,6 @@ const StyledToggleOption = styled.div`
   transition: all 0.3s;
   cursor: pointer;
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--bg-10);
   }
 `;

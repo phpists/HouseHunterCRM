@@ -3,7 +3,7 @@ import { ReactComponent as NotificationIcon } from "../../../assets/images/notif
 
 export const Notification = ({ active, onToggle, count }) => (
   <StyledNotification
-    className="flex items-center justify-center"
+    className="flex items-center justify-center notificationIcon"
     onClick={onToggle}
   >
     <NotificationIcon />
@@ -26,7 +26,7 @@ const StyledNotification = styled.div`
     top: 1px;
     background: #f94343;
     padding: 4px;
-    color: #fff;
+    color: var(--main-color);
     text-align: center;
     leading-trim: both;
     text-edge: cap;
@@ -34,14 +34,14 @@ const StyledNotification = styled.div`
     font-family: Overpass;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: 1; /* 127.273% */
     border-radius: 100%;
     min-width: 16px;
     height: 16px;
   }
   &:hover {
-    background: #fff;
+    background: var(--active-bg);
     path {
       fill: #5d63ff;
     }

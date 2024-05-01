@@ -24,7 +24,7 @@ export const List = ({ photos, level }) => (
 
 const StyledList = styled.div`
   border-radius: 20px;
-  background: #333;
+  background: var(--bg-33);
   padding: 4px;
   width: 98px;
   overflow: hidden;

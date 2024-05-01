@@ -34,7 +34,7 @@ export const Dropdown = ({
 const StyledDropdown = styled.div`
   padding: 20px 10px;
   border-radius: 0 0 6px 6px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--bg-4);
   border: 1px solid ${({ iconColor }) => iconColor};
   border-top: none;
 `;

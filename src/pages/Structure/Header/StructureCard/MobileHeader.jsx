@@ -46,7 +46,7 @@ const StyledMobileHeader = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
-  color: #fff;
+  color: var(--main-color);
   text-align: center;
   font-family: Overpass;
   font-size: 13px;
@@ -63,12 +63,12 @@ const StyledMobileHeader = styled.div`
     justify-content: center;
     padding: 8px 10px;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
     transition: all 0.3s;
     height: 31px;
     &:hover,
     &.active {
-      background: rgba(255, 255, 255, 0.2);
+      background: var(--bg-20);
     }
   }
   @media (min-width: 850px) {

@@ -59,15 +59,15 @@ export const EditWorker = ({ onClose, id }) => {
 const StyledEditWorker = styled(motion.div)`
   position: fixed;
   right: 42px;
-  border-left: 1px solid rgba(255, 255, 255, 0.4);
-  background: rgba(44, 44, 44, 0.8);
+  border-left: var(--second-color-border);
+  background: var(--modals-bg);
   backdrop-filter: blur(12.5px);
   height: calc(100svh - 147px);
   top: 106px;
   width: 361px;
   overflow: auto;
   @supports (-webkit-touch-callout: none) {
-    background: #2c2c2c;
+    background: var(--main-bg);
   }
   .content {
     padding: 15px 11px;

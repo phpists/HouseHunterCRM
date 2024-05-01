@@ -26,9 +26,9 @@ const StyledSearch = styled.div`
     height: 32px;
     flex-shrink: 0;
     border-radius: 8px;
-    border: 1.4px solid rgba(255, 255, 255, 0.2);
+    border: 1.4px solid var(--bg-20);
     padding: 8px 25px 6px 11px;
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -37,11 +37,11 @@ const StyledSearch = styled.div`
     letter-spacing: 0.3px;
     transition: all 0.3s;
     &::placeholder {
-      color: rgba(255, 255, 255, 0.4);
+      color: var(--second-color);
     }
     &:hover,
     &:focus {
-      background: rgba(255, 255, 255, 0.2);
+      background: var(--bg-20);
     }
   }
   svg {

@@ -23,21 +23,21 @@ const StyledDateCard = styled.div`
   transition: all 0.3s;
   position: relative;
   .date {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     margin-bottom: 1px;
   }
   .label {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
@@ -51,7 +51,7 @@ const StyledDateCard = styled.div`
     transition: all 0.3s;
     opacity: 0;
     &:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: var(--bg-20);
       g {
         opacity: 1;
       }
@@ -60,7 +60,7 @@ const StyledDateCard = styled.div`
 
   &:hover,
   &.active {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--bg-10);
     button {
       opacity: 1;
     }

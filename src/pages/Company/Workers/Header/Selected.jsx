@@ -13,10 +13,10 @@ const StyledSelected = styled.div`
   font-weight: 200;
   line-height: 118%;
   letter-spacing: 0.4px;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--second-color);
   margin-left: 5px;
   span {
-    color: rgba(255, 255, 255, 0.2);
+    color: var(--bg-20);
     margin-right: 5px;
   }
 `;

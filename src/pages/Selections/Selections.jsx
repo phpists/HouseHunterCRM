@@ -172,7 +172,7 @@ const Selections = () => {
       storey_count,
     } = obj;
 
-    setFilters({
+    const objData = {
       id_rubric,
       id_location,
       price_min: handleGetRange(Number(price_UAH), true)?.start.toFixed(0),
@@ -200,10 +200,15 @@ const Selections = () => {
         0
       ),
       price_currency: "1",
-    });
-    handleGetRubricsFields(id_rubric);
-    filterActive.current = true;
-    handleGetSelections(true);
+    };
+
+    const objUrl = `/#/objects?findSelectionSimilar=true${Object.entries(
+      objData
+    )
+      ?.map((d) => `&${d[0]}=${d[1]}`)
+      ?.join("")}`;
+
+    window.open(objUrl, "_blank");
   };
 
   const handleApplyFilter = (isApply) => {
@@ -366,7 +371,7 @@ const Selections = () => {
 };
 
 const StyledSelections = styled.div`
-  background: #323232;
+  background: var(--dark-card-bg);
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   padding: 15px 20px;
   position: relative;

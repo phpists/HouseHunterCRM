@@ -14,10 +14,10 @@ const StyledSmallButton = styled.button`
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  border: 1.4px solid rgba(255, 255, 255, 0.2);
+  border: 1.4px solid var(--bg-20);
   transition: all 0.3s;
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
     border: 1.4px solid rgba(255, 255, 255, 0);
     g {
       opacity: 1;

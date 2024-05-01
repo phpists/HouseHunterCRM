@@ -36,7 +36,7 @@ const StyledManage = styled.div`
   .divider {
     width: 1px;
     height: 20px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--bg-10);
     margin: 0 4px;
     flex-shrink: 0;
   }

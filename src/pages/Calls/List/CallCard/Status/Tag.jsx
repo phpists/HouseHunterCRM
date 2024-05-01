@@ -8,7 +8,7 @@ const STATUS = {
   },
   1: {
     title: "Опрацьований",
-    color: "#81FB21",
+    color: "var(--green)",
     bg: "rgba(129, 251, 33, 0.20)",
   },
 };
@@ -27,7 +27,7 @@ const StyledTag = styled.div`
   font-family: Open Sans;
   font-size: 12px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: normal;
   letter-spacing: 0.24px;
   text-transform: capitalize;

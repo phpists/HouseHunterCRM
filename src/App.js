@@ -7,7 +7,7 @@ import { useGetAccessQuery, useLazyGetUserQuery } from "./store/auth/auth.api";
 import { useActions } from "./hooks/actions";
 import { useAppSelect } from "./hooks/redux";
 import { Loading } from "./components/Loading/Loading";
-import { handleCheckAccess } from "./utilits";
+import { handleCheckAccess, handleSetTheme } from "./utilits";
 import { useGetCompanyInfoQuery } from "./store/billing/billing.api";
 import { ErrorBoundary } from "react-error-boundary";
 import { Loader } from "./components/Loader";
@@ -30,7 +30,7 @@ export const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSideBarOpen] = useState(false);
-  const { loginUser, saveCompanyPhoto, saveAccess } = useActions();
+  const { loginUser, saveCompanyPhoto, saveAccess, changeTheme } = useActions();
   const { user } = useAppSelect((state) => state.auth);
   const [loading, setLoading] = useState(true);
   const [load, setLoad] = useState(false);
@@ -130,11 +130,17 @@ export const App = () => {
       });
   };
 
+  const handleSetInitTheme = () => {
+    const prevTheme = localStorage.getItem("theme") ?? "dark";
+    handleSetTheme(prevTheme);
+    changeTheme(prevTheme);
+  };
   useEffect(() => {
     handleClearCacheData();
     document.addEventListener("gesturestart", function (e) {
       e.preventDefault();
     });
+    handleSetInitTheme();
   }, []);
 
   return (
@@ -143,7 +149,7 @@ export const App = () => {
         fallback={
           <div className="error-wrapper">
             <svg
-              fill="rgba(255, 255, 255, 0.9)"
+              fill="var(--dark-90)"
               viewBox="0 0 30 30"
               xmlns="http://www.w3.org/2000/svg"
             >

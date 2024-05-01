@@ -7,7 +7,7 @@ export const Close = ({ onClose }) => (
 const StyledClose = styled.button`
   padding: 8px 0px 6px;
   transition: all 0.3s;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--white-color);
   text-align: center;
   text-overflow: ellipsis;
   font-family: Overpass;
@@ -20,7 +20,7 @@ const StyledClose = styled.button`
   border-radius: 0px 0px 9px 9px;
   margin: 0 0 0 -10px;
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: #fff;
+    background: var(--card-bg-2);
+    color: var(--main-color);
   }
 `;

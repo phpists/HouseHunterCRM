@@ -270,7 +270,7 @@ const Structure = () => {
 
 const StyledStructure = styled.div`
   padding: 15px 20px;
-  background: #323232;
+  background: var(--dark-card-bg);
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   position: relative;
   .structure-content {
@@ -296,7 +296,7 @@ const StyledStructure = styled.div`
     top: 0;
     bottom: 0;
     z-index: 10000;
-    background: #323232;
+    background: var(--dark-card-bg);
     right: 0;
     left: 0;
     display: flex;

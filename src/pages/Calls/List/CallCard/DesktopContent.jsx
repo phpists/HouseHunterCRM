@@ -78,7 +78,7 @@ const StyledDesktopContent = styled.div`
   .comment {
     width: 200px;
     height: 60px;
-    background: #444;
+    background: var(--card-bg-3);
     .field-content {
       width: 70%;
     }
@@ -89,7 +89,7 @@ const StyledDesktopContent = styled.div`
       text-overflow: ellipsis;
     }
     &:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--bg-10);
     }
   }
 

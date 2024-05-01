@@ -6,7 +6,7 @@ import { CloseButton } from "./CloseButton";
 
 export const WelcomeBanner = ({ onClose }) => {
   return (
-    <StyledWelcomeBanner className="flex items-center justify-between">
+    <StyledWelcomeBanner className="flex items-center justify-between stepsBanner">
       <Text />
       <Divider />
       <Steps className="steps" />
@@ -16,7 +16,7 @@ export const WelcomeBanner = ({ onClose }) => {
 };
 
 const StyledWelcomeBanner = styled.div`
-  background: #686de7;
+  background: var(--blue-banner);
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   padding: 40px 100px;
   position: relative;

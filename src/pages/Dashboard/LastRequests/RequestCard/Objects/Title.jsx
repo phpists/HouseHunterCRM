@@ -5,12 +5,12 @@ export const Title = ({ count }) => (
 );
 
 const StyledTitle = styled.div`
-  color: #fff;
+  color: var(--main-color);
   /* Aditional text */
   font-family: Open Sans;
   font-size: 11px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: normal;
   letter-spacing: 0.22px;
   margin-bottom: 4px;

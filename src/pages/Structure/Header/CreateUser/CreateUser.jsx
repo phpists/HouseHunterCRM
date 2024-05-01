@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import plusIcon from "../../../../assets/images/plus.svg";
+import {ReactComponent as Icon} from "../../../../assets/images/plus.svg";
 import { Modal } from "./Modal/Modal";
 import { useState } from "react";
 import { SmallButton } from "./SmallButton";
@@ -20,7 +20,7 @@ export const CreateUser = ({ small, onCreatedUser }) => {
           onClick={() => setOpen(true)}
         >
           <button className="plus-icon flex items-center justify-center">
-            <img src={plusIcon} alt="" />
+            <Icon />
           </button>
           Створити <span className="more">працівника</span>
         </StyledCreateUser>
@@ -33,8 +33,8 @@ const StyledCreateUser = styled.button`
   height: 32px;
   padding: 5px 16px 6px 10px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
+  background: var(--card-bg-2);
+  color: var(--main-color);
   text-align: center;
   leading-trim: both;
   text-edge: cap;
@@ -64,6 +64,6 @@ const StyledCreateUser = styled.button`
     margin-right: 4px;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
   }
 `;

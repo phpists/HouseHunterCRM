@@ -10,7 +10,7 @@ export const CardHeader = ({ title, link }) => (
 );
 
 const StyledCardHeader = styled(NavLink)`
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--dark-90);
   font-family: Overpass;
   font-size: 18px;
   font-style: normal;

@@ -25,9 +25,9 @@ const StyledDropdown = styled.div`
   right: 0;
   width: 220px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   backdrop-filter: blur(18.5px);
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;

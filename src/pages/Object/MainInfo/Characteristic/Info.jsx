@@ -110,15 +110,15 @@ export const Info = ({ fields, data, onChangeField, errors, onOpenSelect }) => {
 
 const StyledCategories = styled.div`
   border-radius: 10px;
-  background: #323232;
+  background: var(--dark-card-bg);
   padding: 4px;
   margin-top: 20px;
   .first-divider {
     margin: -12px 0 0px;
     .title {
-      background: #323232 !important;
+      background: var(--dark-card-bg) !important;
       opacity: 1;
-      color: rgba(255, 255, 255, 0.4);
+      color: var(--second-color);
       border: none;
     }
     div {

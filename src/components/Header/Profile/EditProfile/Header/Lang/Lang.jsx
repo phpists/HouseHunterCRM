@@ -20,7 +20,7 @@ const StyledLang = styled.button`
     }
     .active-lang {
       border-radius: 5px 5px 0 0;
-      background: rgba(255, 255, 255, 0.2);
+      background: var(--bg-20);
       backdrop-filter: blur(4.5px);
       width: 67px;
       overflow: hidden;

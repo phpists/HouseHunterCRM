@@ -40,6 +40,7 @@ export const MobileContent = ({
   editable,
   onEdit,
   onOpenPhonesModal,
+  showClientObjectsCount,
 }) => (
   <StyledMobileContent className="clickable">
     <Header data={data} />
@@ -78,6 +79,7 @@ export const MobileContent = ({
       showContactId={showContactId}
       onShowContact={onShowContact}
       onOpenPhonesModal={onOpenPhonesModal}
+      showClientObjectsCount={showClientObjectsCount}
     />
     <ShowMore
       clientId={data?.id_client}

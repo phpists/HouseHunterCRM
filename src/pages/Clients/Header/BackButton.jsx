@@ -24,9 +24,9 @@ const StyledBackButton = styled.button`
     opacity: 1;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
   }
   &:active {
-    background: rgba(255, 255, 255, 0.4);
+    background: var(--second-color);
   }
 `;

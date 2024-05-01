@@ -9,15 +9,15 @@ export const Tag = ({ icon, title }) => (
 
 const StyledTag = styled.div`
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.1);
   padding: 6px;
-  color: rgba(255, 255, 255, 0.8);
+  background: var(--tag-bg-2);
+  color: var(--tag-color-2);
   leading-trim: both;
   text-edge: cap;
   font-family: Open Sans;
   font-size: 11px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: normal;
   letter-spacing: 0.22px;
   height: 20px;

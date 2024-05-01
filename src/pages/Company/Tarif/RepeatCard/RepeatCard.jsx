@@ -30,7 +30,7 @@ export const RepeatCard = ({ onOpenTarif }) => {
 const StyledRepeatCard = styled.div`
   width: 100%;
   border-radius: 13px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   backdrop-filter: blur(4.5px);
   padding: 11px 19px 13px 15px;
   cursor: no-drop;

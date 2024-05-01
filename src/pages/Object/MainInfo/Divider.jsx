@@ -18,10 +18,11 @@ const StyledDivider = styled.div`
     height: ${({ error }) => (error === "true" ? "2px" : "1px")};
     width: 100%;
     opacity: 0.1;
-    background: ${({ error }) => (error === "true" ? "red" : "#fff")};
+    background: ${({ error }) =>
+      error === "true" ? "red" : "var(--main-color)"};
   }
   .title {
-    color: ${({ error }) => (error === "true" ? "red" : "#fff")};
+    color: ${({ error }) => (error === "true" ? "red" : "var(--main-color)")};
     text-align: center;
     font-family: Overpass;
     font-size: 11px;
@@ -34,8 +35,8 @@ const StyledDivider = styled.div`
     padding: 3px 10px 0;
     border-radius: 5px;
     border: 1px solid
-      ${({ error }) => (error === "true" ? "red" : "rgba(255, 255, 255, 0.1)")};
-    background: #323232;
+      ${({ error }) => (error === "true" ? "red" : "var(--bg-10)")};
+    background: var(--dark-card-bg);
     width: max-content;
     flex-shrink: 0;
   }

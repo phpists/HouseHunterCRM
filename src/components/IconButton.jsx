@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 export const IconButton = ({ Icon, onClick, className, active }) => (
   <StyledIconButton
     onClick={onClick}
-    className={`flex items-center justify-center ${className} ${
+    className={`flex items-center justify-center iconButton ${className} ${
       active && "active"
     }`}
   >
@@ -16,14 +16,14 @@ const StyledIconButton = styled.div`
   height: 32px;
   flex-shrink: 0;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: var(--second-color-border);
   backdrop-filter: blur(18.5px);
   g {
     transition: all 0.3s;
   }
   &:hover,
   &.active {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
     border: none;
     g {
       opacity: 1;

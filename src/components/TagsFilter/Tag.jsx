@@ -23,14 +23,14 @@ export const Tag = ({ title, onRemove, isHide, noEdit }) => (
 
 const StyledTag = styled(motion.div)`
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.4);
+  background: var(--tag-bg-2);
+  color: var(--tag-color-2);
   leading-trim: both;
   text-edge: cap;
   font-family: Open Sans;
   font-size: 11px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: normal;
   letter-spacing: 0.22px;
   width: max-content;

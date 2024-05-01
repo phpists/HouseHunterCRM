@@ -40,7 +40,7 @@ const StyledChatButton = styled.button`
   flex-shrink: 0;
   border-radius: 8px;
   background: ${({ active }) =>
-    active ? "#5D63FFB2" : "rgba(255, 255, 255, 0.18)"};
+    active ? "#5D63FFB2" : "var(--btn-transparent-bg)"};
   cursor: pointer;
   transition: all 0.3s;
   position: relative;
@@ -61,8 +61,8 @@ const StyledChatButton = styled.button`
     top: -2px;
     right: -2px;
     border-radius: 100px;
-    background: #fff;
-    color: #363636;
+    background: var(--active-bg);
+    color: var(--element-inside-bg);
     leading-trim: both;
     text-edge: cap;
     font-family: Open Sans;

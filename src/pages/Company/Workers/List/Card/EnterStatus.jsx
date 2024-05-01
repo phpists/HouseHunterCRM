@@ -50,7 +50,7 @@ const StyledEnterStatus = styled.div`
   cursor: pointer;
   text-align: left;
   .title {
-    color: ${({ status }) => (status ? "#50F835" : "#ff5151")};
+    color: ${({ status }) => (status ? "var(--green-light-2)" : "#ff5151")};
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -59,11 +59,11 @@ const StyledEnterStatus = styled.div`
     letter-spacing: 0.3px;
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;

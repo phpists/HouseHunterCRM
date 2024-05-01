@@ -73,7 +73,7 @@ const StyledAddToSelections = styled.div`
     position: relative;
     margin-top: 15px;
     border-radius: 8px;
-    background: rgba(93, 99, 255, 0.7);
+    background: var(--blue);
     display: flex;
     height: 38px;
     padding: 9px 18px 11px 18px;
@@ -98,18 +98,18 @@ const StyledAddToSelections = styled.div`
   .select-wrapper {
     padding: 10px;
     border-radius: 6px;
-    background: #474747;
+    background: var(--second-bg);
     .label {
       display: none;
     }
   }
   .select-label {
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--white-color);
     text-align: center;
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 120%; /* 16.8px */
     margin-bottom: 4px;
     text-align: left;

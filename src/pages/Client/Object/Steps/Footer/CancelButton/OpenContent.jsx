@@ -15,6 +15,6 @@ const StyledOpenContent = styled.div`
   .content-wrapper {
     text-align: left;
     padding: 0 3px 2px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--bg-10);
   }
 `;

@@ -11,7 +11,7 @@ const StyledSelectIcon = styled.div`
   height: 43px;
   flex-shrink: 0;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   margin-right: 8px;
   transition: all 0.3s;
 `;

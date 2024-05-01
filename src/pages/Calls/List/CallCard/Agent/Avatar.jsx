@@ -15,7 +15,7 @@ const StyledAvatar = styled.div`
   height: 34px;
   flex-shrink: 0;
   border-radius: 34px;
-  border: 1px solid ${({ color }) => color ?? "#b1ff91"};
+  border: 1px solid ${({ color }) => color ?? "var(--green-light)"};
   background: url(${({ avatar }) => avatar}) center/cover no-repeat;
   margin-right: 8px;
 `;

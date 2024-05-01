@@ -8,12 +8,12 @@ export const CardDescription = ({ text = "-" }) => (
 
 const StyledCardDescription = styled.div`
   overflow: hidden;
-  color: #fff;
+  color: var(--main-color);
   text-overflow: ellipsis;
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 100;
+  font-weight: var(--font-weight-100);
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   opacity: 0.4;

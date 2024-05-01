@@ -14,7 +14,7 @@ export const Progress = ({ load }) => {
   }, [load]);
 
   return (
-    <StyledProgress procent={procent}>
+    <StyledProgress procent={procent} className="main-loading-progress">
       <div />
     </StyledProgress>
   );

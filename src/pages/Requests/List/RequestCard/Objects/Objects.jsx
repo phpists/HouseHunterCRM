@@ -48,7 +48,7 @@ export const Objects = ({ idGroup, onOpenChat, data, onChangeNewCount }) => {
 const StyledObjects = styled.div`
   padding: 10px;
   border-radius: 9px;
-  background: #363636;
+  background: var(--element-inside-bg);
   /* opacity: 0.2; */
   min-width: 190px;
   .object-counts {

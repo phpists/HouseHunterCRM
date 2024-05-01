@@ -33,12 +33,12 @@ const StyledModal = styled(motion.div)`
   right: 0;
   bottom: 0;
   width: 413px;
-  border-left: 1px solid rgba(255, 255, 255, 0.4);
-  background: rgba(44, 44, 44, 0.8);
+  border-left: var(--second-color-border);
+  background: var(--modals-bg);
   backdrop-filter: blur(12.5px);
   z-index: 50;
   @supports (-webkit-touch-callout: none) {
-    background: #2c2c2c;
+    background: var(--main-bg);
   }
   .modal-content {
     padding: 20px;

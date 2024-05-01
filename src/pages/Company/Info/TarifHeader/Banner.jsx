@@ -15,7 +15,7 @@ export const Banner = () => (
 );
 
 const StyledBanner = styled.div`
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 30px;
   font-style: normal;
@@ -56,7 +56,7 @@ const StyledBanner = styled.div`
     position: absolute;
     top: 37px;
     height: 1px;
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
     width: 0%;
     right: 0;
     transition: all 0.3s;

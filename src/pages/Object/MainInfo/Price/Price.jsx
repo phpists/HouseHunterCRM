@@ -85,7 +85,7 @@ export const Price = ({
 
 const StyledPrice = styled.div`
   border-radius: 10px;
-  background: #3d3d3d;
+  background: var(--card-bg);
   padding: 8px 15px;
   overflow: auto;
   .field {
@@ -93,7 +93,7 @@ const StyledPrice = styled.div`
     width: 150px !important;
     flex-shrink: 0;
     .value {
-      color: #50f835;
+      color: var(--green-light-2);
     }
   }
   @media (max-width: 800px) {

@@ -12,11 +12,11 @@ export const OpenButton = () => (
 );
 
 const StyledOpenButton = styled.div`
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 100;
+  font-weight: var(--font-weight-100);
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   .open-link {
@@ -37,7 +37,7 @@ const StyledOpenButton = styled.div`
       opacity: 1;
     }
     &:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--card-bg-2);
       svg {
         scale: 1;
         opacity: 1;

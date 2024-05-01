@@ -21,7 +21,9 @@ export const Closed = ({
           </span>
         )}
       </div>
-      {subtitle && <div className="subtitle closedPrice">{subtitle}</div>}
+      {subtitle && (
+        <div className="subtitle closedPrice labelItem">{subtitle}</div>
+      )}
     </div>
     {!notChangeCurrency && <Arrow className="arrow closedPrice" />}
   </StyledClosed>
@@ -30,7 +32,7 @@ export const Closed = ({
 const StyledClosed = styled.div`
   padding: 6px;
   .price {
-    color: #81fb21;
+    color: var(--green);
     leading-trim: both;
     text-edge: cap;
     font-family: Overpass;
@@ -50,15 +52,16 @@ const StyledClosed = styled.div`
     }
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
     margin-top: 2px;
+    text-align: left;
   }
   svg {
     transform: rotate(180deg);

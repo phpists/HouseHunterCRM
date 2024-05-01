@@ -31,7 +31,7 @@ const StyledOption = styled.div`
   padding: 8px;
   transition: all 0.3s;
   cursor: pointer;
-  ${({ last }) => !last && "border-bottom: 1px solid rgba(255, 255, 255, 0.1);"}
+  ${({ last }) => !last && "border-bottom: 1px solid var(--bg-10);"}
   .avatar {
     width: 24px;
     height: 24px;
@@ -41,7 +41,7 @@ const StyledOption = styled.div`
     margin-right: 8px;
   }
   .name {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -57,7 +57,8 @@ const StyledOption = styled.div`
     transition: all 0.3s;
   }
   path {
-    fill: ${({ active }) => (active ? "#50F835" : "#FFF")};
+    fill: ${({ active }) =>
+      active ? "var(--green-light-2)" : "var(--main-color)"};
   }
 
   &:hover {

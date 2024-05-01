@@ -72,7 +72,7 @@ const StyledCard = styled.button`
   gap: 11px;
   width: 100%;
   transition: all 0.3s;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid var(--bg-20);
   svg {
     transform: rotate(-45deg);
     opacity: 0.4;
@@ -89,12 +89,12 @@ const StyledCard = styled.button`
     isSelected &&
     `
      background: rgba(255, 255, 255, 0.07);
-     border-left: 3px solid #50F835;
+     border-left: 3px solid var(--green-light-2);
     svg {
         transform: rotate(0deg);
         opacity: 1;
         path {
-            fill: #50f835;
+            fill: var(--green-light-2);
         }
     }
   `}

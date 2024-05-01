@@ -5,7 +5,7 @@ export const Divider = () => <StyledDivider />;
 const StyledDivider = styled.div`
   width: 1px;
   height: 100%;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   margin: 0 8px;
   @media (max-width: 850px) {
     display: none;

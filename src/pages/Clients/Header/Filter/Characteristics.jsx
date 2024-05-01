@@ -90,7 +90,7 @@ export const Characteristics = () => {
 const StyledCharacteristics = styled.div`
   margin-bottom: 25px;
   border-radius: 9px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   padding: 6px;
   .toggle-group {
     display: grid;

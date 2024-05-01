@@ -35,7 +35,7 @@ const StyledHeader = styled.div`
     line-height: 16.52px;
     letter-spacing: 0.02em;
     text-align: left;
-    color: #fff;
+    color: var(--main-color);
     margin-bottom: 2px;
   }
   .role {

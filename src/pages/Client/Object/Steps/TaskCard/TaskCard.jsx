@@ -35,7 +35,7 @@ const StyledTaskCard = styled.div`
   transition: all 0.3s;
   cursor: pointer;
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
   }
   &.active {
     padding: 7px 10px 0px;

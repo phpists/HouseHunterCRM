@@ -13,7 +13,7 @@ import {
 import { handleFormatDate } from "../../../../../../utilits";
 
 export const Header = ({ onOpenInfo, data }) => {
-  const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
+  const COLORS = ["#7ecefd", "var(--green-light)", "#d0a0ff", "#7ecefd"];
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
   const { data: level, refetch } = useGetCompanyStructureLevelQuery();
 

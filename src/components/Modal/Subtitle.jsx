@@ -7,7 +7,7 @@ export const Subtitle = () => (
 );
 
 const StyledSubtitle = styled.div`
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--white-color);
   text-align: center;
   font-family: Overpass;
   font-size: 14px;

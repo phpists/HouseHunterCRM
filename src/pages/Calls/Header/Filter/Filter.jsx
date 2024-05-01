@@ -69,12 +69,12 @@ const StyledFilter = styled(motion.div)`
   width: 361px;
   bottom: 0;
   flex-shrink: 0;
-  border-left: 1px solid rgba(255, 255, 255, 0.4);
-  background: rgba(44, 44, 44, 0.8);
+  border-left: var(--second-color-border);
+  background: var(--modals-bg);
   backdrop-filter: blur(12.5px);
   z-index: 25;
   @supports (-webkit-touch-callout: none) {
-    background: #2c2c2c;
+    background: var(--main-bg);
   }
   .content {
     padding: 0 20px 20px;
@@ -84,7 +84,7 @@ const StyledFilter = styled(motion.div)`
   }
   .section {
     border-radius: 9px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--bg-10);
     margin-bottom: 25px;
     padding: 8px;
   }

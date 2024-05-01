@@ -16,7 +16,7 @@ const StyledSendButton = styled.button`
   height: 40px;
   width: 40px;
   border-radius: 10px;
-  background: rgba(93, 99, 255, 0.7);
+  background: var(--blue);
   margin-left: 4px;
   flex-shrink: 0;
   transition: all 0.3s;

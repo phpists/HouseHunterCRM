@@ -15,11 +15,11 @@ const StyledDescription = styled.div`
   font-family: Open Sans;
   font-size: 11px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: normal;
   letter-spacing: 0.22px;
   span {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--second-color);
     margin: 0 1px;
   }
 `;

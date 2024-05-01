@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import emailIcon from "../../../../../assets/images/email.svg";
+import { ReactComponent as Icon } from "../../../../../assets/images/email.svg";
 
 export const Email = ({ email }) => (
   <StyledEmail className="notClickable">
     <div className="title flex items-center notClickable">
-      <img src={emailIcon} alt="" className="notClickable" />{" "}
-      <span>{email}</span>
+      <Icon className="notClickable" /> <span>{email}</span>
     </div>
     <div className="label notClickable">Email</div>
   </StyledEmail>
@@ -14,10 +13,10 @@ export const Email = ({ email }) => (
 const StyledEmail = styled.div`
   padding: 6px 8px;
   border-radius: 6px;
-  background: #444;
+  background: var(--card-bg-3);
   margin-top: 4px;
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
@@ -32,16 +31,16 @@ const StyledEmail = styled.div`
       overflow: hidden;
       max-width: 180px;
     }
-    img {
+    svg {
       margin-right: 4px;
     }
   }
   .label {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;

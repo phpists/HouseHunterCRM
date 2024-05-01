@@ -15,7 +15,7 @@ const StyledCreatedDate = styled.div`
   border-radius: 9px;
   transition: all 0.3s;
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -24,16 +24,16 @@ const StyledCreatedDate = styled.div`
     letter-spacing: 0.3px;
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
   }
 `;

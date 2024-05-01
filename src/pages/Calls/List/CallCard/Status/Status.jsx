@@ -18,7 +18,7 @@ const StyledStatus = styled.div`
   border-radius: 9px;
   transition: all 0.3s;
   /* &:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background:  var(--card-bg-2);
   } */
   @media (min-width: 1400px) {
     width: 140px;

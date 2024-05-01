@@ -8,11 +8,11 @@ export const Name = ({ name, id }) => (
 );
 
 const StyledName = styled(NavLink)`
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 14px;
   font-style: normal;
-  font-weight: 100;
+  font-weight: var(--font-weight-100);
   line-height: 118%; /* 16.52px */
   letter-spacing: 0.28px;
   max-width: 80px;

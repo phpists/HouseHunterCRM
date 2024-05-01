@@ -5,7 +5,7 @@ import {
 } from "../../../../../../store/structure/structure.api";
 
 export const Tag = ({ level, namePermision }) => {
-  const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
+  const COLORS = ["#7ecefd", "var(--green-light)", "#d0a0ff", "#7ecefd"];
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
   const { data: companyLevel, refetch } = useGetCompanyStructureLevelQuery();
 
@@ -35,7 +35,7 @@ const StyledTag = styled.div`
   font-family: Overpass;
   font-size: 11px;
   font-style: normal;
-  font-weight: 100;
+  font-weight: var(--font-weight-100);
   line-height: 1; /* 12.98px */
   letter-spacing: 0.22px;
   margin: 2px 0;

@@ -16,17 +16,17 @@ export const PhoneInfo = ({ agent, agentPhone }) => (
 const StyledPhoneInfo = styled.div`
   padding: 7px 7px 6px 8px;
   border-radius: 6px;
-  background: #4f4f4f;
+  background: var(--card-bg-4);
   cursor: pointer;
   transition: all 0.3s;
   flex-shrink: 0;
   width: 163px;
   .name {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     margin-bottom: 1px;
@@ -37,11 +37,11 @@ const StyledPhoneInfo = styled.div`
     white-space: nowrap;
   }
   .phone {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
@@ -52,7 +52,7 @@ const StyledPhoneInfo = styled.div`
     flex-shrink: 0;
   }
   &:hover {
-    background: #656565;
+    background: var(--hover-card-3);
   }
   @media (max-width: 1400px) {
     width: 100%;

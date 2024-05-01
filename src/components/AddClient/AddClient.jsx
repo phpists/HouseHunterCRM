@@ -172,7 +172,7 @@ const StyledAddClient = styled(motion.div)`
   }
   .modal {
     border-radius: 10px;
-    background: #2b2b2b;
+    background: var(--modal-bg);
     padding: 40px;
     min-height: 308px;
     width: 280px;

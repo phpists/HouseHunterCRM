@@ -18,15 +18,15 @@ const StyledMlsButton = styled.button`
   border-radius: 6px;
   height: 46px;
   flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.15);
-  color: rgba(255, 255, 255, 0.5);
+  background: var(--bg-15);
+  color: var(--color-5);
   text-align: center;
   leading-trim: both;
   text-edge: cap;
   font-family: Overpass;
   font-size: 14px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: 0; /* 16.52px */
   letter-spacing: 0.28px;
   text-transform: uppercase;
@@ -45,13 +45,13 @@ const StyledMlsButton = styled.button`
     margin-left: 5px;
   `}
   &:hover {
-    color: #fff;
+    color: var(--main-color);
     background: #3d8ecc;
     opacity: 0.5;
   }
 
   &.active {
-    color: #fff;
+    color: var(--main-color);
     background: #3d8ecc;
     opacity: 1 !important;
   }

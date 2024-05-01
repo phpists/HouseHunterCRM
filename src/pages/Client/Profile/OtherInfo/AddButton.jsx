@@ -22,8 +22,8 @@ const StyledAddButton = styled.div`
   height: 70px;
   flex-shrink: 0;
   border-radius: 7px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  background: rgba(255, 255, 255, 0.1);
+  border: var(--second-color-border);
+  background: var(--bg-10);
   transition: all 0.3s;
   cursor: pointer;
   position: relative;
@@ -36,13 +36,13 @@ const StyledAddButton = styled.div`
     transition: all 0.3s;
   }
   &:hover {
-    background: #fff;
+    background: var(--active-bg);
     border: 1px solid #fff;
     g {
       opacity: 1;
     }
     path {
-      fill: #2c2c2c;
+      fill: var(--main-bg);
     }
   }
   input {

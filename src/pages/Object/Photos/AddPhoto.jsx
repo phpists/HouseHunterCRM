@@ -37,14 +37,14 @@ export const AddPhoto = ({ small, onAdd }) => {
 const StyledAddPhoto = styled.div`
   border-radius: 10px;
   border: 1px solid #fff;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-bg-2);
   width: 400px;
   height: 87px;
   transition: all 0.3s;
   cursor: pointer;
   position: relative;
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -60,7 +60,7 @@ const StyledAddPhoto = styled.div`
     }
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     text-align: center;
     font-family: Open Sans;
     font-size: 11px;
@@ -86,7 +86,7 @@ const StyledAddPhoto = styled.div`
   }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--bg-15);
     svg {
       opacity: 0;
       width: 0;

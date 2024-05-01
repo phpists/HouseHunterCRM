@@ -26,7 +26,7 @@ export const StructureCard = ({
   }, []);
 
   return (
-    <StyledStructureCard>
+    <StyledStructureCard className="list-card-wrapper">
       <DesktopContent
         onOpenInfo={onOpenInfo}
         totalInfoOpened={totalInfoOpened}
@@ -56,7 +56,7 @@ export const StructureCard = ({
 const StyledStructureCard = styled.div`
   padding: 10px;
   border-radius: 10px;
-  background: #3d3d3d;
+  background: var(--card-bg);
   transition: all 0.3s;
   border: 1px solid transparent;
   cursor: pointer;

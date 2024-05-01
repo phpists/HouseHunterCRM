@@ -13,12 +13,12 @@ export const LangCard = ({ title, icon, className }) => (
 const StyledLangCard = styled.div`
   padding: 7px 7px 7px 10px;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--bg-20);
   backdrop-filter: blur(4.5px);
   cursor: pointer;
   span {
     display: block;
-    color: #fff;
+    color: var(--main-color);
     font-family: Lato;
     font-size: 15px;
     font-style: normal;

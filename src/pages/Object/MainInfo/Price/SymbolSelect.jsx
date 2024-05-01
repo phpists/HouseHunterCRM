@@ -22,7 +22,7 @@ export const SymbolSelect = ({ value, onChange = () => null }) => {
 
 const StyledSymbolSelect = styled.div`
   border-radius: 6px;
-  background: rgba(44, 44, 44, 0.5);
+  background: var(--bg-5);
   padding: 2px;
   display: grid;
   grid-template-columns: repeat(3, max-content);
@@ -32,21 +32,21 @@ const StyledSymbolSelect = styled.div`
     border-radius: 5px;
     height: 20px;
     width: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 0.4);
+    background: var(--card-bg-2);
+    color: var(--second-color);
     text-align: center;
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.28px;
     cursor: pointer;
     transition: all 0.3s;
     border: 1px solid rgba(255, 255, 255, 0);
     &.active {
-      color: #50f835;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--green-light-2);
+      border: 1px solid var(--bg-20);
     }
   }
   @media (max-width: 800px) {

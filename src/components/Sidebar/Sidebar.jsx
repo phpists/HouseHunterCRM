@@ -27,14 +27,14 @@ export const Sidebar = ({ sidebarOpen, onClose, accessData }) => {
 const StyledSidebar = styled.div`
   grid-row: 1/3;
   grid-column: 1/2;
-  background: rgba(107, 107, 107, 0.3);
+  background: var(--element-bg);
   backdrop-filter: blur(23px);
   padding: 26px 0 13px;
   height: 100svh;
   overflow: auto;
   transition: all 0.3s;
   @supports (-webkit-touch-callout: none) {
-    background: #2c2c2c;
+    background: var(--main-bg);
   }
   @media (max-width: 1200px) {
     position: fixed;

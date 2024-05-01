@@ -16,7 +16,7 @@ const StyledComments = styled.button`
   height: 32px;
   flex-shrink: 0;
   border-radius: 9px;
-  background: rgba(93, 99, 255, 0.7);
+  background: var(--blue);
   transition: all 0.3s;
   position: relative;
   div {
@@ -24,8 +24,8 @@ const StyledComments = styled.button`
     top: -2px;
     right: -2px;
     border-radius: 100px;
-    background: #fff;
-    color: #363636;
+    background: var(--active-bg);
+    color: var(--main-bg);
     leading-trim: both;
     text-edge: cap;
     font-family: Open Sans;

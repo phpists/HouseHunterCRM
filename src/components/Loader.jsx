@@ -14,6 +14,7 @@ const StyledLoader = styled.div`
   justify-content: center;
   svg {
     height: 100%;
-    ${({ white }) => white === "true" && "circle {stroke: #FFF !important;}"}
+    ${({ white }) =>
+      white === "true" && "circle {stroke: var(--main-color) !important;}"}
   }
 `;

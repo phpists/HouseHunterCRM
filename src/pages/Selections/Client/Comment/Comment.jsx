@@ -33,7 +33,7 @@ const StyledComment = styled.div`
   width: 100%;
   padding: 7px 30px 6px;
   border-radius: 6px;
-  background: #444444;
+  background: var(--card-bg-3)444;
   .value {
     white-space: nowrap;
     overflow: hidden;
@@ -44,7 +44,7 @@ const StyledComment = styled.div`
     line-height: 17px;
     letter-spacing: 0.02em;
     text-align: left;
-    color: #ffffff;
+    var(--main-color)fff;
     margin-bottom: 2px;
     max-width: 200px;
     overflow: hidden;
@@ -62,7 +62,7 @@ const StyledComment = styled.div`
     line-height: 15px;
     letter-spacing: 0.02em;
     text-align: left;
-    color: #ffffff;
+    var(--main-color)fff;
     opacity: 0.4;
   }
 `;

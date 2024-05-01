@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 export const Title = () => <StyledTitle>Про компанію</StyledTitle>;
 
 const StyledTitle = styled.div`
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;

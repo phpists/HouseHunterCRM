@@ -16,8 +16,8 @@ export const NextStep = ({ active, onChangeActive }) => {
 const StyledNextStep = styled.div`
   padding: 14px 10px 11px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.4);
+  background: var(--bg-10);
+  color: var(--second-color);
   text-align: center;
   font-family: Overpass;
   font-size: 15px;
@@ -34,7 +34,7 @@ const StyledNextStep = styled.div`
     white-space: nowrap;
   }
   &:hover {
-    color: #81fb21;
+    color: var(--green);
     border: 1.6px solid #2fa112;
   }
   ${({ active }) =>

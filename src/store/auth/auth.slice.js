@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: null,
   accessData: null,
+  theme: "dark",
 };
 
 export const authSlice = createSlice({
@@ -14,6 +15,9 @@ export const authSlice = createSlice({
     },
     saveAccess(state, action) {
       state.accessData = action.payload;
+    },
+    changeTheme(state, action) {
+      state.theme = action.payload;
     },
   },
 });

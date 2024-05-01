@@ -71,7 +71,7 @@ export const RoleCard = ({
   return (
     <div className="m-2.5">
       <StyledRoleCard
-        iconColor={"#B1FF91"}
+        iconColor={"var(--green-light)"}
         className="flex items-center"
         open={open}
       >
@@ -79,8 +79,8 @@ export const RoleCard = ({
           <div className="flex items-center">
             <Icon
               IconImg={UserIcon}
-              iconBg={"#B1FF9140"}
-              iconColor={"#B1FF91"}
+              iconBg={"var(--green-light)40"}
+              iconColor={"var(--green-light)"}
             />
             <Text
               title={data.name_permision}
@@ -94,7 +94,7 @@ export const RoleCard = ({
       </StyledRoleCard>
       {open && (
         <Dropdown
-          iconColor={"#B1FF91"}
+          iconColor={"var(--green-light)"}
           permissionsList={permissionsList}
           values={checkIsArray(data.permission_list_json)}
           onChangeValue={handleChangeValue}
@@ -109,5 +109,5 @@ export const StyledRoleCard = styled.div`
   padding: 8px 10px;
   border-radius: ${({ open }) => (open ? "6px 6px 0 0" : "6px")};
   border: 1px solid ${({ iconColor }) => iconColor};
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
 `;

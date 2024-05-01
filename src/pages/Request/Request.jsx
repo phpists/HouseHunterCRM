@@ -639,12 +639,12 @@ const Request = () => {
 };
 
 const StyledRequest = styled.div`
-  background: #323232;
+  background: var(--dark-card-bg);
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   padding: 15px 20px;
   .request-content {
     border-radius: 15px;
-    background: #2b2b2b;
+    background: var(--modal-bg);
     padding: 20px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -660,7 +660,7 @@ const StyledRequest = styled.div`
     }
     &:hover {
       &::-webkit-scrollbar-thumb {
-        background: #fff;
+        background: var(--active-bg);
       }
     }
   }

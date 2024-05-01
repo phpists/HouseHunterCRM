@@ -25,9 +25,9 @@ const StyledFooter = styled.div`
     height: 31px;
     width: 50%;
     flex-shrink: 1;
-    background: rgba(255, 255, 255, 0.6);
+    background: var(--bg-60);
     &:hover {
-      background: rgba(255, 255, 255, 1);
+      background: var(--color-2);
     }
   }
   .enter-btn {

@@ -10,7 +10,7 @@ export const Workers = () => (
 
 const StyledWorkers = styled.div`
   border-radius: 24px;
-  background: #323232;
+  background: var(--dark-card-bg);
   padding: 2px 2px 2px 10px;
   color: #58afff;
   leading-trim: both;

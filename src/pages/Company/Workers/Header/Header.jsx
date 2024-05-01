@@ -39,7 +39,7 @@ export const Header = ({
 
 const StyledHeader = styled.div`
   padding: 18px 20px 19px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom: var(--second-color-border);
 
   @media (max-width: 800px) {
     .filter-wrapper {

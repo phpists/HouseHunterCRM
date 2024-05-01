@@ -21,7 +21,7 @@ export const Cards = ({
       dayCount: data?.count_day ?? "0",
     },
     // { title: "Еліта", priceTitle: "900", color: "#E9A624", price: 900 },
-    // { title: "Цар системи", priceTitle: "800", color: "#50F835", price: 800 },
+    // { title: "Цар системи", priceTitle: "800", color: "var(--green-light-2)", price: 800 },
   ];
 
   const handleOpen = (index) => {

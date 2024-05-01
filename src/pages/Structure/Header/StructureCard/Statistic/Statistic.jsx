@@ -100,7 +100,7 @@ export const Statistic = ({ onClick, statisticData }) => (
 const StyledStatistic = styled.div`
   padding: 10px;
   border-radius: 10px;
-  background: rgba(50, 50, 50, 0.8);
+  background: var(--bg-80);
   display: flex;
   margin-right: 10px;
   height: 224px;

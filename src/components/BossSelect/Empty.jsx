@@ -21,24 +21,23 @@ const StyledEmpty = styled.div`
   border-radius: 9px;
   transition: all 0.3s;
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     margin-bottom: 1px;
   }
   .subtitle {
-    color: #fff;
+    color: var(--subtitle-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
-    opacity: 0.4;
   }
 
   svg {
@@ -50,7 +49,7 @@ const StyledEmpty = styled.div`
   }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--bg-10);
     g {
       opacity: 1;
     }
@@ -60,7 +59,7 @@ const StyledEmpty = styled.div`
     open &&
     `
         border-radius: 9px 9px 0 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.40);
-      background: rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid var(--color-40);
+      background: var(--bg-10);
 `}
 `;

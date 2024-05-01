@@ -13,5 +13,5 @@ export const Header = ({ onClose }) => (
 
 const StyledHeader = styled.div`
   padding: 18px 19px 18px 18px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid var(--bg-20);
 `;

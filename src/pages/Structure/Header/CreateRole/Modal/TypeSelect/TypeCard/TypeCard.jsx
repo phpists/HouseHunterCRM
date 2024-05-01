@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ReactComponent as UserCheckIcon } from "../../../../../../../assets/images/user-check.svg";
 import { ReactComponent as UserIcon } from "../../../../../../../assets/images/user-icon.svg";
 import React from "react";
-import arrowBetween from "../../../../../../../assets/images/structure-arrow.svg";
+import { ReactComponent as Arrow } from "../../../../../../../assets/images/structure-arrow.svg";
 
 export const TypeCard = ({ titles, type, active, onSelect }) => {
   return (
@@ -29,7 +29,7 @@ export const TypeCard = ({ titles, type, active, onSelect }) => {
           {titles.map((title, i) => (
             <React.Fragment key={i}>
               <div>{title}</div>
-              {i < titles.length - 1 && <img src={arrowBetween} alt="" />}
+              {i < titles.length - 1 && <Arrow />}
             </React.Fragment>
           ))}
         </div>
@@ -42,8 +42,8 @@ export const TypeCard = ({ titles, type, active, onSelect }) => {
 const StyledTypeCard = styled.div`
   padding: 10px;
   border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--bg-10);
+  background: var(--bg-10);
   border: 1px solid rgba(255, 255, 255, 0);
   transition: all 0.3s;
   cursor: pointer;
@@ -77,7 +77,7 @@ const StyledTypeCard = styled.div`
       &:nth-child(4) {
         background: rgba(177, 255, 145, 0.25);
         path {
-          fill: #b1ff91;
+          fill: var(--green-light);
         }
       }
       svg {
@@ -94,38 +94,41 @@ const StyledTypeCard = styled.div`
     gap: 4px;
     margin-bottom: 6px;
     div {
-      color: #fff;
+      color: var(--main-color);
       font-family: Overpass;
       font-size: 11px;
       font-style: normal;
-      font-weight: 100;
+      font-weight: var(--font-weight-100);
       line-height: 1; /* 12.98px */
       letter-spacing: 0.22px;
       opacity: 0.8;
     }
+    svg {
+      transform: rotate(0);
+    }
     div:nth-child(1) {
-      color: #fff;
+      color: var(--main-color);
       font-family: Overpass;
       font-size: 14px;
       font-style: normal;
-      font-weight: 100;
+      font-weight: var(--font-weight-100);
       line-height: 118%; /* 16.52px */
       letter-spacing: 0.28px;
       opacity: 1;
     }
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
   }
   &:hover,
   &.active {
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    background: rgba(255, 255, 255, 0.04);
+    border: var(--second-color-border);
+    background: var(--bg-4);
   }
 `;

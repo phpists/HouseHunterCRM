@@ -6,7 +6,7 @@ import { Selected } from "./Selected";
 import { useGetAllPerimissionsLevelsQuery } from "../../store/structure/structure.api";
 
 export const BossSelect = ({ users, value, onChange, error }) => {
-  const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
+  const COLORS = ["#7ecefd", "var(--green-light)", "#d0a0ff", "#7ecefd"];
   const [open, setOpen] = useState(false);
   const { data: levelsData } = useGetAllPerimissionsLevelsQuery();
   const [levels, setLevels] = useState([]);

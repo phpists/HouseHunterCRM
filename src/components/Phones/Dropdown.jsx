@@ -34,7 +34,7 @@ const StyledDropdown = styled(motion.div)`
     border-radius: 0;
     ${({ top }) =>
       top
-        ? "border-bottom: 1px solid rgba(255, 255, 255, 0.2);"
-        : "border-top: 1px solid rgba(255, 255, 255, 0.2);"};
+        ? "border-bottom: 1px solid var(--bg-20);"
+        : "border-top: 1px solid var(--bg-20);"};
   }
 `;

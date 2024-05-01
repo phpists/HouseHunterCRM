@@ -56,7 +56,7 @@ export const Calendar = ({
 
 const StyledCalendar = styled.div`
   border-radius: 9px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--bg-20);
   background: rgba(0, 0, 0, 0.1);
   padding-bottom: 12px;
   min-height: 301px;
@@ -64,7 +64,7 @@ const StyledCalendar = styled.div`
     display: none;
   }
   .react-calendar__month-view__weekdays__weekday {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--second-color);
     text-align: center;
     font-feature-settings: "clig" off, "liga" off;
     font-family: Overpass;
@@ -82,7 +82,7 @@ const StyledCalendar = styled.div`
     }
   }
   .react-calendar__month-view__days__day {
-    color: #fff;
+    color: var(--main-color);
     text-align: center;
     font-feature-settings: "clig" off, "liga" off;
     font-family: Overpass;
@@ -101,6 +101,6 @@ const StyledCalendar = styled.div`
     background: #5c496f;
   }
   .react-calendar__month-view__days__day--neighboringMonth {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--second-color);
   }
 `;

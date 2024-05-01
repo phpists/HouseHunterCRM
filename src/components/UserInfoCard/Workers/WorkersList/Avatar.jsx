@@ -9,7 +9,7 @@ const StyledAvatar = styled.div`
   height: 34px;
   flex-shrink: 0;
   border-radius: 34px;
-  border: 1.4px solid #323232;
+  border: 1.4px solid var(--dark-card-bg);
   background: url(${({ avataricon }) => avataricon}) center/cover no-repeat;
   z-index: ${({ zIndex }) => zIndex};
 `;

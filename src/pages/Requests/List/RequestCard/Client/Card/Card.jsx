@@ -31,7 +31,7 @@ const StyledCard = styled.div`
   border-radius: 9px;
   transition: all 0.3s;
   &:hover {
-    background: #363636;
+    background: var(--element-inside-bg);
   }
 
   .phonesContent {

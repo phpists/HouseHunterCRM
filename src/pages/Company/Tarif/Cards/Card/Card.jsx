@@ -46,10 +46,10 @@ export const Card = ({
 };
 const StyledCard = styled.div`
   border-radius: 13px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   padding: 12px 14px 11px;
   cursor: pointer;
-  border: 1.4px solid rgba(255, 255, 255, 0.1)
+  border: 1.4px solid var(--bg-10)
     ${({ open }) => open && "border: 1.4px solid #D9D9D9;"};
   position: relative;
   overflow: hidden;

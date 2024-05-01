@@ -37,5 +37,5 @@ export const Header = ({ step, onChangeStep }) => (
 const StyledHeader = styled.div`
   padding: 6px 6px 6.5px;
   overflow: auto;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom: var(--second-color-border);
 `;

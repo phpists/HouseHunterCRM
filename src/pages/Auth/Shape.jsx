@@ -18,7 +18,7 @@ const StyledShape = styled.div`
   width: 50svw;
   height: 200vh;
   transform: rotate(15deg);
-  background: #2c2c2c;
+  background: var(--main-bg);
   top: -20%;
   right: ${({ type }) => (type === "login" ? -5 : 67)}vw;
   overflow: hidden;
@@ -63,7 +63,7 @@ const StyledShape = styled.div`
     width: 100vw;
     height: 100vh;
     transform: rotate(0deg);
-    background: #2c2c2cca;
+    background: var(--main-bg) ca;
     backdrop-filter: blur(18.5px);
     .shape-1,
     .shape-2 {

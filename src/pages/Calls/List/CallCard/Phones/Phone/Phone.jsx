@@ -18,7 +18,7 @@ export const Phone = ({ open, phone, date, callsData, clientName }) => (
 const StyledPhone = styled.div`
   padding: 10px 31px 13px 15px;
   border-radius: 9px;
-  background: rgba(50, 50, 50, 0.8);
+  background: var(--bg-80);
   transition: all 0.3s;
   border-bottom: 1px solid rgba(255, 255, 255, 0);
   position: relative;
@@ -27,7 +27,7 @@ const StyledPhone = styled.div`
     open &&
     `
     border-radius: 9px 9px 0px 0px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.40);
+    border-bottom: 1px solid var(--color-40);
 
   `}
   @media (min-width: 1600px) {

@@ -7,7 +7,7 @@ export const Divider = ({ className }) => (
 const StyledDivider = styled.div`
   height: 1px;
   opacity: 0.1;
-  background: #fff;
+  background: var(--active-bg);
   width: calc(100% + 17px);
   margin: 8px 0 7px -6px;
 `;

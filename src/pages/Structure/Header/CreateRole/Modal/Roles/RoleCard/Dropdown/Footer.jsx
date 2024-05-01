@@ -20,7 +20,7 @@ const StyledFooter = styled.div`
     padding: 7px 20px 6px;
     border-radius: 6px;
     border: 1.6px solid #fff;
-    background: #fff;
+    background: var(--active-bg);
     color: #2c2c2c;
     font-family: Overpass;
     font-size: 15px;
@@ -31,7 +31,7 @@ const StyledFooter = styled.div`
     width: 100%;
   }
   .cancel-btn {
-    background: rgba(255, 255, 255, 0.6);
+    background: var(--bg-60);
     border: 1.6px solid transparent;
   }
 `;

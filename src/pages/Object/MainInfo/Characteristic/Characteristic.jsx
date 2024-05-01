@@ -123,7 +123,7 @@ export const Characteristic = ({ data, onChangeField, fields, errors }) => {
 
 const StyledCharacteristic = styled.div`
   border-radius: 10px;
-  background: #3d3d3d;
+  background: var(--card-bg);
   padding: 14px 14px 12px 15px;
   margin-bottom: 11px;
   .field {
@@ -138,7 +138,7 @@ const StyledCharacteristic = styled.div`
   }
   .characteristic-content {
     border-radius: 10px;
-    background: #323232;
+    background: var(--dark-card-bg);
     padding: 8px;
   }
   @media (max-width: 1300px) {

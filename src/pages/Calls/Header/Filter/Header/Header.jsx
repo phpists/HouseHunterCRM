@@ -12,5 +12,5 @@ export const Header = ({ onClose }) => (
 const StyledHeader = styled.div`
   margin-bottom: 20px;
   padding: 18px 20px;
-  background: #3d3d3d;
+  background: var(--card-bg);
 `;

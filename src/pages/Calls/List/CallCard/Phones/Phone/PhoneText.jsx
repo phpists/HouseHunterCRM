@@ -12,21 +12,22 @@ export const PhoneText = ({ phone, clientName }) => (
 const StyledPhoneText = styled.div`
   margin-right: 27px;
   .phone {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 16.52px */
     letter-spacing: 0.28px;
     margin-bottom: 2px;
   }
   .subtitle {
-    color: ${({ clientName }) => (clientName ? "#FFF" : "#d0a0ff")};
+    color: ${({ clientName }) =>
+      clientName ? "var(--main-color)" : "#d0a0ff"};
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: 1;
     letter-spacing: 0.22px;
     opacity: 0.4;

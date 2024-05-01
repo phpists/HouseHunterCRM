@@ -78,6 +78,6 @@ export const Contact = ({ phones, email, onChangeField, readOnly }) => {
 const StyledContact = styled.div`
   padding: 3px;
   border-radius: 9px;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--bg-20);
   margin-bottom: 18px;
 `;

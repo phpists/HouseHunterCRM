@@ -38,7 +38,7 @@ export const Tarif = ({
 
 const StyledTarif = styled.div`
   padding: 16px;
-  background: #323232;
+  background: var(--dark-card-bg);
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   height: calc(
     100svh - 78px - 24px - 40px -

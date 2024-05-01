@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import replyIcon from "../../../assets/images/reply.svg";
+import { ReactComponent as Icon } from "../../../assets/images/reply.svg";
 import { motion, useAnimationControls } from "framer-motion";
 import { useEffect } from "react";
 import noPhoto from "../../../assets/images/no-photo.svg";
@@ -43,7 +43,7 @@ export const SelectedMessage = ({
       }
       className="flex items-center"
     >
-      <img src={replyIcon} alt="" className="reply-icon" />
+      <Icon className="reply-icon" />
       <div className="selected-msg-content flex items-center justify-between">
         <div className="flex items-center">
           {isPhoto && <div className="photo" />}
@@ -66,7 +66,7 @@ export const SelectedMessage = ({
 const StyledSelectedMessage = styled(motion.div)`
   position: absolute;
   bottom: 100%;
-  background: #454545;
+  background: var(--chat-bg);
   width: 100%;
   padding: 4px 7px;
   z-index: 101;
@@ -85,12 +85,13 @@ const StyledSelectedMessage = styled(motion.div)`
   }
   .selected-msg-content {
     border-radius: 5px;
-    background: #3d3d3d;
+    background: var(--card-bg);
     padding: 4px 7px 2px;
     width: 100%;
   }
   .name {
-    color: ${({ isOwner }) => (isOwner ? "#81fb21" : "#98F9FF")};
+    color: ${({ isOwner }) =>
+      isOwner ? "var(--green)" : "var(--chat-response-name)"};
     text-overflow: ellipsis;
     whitespace: nowrap;
     font-family: Overpass;
@@ -110,6 +111,7 @@ const StyledSelectedMessage = styled(motion.div)`
     white-space: nowrap;
     width: 100%;
     max-width: 200px;
+    color: var(--main-color);
   }
   .photo {
     width: 36px;

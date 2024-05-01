@@ -26,7 +26,7 @@ export const Profile = ({ small, rieltor }) => {
 };
 
 const StyledProfile = styled.div`
-  color: #fff;
+  color: var(--main-color);
   .profile-info {
     margin-left: ${({ small }) => (small ? 7 : 12)}px;
   }
@@ -40,7 +40,7 @@ const StyledProfile = styled.div`
     font-weight: 400;
     line-height: 118%;
     letter-spacing: 0.28px;
-    opacity: 0.5;
+    color: var(--subtitle-color);
   }
   a {
     margin-right: 10px;

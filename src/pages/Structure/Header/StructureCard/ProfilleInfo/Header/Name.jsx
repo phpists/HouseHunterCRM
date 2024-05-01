@@ -7,7 +7,7 @@ export const Name = ({ name }) => (
 );
 
 const StyledName = styled.div`
-  color: #fff;
+  color: var(--main-color);
   text-align: left;
   font-family: Overpass;
   font-size: 14px;

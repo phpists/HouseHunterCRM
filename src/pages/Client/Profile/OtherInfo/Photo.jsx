@@ -40,7 +40,7 @@ const StyledPhotoWrapper = styled.div`
     position: absolute;
     width: calc(100% - 3px);
     height: 100%;
-    background: #2c2c2c;
+    background: var(--main-bg);
     opacity: 0;
     z-index: 5;
     transition: all 0.3s;
@@ -83,7 +83,7 @@ const StyledPhoto = styled.div`
     opacity: 0;
   }
   &:hover {
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: var(--second-color-border);
     g {
       opacity: 1;
     }

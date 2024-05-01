@@ -21,7 +21,7 @@ export const TypeSelect = ({ value, onChange, options }) => {
 
 const StyledTypeSelect = styled.div`
   border-radius: 6px;
-  background: rgba(44, 44, 44, 0.5);
+  background: var(--bg-5);
   padding: 2px;
   display: flex;
   gap: 3px;
@@ -29,8 +29,8 @@ const StyledTypeSelect = styled.div`
   div {
     border-radius: 5px;
     padding: 1px 4px;
-    background: rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 0.4);
+    background: var(--card-bg-2);
+    color: var(--second-color);
     text-align: center;
     font-family: Overpass;
     font-size: 14px;
@@ -42,8 +42,8 @@ const StyledTypeSelect = styled.div`
     transition: all 0.3s;
     border: 1px solid rgba(255, 255, 255, 0);
     &.active {
-      color: #50f835;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--green-light-2);
+      border: 1px solid var(--bg-20);
     }
   }
 `;

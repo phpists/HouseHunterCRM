@@ -24,7 +24,7 @@ export const PersonalData = () => {
 const StyledPersonalData = styled.div`
   padding: 6px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   margin-bottom: 15px;
   .fields-wrapper {
     display: grid;
@@ -35,6 +35,6 @@ const StyledPersonalData = styled.div`
     width: 100%;
     height: 1px;
     margin: 6.5px 0;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--bg-10);
   }
 `;

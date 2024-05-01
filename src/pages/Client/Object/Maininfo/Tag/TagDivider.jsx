@@ -7,6 +7,6 @@ const StyledTagDivider = styled.div`
   height: 16px;
   border-radius: 10px;
   opacity: 0.32;
-  background: #fff;
+  background: var(--active-bg);
   margin: 0 8px;
 `;

@@ -62,7 +62,7 @@ const StyledSelectionsSelect = styled.div`
   height: 40px;
   padding: 10px;
   border-radius: 6px;
-  background: #474747;
+  background: var(--selection-bg);
   position: relative;
   margin-bottom: 4px;
   z-index: 100;

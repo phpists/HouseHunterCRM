@@ -7,7 +7,7 @@ export const Tag = ({ isCover, onMakeMain }) => (
 );
 
 const StyledTag = styled.div`
-  color: #fff;
+  color: var(--main-color);
   font-family: Open Sans;
   font-size: 11px;
   font-style: normal;
@@ -15,8 +15,8 @@ const StyledTag = styled.div`
   line-height: normal;
   letter-spacing: 0.22px;
   border-radius: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(44, 44, 44, 0.5);
+  border: 1px solid var(--bg-15);
+  background: var(--bg-5);
   backdrop-filter: blur(5px);
   padding: 1px 6px 2px;
   ${({ isCover }) => !isCover && "cursor: pointer;"}

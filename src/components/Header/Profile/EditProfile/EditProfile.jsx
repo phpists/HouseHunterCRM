@@ -59,11 +59,11 @@ const StyledEditProfile = styled(motion.div)`
   right: 0;
   bottom: 0;
   left: 0;
-  background: rgba(44, 44, 44, 0.5);
+  background: var(--bg-5);
   z-index: 1000;
   .modal {
     border-radius: 16px;
-    background: rgba(107, 107, 107, 0.3);
+    background: var(--element-bg);
     backdrop-filter: blur(11.5px);
     width: 360px;
     max-height: 90vh;
@@ -76,7 +76,7 @@ const StyledEditProfile = styled(motion.div)`
       overflow-x: hidden;
     }
     @supports (-webkit-touch-callout: none) {
-      background: #2c2c2c;
+      background: var(--main-bg);
     }
   }
 `;

@@ -16,7 +16,7 @@ export const Header = ({ open, onToggleOpen }) => {
 
 const StyledHeader = styled.div`
   margin-bottom: 8px;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--second-color);
   font-family: Overpass;
   font-size: 20px;
   font-style: normal;

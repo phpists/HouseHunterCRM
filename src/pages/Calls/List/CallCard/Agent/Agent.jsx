@@ -9,7 +9,7 @@ import {
 import { useEffect, useState } from "react";
 
 export const Agent = ({ name, photo, workerLevel }) => {
-  const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
+  const COLORS = ["#7ecefd", "var(--green-light)", "#d0a0ff", "#7ecefd"];
   const { data: level } = useGetCompanyStructureLevelQuery();
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
   const [roles, setRoles] = useState([]);
@@ -61,7 +61,7 @@ export const Agent = ({ name, photo, workerLevel }) => {
 const StyledAgent = styled.div`
   padding: 8px 10px;
   border-radius: 9px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-bg-2);
   width: 185px;
   height: 60px;
   @media (max-width: 1399.9px) {

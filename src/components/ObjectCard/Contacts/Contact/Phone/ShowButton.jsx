@@ -19,8 +19,8 @@ export const ShowButton = ({
 const StyledShowButton = styled.button`
   border-radius: 8px;
   padding: 9px 18px 6px 18px;
-  background: rgba(255, 255, 255, 0.18);
-  color: rgba(255, 255, 255, 0.6);
+  background: var(--btn-transparent-bg);
+  color: var(--white-color);
   text-align: center;
   leading-trim: both;
   text-edge: cap;
@@ -34,7 +34,7 @@ const StyledShowButton = styled.button`
   height: 38px;
   &:hover {
     background: rgba(255, 255, 255, 0.38);
-    color: rgba(255, 255, 255, 1);
+    color: var(--color-2);
   }
   ${({ error }) =>
     error === "true" &&

@@ -13,21 +13,21 @@ const StyledTitleDivider = styled.div`
   div {
     height: 1px;
     opacity: 0.1;
-    background: #fff;
+    background: var(--active-bg);
     width: 100%;
   }
   span {
     border-radius: 5px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: #323232;
+    border: 1px solid var(--bg-10);
+    background: var(--dark-card-bg);
     flex-shrink: 0;
     padding: 3px 20px 0;
-    color: #50f835;
+    color: var(--green-light-2);
     text-align: center;
     font-family: Overpass;
     font-size: 11px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 12.98px */
     letter-spacing: 0.22px;
     text-transform: uppercase;

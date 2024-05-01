@@ -103,10 +103,10 @@ export const Input = ({
 
 const StyledInput = styled.div`
   border-radius: 9px;
-  background: #343434;
+  background: var(--chat-bg);
   min-height: 40px;
   padding: 12px 10px 10px 14px;
-  color: #fff;
+  color: var(--main-color);
   text-overflow: ellipsis;
   font-size: 15px;
   font-style: normal;
@@ -121,7 +121,7 @@ const StyledInput = styled.div`
     resize: none;
     height: 20px;
     &::placeholder {
-      color: rgba(255, 255, 255, 0.5);
+      color: var(--color-5);
     }
   }
   img {

@@ -14,7 +14,7 @@ export const Client = ({ name, phone }) => (
 );
 
 const StyledClient = styled.div`
-  color: #fff;
+  color: var(--main-color);
   img {
     height: 30px;
     width: 30px;

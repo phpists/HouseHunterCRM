@@ -4,7 +4,7 @@ export const Title = () => <StyledTitle>Обрати</StyledTitle>;
 
 const StyledTitle = styled.div`
   margin-right: 11px;
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;

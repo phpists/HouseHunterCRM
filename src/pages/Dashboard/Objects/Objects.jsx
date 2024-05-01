@@ -49,13 +49,13 @@ export const Objects = ({ statisticData }) => {
 
 const StyledObjects = styled.div`
   padding: 10px;
-  background: #323232;
+  background: var(--dark-card-bg);
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   margin-bottom: 10px;
   .content {
     padding: 14px;
     border-radius: 9px;
-    background: #3d3d3d;
+    background: var(--card-bg);
     .icon-wrapper {
       background: rgba(145, 111, 245, 0.1);
     }

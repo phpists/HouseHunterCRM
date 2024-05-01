@@ -48,7 +48,7 @@ export const ProfilleInfo = ({ onOpenInfo, data }) => {
 
 const StyledProfilleInfo = styled.div`
   border-radius: 10px;
-  background: rgba(50, 50, 50, 0.8);
+  background: var(--bg-80);
   padding: 14px 10px 12px 51px;
   width: 316px;
   height: 220px;

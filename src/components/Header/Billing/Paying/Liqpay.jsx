@@ -58,7 +58,7 @@ const StyledLiqpay = styled.div`
 
   @media (min-width: 600px) {
     &:hover {
-      background: #fff;
+      background: var(--active-bg);
       padding: 6px 19px 3px;
       width: auto;
       .icon-full {

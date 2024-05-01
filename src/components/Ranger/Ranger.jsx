@@ -10,7 +10,7 @@ export const Segment = styled("div")`
     props.index === 0
       ? "#808080"
       : props.index === 1
-      ? "#FFF"
+      ? "var(--main-color)"
       : props.index === 2
       ? "#808080"
       : "#808080"};
@@ -125,7 +125,7 @@ const StyledRanger = styled.div`
   padding: ${({ big }) => !big && "transition: all 0.3s;"};
 
   /* transition: all 0.3s; */
-  /* background: rgba(255, 255, 255, 0.05); */
+  /* background:  var(--card-bg-2); */
   position: relative;
   overflow: hidden;
   ${({ error }) => error === "true" && "border: 1px solid red;"}
@@ -137,7 +137,7 @@ const StyledRanger = styled.div`
   ${({ big }) =>
     big &&
     `
-     background: rgb(78 78 78);
+     background: var(--bg-78);
     .first-angle,
     .second-angle {
       opacity: 1;
@@ -145,7 +145,7 @@ const StyledRanger = styled.div`
   `}
 
   &:hover {
-    background: rgb(78 78 78);
+    background: var(--bg-78);
     .first-angle,
     .second-angle {
       opacity: 1;

@@ -17,7 +17,7 @@ export const Clients = ({ data }) => (
 const StyledClients = styled.div`
   padding: 10px;
   margin-bottom: 10px;
-  background: #323232;
+  background: var(--dark-card-bg);
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   path {
     fill: #2df47d;

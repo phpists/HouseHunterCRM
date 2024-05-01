@@ -53,24 +53,24 @@ export const PositionCard = ({
 const StyledPositionCard = styled.div`
   padding: 3px 10px 1px 7px;
   border-radius: 7px;
-  background: rgba(44, 44, 44, 0.5);
+  background: var(--bg-5);
   min-width: 113px;
   transition: all 0.3s;
   border: 1px solid rgba(255, 255, 255, 0);
   cursor: pointer;
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
     margin-right: 5px;
   }
   .value {
-    color: #fff;
+    color: var(--main-color);
     text-align: right;
     font-family: Overpass;
     font-size: 14px;
@@ -96,7 +96,7 @@ const StyledPositionCard = styled.div`
     }
   }
   &:hover {
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--bg-20);
     .value {
       opacity: 1;
     }

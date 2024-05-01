@@ -96,7 +96,7 @@ const StyledCards = styled.div`
   border-radius: 13px;
   overflow: hidden;
   & > .card {
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--bg-10);
     &:nth-child(1),
     &:nth-child(3) {
       border-left: none;

@@ -30,18 +30,18 @@ const StyledCard = styled.div`
 
   .history-card {
     &-title {
-      color: #fff;
+      color: var(--main-color);
       font-size: 14px;
       font-style: normal;
-      font-weight: 100;
+      font-weight: var(--font-weight-100);
       line-height: 120%; /* 16.8px */
       margin-bottom: 4px;
     }
     &-date {
-      color: rgba(255, 255, 255, 0.6);
+      color: var(--white-color);
       font-size: 14px;
       font-style: normal;
-      font-weight: 100;
+      font-weight: var(--font-weight-100);
       line-height: 120%;
       display: flex;
       align-items: center;
@@ -55,7 +55,7 @@ const StyledCard = styled.div`
       align-items: center;
     }
     &-status {
-      color: ${({ action }) => (action ? "#50f835" : "#F14040")};
+      color: ${({ action }) => (action ? "var(--green-light-2)" : "#F14040")};
       font-family: Overpass;
       font-size: 14px;
       font-style: normal;
@@ -64,10 +64,10 @@ const StyledCard = styled.div`
       margin-right: 10px;
     }
     &-tagName {
-      color: #fff;
+      color: var(--main-color);
       font-size: 14px;
       font-style: normal;
-      font-weight: 100;
+      font-weight: var(--font-weight-100);
       line-height: 120%; /* 16.8px */
     }
   }

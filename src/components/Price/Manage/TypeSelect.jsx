@@ -53,8 +53,8 @@ const StyledTypeSelect = styled.div`
   div {
     border-radius: 5px;
     padding: 1px 4px;
-    background: rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 0.4);
+    background: var(--card-bg-2);
+    color: var(--second-color);
     text-align: center;
     font-family: Overpass;
     font-size: 14px;
@@ -68,8 +68,8 @@ const StyledTypeSelect = styled.div`
     box-sizing: content-box;
     width: max-content;
     &.active {
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--main-color);
+      border: 1px solid var(--bg-20);
     }
   }
 `;

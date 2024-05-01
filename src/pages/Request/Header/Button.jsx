@@ -11,7 +11,7 @@ export const Button = ({ title, className, disabled, onClick, active }) => (
 );
 
 const StyledButton = styled.button`
-  color: #fff;
+  color: var(--main-color);
   text-align: center;
   font-family: Overpass;
   font-size: 15px;
@@ -30,13 +30,13 @@ const StyledButton = styled.button`
   transition: all 0.3s;
   margin-right: 10px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: var(--second-color-border);
   opacity: 0.4;
   white-space: nowrap;
   &:hover,
   &.active {
     opacity: 1;
     border: 1px solid rgba(255, 255, 255, 0);
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
   }
 `;

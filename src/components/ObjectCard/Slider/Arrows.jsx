@@ -43,7 +43,7 @@ const StyledArrows = styled.div`
   z-index: 3;
   .btns {
     padding: 5px;
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    border-top: var(--second-color-border);
     width: 100%;
 
     button {
@@ -54,15 +54,15 @@ const StyledArrows = styled.div`
       transition: all 0.3s;
       backdrop-filter: blur(0);
       &:hover {
-        background: rgba(255, 255, 255, 0.2);
+        background: var(--bg-20);
       }
       &:active {
-        background: rgba(255, 255, 255, 0.4);
+        background: var(--second-color);
       }
     }
   }
   .text {
-    color: #fff;
+    color: var(--main-color);
     text-align: center;
     font-family: Overpass;
     font-size: 15px;
@@ -71,7 +71,7 @@ const StyledArrows = styled.div`
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     span {
-      color: rgba(255, 255, 255, 0.4);
+      color: var(--second-color);
     }
   }
 `;

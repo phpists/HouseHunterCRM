@@ -106,5 +106,5 @@ export const StyledRoleCard = styled.div`
   padding: 8px 10px;
   border-radius: ${({ open }) => (open ? "6px 6px 0 0" : "6px")};
   border: 1px solid ${({ iconColor }) => iconColor};
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
 `;

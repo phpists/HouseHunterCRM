@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import clockIcon from "../../../../../assets/images/clock.svg";
+import { ReactComponent as Icon } from "../../../../../assets/images/clock.svg";
 import { handleFormatDate } from "../../../../../utilits";
 
 export const SeenTime = ({ date }) => (
-  <StyledSeenTime className="flex items-center clickable">
-    <img src={clockIcon} alt="" className="clickable" />
+  <StyledSeenTime className="flex items-center clickable labelItem">
+    <Icon alt="" className="clickable" />
     {!date || date === "0"
       ? "не переглянуто"
       : `переглянуто ${handleFormatDate(Number(date) * 1000)}`}
@@ -12,18 +12,19 @@ export const SeenTime = ({ date }) => (
 );
 
 const StyledSeenTime = styled.div`
-  color: #fff;
+  color: var(--main-color);
   leading-trim: both;
   text-edge: cap;
   font-family: Open Sans;
   font-size: 11px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: normal;
   letter-spacing: 0.22px;
   opacity: 0.4;
   margin-bottom: 16px;
-  img {
+
+  svg {
     height: 12px;
     width: 12px;
     margin-right: 4px;

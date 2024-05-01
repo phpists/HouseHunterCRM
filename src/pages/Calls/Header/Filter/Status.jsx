@@ -25,6 +25,6 @@ export const Status = ({ value, onChange }) => (
 const StyledStatus = styled.div`
   padding: 6px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   margin-bottom: 15px;
 `;

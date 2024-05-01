@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { ReactComponent as WebsiteIcon } from "../../../assets/images/website.svg";
 import editIcon from "../../../assets/images/edit-company.svg";
 import { useState } from "react";
-import saveIcon from "../../../assets/images/check.svg";
+import saveIcon from "../../../assets/images/check-blue.svg";
 
 export const WebSite = ({ webSite, onEdit }) => {
   const [edit, setEdit] = useState(false);
@@ -44,7 +44,7 @@ export const WebSite = ({ webSite, onEdit }) => {
 
 const StyledWebSite = styled.div`
   padding: 10px 11px 9px;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--second-color);
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
@@ -76,12 +76,13 @@ const StyledWebSite = styled.div`
     top: 9px;
     right: 9px;
     transform: translateX(-10px);
+    margin: 0;
   }
   input {
     width: 90%;
   }
   &:hover {
-    color: #fff;
+    color: var(--main-color);
     background: rgba(93, 99, 255, 0.1);
     g {
       opacity: 1;

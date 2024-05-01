@@ -26,19 +26,17 @@ const StyledObjectCard = styled.div`
   flex-shrink: 0;
   border-radius: 3px;
   background: ${({ photo }) =>
-    photo
-      ? `url(${photo}) center/cover no-repeat !important`
-      : "rgba(255, 255, 255, 0.2)"};
+    photo ? `url(${photo}) center/cover no-repeat !important` : "var(--bg-20)"};
   transition: all 0.3s;
   border: 1px solid transparent;
   text-align: center;
   font-family: Open Sans;
   font-size: 11px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: 125.182%; /* 13.77px */
   letter-spacing: 0.22px;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--dark-90);
   position: relative;
   margin-right: 5px;
   &::before {

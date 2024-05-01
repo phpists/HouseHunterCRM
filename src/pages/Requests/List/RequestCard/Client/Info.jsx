@@ -29,7 +29,7 @@ export const Info = ({ firstName, lastName, idClient, avatar, dateCreate }) => {
             <Id id={idClient} />
           </div>
         </div>
-        <div className="name date">
+        <div className="name date labelItem">
           Створено {handleFormatDate(Number(dateCreate) * 1000, true)}
         </div>
       </div>
@@ -45,7 +45,7 @@ const StyledInfo = styled.div`
   transition: all 0.3s;
   &:hover {
     border-radius: 9px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
   }
   .avatar {
     margin-right: 8px;
@@ -56,7 +56,7 @@ const StyledInfo = styled.div`
     flex-shrink: 0;
   }
   .name {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
@@ -77,7 +77,7 @@ const StyledInfo = styled.div`
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;

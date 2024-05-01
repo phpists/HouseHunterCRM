@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 export const Email = ({ email }) => <StyledEmail>{email}</StyledEmail>;
 
 const StyledEmail = styled.div`
-  color: #fff;
+  color: var(--main-color);
   text-align: right;
   font-family: Open Sans;
   font-size: 11px;

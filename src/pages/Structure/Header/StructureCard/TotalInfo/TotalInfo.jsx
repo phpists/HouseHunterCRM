@@ -65,7 +65,7 @@ export const TotalInfo = ({ open, onToggleOpen, id }) => {
 const StyledTotalInfo = styled.div`
   padding: 8px;
   border-radius: 10px;
-  background: rgba(50, 50, 50, 0.8);
+  background: var(--bg-80);
   height: 224px;
   ${({ open }) => open && "width: 281px;"}
   .cards {

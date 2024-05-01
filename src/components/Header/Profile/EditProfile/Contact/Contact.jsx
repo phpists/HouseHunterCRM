@@ -20,7 +20,7 @@ const StyledContact = styled.div`
   .divider {
     width: 100%;
     height: 1px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--bg-10);
     margin: 6px 0;
   }
 `;

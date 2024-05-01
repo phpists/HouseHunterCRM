@@ -92,7 +92,7 @@ export const EditObject = ({ onClose, data, onSuccess }) => {
         </div>
         <div className="footer">
           <Button title="Відмінити" cancel onClick={() => onClose()} />
-          <Button title="Зберігти" onClick={handleSave} disabled={loading} />
+          <Button title="Зберегти" onClick={handleSave} disabled={loading} />
         </div>
       </Modal>
     </StyledEditObject>
@@ -126,7 +126,7 @@ const StyledEditObject = styled.div`
     gap: 20px;
   }
   .oldTitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 20px;
     font-style: normal;
@@ -139,12 +139,12 @@ const StyledEditObject = styled.div`
   }
   .oldDesc {
     overflow: hidden;
-    color: #fff;
+    color: var(--main-color);
     text-overflow: ellipsis;
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%;
     letter-spacing: 0.3px;
     opacity: 0.4;

@@ -16,11 +16,11 @@ const StyledButton = styled.div`
   height: 28px;
   flex-shrink: 0;
   border-radius: 7px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   padding: 5px;
   transition: all 0.3s;
   &:hover {
-    background: #fff;
+    background: var(--active-bg);
     svg,
     g,
     path {

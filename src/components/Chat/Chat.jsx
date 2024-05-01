@@ -57,8 +57,8 @@ const StyledChat = styled.div`
   top: 0;
   bottom: 0;
   right: 0;
-  border-left: 1px solid rgba(255, 255, 255, 0.4);
-  background: #3d3d3d;
+  border-left: var(--second-color-border);
+  background: var(--card-bg);
   backdrop-filter: blur(12.5px);
   width: 90%;
   max-width: 439px;

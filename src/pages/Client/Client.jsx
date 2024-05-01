@@ -79,7 +79,7 @@ const Client = () => {
 };
 
 const StyledClient = styled.div`
-  background: #323232;
+  background: var(--dark-card-bg);
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   padding: 18px 20px 20px;
   position: relative;

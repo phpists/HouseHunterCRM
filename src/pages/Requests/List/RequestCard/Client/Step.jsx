@@ -10,10 +10,10 @@ export const Step = () => (
 const StyledStep = styled.div`
   padding: 5px 7px 2px;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-bg-2);
   margin-bottom: 8px;
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -24,7 +24,7 @@ const StyledStep = styled.div`
     margin-right: 5px;
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 12px;
     font-style: normal;

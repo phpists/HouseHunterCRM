@@ -20,7 +20,11 @@ export const DescriptionModal = ({ onClose, initValue }) => {
         />
         <div className="footer">
           <Button title="Відмінити" cancel onClick={() => onClose()} />
-          <Button title="Зберігти" onClick={() => onClose(value)} />
+          <Button
+            title="Зберегти"
+            onClick={() => onClose(value)}
+            className="submit-btn"
+          />
         </div>
       </Modal>
     </StyledDescriptionModal>
@@ -44,5 +48,8 @@ const StyledDescriptionModal = styled.div`
     margin-top: 20px;
     width: max-content;
     margin-left: auto;
+    .submit-btn {
+      color: #fff !important;
+    }
   }
 `;

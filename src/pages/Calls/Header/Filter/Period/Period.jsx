@@ -57,8 +57,8 @@ const StyledPeriod = styled.div`
     top: calc(100% + 10px);
     left: 0;
     z-index: 100;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--bg-20);
+    background: var(--bg-10);
     backdrop-filter: blur(18.5px);
   }
 `;

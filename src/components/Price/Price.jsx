@@ -69,7 +69,7 @@ export const Price = ({
 
 const StyledPrice = styled.button`
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   margin-bottom: 8px;
   width: 100%;
   transition: all 0.3s;

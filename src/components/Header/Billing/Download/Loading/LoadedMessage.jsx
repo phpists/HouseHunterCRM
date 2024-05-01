@@ -6,7 +6,7 @@ export const LoadedMessage = () => (
 
 const StyledLoadedMessage = styled.div`
   margin-top: 2px;
-  color: #fff;
+  color: var(--main-color);
   font-family: Open Sans;
   font-size: 11px;
   font-style: normal;

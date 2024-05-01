@@ -11,11 +11,11 @@ export const Title = () => (
 
 const StyledTitle = styled(NavLink)`
   margin-bottom: 20px;
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 20px;
   font-style: normal;
-  font-weight: 100;
+  font-weight: var(--font-weight-100);
   line-height: 118%; /* 23.6px */
   letter-spacing: 0.4px;
   svg {

@@ -15,7 +15,7 @@ const StyledInfo = styled.div`
   display: grid;
   grid-template-columns: max-content;
   gap: 6px;
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 11px;
   font-style: normal;
@@ -25,7 +25,7 @@ const StyledInfo = styled.div`
   div {
     padding: 5px 8px 2px 7px;
     border-radius: 3px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
   }
   span {
     margin-right: 5px;

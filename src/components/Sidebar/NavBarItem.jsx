@@ -7,7 +7,7 @@ export const NavBarItem = ({ Icon, link, childrenLinks }) => {
   return (
     <StyledNavbarItem
       to={link}
-      className={`flex items-center ${
+      className={`flex items-center sidebarLink ${
         childrenLinks.includes(pathname?.split("/")?.[1]) && "active"
       }`}
       activeclassname="active"
@@ -61,4 +61,5 @@ const StyledNavbarItem = styled(NavLink)`
       background: #5d63ff;
     }
   }
+
 `;

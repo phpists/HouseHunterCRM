@@ -56,7 +56,7 @@ export const Client = ({ clientData }) => {
 
 const StyledClient = styled.div`
   padding: 10px;
-  background: #3d3d3d;
+  background: var(--card-bg);
   margin-bottom: 10px;
   border-radius: 10px;
   display: grid;
@@ -75,7 +75,7 @@ const StyledClient = styled.div`
     }
   }
   &:hover {
-    background: #484848;
+    background: var(--hover-card);
     .arrow-more {
       opacity: 1;
       transform: rotate(0deg);

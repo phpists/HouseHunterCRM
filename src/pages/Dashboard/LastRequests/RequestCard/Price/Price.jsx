@@ -34,6 +34,6 @@ export const Price = ({ data, id }) => (
 const StyledPrice = styled.div`
   padding: 6px 14px;
   border-radius: 9px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-bg-2);
   margin-bottom: 10px;
 `;

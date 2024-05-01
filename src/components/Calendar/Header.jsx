@@ -53,16 +53,16 @@ export const Header = ({ value, onChangeMonth, onChangeYear, onClose }) => {
 };
 
 const StyledHeader = styled.div`
-  color: #fff;
+  color: var(--main-color);
   font-feature-settings: "clig" off, "liga" off;
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: 21px;
   padding: 15px 16px;
   width: 100%;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid var(--bg-20);
   margin-bottom: 20px;
   svg {
     cursor: pointer;
@@ -88,8 +88,8 @@ const StyledHeader = styled.div`
   }
   input {
     border-radius: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--bg-20);
+    background: var(--card-bg-2);
     padding: 10px;
     width: 60px;
     height: 24px;

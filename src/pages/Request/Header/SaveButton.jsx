@@ -8,7 +8,7 @@ export const SaveButton = ({ className, onClick, loading }) => (
 );
 
 const StyledSaveButton = styled.button`
-  color: #fff;
+  color: var(--main-color);
   text-align: center;
   display: flex;
   justify-content: center;
@@ -18,7 +18,7 @@ const StyledSaveButton = styled.button`
   font-weight: 200;
   padding: 6px 28px 6px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--bg-20);
   opacity: 1;
   border: 1px solid transparent;
   line-height: 118%; /* 17.7px */

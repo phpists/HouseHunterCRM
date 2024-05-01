@@ -157,7 +157,7 @@ export const SelectItems = ({
 
 const StyledSelectItems = styled.button`
   border-radius: ${({ open }) => (open ? "8px 8px 0 0" : "8px")};
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--bg-20);
   /* backdrop-filter: blur(18.5px); */
   padding: 4px 4px 4px 12px;
   position: relative;

@@ -21,7 +21,7 @@ export const Card = ({ type, messages, info, link, onClose }) => {
 
 const StyledCard = styled.div`
   border-radius: 9px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: #3d3d3d;
+  border: 1px solid var(--bg-10);
+  background: var(--card-bg);
   padding-top: 8px;
 `;

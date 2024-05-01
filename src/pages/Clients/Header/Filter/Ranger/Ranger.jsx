@@ -65,6 +65,6 @@ const StyledRanger = styled.div`
   padding: 10px 10px 5px;
   border-radius: 6px;
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--bg-10);
   }
 `;

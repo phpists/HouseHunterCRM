@@ -5,11 +5,11 @@ export const Date = ({ date }) => (
 );
 
 const StyledDate = styled.div`
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 11px;
   font-style: normal;
-  font-weight: 100;
+  font-weight: var(--font-weight-100);
   line-height: 118%; /* 12.98px */
   letter-spacing: 0.22px;
   opacity: 0.4;

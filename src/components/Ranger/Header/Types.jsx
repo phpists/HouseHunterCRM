@@ -27,7 +27,7 @@ export const Types = ({ types, typeValue, onChangeType, typeError }) => {
 };
 
 const StyledTypes = styled.div`
-  background: #414141;
+  background: var(--bg-41);
   position: absolute;
   right: 0;
   top: 0;
@@ -35,7 +35,7 @@ const StyledTypes = styled.div`
   border-radius: 0 0 0 7px;
   transition: all 0.3s;
   div {
-    color: ${({ error }) => (error ? "red" : "rgba(255,255,255, 0.4)")};
+    color: ${({ error }) => (error ? "red" : "var(--color-40-rgb)")};
     text-align: center;
     font-family: Open Sans;
     font-size: 11px;
@@ -80,7 +80,7 @@ const StyledTypes = styled.div`
       border-left: 13px solid transparent;
       border-right: 13px solid transparent;
       transform: rotate(45deg);
-      border-bottom: 13px solid #414141;
+      border-bottom: 13px solid var(--bg-41);
     }
     &::after {
       content: "";
@@ -92,7 +92,7 @@ const StyledTypes = styled.div`
       width: 24px;
       border-radius: 100%;
       z-index: 100;
-      background: #4e4e4e;
+      background: var(--bg-78-heck);
     }
   }
   .second-angle {
@@ -114,7 +114,7 @@ const StyledTypes = styled.div`
       border-left: 13px solid transparent;
       border-right: 13px solid transparent;
       transform: rotate(45deg);
-      border-bottom: 13px solid #414141;
+      border-bottom: 13px solid var(--bg-41);
     }
     &::after {
       content: "";
@@ -126,7 +126,7 @@ const StyledTypes = styled.div`
       width: 16.3px;
       border-radius: 100%;
       z-index: 100;
-      background: #4e4e4e;
+      background: var(--bg-78-heck);
     }
   }
 `;

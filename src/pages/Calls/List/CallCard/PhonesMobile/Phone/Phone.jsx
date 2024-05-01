@@ -22,7 +22,7 @@ export const Phone = ({ open, onToggleOpen, phone, date }) => (
 const StyledPhone = styled.div`
   padding: 6px;
   border-radius: 9px;
-  background: rgba(50, 50, 50, 0.8);
+  background: var(--bg-80);
   transition: all 0.3s;
   border-bottom: 1px solid rgba(255, 255, 255, 0);
   position: relative;
@@ -31,7 +31,7 @@ const StyledPhone = styled.div`
     open &&
     `
     border-radius: 9px 9px 0px 0px;
-    border-bottom: 1px solid  rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid  var(--bg-10);
 
   `}
   @media (min-width: 1600px) {

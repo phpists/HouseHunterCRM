@@ -14,7 +14,7 @@ export const AddButton = ({ onClick }) => (
 const StyledAddButton = styled.div`
   border-radius: 1px 0px 9px 9px;
   padding: 6px 6px 6px 10px;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--second-color);
   font-family: Overpass;
   font-size: 12px;
   font-style: normal;
@@ -27,8 +27,8 @@ const StyledAddButton = styled.div`
     transition: all 0.3s;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 1);
+    background: var(--card-bg-2);
+    color: var(--color-2);
     g {
       opacity: 1;
     }

@@ -15,13 +15,12 @@ export const Option = ({ title, active, onSelect, last }) => (
 
 const StyledOption = styled.div`
   padding: 8px;
-  border-bottom: ${({ last }) => (last ? "0px" : "1px")} solid
-    rgba(255, 255, 255, 0.1);
-  color: #fff;
+  border-bottom: ${({ last }) => (last ? "0px" : "1px")} solid var(--bg-10);
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 100;
+  font-weight: var(--font-weight-100);
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   cursor: pointer;
@@ -33,7 +32,8 @@ const StyledOption = styled.div`
     transition: all 0.3s;
   }
   path {
-    fill: ${({ active }) => (active ? "#50F835" : "#FFF")};
+    fill: ${({ active }) =>
+      active ? "var(--green-light-2)" : "var(--main-color)"};
   }
 
   &:hover {

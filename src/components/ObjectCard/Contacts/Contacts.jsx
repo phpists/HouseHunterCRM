@@ -4,7 +4,7 @@ import { Divider } from "./Divider";
 import { useLazyGetPhoneObjectQuery } from "../../../store/objects/objects.api";
 import { useEffect, useState } from "react";
 import { ShowButton } from "./Contact/Phone/ShowButton";
-import { handleResponse } from "../../../utilits";
+import { handleFormatDate, handleResponse } from "../../../utilits";
 
 export const Contacts = ({
   className,
@@ -12,6 +12,7 @@ export const Contacts = ({
   showContactId,
   onShowContact,
   onOpenPhonesModal,
+  showClientObjectsCount,
 }) => {
   const [getClient] = useLazyGetPhoneObjectQuery();
   const [error, setError] = useState(false);
@@ -72,16 +73,14 @@ export const Contacts = ({
             data?.clients_inf?.contact?.party_agency ?? data?.clients_inf?.type
           }
           subtitle={
-            data?.type_object === "street_base"
-              ? `${data?.Count_object ?? 0} об'єкт${
-                  data?.Count_object === 0
-                    ? "ів"
-                    : data?.Count_object === 1
-                    ? ""
-                    : data?.Count_object < 5
-                    ? "а"
-                    : "ів"
-                } у цього клієнта`
+            !showClientObjectsCount
+              ? null
+              : Number(data?.Count_object) === 0
+              ? null
+              : data?.type_object === "street_base"
+              ? `${data?.Count_object ?? 0} об'єктів на ${handleFormatDate(
+                  Number(data?.count_object_date) * 1000
+                )}`
               : null
           }
           onClickOnSubtitle={onOpenPhonesModal}

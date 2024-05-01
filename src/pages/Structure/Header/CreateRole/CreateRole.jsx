@@ -29,10 +29,10 @@ export const CreateRole = ({ onRefetchStructureData }) => {
 
 const StyledCreateRole = styled.button`
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--bg-20);
   padding: 6px 28px;
   height: 32px;
-  color: #fff;
+  color: var(--main-color);
   text-align: center;
   leading-trim: both;
   text-edge: cap;
@@ -46,7 +46,7 @@ const StyledCreateRole = styled.button`
   transition: all 0.3s;
   white-space: nowrap;
   &:hover {
-    background: #fff;
+    background: var(--active-bg);
     color: #2c2c2c;
   }
 `;

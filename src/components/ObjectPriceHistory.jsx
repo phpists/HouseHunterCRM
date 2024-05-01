@@ -3,8 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { Modal } from "./Modal/Modal";
 import { handleFormatDate } from "../utilits";
+import { useAppSelect } from "../hooks/redux";
 
 export const ObjectPriceHistory = ({ onClose, data }) => {
+  const { theme } = useAppSelect((state) => state.auth);
+
   const isJsonString = (str) => {
     try {
       JSON.parse(str);
@@ -83,7 +86,7 @@ export const ObjectPriceHistory = ({ onClose, data }) => {
       },
     ],
     options: {
-      colors: ["#50F835"],
+      colors: ["#50f835"],
       chart: {
         height: 350,
         type: "line",
@@ -126,7 +129,7 @@ export const ObjectPriceHistory = ({ onClose, data }) => {
 
       grid: {
         show: true,
-        borderColor: "rgba(255, 255, 255, 0.10)",
+        borderColor: theme === "dark" ? "rgba(255, 255, 255, 0.10)" : "#171725",
         position: "back",
         xaxis: {
           lines: {
@@ -143,7 +146,7 @@ export const ObjectPriceHistory = ({ onClose, data }) => {
         categories: handleGetDates(),
         labels: {
           style: {
-            colors: "rgba(255, 255, 255, 0.60)",
+            colors: theme === "dark" ? "rgba(255, 255, 255, 0.60)" : "#171725",
             fontFamily: "Overpass",
           },
         },
@@ -151,7 +154,7 @@ export const ObjectPriceHistory = ({ onClose, data }) => {
       yaxis: {
         labels: {
           style: {
-            colors: "rgba(255, 255, 255, 0.60)",
+            colors: theme === "dark" ? "rgba(255, 255, 255, 0.60)" : "#171725",
             fontFamily: "Overpass",
           },
         },
@@ -168,7 +171,7 @@ export const ObjectPriceHistory = ({ onClose, data }) => {
         },
       ],
       options: {
-        colors: ["#50F835"],
+        colors: ["#50f835"],
         chart: {
           height: 350,
           type: "line",
@@ -211,7 +214,8 @@ export const ObjectPriceHistory = ({ onClose, data }) => {
 
         grid: {
           show: true,
-          borderColor: "rgba(255, 255, 255, 0.10)",
+          borderColor:
+            theme === "dark" ? "rgba(255, 255, 255, 0.10)" : "#171725",
           position: "back",
           xaxis: {
             lines: {
@@ -228,7 +232,8 @@ export const ObjectPriceHistory = ({ onClose, data }) => {
           categories: handleGetDates(),
           labels: {
             style: {
-              colors: "rgba(255, 255, 255, 0.60)",
+              colors:
+                theme === "dark" ? "rgba(255, 255, 255, 0.60)" : "#171725",
               fontFamily: "Overpass",
             },
           },
@@ -236,7 +241,8 @@ export const ObjectPriceHistory = ({ onClose, data }) => {
         yaxis: {
           labels: {
             style: {
-              colors: "rgba(255, 255, 255, 0.60)",
+              colors:
+                theme === "dark" ? "rgba(255, 255, 255, 0.60)" : "#171725",
               fontFamily: "Overpass",
             },
           },
@@ -273,11 +279,11 @@ const StyledObjectPriceHistory = styled.div`
     overflow: hidden;
   }
   .empty {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--dark-90);
     font-family: Overpass;
     font-size: 18px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: normal;
     letter-spacing: 0.36px;
     margin-bottom: 4px;
@@ -287,6 +293,6 @@ const StyledObjectPriceHistory = styled.div`
     max-width: 540px;
   }
   text {
-    color: rgba(255, 255, 255, 0.6) !important;
+    color: var(--bg-60) !important;
   }
 `;

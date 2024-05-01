@@ -16,7 +16,7 @@ const StyledClose = styled.div`
   transition: all 0.3s;
   cursor: pointer;
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
     g {
       opacity: 1;
     }

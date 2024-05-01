@@ -200,7 +200,7 @@ export const Tags = ({
 const StyledTags = styled.div`
   padding: 8px;
   border-radius: 9px;
-  background: rgba(50, 50, 50, 0.8);
+  background: var(--bg-80);
   width: 230px;
   margin-right: 10px;
   height: 200px;

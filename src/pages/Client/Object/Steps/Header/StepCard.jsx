@@ -28,7 +28,7 @@ const StyledStepCard = styled.div`
     margin-right: 7px;
   }
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -37,19 +37,19 @@ const StyledStepCard = styled.div`
     letter-spacing: 0.3px;
   }
   .date {
-    color: #fff;
+    color: var(--main-color);
 
     /* Aditional text */
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
     opacity: 1;
   }
 `;

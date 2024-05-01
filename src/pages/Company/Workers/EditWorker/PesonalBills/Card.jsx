@@ -24,7 +24,7 @@ const StyledCard = styled.div`
     font-weight: 200;
     line-height: 118%;
     letter-spacing: 0.3px;
-    color: ${({ type }) => (type ? "#FFF" : "#FF5151")};
+    color: ${({ type }) => (type ? "var(--main-color)" : "#FF5151")};
     span {
       opacity: 0.6;
       margin-right: 3px;
@@ -34,18 +34,18 @@ const StyledCard = styled.div`
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
   }
   .price {
-    color: ${({ type }) => (type ? "#50F835" : "#FF5151")};
+    color: ${({ type }) => (type ? "var(--green-light-2)" : "#FF5151")};
     text-align: right;
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
   }

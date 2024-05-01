@@ -69,27 +69,27 @@ export const Creating = ({ onClose, onRefetchData }) => {
 
 const StyledCreating = styled.div`
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   overflow: hidden;
   text-align: left;
   .content-wrapper-creating {
     padding: 10px 20px 9px;
   }
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;

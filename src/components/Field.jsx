@@ -146,7 +146,7 @@ export const Field = ({
               : placeholder}
           </div>
         )}
-        <div className="label">{label}</div>
+        <div className="label labelItem">{label}</div>
       </div>
       {viewOnly ? null : (
         <div
@@ -181,7 +181,7 @@ const StyleField = styled.div`
     width: 80%;
   }
   .value {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
@@ -194,7 +194,7 @@ const StyleField = styled.div`
     overflow: hidden;
     ${({ full }) => (full ? "width: max-content;" : "white-space: nowrap;")}
     &::placeholder {
-      color: #fff;
+      color: var(--main-color);
       font-family: Overpass;
       font-size: 14px;
       font-style: normal;
@@ -209,14 +209,13 @@ const StyleField = styled.div`
     z-index: 100;
   }
   .label {
-    color: #fff;
+    color: var(--subtitle-color);
     font-family: Open Sans;
     font-size: 10px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
-    opacity: 0.4;
   }
   .edit-btn {
     opacity: 0.4;
@@ -230,7 +229,7 @@ const StyleField = styled.div`
     flex-shrink: 0;
     ${({ edit }) => !edit && " opacity: 0; transform: translateX(-10px);"}
     &:hover {
-      background: rgba(255, 255, 255, 0.2) !important;
+      background: var(--bg-20) !important;
       opacity: 1 !important;
     }
   }
@@ -239,11 +238,11 @@ const StyleField = styled.div`
   }
   .edit-icon {
     path {
-      fill: #fff !important;
+      /* fill: #fff !important; */
     }
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
     .value {
       filter: blur(0px);
       white-space: normal;
@@ -262,7 +261,7 @@ const StyleField = styled.div`
     `
         border-radius: 9px;
         border: 1px solid rgba(255, 255, 255, 0.20);
-        background: rgba(255, 255, 255, 0.05);
+        background:  var(--card-bg-2);
         .value {
             filter: blur(0px);
         }
@@ -270,7 +269,7 @@ const StyleField = styled.div`
   .calendar_wrapper {
     position: absolute;
     top: 100%;
-    background: #414141;
+    background: var(--bg-41);
     max-width: 320px;
     left: 0;
     z-index: 1000;

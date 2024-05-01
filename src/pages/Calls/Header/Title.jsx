@@ -5,7 +5,7 @@ export const Title = ({ selectedCount }) => (
 );
 
 const StyledTitle = styled.div`
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--dark-90);
   font-family: Overpass;
   font-size: 18px;
   font-style: normal;

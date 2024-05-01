@@ -16,7 +16,7 @@ export const CardTitle = ({ title = "-", editable, onEdit }) => (
 );
 
 const StyledCardTitle = styled.div`
-  color: #fff;
+  color: var(--main-color);
   /* H3 */
   font-family: Overpass;
   font-size: 20px;
@@ -44,7 +44,7 @@ const StyledCardTitle = styled.div`
     flex-shrink: 0;
     opacity: 0;
     &:hover {
-      background: rgba(255, 255, 255, 0.2) !important;
+      background: var(--bg-20) !important;
       opacity: 1 !important;
     }
   }

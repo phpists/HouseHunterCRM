@@ -43,18 +43,18 @@ const StyledSelectTask = styled.div`
   cursor: pointer;
   position: relative;
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     opacity: 0.6;
     transition: all 0.3s;
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
@@ -75,7 +75,7 @@ const StyledSelectTask = styled.div`
   }
   &:hover,
   &.active {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
     .title {
       opacity: 1;
     }

@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 export const Phone = () => <StyledPhone>+38 (097) 707-62-58</StyledPhone>;
 
 const StyledPhone = styled.div`
-  color: #fff;
+  color: var(--main-color);
   text-align: right;
   font-family: Open Sans;
   font-size: 11px;

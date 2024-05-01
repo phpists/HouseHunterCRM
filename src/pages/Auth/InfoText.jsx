@@ -13,7 +13,7 @@ const StyledInfoText = styled.div`
   text-align: center;
   margin-top: 20px;
   span {
-    color: #fff;
+    color: var(--main-color);
     text-align: center;
     font-family: Overpass;
     font-size: 12px;

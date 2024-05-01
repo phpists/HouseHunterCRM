@@ -52,7 +52,7 @@ const StyledSelect = styled.button`
   border-radius: 6px 0 0 6px;
   transition: all 0.3s;
   cursor: pointer;
-  color: rgb(255, 255, 255);
+  color: var(--color-3);
   margin-right: 4px;
   z-index: 10;
   .arrow {
@@ -63,12 +63,12 @@ const StyledSelect = styled.button`
     fill: #fff;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--bg-10);
     .arrow {
       opacity: 1;
     }
     .select-icon {
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--bg-10);
     }
   }
   svg {

@@ -24,7 +24,7 @@ export const Input = ({ label, className, phone, value, onChange, error }) => (
 const StyledInput = styled.div`
   margin-bottom: 15px;
   .label {
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--white-color);
     text-align: center;
     font-family: Overpass;
     font-size: 14px;
@@ -36,10 +36,9 @@ const StyledInput = styled.div`
   }
   input {
     border-radius: 6px;
-    background: #474747;
+    background: var(--second-bg);
     padding: 10px;
-    color: ${({ error }) =>
-      error === "true" ? "#ff2e2e" : "rgba(255, 255, 255, 1)"};
+    color: ${({ error }) => (error === "true" ? "#ff2e2e" : "var(--color-2)")};
 
     leading-trim: both;
     text-edge: cap;

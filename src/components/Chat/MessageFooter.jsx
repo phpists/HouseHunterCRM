@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { ReactComponent as CheckIcon } from "../../assets/images/check-check.svg";
-import replyIcon from "../../assets/images/reply.svg";
+import {ReactComponent as Icon} from "../../assets/images/reply.svg";
 
 export const MessageFooter = ({ date, isOwner, isSelected }) => (
   <StyledMessageFooter
@@ -9,11 +9,11 @@ export const MessageFooter = ({ date, isOwner, isSelected }) => (
   >
     {date}
     {isSelected ? (
-      <img src={replyIcon} alt="" className="message" />
+      <Icon  className="message" />
     ) : (
       <>
         <CheckIcon className="message" />
-        <img src={replyIcon} alt="" className="reply-icon message" />
+        <Icon className="reply-icon message" />
       </>
     )}
   </StyledMessageFooter>
@@ -22,7 +22,7 @@ export const MessageFooter = ({ date, isOwner, isSelected }) => (
 const StyledMessageFooter = styled.div`
   font-size: 12px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: 100%; /* 12px */
   letter-spacing: 0.24px;
   min-height: 16px;

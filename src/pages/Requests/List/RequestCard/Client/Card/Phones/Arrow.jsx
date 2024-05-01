@@ -15,8 +15,8 @@ export const Arrow = ({ open, onToggleOpen, visible }) => (
 const StyledArrow = styled.div`
   padding: 0 3px;
   border-radius: 0 6px 6px 0;
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
-  background: #444;
+  border-left: 1px solid var(--bg-10);
+  background: var(--card-bg-3);
   transition: all 0.3s;
   height: 100%;
   cursor: pointer;
@@ -38,8 +38,8 @@ const StyledArrow = styled.div`
     fill: #fff;
   }
   &:hover {
-    background: #535252;
-    border-left: 1px solid #535252;
+    background: var(--hover-card-2);
+    border-left: 1px solid var(--hover-card-2);
     g {
       opacity: 1;
     }

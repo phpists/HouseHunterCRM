@@ -61,8 +61,8 @@ const StyledObjectCommentHistory = styled.div`
     gap: 15px 24px;
     position: relative;
     .icon {
-      background: #2b2b2b;
-      border: 2px solid #2b2b2b;
+      background: var(--modal-bg);
+      border: 2px solid var(--modal-bg);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -73,11 +73,11 @@ const StyledObjectCommentHistory = styled.div`
     }
   }
   .empty {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--dark-90);
     font-family: Overpass;
     font-size: 18px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: normal;
     letter-spacing: 0.36px;
     margin-bottom: 4px;

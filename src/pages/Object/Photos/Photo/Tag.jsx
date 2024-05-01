@@ -5,7 +5,7 @@ export const Tag = ({ onClick }) => (
 );
 
 const StyledTag = styled.div`
-  color: #fff;
+  color: var(--main-color);
   font-family: Open Sans;
   font-size: 12px;
   font-style: normal;
@@ -13,17 +13,17 @@ const StyledTag = styled.div`
   line-height: normal;
   letter-spacing: 0.22px;
   border-radius: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(44, 44, 44, 0.5);
+  border: 1px solid var(--bg-15);
+  background: var(--bg-5);
   backdrop-filter: blur(5px);
   padding: 5px 6px;
   text-align: center;
   transition: all 0.3s;
   cursor: pointer;
   &:hover {
-    background: rgba(44, 44, 44, 0.8);
+    background: var(--modals-bg);
     @supports (-webkit-touch-callout: none) {
-      background: #2c2c2c;
+      background: var(--main-bg);
     }
   }
 `;

@@ -8,8 +8,7 @@ export const Title = ({ title, selectedCount, isDeleted }) => (
 );
 
 const StyledTitle = styled.div`
-  color: ${({ isDeleted }) =>
-    isDeleted ? "#f94343" : "rgba(255, 255, 255, 0.9)"};
+  color: ${({ isDeleted }) => (isDeleted ? "#f94343" : "var(--dark-90)")};
   font-weight: ${({ isDeleted }) => (isDeleted ? 300 : 200)};
   font-family: Overpass;
   font-size: 18px;

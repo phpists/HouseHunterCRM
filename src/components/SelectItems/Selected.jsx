@@ -24,12 +24,12 @@ export const Selected = ({
 const StyledSelected = styled.div`
   padding: 3px;
   border-radius: 7px;
-  background: #323232;
-  color: rgba(255, 255, 255, 0.4);
+  background: var(--select-dark);
+  color: var(--second-color);
   font-family: Overpass;
   font-size: 11px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: 118%; /* 12.98px */
   letter-spacing: 0.22px;
   text-transform: uppercase;
@@ -42,10 +42,10 @@ const StyledSelected = styled.div`
     cursor: pointer;
     transition: all 0.3s;
     &:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: var(--bg-20);
     }
     &.active {
-      background: #fff;
+      background: var(--active-bg);
       color: #2c2c2c;
       font-weight: 600;
     }

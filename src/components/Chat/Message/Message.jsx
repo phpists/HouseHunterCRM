@@ -93,6 +93,7 @@ const StyledMessage = styled.div`
   word-wrap: break-word;
   cursor: pointer;
   transition: all 0.3s;
+  color: #fff;
   &::before {
     content: "";
     display: block;
@@ -116,7 +117,7 @@ const StyledMessage = styled.div`
     width: 24px;
     border-radius: 100%;
     z-index: 100;
-    background: ${({ isOwner }) => (isOwner ? "#5D63FF" : "#454545")};
+    background: ${({ isOwner }) => (isOwner ? "#5D63FF" : "var(--chat-bg)")};
   }
   ${({ first, between }) =>
     (first || between) &&
@@ -127,10 +128,10 @@ const StyledMessage = styled.div`
     }
   `}
   @media(max-width: 1000px) {
-    background: ${({ isOwner }) => (isOwner ? "#5D63FF" : "#454545")};
+    background: ${({ isOwner }) => (isOwner ? "#5D63FF" : "var(--chat-bg)")};
     &::before {
       border-bottom: 13px solid
-        ${({ isOwner }) => (isOwner ? "#5D63FF" : "#454545")};
+        ${({ isOwner }) => (isOwner ? "#5D63FF" : "var(--chat-bg)")};
     }
   }
 `;

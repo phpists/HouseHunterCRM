@@ -11,9 +11,9 @@ export const StartButton = ({ onClick }) => (
 
 const StyledStartButton = styled.button`
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   padding: 14px 10px 11px;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--second-color);
   text-align: center;
   font-family: Overpass;
   font-size: 15px;
@@ -25,6 +25,6 @@ const StyledStartButton = styled.button`
   width: 100%;
   &:hover {
     border: 1.6px solid #fff;
-    color: #fff;
+    color: var(--main-color);
   }
 `;

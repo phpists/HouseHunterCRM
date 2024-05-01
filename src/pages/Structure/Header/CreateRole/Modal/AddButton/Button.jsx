@@ -8,8 +8,8 @@ const StyledButton = styled.button`
   height: 43px;
   width: 100%;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.4);
+  background: var(--bg-10);
+  color: var(--second-color);
   text-align: center;
   font-family: Overpass;
   font-size: 15px;
@@ -21,7 +21,7 @@ const StyledButton = styled.button`
   transition: all 0.3s;
 
   &:hover {
-    color: rgba(255, 255, 255, 1);
+    color: var(--color-2);
     border: 1.4px solid #fff;
   }
 `;

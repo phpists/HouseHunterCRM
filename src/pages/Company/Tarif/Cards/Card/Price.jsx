@@ -20,12 +20,12 @@ const StyledPrice = styled.div`
     color: ${({ color }) => color};
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     text-align: right;
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;

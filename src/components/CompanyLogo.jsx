@@ -49,7 +49,8 @@ const StyledCompanyLogo = styled.div`
   width: 56px;
   height: 56px;
   border-radius: 10px;
-  background: url(${({ value }) => value}) center/cover no-repeat, #4f4f4f;
+  background: url(${({ value }) => value}) center/cover no-repeat,
+    var(--card-bg-4);
   transition: all 0.3s;
   border: 1px solid transparent;
   position: relative;

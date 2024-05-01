@@ -6,6 +6,6 @@ const StyledDivide = styled.div`
   width: 1px;
   height: 28px;
   opacity: 0.1;
-  background: #fff;
+  background: var(--active-bg);
   margin: 0 11px 0 10px;
 `;

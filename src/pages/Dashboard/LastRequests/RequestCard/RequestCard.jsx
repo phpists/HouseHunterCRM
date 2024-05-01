@@ -26,7 +26,7 @@ export const RequestCard = ({
 const StyledRequestCard = styled.div`
   padding: 20px;
   border-radius: 9px;
-  background: #3d3d3d;
+  background: var(--card-bg);
   @media (max-width: 1500px) {
     padding: 10px;
   }

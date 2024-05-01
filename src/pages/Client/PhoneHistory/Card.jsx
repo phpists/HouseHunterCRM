@@ -19,18 +19,18 @@ const StyledCard = styled.div`
 
   .history-card {
     &-title {
-      color: #fff;
+      color: var(--main-color);
       font-size: 14px;
       font-style: normal;
-      font-weight: 100;
+      font-weight: var(--font-weight-100);
       line-height: 120%; /* 16.8px */
       margin-bottom: 4px;
     }
     &-date {
-      color: rgba(255, 255, 255, 0.6);
+      color: var(--white-color);
       font-size: 14px;
       font-style: normal;
-      font-weight: 100;
+      font-weight: var(--font-weight-100);
       line-height: 120%;
       display: flex;
       align-items: center;

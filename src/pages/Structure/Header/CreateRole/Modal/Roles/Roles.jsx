@@ -9,7 +9,7 @@ import {
 import { Empty } from "./Empty";
 
 export const Roles = ({ level, levelData, onRefetchData, onClose }) => {
-  const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
+  const COLORS = ["#7ecefd", "var(--green-light)", "#d0a0ff", "#7ecefd"];
   const { data: permissionsList } = useGetAllPerimissionsQuery();
   const { data: rolesPermission, refetch } = useGetPerimissionDirectorQuery();
 

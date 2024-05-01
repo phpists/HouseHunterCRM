@@ -9,7 +9,7 @@ export const Button = ({ onClick, disabled, loading }) => (
 
 const StyledButton = styled.button`
   border-radius: 8px;
-  background: rgba(93, 99, 255, 0.7);
+  background: var(--blue);
   padding: 9px 18px 10px 18px;
   color: #fff;
   text-align: center;

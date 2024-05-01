@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { ReactComponent as LocationIcon } from "../../../assets/images/location.svg";
 import editIcon from "../../../assets/images/edit-company.svg";
 import { useState } from "react";
-import saveIcon from "../../../assets/images/check.svg";
+import saveIcon from "../../../assets/images/check-blue.svg";
 
 export const Address = ({ address, onEdit }) => {
   const [edit, setEdit] = useState(false);
@@ -43,8 +43,8 @@ export const Address = ({ address, onEdit }) => {
 
 const StyledAddress = styled.div`
   padding: 10px 11px 9px;
-  background: #2a2a2a;
-  color: rgba(255, 255, 255, 0.4);
+  background: var(--company-address);
+  color: var(--second-color);
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
@@ -78,7 +78,7 @@ const StyledAddress = styled.div`
     transform: translateX(-10px);
   }
   &:hover {
-    color: #fff;
+    color: var(--main-color);
     g {
       opacity: 1;
     }

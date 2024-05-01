@@ -92,7 +92,6 @@ export const Card = ({
     });
   };
 
-  console.log(currency);
   return (
     <StyledCard onClick={handleClick} selected={selected}>
       <DesktopContent
@@ -142,7 +141,7 @@ export const Card = ({
 const StyledCard = styled.div`
   padding: 6px 6px 6px 6px;
   border-radius: 15px;
-  background: #3d3d3d;
+  background: var(--card-bg);
   margin-bottom: 10px;
   transition: all 0.3s;
   cursor: pointer;
@@ -170,7 +169,7 @@ const StyledCard = styled.div`
     }
   }
   &:hover {
-    background: #484848;
+    background: var(--hover-card);
     .arrow-more {
       svg {
         opacity: 1;

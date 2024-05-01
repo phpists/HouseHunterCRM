@@ -27,22 +27,22 @@ const StyledStepCard = styled(NavLink)`
   width: 100%;
   cursor: pointer;
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: normal;
     letter-spacing: 0.28px;
     width: 100%;
   }
   .subtitle {
     margin-top: 7px;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--white-color);
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: normal;
     letter-spacing: 0.28px;
     padding: 0 26px 0 0;

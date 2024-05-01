@@ -24,7 +24,7 @@ const StyledFooter = styled.div`
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     height: 30px;
@@ -36,7 +36,7 @@ const StyledFooter = styled.div`
   .submit-btn {
     color: #2c2c2c;
     border: 1.6px solid #fff;
-    background: #fff;
+    background: var(--active-bg);
   }
   .cancel-btn {
     color: #ff4343;

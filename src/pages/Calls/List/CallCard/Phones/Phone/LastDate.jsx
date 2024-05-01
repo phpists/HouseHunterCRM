@@ -9,7 +9,7 @@ export const LastDate = ({ date }) => (
 
 const StyledLastDate = styled.div`
   .date {
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--white-color);
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
@@ -19,11 +19,11 @@ const StyledLastDate = styled.div`
     margin-bottom: 2px;
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;

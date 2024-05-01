@@ -9,13 +9,13 @@ export const Date = ({ deadline }) => (
 );
 
 const StyledDate = styled.div`
-  color: #fff;
+  color: var(--main-color);
   leading-trim: both;
   text-edge: cap;
   font-family: Overpass;
   font-size: 14px;
   font-style: normal;
-  font-weight: 100;
+  font-weight: var(--font-weight-100);
   line-height: 118%; /* 16.52px */
   letter-spacing: 0.28px;
   svg {
@@ -26,7 +26,7 @@ const StyledDate = styled.div`
       opacity: 1;
     }
     path {
-      fill: #50f835;
+      fill: var(--green);
     }
   }
 `;

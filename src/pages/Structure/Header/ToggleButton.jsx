@@ -10,8 +10,8 @@ const StyledToggleShowButton = styled.div`
   height: 32px;
   padding: 5px 16px 6px 10px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
+  background: var(--card-bg-2);
+  color: var(--main-color);
   text-align: center;
   leading-trim: both;
   text-edge: cap;
@@ -34,6 +34,6 @@ const StyledToggleShowButton = styled.div`
   }
   &:hover,
   &.active {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
   }
 `;

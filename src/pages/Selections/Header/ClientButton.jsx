@@ -12,7 +12,7 @@ const StyledClientButton = styled.button`
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  border: 1.4px solid rgba(255, 255, 255, 0.2);
+  border: 1.4px solid var(--bg-20);
   width: 32px;
   height: 32px;
   flex-shrink: 0;
@@ -23,7 +23,7 @@ const StyledClientButton = styled.button`
   }
   &:hover,
   &.active {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
     svg {
       opacity: 1;
     }

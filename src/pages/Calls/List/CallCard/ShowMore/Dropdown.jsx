@@ -90,7 +90,7 @@ const StyledDropdown = styled.div`
     cursor: pointer;
     white-space: nowrap;
     &:hover {
-      background: #fff;
+      background: var(--active-bg);
     }
   }
   div:first-child {

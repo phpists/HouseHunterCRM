@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const Toggle = ({ value, onChange, className }) => (
   <StyledToggle value={value} onClick={onChange} className={`${className}`}>
-    <div />
+    <div className="toggle-circle" />
   </StyledToggle>
 );
 
@@ -22,7 +22,7 @@ const StyledToggle = styled.div`
     width: 15px;
     height: 15px;
     border-radius: 100%;
-    background: #fff;
+    background: var(--active-bg);
     transition: all 0.3s;
   }
 `;

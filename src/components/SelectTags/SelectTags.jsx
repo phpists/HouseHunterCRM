@@ -194,11 +194,11 @@ const StyledSelectTags = styled.button`
   width: 100%;
   ${({ error }) => error === "true" && "border: 1px solid red;"}
   .value {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     margin-bottom: 1px;
@@ -207,11 +207,11 @@ const StyledSelectTags = styled.button`
     text-align: left;
     width: 90%;
     &::placeholder {
-      color: #fff;
+      color: var(--main-color);
       font-family: Overpass;
       font-size: 14px;
       font-style: normal;
-      font-weight: 100;
+      font-weight: var(--font-weight-100);
       line-height: 118%; /* 17.7px */
       letter-spacing: 0.3px;
     }
@@ -241,11 +241,11 @@ const StyledSelectTags = styled.button`
     text-transform: capitalize;
   }
   .label {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
@@ -265,7 +265,7 @@ const StyledSelectTags = styled.button`
 
   &:hover,
   &.open {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
     .value {
       opacity: 1;
     }
@@ -275,7 +275,7 @@ const StyledSelectTags = styled.button`
   }
   &.open {
     border-radius: 9px 9px 0px 0px !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    border-bottom: var(--second-color-border);
     .tagsSelectDropdown {
       opacity: 1;
       visibility: visible;
@@ -292,7 +292,7 @@ const StyledSelectTags = styled.button`
     showtags === "true" &&
     !hideArrow &&
     `
-    background: rgba(255, 255, 255, 0.05);
+    background:  var(--card-bg-2);
     .value {
         opacity: 1;
     }

@@ -272,7 +272,7 @@ export const ProfileField = ({
       </div>
       {!big && (
         <>
-          <div className="label">{label}</div>
+          <div className="label labelItem">{label}</div>
           <div className="label label-hover">{label}</div>
         </>
       )}
@@ -300,7 +300,7 @@ const StyledProfileField = styled.button`
   background: linear-gradient(
       to left,
       rgba(255, 255, 255, 0) 50%,
-      rgba(255, 255, 255, 0.05) 50%
+      var(--card-bg-2) 50%
     )
     right;
   background-size: 210%;
@@ -311,11 +311,11 @@ const StyledProfileField = styled.button`
   ${({ error }) => error === "true" && "border: 1px solid red;"}
 
   .value {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     margin-bottom: 1px;
@@ -329,7 +329,7 @@ const StyledProfileField = styled.button`
     ${({ big }) =>
       big &&
       `
-        color: rgba(255, 255, 255, 0.40);
+        color: var(--color-40);
         font-family: Overpass;
         font-size: 20px;
         font-style: normal;
@@ -366,14 +366,13 @@ const StyledProfileField = styled.button`
     }
   }
   .label {
-    color: #fff;
+    color: var(--subtitle-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
-    opacity: 0.4;
     margin-top: 2px;
     text-transform: capitalize;
   }
@@ -439,13 +438,15 @@ const StyledProfileField = styled.button`
       }
     }
     path {
-      fill: #2c2c2c;
+      fill: var(--main-bg);
     }
   }
   ${({ active, grey }) =>
     active === "true" &&
     `
-    background:  ${grey ? "rgba(255, 255, 255, 0.05)" : "#FFF"} !important;
+    background:  ${
+      grey ? " var(--card-bg-2)" : "var(--active-input-bg)"
+    } !important;
     .check-icon {
         opacity: 1;
         visibility: visible;
@@ -460,7 +461,7 @@ const StyledProfileField = styled.button`
     `
         : `
         path {
-            fill: #FFF;
+            fill: var(--main-bg);
         }
     `
     }
@@ -469,14 +470,14 @@ const StyledProfileField = styled.button`
     color: #2c2c2c;
     padding: 0;
     .arrow path {
-      fill: #2c2c2c;
+      fill: var(--main-bg);
     }
   }
 
   .calendar_wrapper {
     position: absolute;
     top: 100%;
-    background: #414141;
+    background: var(--bg-41);
     max-width: 320px;
     left: 0;
     z-index: 1000;
@@ -496,7 +497,7 @@ const StyledProfileField = styled.button`
     flex-shrink: 0;
     ${({ edit }) => !edit && " opacity: 0; transform: translateX(-10px);"}
     &:hover {
-      background: rgba(255, 255, 255, 0.2) !important;
+      background: var(--bg-20) !important;
       opacity: 1 !important;
     }
   }
@@ -505,7 +506,7 @@ const StyledProfileField = styled.button`
   }
   .edit-icon {
     path {
-      fill: #fff !important;
+      fill: var(--main-color) !important;
     }
   }
 `;

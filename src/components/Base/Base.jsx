@@ -424,6 +424,33 @@ export const Base = ({
                 : []
             }
           />
+          {idSource ? (
+            <SelectTags
+              label="Пошук по ресурсу"
+              placeholder="Оберіть ресурс"
+              options={
+                typeof sources === "object"
+                  ? Object?.entries(sources)?.map((e) => ({
+                      value: e[0],
+                      title: e[1],
+                    }))
+                  : []
+              }
+              value={data?.street_base_object?.id_source}
+              onChange={(val) =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  id_source:
+                    val === data?.street_base_object?.id_source
+                      ? undefined
+                      : val,
+                })
+              }
+              isSearch
+              notMultiSelect
+            />
+          ) : null}
+
           {idAdInSource ? (
             <Field
               placeholder="Введіть значення..."
@@ -436,33 +463,6 @@ export const Base = ({
               }
               label="Пошук по Id на ресурсі"
               className="field-wrapper"
-              onFocus={onFocus}
-              onBlur={onBlur}
-            />
-          ) : null}
-          {countObjectOwner ? (
-            <Ranger
-              label="Кількість об'єктів"
-              max={1000}
-              values={[
-                data?.street_base_object?.count_object_owner_from ?? 0,
-                data?.street_base_object?.count_object_owner_to ?? 0,
-              ]}
-              onChange={(values) =>
-                handleChangeRange(
-                  values,
-                  [
-                    data?.street_base_object?.count_object_owner_from ?? 0,
-                    data?.street_base_object?.count_object_owner_to ?? 0,
-                  ],
-                  ["count_object_owner_from", "count_object_owner_to"],
-                  (field, value) =>
-                    onChange("street_base_object", {
-                      ...data?.street_base_object,
-                      [field]: value,
-                    })
-                )
-              }
               onFocus={onFocus}
               onBlur={onBlur}
             />
@@ -495,30 +495,31 @@ export const Base = ({
               })
             }
           />
-          {idSource ? (
-            <SelectTags
-              label="Пошук по ресурсу"
-              placeholder="Оберіть ресурс"
-              options={
-                typeof sources === "object"
-                  ? Object?.entries(sources)?.map((e) => ({
-                      value: e[0],
-                      title: e[1],
-                    }))
-                  : []
+          {countObjectOwner ? (
+            <Ranger
+              label="Кількість об'єктів за номером"
+              max={1000}
+              values={[
+                data?.street_base_object?.count_object_owner_from ?? 0,
+                data?.street_base_object?.count_object_owner_to ?? 0,
+              ]}
+              onChange={(values) =>
+                handleChangeRange(
+                  values,
+                  [
+                    data?.street_base_object?.count_object_owner_from ?? 0,
+                    data?.street_base_object?.count_object_owner_to ?? 0,
+                  ],
+                  ["count_object_owner_from", "count_object_owner_to"],
+                  (field, value) =>
+                    onChange("street_base_object", {
+                      ...data?.street_base_object,
+                      [field]: value,
+                    })
+                )
               }
-              value={data?.street_base_object?.id_source}
-              onChange={(val) =>
-                onChange("street_base_object", {
-                  ...data?.street_base_object,
-                  id_source:
-                    val === data?.street_base_object?.id_source
-                      ? undefined
-                      : val,
-                })
-              }
-              isSearch
-              notMultiSelect
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
           ) : null}
         </>
@@ -561,7 +562,7 @@ export const Base = ({
 const StyledBase = styled.div`
   padding: 6px 8px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   &.error-field {
     border: 1px red solid;
   }
@@ -573,7 +574,7 @@ const StyledBase = styled.div`
   }
   .xbase-title {
     margin-left: 2px;
-    color: #81fb21;
+    color: var(--green);
   }
   .companySelect {
     margin: 6.5px 0px;

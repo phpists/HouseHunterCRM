@@ -49,7 +49,7 @@ const StyledHours = styled.div`
   margin-left: auto;
   input {
     width: 20px;
-    color: #fff;
+    color: var(--main-color);
     text-align: center;
     font-feature-settings: "clig" off, "liga" off;
     font-family: Public Sans;
@@ -60,7 +60,7 @@ const StyledHours = styled.div`
   }
   div {
     margin: 0 10px;
-    color: rgba(255, 255, 255, 0.2);
+    color: var(--bg-20);
     text-align: center;
     font-feature-settings: "clig" off, "liga" off;
     font-family: Public Sans;

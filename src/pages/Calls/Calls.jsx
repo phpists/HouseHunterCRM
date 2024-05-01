@@ -279,7 +279,6 @@ const Calls = () => {
   }, [isDefaultFilterSet]);
 
   const handleSelectAll = (isReset, count) => {
-
     setSelected(isReset ? [] : data?.map((c) => c.id));
   };
 
@@ -344,7 +343,7 @@ const Calls = () => {
 const StyledCalls = styled.div`
   position: relative;
   padding: 15px 20px;
-  background: #323232;
+  background: var(--dark-card-bg);
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   @media (max-width: 600px) {
     width: 100svw;

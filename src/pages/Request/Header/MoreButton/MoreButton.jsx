@@ -23,12 +23,12 @@ const StyledMoreButton = styled.button`
   width: 32px;
   height: 32px;
   border-radius: 5px;
-  border: 1.6px solid rgba(255, 255, 255, 0.4);
+  border: 1.6px solid var(--second-color);
   backdrop-filter: blur(18.5px);
   transition: all 0.3s;
   &:hover,
   &.open {
-    border: 1.6px solid rgba(255, 255, 255, 1);
+    border: 1.6px solid var(--color-2);
     g {
       opacity: 1;
     }

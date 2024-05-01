@@ -99,7 +99,7 @@ const StyledBilling = styled.div`
   &:hover {
     /* padding: 12px 187px 11px 13px;*/
     /* border-radius: 12px;
-    background: #474747;
+    background: var(--second-bg);
     border: none;
     & > .bill-btn {
       opacity: 1;
@@ -114,7 +114,7 @@ const StyledBilling = styled.div`
     `
     // padding: 11px 165px 11px 14px !important;
     border-radius: 12px;
-    background: #474747;
+    background: var(--second-bg);
     border: none;
     .main-text {
         margin: 0 10px 0 0;

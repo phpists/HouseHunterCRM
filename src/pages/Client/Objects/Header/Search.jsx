@@ -28,13 +28,13 @@ const StyledSearch = styled.div`
   height: 32px;
   flex-shrink: 0;
   border-radius: 8px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid var(--bg-20);
   transition: all 0.3s;
   cursor: pointer;
   margin-right: 15px;
   input {
     width: 0;
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -42,12 +42,12 @@ const StyledSearch = styled.div`
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     &::placeholder {
-      color: rgba(255, 255, 255, 0.4);
+      color: var(--second-color);
     }
   }
   &:hover {
     border: 2px solid transparent;
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
     g {
       opacity: 1;
     }
@@ -55,7 +55,7 @@ const StyledSearch = styled.div`
   ${({ isFocused }) =>
     isFocused &&
     `
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
     g {
       opacity: 1;
     }

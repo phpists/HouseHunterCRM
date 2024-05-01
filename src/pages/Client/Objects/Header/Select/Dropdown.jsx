@@ -20,12 +20,12 @@ const StyledDropdown = styled.div`
   top: 100%;
   width: 100%;
   left: 0;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--bg-20);
   border-radius: 0 0 8px 8px;
   overflow: hidden;
   backdrop-filter: blur(18.5px);
   div {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--second-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -38,8 +38,8 @@ const StyledDropdown = styled.div`
     border-top: 1px solid rgba(255, 255, 255, 0.3);
     &:hover {
       opacity: 1;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
+      background: var(--bg-10);
+      color: var(--main-color);
     }
   }
   div:last-child {

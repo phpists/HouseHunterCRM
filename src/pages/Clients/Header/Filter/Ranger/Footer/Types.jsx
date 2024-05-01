@@ -17,7 +17,7 @@ export const Types = ({ types, activeType, onChangeType }) => (
 const StyledTypes = styled.div`
   padding: 2px;
   border-radius: 4px;
-  background: #3d3d3d;
+  background: var(--card-bg);
   display: grid;
   grid-template-columns: repeat(2, max-content);
   gap: 2px;
@@ -29,7 +29,7 @@ const StyledTypes = styled.div`
     flex-shrink: 0;
     border-radius: 2px;
     transition: all 0.3s;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--second-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
@@ -39,7 +39,7 @@ const StyledTypes = styled.div`
     transition: all 0.3s;
     padding: 1px 5px 2px 6px;
     &:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: var(--bg-20);
     }
     &.active {
       background: #fff !important;

@@ -151,7 +151,7 @@ const StyledProfileMobile = styled.div`
   margin: 5px 0 0px;
   padding: 10px;
   border-radius: 15px;
-  background: #3d3d3d;
+  background: var(--card-bg);
   position: relative;
   .main-ptofile-info {
     gap: 10px;

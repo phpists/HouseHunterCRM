@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-export const Tag = ({ icon, title, hoverTitle }) => (
+export const Tag = ({ Icon, title, hoverTitle }) => (
   <StyledTag
     className="flex items-center clickable select-none"
     title={hoverTitle ?? title}
   >
-    {icon && <img src={icon} alt="" />}
+    {Icon ? Icon : null}
     <div className="title clickable">{title}</div>
   </StyledTag>
 );
@@ -13,14 +13,14 @@ export const Tag = ({ icon, title, hoverTitle }) => (
 const StyledTag = styled.div`
   padding: 4px 6px;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.8);
+  background: var(--tag-bg-2);
+  color: var(--tag-color-2);
   leading-trim: both;
   text-edge: cap;
   font-family: Open Sans;
   font-size: 11px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: 1;
   letter-spacing: 0.22px;
   height: max-content;
@@ -30,7 +30,7 @@ const StyledTag = styled.div`
     max-width: 170px;
     overflow: hidden;
   }
-  img {
+  svg {
     margin-right: 4px;
     height: 12px;
     width: 12px;

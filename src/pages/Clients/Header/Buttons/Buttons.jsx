@@ -96,7 +96,7 @@ export const Buttons = ({
 
 const StyledButtons = styled.div`
   .icon-btn {
-    border: 2px solid rgba(255, 255, 255, 0.2) !important;
+    border: 2px solid var(--bg-20) !important;
     margin-right: 15px;
     &:hover {
       border: 2px solid transparent !important;

@@ -42,7 +42,7 @@ export const Info = ({
 
 const StyledInfo = styled.div`
   border-radius: 9px;
-  background: rgba(50, 50, 50, 0.6);
+  background: var(--bg-60-2);
   padding: 10px;
   overflow: auto;
   /* width: 264px; */

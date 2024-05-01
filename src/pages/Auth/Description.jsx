@@ -7,12 +7,12 @@ export const Description = ({ description, className }) => (
 );
 
 const StyledDescription = styled.div`
-  color: #fff;
+  color: var(--main-color);
   text-align: center;
   font-family: Open Sans;
   font-size: 15px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: normal;
   letter-spacing: 0.3px;
   opacity: 0.4;

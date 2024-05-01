@@ -8,7 +8,7 @@ const StyledSlide = styled.div`
   width: 100%;
   height: 220px;
   flex-shrink: 0;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--bg-10);
   background: url(${({ photo }) => photo}) center/cover no-repeat;
   flex-shrink: 0;
 `;

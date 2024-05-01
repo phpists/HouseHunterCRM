@@ -12,20 +12,20 @@ export const Text = () => (
 
 const StyledText = styled.div`
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 32px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: normal;
     letter-spacing: 0.64px;
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 15px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.3px;
     opacity: 0.4;

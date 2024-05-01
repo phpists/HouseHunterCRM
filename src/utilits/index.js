@@ -506,3 +506,8 @@ export const handleDownloadFile = (url) => {
   a.click();
   document.body.removeChild(a);
 };
+
+export const handleSetTheme = (theme) => {
+  const htmlElem = document.querySelector("html");
+  htmlElem.setAttribute("data-theme", theme);
+};

@@ -12,11 +12,11 @@ const StyledEmpty = styled.button`
   padding: 7px 10px 5px;
   border-radius: 9px;
   transition: all 0.3s;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--second-color);
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 100;
+  font-weight: var(--font-weight-100);
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   width: 100%;
@@ -24,8 +24,8 @@ const StyledEmpty = styled.button`
   position: relative;
   &:hover,
   &:focus {
-    background: rgba(255, 255, 255, 0.05);
-    color: #fff;
+    background: var(--card-bg-2);
+    color: var(--main-color);
   }
   &:focus > .dropdown {
     opacity: 1;

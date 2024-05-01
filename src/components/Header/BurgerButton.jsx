@@ -15,7 +15,7 @@ const StyledBurgerButton = styled.button`
   height: 56px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: #4f4f4f;
+  background: var(--card-bg-4);
   z-index: 2;
   @media (min-width: 1200px) {
     display: none;

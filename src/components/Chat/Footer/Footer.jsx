@@ -90,7 +90,7 @@ const StyledFooter = styled.div`
         position: absolute;
         top: 0;
         width: 100%;
-        background: #454545;
+        background: var(--chat-bg);
         height: 100px;
         left: 0;
     }

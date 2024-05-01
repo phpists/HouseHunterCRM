@@ -5,7 +5,7 @@ export const Title = ({ title, className }) => (
 );
 
 const StyledTitle = styled.h2`
-  color: #fff;
+  color: var(--main-color);
   text-align: center;
   font-family: Overpass;
   font-size: 26px;

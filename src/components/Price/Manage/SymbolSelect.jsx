@@ -29,8 +29,8 @@ const StyledSymbolSelect = styled.div`
     height: 20px;
     width: 20px;
     padding: 1px 4px;
-    background: rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 0.4);
+    background: var(--card-bg-2);
+    color: var(--second-color);
     text-align: center;
     font-family: Overpass;
     font-size: 14px;
@@ -42,8 +42,8 @@ const StyledSymbolSelect = styled.div`
     transition: all 0.3s;
     border: 1px solid rgba(255, 255, 255, 0);
     &.active {
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--main-color);
+      border: 1px solid var(--bg-20);
     }
   }
 `;

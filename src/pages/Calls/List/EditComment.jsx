@@ -60,7 +60,7 @@ const StyleEditComment = styled.div`
     line-height: 17px;
     letter-spacing: 0em;
     margin-bottom: 4px;
-    color: #ffffff99;
+    var(--main-color)fff99;
   }
   .edit-comment-content {
     max-height: 60vh;
@@ -70,11 +70,11 @@ const StyleEditComment = styled.div`
     resize: none;
     height: 80px;
     width: 100%;
-    background: #474747;
+    background: var(--second-bg-edit-textarea);
     margin-bottom: 15px;
     padding: 10px 10px 14px 10px;
     border-radius: 6px;
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
@@ -83,7 +83,7 @@ const StyleEditComment = styled.div`
     letter-spacing: 0.3px;
     overflow: auto;
     &::placeholder {
-      color: #fff;
+      color: var(--main-color);
       font-family: Overpass;
       font-size: 14px;
       font-style: normal;
@@ -104,5 +104,6 @@ const StyleEditComment = styled.div`
     line-height: 18px;
     letter-spacing: 0.02em;
     text-align: center;
+    color: #FFF;
   }
 `;

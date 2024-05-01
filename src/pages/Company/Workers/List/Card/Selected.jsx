@@ -15,7 +15,7 @@ const StyledSelected = styled.div`
   cursor: pointer;
   text-align: left;
   .title {
-    color: #50f835;
+    color: var(--green-light-2);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -24,16 +24,16 @@ const StyledSelected = styled.div`
     letter-spacing: 0.3px;
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
   }
 `;

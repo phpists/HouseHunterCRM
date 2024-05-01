@@ -12,13 +12,13 @@ export const Value = ({ from, to, type }) => (
 
 const StyledValue = styled.div`
   border-radius: 4px;
-  background: #3d3d3d;
+  background: var(--card-bg);
   padding: 3px 9px 4px 10px;
-  color: #fff;
+  color: var(--main-color);
   font-family: Open Sans;
   font-size: 11px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: normal;
   letter-spacing: 0.22px;
   .first-type {

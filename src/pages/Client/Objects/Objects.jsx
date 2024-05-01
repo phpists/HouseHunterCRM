@@ -293,7 +293,7 @@ export const Objects = ({
 
 const StyledObjects = styled.div`
   border-radius: 15px;
-  background: #2b2b2b;
+  background: var(--modal-bg);
   .objects-content {
     padding: 10px;
     height: calc(100svh - 287px);

@@ -12,12 +12,12 @@ export const Card = ({ title, userName, phone, active, onClick }) => (
 const StyledCard = styled.div`
   padding: 10px;
   border-radius: 6px;
-  background: #474747;
+  background: var(--selection-bg);
   width: 100%;
   cursor: pointer;
   transition: all 0.3s;
   &:hover,
   &.active {
-    background: #5d5d5d;
+    background: var(--selection-bg-hover);
   }
 `;

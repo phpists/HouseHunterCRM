@@ -13,7 +13,7 @@ export const Title = ({ requestsCount, objectsCount }) => (
 );
 
 const StyledTitle = styled.div`
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--second-color);
   font-family: Overpass;
   font-size: 20px;
   font-style: normal;
@@ -23,15 +23,15 @@ const StyledTitle = styled.div`
   .number {
   }
   span {
-    color: rgba(255, 255, 255, 0.2);
+    color: var(--bg-20);
   }
   .purple {
     color: #b61feb;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
   }
   .green {
     color: #2df47d;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
   }
   .end {
     margin: 0 5px;

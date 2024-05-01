@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 export const Title = () => <StyledTitle>Юрій Олексійович</StyledTitle>;
 
 const StyledTitle = styled.h3`
-  color: #fff;
+  color: var(--main-color);
   text-align: center;
   font-family: Overpass;
   font-size: 20px;

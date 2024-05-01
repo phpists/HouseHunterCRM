@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 import { Button } from "../../../components/Button";
 
-export const Footer = ({ onSave, onReset, loading }) => (
-  <StyledFooter className="flex items-center justify-between">
+export const Footer = ({ onSave, onReset, loading, className }) => (
+  <StyledFooter className={`flex items-center justify-between ${className}`}>
     <Button
       title="Зберегти"
       onClick={onSave}
@@ -35,10 +35,10 @@ const StyledFooter = styled.div`
     height: 31px;
     width: 100%;
     flex-shrink: 1;
-    background: rgba(255, 255, 255, 0.6);
+    background: var(--bg-60);
     transition: all 0.3s;
     &:hover {
-      background: #fff;
+      background: var(--active-bg) !important;
     }
   }
   .enter-btn {

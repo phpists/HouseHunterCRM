@@ -25,7 +25,7 @@ export const BackButton = () => {
 };
 
 const StyledBackButton = styled.button`
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 20px;
   font-style: normal;
@@ -48,10 +48,10 @@ const StyledBackButton = styled.button`
       opacity: 1;
     }
     &:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: var(--bg-20);
     }
     &:active {
-      background: rgba(255, 255, 255, 0.4);
+      background: var(--second-color);
     }
   }
   @media (max-width: 600px) {

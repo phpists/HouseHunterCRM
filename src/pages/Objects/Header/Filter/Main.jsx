@@ -354,7 +354,7 @@ const StyledMain = styled.div`
   .first-angle,
   .second-angle {
     &::after {
-      background: #4e4e4e !important;
+      background: var(--bg-78-heck) !important;
     }
   }
 

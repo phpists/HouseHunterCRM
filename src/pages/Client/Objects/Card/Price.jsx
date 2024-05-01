@@ -19,7 +19,7 @@ const StyledPrice = styled.div`
   padding: 1px 6px 2px;
   border-radius: 5px;
   background: rgba(103, 203, 78, 0.15);
-  color: #50f835;
+  color: var(--green-light-2);
   font-family: "Open Sans";
   font-size: 11px;
   font-style: normal;

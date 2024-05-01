@@ -99,7 +99,7 @@ const StyledMobileContent = styled.div`
     width: 44px;
     height: 44px;
     border-radius: 9px;
-    background: #2b2b2b;
+    background: var(--modal-bg);
     font-size: 10px;
     margin: 0;
     img {

@@ -20,7 +20,7 @@ export const ToggleOption = ({
 
 const StyledToggleOption = styled.div`
   border-radius: 6px;
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
@@ -29,10 +29,10 @@ const StyledToggleOption = styled.div`
   letter-spacing: 0.3px;
   transition: all 0.3s;
   .toggle-active {
-    background: #50f835;
+    background: var(--green-light-2);
   }
   div {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--second-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -45,11 +45,11 @@ const StyledToggleOption = styled.div`
     border-top: 1px solid rgba(255, 255, 255, 0.3);
     &:hover {
       opacity: 1;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
+      background: var(--bg-10);
+      color: var(--main-color);
     }
   }
   &.active {
-    color: #50f835;
+    color: var(--green-light-2);
   }
 `;

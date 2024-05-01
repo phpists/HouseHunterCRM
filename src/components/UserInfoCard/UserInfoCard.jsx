@@ -140,13 +140,13 @@ const StyledUserInfoCard = styled(motion.div)`
   top: 0;
   height: 100%;
   overflow: auto;
-  border-left: 1px solid rgba(255, 255, 255, 0.4);
-  background: rgba(44, 44, 44, 0.8);
+  border-left: var(--second-color-border);
+  background: var(--modals-bg);
   backdrop-filter: blur(12.5px);
   width: 361px;
   z-index: 1088;
   @supports (-webkit-touch-callout: none) {
-    background: #2c2c2c;
+    background: var(--main-bg);
   }
   .modal-content {
     padding: 0 10px 15px 11px;

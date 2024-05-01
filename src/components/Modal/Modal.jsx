@@ -53,7 +53,7 @@ const StyledModal = styled(motion.div)`
   }
   .modal {
     border-radius: 10px;
-    background: #2b2b2b;
+    background: var(--modal-bg);
     padding: 40px;
     max-width: 380px;
     width: 90%;

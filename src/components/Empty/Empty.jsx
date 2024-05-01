@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import activityIcon from "../../assets/images/activity.svg";
+import { ReactComponent as Icon } from "../../assets/images/activity.svg";
 import { Loader } from "../Loader";
 
 export const Empty = ({ loading }) => (
@@ -8,7 +8,7 @@ export const Empty = ({ loading }) => (
       <Loader white />
     ) : (
       <>
-        <img src={activityIcon} alt="" />
+        <Icon className="icon" />
         <div className="title">Пусто</div>
       </>
     )}
@@ -22,34 +22,34 @@ export const Empty = ({ loading }) => (
 
 const StyledEmpty = styled.div`
   padding: 40px 20px;
-  background: #323232;
+  background: var(--dark-card-bg);
   height: 100%;
   margin-top: 30px;
-  img {
+  svg {
+    height: 40px;
+  }
+  .icon {
     width: 24px;
     height: 24px;
     margin-bottom: 4px;
   }
-  svg {
-    height: 40px;
-  }
   .title {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--dark-90);
     font-family: Overpass;
     font-size: 18px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: normal;
     letter-spacing: 0.36px;
     margin-bottom: 4px;
   }
   .subtitle {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--second-color);
     text-align: center;
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: normal;
     letter-spacing: 0.28px;
   }

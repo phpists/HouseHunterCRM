@@ -87,7 +87,7 @@ const StyledDashboard = styled.div`
     height: max-content;
     max-height: calc(100svh - 148px);
     overflow: auto;
-    background: #323232;
+    background: var(--dark-card-bg);
   }
   .dashboard-col-statistic {
     height: calc(100svh - 148px);
@@ -98,7 +98,7 @@ const StyledDashboard = styled.div`
   .steps-wrapper {
     width: 100%;
     padding: 20px;
-    background: #686de7;
+    background: var(--blue-banner);
     box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
     margin-bottom: 20px;
     height: calc(100svh - 365px);

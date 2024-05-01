@@ -42,7 +42,7 @@ export const Input = ({
 const StyledInput = styled.div`
   margin-bottom: 15px;
   .label {
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--white-color);
     text-align: center;
     font-family: Overpass;
     font-size: 14px;
@@ -54,10 +54,9 @@ const StyledInput = styled.div`
   }
   input {
     border-radius: ${({ phone }) => (phone ? "0 6px 6px 0" : "6px")};
-    background: #474747;
+    background: var(--input-bg);
     padding: 10px;
-    color: ${({ error }) =>
-      error === "true" ? "#ff2e2e" : "rgba(255, 255, 255, 1)"};
+    color: ${({ error }) => (error === "true" ? "#ff2e2e" : "var(--color-2)")};
 
     leading-trim: both;
     text-edge: cap;
@@ -72,7 +71,7 @@ const StyledInput = styled.div`
     ${({ error }) => error === "true" && "border: 1px solid #ff2e2e;"}
   }
   .code-select-wrapper {
-    background: #474747;
+    background: var(--second-bg);
     padding: 10px;
     height: 37px;
   }

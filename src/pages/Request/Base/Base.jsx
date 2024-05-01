@@ -77,7 +77,7 @@ export const Base = ({ data, onChangeField, className }) => {
 const StyledBase = styled.div`
   padding: 6px 8px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   .check-opt {
     margin-bottom: 6.5px;
   }
@@ -86,6 +86,6 @@ const StyledBase = styled.div`
   }
   .xbase-title {
     margin-left: 2px;
-    color: #81fb21;
+    color: var(--green);
   }
 `;

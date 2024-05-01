@@ -13,9 +13,9 @@ const StyledTotal = styled.div`
   gap: 6px;
   padding: 7px 10px 5px;
   border-radius: 9px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-bg-2);
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -24,7 +24,7 @@ const StyledTotal = styled.div`
     opacity: 0.4;
   }
   .value {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;

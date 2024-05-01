@@ -5,7 +5,7 @@ export const Title = ({ count }) => (
 );
 
 const StyledTitle = styled.h3`
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 20px;
   font-style: normal;

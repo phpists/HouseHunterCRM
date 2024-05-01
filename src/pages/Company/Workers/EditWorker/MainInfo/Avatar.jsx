@@ -40,7 +40,7 @@ const StyledAvatar = styled.div`
     z-index: 1;
   }
   &:hover {
-    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    border: 1.5px solid var(--second-color);
 
     img {
       opacity: 1;

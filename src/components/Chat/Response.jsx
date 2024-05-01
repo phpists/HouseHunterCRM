@@ -31,7 +31,7 @@ const StyledResponse = styled.div`
   background: rgba(0, 0, 0, 0.12);
   padding: ${({ isPhoto }) => (isPhoto ? "2px 7px 2px 2px" : "4px 7px 2px")};
   margin-bottom: 8px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-5);
   text-overflow: ellipsis;
   white-space: nowrap;
   font-family: Overpass;
@@ -41,7 +41,8 @@ const StyledResponse = styled.div`
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   .name {
-    color: ${({ isOwner }) => (isOwner ? "#81fb21" : "#98F9FF")};
+    color: ${({ isOwner }) =>
+      isOwner ? "var(--green)" : "var(--chat-response-name)"};
     text-overflow: ellipsis;
     white-space: nowrap;
     font-family: Overpass;

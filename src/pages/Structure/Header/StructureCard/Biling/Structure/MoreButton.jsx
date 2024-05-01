@@ -14,7 +14,7 @@ const StyledMoreButton = styled.div`
   height: 34px;
   flex-shrink: 0;
   border-radius: 34px;
-  border: 1.4px solid #323232;
+  border: 1.4px solid var(--dark-card-bg);
   z-index: ${({ zIndex }) => zIndex};
   font-family: Overpass;
   font-size: 13px;

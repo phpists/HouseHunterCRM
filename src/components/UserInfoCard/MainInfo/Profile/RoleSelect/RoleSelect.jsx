@@ -16,7 +16,7 @@ export const RoleSelect = ({
   namePermission,
 }) => {
   const [open, setOpen] = useState(false);
-  const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
+  const COLORS = ["#7ecefd", "var(--green-light)", "#d0a0ff", "#7ecefd"];
   const { data: level } = useGetCompanyStructureLevelQuery();
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
   const [roles, setRoles] = useState([]);
@@ -116,7 +116,7 @@ const StyledRoleSelect = styled.div`
   transition: all 0.3s;
   max-width: 121px;
   .title {
-    color: ${({ active }) => active?.color ?? "#fff"};
+    color: ${({ active }) => active?.color ?? "var(--main-color)"};
     leading-trim: both;
     text-edge: cap;
     font-family: Overpass;
@@ -162,7 +162,7 @@ const StyledRoleSelect = styled.div`
     transition: all 0.3s;
     transform: rotate(${({ open }) => (open ? 180 : 0)}deg);
     path {
-      fill: ${({ active }) => active?.color ?? "#fff"};
+      fill: ${({ active }) => active?.color ?? "var(--main-color)"};
     }
   }
 

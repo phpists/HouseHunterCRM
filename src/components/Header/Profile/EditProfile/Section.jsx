@@ -6,7 +6,7 @@ export const Section = ({ children, className }) => (
 
 const StyledSection = styled.div`
   border-radius: 9px;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--bg-20);
   padding: 6px;
   margin-bottom: 25px;
   width: 100%;

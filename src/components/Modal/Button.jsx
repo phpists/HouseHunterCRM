@@ -1,17 +1,21 @@
 import styled from "styled-components";
 
-export const Button = ({ onClick, disabled, title, cancel }) => (
-  <StyledButton onClick={onClick} disabled={disabled} cancel={cancel}>
+export const Button = ({ onClick, disabled, title, cancel, className }) => (
+  <StyledButton
+    onClick={onClick}
+    disabled={disabled}
+    cancel={cancel}
+    className={className}
+  >
     {title}
   </StyledButton>
 );
 
 const StyledButton = styled.button`
   border-radius: 8px;
-  background: ${({ cancel }) =>
-    cancel ? "rgba(255, 255, 255, 0.6)" : "rgba(93, 99, 255, 0.7)"};
+  background: ${({ cancel }) => (cancel ? "var(--bg-60)" : " var(--blue);")};
   padding: 9px 18px;
-  color: ${({ cancel }) => (cancel ? "rgb(44, 44, 44)" : "#fff")};
+  color: ${({ cancel }) => (cancel ? "rgb(44, 44, 44)" : "var(--main-color)")};
   text-align: center;
   leading-trim: both;
   text-edge: cap;
@@ -25,7 +29,8 @@ const StyledButton = styled.button`
   width: 100%;
   height: 38px;
   &:hover {
+    color: ${({ cancel }) => (cancel ? "var(--btn-color-hover-44)" : "#FFF")};
     background: ${({ cancel }) =>
-      cancel ? "rgba(255, 255, 255, 1)" : "rgba(93, 99, 255, 1)"};
+      cancel ? "var(--color-2)" : "rgba(93, 99, 255, 1)"};
   }
 `;

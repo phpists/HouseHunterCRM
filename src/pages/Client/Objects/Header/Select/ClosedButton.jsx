@@ -15,7 +15,7 @@ const StyledClosedButton = styled.div`
   height: 32px;
   flex-shrink: 0;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--bg-20);
   backdrop-filter: blur(18.5px);
   cursor: pointer;
   path {

@@ -15,7 +15,7 @@ export const Title = ({ open, balance, value, onChange }) => (
 );
 
 const StyledTitle = styled.div`
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: ${({ open }) => (open ? 20 : 15)}px;
   font-style: normal;

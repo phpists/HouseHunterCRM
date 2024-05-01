@@ -62,7 +62,7 @@ export const Breadcrumbs = ({
 const StyledBreadcrumbs = styled.div`
   font-size: ${({ isSmall }) => (isSmall ? 14 : 18)}px;
   .title {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--second-color);
     font-family: Overpass;
     font-style: normal;
     font-weight: 200;
@@ -72,15 +72,15 @@ const StyledBreadcrumbs = styled.div`
 
     cursor: pointer;
     &.active {
-      color: rgba(255, 255, 255, 0.9);
+      color: var(--dark-90);
       font-family: Overpass;
     }
   }
   .divider {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--second-color);
     font-family: Overpass;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: normal;
     letter-spacing: 0.36px;
     margin: 0 4px;

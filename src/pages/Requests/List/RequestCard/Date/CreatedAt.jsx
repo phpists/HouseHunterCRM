@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import clock from "../../../../../assets/images/time.svg";
+import { ReactComponent as Clock } from "../../../../../assets/images/time.svg";
 import { handleFormatDate } from "../../../../../utilits";
 
 export const CreatedAt = ({ dateCreate }) => (
-  <StyledCreatedAt className="flex item-center">
-    <img src={clock} alt="" />
+  <StyledCreatedAt className="flex item-center labelItem">
+    <Clock />
     Створено {handleFormatDate(Number(dateCreate) * 1000)}
   </StyledCreatedAt>
 );
@@ -18,7 +18,7 @@ const StyledCreatedAt = styled.div`
   text-align: left;
   opacity: 0.4;
   margin-bottom: 17px;
-  img {
+  svg {
     margin-right: 4px;
     height: 12px;
     width: 12px;

@@ -109,7 +109,7 @@ export const TagsFilter = ({
         {search && tags?.length === 0 && <SearchIcon className="search-icon" />}
       </div>
       {search && tags?.length === 0 ? null : (
-        <div className="label">{label}</div>
+        <div className="label labelItem">{label}</div>
       )}
     </StyledTagsFilter>
   );
@@ -123,7 +123,7 @@ const StyledTagsFilter = styled.div`
     border: red 1px solid;
   }
   input {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
@@ -133,7 +133,7 @@ const StyledTagsFilter = styled.div`
     transition: all 0.3s;
     width: 100%;
     &::placeholder {
-      color: #fff;
+      color: var(--main-color);
       font-family: Overpass;
       font-size: 15px;
       font-style: normal;
@@ -144,11 +144,11 @@ const StyledTagsFilter = styled.div`
     }
   }
   .label {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
@@ -170,7 +170,7 @@ const StyledTagsFilter = styled.div`
     ${({ noEdit }) =>
       !noEdit &&
       `
-        background: rgba(255, 255, 255, 0.05);
+        background:  var(--card-bg-2);
         input {
         &::placeholder {
             opacity: 1;
@@ -180,5 +180,5 @@ const StyledTagsFilter = styled.div`
     `}
   }
 
-  ${({ empty }) => !empty && "background: rgba(255, 255, 255, 0.05);"}
+  ${({ empty }) => !empty && "background:  var(--card-bg-2);"}
 `;

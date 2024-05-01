@@ -50,9 +50,9 @@ export const Contacts = () => {
 const StyledContacts = styled.div`
   padding: 10px 15px;
   border-radius: 10px;
-  background: #3d3d3d;
+  background: var(--card-bg);
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 20px;
     font-style: normal;
@@ -63,7 +63,7 @@ const StyledContacts = styled.div`
     margin-bottom: 15px;
   }
   .name {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -77,11 +77,11 @@ const StyledContacts = styled.div`
     max-width: 100px;
   }
   .label {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
@@ -100,7 +100,7 @@ const StyledContacts = styled.div`
     width: 1px;
     height: 49px;
     opacity: 0.1;
-    background: #fff;
+    background: var(--active-bg);
     margin: 0 20px;
   }
   @media (max-width: 1300px) {
@@ -122,7 +122,7 @@ const StyledContacts = styled.div`
   @media (max-width: 800px) {
     padding: 10px;
     .title {
-      color: #fff;
+      color: var(--main-color);
       font-family: Overpass;
       font-size: 18px;
     }

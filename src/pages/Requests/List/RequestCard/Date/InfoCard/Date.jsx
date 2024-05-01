@@ -15,13 +15,13 @@ export const Date = ({ date }) => (
 const StyledDate = styled.div`
   white-space: nowrap;
   .title {
-    color: #fff;
+    color: var(--main-color);
     leading-trim: both;
     text-edge: cap;
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 16.52px */
     letter-spacing: 0.28px;
     margin-bottom: 4px;
@@ -30,11 +30,11 @@ const StyledDate = styled.div`
     }
   }
   .subtitle {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--second-color);
     font-family: Overpass;
     font-size: 12px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 14.16px */
     letter-spacing: 0.24px;
   }

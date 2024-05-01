@@ -34,7 +34,7 @@ export const Card = ({
 
   return (
     <StyledCard
-      className="hide-scroll card"
+      className={`hide-scroll card list-card-wrapper ${selected && "selected"}`}
       onClick={handleClick}
       selected={selected}
     >
@@ -93,11 +93,11 @@ export const Card = ({
 const StyledCard = styled.div`
   padding: 14px;
   border-radius: 15px;
-  background: #3d3d3d;
+  background: var(--card-bg-5);
   transition: all 0.3s;
   cursor: pointer;
   &:hover {
-    background: #484848;
+    background: var(--hover-card);
   }
   ${({ selected }) => selected && "border: 1.4px solid #FFF;"}
   .commet-value, .desktop-comment {

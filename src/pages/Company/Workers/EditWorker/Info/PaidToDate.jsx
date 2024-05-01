@@ -21,16 +21,16 @@ const StyledLPaidToDate = styled.div`
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
-    color: #50f835;
+    color: var(--green-light-2);
     span {
-      color: rgba(80, 248, 53, 0.6);
+      color: var(--green-light-3);
     }
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
@@ -47,7 +47,7 @@ const StyledLPaidToDate = styled.div`
   }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
     img {
       opacity: 1;
       visibility: visible;

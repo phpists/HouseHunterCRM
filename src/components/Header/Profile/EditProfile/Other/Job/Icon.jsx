@@ -12,7 +12,7 @@ const StyledIcon = styled.div`
   height: 43px;
   flex-shrink: 0;
   border-radius: 4px;
-  background: #fff;
+  background: var(--active-bg);
   margin-right: 8px;
   transition: all 0.3s;
 `;

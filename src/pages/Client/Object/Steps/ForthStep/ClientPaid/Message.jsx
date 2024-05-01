@@ -18,26 +18,26 @@ export const Message = ({ open, onClose }) => (
 
 const StyledMessage = styled(motion.div)`
   border-radius: 9px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--bg-20);
+  background: var(--card-bg-2);
   backdrop-filter: blur(8.5px);
   position: absolute;
   right: 0;
   padding: 7px 7px 7px 10px;
   z-index: 2;
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;

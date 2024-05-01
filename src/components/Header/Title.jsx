@@ -70,7 +70,7 @@ export const Title = () => {
 };
 
 const StyledTitle = styled.h1`
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 32px;
   font-style: normal;

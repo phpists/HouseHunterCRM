@@ -1,12 +1,18 @@
 import { styled } from "styled-components";
 import viberIcon from "../assets/images/viber.svg";
+import viberBlackIcon from "../assets/images/viber-black.svg";
 import telegramIcon from "../assets/images/telegram.svg";
+import telegramBlackIcon from "../assets/images/telegram-black.svg";
 import { ReactComponent as CheckIcon } from "../assets/images/circle-green-check.svg";
 import { ReactComponent as ArrowIcon } from "../assets/images/socmedia-arrow.svg";
 
 const TYPES = {
-  viber: { icon: viberIcon, color: "#7360F2" },
-  telegram: { icon: telegramIcon, color: "#3D8ECC" },
+  viber: { icon: viberIcon, iconDark: viberBlackIcon, color: "#7360F2" },
+  telegram: {
+    icon: telegramIcon,
+    iconDark: telegramBlackIcon,
+    color: "#3D8ECC",
+  },
 };
 
 export const Socmedia = ({
@@ -23,7 +29,7 @@ export const Socmedia = ({
     type === "viber" ? `viber://chat?number=${phone}` : `https://t.me/${phone}`;
   return (
     <StyledSocmedia
-      className={`flex items-center justify-between ${className} ${
+      className={`flex items-center justify-between socmediaWrapper ${className} ${
         active && "active"
       } ${phone && "phone"}`}
       onClick={onClick}
@@ -32,7 +38,8 @@ export const Socmedia = ({
       href={phone ? phoneValue : undefined}
       target={phone && type === "telegram" ? "_blank" : undefined}
     >
-      <img src={TYPES[type].icon} alt="" />
+      <img src={TYPES[type].icon} alt="" className="socmedia-light" />
+      <img src={TYPES[type].iconDark} alt="" className="socmedia-dark" />
       {phone ? null : (
         <>
           {" "}
@@ -52,6 +59,9 @@ const StyledSocmedia = styled.a`
   flex-shrink: 0;
   cursor: pointer;
   transition: all 0.3s;
+  .socmedia-dark {
+    display: none;
+  }
   img {
     transition: all 0.3s;
     transform: translateX(50%);
@@ -59,7 +69,7 @@ const StyledSocmedia = styled.a`
   .divider {
     width: 1px;
     height: 18px;
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
   }
   path {
     fill: #fff;
@@ -87,6 +97,21 @@ const StyledSocmedia = styled.a`
   }
   &.active {
     background: ${({ color }) => color} !important;
+    .white-fill-svg {
+      fill: #fff !important;
+    }
+    .white-stroke-svg {
+      stroke: #fff !important;
+    }
+    .socmedia-dark {
+      display: none !important;
+    }
+    .socmedia-light {
+      display: block !important;
+    }
+    .divider {
+      background: rgba(255, 255, 255, 0.2) !important;
+    }
   }
   &.phone {
     display: flex;
@@ -94,7 +119,7 @@ const StyledSocmedia = styled.a`
     justify-content: center;
     width: 45px;
     height: 45px;
-    background: #444;
+    background: var(--card-bg-3);
     padding: 6px;
     border-radius: 6px;
     img {

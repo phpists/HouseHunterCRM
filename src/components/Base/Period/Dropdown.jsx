@@ -27,17 +27,17 @@ export const Dropdown = ({ options, value, onChange }) => {
 
 const StyledDropdown = styled.button`
   border-radius: 7px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(44, 44, 44, 0.5);
+  border: 1px solid var(--card-bg-2);
+  background: var(--bg-5);
   position: relative;
   width: 105px;
   div {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--second-color);
     text-align: center;
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     text-transform: uppercase;
@@ -48,8 +48,8 @@ const StyledDropdown = styled.button`
     position: absolute;
     bottom: 0;
     border-radius: 7px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(44, 44, 44, 0.5);
+    border: 1px solid var(--card-bg-2);
+    background: var(--bg-5);
     backdrop-filter: blur(3.5px);
     opacity: 0;
     visibility: hidden;
@@ -57,9 +57,9 @@ const StyledDropdown = styled.button`
     max-height: 100px;
     overflow: auto;
     div {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid var(--card-bg-2);
       &:hover {
-        color: #fff;
+        color: var(--main-color);
       }
       &:last-child {
         border: none;

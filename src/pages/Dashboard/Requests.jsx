@@ -41,11 +41,11 @@ export const Requests = ({ statisticData }) => {
 
 const StyledRequests = styled.div`
   padding: 10px;
-  background: #323232;
+  background: var(--dark-card-bg);
   .content {
     padding: 14px;
     border-radius: 9px;
-    background: #3d3d3d;
+    background: var(--card-bg);
     .icon-wrapper {
       background: rgba(68, 172, 238, 0.1);
     }

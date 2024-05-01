@@ -22,7 +22,7 @@ export const StepButton = () => {
 
 const StyledStepButton = styled.button`
   padding: 20px;
-  background: #686de7;
+  background: var(--blue-banner);
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   position: relative;
   .step-button-arrow {
@@ -31,7 +31,7 @@ const StyledStepButton = styled.button`
     transform: rotate(${({ open }) => (open ? 180 : 0)}deg);
   }
   .step-button-title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 18px;
     font-style: normal;
@@ -44,7 +44,7 @@ const StyledStepButton = styled.button`
     position: absolute;
     top: 100%;
     left: 0;
-    background: #686de7;
+    background: var(--blue-banner);
     padding: 0 20px 20px;
     text-align: left;
     z-index: 30;

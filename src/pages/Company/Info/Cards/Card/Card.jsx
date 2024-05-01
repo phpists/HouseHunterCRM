@@ -71,7 +71,7 @@ export const Card = ({
 const StyledCard = styled.div`
   padding: 8px 8px 9px 9px;
   transition: all 0.3s;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -80,7 +80,7 @@ const StyledCard = styled.div`
   }
 
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 20px;
     font-style: normal;
@@ -91,11 +91,11 @@ const StyledCard = styled.div`
     z-index: 10;
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: 120.182%; /* 13.22px */
     letter-spacing: 0.22px;
     opacity: 0.4;
@@ -135,7 +135,7 @@ const StyledCard = styled.div`
   }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--bg-15);
     .hover {
       display: block;
     }
@@ -167,7 +167,7 @@ const StyledCard = styled.div`
     }
   }
   @media (max-width: 600px) {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
     svg {
       position: absolute;
       top: 11px;

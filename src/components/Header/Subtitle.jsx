@@ -69,12 +69,11 @@ export const Subtitle = () => {
 };
 
 const StyledSubtitle = styled.div`
-  color: #fff;
+  color: var(--subtitle-color);
   font-family: Open Sans;
   font-size: 15px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: normal;
   letter-spacing: 0.3px;
-  opacity: 0.4;
 `;

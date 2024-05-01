@@ -5,7 +5,7 @@ export const CardTitle = ({ title }) => (
 );
 
 const StyledCardTitle = styled.div`
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 14px;
   font-style: normal;

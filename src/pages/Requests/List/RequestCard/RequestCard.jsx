@@ -51,7 +51,7 @@ export const RequestCard = ({
     <StyledRequestCard
       selected={selected}
       onClick={handleClick}
-      className="clickable"
+      className={`clickable list-card-wrapper ${selected && "selected"}`}
     >
       {isMobile ? (
         <MobileContent
@@ -88,7 +88,7 @@ export const RequestCard = ({
 
 const StyledRequestCard = styled.div`
   border-radius: 10px;
-  background: #3d3d3d;
+  background: var(--card-bg);
   padding: 10px;
   justify-content: space-between;
   border: 1px solid transparent;

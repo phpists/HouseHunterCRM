@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import activityIcon from "../assets/images/activity.svg";
+import { ReactComponent as Icon } from "../assets/images/activity.svg";
 import { Loader } from "./Loader";
 
 export const Empty = ({ noSubtitle, className, loading }) => (
@@ -8,7 +8,7 @@ export const Empty = ({ noSubtitle, className, loading }) => (
       <Loader white className="loaderComponent" />
     ) : (
       <>
-        <img src={activityIcon} alt="icon" />
+        <Icon />
         <div className="title">Упс, тут пусто!</div>
       </>
     )}
@@ -22,11 +22,11 @@ const StyledEmpty = styled.div`
   flex-direction: column;
   height: 100%;
   margin-top: 56px;
-  img {
+  svg {
     margin-bottom: 4px;
   }
   .title {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--dark-90);
     font-family: Overpass;
     font-size: 18px;
     font-style: normal;
@@ -36,7 +36,7 @@ const StyledEmpty = styled.div`
     margin-bottom: 10px;
   }
   .subtitle {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--second-color);
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;

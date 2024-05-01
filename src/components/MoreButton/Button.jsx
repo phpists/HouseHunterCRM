@@ -17,7 +17,7 @@ const StyledButton = styled.button`
   height: 32px;
   flex-shrink: 0;
   border-radius: 8px;
-  border: 1.4px solid rgba(255, 255, 255, 0.4);
+  border: var(--border-1);
   transition: all 0.3s;
   position: relative;
   z-index: 0;
@@ -28,7 +28,7 @@ const StyledButton = styled.button`
     transition: all 0.3s;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
     border: none;
     g {
       opacity: 1;

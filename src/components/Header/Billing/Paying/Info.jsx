@@ -23,12 +23,12 @@ const StyledInfo = styled.div`
     width: max-content;
     padding: 6px 10px 4px 8px;
     border-radius: 7px;
-    background: #fff;
+    background: var(--active-bg);
     color: #5d63ff;
     font-family: Overpass;
     font-size: 12px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: 118%; /* 14.16px */
     letter-spacing: 0.24px;
     visibility: hidden;

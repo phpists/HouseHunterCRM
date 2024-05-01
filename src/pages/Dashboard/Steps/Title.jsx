@@ -5,7 +5,7 @@ export const Title = () => (
 );
 
 const StyledTitle = styled.div`
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 20px;
   font-style: normal;

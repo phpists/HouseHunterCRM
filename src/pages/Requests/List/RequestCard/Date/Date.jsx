@@ -60,7 +60,7 @@ export const Date = ({ category, location, date, dateCreate }) => {
 
 const StyledDate = styled.div`
   border-radius: 9px;
-  background: rgba(50, 50, 50, 0.6);
+  background: var(--bg-60-2);
   padding: 10px;
   width: 320px;
   overflow: auto;

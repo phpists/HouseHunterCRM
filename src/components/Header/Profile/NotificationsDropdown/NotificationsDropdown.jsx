@@ -96,7 +96,7 @@ const StyledNotificationsDropdown = styled.div`
   left: 0;
   padding: 10px;
   border-radius: 9px;
-  background: #474747;
+  background: var(--second-bg);
   z-index: 1000;
   display: grid;
   grid-template-columns: 1fr;

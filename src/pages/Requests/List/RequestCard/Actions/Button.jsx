@@ -27,7 +27,7 @@ const StyledButton = styled.button`
   height: 24px;
   flex-shrink: 0;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-bg-2);
   transition: all 0.3s;
   border: 1px solid transparent;
   svg {
@@ -36,7 +36,7 @@ const StyledButton = styled.button`
   &:hover,
   &.active {
     border-radius: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--bg-20);
     g,
     path {
       opacity: 1;
@@ -49,7 +49,7 @@ const StyledLink = styled(NavLink)`
   height: 24px;
   flex-shrink: 0;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-bg-2);
   transition: all 0.3s;
   border: 1px solid transparent;
   svg {
@@ -58,7 +58,7 @@ const StyledLink = styled(NavLink)`
   &:hover,
   &.active {
     border-radius: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--bg-20);
     g,
     path {
       opacity: 1;

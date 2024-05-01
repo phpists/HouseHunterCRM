@@ -5,7 +5,7 @@ export const SendClientButton = () => (
 );
 
 const StyledSendClientButton = styled.div`
-  color: #fff;
+  color: var(--main-color);
   text-align: center;
   font-family: Overpass;
   font-size: 15px;
@@ -15,13 +15,13 @@ const StyledSendClientButton = styled.div`
   letter-spacing: 0.3px;
   padding: 8px 18px 6px 17px;
   border-radius: 8px;
-  border: 1.4px solid rgba(255, 255, 255, 0.4);
+  border: 1.4px solid var(--second-color);
   opacity: 0.4;
   cursor: pointer;
   transition: all 0.3s;
   margin-right: 21px;
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
     opacity: 1;
     border: 1px solid transparent;
   }

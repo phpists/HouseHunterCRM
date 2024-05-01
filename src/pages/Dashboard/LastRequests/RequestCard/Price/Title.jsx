@@ -3,11 +3,11 @@ import styled from "styled-components";
 export const Title = ({ price }) => <StyledTitle> {price}</StyledTitle>;
 
 const StyledTitle = styled.div`
-  color: #81fb21;
+  color: var(--green);
   font-family: Overpass;
   font-size: 14px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: normal;
   letter-spacing: 0.28px;
 `;

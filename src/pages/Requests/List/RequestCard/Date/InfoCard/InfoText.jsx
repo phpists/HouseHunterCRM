@@ -9,11 +9,11 @@ export const InfoText = ({ category }) => (
 
 const StyledInfoText = styled.div`
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 14px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.28px;
     margin-bottom: 2px;
@@ -24,11 +24,11 @@ const StyledInfoText = styled.div`
   }
   .id {
     opacity: 0.4;
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 12px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 14.16px */
     letter-spacing: 0.24px;
   }

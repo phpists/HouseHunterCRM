@@ -11,8 +11,8 @@ export const MoreButton = ({ open, onToggle }) => (
 
 const StyledMoreButton = styled.div`
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.4);
+  background: var(--bg-10);
+  color: var(--second-color);
   text-align: center;
   font-family: Overpass;
   font-size: 15px;
@@ -22,7 +22,7 @@ const StyledMoreButton = styled.div`
   letter-spacing: 0.3px;
   height: 43px;
   &:hover {
-    color: rgba(255, 255, 255, 1);
+    color: var(--color-2);
   }
 
   @media (min-width: 850px) {

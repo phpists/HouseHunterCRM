@@ -236,7 +236,7 @@ export const Maininfo = ({
 const StyledMaininfo = styled.div`
   padding: 6px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   margin-bottom: 10px;
   .title-field {
     align-items: start !important;
@@ -252,7 +252,7 @@ const StyledMaininfo = styled.div`
   }
   .price-field {
     .value {
-      color: #81fb21;
+      color: var(--green);
       width: 150px;
     }
   }

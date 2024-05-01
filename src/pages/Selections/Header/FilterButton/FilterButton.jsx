@@ -39,12 +39,12 @@ const StyledFilterButton = styled.button`
   height: 32px;
   margin-left: 15px;
   border-radius: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--bg-20);
   g {
     transition: all 0.3s;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
     g {
       opacity: 1;
     }

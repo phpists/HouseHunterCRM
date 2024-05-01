@@ -24,7 +24,7 @@ const StyledJob = styled.div`
   position: relative;
   cursor: pointer;
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -37,23 +37,23 @@ const StyledJob = styled.div`
     }
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
   }
   &:hover {
-    background: #fff;
+    background: var(--active-bg);
     .title,
     .subtitle {
       color: #2c2c2c;
     }
     .job-icon {
-      background: #2c2c2c;
+      background: var(--main-bg);
     }
   }
 `;

@@ -14,26 +14,26 @@ const StyledFooter = styled.div`
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 100;
+  font-weight: var(--font-weight-100);
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--bg-10);
   display: grid;
   grid-template-columns: 1fr 1fr;
   button {
     padding: 6px 10px 5px;
     transition: all 0.3s;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--second-color);
     &:hover {
-      background: rgba(255, 255, 255, 0.2);
-      color: rgba(255, 255, 255, 1);
+      background: var(--bg-20);
+      color: var(--color-2);
     }
     &:disabled {
       background: rgba(255, 255, 255, 0);
-      color: rgba(255, 255, 255, 0.4);
+      color: var(--second-color);
     }
   }
   button:nth-child(1) {
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid var(--bg-10);
   }
 `;

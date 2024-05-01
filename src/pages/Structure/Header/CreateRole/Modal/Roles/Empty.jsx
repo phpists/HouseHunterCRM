@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Empty = () => <StyledEmpty>Пусто</StyledEmpty>;
 
 const StyledEmpty = styled.div`
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--dark-90);
   font-family: Overpass;
   font-size: 18px;
   font-style: normal;

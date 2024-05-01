@@ -24,11 +24,11 @@ const StyledSelectItemsDropdown = styled.div`
   top: 100%;
   width: 100%;
   left: 0;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   border-radius: 0px 0px 9px 9px;
   overflow: hidden;
   backdrop-filter: blur(18.5px);
-  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  border-top: var(--second-color-border);
   z-index: 100;
   text-align: left;
 `;

@@ -22,7 +22,7 @@ const StyledBusyStatus = styled.div`
   transition: all 0.3s;
   cursor: pointer;
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -32,17 +32,17 @@ const StyledBusyStatus = styled.div`
     margin-bottom: 1px;
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
   }
   &:hover {
-    background: #fff;
+    background: var(--active-bg);
     .title,
     .subtitle {
       color: #2c2c2c;

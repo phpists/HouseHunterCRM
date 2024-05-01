@@ -86,7 +86,7 @@ const StyledDesktopContent = styled.div`
     width: 62px;
     height: 62px;
     border-radius: 9px;
-    background: #2b2b2b;
+    background: var(--modal-bg);
     margin-right: 12px;
     img {
       height: 21px;

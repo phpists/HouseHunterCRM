@@ -8,7 +8,7 @@ export const Subtitle = ({ subtitle }) => (
 );
 
 const StyledSubtitle = styled.div`
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--second-color);
   font-family: Overpass;
   font-size: 20px;
   font-style: normal;
@@ -16,7 +16,7 @@ const StyledSubtitle = styled.div`
   line-height: 118%;
   letter-spacing: 0.4px;
   span {
-    color: rgba(255, 255, 255, 0.2);
+    color: var(--bg-20);
     margin: 0 5px;
   }
   @media (max-width: 850px) {

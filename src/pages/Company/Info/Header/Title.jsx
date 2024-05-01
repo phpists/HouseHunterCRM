@@ -40,7 +40,7 @@ export const Title = ({ title, onEdit }) => {
 };
 
 const StyledTitle = styled.h3`
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 20px;
   font-style: normal;
@@ -64,7 +64,7 @@ const StyledTitle = styled.h3`
     transform: translateX(-5px);
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--bg-10);
     img {
       opacity: 1;
       visibility: visible;
@@ -74,7 +74,7 @@ const StyledTitle = styled.h3`
   ${({ edit }) =>
     edit &&
     `
-     background: rgba(255, 255, 255, 0.1);
+     background: var(--bg-10);
     img {
       opacity: 1;
       visibility: visible;

@@ -7,7 +7,8 @@ export const Name = ({ isSelected, name }) => (
 );
 
 const StyledName = styled.div`
-  color: ${({ isSelected }) => (isSelected ? "#50F835" : "#fff")};
+  color: ${({ isSelected }) =>
+    isSelected ? "var(--green-light-2)" : "var(--main-color)"};
   font-family: Overpass;
   font-size: 17px;
   font-style: normal;

@@ -66,7 +66,7 @@ const StyledDropdown = styled.div`
   transition: all 0.01;
   .opt {
     padding: 8px 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--bg-10);
     cursor: pointer;
     &:last-child {
       border-bottom: none;
@@ -74,7 +74,7 @@ const StyledDropdown = styled.div`
   }
   .epmty {
     padding: 10px;
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;

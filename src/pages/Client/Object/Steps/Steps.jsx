@@ -35,7 +35,7 @@ const StyledSteps = styled.div`
   width: 100%;
   .steps-wrapper {
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--bg-10);
     .steps-content {
       padding: 6px;
       margin-bottom: 10px;

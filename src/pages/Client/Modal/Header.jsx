@@ -10,8 +10,8 @@ export const Header = ({ title, onClose }) => (
 
 const StyledHeader = styled.div`
   padding: 18px 20px;
-  background: #3d3d3d;
-  color: #fff;
+  background: var(--card-bg);
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 20px;
   font-style: normal;

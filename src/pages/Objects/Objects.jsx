@@ -94,6 +94,34 @@ const Objects = () => {
           price_currency: updatedFilters?.price_currency ?? "1",
           price_for: updatedFilters?.price_for ?? "4",
         };
+      } else if (field?.includes("_min") || field?.includes("_max")) {
+        const fieldMinName = field?.includes("_min")
+          ? field
+          : field?.replace("_max", "_min");
+        const fieldMaxName = field?.includes("_max")
+          ? field
+          : field?.replace("_min", "_max");
+
+        const valMin = field?.includes("_min")
+          ? value
+          : updatedFilters[fieldMinName] ?? 0;
+        const valMax = field?.includes("_max")
+          ? value
+          : updatedFilters[fieldMaxName] ?? 0;
+
+        if (valMin > valMax && field?.includes("_min") && valMin !== 0) {
+          updatedFilters = {
+            ...updatedFilters,
+            [fieldMinName]: valMin,
+            [fieldMaxName]: valMin,
+          };
+        } else if (valMax < valMin && field?.includes("_max") && valMax !== 0) {
+          updatedFilters = {
+            ...updatedFilters,
+            [fieldMinName]: valMax,
+            [fieldMaxName]: valMax,
+          };
+        }
       }
 
       if (field === "street_base_object") {
@@ -473,10 +501,44 @@ const Objects = () => {
     setFilterFields([]);
     const filterApply = location?.search?.split("=")[0];
     const filterApplyValue = location?.search?.split("=")[1];
-    console.log(filterApplyValue);
     if (id) {
       setFilters({
         id_hash: id,
+        company_object: {
+          show_only: "company",
+          actual: "1",
+          given_objects: "1",
+          not_actual: "1",
+          overdue: "1",
+          show_street_base_company: "1",
+        },
+        street_base_object: {
+          sorting_id: "16",
+        },
+        mls_object: {},
+      });
+      filterActive.current = true;
+      setUpdateData(true);
+    } else if (filterApply === "?findSelectionSimilar") {
+      const initFilters =
+        location?.search
+          ?.replace("?findSelectionSimilar=true", "")
+          ?.split("&")
+          ?.filter((f) => f?.length > 0)
+          ?.map((f) => f?.split("=")) ?? [];
+      let initFiltersObject = {};
+
+      try {
+        initFiltersObject = Object.fromEntries(initFilters);
+      } catch {
+        initFiltersObject = {};
+      }
+
+      setFilters({
+        ...initFiltersObject,
+        id_location: initFiltersObject?.id_location
+          ? [initFiltersObject?.id_location]
+          : undefined,
         company_object: {
           show_only: "company",
           actual: "1",
@@ -675,7 +737,7 @@ const Objects = () => {
 
 const StyledObjects = styled.div`
   padding: 15px 20px;
-  background: #323232;
+  background: var(--dark-card-bg);
   box-shadow: 0px 3px 32px 0px rgba(0, 0, 0, 0.22);
   position: relative;
   @media (max-width: 500px) {

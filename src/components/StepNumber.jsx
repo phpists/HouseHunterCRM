@@ -11,10 +11,10 @@ const StyledStepNumber = styled.div`
   width: 32px;
   height: 32px;
   flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-bg-2);
   border: 1.4px solid #fff;
   border-radius: 100%;
-  color: #fff;
+  color: var(--main-color);
   text-align: center;
   leading-trim: both;
   text-edge: cap;

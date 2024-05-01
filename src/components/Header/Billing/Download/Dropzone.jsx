@@ -13,7 +13,7 @@ const StyledDropzone = styled.div`
   border-radius: 9px;
   border: 1px dashed #5d63ff;
   background: rgba(49, 50, 65, 0);
-  color: rgba(255, 255, 255, 0.2);
+  color: var(--bg-20);
   text-align: center;
   font-family: Open Sans;
   font-size: 11px;

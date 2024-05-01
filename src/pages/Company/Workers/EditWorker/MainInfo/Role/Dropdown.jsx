@@ -16,7 +16,7 @@ const StyledDropdown = styled.div`
   font-family: Overpass;
   font-size: 11px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: 118%; /* 12.98px */
   letter-spacing: 0.22px;
   text-transform: uppercase;
@@ -30,7 +30,7 @@ const StyledDropdown = styled.div`
     border-top: 1px solid rgba(88, 175, 255, 0.1);
   }
   .create {
-    color: #fff;
+    color: var(--main-color);
     border-radius: 0 0 7px 7px;
   }
 `;

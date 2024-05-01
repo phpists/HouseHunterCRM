@@ -28,19 +28,20 @@ const StyledLoginAllow = styled.div`
   border-radius: 9px;
   transition: all 0.3s;
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
   }
   .title {
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
-    color: ${({ isAllowed }) => (isAllowed ? "#50F835" : "#F17807")};
+    color: ${({ isAllowed }) =>
+      isAllowed ? "var(--green-light-2)" : "#F17807"};
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
@@ -50,7 +51,7 @@ const StyledLoginAllow = styled.div`
     opacity: 0.4;
   }
   .toggle {
-    background: #323232;
+    background: var(--dark-card-bg);
   }
   .toggle-active {
     background: #35c511;

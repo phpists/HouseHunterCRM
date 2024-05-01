@@ -13,7 +13,7 @@ const StyledPayButton = styled.div`
     font-family: Overpass;
     font-size: 12px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: 118%; /* 14.16px */
     letter-spacing: 0.24px;
     height: 26px;
@@ -23,7 +23,7 @@ const StyledPayButton = styled.div`
     color: #248e09;
     &:hover {
       background: #2fa112;
-      color: #fff;
+      color: var(--main-color);
       border: 1.2px solid #248e09;
     }
   }

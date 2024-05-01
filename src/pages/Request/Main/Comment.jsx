@@ -19,7 +19,7 @@ export const Comment = ({ value, onChange, error }) => {
 const StlyedComment = styled.div`
   padding: 8px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   margin-bottom: 15px;
   .value {
     width: 100%;

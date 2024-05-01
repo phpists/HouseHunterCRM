@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 export const Date = ({ date }) => <StyledDate>Додана {date}</StyledDate>;
 
 const StyledDate = styled.h3`
-  color: #fff;
+  color: var(--main-color);
   /* Aditional text */
   font-family: Open Sans;
   font-size: 11px;

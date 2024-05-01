@@ -7,7 +7,7 @@ const StyledDivider = styled.div`
   margin: 17px 0 16px -16px;
   height: 1px;
   opacity: 0.1;
-  background: #fff;
+  background: var(--active-bg);
   width: calc(100% + 32px);
   flex-shrink: 0;
 `;

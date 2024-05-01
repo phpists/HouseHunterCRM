@@ -5,7 +5,7 @@ import bg from "../../assets/images/loading.svg";
 
 export const Loading = ({ load }) => (
   <StyledLoading className="flex flex-col justify-center items-center" bg={bg}>
-    <img src={logo} alt="logo" />
+    <img src={logo} alt="logo" className="main-loading-logo" />
     <Progress load={load} />
   </StyledLoading>
 );
@@ -17,8 +17,8 @@ const StyledLoading = styled.div`
   bottom: 0;
   left: 0;
   z-index: 1000;
-  background: url(${({ bg }) => bg}) center/contain no-repeat, #2c2c2c;
-  img {
+  background: url(${({ bg }) => bg}) center/contain no-repeat, var(--main-bg);
+  .main-loading-logo {
     height: 50px;
   }
 `;

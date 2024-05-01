@@ -33,20 +33,20 @@ const StyledField = styled.div`
   cursor: pointer;
   transition: all 0.3s;
   .value {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
   }
   .label {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
@@ -63,7 +63,7 @@ const StyledField = styled.div`
     }
   }
   .edit-icon path {
-    fill: #fff;
+    fill: var(--main-color);
   }
   input {
     width: 100%;

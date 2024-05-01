@@ -9,7 +9,7 @@ export const LastDate = () => (
 );
 
 const StyledLastDate = styled.div`
-  color: #fff;
+  color: var(--main-color);
   leading-trim: both;
   text-edge: cap;
   font-family: Open Sans;

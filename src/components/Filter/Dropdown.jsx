@@ -38,7 +38,7 @@ export const Dropdown = ({ open, filter, onFilterChange }) => {
   }, [level, levels]);
 
   return (
-    <StyledDropdown open={open}>
+    <StyledDropdown open={open} className="companyFilterDropdown">
       <div
         className="flex items-center justify-between toggle-wrapper"
         onClick={() => onFilterChange("active", !filter?.active)}
@@ -74,6 +74,7 @@ export const Dropdown = ({ open, filter, onFilterChange }) => {
                 : [...filter.roles, i.toString()]
             )
           }
+          className="company-roles-option"
         />
       ))}
     </StyledDropdown>
@@ -86,9 +87,9 @@ const StyledDropdown = styled.div`
   right: 0;
   width: 220px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--company-filter-dropdown-bg);
   backdrop-filter: blur(18.5px);
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
@@ -104,10 +105,10 @@ const StyledDropdown = styled.div`
   }
   .toggle-wrapper {
     padding: 6px 6px 7px 11px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--bg-10);
   }
   .toggle {
-    background: #323232;
+    background: var(--dark-card-bg);
   }
   .toggle--active {
     background: #35c511;

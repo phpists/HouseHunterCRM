@@ -37,6 +37,7 @@ export const ObjectCard = memo(
     editable,
     onEdit,
     onOpenPhonesModal,
+    showClientObjectsCount,
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
     const { ref, inView } = useInView({ triggerOnce: true });
@@ -61,7 +62,7 @@ export const ObjectCard = memo(
 
     return (
       <StyledObjectCard
-        className={` clickable ${selected && "selected"} ${
+        className={` clickable list-card-wrapper ${selected && "selected"} ${
           !inView && "notInView"
         }`}
         onClick={handleClick}
@@ -98,6 +99,7 @@ export const ObjectCard = memo(
             editable={editable}
             onEdit={onEdit}
             onOpenPhonesModal={onOpenPhonesModal}
+            showClientObjectsCount={showClientObjectsCount}
           />
         ) : (
           <MobileContent
@@ -130,6 +132,7 @@ export const ObjectCard = memo(
             editable={editable}
             onEdit={onEdit}
             onOpenPhonesModal={onOpenPhonesModal}
+            showClientObjectsCount={showClientObjectsCount}
           />
         )}
       </StyledObjectCard>
@@ -140,7 +143,7 @@ export const ObjectCard = memo(
 const StyledObjectCard = styled.div`
   padding: 10px;
   border-radius: 10px;
-  background: #3d3d3d;
+  background: var(--card-bg);
   position: relative;
   border: 1px solid transparent;
   cursor: pointer;

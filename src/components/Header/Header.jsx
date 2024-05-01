@@ -7,6 +7,7 @@ import { BurgerButton } from "./BurgerButton";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { ToggleFullScreen } from "./ToggleFullScreen";
+import { ThemeToggle } from "./ThemeToggle";
 
 export const Header = ({ onOpenSidebar }) => {
   const { pathname } = useLocation();
@@ -28,13 +29,14 @@ export const Header = ({ onOpenSidebar }) => {
           </div>
         </div>
         <div className="flex items-center">
-          <ToggleFullScreen />
           <Billing
             open={openBilling}
             onToggleOpen={(val) => setOpenBilling(val)}
             onToggleHover={(val) => setHoverBilling(val)}
           />
           <Profile />
+          <ToggleFullScreen />
+          <ThemeToggle />
         </div>
       </div>
     </StyledHeader>

@@ -13,7 +13,7 @@ import {
 import { useEffect } from "react";
 
 export const RoleSelect = ({ value, onChange, error }) => {
-  const COLORS = ["#7ecefd", "#b1ff91", "#d0a0ff", "#7ecefd"];
+  const COLORS = ["#7ecefd", "var(--green-light)", "#d0a0ff", "#7ecefd"];
   const { data: permissionsList } = useGetAllPerimissionsQuery();
   const { data: level, refetch } = useGetCompanyStructureLevelQuery();
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
@@ -105,7 +105,7 @@ const StyledRoleSelect = styled.div`
   text-align: left;
   ${({ error }) => error === "true" && "border: 1px solid red;"}
   .title {
-    color: ${({ active }) => active ?? "#fff"};
+    color: ${({ active }) => active ?? "var(--main-color)"};
     leading-trim: both;
     text-edge: cap;
     font-family: Overpass;
@@ -149,7 +149,7 @@ const StyledRoleSelect = styled.div`
     transition: all 0.3s;
     transform: rotate(${({ open }) => (open ? 180 : 0)}deg);
     path {
-      fill: ${({ active }) => active ?? "#fff"};
+      fill: ${({ active }) => active ?? "var(--main-color)"};
     }
   }
 

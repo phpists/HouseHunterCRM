@@ -13,7 +13,7 @@ const StyledStatusCard = styled.div`
   transition: all 0.3s;
   text-align: left;
   .title {
-    color: ${({ status }) => (status ? "#50f835" : "#FF4343")};
+    color: ${({ status }) => (status ? "var(--green-light-2)" : "#FF4343")};
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
@@ -22,21 +22,21 @@ const StyledStatusCard = styled.div`
     letter-spacing: 0.28px;
     margin-bottom: 2px;
     span {
-      color: rgba(80, 248, 53, 0.6);
+      color: var(--green-light-3);
     }
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
   }
   &:hover {
     background: ${({ status }) =>
-      status ? "rgba(255, 255, 255, 0.05)" : "rgba(255, 67, 67, 0.10)"};
+      status ? " var(--card-bg-2)" : "rgba(255, 67, 67, 0.10)"};
   }
 `;

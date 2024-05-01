@@ -23,7 +23,7 @@ const StyledDropdown = styled.div`
   width: 100%;
   padding: 6px;
   border-radius: 0px 0px 6px 6px;
-  background: #4e4e4e;
+  background: var(--bg-78-heck);
   z-index: 22;
   display: grid;
   grid-template-columns: 1fr;

@@ -199,6 +199,7 @@ export const List = ({
                   onChangeTags(d?.id, fieldName, val)
                 }
                 onOpenPhonesModal={() => setClientModal(d?.id)}
+                showClientObjectsCount
               />
             ))}
           </>

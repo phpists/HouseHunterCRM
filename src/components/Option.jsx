@@ -29,7 +29,7 @@ export const Option = ({
 };
 const StyledOption = styled.div`
   padding: 8px 17px 6px 11px;
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
@@ -38,16 +38,11 @@ const StyledOption = styled.div`
   letter-spacing: 0.3px;
   transition: all 0.3s;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.2);
-  background: linear-gradient(
-      to left,
-      rgba(255, 255, 255, 0) 50%,
-      rgba(255, 255, 255, 0.1) 50%
-    )
-    right;
+  background: var(--bg-20);
+  background: var(--gradient-bg);
   background-size: 210%;
   transition: 0.3s ease-out;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--bg-10);
   text-align: left;
   &:hover {
     background-position: left;
@@ -61,7 +56,7 @@ const StyledOption = styled.div`
   ${({ active }) =>
     active === "true" &&
     `
-    color: #50F835;
+    color: var(--green-light-2);
     background: rgba(280, 248, 53, 0.1);
     img {
         opacity: 1;

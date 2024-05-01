@@ -6,7 +6,7 @@ export const SectionTitle = ({ title }) => (
 
 const StyledSectionTitle = styled.div`
   margin-bottom: 8px;
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 14px;
   font-style: normal;

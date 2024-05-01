@@ -19,7 +19,7 @@ const StyledDownload = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--chat-tag-bg);
   backdrop-filter: blur(3px);
   cursor: pointer;
 `;

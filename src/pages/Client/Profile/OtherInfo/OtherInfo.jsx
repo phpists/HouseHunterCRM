@@ -96,7 +96,7 @@ export const OtherInfo = ({
 
 const StyledOtherInfo = styled.div`
   border-radius: 9px;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--bg-20);
   padding: 3px;
   overflow: auto;
   position: relative;

@@ -19,7 +19,7 @@ const StyledButtons = styled.div`
     height: 32px;
     flex-shrink: 0;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.18);
+    background: var(--btn-transparent-bg);
     transition: all 0.3s;
     margin-right: 4px;
     padding: 4px;

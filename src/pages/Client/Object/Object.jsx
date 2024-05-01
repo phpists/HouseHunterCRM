@@ -166,7 +166,7 @@ const StyledObject = styled.div`
   height: calc(100svh - 235px);
   overflow: auto;
   overflow-x: hidden;
-  background: #2b2b2b;
+  background: var(--modal-bg);
   @media (min-width: 1400px) {
     width: 290px;
   }

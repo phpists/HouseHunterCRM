@@ -201,14 +201,14 @@ export const Categories = ({
 
 const StyledCategories = styled.div`
   border-radius: 10px;
-  background: #323232;
+  background: var(--dark-card-bg);
   padding: 4px;
   .first-divider {
     margin: -12px 0 0px;
     .title {
-      background: #323232 !important;
+      background: var(--dark-card-bg) !important;
       opacity: 1;
-      color: rgba(255, 255, 255, 0.4);
+      color: var(--second-color);
       border: none;
     }
     div {
@@ -227,7 +227,7 @@ const StyledCategories = styled.div`
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     border-radius: 6px;

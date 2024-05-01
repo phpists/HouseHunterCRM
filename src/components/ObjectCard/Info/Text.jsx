@@ -43,7 +43,7 @@ const StyledText = styled.div`
     flex-shrink: 0;
     opacity: 0;
     &:hover {
-      background: rgba(255, 255, 255, 0.2) !important;
+      background: var(--bg-20) !important;
       opacity: 1 !important;
     }
   }
@@ -53,7 +53,7 @@ const StyledText = styled.div`
     }
   }
   .title {
-    color: #fff;
+    color: var(--main-color);
     /* H3 */
     font-family: Overpass;
     font-size: 20px;
@@ -65,12 +65,12 @@ const StyledText = styled.div`
   }
   .descr {
     overflow: hidden;
-    color: #fff;
+    color: var(--main-color);
     text-overflow: ellipsis;
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     opacity: 0.4;

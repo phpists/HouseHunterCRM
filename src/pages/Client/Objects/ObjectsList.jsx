@@ -129,7 +129,6 @@ export const ObjectsList = ({
     );
   };
 
-  console.log(objects);
   return (
     <>
       {deleteModal && (

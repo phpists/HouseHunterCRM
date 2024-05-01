@@ -4,7 +4,7 @@ export const Rent = ({ category }) => <StyledRent>{category}</StyledRent>;
 
 const StyledRent = styled.div`
   margin-bottom: 2px;
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 14px;
   font-style: normal;

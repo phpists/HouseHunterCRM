@@ -17,7 +17,7 @@ const StyledNoRole = styled.div`
     padding: 4px 6px 1px;
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.3);
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 11px;
     font-style: normal;

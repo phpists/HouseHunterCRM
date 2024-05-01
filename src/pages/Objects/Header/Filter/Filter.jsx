@@ -170,7 +170,6 @@ export const Filter = ({
     }
   };
 
-  console.log(isInputFocused);
   return (
     <>
       <StyledFilter
@@ -215,11 +214,11 @@ const StyledFilter = styled(motion.div)`
   width: 439px;
   bottom: 0;
   flex-shrink: 0;
-  background: rgba(44, 44, 44, 0.8);
+  background: var(--modals-bg);
   backdrop-filter: blur(12.5px);
   z-index: 20;
   @supports (-webkit-touch-callout: none) {
-    background: #2c2c2c;
+    background: var(--main-bg);
   }
   .content {
     padding: 0 20px 0px;
@@ -232,11 +231,11 @@ const StyledFilter = styled(motion.div)`
     align-items: center;
     padding: 20px 20px 0;
     margin-bottom: 6px;
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: 118%;
     letter-spacing: 0.28px;
     text-transform: uppercase;
@@ -248,7 +247,7 @@ const StyledFilter = styled(motion.div)`
   }
   .section {
     border-radius: 9px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--bg-10);
     margin-bottom: 25px;
     padding: 8px;
   }

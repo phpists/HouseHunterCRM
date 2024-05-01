@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import homeIcon from "../../../../assets/images/tag-home.svg";
-import doorIcon from "../../../../assets/images/tag-door.svg";
-import expandIcon from "../../../../assets/images/tag-expanded.svg";
-import stairsIcon from "../../../../assets/images/tag-stairs.svg";
-import boxIcon from "../../../../assets/images/tag-box-select.svg";
+import { ReactComponent as Home } from "../../../../assets/images/tag-home.svg";
+import { ReactComponent as Door } from "../../../../assets/images/tag-door.svg";
+import { ReactComponent as Expand } from "../../../../assets/images/tag-expanded.svg";
+import { ReactComponent as Stairs } from "../../../../assets/images/tag-stairs.svg";
+import { ReactComponent as Box } from "../../../../assets/images/tag-box-select.svg";
 import brickIcon from "../../../../assets/images/tag-brick.svg";
 import { Tag } from "./Tag";
 
@@ -18,15 +18,15 @@ export const Tags = ({ data }) => {
             title: `${data?.location_name} ${
               data?.street?.length > 0 ? `/ ${data?.street}` : ""
             }`,
-            icon: homeIcon,
+            Icon: <Home />,
           },
         ]
       : []),
     ...(data?.rooms > 0
-      ? [{ title: `${data?.rooms} кімнати`, icon: doorIcon }]
+      ? [{ title: `${data?.rooms} кімнати`, Icon: <Door /> }]
       : []),
     ...(data?.area_total > 0
-      ? [{ title: `${data?.area_total} м²`, icon: expandIcon }]
+      ? [{ title: `${data?.area_total} м²`, Icon: <Expand /> }]
       : []),
     ...(data?.address_storey > 0 &&
     data?.storey_count > 0 &&
@@ -35,7 +35,7 @@ export const Tags = ({ data }) => {
       ? [
           {
             title: `${data?.address_storey} / ${data?.storey_count}`,
-            icon: stairsIcon,
+            Icon: <Stairs />,
             hoverTitle: `${data?.address_storey} поверх / ${data?.storey_count} поверховість`,
           },
         ]
@@ -43,16 +43,16 @@ export const Tags = ({ data }) => {
       ? [
           {
             title: `${data?.address_storey}`,
-            icon: stairsIcon,
+            Icon: <Stairs />,
             hoverTitle: `${data?.address_storey} поверх`,
           },
         ]
       : []),
     ...(data.area_plot_sotka > 0
-      ? [{ title: `${data?.area_plot_sotka} соток`, icon: boxIcon }]
+      ? [{ title: `${data?.area_plot_sotka} соток`, Icon: <Box /> }]
       : []),
     ...(data.area_kitchen > 0
-      ? [{ title: `${data?.area_kitchen} м² кухні`, icon: expandIcon }]
+      ? [{ title: `${data?.area_kitchen} м² кухні`, Icon: <Expand /> }]
       : []),
     // { title: "Купівля-продаж" },
     // { title: "Хрущьовка", icon: homeIcon },
@@ -61,8 +61,8 @@ export const Tags = ({ data }) => {
 
   return (
     <StyledTags className="flex flex-wrap hide-scroll clickable">
-      {TAGS.map(({ title, icon, hoverTitle }, i) => (
-        <Tag key={i} title={title} icon={icon} hoverTitle={hoverTitle} />
+      {TAGS.map(({ title, Icon, hoverTitle }, i) => (
+        <Tag key={i} title={title} Icon={Icon} hoverTitle={hoverTitle} />
       ))}
     </StyledTags>
   );

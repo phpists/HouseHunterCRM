@@ -11,7 +11,7 @@ const StyledFooter = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   div {
-    color: #fff;
+    color: var(--main-color);
     text-align: center;
     font-family: Overpass;
     font-size: 15px;
@@ -24,10 +24,10 @@ const StyledFooter = styled.div`
     padding: 6px 10px 5px;
     &:hover {
       opacity: 1;
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--card-bg-2);
     }
     &:first-child {
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      border-right: 1px solid var(--bg-10);
     }
   }
 `;

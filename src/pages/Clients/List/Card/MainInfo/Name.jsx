@@ -4,7 +4,7 @@ export const Name = ({ name }) => <StyledName title={name}>{name}</StyledName>;
 
 const StyledName = styled.div`
   margin-right: 10px;
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 17px;
   font-style: normal;

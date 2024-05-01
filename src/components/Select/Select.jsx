@@ -149,7 +149,7 @@ const StyledSelect = styled.button`
   transition: all 0.3s;
   cursor: pointer;
   position: relative;
-  color: #fff;
+  color: var(--main-color);
   display: block;
   width: 100%;
   text-align: left;
@@ -166,12 +166,12 @@ const StyledSelect = styled.button`
     z-index: 10;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--bg-10);
     .arrow {
       opacity: 1;
     }
     .select-icon {
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--bg-10);
     }
   }
   svg {
@@ -182,7 +182,7 @@ const StyledSelect = styled.button`
     border-radius: 6px 6px 0 0 !important;
     color: #2c2c2c;
     .arrow path {
-      fill: #2c2c2c;
+      fill: var(--main-bg);
     }
     .arrow {
       transform: rotate(180deg);

@@ -19,7 +19,7 @@ export const Input = ({
   const [showPassword, setShowPassword] = useState(!password);
 
   return (
-    <StyledInput className={`${className}`} error={error}>
+    <StyledInput className={`${className} auth-input`} error={error}>
       {phone ? (
         <PhoneInput
           phoneCode={phoneCode}
@@ -57,9 +57,8 @@ const StyledInput = styled.div`
     height: 32px;
     padding: 8px 12px 6px;
     border-radius: 6px;
-    border: 1px solid
-      ${({ error }) => (error ? "#ff2e2e" : "rgba(255, 255, 255, 0.2)")};
-    color: #fff;
+    border: 1px solid ${({ error }) => (error ? "#ff2e2e" : "var(--bg-20)")};
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -68,7 +67,7 @@ const StyledInput = styled.div`
     letter-spacing: 0.3px;
     transition: all 0.3s;
     &::placeholder {
-      color: rgba(255, 255, 255, 0.6);
+      color: var(--white-color);
     }
     &:hover,
     &:focus {

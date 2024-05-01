@@ -315,8 +315,13 @@ const StyledProfile = styled.div`
   border-radius: 6px;
   cursor: pointer;
   background: ${({ openNotifications }) =>
-    openNotifications === "true" ? "#474747" : "#2c2c2c"};
-  background: linear-gradient(to right, #2c2c2c 50%, #474747 50%) left;
+    openNotifications === "true" ? "var(--second-bg)" : "#2c2c2c"};
+  background: linear-gradient(
+      to right,
+      var(--main-bg) 50%,
+      var(--second-bg) 50%
+    )
+    left;
   background-size: 200%;
   transition: 0.3s ease-out;
   position: relative;

@@ -5,7 +5,7 @@ const TYPES = {
   actual: {
     title: "Актуально",
     background: "rgba(80, 248, 53, 0.25)",
-    color: "#50F835",
+    color: "var(--green-light-2)",
   },
   not_actual: {
     title: "Не актуально",
@@ -31,15 +31,15 @@ const StyledStatusButton = styled.button`
   width: 150px;
   height: 46px;
   flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.15);
-  color: rgba(255, 255, 255, 0.5);
+  background: var(--bg-15);
+  color: var(--color-5);
   text-align: center;
   leading-trim: both;
   text-edge: cap;
   font-family: Overpass;
   font-size: 14px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: 118%; /* 16.52px */
   letter-spacing: 0.28px;
   text-transform: uppercase;

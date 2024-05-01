@@ -1,15 +1,17 @@
 import styled from "styled-components";
 
 export const OpenButton = ({ onClick }) => (
-  <StyledOpenButton onClick={onClick}>Перейти в добірку</StyledOpenButton>
+  <StyledOpenButton onClick={onClick} className="toSelectionBtn">
+    Перейти в добірку
+  </StyledOpenButton>
 );
 
 const StyledOpenButton = styled.button`
   margin-right: 4px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.18);
+  background: var(--btn-transparent-bg);
   padding: 9px 18px 10px 18px;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--white-color);
   text-align: center;
   leading-trim: both;
   text-edge: cap;
@@ -25,7 +27,7 @@ const StyledOpenButton = styled.button`
   white-space: nowrap;
   &:hover {
     background: rgba(255, 255, 255, 0.38);
-    color: #fff;
+    color: var(--main-color);
   }
   @media (max-width: 1520px) {
     font-size: 9px;

@@ -36,7 +36,7 @@ export const MainInfo = ({
 const StyledMainInfo = styled.div`
   padding: 10px;
   border-radius: 9px;
-  background: rgba(50, 50, 50, 0.8);
+  background: var(--bg-80);
   min-height: 200px;
   margin-right: 10px;
   width: 220px;

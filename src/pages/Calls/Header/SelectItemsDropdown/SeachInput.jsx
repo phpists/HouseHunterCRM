@@ -16,32 +16,32 @@ export const SeachInput = () => (
 const StyledSeachInput = styled.div`
   padding: 6px 10px;
   border-radius: 9px 9px 0px 0px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom: var(--second-color-border);
   input {
-    color: #fff;
+    color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 100;
+    font-weight: var(--font-weight-100);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     height: 18px;
     &::placeholder {
-      color: #fff;
+      color: var(--main-color);
       font-family: Overpass;
       font-size: 15px;
       font-style: normal;
-      font-weight: 100;
+      font-weight: var(--font-weight-100);
       line-height: 118%; /* 17.7px */
       letter-spacing: 0.3px;
     }
   }
   .label {
-    color: #fff;
+    color: var(--main-color);
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
@@ -54,7 +54,7 @@ const StyledSeachInput = styled.div`
     transition: all 0.3s;
     margin-left: 5px;
     &:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: var(--bg-20);
       g {
         opacity: 1;
       }

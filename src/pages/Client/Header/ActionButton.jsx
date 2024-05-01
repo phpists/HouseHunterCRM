@@ -10,8 +10,8 @@ export const ActionButton = ({ title, smallTitle, onClick, className }) => (
 const StyledActionButton = styled.div`
   padding: 8px 18px 6px 17px;
   border-radius: 8px;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  color: #fff;
+  border: var(--second-color-border);
+  color: var(--main-color);
   text-align: center;
   font-family: Overpass;
   font-size: 15px;
@@ -24,7 +24,7 @@ const StyledActionButton = styled.div`
   transition: all 0.3s;
   white-space: nowrap;
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
     opacity: 1;
     border: 1px solid transparent;
   }

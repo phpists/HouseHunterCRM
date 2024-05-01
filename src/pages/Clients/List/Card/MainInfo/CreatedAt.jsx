@@ -26,11 +26,11 @@ export const CreatedAt = ({ dateCreate, isDeleted, deleteDate }) => (
 
 const StyledCreatedAt = styled.div`
   margin-top: 2px;
-  color: #fff;
+  color: var(--main-color);
   font-family: Open Sans;
   font-size: 11px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: normal;
   letter-spacing: 0.22px;
   opacity: 0.4;

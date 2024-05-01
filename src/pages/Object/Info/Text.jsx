@@ -48,7 +48,7 @@ export const Text = ({ data, onChangeField, errors, objectData }) => {
   };
 
   return (
-    <StyledText className="hide-scroll" ref={textRef}>
+    <StyledText className="hide-scroll object-text-wrapper" ref={textRef}>
       {descrModal && (
         <DescriptionModal
           onClose={handleCloseDescModal}
@@ -90,21 +90,21 @@ export const Text = ({ data, onChangeField, errors, objectData }) => {
 const StyledText = styled.div`
   padding: 15px;
   border-radius: 10px;
-  background: #3d3d3d;
+  background: var(--card-bg);
   margin-bottom: 10px;
   height: calc(100svh - 350px);
   overflow: auto;
   .title {
     margin-bottom: 10px;
     .value {
-      font-weight: 300;
+      font-weight: var(--font-weight-light);
     }
     &:hover {
       background: rgba(255, 255, 255, 0.3);
     }
   }
   .desciption {
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--bg-10);
     .value {
       white-space: unset !important;
       height: 85px;
@@ -118,7 +118,7 @@ const StyledText = styled.div`
     }
   }
   .comment {
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--bg-10);
     .value {
       white-space: unset !important;
       height: 35px;

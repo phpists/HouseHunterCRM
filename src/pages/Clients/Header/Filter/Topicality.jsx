@@ -21,7 +21,7 @@ export const Topicality = () => {
 
 const StyledTopicality = styled.div`
   border-radius: 9px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   padding: 6px;
   margin-bottom: 25px;
 `;

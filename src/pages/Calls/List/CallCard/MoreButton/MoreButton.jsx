@@ -17,13 +17,13 @@ const StyledMoreButton = styled.button`
   height: 32px;
   flex-shrink: 0;
   border-radius: 5px;
-  border: 1.4px solid rgba(255, 255, 255, 0.4);
+  border: 1.4px solid var(--second-color);
   backdrop-filter: blur(18.5px);
   margin: 14px 0 0 20px;
   z-index: 10;
   &:hover,
   &.open {
-    border: 1.4px solid rgba(255, 255, 255, 1);
+    border: 1.4px solid var(--color-2);
     z-index: 25;
     g {
       opacity: 1;

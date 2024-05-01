@@ -132,18 +132,18 @@ export const CallCard = ({
 const StyledCallCard = styled.div`
   padding: 10px 20px 10px 10px;
   border-radius: 10px;
-  background: #3d3d3d;
+  background: var(--card-bg);
   border: 1px solid rgba(255, 255, 255, 0);
   transition: all 0.3s;
   position: relative;
   &:hover {
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: var(--second-color-border);
   }
 
   ${({ selected }) =>
     selected &&
     `
-      border: 1px solid rgba(255, 255, 255, 1) !important;
+      border: 1px solid var(--color-2) !important;
   `}
 
   @media (max-width:1500px) {

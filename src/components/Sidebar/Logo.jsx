@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export const Logo = ({ onClose }) => (
   <StyledLogo to={"/"} className="mb-2" onClick={onClose}>
-    <img src={logo} alt="logo" />
+    <img src={logo} alt="logo" className="sidebar-logo" />
   </StyledLogo>
 );
 

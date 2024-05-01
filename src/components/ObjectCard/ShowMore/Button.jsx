@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import dotsIcon from "../../../assets/images/options.svg";
+import { ReactComponent as Icon } from "../../../assets/images/options.svg";
 
 export const Button = ({ onChangeFocus }) => (
   <StyledButton
@@ -8,7 +8,7 @@ export const Button = ({ onChangeFocus }) => (
     onBlur={() => onChangeFocus(false)}
     onClick={(e) => e.currentTarget.focus()}
   >
-    <img src={dotsIcon} alt="" />
+    <Icon />
   </StyledButton>
 );
 
@@ -17,7 +17,7 @@ const StyledButton = styled.button`
   height: 32px;
   flex-shrink: 0;
   border-radius: 5px;
-  border: 1.4px solid rgba(255, 255, 255, 0.4);
+  border: var(--second-color-border);
   backdrop-filter: blur(18.5px);
 
   @media (max-width: 1400px) {

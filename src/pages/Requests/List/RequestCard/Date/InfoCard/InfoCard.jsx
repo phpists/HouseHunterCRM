@@ -12,7 +12,7 @@ export const InfoCard = ({ category, date }) => (
 const StyledInfoCard = styled.div`
   margin-bottom: 8px;
   border-radius: 9px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-bg-2);
   padding: 6px 10px;
 
   @media (min-width: 1550px) {

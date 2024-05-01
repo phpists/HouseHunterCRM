@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import linkIcon from "../assets/images/link.svg";
+import { ReactComponent as LinkIcon } from "../assets/images/link.svg";
 import checkIcon from "../assets/images/circle-green-check.svg";
 import { useState } from "react";
 import cogoToast from "cogo-toast";
@@ -30,7 +30,7 @@ export const CopyLink = ({ className, link }) => {
       onClick={() => (active ? null : handleCopy())}
     >
       <img src={checkIcon} alt="" className="check-icon" />
-      <img src={linkIcon} alt="" className="link-icon" />
+      <LinkIcon className="link-icon" />
     </StyledCopyLink>
   );
 };
@@ -51,11 +51,11 @@ const StyledCopyLink = styled.button`
   }
   &:hover,
   &.active {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
   }
 
   &.active {
-    border: 1.4px solid #81fb21;
+    border: 1.4px solid var(--green);
     .check-icon {
       height: 18px;
     }

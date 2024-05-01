@@ -46,7 +46,7 @@ const StyledHeader = styled.div`
     margin-right: 8px;
   }
   .title {
-    color: #fff;
+    color: var(--main-color);
     font-feature-settings: "clig" off, "liga" off;
     font-family: Overpass;
     font-size: 14px;
@@ -55,7 +55,7 @@ const StyledHeader = styled.div`
     line-height: 22px;
   }
   .subtitle {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--second-color);
     text-align: right;
     font-feature-settings: "clig" off, "liga" off;
     font-family: Overpass;

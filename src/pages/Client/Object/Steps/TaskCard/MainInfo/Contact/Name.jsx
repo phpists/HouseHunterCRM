@@ -11,13 +11,13 @@ const TYPES = {
     width: 53,
   },
   agent: {
-    color: "#FFF",
+    color: "var(--main-color)",
     title: "Агент",
     icon: agentIcon,
     width: 53,
   },
   owner: {
-    color: "#81FB21",
+    color: "var(--green)",
     title: "Власник",
     icon: ownerIcon,
     width: 74,
@@ -49,7 +49,7 @@ const StyledName = styled.div`
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   color: ${({ color }) => color};
@@ -67,7 +67,7 @@ const StyledName = styled.div`
     top: 0;
     padding: 3px 7px 3px 3px;
     border-radius: 6px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
     backdrop-filter: blur(8.5px);
     width: max-content;
     opacity: 0;

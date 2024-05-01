@@ -34,6 +34,6 @@ const StyledFooter = styled.div`
     margin-right: 25px;
   }
   .cancel-btn {
-    background: rgba(255, 255, 255, 0.6);
+    background: var(--bg-60);
   }
 `;

@@ -15,6 +15,6 @@ export const Workers = () => {
 const StyledWorkers = styled.div`
   padding: 6px 17px 6px 6px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-10);
   margin-bottom: 15px;
 `;

@@ -38,6 +38,7 @@ export const DesktopContent = ({
   editable,
   onEdit,
   onOpenPhonesModal,
+  showClientObjectsCount,
 }) => {
   return (
     <StyledDesktopContent className="flex items-center justify-between clickable">
@@ -73,6 +74,7 @@ export const DesktopContent = ({
         showContactId={showContactId}
         onShowContact={onShowContact}
         onOpenPhonesModal={onOpenPhonesModal}
+        showClientObjectsCount={showClientObjectsCount}
       />
       <ShowMore
         clientId={data?.id_client}

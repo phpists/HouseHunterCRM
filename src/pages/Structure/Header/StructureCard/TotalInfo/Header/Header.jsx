@@ -33,7 +33,7 @@ export const Header = ({
 const StyledHeader = styled.div`
   padding: ${({ open }) => (open ? "4px 10px 4px" : "4px")};
   border-radius: 6px;
-  background: #3d3d3d;
+  background: var(--card-bg);
   margin-bottom: 8px;
   position: relative;
   .calendarIcon {

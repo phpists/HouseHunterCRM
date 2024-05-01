@@ -30,13 +30,13 @@ const StyledAccessButton = styled.button`
     opacity: 0.4;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.4);
+    background: var(--second-color);
     path {
       opacity: 1;
     }
   }
 
   &.active {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-20);
   }
 `;

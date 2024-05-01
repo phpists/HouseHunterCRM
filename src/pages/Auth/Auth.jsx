@@ -60,7 +60,7 @@ const StyledAuth = styled.div`
     width: 100%;
     height: 100%;
     display: block;
-    background: rgba(44, 44, 44, 0.5);
+    background: var(--bg-5);
     backdrop-filter: blur(4.5px);
   }
   button {

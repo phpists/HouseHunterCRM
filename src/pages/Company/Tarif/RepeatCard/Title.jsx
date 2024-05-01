@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 export const Title = () => <StyledTitle>+1 місяць</StyledTitle>;
 
 const StyledTitle = styled.div`
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 20px;
   font-style: normal;

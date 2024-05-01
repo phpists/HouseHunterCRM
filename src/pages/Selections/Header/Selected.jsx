@@ -5,11 +5,11 @@ export const Selected = ({ selectedCount }) => (
 );
 
 const StyledSelected = styled.div`
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--dark-90);
   font-family: Overpass;
   font-size: 18px;
   font-style: normal;
-  font-weight: 100;
+  font-weight: var(--font-weight-100);
   line-height: normal;
   letter-spacing: 0.36px;
   margin-left: 10px;

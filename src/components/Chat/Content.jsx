@@ -168,7 +168,7 @@ const StyledContent = styled.div`
   ${({ selected }) => selected && "padding-bottom: 61px;"}
   div {
     &::after {
-      background: #3d3d3d;
+      background: var(--card-bg);
     }
   }
 

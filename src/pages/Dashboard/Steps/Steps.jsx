@@ -6,7 +6,7 @@ import { CloseButton } from "../WelcomeBanner/CloseButton";
 
 export const Steps = ({ className, close, onClose }) => {
   return (
-    <StyledSteps className={`${className}`}>
+    <StyledSteps className={`${className} stepsBanner`}>
       {close && <CloseButton onClose={onClose} />}
       <Title />
       <StepCard

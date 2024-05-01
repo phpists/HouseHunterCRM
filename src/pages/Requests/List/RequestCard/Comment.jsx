@@ -56,7 +56,7 @@ const StyledComment = styled.div`
   width: 280px;
   .field {
     border-radius: 9px;
-    background: #363636;
+    background: var(--element-inside-bg);
     padding: 10px 20px 10px 10px;
     height: 100%;
     &:hover {

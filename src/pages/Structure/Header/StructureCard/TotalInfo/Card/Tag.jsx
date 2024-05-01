@@ -15,7 +15,7 @@ const StyledTag = styled.div`
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   height: 20px;

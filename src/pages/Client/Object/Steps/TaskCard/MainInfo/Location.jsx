@@ -12,7 +12,7 @@ export const Location = () => (
 );
 
 const StyledLocation = styled.div`
-  color: #fff;
+  color: var(--main-color);
   text-overflow: ellipsis;
   font-family: Overpass;
   font-size: 15px;
@@ -35,7 +35,7 @@ const StyledLocation = styled.div`
   }
   div {
     position: absolute;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
     backdrop-filter: blur(8.5px);
     top: 0;
     left: 0;

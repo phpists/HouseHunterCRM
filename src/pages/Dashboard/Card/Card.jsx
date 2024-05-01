@@ -16,5 +16,5 @@ export const Card = ({ IconImg, title, subtitle }) => (
 const StyledCard = styled.div`
   padding: 5px;
   border-radius: 9px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-bg-2);
 `;

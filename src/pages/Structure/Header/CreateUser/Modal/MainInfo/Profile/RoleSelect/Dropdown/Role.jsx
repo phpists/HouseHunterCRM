@@ -8,7 +8,7 @@ const StyledRole = styled.div`
   padding: 4px 6px;
   border-radius: 5px;
   background: rgba(255, 255, 255, 0.3);
-  color: #fff;
+  color: var(--main-color);
   leading-trim: both;
   text-edge: cap;
   font-family: Overpass;

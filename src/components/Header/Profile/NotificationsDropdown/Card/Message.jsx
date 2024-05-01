@@ -10,7 +10,7 @@ export const Message = ({ message, info, link }) => (
 );
 
 const StyledMessage = styled(NavLink)`
-  color: #fff;
+  color: var(--main-color);
   font-feature-settings: "clig" off, "liga" off;
   font-family: Overpass;
   font-size: 14px;

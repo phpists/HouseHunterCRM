@@ -72,12 +72,12 @@ const StyledDate = styled.button`
     letter-spacing: 0.3px;
   }
   .subtitle {
-    color: #fff;
+    color: var(--main-color);
     text-align: center;
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
@@ -90,8 +90,8 @@ const StyledDate = styled.button`
     position: absolute;
     top: calc(100% + 9px);
     border-radius: 9px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: #3d3d3d;
+    border: 1px solid var(--bg-20);
+    background: var(--card-bg);
     z-index: 10;
     visibility: hidden;
     opacity: 0;
@@ -109,14 +109,14 @@ const StyledDate = styled.button`
     }
   }
   &:hover {
-    color: #fff;
+    color: var(--main-color);
     background: rgba(255, 159, 46, 0.4);
     opacity: 0.5;
   }
 
   &.active,
   &.notEmpty {
-    color: #fff;
+    color: var(--main-color);
     background: rgba(255, 159, 46, 0.4);
     opacity: 1 !important;
   }
@@ -127,7 +127,7 @@ const StyledDate = styled.button`
       visibility: visible;
     }
     border-radius: 9px;
-    /* background: rgba(255, 255, 255, 0.05); */
+    /* background:  var(--card-bg-2); */
     .calendar-icon g {
       opacity: 1;
     }
@@ -141,7 +141,7 @@ const StyledDate = styled.button`
   @media (max-width: 800px) {
     padding: 6px 10px;
     border-radius: 9px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg-2);
     margin: 0;
     .title {
       font-size: 14px;

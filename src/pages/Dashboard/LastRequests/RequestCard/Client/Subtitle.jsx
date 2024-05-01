@@ -6,11 +6,11 @@ export const Subtitle = ({ subtitle }) => (
 
 const StyledSubtitle = styled.div`
   opacity: 0.4;
-  color: #fff;
+  color: var(--main-color);
   font-family: Overpass;
   font-size: 12px;
   font-style: normal;
-  font-weight: 100;
+  font-weight: var(--font-weight-100);
   line-height: 118%; /* 14.16px */
   letter-spacing: 0.24px;
   width: 140px;

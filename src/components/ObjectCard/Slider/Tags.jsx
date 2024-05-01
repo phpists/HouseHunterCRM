@@ -23,6 +23,6 @@ const StyledTags = styled.div`
   div {
     padding: 1px 4px 2px 4px;
     border-radius: 5px;
-    background: #3d3d3d99;
+    background: var(--bg-5);
   }
 `;

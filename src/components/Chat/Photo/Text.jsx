@@ -40,6 +40,6 @@ const StyledText = styled.div`
     width: 24px;
     border-radius: 100%;
     z-index: 100;
-    background: ${({ isOwner }) => (isOwner ? "#5D63FF" : "#454545")};
+    background: ${({ isOwner }) => (isOwner ? "#5D63FF" : "var(--chat-bg)")};
   }
 `;

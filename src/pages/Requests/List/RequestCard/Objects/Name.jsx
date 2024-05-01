@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Name = ({ name }) => (
   <StyledName className="flex items-center clickable" title={name}>
     <div className="name-title clickable">Назва:</div>{" "}
-    <span className="clickable">{name}</span>
+    <span className="clickable selectionName">{name}</span>
   </StyledName>
 );
 
@@ -13,11 +13,11 @@ const StyledName = styled.div`
   font-weight: 200;
   line-height: 17px;
   letter-spacing: 0em;
-  color: #ffff;
+  var(--main-color)f;
   margin-bottom: 12px;
   .name-title {
     margin-right: 10px;
-    color: #919191;
+    color: var(--element-super-dark-text);
   }
   span {
     white-space: nowrap;
