@@ -59,7 +59,10 @@ export const MobileContent = ({
         <Statistic statisticData={statisticData} />
         <TotalInfo open={totalInfoOpened} onToggleOpen={() => null} id={id} />
       </div>
-      <MoreButton open={open} onToggle={() => setOpen(!open)} />
+      <MoreButton
+        title={open ? "Згорнути" : "Докладніше"}
+        onClick={() => setOpen(!open)}
+      />
       {isMore ? <Arrow onClick={onNextLevel} /> : null}
     </StyledMobileContent>
   );

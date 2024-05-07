@@ -4,7 +4,7 @@ import checkboxIcon from "../assets/images/checkbox-icon.svg";
 export const CheckOption = ({ label, className, value, onChange, error }) => {
   return (
     <StyledCheckOption
-      className={`flex items-center justify-between ${className} ${
+      className={`flex items-center justify-between checkOptionWrapper ${className} ${
         error && "error-field"
       }`}
       onClick={() => (onChange ? onChange(value === "1" ? "0" : "1") : null)}

@@ -181,9 +181,47 @@ export const handleChangeRange = (
   values,
   prevValues,
   fields,
-  onChangeField
+  onChangeField,
+  isChangeAllFields
 ) => {
-  if (values[0] !== prevValues[0]) {
+  if (isChangeAllFields) {
+    const fieldMinName = fields[0];
+    const fieldMaxName = fields[1];
+    const valMin = values[0] ?? 0;
+    const valMax = values[1] ?? 0;
+
+    if (
+      valMin > valMax &&
+      valMin !== 0 &&
+      valMax !== 0 &&
+      values[0] !== prevValues[0]
+    ) {
+      onChangeField({
+        [fieldMinName]: valMin,
+        [fieldMaxName]: valMin,
+      });
+    } else if (
+      valMax < valMin &&
+      valMin !== 0 &&
+      valMax !== 0 &&
+      values[1] !== prevValues[1]
+    ) {
+      onChangeField({
+        [fieldMinName]: valMax,
+        [fieldMaxName]: valMax,
+      });
+    } else if (values[0] !== prevValues[0]) {
+      onChangeField({
+        [fieldMinName]: valMin,
+        [fieldMaxName]: valMax,
+      });
+    } else {
+      onChangeField({
+        [fieldMinName]: valMin,
+        [fieldMaxName]: valMax,
+      });
+    }
+  } else if (values[0] !== prevValues[0]) {
     onChangeField(fields[0], values[0] ?? 0);
   } else {
     onChangeField(fields[1], values[1] ?? 0);
@@ -421,7 +459,22 @@ export const formatBytes = (bytes, decimals) => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 };
 
-const handleFormatBilling = (date) => {
+function iOS() {
+  return (
+    [
+      "iPad Simulator",
+      "iPhone Simulator",
+      "iPod Simulator",
+      "iPad",
+      "iPhone",
+      "iPod",
+    ].includes(navigator.platform) ||
+    // iPad on iOS 13 detection
+    (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+  );
+}
+
+export const handleFormatBilling = (date) => {
   const formated = date?.split(" ");
   if (formated?.length > 0) {
     const hours = formated[1];
@@ -430,9 +483,11 @@ const handleFormatBilling = (date) => {
     return isNaN(date)
       ? Math.floor(
           new Date(
-            `${dateSplited[1]}.${dateSplited[0]}.${dateSplited[2]} ${
-              hours ?? ""
-            }`
+            iOS()
+              ? `${dateSplited[2]}-${dateSplited[0]}-${dateSplited[1]}`
+              : `${dateSplited[0]}.${dateSplited[1]}.${dateSplited[2]} ${
+                  hours ?? ""
+                }`
           )?.getTime()
         )
       : Number(date) * 1000;

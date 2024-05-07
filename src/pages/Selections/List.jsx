@@ -147,7 +147,7 @@ export const List = ({
               onChangeTags={(fieldName, val) =>
                 onChangeTags(d?.id, fieldName, val)
               }
-              editable={d?.type_object === "street_base"}
+              editable
               onEdit={() => setEditObject(d)}
             />
           ))

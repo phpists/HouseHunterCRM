@@ -109,13 +109,23 @@ const Objects = () => {
           ? value
           : updatedFilters[fieldMaxName] ?? 0;
 
-        if (valMin > valMax && field?.includes("_min") && valMin !== 0) {
+        if (
+          valMin > valMax &&
+          field?.includes("_min") &&
+          valMin !== 0 &&
+          valMax
+        ) {
           updatedFilters = {
             ...updatedFilters,
             [fieldMinName]: valMin,
             [fieldMaxName]: valMin,
           };
-        } else if (valMax < valMin && field?.includes("_max") && valMax !== 0) {
+        } else if (
+          valMax < valMin &&
+          field?.includes("_max") &&
+          valMax !== 0 &&
+          valMin
+        ) {
           updatedFilters = {
             ...updatedFilters,
             [fieldMinName]: valMax,
@@ -653,15 +663,15 @@ const Objects = () => {
   };
 
   const handleDeleteObjectsFilterByIds = (ids, isSelected) => {
-    const updatedCount = allCount - ids?.length;
-    allCountRef.current = updatedCount;
-    const updatedAllCount = (objectsCount || 0) - ids.length;
-    saveObjectsCount(updatedAllCount);
-    setAllCount(updatedCount);
-    const updatedData = objects.filter((obj) => !ids.find((s) => s === obj.id));
-    dataRef.current = updateData;
-    setObjects(updatedData);
-    isSelected && setSelected([]);
+    // const updatedCount = allCount - ids?.length;
+    // allCountRef.current = updatedCount;
+    // const updatedAllCount = (objectsCount || 0) - ids.length;
+    // saveObjectsCount(updatedAllCount);
+    // setAllCount(updatedCount);
+    // const updatedData = objects.filter((obj) => !ids.find((s) => s === obj.id));
+    // dataRef.current = updateData;
+    // setObjects(updatedData);
+    // isSelected && setSelected([]);
     // handleGetObjects();
   };
 

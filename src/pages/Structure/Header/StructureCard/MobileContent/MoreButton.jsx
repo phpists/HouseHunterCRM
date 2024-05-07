@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-export const MoreButton = ({ open, onToggle }) => (
+export const MoreButton = ({ title, onClick }) => (
   <StyledMoreButton
     className="flex items-center justify-center notClickable"
-    onClick={onToggle}
+    onClick={onClick}
   >
-    {open ? "Згорнути" : "Докладніше"}
+    {title}
   </StyledMoreButton>
 );
 

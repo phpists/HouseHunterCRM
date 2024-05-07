@@ -15,12 +15,12 @@ import { useEffect } from "react";
 import { ProfileField } from "../../../../components/ProfileField";
 import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.api";
 import { Price } from "../../../Request/Main/Price/Price";
-import { ToggleOption } from "./ToggleOption";
-import { CheckOption } from "../../../../components/CheckOption";
+import { IconButton } from "../../../../components/IconButton";
 import { Base } from "../../../../components/Base/Base";
 import { TagsFilter } from "../../../../components/TagsFilter/TagsFilter";
 import { useGetPhonesCodesQuery } from "../../../../store/auth/auth.api";
 import { Ranger } from "../../../../components/Ranger/Ranger";
+import { MapButton } from "./MapButton";
 
 const notAllowedFields = [
   "comment",
@@ -70,6 +70,7 @@ export const Main = ({
   isInputFocused,
   phoneCode,
   onChangePhoneCode,
+  onOpenMap,
 }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: rubricsList } = useGetRubricsQuery();
@@ -97,7 +98,7 @@ export const Main = ({
   }, [locationsList]);
 
   return (
-    <StyledMain className="section">
+    <StyledMain className="section filterFieldsWrapper">
       <SelectTags
         label="Категорія"
         notMultiSelect
@@ -114,22 +115,25 @@ export const Main = ({
         }
       />
       <Divider />
-      <SelectTags
-        label="Локація"
-        tags={formatedLocations?.filter(
-          (l) => !!filters?.id_location?.find((v) => v === l.value)
-        )}
-        onChange={(val) => {
-          onChangeFilter(
-            "id_location",
-            filters?.id_location?.find((l) => l === val)
-              ? filters?.id_location?.filter((l) => l !== val)
-              : [...(filters?.id_location ? filters?.id_location : []), val]
-          );
-        }}
-        options={formatedLocations}
-        showTags
-      />
+      <div className="flex items-center">
+        <SelectTags
+          label="Локація"
+          tags={formatedLocations?.filter(
+            (l) => !!filters?.id_location?.find((v) => v === l.value)
+          )}
+          onChange={(val) => {
+            onChangeFilter(
+              "id_location",
+              filters?.id_location?.find((l) => l === val)
+                ? filters?.id_location?.filter((l) => l !== val)
+                : [...(filters?.id_location ? filters?.id_location : []), val]
+            );
+          }}
+          options={formatedLocations}
+          showTags
+        />
+        <MapButton onOpenMap={onOpenMap} />
+      </div>
 
       <Divider />
       <Price

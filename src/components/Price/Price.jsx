@@ -45,6 +45,7 @@ export const Price = ({
           type={type}
           onChangeType={handleChangeType}
           rubricId={rubricId}
+          onClose={() => setOpen(false)}
         />
       ) : (
         <Closed
@@ -76,6 +77,16 @@ const StyledPrice = styled.button`
   height: 32px;
   &:hover {
     .arrow {
+      g {
+        opacity: 1;
+      }
+    }
+  }
+  .close-icon {
+    display: block;
+    margin: 0 5px 0 auto;
+    cursor: pointer;
+    &:hover {
       g {
         opacity: 1;
       }

@@ -27,6 +27,7 @@ export const Filter = ({
   allCount,
   phoneCode,
   onChangePhoneCode,
+  onOpenMap,
 }) => {
   const controls = useAnimationControls();
   const [errors, setErrors] = useState({});
@@ -191,6 +192,7 @@ export const Filter = ({
             isInputFocused={isInputFocused}
             phoneCode={phoneCode}
             onChangePhoneCode={onChangePhoneCode}
+            onOpenMap={onOpenMap}
           />
         </div>
         <div className="total">

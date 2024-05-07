@@ -13,13 +13,13 @@ const StyledTitleDivider = styled.div`
   div {
     height: 1px;
     opacity: 0.1;
-    background: var(--active-bg);
+    background: var(--title-divider-border);
     width: 100%;
   }
   span {
     border-radius: 5px;
     border: 1px solid var(--bg-10);
-    background: var(--dark-card-bg);
+    background: var(--title-divider-bg);
     flex-shrink: 0;
     padding: 3px 20px 0;
     color: var(--green-light-2);

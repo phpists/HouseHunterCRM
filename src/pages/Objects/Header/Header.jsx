@@ -21,6 +21,7 @@ import { useAppSelect } from "../../../hooks/redux";
 import { AddToSelections } from "../AddToSelections";
 import { SendModal } from "../../Clients/SendModal";
 import { SortButton } from "./SortButton/SortButton";
+import { MapModal } from "./MapModal/MapModal";
 
 export const Header = ({
   selectedCount,
@@ -58,6 +59,7 @@ export const Header = ({
     !filters?.street_base_object &&
     !filters?.mls_object &&
     ["my_structure", "only_my"]?.includes(filters?.company_object?.show_only);
+  const [openMap, setOpenMap] = useState(false);
 
   useEffect(() => {
     setDefalultFiltersOpen({
@@ -122,6 +124,14 @@ export const Header = ({
   const handleSendClientsSuccess = () => {
     onSelectAll(true);
     setOpenSendClient(false);
+  };
+
+  const handleSearchStreets = (streets) => {
+    const tags = Array.isArray(filters?.search_like)
+      ? filters?.search_like
+      : [];
+    const updatedTags = [...tags, ...streets.slice(0, 40 - tags?.length)];
+    onChangeFilter("search_like", updatedTags);
   };
 
   return (
@@ -278,6 +288,13 @@ export const Header = ({
             allCount={allCount}
             phoneCode={phoneCode}
             onChangePhoneCode={onChangePhoneCode}
+            onOpenMap={() => setOpenMap(true)}
+          />
+        )}
+        {openMap && (
+          <MapModal
+            onClose={() => setOpenMap(false)}
+            onSuccess={handleSearchStreets}
           />
         )}
         {addClient && <AddClient onClose={() => setAddClient(false)} />}

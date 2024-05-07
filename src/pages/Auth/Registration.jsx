@@ -16,6 +16,7 @@ import {
 } from "../../utilits";
 import cogoToast from "cogo-toast";
 import { InfoText } from "./InfoText";
+import { Links } from "../Links";
 
 export const Registration = ({ onSuccess, onLogin }) => {
   const [registrate] = useLazyRegisterQuery();
@@ -109,12 +110,18 @@ export const Registration = ({ onSuccess, onLogin }) => {
           errors.email
         }
       />
+      <Links />
       <InfoText text="Увійти" onClick={onLogin} className="info-text" />
     </StyledRegistration>
   );
 };
 
 const StyledRegistration = styled.div`
+  overflow: auto;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: c;
   .input {
     width: 270px;
     margin-bottom: 15px;

@@ -34,5 +34,6 @@ const StyledList = styled.div`
   }
   @media (max-width: 850px) {
     width: 100%;
+    flex-shrink: 1;
   }
 `;

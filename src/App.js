@@ -11,6 +11,10 @@ import { handleCheckAccess, handleSetTheme } from "./utilits";
 import { useGetCompanyInfoQuery } from "./store/billing/billing.api";
 import { ErrorBoundary } from "react-error-boundary";
 import { Loader } from "./components/Loader";
+import { Privacy } from "./pages/Privacy";
+import { Terms } from "./pages/Terms";
+import { License } from "./pages/License";
+import { CookiePolicy } from "./pages/CookiePolicy";
 
 const Company = lazy(() => import("./pages/Company/Company"));
 const Auth = lazy(() => import("./pages/Auth/Auth"));
@@ -55,7 +59,11 @@ export const App = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token && location.pathname !== "/auth") {
+    if (
+      !token &&
+      location.pathname !== "/auth" &&
+      !location.pathname.includes("/info")
+    ) {
       navigate("/auth");
       setLoad(true);
       setTimeout(() => setLoading(false), 1500);
@@ -167,97 +175,114 @@ export const App = () => {
           </div>
         }
       >
-        {loading ? (
-          <Loading load={load} />
-        ) : user ? (
-          <StyledApp>
-            <Sidebar
-              sidebarOpen={sidebarOpen}
-              onClose={() => setSideBarOpen(false)}
-              accessData={data}
-            />
-            <Header onOpenSidebar={() => setSideBarOpen(true)} />
-            <div className="app-content">
-              <Suspense
-                fallback={
-                  <div className="page-load">
-                    <Loader white />
-                  </div>
-                }
-              >
-                <Routes>
-                  <Route
-                    path="/"
-                    element={
-                      <Dashboard
-                        isClientsAccess={handleCheckAccess(
-                          data,
-                          "clients",
-                          "view"
-                        )}
-                      />
-                    }
-                  />
-                  <Route path="/empty" element={<Dashboard />} />
-                  {handleCheckAccess(data, "clients", "view") && (
-                    <Route path="/clients" element={<Clients />} />
-                  )}
-                  {handleCheckAccess(data, "clients", "view") && (
-                    <Route path="/client/:id" element={<Client />} />
-                  )}
+        <Routes>
+          {" "}
+          <Route path="/info/privacy" element={<Privacy />} />
+          <Route path="/info/terms" element={<Terms />} />
+          <Route path="/info/license" element={<License />} />
+          <Route path="/info/cookie-policy" element={<CookiePolicy />} />
+          <Route
+            path="*"
+            element={
+              <>
+                {loading ? (
+                  <Loading load={load} />
+                ) : user ? (
+                  <StyledApp>
+                    <Sidebar
+                      sidebarOpen={sidebarOpen}
+                      onClose={() => setSideBarOpen(false)}
+                      accessData={data}
+                    />
+                    <Header onOpenSidebar={() => setSideBarOpen(true)} />
+                    <div className="app-content">
+                      <Suspense
+                        fallback={
+                          <div className="page-load">
+                            <Loader white />
+                          </div>
+                        }
+                      >
+                        <Routes>
+                          <Route
+                            path="/"
+                            element={
+                              <Dashboard
+                                isClientsAccess={handleCheckAccess(
+                                  data,
+                                  "clients",
+                                  "view"
+                                )}
+                              />
+                            }
+                          />
+                          <Route path="/empty" element={<Dashboard />} />
+                          {handleCheckAccess(data, "clients", "view") && (
+                            <Route path="/clients" element={<Clients />} />
+                          )}
+                          {handleCheckAccess(data, "clients", "view") && (
+                            <Route path="/client/:id" element={<Client />} />
+                          )}
 
-                  {handleCheckAccess(data, "objects", "view") && (
-                    <Route
-                      path="/create-object/:clientId"
-                      element={<ObjectPage />}
-                    />
-                  )}
-                  {handleCheckAccess(data, "objects", "view") &&
-                    handleCheckAccess(data, "objects", "edit") && (
-                      <Route
-                        path="/edit-object/:clientId/:id"
-                        element={<ObjectPage />}
-                      />
-                    )}
-                  {handleCheckAccess(data, "objects", "view") && (
-                    <Route path="/objects" element={<Objects />} />
-                  )}
-                  {handleCheckAccess(data, "objects", "view") && (
-                    <Route path="/objects/:id" element={<Objects />} />
-                  )}
-                  {handleCheckAccess(data, "requests", "view") && (
-                    <Route
-                      path="/create-request/:clientId"
-                      element={<Request />}
-                    />
-                  )}
-                  {handleCheckAccess(data, "requests", "view") && (
-                    <Route
-                      path="/edit-request/:clientId/:id"
-                      element={<Request />}
-                    />
-                  )}
-                  {handleCheckAccess(data, "requests", "view") && (
-                    <Route path="/requests" element={<Requests />} />
-                  )}
-                  {handleCheckAccess(data, "structure", "view") && (
-                    <Route path="/structure" element={<Structure />} />
-                  )}
-                  {handleCheckAccess(data, "calls", "view") && (
-                    <Route path="/calls" element={<Calls />} />
-                  )}
-                  {user?.struct_level === 1 && (
-                    <Route path="/company" element={<Company />} />
-                  )}
-                  <Route path="/selections/:id" element={<Selections />} />
-                  <Route path="*" element={<Dashboard />} />
-                </Routes>
-              </Suspense>
-            </div>
-          </StyledApp>
-        ) : (
-          <Auth />
-        )}
+                          {handleCheckAccess(data, "objects", "view") && (
+                            <Route
+                              path="/create-object/:clientId"
+                              element={<ObjectPage />}
+                            />
+                          )}
+                          {handleCheckAccess(data, "objects", "view") &&
+                            handleCheckAccess(data, "objects", "edit") && (
+                              <Route
+                                path="/edit-object/:clientId/:id"
+                                element={<ObjectPage />}
+                              />
+                            )}
+                          {handleCheckAccess(data, "objects", "view") && (
+                            <Route path="/objects" element={<Objects />} />
+                          )}
+                          {handleCheckAccess(data, "objects", "view") && (
+                            <Route path="/objects/:id" element={<Objects />} />
+                          )}
+                          {handleCheckAccess(data, "requests", "view") && (
+                            <Route
+                              path="/create-request/:clientId"
+                              element={<Request />}
+                            />
+                          )}
+                          {handleCheckAccess(data, "requests", "view") && (
+                            <Route
+                              path="/edit-request/:clientId/:id"
+                              element={<Request />}
+                            />
+                          )}
+                          {handleCheckAccess(data, "requests", "view") && (
+                            <Route path="/requests" element={<Requests />} />
+                          )}
+                          {handleCheckAccess(data, "structure", "view") && (
+                            <Route path="/structure" element={<Structure />} />
+                          )}
+                          {handleCheckAccess(data, "calls", "view") && (
+                            <Route path="/calls" element={<Calls />} />
+                          )}
+                          {user?.struct_level === 1 && (
+                            <Route path="/company" element={<Company />} />
+                          )}
+                          <Route
+                            path="/selections/:id"
+                            element={<Selections />}
+                          />
+                          <Route path="*" element={<Dashboard />} />
+                        </Routes>
+                      </Suspense>
+                    </div>
+                  </StyledApp>
+                ) : (
+                  <Auth />
+                )}
+              </>
+            }
+          />
+        </Routes>
       </ErrorBoundary>
     </>
   );

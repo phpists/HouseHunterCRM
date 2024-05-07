@@ -133,7 +133,7 @@ export const List = ({
         />
       ) : null}
       <StyledList ref={innerRef}>
-        {data?.length === 0 || actionLoading || deleting ? (
+        {data?.length === 0 || actionLoading ? (
           <Empty loading={loading || actionLoading || deleting} />
         ) : (
           <>

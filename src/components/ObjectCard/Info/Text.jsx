@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import editIcon from "../../../assets/images/edit.svg";
+import { ReactComponent as EditIcon } from "../../../assets/images/edit.svg";
 
 export const Text = ({ data, editable, onEdit }) => {
   return (
@@ -11,7 +11,7 @@ export const Text = ({ data, editable, onEdit }) => {
             className="edit-icon flex items-center justify-center"
             onClick={onEdit}
           >
-            <img src={editIcon} alt="" />
+            <EditIcon />
           </div>
         ) : null}
       </div>
@@ -79,10 +79,18 @@ const StyledText = styled.div`
     width: 100%;
   }
   @media (min-width: 1400px) {
-    width: 240px;
-    height: 130px;
+    width: 180px;
   }
-  @media (min-width: 1600px) {
-    width: 400px;
+  @media (min-width: 1500px) {
+    width: 280px;
+  }
+  @media (min-width: 1550px) {
+    width: 330px;
+  }
+  @media (min-width: 1660px) {
+    width: 330px;
+  }
+  @media (min-width: 1760px) {
+    width: 420px;
   }
 `;

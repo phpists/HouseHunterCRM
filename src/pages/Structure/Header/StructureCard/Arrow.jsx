@@ -26,8 +26,8 @@ const StyledArrow = styled.div`
     position: absolute;
     top: 11px;
     right: 11px;
-  }
-  @media (max-width: 850px) {
-    display: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
   }
 `;

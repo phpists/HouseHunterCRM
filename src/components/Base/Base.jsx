@@ -511,11 +511,12 @@ export const Base = ({
                     data?.street_base_object?.count_object_owner_to ?? 0,
                   ],
                   ["count_object_owner_from", "count_object_owner_to"],
-                  (field, value) =>
+                  (values) =>
                     onChange("street_base_object", {
                       ...data?.street_base_object,
-                      [field]: value,
-                    })
+                      ...values,
+                    }),
+                  true
                 )
               }
               onFocus={onFocus}

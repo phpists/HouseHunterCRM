@@ -28,4 +28,7 @@ const StyledText = styled.div`
     letter-spacing: 0.22px;
     opacity: 0.4;
   }
+  @media (max-width: 850px) {
+    min-width: 100px;
+  }
 `;

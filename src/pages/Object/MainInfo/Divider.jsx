@@ -2,7 +2,9 @@ import { styled } from "styled-components";
 
 export const Divider = ({ title, className, error }) => (
   <StyledDivider
-    className={`flex items-center ${className} ${error && "error-field"}`}
+    className={`flex items-center objectTitlteDivider ${className} ${
+      error && "error-field"
+    }`}
     error={error?.toString()}
   >
     <div />

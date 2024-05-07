@@ -43,5 +43,5 @@ export const Footer = ({
 };
 
 const StyledFooter = styled.div`
-  gap: 4px;
+  gap: 3px;
 `;

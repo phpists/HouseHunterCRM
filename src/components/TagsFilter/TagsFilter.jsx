@@ -27,7 +27,12 @@ export const TagsFilter = ({
           hideAfter: 3,
           position: "top-right",
         });
-      } else {
+      } else if (tags?.length > 40) {
+        cogoToast.error("Максимальне кількість тегів - 40", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      } else if (value?.length > 0) {
         onChange([...tags, value]);
         setValue("");
       }

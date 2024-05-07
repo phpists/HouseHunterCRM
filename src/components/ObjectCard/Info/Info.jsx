@@ -33,9 +33,12 @@ const StyledInfo = styled.div`
     width: 280px;
   }
   @media (min-width: 1550px) {
-    width: 320px;
+    width: 330px;
   }
   @media (min-width: 1660px) {
-    width: auto;
+    width: 330px;
+  }
+  @media (min-width: 1760px) {
+    width: 420px;
   }
 `;
