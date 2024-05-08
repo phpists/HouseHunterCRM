@@ -29,14 +29,20 @@ const StyledAccessButton = styled.button`
   path {
     opacity: 0.4;
   }
-  &:hover {
-    background: var(--second-color);
+
+  @media (min-width: 500px) {
+    &:hover {
+      background: var(--second-color);
+      path {
+        opacity: 1;
+      }
+    }
+  }
+  
+  &.active {
+    background: var(--bg-20);
     path {
       opacity: 1;
     }
-  }
-
-  &.active {
-    background: var(--bg-20);
   }
 `;

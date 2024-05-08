@@ -14,11 +14,11 @@ export const MapButton = ({ onOpenMap }) => {
 const StyledMapButton = styled.div`
   cursor: pointer;
   .icon-wrapper {
-    height: 48px;
-    width: 48px;
+    height: 30px;
+    width: 30px;
     margin-left: 10px;
     svg {
-      height: 30px;
+      height: 20px;
       opacity: 0.5;
     }
     &:hover {

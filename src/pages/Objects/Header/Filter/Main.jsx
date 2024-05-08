@@ -132,13 +132,13 @@ export const Main = ({
         showTags
       />
       <Divider />
-      <div className="flex items-center">
+      <div className="flex items-start">
         <TagsFilter
           label="Пошук по вулиці"
           search
           tags={Array.isArray(filters?.list_street) ? filters?.list_street : []}
           onChange={(val) => onChangeFilter("list_street", val)}
-          className="w-full"
+          className="w-full streetsWrapper"
         />
         <MapButton onOpenMap={onOpenMap} />
       </div>

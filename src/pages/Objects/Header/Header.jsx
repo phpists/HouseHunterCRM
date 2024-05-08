@@ -126,20 +126,32 @@ export const Header = ({
     setOpenSendClient(false);
   };
 
-  const removeExtraSpacesAndWords = (text)  => {
-    if(!text){return text};
-    const wordsToRemove = ["вулиця", "проспект","вул."];
-      const regex = new RegExp(wordsToRemove.join("|") + "| +", "gi");
-      return text.replace(regex, function(match) {
-          return wordsToRemove.includes(match) ? "" : " "; 
-      }).trim();
-  }
+  const removeExtraSpacesAndWords = (text) => {
+    if (!text) {
+      return text;
+    }
+    const wordsToRemove = ["вулиця", "проспект", "вул."];
+    const regex = new RegExp(wordsToRemove.join("|") + "| +", "gi");
+    return text
+      .replace(regex, function (match) {
+        return wordsToRemove.includes(match) ? "" : " ";
+      })
+      .trim();
+  };
 
   const handleSearchStreets = (streets) => {
     const tags = Array.isArray(filters?.list_street)
       ? filters?.list_street
       : [];
-    const updatedTags = [...tags, ...streets.slice(0, 40 - tags?.length)?.map(s => removeExtraSpacesAndWords(s))];
+    const uniqTags = [
+      ...new Set(
+        streets
+          .slice(0, 40 - tags?.length)
+          ?.map((s) => removeExtraSpacesAndWords(s))
+      ),
+    ];
+
+    const updatedTags = [...tags, ...uniqTags];
     onChangeFilter("list_street", updatedTags);
   };
 
