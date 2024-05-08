@@ -42,9 +42,7 @@ export const MapModal = ({ onClose, onSuccess }) => {
     setLoading(true);
     getStreetsInPolygon(polygon?.[0]).then((streets) => {
       setLoading(false);
-      const streetsFiltered = streets
-        ?.filter((str) => str)
-        ?.map((str) => str?.replace("вулиця", ""));
+      const streetsFiltered = streets?.filter((str) => str);
       onSuccess(streetsFiltered ?? []);
       onClose();
     });

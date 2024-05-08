@@ -115,26 +115,33 @@ export const Main = ({
         }
       />
       <Divider />
+      <SelectTags
+        label="Локація"
+        tags={formatedLocations?.filter(
+          (l) => !!filters?.id_location?.find((v) => v === l.value)
+        )}
+        onChange={(val) => {
+          onChangeFilter(
+            "id_location",
+            filters?.id_location?.find((l) => l === val)
+              ? filters?.id_location?.filter((l) => l !== val)
+              : [...(filters?.id_location ? filters?.id_location : []), val]
+          );
+        }}
+        options={formatedLocations}
+        showTags
+      />
+      <Divider />
       <div className="flex items-center">
-        <SelectTags
-          label="Локація"
-          tags={formatedLocations?.filter(
-            (l) => !!filters?.id_location?.find((v) => v === l.value)
-          )}
-          onChange={(val) => {
-            onChangeFilter(
-              "id_location",
-              filters?.id_location?.find((l) => l === val)
-                ? filters?.id_location?.filter((l) => l !== val)
-                : [...(filters?.id_location ? filters?.id_location : []), val]
-            );
-          }}
-          options={formatedLocations}
-          showTags
+        <TagsFilter
+          label="Пошук по вулиці"
+          search
+          tags={Array.isArray(filters?.list_street) ? filters?.list_street : []}
+          onChange={(val) => onChangeFilter("list_street", val)}
+          className="w-full"
         />
         <MapButton onOpenMap={onOpenMap} />
       </div>
-
       <Divider />
       <Price
         values={[filters?.price_min ?? "0", filters?.price_max ?? "0"]}

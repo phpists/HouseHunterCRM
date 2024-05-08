@@ -480,15 +480,16 @@ export const handleFormatBilling = (date) => {
     const hours = formated[1];
     const dateSplited = formated[0]?.split(".");
 
+    const iosDate = new Date(
+      `${dateSplited[2]}-${dateSplited[0]}-${dateSplited[1]}`
+    )?.getTime();
+    const dateFormated = new Date(
+      `${dateSplited[0]}.${dateSplited[1]}.${dateSplited[2]} ${hours ?? ""}`
+    )?.getTime();
+
     return isNaN(date)
       ? Math.floor(
-          new Date(
-            iOS()
-              ? `${dateSplited[2]}-${dateSplited[0]}-${dateSplited[1]}`
-              : `${dateSplited[0]}.${dateSplited[1]}.${dateSplited[2]} ${
-                  hours ?? ""
-                }`
-          )?.getTime()
+          iOS() ? (isNaN(iosDate) ? dateFormated : iosDate) : dateFormated
         )
       : Number(date) * 1000;
   } else {

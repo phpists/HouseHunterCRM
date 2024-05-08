@@ -67,10 +67,11 @@ export const MarkObjectPhones = ({ onClose, object, onSuccess }) => {
         onClose();
       });
     } else if (type === 1) {
+      const clientName = object?.clients_inf?.contact?.name ?? "Name";
       addOtherAgency({
         id_object: object?.id,
-        agency_name: name,
-        rieltor_name: agency,
+        agency_name: agency?.length > 0 ? agency : "Стороння агенція",
+        rieltor_name: name?.length > 0 ? name : clientName,
       }).then((resp) => {
         handleResponse(resp, () => {
           cogoToast.success("Успішно збережено", {
@@ -81,8 +82,8 @@ export const MarkObjectPhones = ({ onClose, object, onSuccess }) => {
             onSuccess(object?.id, {
               type: "Стороння агенція",
               contact: {
-                name: name,
-                party_agency: agency,
+                name: name?.length > 0 ? name : clientName,
+                party_agency: agency?.length > 0 ? agency : "Стороння агенція",
               },
               error: 0,
             });
@@ -148,13 +149,7 @@ export const MarkObjectPhones = ({ onClose, object, onSuccess }) => {
             value={type === 2 ? "1" : "0"}
             onChange={() => handleChangeType(2)}
           />
-          <Button
-            onClick={handleSave}
-            title="Зберегти"
-            disabled={
-              type === 1 ? agency?.length === 0 || name?.length === 0 : false
-            }
-          />
+          <Button onClick={handleSave} title="Зберегти" />
         </div>
       </Modal>
     </StyledMarkObjectPhones>

@@ -16,7 +16,8 @@ import {
 } from "../../utilits";
 import cogoToast from "cogo-toast";
 import { InfoText } from "./InfoText";
-import { Links } from "../Links";
+import { Links } from "./Links";
+import { AgreeCheckbox } from "./AgreeCheckbox";
 
 export const Registration = ({ onSuccess, onLogin }) => {
   const [registrate] = useLazyRegisterQuery();
@@ -26,6 +27,7 @@ export const Registration = ({ onSuccess, onLogin }) => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [phoneCode, setPhoneCode] = useState("1");
+  const [agree, setAgree] = useState(false);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
 
   const handleChangeEmail = (val) => {
@@ -97,6 +99,7 @@ export const Registration = ({ onSuccess, onLogin }) => {
         value={password}
         onChange={(val) => setPassword(val)}
       />
+      <AgreeCheckbox value={agree} onChange={() => setAgree(!agree)} />
       <Button
         title="Зареєструватись"
         icon={arrowIcon}
@@ -107,7 +110,8 @@ export const Registration = ({ onSuccess, onLogin }) => {
           phone?.length === 0 ||
           email.length === 0 ||
           password.length === 0 ||
-          errors.email
+          errors.email ||
+          !agree
         }
       />
       <Links />
@@ -127,6 +131,6 @@ const StyledRegistration = styled.div`
     margin-bottom: 15px;
   }
   .password-input {
-    margin-bottom: 47px;
+    margin-bottom: 27px;
   }
 `;

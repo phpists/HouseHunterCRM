@@ -18,4 +18,7 @@ const StyledInfoList = styled.div`
   margin-top: 20px;
   max-height: 50px;
   overflow: auto;
+  @media (max-width: 1100px) {
+    max-height: max-content;
+  }
 `;

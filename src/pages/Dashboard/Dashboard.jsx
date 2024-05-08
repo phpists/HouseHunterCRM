@@ -118,7 +118,10 @@ const StyledDashboard = styled.div`
       grid-template-columns: 1fr;
       max-height: max-content;
       overflow: auto;
-      height: calc(100svh - 98px - 40px);
+      height: calc(100svh - 115px);
+    }
+    .dashboard-col-statistic {
+      height: max-content;
     }
     .dashboard-col {
       max-height: max-content;
@@ -136,7 +139,7 @@ const StyledDashboard = styled.div`
   }
   @media (max-width: 500px) {
     .dashboard-content {
-      height: calc(100svh - 29px - 40px);
+      height: calc(100svh - 75px);
     }
   }
 `;
