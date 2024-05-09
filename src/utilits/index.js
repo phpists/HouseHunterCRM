@@ -459,39 +459,16 @@ export const formatBytes = (bytes, decimals) => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 };
 
-function iOS() {
-  return (
-    [
-      "iPad Simulator",
-      "iPhone Simulator",
-      "iPod Simulator",
-      "iPad",
-      "iPhone",
-      "iPod",
-    ].includes(navigator.platform) ||
-    // iPad on iOS 13 detection
-    (navigator.userAgent.includes("Mac") && "ontouchend" in document)
-  );
-}
-
 export const handleFormatBilling = (date) => {
   const formated = date?.split(" ");
   if (formated?.length > 0) {
     const hours = formated[1];
     const dateSplited = formated[0]?.split(".");
-
-    const iosDate = new Date(
-      `${dateSplited[2]}-${dateSplited[0]}-${dateSplited[1]}`
-    )?.getTime();
     const dateFormated = new Date(
-      `${dateSplited[0]}.${dateSplited[1]}.${dateSplited[2]} ${hours ?? ""}`
+      `${dateSplited[1]}/${dateSplited[0]}/${dateSplited[2]}`
     )?.getTime();
 
-    return isNaN(date)
-      ? Math.floor(
-          iOS() ? (isNaN(iosDate) ? dateFormated : iosDate) : dateFormated
-        )
-      : Number(date) * 1000;
+    return isNaN(date) ? dateFormated : Number(date) * 1000;
   } else {
     return Number(date) * 1000;
   }

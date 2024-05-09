@@ -5,8 +5,8 @@ import styled from "styled-components";
 
 export const MapComponent = ({ polygon, onChangePolygon }) => {
   const mapConfig = {
-    lat: 22,
-    lng: -72,
+    lat: 49.8525,
+    lng: 24.0515,
     zoom: 6,
   };
 

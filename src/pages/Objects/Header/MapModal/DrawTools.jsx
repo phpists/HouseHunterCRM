@@ -45,7 +45,7 @@ export const DrawTools = ({ polygon, onChangePolygon }) => {
 
   return (
     <MapContainer
-      center={[50.450001, 30.523333]}
+      center={[49.844003, 24.026193]}
       zoom={13}
       zoomControl={false}
       style={{ width: "100%", height: "100%" }}
