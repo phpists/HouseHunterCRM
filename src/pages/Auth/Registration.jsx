@@ -41,6 +41,7 @@ export const Registration = ({ onSuccess, onLogin }) => {
   };
 
   const handleSubmit = () => {
+    const referalId = localStorage.getItem("referalId");
     const data = {
       password,
       id_phone_code: phoneCode,
@@ -49,6 +50,7 @@ export const Registration = ({ onSuccess, onLogin }) => {
       mod: "account",
       action: "create",
       email,
+      ref_id: referalId ?? undefined,
     };
 
     registrate(data).then((resp) => {

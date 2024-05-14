@@ -1,11 +1,13 @@
 import { styled } from "styled-components";
 import bg from "../../assets/images/auth-bg.png";
 import { Logo } from "./Logo";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Content } from "./Content";
 import { SuccessMessage } from "./SuccessMessage";
+import { useLocation, useParams } from "react-router-dom";
 
 const Auth = () => {
+  const { search } = useLocation();
   const [isRightBlockHover, setIsRightBlockHover] = useState("false");
   const [forgotPassword, setForgotPassword] = useState(false);
   const [type, setType] = useState("login");
@@ -23,6 +25,23 @@ const Auth = () => {
     setSuccess(false);
     setType("login");
   };
+
+  const handleSaveId = (id) => {
+    localStorage.setItem("referalId", id);
+  };
+
+  const handleCheckReferalId = () => {
+    const referalId = search?.split("=")?.[1];
+
+    if (referalId) {
+      handleSaveId(referalId);
+      setType("registration");
+    }
+  };
+
+  useEffect(() => {
+    handleCheckReferalId();
+  }, [search]);
 
   return (
     <StyledAuth bg={bg}>

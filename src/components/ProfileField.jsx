@@ -165,7 +165,7 @@ export const ProfileField = ({
               />
             ) : textarea ? (
               <textarea
-                className="value hide-scroll"
+                className="value"
                 value={value}
                 ref={textareaRef}
                 onChange={textAreaAdjust}
@@ -380,6 +380,7 @@ const StyledProfileField = styled.button`
   textarea {
     resize: none;
     width: 100%;
+    overflow: auto !important;
   }
   .label-hover {
     display: none;

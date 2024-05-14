@@ -16,6 +16,7 @@ export const auth = createApi({
         name,
         mod,
         action,
+        ref_id,
       }) => ({
         url: "",
         method: "POST",
@@ -27,6 +28,7 @@ export const auth = createApi({
           name,
           mod,
           action,
+          ref_id,
         }),
       }),
     }),

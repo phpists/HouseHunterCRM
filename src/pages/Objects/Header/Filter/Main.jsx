@@ -21,6 +21,7 @@ import { TagsFilter } from "../../../../components/TagsFilter/TagsFilter";
 import { useGetPhonesCodesQuery } from "../../../../store/auth/auth.api";
 import { Ranger } from "../../../../components/Ranger/Ranger";
 import { MapButton } from "./MapButton";
+import { ReactComponent as RemoveIcon } from "../../../../assets/images/remove.svg";
 
 const notAllowedFields = [
   "comment",
@@ -140,7 +141,15 @@ export const Main = ({
           onChange={(val) => onChangeFilter("list_street", val)}
           className="w-full streetsWrapper"
         />
-        <MapButton onOpenMap={onOpenMap} />
+        <div className="streetsWrapper-btns">
+          <MapButton onOpenMap={onOpenMap} />
+          {filters?.list_street?.length > 0 ? (
+            <IconButton
+              Icon={RemoveIcon}
+              onClick={(val) => onChangeFilter("list_street", [])}
+            />
+          ) : null}
+        </div>
       </div>
       <Divider />
       <Price
@@ -379,5 +388,15 @@ const StyledMain = styled.div`
   }
   .filter-range-wrapper {
     grid-column: 1/3;
+  }
+  .streetsWrapper-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-left: 10px;
+    .iconButton {
+      width: 30px;
+      height: 30px;
+    }
   }
 `;

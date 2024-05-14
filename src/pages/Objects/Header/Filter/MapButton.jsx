@@ -16,7 +16,6 @@ const StyledMapButton = styled.div`
   .icon-wrapper {
     height: 30px;
     width: 30px;
-    margin-left: 10px;
     svg {
       height: 20px;
       opacity: 0.5;

@@ -136,7 +136,9 @@ const Objects = () => {
 
       if (field === "street_base_object") {
         const isEmpty =
-          Object.entries(updatedFilters?.street_base_object)?.length > 0 &&
+          Object.entries(updatedFilters?.street_base_object)?.filter(
+            (v) => v[1]
+          )?.length === 0 ||
           Object.entries(updatedFilters?.street_base_object)?.[0]?.[1]
             ?.length === 0;
 
@@ -144,6 +146,7 @@ const Objects = () => {
           updatedFilters = { ...updatedFilters, street_base_object: {} };
         }
       }
+
       setFilters(updatedFilters);
       localStorage.setItem(
         "objectsLastFilters",

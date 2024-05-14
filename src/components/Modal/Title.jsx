@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const Title = ({ title }) => <StyledTitle>{title}</StyledTitle>;
+export const Title = ({ title }) => (
+  <StyledTitle className="modal-header-title">{title}</StyledTitle>
+);
 
 const StyledTitle = styled.div`
   color: var(--main-color);
@@ -12,4 +14,5 @@ const StyledTitle = styled.div`
   letter-spacing: 0.36px;
   text-align: left;
   margin-bottom: 16px;
+  white-space: pre-line;
 `;

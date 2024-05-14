@@ -128,10 +128,10 @@ const StyledMessage = styled.div`
     }
   `}
   @media(max-width: 1000px) {
-    background: ${({ isOwner }) => (isOwner ? "#5D63FF" : "var(--chat-bg)")};
+    /* background: ${({ isOwner }) => (isOwner ? "#5D63FF" : "var(--chat-bg)")};
     &::before {
       border-bottom: 13px solid
         ${({ isOwner }) => (isOwner ? "#5D63FF" : "var(--chat-bg)")};
-    }
+    } */
   }
 `;

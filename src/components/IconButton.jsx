@@ -18,6 +18,7 @@ const StyledIconButton = styled.div`
   border-radius: 8px;
   border: var(--second-color-border);
   backdrop-filter: blur(18.5px);
+  cursor: pointer;
   g {
     transition: all 0.3s;
   }

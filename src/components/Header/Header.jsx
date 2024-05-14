@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { ToggleFullScreen } from "./ToggleFullScreen";
 import { ThemeToggle } from "./ThemeToggle";
+import { ReferalLink } from "./ReferalLink/ReferalLink";
 
 export const Header = ({ onOpenSidebar }) => {
   const { pathname } = useLocation();
@@ -29,6 +30,7 @@ export const Header = ({ onOpenSidebar }) => {
           </div>
         </div>
         <div className="flex items-center">
+          <ReferalLink />
           <Billing
             open={openBilling}
             onToggleOpen={(val) => setOpenBilling(val)}

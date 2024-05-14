@@ -176,7 +176,6 @@ export const App = () => {
         }
       >
         <Routes>
-          {" "}
           <Route path="/info/privacy" element={<Privacy />} />
           <Route path="/info/terms" element={<Terms />} />
           <Route path="/info/license" element={<License />} />
