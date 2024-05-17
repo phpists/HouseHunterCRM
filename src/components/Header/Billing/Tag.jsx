@@ -17,5 +17,5 @@ const StyledTag = styled.div`
   border-radius: 8px;
   line-height: 1;
   height: 16px;
-  margin-bottom: 18px;
+  margin-left: 7px;
 `;

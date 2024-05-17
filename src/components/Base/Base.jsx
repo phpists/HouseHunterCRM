@@ -52,6 +52,7 @@ export const Base = ({
   onBlur,
   objMls,
   countObjectOwner,
+  requestPage,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -481,20 +482,23 @@ export const Base = ({
               })
             }
           />
-          <CheckOption
-            label="Потенційні власники"
-            className="check-opt"
-            value={data?.street_base_object?.potential_owner}
-            onChange={() =>
-              onChange("street_base_object", {
-                ...data?.street_base_object,
-                potential_owner:
-                  data?.street_base_object?.potential_owner === "1"
-                    ? undefined
-                    : "1",
-              })
-            }
-          />
+          {requestPage ? null : (
+            <CheckOption
+              label="Потенційні власники"
+              className="check-opt"
+              value={data?.street_base_object?.potential_owner}
+              onChange={() =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  potential_owner:
+                    data?.street_base_object?.potential_owner === "1"
+                      ? undefined
+                      : "1",
+                })
+              }
+            />
+          )}
+
           {countObjectOwner ? (
             <Ranger
               label="Кількість об'єктів за номером"

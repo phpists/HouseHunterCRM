@@ -63,6 +63,7 @@ export const Workers = ({
 
   const handleFilter = () =>
     workers
+      ?.sort((a, b) => a?.struct_level - b?.struct_level)
       ?.filter(({ first_name, last_name, phones }) =>
         filter?.search?.length > 0
           ? `${first_name ?? ""} ${last_name ?? ""}`

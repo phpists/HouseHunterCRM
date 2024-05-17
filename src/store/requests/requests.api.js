@@ -26,6 +26,7 @@ export const requests = createApi({
           },
           null,
           [],
+          true,
           true
         ),
       }),
@@ -227,6 +228,7 @@ export const requests = createApi({
           },
           null,
           [],
+          true,
           true
         ),
       }),

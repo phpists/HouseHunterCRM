@@ -8,7 +8,7 @@ export const ReferalLink = () => {
   const [open, setOpen] = useState(false);
   const { user } = useAppSelect((state) => state.auth);
 
-  if (!user?.is_director) {
+  if (!user?.id_hash_director) {
     return null;
   }
 

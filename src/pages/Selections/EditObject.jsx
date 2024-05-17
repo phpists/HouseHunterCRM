@@ -106,6 +106,7 @@ const StyledEditObject = styled.div`
       .value {
         max-height: 200px !important;
         height: 50vh !important;
+        width: 100%;
       }
     }
   }
@@ -151,6 +152,7 @@ const StyledEditObject = styled.div`
   }
   textarea {
     white-space: unset !important;
+    width: 100%;
   }
   @media (max-width: 800px) {
     .editObject-content {
@@ -161,5 +163,9 @@ const StyledEditObject = styled.div`
       grid-template-columns: 1fr;
       width: 100%;
     }
+  }
+  *::-webkit-scrollbar-thumb {
+    border-radius: 12px;
+    background: #2c2c2c;
   }
 `;

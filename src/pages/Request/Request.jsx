@@ -630,6 +630,7 @@ const Request = () => {
             className="request-base-wrapper"
             dateAgreement
             dateAgreementFieldName="company_given_objects_to"
+            requestPage
           />
           <Contacts />
         </div>

@@ -11,7 +11,7 @@ export const ReferalModal = ({ onClose }) => {
 
   const handleCopyAnimation = () => {
     setCopied(true);
-    handleCopy(`https://house-hunter.info/#/auth?id=${user?.id}`);
+    handleCopy(`https://house-hunter.info/#/auth?id=${user?.id_hash_director}`);
     setTimeout(() => setCopied(false), 1000);
   };
 
@@ -38,7 +38,9 @@ export const ReferalModal = ({ onClose }) => {
           }`}
           onClick={handleCopyLink}
         >
-          <span>https://house-hunter.info/#/auth?id={user?.id}</span>
+          <span>
+            https://house-hunter.info/#/auth?id={user?.id_hash_director}
+          </span>
           <Copy />
         </div>
         <div className="label mb-0">
@@ -75,7 +77,7 @@ const StyledReferalModal = styled.div`
   .link-wrapper {
     margin-bottom: 14px;
     padding: 10px 10px 14px;
-    background: #474747;
+    background: var(--input-bg);
     border-radius: 6px;
     border: 1px solid #5d63ff;
     font-size: 14px;

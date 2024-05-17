@@ -28,7 +28,8 @@ export const handleToFormData = (
   data,
   files,
   notCleanFields,
-  allowEmptyValue
+  allowEmptyValue,
+  isClearUndefined
 ) => {
   const formData = new FormData();
 
@@ -87,10 +88,11 @@ export const handleToFormData = (
             } else {
               formData.append(`${field[0]}[${fField[0]}][]`, []);
             }
-            // *
           } else {
-            (fField[1] || fField[1]?.length > 0 || allowEmptyValue) &&
+            if (isClearUndefined && fField[1] === undefined) {
+            } else if (fField[1] || fField[1]?.length > 0 || allowEmptyValue) {
               formData.append(`${field[0]}[${fField[0]}]`, fField[1]);
+            }
           }
         });
       } else {

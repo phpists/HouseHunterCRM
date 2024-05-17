@@ -45,9 +45,6 @@ export const Billing = ({ open, onToggleOpen, onToggleHover }) => {
       onTouchStart={() => onToggleHover(true)}
       onTouchEnd={() => onToggleHover(false)}
     >
-      {!open && Number(balanceData?.sale) > 0 && (
-        <Tag procent={balanceData?.sale} />
-      )}
       {attach && (
         <Download
           download={download}
@@ -65,12 +62,17 @@ export const Billing = ({ open, onToggleOpen, onToggleHover }) => {
         />
       )}
       <div className="main-text">
-        <Title
-          open={open}
-          balance={balance ?? "0.00"}
-          value={value}
-          onChange={(val) => setValue(val)}
-        />
+        <div className="flex  mb-0.5">
+          <Title
+            open={open}
+            balance={balance ?? "0.00"}
+            value={value}
+            onChange={(val) => setValue(val)}
+          />
+          {!open && Number(balanceData?.sale) > 0 && (
+            <Tag procent={balanceData?.sale} />
+          )}
+        </div>
         <Subtitle subtitle={open ? "Сума поповнення" : null} />
       </div>
       {/* {open ? (
