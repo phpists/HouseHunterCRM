@@ -202,5 +202,8 @@ const StyledProfileMobile = styled.div`
       top: 10px;
       right: 10px;
     }
+    .phones-wrapper {
+      width: 50svw;
+    }
   }
 `;

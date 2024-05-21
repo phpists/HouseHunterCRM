@@ -73,4 +73,12 @@ const StyledThemeToggle = styled.div`
       opacity: 1;
     }
   }
+  @media (max-width: 800px) {
+    width: 28px;
+    margin-left: 5px;
+    div {
+      height: 14px;
+      width: 14px;
+    }
+  }
 `;

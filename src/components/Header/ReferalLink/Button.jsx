@@ -14,4 +14,8 @@ const StyledButton = styled.button`
   border: 1.4px solid #2ef5c633;
   border-radius: 8px;
   margin-right: 3px;
+  @media (max-width: 800px) {
+    height: 35px;
+    width: 35px;
+  }
 `;

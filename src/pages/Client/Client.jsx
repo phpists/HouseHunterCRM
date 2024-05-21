@@ -104,8 +104,8 @@ const StyledClient = styled.div`
 
   @media (max-width: 700px) {
     width: 100svw;
-    margin-left: -24px;
-    padding: 20px 24px;
+    margin-left: -15px;
+    padding: 20px 20px;
     overflow: auto;
     height: calc(100vh - 115px);
     .client-content {

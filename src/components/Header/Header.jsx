@@ -59,13 +59,13 @@ const StyledHeader = styled.div`
     .header-text {
       display: none;
     }
-    ${({ openbilling }) =>
+    /* ${({ openbilling }) =>
       openbilling === "true" &&
       `
         .profile-header-block {
             display: none;
         }
-    `}
+    `} */
   }
   @media (max-width: 500px) {
     padding: 10px;

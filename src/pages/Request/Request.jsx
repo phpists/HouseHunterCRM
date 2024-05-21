@@ -591,7 +591,7 @@ const Request = () => {
         onToggleDeleted={(val) => setDeleted(val)}
         isDataLoading={isDataLoading}
       />
-      <div className="request-content" ref={contentRef}>
+      <div className="request-content request-content-wrapper" ref={contentRef}>
         <div>
           <CardTitle title="Головне" />
           <Main
@@ -686,11 +686,13 @@ const StyledRequest = styled.div`
     .request-content {
       grid-template-columns: 1fr;
       height: calc(100svh - 260px);
-      overflow: auto;
+      height: max-content;
       grid-auto-rows: max-content;
+      overflow: auto !important;
     }
     .request-card {
       height: max-content;
+      overflow: visible !important;
       /* overflow: initial; */
     }
   }
@@ -701,7 +703,7 @@ const StyledRequest = styled.div`
     margin-left: -24px;
     .request-content {
       padding: 10px;
-      height: calc(100svh - 190px);
+      height: calc(100svh - 170px);
     }
   }
 `;

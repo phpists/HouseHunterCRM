@@ -5,13 +5,11 @@ import { Phones } from "../../../components/Phones/Phones";
 import { Comment } from "./Comment/Comment";
 import { ReactComponent as ArrowIcon } from "../../../assets/images/clients-arrow.svg";
 import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
-import { useLazyGetRequestQuery } from "../../../store/requests/requests.api";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useActions } from "../../../hooks/actions";
 
-export const Client = ({ clientData }) => {
-  const { id } = useParams();
+export const Client = ({ clientData, className }) => {
   const { data } = useGetPhonesCodesQuery();
   const navigate = useNavigate();
   const { saveSelectionName } = useActions();
@@ -26,7 +24,7 @@ export const Client = ({ clientData }) => {
 
   return (
     <StyledClient
-      className="flex items-center justify-between openClient"
+      className={`flex items-center justify-between openClient ${className}`}
       onClick={handleGoToClient}
     >
       <div className="flex items-center user-info openClient mr-2">
@@ -110,6 +108,7 @@ const StyledClient = styled.div`
     grid-template-columns: 1fr;
     grid-auto-rows: max-content;
     position: relative;
+    display: none;
     .divider {
       width: 100%;
       height: 1px;

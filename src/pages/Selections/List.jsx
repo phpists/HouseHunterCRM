@@ -90,7 +90,10 @@ export const List = ({
         />
       )}
       {clientData && showClient ? <Client clientData={clientData} /> : null}
-      <StyledList ref={innerRef}>
+      <StyledList ref={innerRef} showClient={showClient}>
+        {clientData && showClient ? (
+          <Client clientData={clientData} className="mobileClient" />
+        ) : null}
         {data?.length === 0 || actionLoading ? (
           <Empty loading={loading || actionLoading} />
         ) : (
@@ -168,11 +171,17 @@ const StyledList = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-rows: max-content;
-  height: calc(100svh - 225px);
+  height: calc(100svh - ${({ showClient }) => (showClient ? 295 : 205)}px);
   overflow: auto;
   gap: 10px;
   position: relative;
+  .mobileClient {
+    display: none;
+  }
   @media (max-width: 800px) {
     height: calc(100svh - 200px);
+    .mobileClient {
+      display: grid;
+    }
   }
 `;

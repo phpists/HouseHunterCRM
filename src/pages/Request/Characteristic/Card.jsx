@@ -52,12 +52,11 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
               </>
             );
           } else if (
-            (field?.includes("_min") &&
-              fields?.find(
-                (f) => f.field === field?.replace("_min", "_max")
-              )) ||
-            (["address_storey", "storey_count"]?.includes(field) &&
-              !["address_storey_min", "storey_count_min"]?.includes(field))
+            field?.includes("_min") &&
+            fields?.find((f) => f.field === field?.replace("_min", "_max"))
+            //    ||
+            // (["address_storey", "storey_count"]?.includes(field) &&
+            //   !["address_storey_min", "storey_count_min"]?.includes(field))
           ) {
             const labels = {
               room_min: "Кількість кімнат/Приміщень",

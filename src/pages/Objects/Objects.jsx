@@ -435,68 +435,44 @@ const Objects = () => {
       area_total,
       storey_count,
     } = obj;
-    setFilters({
+
+    const objData = {
       id_rubric,
-      id_location: [id_location],
-      price_min:
-        !price_UAH || price_UAH === "0"
-          ? undefined
-          : handleGetRange(Number(price_UAH), true)?.start.toFixed(0),
-      price_max:
-        !price_UAH || price_UAH === "0"
-          ? undefined
-          : handleGetRange(Number(price_UAH), true)?.end.toFixed(0),
-      area_total_min:
-        !area_total || area_total === "0"
-          ? undefined
-          : handleGetRange(Number(area_total), true)?.start.toFixed(0),
-      area_total_max:
-        !area_total || area_total === "0"
-          ? undefined
-          : handleGetRange(Number(area_total), true)?.end.toFixed(0),
-      area_plot_sotka_min:
-        !area_plot_sotka || area_plot_sotka === "0"
-          ? undefined
-          : handleGetRange(Number(area_plot_sotka), true)?.start.toFixed(0),
-      area_plot_sotka_max:
-        !area_plot_sotka || area_plot_sotka === "0"
-          ? undefined
-          : handleGetRange(Number(area_plot_sotka), true)?.end.toFixed(0),
-      room_min: rooms === "0" ? undefined : rooms,
-      room_max: rooms === "0" ? undefined : rooms,
-      storey_count_min:
-        !storey_count || storey_count === "0"
-          ? undefined
-          : handleGetRange(Number(storey_count))?.start.toFixed(0),
-      storey_count_max:
-        !storey_count || storey_count === "0"
-          ? undefined
-          : handleGetRange(Number(storey_count))?.end.toFixed(0),
-      address_storey_min:
-        !address_storey || address_storey === "0"
-          ? undefined
-          : handleGetRange(Number(address_storey))?.start.toFixed(0),
-      address_storey_max:
-        !address_storey || address_storey === "0"
-          ? undefined
-          : handleGetRange(Number(address_storey))?.end.toFixed(0),
+      id_location,
+      price_min: handleGetRange(Number(price_UAH), true)?.start.toFixed(0),
+      price_max: handleGetRange(Number(price_UAH), true)?.end.toFixed(0),
+      area_total_min: handleGetRange(Number(area_total), true)?.start.toFixed(
+        0
+      ),
+      area_total_max: handleGetRange(Number(area_total), true)?.end.toFixed(0),
+      area_plot_sotka_min: handleGetRange(
+        Number(area_plot_sotka),
+        true
+      )?.start.toFixed(0),
+      area_plot_sotka_max: handleGetRange(
+        Number(area_plot_sotka),
+        true
+      )?.end.toFixed(0),
+      room_min: handleGetRange(Number(rooms))?.start.toFixed(0),
+      room_max: handleGetRange(Number(rooms))?.end.toFixed(0),
+      storey_count_min: handleGetRange(Number(storey_count))?.start.toFixed(0),
+      storey_count_max: handleGetRange(Number(storey_count))?.end.toFixed(0),
+      address_storey_min: handleGetRange(Number(address_storey))?.start.toFixed(
+        0
+      ),
+      address_storey_max: handleGetRange(Number(address_storey))?.end.toFixed(
+        0
+      ),
       price_currency: "1",
-      company_object: {
-        show_only: "company",
-        actual: "1",
-        given_objects: "1",
-        not_actual: "1",
-        overdue: "1",
-        show_street_base_company: "1",
-      },
-      street_base_object: {
-        sorting_id: "16",
-      },
-      mls_object: {},
-    });
-    handleGetRubricsFields(id_rubric);
-    filterActive.current = true;
-    setUpdateData(true);
+    };
+
+    const objUrl = `/#/objects?findSelectionSimilar=true${Object.entries(
+      objData
+    )
+      ?.map((d) => `&${d[0]}=${d[1]}`)
+      ?.join("")}`;
+
+    window.open(objUrl, "_blank");
   };
 
   useEffect(() => {
