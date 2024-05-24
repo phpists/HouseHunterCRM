@@ -686,7 +686,6 @@ const StyledRequest = styled.div`
     .request-content {
       grid-template-columns: 1fr;
       height: calc(100svh - 260px);
-      height: max-content;
       grid-auto-rows: max-content;
       overflow: auto !important;
     }

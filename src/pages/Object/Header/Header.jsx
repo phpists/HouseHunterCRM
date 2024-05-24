@@ -97,6 +97,7 @@ export const Header = ({
         <div className="btns-header flex items-center">
           {!isData ? null : isDeleted ? (
             <>
+              <ToClientButton />
               <IconButton
                 Icon={RestoreIcon}
                 className="icon-btn restore"

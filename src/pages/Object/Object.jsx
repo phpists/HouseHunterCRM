@@ -85,10 +85,35 @@ const ObjectPage = () => {
     return updatedData;
   };
 
-  const handleGetRubricsFields = (id, lastData, isFormatdate) => {
+  const handleGetAllFieldsNames = (fields) => {
+    const mainFields = fields?.main_field ?? {};
+    const otherFields = fields?.other_field ?? {};
+    const allFields = { ...mainFields, ...otherFields };
+    const allFieldsNames = Object.entries(allFields)?.map((f) => f[0]);
+    return allFieldsNames;
+  };
+
+  const handleCleanUnUsedFields = (fields, data) => {
+    const currentFields = handleGetAllFieldsNames(fields);
+    const updatedData = Object.fromEntries(
+      Object.entries(data)?.filter((f) => currentFields.includes(f[0]))
+    );
+    return updatedData;
+  };
+
+  const handleGetRubricsFields = (id, lastData, isFormatdate, prevData) => {
     getRubricFields(id).then((resp) => {
+      let data = lastData;
+
+      if (prevData) {
+        data = {
+          ...handleCleanUnUsedFields(resp?.data, prevData),
+          id_rubric: lastData.id_rubric,
+        };
+      }
+
       isFormatdate &&
-        setData(handleFormatDatesToTimestamp(lastData, resp?.data, true));
+        setData(handleFormatDatesToTimestamp(data, resp?.data, true));
       setFields(resp?.data);
     });
   };
@@ -112,8 +137,8 @@ const ObjectPage = () => {
         obj_is_actual: data?.obj_is_actual ?? undefined,
         mls: data?.mls ?? undefined,
       };
-      setData(newData);
-      handleGetRubricsFields(value, newData, true);
+      handleGetRubricsFields(value, newData, true, data);
+      //   setData(newData);
     } else {
       const fieldType =
         fields?.main_field?.[fieldName]?.type ??
