@@ -100,7 +100,7 @@ export const Filter = ({
       ...data,
       company_object: {
         ...company_object,
-        dt_end_agreement_to: dt_end_agreement_to?.getTime(),
+        dt_end_agreement_to: dt_end_agreement_to?.getTime() / 1000,
       },
       street_base_object,
       mls_object,
