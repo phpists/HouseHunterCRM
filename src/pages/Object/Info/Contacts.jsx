@@ -70,6 +70,10 @@ const StyledContacts = styled.div`
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     margin-bottom: 1px;
+    max-width: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .label {
     color: var(--main-color);
@@ -94,6 +98,9 @@ const StyledContacts = styled.div`
     .contacts-wrapper {
       justify-content: space-between;
     }
+    .name {
+      max-width: 150px;
+    }
   }
   @media (max-width: 800px) {
     .contacts-wrapper {
@@ -107,6 +114,11 @@ const StyledContacts = styled.div`
       color: var(--main-color);
       font-family: Overpass;
       font-size: 18px;
+    }
+  }
+  @media (min-width: 1400px) {
+    .name {
+      max-width: 80px;
     }
   }
 `;
