@@ -42,6 +42,7 @@ export const Header = ({
   onRestore,
   selectedClients,
   isDeleted,
+  onRefetch,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -124,6 +125,7 @@ export const Header = ({
   const handleSendClientsSuccess = () => {
     onSelectAll(true);
     setOpenSendClient(false);
+    onRefetch();
   };
 
   const removeExtraSpacesAndWords = (text) => {

@@ -26,7 +26,9 @@ export const Socmedia = ({
   activeColor,
 }) => {
   const phoneValue =
-    type === "viber" ? `viber://chat?number=${phone}` : `https://t.me/${phone}`;
+    type === "viber"
+      ? `viber://chat?number=${phone}`
+      : `https://t.me/${phone?.[0] === "0" ? "+38" : ""}${phone}`;
   return (
     <StyledSocmedia
       className={`flex items-center justify-between socmediaWrapper ${className} ${

@@ -483,7 +483,7 @@ const Objects = () => {
     // eslint-disable-next-line
   }, [updateData]);
 
-  useEffect(() => {
+  const handleApplyDefaultFilters = () => {
     filterActive.current = false;
     isFirstRender.current = false;
     setIsDeleted(false);
@@ -599,7 +599,15 @@ const Objects = () => {
       filterActive.current = true;
       setUpdateData(true);
     }
+  };
+
+  useEffect(() => {
+    handleApplyDefaultFilters();
   }, [location.search, id]);
+
+  useEffect(() => {
+    handleApplyDefaultFilters();
+  }, []);
 
   const handleScroll = () => {
     if (
@@ -699,6 +707,7 @@ const Objects = () => {
           ),
         ]}
         isDeleted={isDeleted}
+        onRefetch={() => handleGetObjects(true, true)}
       />
       <List
         selected={selected}
