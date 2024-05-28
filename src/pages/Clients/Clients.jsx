@@ -85,7 +85,7 @@ const Clients = () => {
       setLoading(true);
       const sendData = {
         current_page: currentPage.current,
-        item_on_page: 10,
+        item_on_page: 50,
         show_favorite: favoritesFilter ? "1" : undefined,
         search_phone_code: isFilters.current ? searchPhoneCode : undefined,
         search_phone: isFilters.current

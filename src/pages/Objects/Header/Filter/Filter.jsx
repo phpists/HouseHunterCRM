@@ -80,7 +80,7 @@ export const Filter = ({
     let data = {
       only_favorite: isFavorite ?? undefined,
       current_page: 1,
-      item_on_page: 10,
+      item_on_page: 50,
     };
 
     const { company_object, street_base_object, mls_object, ...otherFilters } =

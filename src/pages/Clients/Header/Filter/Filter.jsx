@@ -84,7 +84,7 @@ export const Filter = ({
   const handleGetTotal = () => {
     const sendData = {
       current_page: 0,
-      item_on_page: 10,
+      item_on_page: 50,
       show_favorite: favoritesFilter ? "1" : undefined,
       search_phone_code:
         removePhoneMask(filter.search_phone)?.length > 0

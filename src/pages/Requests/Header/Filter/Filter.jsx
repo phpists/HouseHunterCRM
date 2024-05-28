@@ -33,7 +33,7 @@ export const Filter = ({
   const handleGetTotal = () => {
     let data = {
       current_page: 0,
-      item_on_page: 10,
+      item_on_page: 50,
       only_favorite: isFavorite ?? undefined,
     };
 

@@ -34,7 +34,7 @@ export const Filter = ({
     let sendData = {
       id_requst_group: id,
       current_page: 0,
-      item_on_page: 30,
+      item_on_page: 50,
       filters,
     };
 

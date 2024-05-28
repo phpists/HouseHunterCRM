@@ -192,7 +192,7 @@ const Objects = () => {
       let data = {
         only_favorite: isFavorite ?? undefined,
         current_page: currentPage.current,
-        item_on_page: 10,
+        item_on_page: 50,
         sorting,
       };
 

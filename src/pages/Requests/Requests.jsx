@@ -118,7 +118,7 @@ const Requests = () => {
       isLoading.current = true;
       let data = {
         current_page: currentPage.current,
-        item_on_page: 10,
+        item_on_page: 50,
         only_favorite: isFavorite ?? undefined,
       };
 

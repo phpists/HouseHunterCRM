@@ -18,7 +18,7 @@ export const calls = createApi({
             mod: "calls",
             filters,
             current_page,
-            item_on_page: 10,
+            item_on_page: 50,
             only_count_item,
           },
           undefined
