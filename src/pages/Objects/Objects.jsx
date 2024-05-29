@@ -541,6 +541,9 @@ const Objects = () => {
         },
         mls_object: {},
       });
+      if (initFiltersObject?.id_rubric) {
+        handleGetRubricsFields(initFiltersObject?.id_rubric);
+      }
       filterActive.current = true;
       setUpdateData(true);
     } else if (filterApply === "?showDeadline") {
