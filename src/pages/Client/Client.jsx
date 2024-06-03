@@ -39,6 +39,7 @@ const Client = () => {
   const handleChangeIsDeleted = (val) => {
     setIsDeleted(val);
     setIsRefetch(true);
+    handleGetClient();
   };
 
   return (
@@ -47,6 +48,7 @@ const Client = () => {
         favorite={clientData?.data?.favorite_client}
         isDeleted={isDeleted}
         onToggleIsDeleted={handleChangeIsDeleted}
+        deleteReason={clientData?.data?.reasone_remove}
       />
       <ProfileMobile
         data={clientData?.data}

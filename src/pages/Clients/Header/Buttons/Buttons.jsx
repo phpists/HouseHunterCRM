@@ -32,6 +32,8 @@ export const Buttons = ({
   onRestore,
   onDeleteFinally,
   finalDeleteConfirmTitle,
+  confirmText,
+  onChangeConfirmText,
 }) => {
   const { search } = useLocation();
   const [addClient, setAddClient] = useState(false);
@@ -89,6 +91,8 @@ export const Buttons = ({
         onRestore={onRestore}
         onDeleteFinally={onDeleteFinally}
         finalDeleteConfirmTitle={finalDeleteConfirmTitle}
+        confirmText={confirmText}
+        onChangeConfirmText={onChangeConfirmText}
       />
     </StyledButtons>
   );

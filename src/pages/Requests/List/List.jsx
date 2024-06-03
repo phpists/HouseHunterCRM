@@ -10,6 +10,7 @@ import { Chat } from "../../../components/Chat/Chat";
 import { Loader } from "../../../components/Loader";
 import { EditComment } from "./EditComment";
 import { useAppSelect } from "../../../hooks/redux";
+import { DeleteInfo } from "../../../components/DeleteInfo/DeleteInfo";
 
 export const List = ({
   selected,
@@ -32,6 +33,8 @@ export const List = ({
   const [selectedChat, setSelectedChat] = useState(null);
   const { accessData, user } = useAppSelect((state) => state.auth);
   const [editComment, setEditComment] = useState(false);
+  const [confirmText, setConfimText] = useState("");
+  const [deleteInfo, setDeleteInfo] = useState(null);
 
   const handleCancelDeleteRequest = () => {
     setDeleteModal(false);
@@ -47,6 +50,7 @@ export const List = ({
       id_groups: [selectedCard],
       final_remove:
         isDeletedRequests || deleteModal === "finally" ? "1" : undefined,
+      reasone_remove: confirmText,
     }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Заявку успішно видалено!", {
@@ -76,8 +80,15 @@ export const List = ({
           onClose={handleCancelDeleteRequest}
           onSubmit={handleDeleteRequest}
           passwordCheck={isDeletedRequests || deleteModal === "finally"}
+          confirmText={
+            isDeletedRequests || deleteModal === "finally" ? null : confirmText
+          }
+          onChangeConfirmText={(val) => setConfimText(val)}
         />
       )}
+      {deleteInfo ? (
+        <DeleteInfo onClose={() => setDeleteInfo(false)} text={deleteInfo} />
+      ) : null}
       {selectedChat && (
         <Chat
           onClose={() => setSelectedChat(false)}
@@ -118,6 +129,12 @@ export const List = ({
                 }
                 onRestore={() => onRestore(d[0], d[1]?.id_group)}
                 onChangeNewCount={(count) => onChangeNewCount(count, d[0])}
+                onShowDeleteReasone={
+                  d[1]?.General_field_group?.reasone_remove?.length > 0
+                    ? () =>
+                        setDeleteInfo(d[1]?.General_field_group?.reasone_remove)
+                    : null
+                }
               />
             );
           })

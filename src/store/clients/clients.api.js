@@ -161,7 +161,7 @@ export const clients = createApi({
       }),
     }),
     deleteCient: build.query({
-      query: ({ id_client, final_remove }) => ({
+      query: ({ id_client, final_remove, reasone_remove }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -170,6 +170,7 @@ export const clients = createApi({
           mod: "clients",
           id_client,
           final_remove,
+          reasone_remove,
         }),
       }),
     }),

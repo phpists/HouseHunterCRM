@@ -17,6 +17,7 @@ export const DesktopContent = ({
   onChangeComment,
   onRestore,
   onChangeNewCount,
+  onShowDeleteReasone,
 }) => (
   <StyledDesktopContent className="clickable">
     <Client data={data} />
@@ -60,6 +61,7 @@ export const DesktopContent = ({
       isDeleted={data?.General_field_group?.deleted === "1"}
       onRestore={onRestore}
       userId={data?.General_field_group?.id_user}
+      onShowDeleteReasone={onShowDeleteReasone}
     />
   </StyledDesktopContent>
 );

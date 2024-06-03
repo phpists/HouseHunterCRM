@@ -31,6 +31,7 @@ export const DesktopContent = ({
   onRestore,
   onDeleteFinally,
   deleteDate,
+  onOpenDeleteReason,
 }) => (
   <StyledDesktopContent className="flex items-center justify-between hide-scroll card">
     <MainInfo
@@ -72,6 +73,7 @@ export const DesktopContent = ({
         isDeleted={isDeleted}
         onRestore={onRestore}
         onDeleteFinally={onDeleteFinally}
+        onOpenDeleteReason={onOpenDeleteReason}
       />
       <Arrow id={id} />{" "}
     </div>

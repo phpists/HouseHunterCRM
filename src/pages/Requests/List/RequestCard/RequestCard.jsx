@@ -19,6 +19,7 @@ export const RequestCard = ({
   onRestore,
   onDeleteFinally,
   onChangeNewCount,
+  onShowDeleteReasone,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1400);
@@ -66,6 +67,7 @@ export const RequestCard = ({
           onRestore={onRestore}
           onDeleteFinally={onDeleteFinally}
           onChangeNewCount={onChangeNewCount}
+          onShowDeleteReasone={onShowDeleteReasone}
         />
       ) : (
         <DesktopContent
@@ -80,6 +82,7 @@ export const RequestCard = ({
           onRestore={onRestore}
           onDeleteFinally={onDeleteFinally}
           onChangeNewCount={onChangeNewCount}
+          onShowDeleteReasone={onShowDeleteReasone}
         />
       )}
     </StyledRequestCard>

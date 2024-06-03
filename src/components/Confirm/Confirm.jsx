@@ -11,7 +11,14 @@ import { useAppSelect } from "../../hooks/redux";
 import cogoToast from "cogo-toast";
 import { handleResponse } from "../../utilits";
 
-export const Confirm = ({ onClose, onSubmit, title, passwordCheck }) => {
+export const Confirm = ({
+  onClose,
+  onSubmit,
+  title,
+  passwordCheck,
+  confirmText,
+  onChangeConfirmText,
+}) => {
   const controls = useAnimationControls();
   const [password, setPassword] = useState("");
   const [checkUser] = useLazyCheckUserQuery();
@@ -51,6 +58,8 @@ export const Confirm = ({ onClose, onSubmit, title, passwordCheck }) => {
 
   useEffect(() => {
     controls.start({ opacity: 1, zIndex: 102 });
+    onChangeConfirmText && onChangeConfirmText("");
+    console.log(typeof confirmText);
   }, []);
 
   const handleClickOnOverlay = (e) =>
@@ -77,6 +86,17 @@ export const Confirm = ({ onClose, onSubmit, title, passwordCheck }) => {
               value={password}
               onChange={(val) => setPassword(val)}
               className="passwordValue"
+            />
+          </div>
+        ) : null}
+        {typeof confirmText === "string" ? (
+          <div className="checkPassword">
+            <Field
+              label="Причина видалення"
+              placeholder="Введіть причину видалення"
+              value={confirmText}
+              onChange={onChangeConfirmText}
+              className="input-value"
             />
           </div>
         ) : null}

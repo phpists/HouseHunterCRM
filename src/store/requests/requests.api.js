@@ -128,7 +128,7 @@ export const requests = createApi({
       },
     }),
     deleteRequest: build.query({
-      query: ({ id_groups, final_remove }) => ({
+      query: ({ id_groups, final_remove, reasone_remove }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -137,6 +137,7 @@ export const requests = createApi({
           mod: "requests",
           id_groups,
           final_remove,
+          reasone_remove,
         }),
       }),
     }),

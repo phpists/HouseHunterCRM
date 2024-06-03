@@ -17,7 +17,8 @@ export const MobileContent = ({
   onChangeComment,
   onRestore,
   onDeleteFinally,
-  onChangeNewCount = { onChangeNewCount },
+  onChangeNewCount,
+  onShowDeleteReasone,
 }) => (
   <StyledMobileContent className="flex clickable">
     <div className="w-full">
@@ -66,6 +67,7 @@ export const MobileContent = ({
       onRestore={onRestore}
       userId={data?.General_field_group?.id_user}
       onDeleteFinally={onDeleteFinally}
+      onShowDeleteReasone={onShowDeleteReasone}
     />
   </StyledMobileContent>
 );

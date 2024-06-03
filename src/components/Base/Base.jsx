@@ -1,12 +1,8 @@
 import { styled } from "styled-components";
 import { TitleDivider } from "./TitleDivider";
 import { CheckOption } from "../CheckOption";
-import {
-  useGetCommentsToFieldsQuery,
-  useGetSourcesQuery,
-} from "../../store/objects/objects.api";
+import { useGetSourcesQuery } from "../../store/objects/objects.api";
 import { useEffect, useState } from "react";
-import { Select } from "../Select/Select";
 import { Period } from "./Period/Period";
 import { Divider } from "./Divider";
 import { ToggleOption } from "../ToggleOption";
@@ -16,16 +12,13 @@ import {
 } from "../../store/requests/requests.api";
 import { SelectTags } from "../SelectTags/SelectTags";
 import { Field } from "../Field";
-import { Deadline } from "../../pages/Request/Characteristic/Deadline";
 import { ProfileField } from "../ProfileField";
 import { useGetWorkerMyStructureQuery } from "../../store/calls/calls.api";
 import { useAppSelect } from "../../hooks/redux";
-import {
-  useGetAllPerimissionsLevelsQuery,
-  useGetCompanyStructureLevelQuery,
-} from "../../store/structure/structure.api";
+import { useGetCompanyStructureLevelQuery } from "../../store/structure/structure.api";
 import { Ranger } from "../Ranger/Ranger";
 import { handleChangeRange } from "../../utilits";
+import { useGetWorkersMyCompanyQuery } from "../../store/billing/billing.api";
 
 export const Base = ({
   data,
@@ -53,12 +46,13 @@ export const Base = ({
   objMls,
   countObjectOwner,
   requestPage,
+  allObjectsWorker,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
-  const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: companies } = useGetCompaniesQuery();
   const { data: sortingPeriods } = useGetSortingObjectQuery();
+  const { data: companyWorkers } = useGetWorkersMyCompanyQuery();
   const [company, setCompany] = useState(!!data?.company_object);
   const [streetBase, setStreetBase] = useState(
     !!data.street_base_object || streetBaseOpen
@@ -188,6 +182,32 @@ export const Base = ({
             }
             error={!!errors.find((e) => e === "show_only")}
           />
+          {allObjectsWorker && data?.company_object?.show_only === "company" ? (
+            <SelectTags
+              label="Пошук по працівнику"
+              placeholder="Оберіть працівника"
+              options={
+                companyWorkers?.data
+                  ? companyWorkers?.data?.map(({ id, name }) => ({
+                      title: name ?? "-",
+                      value: id,
+                    }))
+                  : []
+              }
+              value={data?.company_object?.id_worker_Search}
+              onChange={(val) =>
+                onChange("company_object", {
+                  ...data?.company_object,
+                  id_worker_Search:
+                    val === data?.company_object?.id_worker_Search
+                      ? undefined
+                      : val,
+                })
+              }
+              isSearch
+              notMultiSelect
+            />
+          ) : null}
           {Number(user?.struct_level) !== Number(level) ? (
             <>
               {" "}

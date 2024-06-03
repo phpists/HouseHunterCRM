@@ -38,6 +38,7 @@ export const ObjectCard = memo(
     onEdit,
     onOpenPhonesModal,
     showClientObjectsCount,
+    onOpenDeleteReason,
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
     const { ref, inView } = useInView({ triggerOnce: true });
@@ -100,6 +101,7 @@ export const ObjectCard = memo(
             onEdit={onEdit}
             onOpenPhonesModal={onOpenPhonesModal}
             showClientObjectsCount={showClientObjectsCount}
+            onOpenDeleteReason={onOpenDeleteReason}
           />
         ) : (
           <MobileContent
@@ -133,6 +135,7 @@ export const ObjectCard = memo(
             onEdit={onEdit}
             onOpenPhonesModal={onOpenPhonesModal}
             showClientObjectsCount={showClientObjectsCount}
+            onOpenDeleteReason={onOpenDeleteReason}
           />
         )}
       </StyledObjectCard>

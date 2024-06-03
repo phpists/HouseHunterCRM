@@ -41,6 +41,7 @@ export const MobileContent = ({
   onEdit,
   onOpenPhonesModal,
   showClientObjectsCount,
+  onOpenDeleteReason,
 }) => (
   <StyledMobileContent className="clickable">
     <Header data={data} />
@@ -103,6 +104,7 @@ export const MobileContent = ({
       isDeleted={isDeleted}
       onRestore={onRestore}
       onDeleteFinally={onDeleteFinally}
+      onOpenDeleteReason={onOpenDeleteReason}
     />
   </StyledMobileContent>
 );

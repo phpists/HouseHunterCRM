@@ -19,6 +19,9 @@ const StyledIconButton = styled.div`
   border: var(--second-color-border);
   backdrop-filter: blur(18.5px);
   cursor: pointer;
+  svg {
+    height: 60%;
+  }
   g {
     transition: all 0.3s;
   }

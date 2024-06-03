@@ -5,6 +5,7 @@ import { ReactComponent as RemoveIcon } from "../../assets/images/remove.svg";
 import { ReactComponent as EditIcon } from "../../assets/images/edit-company.svg";
 import { ReactComponent as RestoreIcon } from "../../assets/images/refresh-icon.svg";
 import { ReactComponent as DownloadIcon } from "../../assets/images/file.svg";
+import { ReactComponent as DeleteInfo } from "../../assets/images/delete-info.svg";
 
 export const Dropdown = ({
   onDelete,
@@ -18,10 +19,20 @@ export const Dropdown = ({
   onRestore,
   onDeleteFinally,
   onDownload,
+  onOpenDeleteReason,
 }) => (
   <StyledDropdown className="dropdown noClickable">
     {isDeleted ? (
       <>
+        {onOpenDeleteReason && (
+          <div
+            className="flex items-center justify-between noClickable"
+            onClick={onOpenDeleteReason}
+          >
+            <span className="noClickable">Причина видалення</span>
+            <DeleteInfo className="refresh noClickable" />
+          </div>
+        )}
         {onRestore && (
           <div
             className="flex items-center justify-between noClickable"
@@ -140,6 +151,10 @@ const StyledDropdown = styled.div`
   }
   div:first-child {
     border: none;
+  }
+  svg {
+    height: 15px;
+    width: 15px;
   }
   g {
     opacity: 1;

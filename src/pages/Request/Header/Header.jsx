@@ -3,6 +3,7 @@ import { SaveButton } from "./SaveButton";
 import { ReactComponent as StarIcon } from "../../../assets/images/card-star.svg";
 import { ReactComponent as RemoveIcon } from "../../../assets/images/remove.svg";
 import { ReactComponent as RestoreIcon } from "../../../assets/images/refresh-icon.svg";
+import { ReactComponent as DeleteInfoIcon } from "../../../assets/images/delete-info.svg";
 import { IconButton } from "../../../components/IconButton";
 import { Title } from "./Title";
 import { Button } from "./Button";
@@ -12,7 +13,7 @@ import {
   useLazyDeleteRequestQuery,
   useLazyRestoreRequestsQuery,
 } from "../../../store/requests/requests.api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Confirm } from "../../../components/Confirm/Confirm";
 import { useNavigate, useParams } from "react-router-dom";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
@@ -20,6 +21,7 @@ import cogoToast from "cogo-toast";
 import { BackButton } from "../../../components/BackButton";
 import { useAppSelect } from "../../../hooks/redux";
 import { Id } from "../../../components/Id";
+import { DeleteInfo } from "../../../components/DeleteInfo/DeleteInfo";
 
 export const Header = ({
   onSave,
@@ -39,13 +41,18 @@ export const Header = ({
   const [restoreRequests] = useLazyRestoreRequestsQuery();
   const [deleteModal, setDeleteModal] = useState(false);
   const { accessData, user } = useAppSelect((state) => state.auth);
+  const [confirmText, setConfimText] = useState("");
+  const [deleteInfo, setDeleteInfo] = useState(false);
+  const [deleteReason, setDeleteReason] = useState(null);
 
   const handleDeleteRequest = () => {
     deleteRequest({
       id_groups: [id],
       final_remove: isDeleted ? "1" : undefined,
+      reasone_remove: confirmText,
     }).then((resp) =>
       handleResponse(resp, () => {
+        setDeleteReason(confirmText);
         cogoToast.success("Запит успішно видалено!", {
           hideAfter: 3,
           position: "top-right",
@@ -70,6 +77,7 @@ export const Header = ({
   const handleRestoreRequest = () => {
     restoreRequests([id]).then((resp) =>
       handleResponse(resp, () => {
+        setDeleteReason(null);
         onToggleDeleted(false);
         cogoToast.success("Запит успішно відновлено", {
           hideAfter: 3,
@@ -79,6 +87,10 @@ export const Header = ({
     );
   };
 
+  useEffect(() => {
+    setDeleteReason(data?.general_group?.reasone_remove ?? null);
+  }, [data]);
+
   return (
     <StyledHeader className="flex items-center justify-between">
       {deleteModal && (
@@ -87,8 +99,16 @@ export const Header = ({
           onClose={() => setDeleteModal(false)}
           onSubmit={handleDeleteRequest}
           passwordCheck={isDeleted}
+          confirmText={isDeleted ? null : confirmText}
+          onChangeConfirmText={(val) => setConfimText(val)}
         />
       )}
+      {deleteInfo ? (
+        <DeleteInfo
+          onClose={() => setDeleteInfo(false)}
+          text={deleteReason ?? data?.general_group?.reasone_remove}
+        />
+      ) : null}
       <div className="flex title-wrapper">
         <div className="flex items-center">
           <BackButton onClick={() => navigate(-1)} />
@@ -97,12 +117,20 @@ export const Header = ({
         <div className="mobile-action-btns flex items-center">
           {isDataLoading ? null : isDeleted ? (
             <>
-              {" "}
-              <IconButton
-                Icon={RestoreIcon}
-                className="icon-btn restore-btn ml-auto"
-                onClick={handleRestoreRequest}
-              />
+              <div className="flex items-center">
+                {deleteReason?.length > 0 ? (
+                  <IconButton
+                    Icon={DeleteInfoIcon}
+                    className="restore-btn icon-btn mr-2.5 "
+                    onClick={() => setDeleteInfo(true)}
+                  />
+                ) : null}
+                <IconButton
+                  Icon={RestoreIcon}
+                  className="icon-btn restore-btn ml-auto"
+                  onClick={handleRestoreRequest}
+                />
+              </div>
               {user?.struct_level === 1 ? (
                 <IconButton
                   Icon={RemoveIcon}

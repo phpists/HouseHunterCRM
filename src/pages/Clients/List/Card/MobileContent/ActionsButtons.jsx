@@ -13,6 +13,7 @@ export const ActionsButtons = ({
   isDeleted,
   onRestore,
   onDeleteFinally,
+  onOpenDeleteReason,
 }) => (
   <StyledActionsButtons className={`flex flex-col items-center ${className}`}>
     <Arrow id={id} />
@@ -26,6 +27,7 @@ export const ActionsButtons = ({
       isDeleted={isDeleted}
       onRestore={onRestore}
       onDeleteFinally={onDeleteFinally}
+      onOpenDeleteReason={onOpenDeleteReason}
     />
   </StyledActionsButtons>
 );

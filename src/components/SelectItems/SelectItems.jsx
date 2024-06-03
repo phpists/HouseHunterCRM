@@ -27,6 +27,8 @@ export const SelectItems = ({
   finalDeleteConfirmTitle,
   onSendClients,
   allowSelectAll,
+  confirmText,
+  onChangeConfirmText,
 }) => {
   const [type, setType] = useState(null);
   const [open, setOpen] = useState(false);
@@ -109,6 +111,8 @@ export const SelectItems = ({
           passwordCheck={
             passwordCheck || selectedCount > 1 || deleteModal === "finally"
           }
+          confirmText={deleteModal === "finally" ? null : confirmText}
+          onChangeConfirmText={onChangeConfirmText}
         />
       )}
       <div className="relative z-300">

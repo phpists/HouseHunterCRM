@@ -43,6 +43,7 @@ export const Header = ({
   const isPrevFilter = localStorage.getItem("requestFilter");
   const [restoreRequests] = useLazyRestoreRequestsQuery();
   const isAllActions = filters?.only_company_obj !== "1";
+  const [confirmText, setConfimText] = useState("");
 
   const handleToggleFavorites = () => {
     onChangeActionLoading(true);
@@ -71,6 +72,7 @@ export const Header = ({
       deleteRequest({
         id_groups: selected,
         final_remove: isFinally ? "1" : undefined,
+        reasone_remove: confirmText,
       }).then((resp) => {
         handleResponse(resp, () => {
           cogoToast.success(
@@ -163,6 +165,8 @@ export const Header = ({
                   ? () => handleDelete(true)
                   : null
               }
+              confirmText={filters?.show_deleted ? null : confirmText}
+              onChangeConfirmText={(val) => setConfimText(val)}
             />
           </div>
         </div>
@@ -195,6 +199,8 @@ export const Header = ({
             : null
         }
         finalDeleteConfirmTitle="Видалити запит(и) остаточно?"
+        confirmText={filters?.show_deleted ? null : confirmText}
+        onChangeConfirmText={(val) => setConfimText(val)}
       />
       {filterOpen && (
         <Filter

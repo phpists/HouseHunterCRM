@@ -4,6 +4,7 @@ import { ReactComponent as StarIcon } from "../../../../../assets/images/card-st
 import { ReactComponent as EditIcon } from "../../../../../assets/images/edit-company.svg";
 import { ReactComponent as RemoveIcon } from "../../../../../assets/images/remove.svg";
 import { ReactComponent as Refresh } from "../../../../../assets/images/refresh-icon.svg";
+import { ReactComponent as DeleteInfoIcon } from "../../../../../assets/images/delete-info.svg";
 import { useNavigate } from "react-router-dom";
 import { useLazyAddToFavoriteQuery } from "../../../../../store/requests/requests.api";
 import { handleResponse } from "../../../../../utilits";
@@ -24,6 +25,7 @@ export const Actions = ({
   onRestore,
   userId,
   onDeleteFinally,
+  onShowDeleteReasone,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const navigate = useNavigate();
@@ -44,6 +46,13 @@ export const Actions = ({
 
   return (
     <StyledActions className="clickable">
+      {onShowDeleteReasone && (
+        <Button
+          Icon={DeleteInfoIcon}
+          className="edit-btn mb-2.5"
+          onClick={onShowDeleteReasone}
+        />
+      )}
       {isDeleted && isRestore && (
         <Button
           Icon={Refresh}

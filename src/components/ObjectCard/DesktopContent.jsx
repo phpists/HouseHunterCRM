@@ -39,6 +39,7 @@ export const DesktopContent = ({
   onEdit,
   onOpenPhonesModal,
   showClientObjectsCount,
+  onOpenDeleteReason,
 }) => {
   return (
     <StyledDesktopContent className="flex items-center justify-between clickable">
@@ -98,6 +99,7 @@ export const DesktopContent = ({
         isDeleted={isDeleted}
         onRestore={onRestore}
         onDeleteFinally={onDeleteFinally}
+        onOpenDeleteReason={onOpenDeleteReason}
       />
       <div className="mobile-footer w-full">
         <Info data={data} editable={editable} onEdit={onEdit} />

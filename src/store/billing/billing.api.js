@@ -155,6 +155,17 @@ export const billing = createApi({
         }),
       }),
     }),
+    getWorkersMyCompany: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getWorkerMyCompany",
+          mod: "system_info",
+        }),
+      }),
+    }),
   }),
 });
 
@@ -171,4 +182,5 @@ export const {
   useLazyEditCompanyInfoQuery,
   useLazyToggleActiveWorkerStatusQuery,
   useLazyDeleteCompanyImgQuery,
+  useGetWorkersMyCompanyQuery,
 } = billing;

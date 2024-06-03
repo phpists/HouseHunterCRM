@@ -5,8 +5,9 @@ import { IconButton } from "../../../components/IconButton";
 import { ReactComponent as StarIcon } from "../../../assets/images/card-star.svg";
 import { ReactComponent as RemoveIcon } from "../../../assets/images/remove.svg";
 import { ReactComponent as RestoreIcon } from "../../../assets/images/refresh-icon.svg";
+import { ReactComponent as DeleteInfoIcon } from "../../../assets/images/delete-info.svg";
 import { Confirm } from "../../../components/Confirm/Confirm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
@@ -19,6 +20,7 @@ import { ToClientButton } from "./ToClientButton";
 import { useAppSelect } from "../../../hooks/redux";
 import { DownloadButton } from "./DownloadButton";
 import { Id } from "../../../components/Id";
+import { DeleteInfo } from "../../../components/DeleteInfo/DeleteInfo";
 
 export const Header = ({
   onSave,
@@ -28,6 +30,7 @@ export const Header = ({
   isDeleted,
   onChangeRestoreObject,
   isData,
+  reasonRemove,
 }) => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -36,13 +39,18 @@ export const Header = ({
   const [addToFavorites] = useLazyAddToFavoritesQuery();
   const { accessData, user } = useAppSelect((state) => state.auth);
   const [restoreObjects] = useLazyRestoreObjectsQuery();
+  const [deleteInfo, setDeleteInfo] = useState(false);
+  const [confirmText, setConfimText] = useState("");
+  const [deleteReason, setDeleteReason] = useState(null);
 
   const handleDeleteRequest = () => {
     deleteObject({
       id_objects: [id],
       final_remove: isDeleted ? "1" : undefined,
+      reasone_remove: confirmText,
     }).then((resp) =>
       handleResponse(resp, () => {
+        setDeleteReason(confirmText);
         cogoToast.success("Об'єкт успішно видалено!", {
           hideAfter: 3,
           position: "top-right",
@@ -78,9 +86,14 @@ export const Header = ({
           position: "top-right",
         });
         onChangeRestoreObject("0");
+        setDeleteReason(null);
       })
     );
   };
+
+  useEffect(() => {
+    setDeleteReason(reasonRemove);
+  }, [reasonRemove]);
 
   return (
     <>
@@ -90,14 +103,26 @@ export const Header = ({
           onClose={() => setDeleteModal(false)}
           onSubmit={handleDeleteRequest}
           passwordCheck={isDeleted}
+          confirmText={isDeleted ? null : confirmText}
+          onChangeConfirmText={(val) => setConfimText(val)}
         />
       )}
+      {deleteInfo ? (
+        <DeleteInfo onClose={() => setDeleteInfo(false)} text={deleteReason} />
+      ) : null}
       <StyledHeader className="flex items-center justify-between">
         <BackButton />
         <div className="btns-header flex items-center">
           {!isData ? null : isDeleted ? (
             <>
               <ToClientButton />
+              {deleteReason?.length > 0 ? (
+                <IconButton
+                  Icon={DeleteInfoIcon}
+                  className="restore-btn icon-btn mr-2.5 restore "
+                  onClick={() => setDeleteInfo(true)}
+                />
+              ) : null}
               <IconButton
                 Icon={RestoreIcon}
                 className="icon-btn restore"

@@ -7,7 +7,7 @@ import {
   useLazyDeleteCientQuery,
   useLazyGetNewClientsCountQuery,
 } from "../../../store/clients/clients.api";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useActions } from "../../../hooks/actions";
 import { useAppSelect } from "../../../hooks/redux";
 import cogoToast from "cogo-toast";
@@ -42,6 +42,7 @@ export const Header = ({
   const { newClientsCount } = useAppSelect((state) => state.clients);
   const [deleteClient] = useLazyDeleteCientQuery();
   const { accessData, user } = useAppSelect((state) => state.auth);
+  const [confirmText, setConfimText] = useState("");
 
   useEffect(() => {
     getNewClientsCount().then((resp) => saveNewClientsCount(resp?.data?.count));
@@ -53,6 +54,7 @@ export const Header = ({
       deleteClient({
         id_client: selected,
         final_remove: isFinal ? "1" : undefined,
+        reasone_remove: confirmText,
       }).then((resp) => {
         handleResponse(
           resp,
@@ -119,6 +121,8 @@ export const Header = ({
           onDeleteFinally={
             user?.struct_level === 1 ? () => handleDeleteClients(true) : null
           }
+          confirmText={confirmText}
+          onChangeConfirmText={(val) => setConfimText(val)}
         />
       </div>
       <SelectItems
@@ -151,6 +155,8 @@ export const Header = ({
         finalDeleteConfirmTitle={`Видалити клієнт${
           selected?.length > 1 ? "ів" : "а"
         } остаточно?`}
+        confirmText={confirmText}
+        onChangeConfirmText={(val) => setConfimText(val)}
       />
     </StyledHeader>
   );

@@ -449,6 +449,7 @@ const ObjectPage = () => {
         isDeleted={data?.deleted === "1"}
         onChangeRestoreObject={(deleted) => setData({ ...data, deleted })}
         isData={!isLoadingData}
+        reasonRemove={data?.reasone_remove}
       />
       <Header
         className="mobile-header"

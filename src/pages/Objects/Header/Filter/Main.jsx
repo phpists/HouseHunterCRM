@@ -363,6 +363,7 @@ export const Main = ({
         idSource
         objMls
         countObjectOwner
+        allObjectsWorker
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
       />

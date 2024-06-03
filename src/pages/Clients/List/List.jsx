@@ -8,6 +8,7 @@ import { handleCheckAccess } from "../../../utilits";
 import { Loader } from "../../../components/Loader";
 import { EditComment } from "./EditComment";
 import { useAppSelect } from "../../../hooks/redux";
+import { DeleteInfo } from "../../../components/DeleteInfo/DeleteInfo";
 
 export const List = ({
   selected,
@@ -28,15 +29,19 @@ export const List = ({
   const [editComment, setEditComment] = useState(false);
   const { accessData, user } = useAppSelect((state) => state.auth);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
+  const [confirmText, setConfimText] = useState("");
+  const [deleteInfo, setDeleteInfo] = useState(null);
 
   const handleOpenDeleteModal = (id, isFinally) => {
     setDeleteModal(id);
     setIsDeleteFinally(isFinally);
+    setConfimText("");
   };
 
   const handleDelete = () => {
-    onDelete(deleteModal, isDeleteFinally);
+    onDelete(deleteModal, confirmText, isDeleteFinally);
     setDeleteModal(null);
+    setConfimText("");
   };
 
   return (
@@ -51,6 +56,8 @@ export const List = ({
           onSubmit={handleDelete}
           onClose={() => setDeleteModal(null)}
           passwordCheck={isDeleted || isDeleteFinally}
+          confirmText={isDeleteFinally || isDeleted ? null : confirmText}
+          onChangeConfirmText={(val) => setConfimText(val)}
         />
       )}
       {editComment && (
@@ -60,6 +67,10 @@ export const List = ({
           onChange={onChangeComment}
         />
       )}
+      {deleteInfo ? (
+        <DeleteInfo onClose={() => setDeleteInfo(false)} text={deleteInfo} />
+      ) : null}
+
       <StyledList ref={innerRef}>
         {clients?.length === 0 || actionLoading ? (
           <Empty loading={loading || actionLoading} />
@@ -81,6 +92,7 @@ export const List = ({
                 email,
                 deleted,
                 dt_start_delete,
+                reasone_remove,
               },
               i
             ) => (
@@ -127,6 +139,11 @@ export const List = ({
                     : null
                 }
                 deleteDate={dt_start_delete}
+                onOpenDeleteReason={
+                  reasone_remove?.length > 0
+                    ? () => setDeleteInfo(reasone_remove)
+                    : null
+                }
               />
             )
           )

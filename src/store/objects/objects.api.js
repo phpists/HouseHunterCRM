@@ -60,7 +60,7 @@ export const objects = createApi({
       },
     }),
     deleteObject: build.query({
-      query: ({ id_objects, final_remove }) => ({
+      query: ({ id_objects, final_remove, reasone_remove }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -69,6 +69,7 @@ export const objects = createApi({
           mod: "objects",
           id_objects,
           final_remove,
+          reasone_remove,
         }),
       }),
     }),

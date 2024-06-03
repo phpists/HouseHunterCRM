@@ -85,6 +85,7 @@ const StyledDate = styled.button`
   .calendar-wrapper {
     border-radius: 0 0 6px 6px;
     border: none;
+    width: 340px;
   }
   .dropdown {
     position: absolute;

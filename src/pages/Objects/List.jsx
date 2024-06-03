@@ -16,6 +16,7 @@ import { EditObjectComment } from "../../components/EditObjectComment";
 import { Confirm } from "../../components/Confirm/Confirm";
 import { MarkObjectPhones } from "../../components/MarkObjectPhones/MarkObjectPhones";
 import { FindClientsObjects } from "./FindClientsObjects";
+import { DeleteInfo } from "../../components/DeleteInfo/DeleteInfo";
 
 export const List = ({
   selected,
@@ -49,6 +50,8 @@ export const List = ({
   const [markPhoneModal, setMarkPhoneModal] = useState(false);
   const [showContactId, setShowContactId] = useState(null);
   const [clientModal, setClientModal] = useState(null);
+  const [confirmText, setConfimText] = useState("");
+  const [deleteInfo, setDeleteInfo] = useState(null);
 
   const onChangeCurrency = (val) => setCurrency(val);
   const onChangeType = (val) => setType(val);
@@ -58,6 +61,7 @@ export const List = ({
     deleteObject({
       id_objects: [deleteId],
       final_remove: isDeleted || deleteModal === "finally" ? "1" : undefined,
+      reasone_remove: confirmText,
     }).then((resp) => {
       handleResponse(resp, () => {
         cogoToast.success(`Обєкт успішно видалено!`, {
@@ -124,6 +128,10 @@ export const List = ({
           onClose={() => setDeleteModal(false)}
           onSubmit={handleDelete}
           passwordCheck={isDeleted || deleteModal === "finally"}
+          confirmText={
+            isDeleted || deleteModal === "finally" ? null : confirmText
+          }
+          onChangeConfirmText={(val) => setConfimText(val)}
         />
       )}
       {clientModal ? (
@@ -131,6 +139,9 @@ export const List = ({
           onClose={() => setClientModal(null)}
           id={clientModal}
         />
+      ) : null}
+      {deleteInfo ? (
+        <DeleteInfo onClose={() => setDeleteInfo(false)} text={deleteInfo} />
       ) : null}
       <StyledList ref={innerRef}>
         {data?.length === 0 || actionLoading ? (
@@ -200,6 +211,11 @@ export const List = ({
                 }
                 onOpenPhonesModal={() => setClientModal(d?.id)}
                 showClientObjectsCount
+                onOpenDeleteReason={
+                  d?.reasone_remove?.length > 0
+                    ? () => setDeleteInfo(d?.reasone_remove)
+                    : null
+                }
               />
             ))}
           </>

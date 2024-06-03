@@ -61,6 +61,7 @@ export const Header = ({
     !filters?.mls_object &&
     ["my_structure", "only_my"]?.includes(filters?.company_object?.show_only);
   const [openMap, setOpenMap] = useState(false);
+  const [confirmText, setConfimText] = useState("");
 
   useEffect(() => {
     setDefalultFiltersOpen({
@@ -90,6 +91,7 @@ export const Header = ({
       deleteObject({
         id_objects: selected,
         final_remove: isFinally ? "1" : undefined,
+        reasone_remove: confirmText,
       }).then((resp) => {
         handleResponse(resp, () => {
           cogoToast.success(
@@ -99,7 +101,7 @@ export const Header = ({
               position: "top-right",
             }
           );
-          !filters?.company_object?.show_deleted === "1" && onDelete();
+          filters?.company_object?.show_deleted !== "1" && onDelete();
         });
         onChangeActionLoading(false);
       });
@@ -246,6 +248,8 @@ export const Header = ({
                 onSendClients={
                   selectedClients?.length > 0 ? handleSendClients : null
                 }
+                confirmText={confirmText}
+                onChangeConfirmText={(val) => setConfimText(val)}
               />
             </div>
           </div>
@@ -296,6 +300,8 @@ export const Header = ({
             onSendClients={
               selectedClients?.length > 0 ? handleSendClients : null
             }
+            confirmText={confirmText}
+            onChangeConfirmText={(val) => setConfimText(val)}
           />
         </div>
         {filterOpen && (

@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { Button } from "./Button";
 import { Dropdown } from "./Dropdown";
 import { Divider } from "./Divider";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export const MoreButton = ({
   className,
@@ -17,6 +17,7 @@ export const MoreButton = ({
   onRestore,
   onDeleteFinally,
   onDownload,
+  onOpenDeleteReason,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
 
@@ -43,6 +44,8 @@ export const MoreButton = ({
           onRestore={onRestore}
           onDeleteFinally={onDeleteFinally}
           onDownload={onDownload}
+          onClick
+          onOpenDeleteReason={onOpenDeleteReason}
         />
       </div>
       <Divider />
@@ -62,10 +65,10 @@ const StyledMoreButton = styled.button`
       opacity: 1;
       visibility: visible;
     }
-`}/* &:focus {
+`} &:focus {
     .dropdown {
       opacity: 1;
       visibility: visible;
     }
-  } */
+  }
 `;

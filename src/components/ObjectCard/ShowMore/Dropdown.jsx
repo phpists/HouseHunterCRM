@@ -14,6 +14,7 @@ import { ReactComponent as DownloadIcon } from "../../../assets/images/file.svg"
 import { ReactComponent as ToObjectIcon } from "../../../assets/images/my-object.svg";
 import { ReactComponent as PhoneIcon } from "../../../assets/images/phone-menu.svg";
 import { ReactComponent as RestoreIcon } from "../../../assets/images/refresh-icon.svg";
+import { ReactComponent as DeleteInfoIcon } from "../../../assets/images/delete-info.svg";
 import {
   useLazyAddStreetBaseObjectQuery,
   useLazyDownloadObjectQuery,
@@ -45,6 +46,7 @@ export const Dropdown = ({
   isDeleted,
   onRestore,
   onDeleteFinally,
+  onOpenDeleteReason,
 }) => {
   const [addStreetBaseObject] = useLazyAddStreetBaseObjectQuery();
   const [added, setAdded] = useState(false);
@@ -102,6 +104,15 @@ export const Dropdown = ({
             >
               <span>Редагувати </span> <Edit />
             </NavLink>
+          )}
+          {onOpenDeleteReason && (
+            <div
+              className="flex items-center justify-between"
+              onClick={onOpenDeleteReason}
+            >
+              <span>Причина видалення </span>{" "}
+              <DeleteInfoIcon className="selection-icon" />
+            </div>
           )}
           {onRestore && (
             <div
@@ -302,6 +313,7 @@ const StyledDropdown = styled.div`
   svg {
     flex-shrink: 0;
     width: 14px;
+    height: 14px;
   }
   g {
     opacity: 1;

@@ -653,15 +653,15 @@ const Objects = () => {
   };
 
   const handleDeleteObjectsFilterByIds = (ids, isSelected) => {
-    // const updatedCount = allCount - ids?.length;
-    // allCountRef.current = updatedCount;
-    // const updatedAllCount = (objectsCount || 0) - ids.length;
-    // saveObjectsCount(updatedAllCount);
-    // setAllCount(updatedCount);
-    // const updatedData = objects.filter((obj) => !ids.find((s) => s === obj.id));
-    // dataRef.current = updateData;
-    // setObjects(updatedData);
-    // isSelected && setSelected([]);
+    const updatedCount = allCount - ids?.length;
+    allCountRef.current = updatedCount;
+    const updatedAllCount = (objectsCount || 0) - ids.length;
+    saveObjectsCount(updatedAllCount);
+    setAllCount(updatedCount);
+    const updatedData = objects.filter((obj) => !ids.find((s) => s === obj.id));
+    dataRef.current = updateData;
+    setObjects(updatedData);
+    isSelected && setSelected([]);
     // handleGetObjects();
   };
 

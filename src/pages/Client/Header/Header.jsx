@@ -20,8 +20,15 @@ import { handleCheckAccess, handleResponse } from "../../../utilits";
 import { useGetAccessQuery } from "../../../store/auth/auth.api";
 import { SendModal } from "../../Clients/SendModal";
 import { useAppSelect } from "../../../hooks/redux";
+import { ReactComponent as DeleteInfoIcon } from "../../../assets/images/delete-info.svg";
+import { DeleteInfo } from "../../../components/DeleteInfo/DeleteInfo";
 
-export const Header = ({ favorite, isDeleted, onToggleIsDeleted }) => {
+export const Header = ({
+  favorite,
+  isDeleted,
+  onToggleIsDeleted,
+  deleteReason,
+}) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [deleteClient] = useLazyDeleteCientQuery();
@@ -31,11 +38,14 @@ export const Header = ({ favorite, isDeleted, onToggleIsDeleted }) => {
   const [status, setStatus] = useState(false);
   const [sendClient, setSendClient] = useState(null);
   const [restoreClients] = useLazyRestoreClientsQuery();
+  const [confirmText, setConfimText] = useState("");
+  const [deleteInfo, setDeleteInfo] = useState(false);
 
   const handleDeleteClient = () => {
     deleteClient({
       id_client: [id],
       final_remove: isDeleted ? "1" : undefined,
+      reasone_remove: confirmText,
     }).then((resp) => {
       handleResponse(resp, () => {
         cogoToast.success("Клієнта успішно видалено!", {
@@ -90,8 +100,13 @@ export const Header = ({ favorite, isDeleted, onToggleIsDeleted }) => {
           onClose={() => setDeleteModal(false)}
           onSubmit={handleDeleteClient}
           passwordCheck={isDeleted}
+          confirmText={isDeleted ? null : confirmText}
+          onChangeConfirmText={(val) => setConfimText(val)}
         />
       )}
+      {deleteInfo ? (
+        <DeleteInfo onClose={() => setDeleteInfo(false)} text={deleteReason} />
+      ) : null}
       {sendClient ? (
         <SendModal
           onSendSuccess={handleSuccessSend}
@@ -115,11 +130,19 @@ export const Header = ({ favorite, isDeleted, onToggleIsDeleted }) => {
     /> */}
           {isDeleted ? (
             <>
+              {deleteReason?.length > 0 ? (
+                <IconButton
+                  Icon={DeleteInfoIcon}
+                  className="restore-btn icon-btn mr-2.5 "
+                  onClick={() => setDeleteInfo(true)}
+                />
+              ) : null}
               <IconButton
                 Icon={RestoreIcon}
                 className="restore-btn icon-btn mr-2.5 "
                 onClick={handleRestore}
               />
+
               {user?.struct_level === 1 && (
                 <IconButton
                   Icon={RemoveIcon}
