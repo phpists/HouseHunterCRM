@@ -59,7 +59,7 @@ const StyledCalendar = styled.div`
   border: 1px solid var(--bg-20);
   background: rgba(0, 0, 0, 0.1);
   padding-bottom: 12px;
-  min-height: 301px;
+  /* min-height: 301px; */
   .react-calendar__navigation {
     display: none;
   }
@@ -90,8 +90,8 @@ const StyledCalendar = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    height: 34px;
-    width: 42px;
+    height: 24px;
+    width: 22px;
     display: flex;
     align-items: center;
     justify-content: center;

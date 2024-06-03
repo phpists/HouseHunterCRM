@@ -597,6 +597,9 @@ const Objects = () => {
       setIsDeleted(lastFilters?.company_object?.show_deleted === "1");
       filterActive.current = true;
       setUpdateData(true);
+      if (lastFilters?.id_rubric) {
+        handleGetRubricsFields(lastFilters?.id_rubric);
+      }
     } else {
       setFilters(DEFAULT_FILTERS);
       filterActive.current = true;

@@ -11,6 +11,8 @@ export const Header = ({
   onSelectAll,
   onDeleteFinally,
   onRestore,
+  confirmText,
+  onChangeConfirmText,
 }) => {
   return (
     <StyledHeader className="flex items-center justify-between">
@@ -30,6 +32,8 @@ export const Header = ({
           onSelectAll={onSelectAll}
           onDeleteFinally={onDeleteFinally}
           onRestore={onRestore}
+          confirmText={confirmText}
+          onChangeConfirmText={onChangeConfirmText}
         />
       </div>
     </StyledHeader>

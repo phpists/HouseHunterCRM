@@ -36,6 +36,7 @@ export const ObjectsList = ({
   const [selectedCard, setSelectedCard] = useState(null);
   const [restoreObjects] = useLazyRestoreObjectsQuery();
   const { user } = useAppSelect((state) => state.auth);
+  const [confirmText, setConfimText] = useState("");
 
   const handleGetClientsObjects = () => {
     getClientsObjects({
@@ -99,6 +100,7 @@ export const ObjectsList = ({
       id_objects: [selectedCard],
       final_remove:
         handleGetObjectById(selectedCard)?.deleted === "1" ? "1" : undefined,
+      reasone_remove: confirmText,
     }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Об'єкт успішно видалено!", {
@@ -141,6 +143,8 @@ export const ObjectsList = ({
           onClose={handleCancelDeleteRequest}
           onSubmit={handleDeleteObject}
           passwordCheck={deleteModal === "finally"}
+          confirmText={deleteModal === "finally" ? null : confirmText}
+          onChangeConfirmText={(val) => setConfimText(val)}
         />
       )}
       <div>

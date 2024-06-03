@@ -45,6 +45,7 @@ export const Objects = ({
   const [allRequestsIds, setAllRequestsIds] = useState([]);
   const [restoreRequests] = useLazyRestoreRequestsQuery();
   const [restoreObjects] = useLazyRestoreObjectsQuery();
+  const [confirmText, setConfimText] = useState("");
 
   const handleRefreshObjects = (val) => setRefreshObjects(val);
   const handleRefreshRequests = (val) => setRefreshRequests(val);
@@ -78,6 +79,7 @@ export const Objects = ({
     deleteObjects({
       id_objects: objects,
       final_remove: isFinally ? "1" : undefined,
+      reasone_remove: confirmText,
     }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success(
@@ -97,6 +99,7 @@ export const Objects = ({
     deleteRequests({
       id_groups: requests,
       final_remove: isFinally ? "1" : undefined,
+      reasone_remove: confirmText,
     }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success(
@@ -228,6 +231,8 @@ export const Objects = ({
         }
         onSelectAll={handleSelectAll}
         onRestore={handleRestoreItems}
+        confirmText={confirmText}
+        onChangeConfirmText={(val) => setConfimText(val)}
       />
       <div className="objects-content hide-scroll">
         {isDeleted ? null : <Actions accessData={accessData} />}
@@ -255,6 +260,8 @@ export const Objects = ({
           onDeleteFinally={
             user?.struct_level === 1 ? () => handleDeleteItems(true) : null
           }
+          confirmText={confirmText}
+          onChangeConfirmText={(val) => setConfimText(val)}
         />
         {handleCheckAccess(accessData, "objects", "view") && (
           <ObjectsList

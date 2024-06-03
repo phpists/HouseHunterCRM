@@ -42,6 +42,7 @@ export const RequestsList = ({
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
   const { user } = useAppSelect((state) => state.auth);
+  const [confirmText, setConfimText] = useState("");
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -185,6 +186,7 @@ export const RequestsList = ({
           "1" || deleteModal === "finally"
           ? "1"
           : undefined,
+      reasone_remove: confirmText,
     }).then((resp) =>
       handleResponse(resp, () => {
         cogoToast.success("Запит успішно видалено!", {
@@ -231,6 +233,8 @@ export const RequestsList = ({
             handleGetRequestById(selectedCard)?.General_field_group?.deleted ===
               "1" || deleteModal === "finally"
           }
+          confirmText={deleteModal === "finally" ? null : confirmText}
+          onChangeConfirmText={(val) => setConfimText(val)}
         />
       )}
       <div>

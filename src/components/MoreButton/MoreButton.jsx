@@ -65,7 +65,8 @@ const StyledMoreButton = styled.button`
       opacity: 1;
       visibility: visible;
     }
-`} &:focus {
+`}
+  &:focus {
     .dropdown {
       opacity: 1;
       visibility: visible;

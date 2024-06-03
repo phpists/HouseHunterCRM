@@ -35,7 +35,7 @@ export const Header = ({ value, onChangeMonth, onChangeYear, onClose }) => {
   return (
     <StyledHeader className="flex items-center justify-between calendar-header">
       <span className="flex items-center">
-        {handleGetTitle(value)}{" "}
+        <span className="title-header ">{handleGetTitle(value)}</span>
         <ReactInputMask
           className="ml-1"
           mask={"9999"}
@@ -94,5 +94,9 @@ const StyledHeader = styled.div`
     width: 60px;
     height: 24px;
     margin-right: 5px;
+  }
+  .title-header {
+    width: 70px;
+    text-align: left;
   }
 `;

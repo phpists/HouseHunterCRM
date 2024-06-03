@@ -96,7 +96,7 @@ const StyledDate = styled.button`
     z-index: 10;
     visibility: hidden;
     opacity: 0;
-    width: 328px;
+    width: 340px;
     left: 50%;
     transform: translateX(-50%);
     overflow: hidden;
