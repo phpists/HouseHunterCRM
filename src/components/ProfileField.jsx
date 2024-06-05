@@ -128,7 +128,16 @@ export const ProfileField = ({
     >
       {type === "date" && active && open && (calendarOpen || onlyCalendar) && (
         <div className="calendar_wrapper">
-          <Calendar value={value} onChange={handleChangeValue} />
+          <Calendar
+            value={value}
+            onChange={handleChangeValue}
+            onClose={() => {
+              if (onlyCalendar) {
+                setActive(false);
+                setOpen(false);
+              }
+            }}
+          />
         </div>
       )}
       {/* {type === "date" && !onlyCalendar && (

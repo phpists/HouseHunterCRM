@@ -22,6 +22,7 @@ import { AddToSelections } from "../AddToSelections";
 import { SendModal } from "../../Clients/SendModal";
 import { SortButton } from "./SortButton/SortButton";
 import { MapModal } from "./MapModal/MapModal";
+import { Statistic } from "./Statistic/Statistic";
 
 export const Header = ({
   selectedCount,
@@ -187,6 +188,7 @@ export const Header = ({
             />
           </div>
           <div className="flex items-center bts">
+            {filters?.id_rubric ? <Statistic filters={filters} /> : null}
             <SortButton
               value={filters?.sorting}
               onChange={(val) => onChangeFilter("sorting", val)}

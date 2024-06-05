@@ -116,7 +116,11 @@ export const List = ({
                 data={d[1]}
                 id={id}
                 onDelete={() => handleOnDeleteRequest(d[0])}
-                onDeleteFinally={() => handleOnDeleteRequest(d[0], true)}
+                onDeleteFinally={
+                  user?.struct_level === 1
+                    ? () => handleOnDeleteRequest(d[0], true)
+                    : null
+                }
                 onFavorite={onFavorite}
                 isEdit={handleCheckAccess(accessData, "requests", "edit")}
                 isDelete={handleCheckAccess(accessData, "requests", "delete")}

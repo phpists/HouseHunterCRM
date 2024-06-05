@@ -16,6 +16,9 @@ export const Price = ({
   type,
   onChangeType,
   rubricId,
+  noSelectCurrency,
+  allTypes,
+  noPriceTitle,
 }) => {
   const [open, setOpen] = useState(false);
   const options = ["₴", "$", "€"];
@@ -46,6 +49,8 @@ export const Price = ({
           onChangeType={handleChangeType}
           rubricId={rubricId}
           onClose={() => setOpen(false)}
+          noSelectCurrency={noSelectCurrency}
+          allTypes={allTypes}
         />
       ) : (
         <Closed
@@ -53,7 +58,7 @@ export const Price = ({
             title ??
             `${
               Number(price) === 0
-                ? "Ціну не обрано"
+                ? noPriceTitle ?? "Ціну не обрано"
                 : fortmatNumber(Number(price))
             } ${Number(price) === 0 ? "" : options[currency] ?? options[0]}`
           }

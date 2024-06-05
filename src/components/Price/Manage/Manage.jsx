@@ -11,21 +11,26 @@ export const Manage = ({
   onChangeType,
   rubricId,
   onClose,
+  noSelectCurrency,
+  allTypes,
 }) => {
   return (
     <>
       <StyledManage className="flex items-center">
-        <SymbolSelect
-          onChangeCurrency={onChangeCurrency}
-          activeCurrency={activeCurrency}
-        />
+        {noSelectCurrency ? null : (
+          <SymbolSelect
+            onChangeCurrency={onChangeCurrency}
+            activeCurrency={activeCurrency}
+          />
+        )}
         {type ? (
           <>
-            <div className="divider" />
+            {noSelectCurrency ? null : <div className="divider" />}
             <TypeSelect
               type={type}
               onChangeType={onChangeType}
               rubricId={rubricId}
+              allTypes={allTypes}
             />
           </>
         ) : null}

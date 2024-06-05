@@ -473,6 +473,19 @@ export const objects = createApi({
         }),
       }),
     }),
+    getObjectsStatustic: build.query({
+      query: ({ ...filters }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "view",
+          mod: "objects",
+          show_statistic: "true",
+          ...filters,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -511,4 +524,5 @@ export const {
   useLazyCleanObjectMarksQuery,
   useLazyRestoreObjectsQuery,
   useGetSortObjectViewQuery,
+  useLazyGetObjectsStatusticQuery,
 } = objects;

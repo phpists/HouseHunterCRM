@@ -19,6 +19,7 @@ import { ToggleOption } from "./ToggleOption";
 import { useGetCompanyStructureLevelQuery } from "../../../../store/structure/structure.api";
 import { useAppSelect } from "../../../../hooks/redux";
 import { useGetWorkerMyStructureQuery } from "../../../../store/calls/calls.api";
+import { useGetWorkersMyCompanyQuery } from "../../../../store/billing/billing.api";
 
 export const Tags = ({
   filters,
@@ -33,6 +34,7 @@ export const Tags = ({
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
   const { data: workers } = useGetWorkerMyStructureQuery();
+  const { data: companyWorkers } = useGetWorkersMyCompanyQuery();
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -313,6 +315,26 @@ export const Tags = ({
           )
         }
       />
+      {filters?.only_company_obj === "1" ? (
+        <>
+          <SelectTags
+            label="Пошук по працівнику"
+            placeholder="Оберіть працівника"
+            options={
+              companyWorkers?.data
+                ? companyWorkers?.data?.map(({ id, name }) => ({
+                    title: name ?? "-",
+                    value: id,
+                  }))
+                : []
+            }
+            value={filters?.id_worker_Search}
+            onChange={(val) => onChangeFilter("id_worker_Search", val)}
+            isSearch
+            notMultiSelect
+          />
+        </>
+      ) : null}
       {Number(user?.struct_level) !== Number(level) ? (
         <>
           <CheckOption
@@ -328,6 +350,7 @@ export const Tags = ({
                   only_street_base_obj: "0",
                   only_my_obj: "0",
                   only_my_structure: "1",
+                  id_worker_Search: undefined,
                 },
                 true
               )
@@ -375,9 +398,39 @@ export const Tags = ({
         }
       />
       <Divider />
-      <ToggleOption
-        label="Протерміновані запити"
-        active={filters?.showDeadline === "1"}
+      <CheckOption
+        label="Актуальні"
+        value={filters?.not_actual ? "0" : "1"}
+        onChange={() =>
+          onChangeFilter(
+            "showUnreadMessege",
+            {
+              ...filters,
+              show_deleted: undefined,
+              not_actual: undefined,
+            },
+            true
+          )
+        }
+      />
+      <CheckOption
+        label="Неактуальні"
+        value={filters?.not_actual}
+        onChange={() =>
+          onChangeFilter(
+            "showUnreadMessege",
+            {
+              ...filters,
+              show_deleted: undefined,
+              not_actual: "1",
+            },
+            true
+          )
+        }
+      />
+      <CheckOption
+        label="Протерміновані"
+        value={filters?.showDeadline}
         onChange={() =>
           onChangeFilter(
             "showUnreadMessege",
@@ -391,9 +444,9 @@ export const Tags = ({
         }
       />
       <Divider />
-      <ToggleOption
-        label="Не переглянуті повідомлення із підбірок"
-        active={filters?.showUnreadMessege === "1"}
+      <CheckOption
+        label="Запити з повідомленнями в підбірках"
+        value={filters?.showUnreadMessege}
         onChange={() =>
           onChangeFilter(
             "showUnreadMessege",
@@ -407,9 +460,9 @@ export const Tags = ({
         }
       />
       <Divider />
-      <ToggleOption
+      <CheckOption
         label="Запити до видалення"
-        active={filters?.show_deleted === "1"}
+        value={filters?.show_deleted}
         onChange={() =>
           onChangeFilter(
             "showUnreadMessege",

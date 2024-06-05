@@ -59,7 +59,6 @@ export const Confirm = ({
   useEffect(() => {
     controls.start({ opacity: 1, zIndex: 102 });
     onChangeConfirmText && onChangeConfirmText("");
-    console.log(typeof confirmText);
   }, []);
 
   const handleClickOnOverlay = (e) =>
@@ -102,7 +101,17 @@ export const Confirm = ({
         ) : null}
         <div className="buttons">
           <Button title="Ні" cancel onClick={handleClose} />
-          <Button title="Так" onClick={handleSubmit} />
+          <Button
+            title="Так"
+            onClick={handleSubmit}
+            disabled={
+              passwordCheck
+                ? false
+                : typeof confirmText === "string"
+                ? confirmText?.length === 0
+                : false
+            }
+          />
         </div>
       </div>
     </StyledConfirm>

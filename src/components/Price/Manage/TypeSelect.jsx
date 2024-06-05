@@ -2,33 +2,47 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import { PRICES_FOR_TITLE } from "../../../constants";
 
-export const TypeSelect = ({ type, onChangeType, rubricId }) => {
-  const TYPES =
-    rubricId === "65" || rubricId === "66"
-      ? [
-          {
-            title: "Об'єкт",
-            value: "4",
-          },
-          {
-            title: "Сотка",
-            value: "2",
-          },
-          //   {
-          //     title: "Га",
-          //     value: "3",
-          //   },
-        ]
-      : [
-          {
-            title: "Об'єкт",
-            value: "4",
-          },
-          {
-            title: "м²",
-            value: "1",
-          },
-        ];
+export const TypeSelect = ({ type, onChangeType, rubricId, allTypes }) => {
+  const TYPES = allTypes
+    ? [
+        {
+          title: "Об'єкт",
+          value: "4",
+        },
+        {
+          title: "Сотка",
+          value: "2",
+        },
+        {
+          title: "м²",
+          value: "1",
+        },
+      ]
+    : rubricId === "65" || rubricId === "66"
+    ? [
+        {
+          title: "Об'єкт",
+          value: "4",
+        },
+        {
+          title: "Сотка",
+          value: "2",
+        },
+        //   {
+        //     title: "Га",
+        //     value: "3",
+        //   },
+      ]
+    : [
+        {
+          title: "Об'єкт",
+          value: "4",
+        },
+        {
+          title: "м²",
+          value: "1",
+        },
+      ];
 
   return (
     <StyledTypeSelect>
