@@ -47,6 +47,7 @@ export const Dropdown = ({
   onRestore,
   onDeleteFinally,
   onOpenDeleteReason,
+  onFastSelection,
 }) => {
   const [addStreetBaseObject] = useLazyAddStreetBaseObjectQuery();
   const [added, setAdded] = useState(false);
@@ -190,6 +191,15 @@ export const Dropdown = ({
               onClick={onAddToSelection}
             >
               <span>Додати в підбірку</span>{" "}
+              <Selection className="selection-icon" />
+            </div>
+          )}
+          {onFastSelection && (
+            <div
+              className="flex items-center justify-between"
+              onClick={onFastSelection}
+            >
+              <span>Додати в швидку підбірку</span>{" "}
               <Selection className="selection-icon" />
             </div>
           )}

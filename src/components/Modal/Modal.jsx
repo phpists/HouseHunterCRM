@@ -62,6 +62,9 @@ const StyledModal = styled(motion.div)`
     position: relative;
     max-height: 90vh;
     overflow: auto;
+    a {
+      font-weight: 700;
+    }
   }
   .close-btn {
     position: absolute;

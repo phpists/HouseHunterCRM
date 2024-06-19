@@ -40,6 +40,7 @@ const INITIAL_DATA = {
   photos: [],
   active: "1",
   dt_birthday: null,
+  public_access: "0",
 };
 
 export const WorkerModal = ({
@@ -193,13 +194,21 @@ export const WorkerModal = ({
   const handleSaveUser = () => {
     if (handleCheckFields()) {
       setLoading(true);
-      const { first_name, last_name, email, phones, password, photo } =
-        profileData;
+      const {
+        first_name,
+        last_name,
+        email,
+        phones,
+        password,
+        photo,
+        public_access,
+      } = profileData;
 
       editProfile({
         first_name,
         last_name,
         email,
+        public_access,
         phones_json: JSON.stringify(
           phones.map((phone) => ({
             ...phone,

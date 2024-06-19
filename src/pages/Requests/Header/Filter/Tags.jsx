@@ -73,15 +73,23 @@ export const Tags = ({
       <Divider />
       <SelectTags
         label="Локація"
-        notMultiSelect
-        value={filters?.id_location}
+        tags={formatedLocations?.filter((l) =>
+          Array.isArray(filters?.id_location)
+            ? !!filters?.id_location?.find((v) => v === l.value)
+            : false
+        )}
         onChange={(val) =>
           onChangeFilter(
             "id_location",
-            val === filters?.id_location ? null : val
+            !Array.isArray(filters?.id_location)
+              ? [val]
+              : filters?.id_location?.find((l) => l === val)
+              ? filters?.id_location?.filter((l) => l !== val)
+              : [...(filters?.id_location ? filters?.id_location : []), val]
           )
         }
         options={formatedLocations}
+        showTags
       />
       <Divider />
       <Price
@@ -309,6 +317,7 @@ export const Tags = ({
               only_street_base_obj: "0",
               only_my_obj: "0",
               only_my_structure: "0",
+              public_access: "0",
               id_worker_Search: undefined,
             },
             true
@@ -350,6 +359,7 @@ export const Tags = ({
                   only_street_base_obj: "0",
                   only_my_obj: "0",
                   only_my_structure: "1",
+                  public_access: "0",
                   id_worker_Search: undefined,
                 },
                 true
@@ -391,6 +401,27 @@ export const Tags = ({
               only_street_base_obj: "0",
               only_my_obj: "1",
               only_my_structure: "0",
+              public_access: "0",
+              id_worker_Search: undefined,
+            },
+            true
+          )
+        }
+      />
+      <CheckOption
+        label="Cпільний доступ"
+        className="check-opt"
+        value={filters?.public_access}
+        onChange={(val) =>
+          onChangeFilter(
+            "public_access",
+            {
+              ...filters,
+              only_company_obj: "0",
+              only_street_base_obj: "0",
+              only_my_obj: "0",
+              only_my_structure: "0",
+              public_access: "1",
               id_worker_Search: undefined,
             },
             true
@@ -400,7 +431,7 @@ export const Tags = ({
       <Divider />
       <CheckOption
         label="Актуальні"
-        value={filters?.not_actual ? "0" : "1"}
+        value={!filters?.not_actual && !filters?.showDeadline ? "1" : "0"}
         onChange={() =>
           onChangeFilter(
             "showUnreadMessege",
@@ -408,6 +439,7 @@ export const Tags = ({
               ...filters,
               show_deleted: undefined,
               not_actual: undefined,
+              showDeadline: undefined,
             },
             true
           )
@@ -415,7 +447,7 @@ export const Tags = ({
       />
       <CheckOption
         label="Неактуальні"
-        value={filters?.not_actual}
+        value={filters?.not_actual && !filters?.showDeadline ? "1" : "0"}
         onChange={() =>
           onChangeFilter(
             "showUnreadMessege",
@@ -423,6 +455,7 @@ export const Tags = ({
               ...filters,
               show_deleted: undefined,
               not_actual: "1",
+              showDeadline: undefined,
             },
             true
           )

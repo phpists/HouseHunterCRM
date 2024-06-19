@@ -19,8 +19,8 @@ export const TagsFilter = ({
   const [isActive, setIsActive] = useState(false);
   const [value, setValue] = useState("");
 
-  const handleAddTag = (e) => {
-    if (e.keyCode === 13 && Array.isArray(tags)) {
+  const handleAddTag = () => {
+    if (Array.isArray(tags)) {
       const isExist = !!tags?.find((t) => t === value);
       if (isExist) {
         cogoToast.error("Значення вже додано", {
@@ -36,6 +36,12 @@ export const TagsFilter = ({
         onChange([...tags, value]);
         setValue("");
       }
+    }
+  };
+
+  const handleOnEnter = (e) => {
+    if (e.keyCode === 13) {
+      handleAddTag();
     }
   };
 
@@ -107,7 +113,8 @@ export const TagsFilter = ({
               }
               value={value}
               onChange={(e) => setValue(e.target.value)}
-              onKeyDown={handleAddTag}
+              onKeyDown={handleOnEnter}
+              onBlur={handleAddTag}
             />
           )}
         </div>

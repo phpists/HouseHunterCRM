@@ -3,24 +3,39 @@ import { Logo } from "./Logo";
 import { CompanyLogo } from "../CompanyLogo";
 import { NavBar } from "./Navbar";
 import { useAppSelect } from "../../hooks/redux";
+import { Support } from "./Support";
+import { Modal } from "../Modal/Modal";
+import { useState } from "react";
 
 export const Sidebar = ({ sidebarOpen, onClose, accessData }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { companyPhoto } = useAppSelect((state) => state.billing);
+  const [supportModal, setSupportModal] = useState(false);
 
   return (
-    <StyledSidebar
-      className="flex flex-col justify-between items-center"
-      sidebaropen={sidebarOpen?.toString()}
-    >
-      <Logo onClose={onClose} />
-      <NavBar accessData={accessData} />
-      {user?.struct_level === 1 ? (
-        <CompanyLogo value={companyPhoto} />
-      ) : (
-        <div />
+    <>
+      {supportModal && (
+        <Modal title="Підтримка" onClose={() => setSupportModal(false)}>
+          При виникненні питань телефонуйте{" "}
+          <a href="tel:+380678114777">+380678114777</a>
+        </Modal>
       )}
-    </StyledSidebar>
+      <StyledSidebar
+        className="flex flex-col justify-between items-center"
+        sidebaropen={sidebarOpen?.toString()}
+      >
+        <Logo onClose={onClose} />
+        <NavBar accessData={accessData} />
+        <div>
+          <Support onClick={() => setSupportModal(true)} />
+          {user?.struct_level === 1 ? (
+            <CompanyLogo value={companyPhoto} />
+          ) : (
+            <div />
+          )}
+        </div>
+      </StyledSidebar>
+    </>
   );
 };
 

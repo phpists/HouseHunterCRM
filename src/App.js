@@ -130,7 +130,7 @@ export const App = () => {
 
         if (lastUpdate && isNewBuild) {
           handleRefreshData();
-        } else if (!lastUpdate && token) {
+        } else if (!lastUpdate) {
           handleRefreshData();
         }
 

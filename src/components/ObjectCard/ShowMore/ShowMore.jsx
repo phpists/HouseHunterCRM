@@ -26,6 +26,7 @@ export const ShowMore = ({
   onRestore,
   onDeleteFinally,
   onOpenDeleteReason,
+  onFastSelection,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -75,6 +76,7 @@ export const ShowMore = ({
         onRestore={onRestore}
         onDeleteFinally={onDeleteFinally}
         onOpenDeleteReason={onOpenDeleteReason}
+        onFastSelection={onFastSelection}
       />
     </StyledShowMore>
   );

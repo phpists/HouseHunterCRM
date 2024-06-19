@@ -54,6 +54,7 @@ const StyledCompanyLogo = styled.div`
   transition: all 0.3s;
   border: 1px solid transparent;
   position: relative;
+  margin-top: 20px;
   input {
     opacity: 0;
     position: absolute;

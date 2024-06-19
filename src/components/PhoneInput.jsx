@@ -35,47 +35,19 @@ export const PhoneInput = ({
     }
   };
 
-  const handleChange = (e) => {
-    if (e.nativeEvent.inputType === "insertFromPaste") {
-    } else {
-      onChange(handleRemovePhoneMask(e.target.value)?.replace(/\s/g, ""));
-    }
-  };
-
-  const handleGetValueStartIndex = (e) => {
-    const inputValue = e?.target.value;
-    let valueStart = 0;
-    inputValue.split("").forEach((str, i) => {
-      if (!isNaN(str)) {
-        valueStart = 1 + i;
-      }
-    });
-
-    return valueStart;
-  };
-  //   const handleSetRangeInTheStart = (e) => {
-  //     if (e?.target?.setSelectionRange) {
-  //       const valueStart = handleGetValueStartIndex(e);
-  //       e?.target?.setSelectionRange(valueStart, valueStart);
-  //     }
-  //   };
-
   const handleFocus = (e) => {
     onFocus && onFocus();
-    //   handleSetRangeInTheStart(e);
-    //   if (e.target.scrollLeft) {
-    //     e.target.scrollLeft = 0;
-    //   }
   };
 
-  //   const handleSetRange = (e) => {
-  //     const start = e.target.selectionStart;
-  //     const valueStart = handleGetValueStartIndex(e);
+  const handleGetMask = () =>
+    phonesCodes
+      ?.find(({ id }) => id === phoneCode)
+      ?.format?.split(" ")
+      .join("")
+      ?.replaceAll("9", "0");
 
-  //     if (start > valueStart) {
-  //       handleSetRangeInTheStart(e);
-  //     }
-  //   };
+  const handleGetMaskSymbolsNumber = () =>
+    phonesCodes ? handleGetMask()?.replaceAll("0", "")?.length : 0;
 
   return (
     <div className="flex items-center relative">
@@ -88,11 +60,11 @@ export const PhoneInput = ({
       />
       <IMaskInput
         className={inputClassName}
-        mask={phonesCodes
-          ?.find(({ id }) => id === phoneCode)
-          ?.format?.split(" ")
-          .join("")
-          ?.replaceAll("9", "0")}
+        mask={handleGetMask()?.slice(
+          0,
+          Number(phonesCodes?.find(({ id }) => id === phoneCode)?.num_count) +
+            handleGetMaskSymbolsNumber()
+        )}
         value={value}
         unmask={true} // true|false|'typed'
         inputRef={inputRef} // access to nested input

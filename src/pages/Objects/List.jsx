@@ -17,6 +17,7 @@ import { Confirm } from "../../components/Confirm/Confirm";
 import { MarkObjectPhones } from "../../components/MarkObjectPhones/MarkObjectPhones";
 import { FindClientsObjects } from "./FindClientsObjects";
 import { DeleteInfo } from "../../components/DeleteInfo/DeleteInfo";
+import { FastSelection } from "../../components/FastSelection/FastSelection";
 
 export const List = ({
   selected,
@@ -52,6 +53,7 @@ export const List = ({
   const [clientModal, setClientModal] = useState(null);
   const [confirmText, setConfimText] = useState("");
   const [deleteInfo, setDeleteInfo] = useState(null);
+  const [fastSelection, setFastSelection] = useState(null);
 
   const onChangeCurrency = (val) => setCurrency(val);
   const onChangeType = (val) => setType(val);
@@ -78,6 +80,7 @@ export const List = ({
     setDeleteModal(isFinally ? "finally" : true);
     setDeleteId(id);
   };
+
   return (
     <>
       {markPhoneModal && (
@@ -118,6 +121,12 @@ export const List = ({
           onChange={onChangeComment}
         />
       )}
+      {fastSelection && (
+        <FastSelection
+          onClose={() => setFastSelection(null)}
+          id={fastSelection}
+        />
+      )}
       {deleteModal && (
         <Confirm
           title={
@@ -148,7 +157,7 @@ export const List = ({
           <Empty loading={loading || actionLoading || deleting} />
         ) : (
           <>
-            {data.map((d, i) => (
+            {data.map((d) => (
               <ObjectCard
                 key={d?.id}
                 selected={!!selected.find((j) => j === d?.id)}
@@ -214,6 +223,11 @@ export const List = ({
                 onOpenDeleteReason={
                   d?.reasone_remove?.length > 0
                     ? () => setDeleteInfo(d?.reasone_remove)
+                    : null
+                }
+                onFastSelection={
+                  user?.show_fast_folder && d?.type_object !== "street_base"
+                    ? () => setFastSelection(d?.id)
                     : null
                 }
               />

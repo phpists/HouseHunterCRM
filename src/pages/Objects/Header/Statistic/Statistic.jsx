@@ -12,8 +12,9 @@ import {
 import { Loader } from "../../../../components/Loader";
 import { Price } from "../../../../components/Price/Price";
 import { PriceCard } from "./PriceCard";
+import cogoToast from "cogo-toast";
 
-export const Statistic = ({ filters }) => {
+export const Statistic = ({ filters, allCount }) => {
   const [open, setOpen] = useState(false);
   const [getStatistic, { data }] = useLazyGetObjectsStatusticQuery();
   const [loading, setLoading] = useState(false);
@@ -78,8 +79,25 @@ export const Statistic = ({ filters }) => {
     );
   };
 
+  const handleCheckIsAllow = () => {
+    if (!filters?.id_rubric) {
+      cogoToast.error("Оберіть категорію", {
+        hideAfter: 3,
+        position: "top-right",
+      });
+      return false;
+    } else if (allCount === 0) {
+      cogoToast.error("Не знайдено об'єктів для обрахування статистики", {
+        hideAfter: 3,
+        position: "top-right",
+      });
+    } else {
+      return true;
+    }
+  };
+
   const handleOpen = () => {
-    if (filters) {
+    if (filters && handleCheckIsAllow()) {
       handleGetStatistic();
       setOpen(true);
     }
@@ -89,22 +107,27 @@ export const Statistic = ({ filters }) => {
     <StyledStatistic>
       {open && (
         <Modal onClose={() => setOpen(false)} title="Статистика ціни">
-          {loading && <Loader white />}
-          <PriceCard
-            title="Середня ціна"
-            cardType="avg"
-            data={data?.date ?? {}}
-          />
-          <PriceCard
-            title="Мінімальна ціна"
-            cardType="min"
-            data={data?.date ?? {}}
-          />
-          <PriceCard
-            title="Максимальна ціна"
-            cardType="max"
-            data={data?.date ?? {}}
-          />
+          {loading ? (
+            <Loader white className="loader" />
+          ) : (
+            <>
+              <PriceCard
+                title="Середня ціна"
+                cardType="avg"
+                data={data?.date ?? {}}
+              />
+              <PriceCard
+                title="Мінімальна ціна"
+                cardType="min"
+                data={data?.date ?? {}}
+              />
+              <PriceCard
+                title="Максимальна ціна"
+                cardType="max"
+                data={data?.date ?? {}}
+              />
+            </>
+          )}
         </Modal>
       )}
       <IconButton Icon={Icon} className="icon-btn" onClick={handleOpen} />
@@ -113,6 +136,19 @@ export const Statistic = ({ filters }) => {
 };
 
 const StyledStatistic = styled.div`
+  .modal {
+    min-height: 340px;
+    position: relative;
+  }
+  .loader {
+    svg {
+      height: 60px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
   svg {
     opacity: 0.5;
   }

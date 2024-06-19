@@ -13,7 +13,10 @@ import {
 } from "../../../../utilits";
 import { useEffect } from "react";
 import { ProfileField } from "../../../../components/ProfileField";
-import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.api";
+import {
+  useGetCommentsToFieldsQuery,
+  useGetStreetsListQuery,
+} from "../../../../store/objects/objects.api";
 import { Price } from "../../../Request/Main/Price/Price";
 import { IconButton } from "../../../../components/IconButton";
 import { Base } from "../../../../components/Base/Base";
@@ -78,6 +81,7 @@ export const Main = ({
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
+  const { data: streets } = useGetStreetsListQuery();
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -97,6 +101,19 @@ export const Main = ({
       handleFormatLocations();
     }
   }, [locationsList]);
+
+  const handleChangeStreetsField = (val) => {
+    const currentValue = Array.isArray(filters?.list_street)
+      ? filters?.list_street
+      : [];
+
+    const isExist = currentValue.includes(val);
+    const updatedValue = isExist
+      ? currentValue?.filter((v) => v !== val)
+      : [...currentValue, val];
+
+    onChangeFilter("list_street", updatedValue);
+  };
 
   return (
     <StyledMain className="section filterFieldsWrapper">
@@ -134,12 +151,26 @@ export const Main = ({
       />
       <Divider />
       <div className="flex items-start">
-        <TagsFilter
+        <SelectTags
           label="Пошук по вулиці"
-          search
-          tags={Array.isArray(filters?.list_street) ? filters?.list_street : []}
-          onChange={(val) => onChangeFilter("list_street", val)}
+          tags={
+            Array.isArray(filters?.list_street)
+              ? filters?.list_street?.map((v) => ({ title: v, value: v }))
+              : []
+          }
+          onChange={handleChangeStreetsField}
+          options={
+            streets
+              ? Object.entries(streets)
+                  ?.filter((s) => s?.[0] !== "error")
+                  ?.map((s) => ({
+                    title: s?.[1]?.name,
+                    value: s?.[1]?.name,
+                  }))
+              : []
+          }
           className="w-full streetsWrapper"
+          showTags
         />
         <div className="streetsWrapper-btns">
           <MapButton onOpenMap={onOpenMap} />
@@ -364,6 +395,7 @@ export const Main = ({
         objMls
         countObjectOwner
         allObjectsWorker
+        publicAccess
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
       />

@@ -486,6 +486,17 @@ export const objects = createApi({
         }),
       }),
     }),
+    getStreetsList: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getListStreet",
+          mod: "system_info",
+        }),
+      }),
+    }),
   }),
 });
 
@@ -525,4 +536,5 @@ export const {
   useLazyRestoreObjectsQuery,
   useGetSortObjectViewQuery,
   useLazyGetObjectsStatusticQuery,
+  useGetStreetsListQuery
 } = objects;

@@ -51,6 +51,7 @@ export const Price = ({
       <TypeSelect
         value={data?.price_for}
         onChange={(val) => onChangeField("price_for", val)}
+        error={errors?.find((e) => e === "price_for")}
         options={
           data?.id_rubric === "65" || data?.id_rubric === "66"
             ? [

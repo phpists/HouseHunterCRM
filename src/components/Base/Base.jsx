@@ -47,6 +47,7 @@ export const Base = ({
   countObjectOwner,
   requestPage,
   allObjectsWorker,
+  publicAccess,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -272,6 +273,24 @@ export const Base = ({
             }
             error={!!errors.find((e) => e === "show_only")}
           />
+
+          {publicAccess ? (
+            <CheckOption
+              label="Спільний доступ"
+              className="check-opt"
+              value={
+                data?.company_object?.show_only === "public_access" ? "1" : "0"
+              }
+              onChange={() =>
+                onChange("company_object", {
+                  ...data?.company_object,
+                  show_only: "public_access",
+                  id_worker_Search: undefined,
+                })
+              }
+              error={!!errors.find((e) => e === "show_only")}
+            />
+          ) : null}
           <Divider />
           <CheckOption
             label="Aктуальні"

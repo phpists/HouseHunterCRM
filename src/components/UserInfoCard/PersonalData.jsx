@@ -4,6 +4,7 @@ import { Divider } from "./Divider";
 import { ProfileField } from "../ProfileField";
 import { useGetPhonesCodesQuery } from "../../store/auth/auth.api";
 import { Phones } from "./Phones/Phones";
+import { CheckOption } from "../CheckOption";
 
 export const PersonalData = ({
   data,
@@ -88,6 +89,17 @@ export const PersonalData = ({
         label="Пароль"
         full
         hide
+      />
+      <Divider />
+      <CheckOption
+        label="Cпільний доступ"
+        value={data?.public_access === "1" ? "1" : "0"}
+        onChange={() =>
+          onChangeField(
+            "public_access",
+            data?.public_access === "1" ? "0" : "1"
+          )
+        }
       />
     </StyledPersonalData>
   );

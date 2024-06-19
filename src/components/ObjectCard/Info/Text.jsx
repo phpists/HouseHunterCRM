@@ -1,7 +1,15 @@
 import styled from "styled-components";
 import { ReactComponent as EditIcon } from "../../../assets/images/edit.svg";
+import { useEffect, useRef } from "react";
 
 export const Text = ({ data, editable, onEdit }) => {
+  const textRef = useRef();
+
+  useEffect(() => {
+    textRef.current.innerHTML =
+      data?.description?.length > 0 ? data?.description : "-";
+  }, [data]);
+
   return (
     <StyledText className="hide-scroll clickable">
       <div className="title clickable">
@@ -15,9 +23,7 @@ export const Text = ({ data, editable, onEdit }) => {
           </div>
         ) : null}
       </div>
-      <div className="descr clickable">
-        {data?.description?.length > 0 ? data?.description : "-"}
-      </div>
+      <div className="descr clickable" ref={textRef}></div>
     </StyledText>
   );
 };
@@ -74,6 +80,12 @@ const StyledText = styled.div`
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     opacity: 0.4;
+    white-space: break-spaces;
+    br {
+      content: "";
+      display: block;
+      margin: -10px 0;
+    }
   }
   @media (max-width: 1399.9px) {
     width: 100%;

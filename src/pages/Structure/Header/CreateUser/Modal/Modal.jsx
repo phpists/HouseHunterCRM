@@ -32,6 +32,7 @@ const INITIAL_DATA = {
   phones: [{ code: "1", phone: "", telegram: "0", viber: "0" }],
   photo: { file: null, url: null },
   dt_birthday: null,
+  public_access: "0",
 };
 
 export const Modal = ({ onClose, onCreatedUser }) => {

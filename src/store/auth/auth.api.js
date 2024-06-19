@@ -215,6 +215,18 @@ export const auth = createApi({
         }),
       }),
     }),
+    showFastFolder: build.query({
+      query: (id) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "requests",
+          action: "show_fast_folder",
+          id,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -232,4 +244,5 @@ export const {
   useLazyUpdateBannerIdQuery,
   useGetBannersQuery,
   useLazyCheckUserQuery,
+  useLazyShowFastFolderQuery,
 } = auth;

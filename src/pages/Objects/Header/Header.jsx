@@ -188,7 +188,7 @@ export const Header = ({
             />
           </div>
           <div className="flex items-center bts">
-            {filters?.id_rubric ? <Statistic filters={filters} /> : null}
+            <Statistic filters={filters} allCount={allCount} />
             <SortButton
               value={filters?.sorting}
               onChange={(val) => onChangeFilter("sorting", val)}

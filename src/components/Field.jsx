@@ -59,7 +59,7 @@ export const Field = ({
       edit={edit}
       hide={hide}
       full={full}
-      error={error?.toString()}
+      error={error}
       onClick={() => {
         if (onClick) {
           onClick();
@@ -176,7 +176,7 @@ const StyleField = styled.div`
   transition: all 0.3s;
   flex-shrink: 0;
   position: relative;
-  ${({ error }) => error === "true" && "  border: 1px solid red !important;"}
+  ${({ error }) => error && " border: 1px solid red !important;"}
   .field-content {
     width: 80%;
   }

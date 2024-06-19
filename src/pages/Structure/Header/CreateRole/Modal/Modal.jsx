@@ -10,6 +10,15 @@ import {
   useGetCompanyStructureLevelQuery,
 } from "../../../../../store/structure/structure.api";
 import { Confirm } from "../../../../../components/Confirm/Confirm";
+import { CheckOption } from "../../../../../components/CheckOption";
+import { useAppSelect } from "../../../../../hooks/redux";
+import {
+  useLazyEditProfileQuery,
+  useLazyGetUserQuery,
+} from "../../../../../store/auth/auth.api";
+import { useActions } from "../../../../../hooks/actions";
+import { handleRemovePhoneMask, handleResponse } from "../../../../../utilits";
+import cogoToast from "cogo-toast";
 
 export const Modal = ({ onClose, onRefetchStructureData }) => {
   const controls = useAnimationControls();
@@ -17,6 +26,10 @@ export const Modal = ({ onClose, onRefetchStructureData }) => {
   const { data: levels } = useGetAllPerimissionsLevelsQuery();
   const [confirm, setConfirm] = useState();
   const [confirmFunc, setConfirmFunc] = useState(null);
+  const { user } = useAppSelect((state) => state.auth);
+  const [editProfile] = useLazyEditProfileQuery();
+  const [getProfile] = useLazyGetUserQuery();
+  const { loginUser } = useActions();
 
   const handleGetCurrentLevel = (level) =>
     levels
@@ -39,6 +52,35 @@ export const Modal = ({ onClose, onRefetchStructureData }) => {
     setConfirmFunc(() => func);
   };
 
+  const handleGetUserData = (noLoading) => {
+    getProfile().then((resp) => {
+      loginUser(resp?.data?.data);
+    });
+  };
+
+  const handleToggleFastSelections = () => {
+    editProfile({
+      ...user,
+      phones_json: JSON.stringify(
+        user?.phones.map((phone) => ({
+          ...phone,
+          viber: phone.viber === "1",
+          telegram: phone.telegram === "1",
+          id_phone_code: phone.id_phone_code,
+          phone: handleRemovePhoneMask(phone.phone),
+        }))
+      ),
+      show_fast_folder: user?.show_fast_folder ? "0" : "1",
+    }).then((resp) => {
+      handleResponse(resp, () => {
+        handleGetUserData();
+        cogoToast.success("Зміни успішно збережено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      });
+    });
+  };
   return (
     <>
       {confirm && (
@@ -72,6 +114,11 @@ export const Modal = ({ onClose, onRefetchStructureData }) => {
               onClose={handleClose}
             />
           )}
+          <CheckOption
+            label="Дозволити швидкі підбірки"
+            value={user?.show_fast_folder ? "1" : "0"}
+            onChange={handleToggleFastSelections}
+          />
           {/* <AddButton onRefetchData={refetch} /> */}
         </div>
       </StyledModal>

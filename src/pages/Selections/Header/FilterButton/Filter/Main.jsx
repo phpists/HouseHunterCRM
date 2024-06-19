@@ -195,7 +195,7 @@ export const Main = ({
       />
       <Divider />
       <ToggleOption
-        label="Не обрані клієнтом "
+        label="Нові"
         value={filters?.show_not_choise_objects === "1"}
         onChange={() =>
           onChangeFilter(

@@ -704,6 +704,9 @@ const StyledRequest = styled.div`
       padding: 10px;
       height: calc(100svh - 170px);
     }
+    .request-base-wrapper {
+        height: max-content !important;
+    }
   }
 `;
 

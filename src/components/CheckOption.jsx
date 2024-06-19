@@ -37,18 +37,20 @@ const StyledCheckOption = styled.div`
     text-transform: capitalize;
   }
   button {
-    width: 19px;
-    height: 19px;
+    width: 19px !important;
+    height: 19px !important;
     flex-shrink: 0;
-    border-radius: 5px;
+    border-radius: 5px !important;
     border: 1.4px solid #fff;
     transition: all 0.3s;
+    flex-shrink: 0;
+    padding: 0 !important;
     img {
       opacity: 0;
       transition: all 0.3s;
     }
     &.active {
-      background: var(--active-bg);
+      background: var(--active-bg) !important;
       img {
         opacity: 1;
       }

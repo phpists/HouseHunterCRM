@@ -6,7 +6,7 @@ export const Dropdown = ({ open, data, onChangeField }) => {
   return (
     <StyledDropdown open={open}>
       <div className="flex items-center justify-between toggle-wrapper">
-        <span>Призупинити показ</span>
+        <span>Зупинити надсилання</span>
         <Toggle
           value={Number(data?.general_group?.stop_showing) > 0}
           onChange={() =>

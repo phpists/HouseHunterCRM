@@ -7,7 +7,7 @@ import {
 } from "../../../../constants";
 
 export const PriceCard = ({ title, cardType, data }) => {
-  const [type, setType] = useState("1");
+  const [type, setType] = useState("4");
   const [currency, setCurrency] = useState("1");
   const TYPES = [
     "",
@@ -18,7 +18,6 @@ export const PriceCard = ({ title, cardType, data }) => {
   ];
   const CURRENCIES = ["uah", "usd", "eur"];
 
-  console.log(`${cardType}_per_${TYPES[type]}`);
   return (
     <StyledPriceCard>
       <div>{title}</div>

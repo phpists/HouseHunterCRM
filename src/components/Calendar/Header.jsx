@@ -3,24 +3,27 @@ import { ReactComponent as ArrowBack } from "../../assets/images/calendar-back.s
 import { ReactComponent as ArrowNext } from "../../assets/images/calendar-next.svg";
 import { ReactComponent as Close } from "../../assets/images/close.svg";
 import ReactInputMask from "react-input-mask";
+import { useEffect, useState } from "react";
+
+const MONTHS = [
+  "Січень",
+  "Лютий",
+  "Березень",
+  "Квітень",
+  "Травень",
+  "Червень",
+  "Липень",
+  "Серпень",
+  "Вересень",
+  "Жовтень",
+  "Листопад",
+  "Грудень",
+];
 
 export const Header = ({ value, onChangeMonth, onChangeYear, onClose }) => {
-  const handleGetTitle = (date) => {
-    const MONTHS = [
-      "Січень",
-      "Лютий",
-      "Березень",
-      "Квітень",
-      "Травень",
-      "Червень",
-      "Липень",
-      "Серпень",
-      "Вересень",
-      "Жовтень",
-      "Листопад",
-      "Грудень",
-    ];
+  const [year, setYear] = useState(value?.getFullYear());
 
+  const handleGetTitle = (date) => {
     const month = date.getMonth();
     const year = date.getFullYear();
     return `${MONTHS[month]}`;
@@ -30,7 +33,12 @@ export const Header = ({ value, onChangeMonth, onChangeYear, onClose }) => {
     if (!isNaN(val)) {
       onChangeYear(val);
     }
+    setYear(val);
   };
+
+  useEffect(() => {
+    setYear(value?.getFullYear());
+  }, [value]);
 
   return (
     <StyledHeader className="flex items-center justify-between calendar-header">
@@ -39,7 +47,7 @@ export const Header = ({ value, onChangeMonth, onChangeYear, onClose }) => {
         <ReactInputMask
           className="ml-1"
           mask={"9999"}
-          defaultValue={value?.getFullYear()}
+          value={year}
           onChange={(e) => handleChangeYear(e.target.value)}
         />
       </span>

@@ -3,6 +3,7 @@ import { Field } from "../../../../../components/Field";
 import { Divider } from "./Divider";
 import { useGetPhonesCodesQuery } from "../../../../../store/auth/auth.api";
 import { Phones } from "../../../../../components/UserInfoCard/Phones/Phones";
+import { CheckOption } from "../../../../../components/CheckOption";
 
 export const PersonalData = ({ data, onChangeField, errors }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
@@ -61,6 +62,17 @@ export const PersonalData = ({ data, onChangeField, errors }) => {
         value={data?.password}
         onChange={(val) => onChangeField("password", val)}
         error={!!errors?.find((e) => e === "password")}
+      />
+      <Divider />
+      <CheckOption
+        label="Cпільний доступ"
+        value={data?.public_access === "1" ? "1" : "0"}
+        onChange={() =>
+          onChangeField(
+            "public_access",
+            data?.public_access === "1" ? "0" : "1"
+          )
+        }
       />
     </StyledPersonalData>
   );

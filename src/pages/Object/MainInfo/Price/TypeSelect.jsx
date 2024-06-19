@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 
-export const TypeSelect = ({ value, onChange, options }) => {
+export const TypeSelect = ({ value, onChange, options, error }) => {
   return (
-    <StyledTypeSelect>
+    <StyledTypeSelect error={error}>
       {options.map((opt, i) => (
         <div
           key={i}
@@ -26,6 +26,7 @@ const StyledTypeSelect = styled.div`
   display: flex;
   gap: 3px;
   width: max-content;
+  ${({ error }) => error && "border: 1px solid red;"}
   div {
     border-radius: 5px;
     padding: 1px 4px;

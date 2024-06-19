@@ -175,7 +175,7 @@ export const Header = ({
           <>
             <SaveButton onClick={onSave} loading={loading} />
             <Button
-              title="Призупинити показ"
+              title="Зупинити надсилання"
               active={Number(data?.general_group?.stop_showing) > 0}
               onClick={() =>
                 onChangeField("general_group", {
