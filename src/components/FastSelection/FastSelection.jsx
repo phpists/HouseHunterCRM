@@ -3,9 +3,11 @@ import { Modal } from "../Modal/Modal";
 import { useState } from "react";
 import { ProfileField } from "../ProfileField";
 import { CopyLink } from "../CopyLink";
+import { useAppSelect } from "../../hooks/redux";
 
 export const FastSelection = ({ onClose, id }) => {
-  const LINK = `https://fast-selection.house-hunter.info/?id=${id}`;
+  const { user } = useAppSelect((state) => state.auth);
+  const LINK = `https://fast-selection.house-hunter.info/?us=${user?.id}&id=${id}`;
 
   return (
     <StyledFastSelection>
