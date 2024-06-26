@@ -678,7 +678,7 @@ const StyledRequest = styled.div`
   }
   @media (max-width: 1300px) {
     .request-base-wrapper {
-      height: calc(100svh - 482px) !important;
+      height: max-content !important;
       margin-bottom: 15px;
     }
   }
@@ -705,7 +705,7 @@ const StyledRequest = styled.div`
       height: calc(100svh - 170px);
     }
     .request-base-wrapper {
-        height: max-content !important;
+      height: max-content !important;
     }
   }
 `;

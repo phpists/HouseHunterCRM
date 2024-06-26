@@ -24,8 +24,6 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
     "price_min",
     "price_max",
     "price_for",
-    "address_storey_min",
-    "storey_count_min",
   ];
 
   return (
@@ -33,7 +31,7 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
       <TitleDivider title={title} />
       {fields
         ?.filter((f) => !filteredFields?.find((ff) => ff === f?.field))
-        ?.map(({ field, field_option }, i) => {
+        ?.map(({ field, field_option, type }, i) => {
           if (Object.entries(field_option)?.length > 0) {
             return (
               <>
@@ -54,11 +52,8 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
               </>
             );
           } else if (
-            (field?.includes("_min") &&
-              fields?.find(
-                (f) => f.field === field?.replace("_min", "_max")
-              )) ||
-            ["address_storey", "storey_count"]?.includes(field)
+            field?.includes("_min") &&
+            fields?.find((f) => f.field === field?.replace("_min", "_max"))
           ) {
             const labels = {
               room_min: "Кількість кімнат/Приміщень",
@@ -101,17 +96,21 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
                 />
               </>
             );
-          } else if (field?.type === "checkbox") {
+          } else if (["not_first_storey", "not_last_storey"]?.includes(field)) {
+            const labels = {
+              not_first_storey: "Не перший поверх",
+              not_last_storey: "Не останній поверх",
+            };
             return (
-              <CheckOption
-                label={
-                  commentsToFields?.object[field]
-                    ? commentsToFields?.object[field]
-                    : commentsToFields?.request[field] ?? ""
-                }
-                value={data[field]}
-                onChange={(val) => onChangeField(field, val)}
-              />
+              <>
+                {" "}
+                {i > 0 && <Divider />}
+                <CheckOption
+                  label={labels[field] ?? ""}
+                  value={data[field]}
+                  onChange={(val) => onChangeField(field, val)}
+                />
+              </>
             );
           } else if (
             field?.includes("_max") &&
@@ -119,6 +118,7 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
           ) {
             return <div></div>;
           } else {
+            console.log("else", field);
             return null;
           }
         })}

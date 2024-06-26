@@ -44,6 +44,7 @@ export const Header = ({
   selectedClients,
   isDeleted,
   onRefetch,
+  onFastCopy,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -252,6 +253,7 @@ export const Header = ({
                 }
                 confirmText={confirmText}
                 onChangeConfirmText={(val) => setConfimText(val)}
+                onFastCopy={onFastCopy}
               />
             </div>
           </div>
@@ -304,6 +306,7 @@ export const Header = ({
             }
             confirmText={confirmText}
             onChangeConfirmText={(val) => setConfimText(val)}
+            onFastCopy={onFastCopy}
           />
         </div>
         {filterOpen && (

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ObjectCard } from "../../components/ObjectCard/ObjectCard";
 import { Empty } from "../../components/Empty/Empty";
 import { useGetAccessQuery } from "../../store/auth/auth.api";
-import { handleCheckAccess, handleResponse } from "../../utilits";
+import { handleCheckAccess, handleCopy, handleResponse } from "../../utilits";
 import { useState } from "react";
 import { AddToSelections } from "./AddToSelections";
 import { Loader } from "../../components/Loader";
@@ -79,6 +79,14 @@ export const List = ({
   const handleOpenDelete = (id, isFinally) => {
     setDeleteModal(isFinally ? "finally" : true);
     setDeleteId(id);
+  };
+
+  const handleCopyFastFolderLink = (id) => {
+    const LINK = `https://fast-selection.house-hunter.info/?us=${
+      user?.id
+    }&id=${btoa(`["${id}"]`)}`;
+
+    handleCopy(LINK);
   };
 
   return (
@@ -226,8 +234,8 @@ export const List = ({
                     : null
                 }
                 onFastSelection={
-                  user?.show_fast_folder && d?.type_object !== "street_base"
-                    ? () => setFastSelection(d?.id)
+                  user?.show_fast_folder
+                    ? () => handleCopyFastFolderLink(d?.id)
                     : null
                 }
               />

@@ -12,6 +12,7 @@ import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
 import {
   checkIsJSON,
+  handleCopy,
   handleFromInputDate,
   handleGetRange,
   handleResponse,
@@ -22,6 +23,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { useAppSelect } from "../../hooks/redux";
 
 const Objects = () => {
+  const { user } = useAppSelect((state) => state.auth);
   const { id } = useParams();
   const location = useLocation();
   const [getAllObjects] = useLazyGetAllObjectsQuery();
@@ -685,6 +687,15 @@ const Objects = () => {
     }
   };
 
+  const handleCopyFastFolderLink = () => {
+    const LINK = `https://fast-selection.house-hunter.info/?us=${
+      user?.id
+    }&id=${btoa(JSON.stringify(selected))}`;
+
+    handleCopy(LINK);
+    setSelected([]);
+  };
+
   return (
     <StyledObjects>
       <Header
@@ -714,6 +725,7 @@ const Objects = () => {
         ]}
         isDeleted={isDeleted}
         onRefetch={() => handleGetObjects(true, true)}
+        onFastCopy={user?.show_fast_folder ? handleCopyFastFolderLink : null}
       />
       <List
         selected={selected}

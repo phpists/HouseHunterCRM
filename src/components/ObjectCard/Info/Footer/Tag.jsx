@@ -39,5 +39,6 @@ const StyledTag = styled.div`
   line-height: 1.3;
   letter-spacing: 0.22px;
   text-transform: capitalize;
-  height: 18px;
+  min-height: 18px;
+  word-break: break-all;
 `;

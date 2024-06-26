@@ -12,6 +12,7 @@ export const Dropdown = ({
   onRestore,
   onDeleteFinally,
   onSendClients,
+  onFastCopy,
 }) => {
   const OPTIONS = [
     { title: "Додати в улюблене", value: "favorite" },
@@ -30,6 +31,7 @@ export const Dropdown = ({
     ...(onAddToSelection
       ? [{ title: "Додати до підбірки", value: "selection" }]
       : []),
+    ...(onFastCopy ? [{ title: "Швидка підбірка", value: "onFastCopy" }] : []),
   ];
 
   return (

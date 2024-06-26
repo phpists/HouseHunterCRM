@@ -29,6 +29,7 @@ export const SelectItems = ({
   allowSelectAll,
   confirmText,
   onChangeConfirmText,
+  onFastCopy,
 }) => {
   const [type, setType] = useState(null);
   const [open, setOpen] = useState(false);
@@ -65,6 +66,8 @@ export const SelectItems = ({
       setDeleteModal("finally");
     } else if (opt === "sendClients") {
       onSendClients();
+    } else if (opt === "onFastCopy") {
+      onFastCopy();
     }
   };
 
@@ -149,6 +152,7 @@ export const SelectItems = ({
                   onRestore={onRestore}
                   onDeleteFinally={onDeleteFinally}
                   onSendClients={onSendClients}
+                  onFastCopy={onFastCopy}
                 />
               )}
             </>

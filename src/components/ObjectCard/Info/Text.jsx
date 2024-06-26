@@ -6,14 +6,26 @@ export const Text = ({ data, editable, onEdit }) => {
   const textRef = useRef();
 
   useEffect(() => {
-    textRef.current.innerHTML =
-      data?.description?.length > 0 ? data?.description : "-";
+    const textDividedByBr =
+      data?.description?.length > 0
+        ? data?.description
+            ?.replaceAll("<br />", "<DIVIDER/>")
+            ?.replaceAll("&amp;#039;", "'")
+            ?.replaceAll(/\s\s/g, "")
+            ?.split("<DIVIDER/>")
+            ?.filter((str) => str?.length > 0)
+            ?.filter((str) => str !== "\t")
+            ?.join("<br />")
+        : "-";
+    textRef.current.innerHTML = textDividedByBr;
   }, [data]);
 
   return (
     <StyledText className="hide-scroll clickable">
       <div className="title clickable">
-        {data?.title?.length > 0 ? data?.title : "-"}
+        {data?.title?.length > 0
+          ? data?.title?.replaceAll("&amp;#039;", "'")
+          : "-"}
         {editable ? (
           <div
             className="edit-icon flex items-center justify-center"
@@ -72,7 +84,6 @@ const StyledText = styled.div`
   .descr {
     overflow: hidden;
     color: var(--main-color);
-    text-overflow: ellipsis;
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -80,12 +91,7 @@ const StyledText = styled.div`
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     opacity: 0.4;
-    white-space: break-spaces;
-    br {
-      content: "";
-      display: block;
-      margin: -10px 0;
-    }
+    word-break: break-word;
   }
   @media (max-width: 1399.9px) {
     width: 100%;

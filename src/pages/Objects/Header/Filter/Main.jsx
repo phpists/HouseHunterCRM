@@ -25,6 +25,8 @@ import { useGetPhonesCodesQuery } from "../../../../store/auth/auth.api";
 import { Ranger } from "../../../../components/Ranger/Ranger";
 import { MapButton } from "./MapButton";
 import { ReactComponent as RemoveIcon } from "../../../../assets/images/remove.svg";
+import { CheckOption } from "../../../../components/CheckOption";
+import { ToggleOption } from "../../../../components/ToggleOption";
 
 const notAllowedFields = [
   "comment",
@@ -228,6 +230,7 @@ export const Main = ({
         }
         onChange={(val) => onChangeFilter("search_not_like", val)}
       />
+
       <Divider />
       <ProfileField
         placeholder="Введіть значення"
@@ -329,6 +332,32 @@ export const Main = ({
                         }
                         onBlur={() => onChangeInputFocus(false)}
                       />
+                      {fieldName === "storey_count" ? (
+                        <>
+                          <ToggleOption
+                            label="Не перший поверх"
+                            className="check-opt filter-range-wrapper"
+                            value={filters?.not_first_storey}
+                            onChange={() =>
+                              onChangeFilter(
+                                "not_first_storey",
+                                filters?.not_first_storey ? undefined : "1"
+                              )
+                            }
+                          />
+                          <ToggleOption
+                            label="Не останній поверх"
+                            className="check-opt filter-range-wrapper"
+                            value={filters?.not_last_storey}
+                            onChange={() =>
+                              onChangeFilter(
+                                "not_last_storey",
+                                filters?.not_last_storey ? undefined : "1"
+                              )
+                            }
+                          />
+                        </>
+                      ) : null}
                     </>
                   );
                 } else if (typeof field[1]?.field_option === "object") {

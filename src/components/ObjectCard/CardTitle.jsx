@@ -3,7 +3,7 @@ import editIcon from "../../assets/images/edit.svg";
 
 export const CardTitle = ({ title = "-", editable, onEdit }) => (
   <StyledCardTitle className="clickable">
-    {title}{" "}
+    {title?.replaceAll("&amp;#039;", "'")}{" "}
     {editable ? (
       <div
         className="edit-icon flex items-center justify-center"
