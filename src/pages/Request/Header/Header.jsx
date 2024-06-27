@@ -4,6 +4,7 @@ import { ReactComponent as StarIcon } from "../../../assets/images/card-star.svg
 import { ReactComponent as RemoveIcon } from "../../../assets/images/remove.svg";
 import { ReactComponent as RestoreIcon } from "../../../assets/images/refresh-icon.svg";
 import { ReactComponent as DeleteInfoIcon } from "../../../assets/images/delete-info.svg";
+import { ReactComponent as OpenIcon } from "../../../assets/images/open-folder.svg";
 import { IconButton } from "../../../components/IconButton";
 import { Title } from "./Title";
 import { Button } from "./Button";
@@ -15,7 +16,7 @@ import {
 } from "../../../store/requests/requests.api";
 import { useEffect, useState } from "react";
 import { Confirm } from "../../../components/Confirm/Confirm";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
 import cogoToast from "cogo-toast";
 import { BackButton } from "../../../components/BackButton";
@@ -155,6 +156,18 @@ export const Header = ({
                     active={favorite}
                   />
 
+                  {data?.fields?.[0]?.id_group ? (
+                    <NavLink
+                      to={`/selections/${data?.fields?.[0]?.id_group}`}
+                      title="Відкрити підбірку"
+                    >
+                      <IconButton
+                        Icon={OpenIcon}
+                        className="ml-2.5 icon-btn restore-btn"
+                      />
+                    </NavLink>
+                  ) : null}
+
                   {handleCheckAccess(accessData, "requests", "delete") && (
                     <IconButton
                       Icon={RemoveIcon}
@@ -244,6 +257,17 @@ export const Header = ({
                     onClick={() => setDeleteModal(true)}
                   />
                 )}
+                {data?.fields?.[0]?.id_group ? (
+                  <NavLink
+                    to={`/selections/${data?.fields?.[0]?.id_group}`}
+                    title="Відкрити підбірку"
+                  >
+                    <IconButton
+                      Icon={OpenIcon}
+                      className="ml-2 icon-btn restore-btn"
+                    />
+                  </NavLink>
+                ) : null}
                 <Id id={id} />
               </>
             )}
@@ -318,7 +342,7 @@ const StyledHeader = styled.div`
       display: block;
     }
     .remove-btn {
-      margin-left: 12px;
+      margin-left: 10px;
     }
   }
 `;

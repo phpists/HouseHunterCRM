@@ -34,7 +34,7 @@ const StyledSaveButton = styled.button`
     width: 18px;
   }
   @media (max-width: 800px) {
-    margin-right: 15px;
+    margin-right: 8px;
     width: 100%;
   }
 `;
