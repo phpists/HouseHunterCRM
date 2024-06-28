@@ -38,13 +38,13 @@ const StyledClosed = styled.div`
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: var(--font-weight-light);
     line-height: 1.7; /* 16.52px */
     letter-spacing: 0.28px;
     width: max-content;
     .priceFore {
       font-size: 11px;
-      font-weight: 200;
+      font-weight: var(--font-weight-200);
       line-height: 1.8;
       span {
         margin: 0 4px;

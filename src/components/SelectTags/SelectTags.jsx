@@ -235,7 +235,7 @@ const StyledSelectTags = styled.button`
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 1.4;
     letter-spacing: 0.28px;
     text-transform: capitalize;

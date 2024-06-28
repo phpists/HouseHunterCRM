@@ -69,7 +69,7 @@ const StyledSelectionsSelect = styled.div`
   .value {
     font-family: Overpass;
     font-size: 14px;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 17px;
     letter-spacing: 0em;
     text-align: left;

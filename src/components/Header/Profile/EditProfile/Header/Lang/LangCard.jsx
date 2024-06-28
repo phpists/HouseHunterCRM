@@ -22,7 +22,7 @@ const StyledLangCard = styled.div`
     font-family: Lato;
     font-size: 15px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.3px;
     opacity: 0.6;

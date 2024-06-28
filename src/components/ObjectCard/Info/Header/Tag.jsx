@@ -11,8 +11,8 @@ export const Tag = ({ title, color }) => {
       background: "rgba(249, 58, 58, 0.20)",
     },
     green: {
-      color: "rgba(129, 251, 33, 0.90)",
-      background: "rgba(129, 251, 33, 0.15)",
+      color: "var(--green-tag)",
+      background: "var(--green-tag-bg)",
     },
   };
 

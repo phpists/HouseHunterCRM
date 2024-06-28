@@ -699,7 +699,7 @@ const StyledRequest = styled.div`
   @media (max-width: 800px) {
     padding: 20px 10px;
     width: 100svw;
-    margin-left: -13px;
+    margin-left: -23px;
     .request-content {
       padding: 10px;
       height: calc(100svh - 170px);
@@ -707,6 +707,9 @@ const StyledRequest = styled.div`
     .request-base-wrapper {
       height: max-content !important;
     }
+  }
+  @media (max-width: 500px) {
+    margin-left: -13px;
   }
 `;
 

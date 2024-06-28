@@ -1,6 +1,8 @@
 import { styled } from "styled-components";
 import { useState } from "react";
 import { Toggle } from "../../../../components/Toggle";
+import { NavLink } from "react-router-dom";
+import { Button } from "../Button";
 
 export const Dropdown = ({ open, data, onChangeField }) => {
   return (
@@ -58,6 +60,17 @@ export const Dropdown = ({ open, data, onChangeField }) => {
           }
         />
       </div>
+      <div>
+        {data?.fields?.[0]?.id_group ? (
+          <NavLink
+            to={`/selections/${data?.fields?.[0]?.id_group}`}
+            title="Перейти в підбірку"
+            className="flex items-center justify-between toggle-wrapper"
+          >
+            <span>Перейти в підбірку</span>
+          </NavLink>
+        ) : null}
+      </div>
     </StyledDropdown>
   );
 };
@@ -80,7 +93,7 @@ const StyledDropdown = styled.div`
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 200;
+  font-weight: var(--font-weight-200);
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   .toggle-wrapper {
@@ -103,7 +116,7 @@ const StyledDropdown = styled.div`
     opacity: 1;
     visibility: visible;
   `}
-  @media (min-width: 800px) {
+  @media (min-width: 1350px) {
     display: none;
   }
 `;

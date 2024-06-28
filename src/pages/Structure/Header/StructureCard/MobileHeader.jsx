@@ -51,7 +51,7 @@ const StyledMobileHeader = styled.div`
   font-family: Overpass;
   font-size: 13px;
   font-style: normal;
-  font-weight: 200;
+  font-weight: var(--font-weight-200);
   line-height: 1;
   letter-spacing: 0.26px;
   .notStructureWorkers {

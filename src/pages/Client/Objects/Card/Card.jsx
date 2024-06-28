@@ -139,14 +139,14 @@ export const Card = ({
 };
 
 const StyledCard = styled.div`
-  padding: 6px 6px 6px 6px;
+  padding: 0;
   border-radius: 15px;
   background: var(--card-bg);
   margin-bottom: 10px;
   transition: all 0.3s;
   cursor: pointer;
   .arrow-more {
-    padding: 15px;
+    padding: 21px;
     position: relative;
     &::before {
       content: "";
@@ -180,6 +180,9 @@ const StyledCard = styled.div`
 
   @media (max-width: 700px) {
     padding: 6px;
+    .arrow-more {
+      padding: 15px;
+    }
   }
 
   ${({ selected }) => selected && "border: 1.4px solid #FFF;"}

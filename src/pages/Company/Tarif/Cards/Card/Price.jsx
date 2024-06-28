@@ -13,7 +13,7 @@ const StyledPrice = styled.div`
     font-family: Overpass;
     font-size: 17px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: var(--font-weight-light);
     line-height: 118%; /* 20.06px */
     letter-spacing: 0.34px;
     margin-bottom: 2px;

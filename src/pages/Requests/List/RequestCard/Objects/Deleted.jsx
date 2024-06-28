@@ -15,7 +15,7 @@ export const Deleted = ({ date }) => (
 const StyledDeleted = styled.div`
   font-family: Overpass;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: var(--font-weight-light);
   line-height: 17px;
   letter-spacing: 0em;
   color: #f94343;

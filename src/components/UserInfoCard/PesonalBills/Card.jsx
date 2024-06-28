@@ -22,7 +22,7 @@ const StyledCard = styled.div`
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 118%;
     letter-spacing: 0.3px;
     color: ${({ type }) => (type ? "var(--main-color)" : "#FF5151")};

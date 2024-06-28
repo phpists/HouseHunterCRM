@@ -72,7 +72,7 @@ const StyledSelectedMessage = styled(motion.div)`
   z-index: 101;
   color: rgba(255, 255, 255, 0.7);
   font-size: 15px;
-  font-weight: 400;
+  font-weight: var(--font-weight-light);
   line-height: 118%;
   letter-spacing: 0.3px;
   left: 0;

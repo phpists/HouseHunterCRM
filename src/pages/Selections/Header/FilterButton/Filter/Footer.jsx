@@ -14,7 +14,7 @@ const StyledFooter = styled.div`
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: var(--font-weight-light);
     line-height: 1.5;
     letter-spacing: 0.3px;
     padding: 7px 20px 6px 20px;

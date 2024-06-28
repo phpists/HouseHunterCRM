@@ -31,7 +31,7 @@ const StyledHeader = styled.div`
   .name {
     font-family: Overpass;
     font-size: 14px;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 16.52px;
     letter-spacing: 0.02em;
     text-align: left;
@@ -41,10 +41,10 @@ const StyledHeader = styled.div`
   .role {
     font-family: Overpass;
     font-size: 12px;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 14.16px;
     letter-spacing: 0.02em;
     text-align: left;
-    opacity: 0.4;
+    opacity: var(--light-opacity);
   }
 `;

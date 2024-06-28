@@ -139,7 +139,7 @@ const StyledTagsFilter = styled.div`
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     transition: all 0.3s;
@@ -149,7 +149,7 @@ const StyledTagsFilter = styled.div`
       font-family: Overpass;
       font-size: 15px;
       font-style: normal;
-      font-weight: 200;
+      font-weight: var(--font-weight-200);
       line-height: 118%; /* 17.7px */
       letter-spacing: 0.3px;
       opacity: 0.6;

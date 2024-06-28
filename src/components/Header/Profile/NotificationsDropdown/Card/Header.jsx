@@ -51,7 +51,7 @@ const StyledHeader = styled.div`
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 22px;
   }
   .subtitle {
@@ -61,7 +61,7 @@ const StyledHeader = styled.div`
     font-family: Overpass;
     font-size: 11px;
     font-style: normal;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: normal;
     margin-right: 8px;
   }

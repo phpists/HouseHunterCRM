@@ -31,7 +31,7 @@ const StyledComments = styled.button`
     font-family: Open Sans;
     font-size: 10px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: var(--font-weight-light);
     line-height: 1.1;
     letter-spacing: 0.2px;
     padding: 2px;

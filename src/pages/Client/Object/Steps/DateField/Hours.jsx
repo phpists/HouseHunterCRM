@@ -55,7 +55,7 @@ const StyledHours = styled.div`
     font-family: Public Sans;
     font-size: 15px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: var(--font-weight-light);
     line-height: 22px; /* 146.667% */
   }
   div {
@@ -66,7 +66,7 @@ const StyledHours = styled.div`
     font-family: Public Sans;
     font-size: 15px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: var(--font-weight-light);
     line-height: 22px; /* 146.667% */
   }
 `;

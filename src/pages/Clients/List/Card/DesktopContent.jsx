@@ -82,6 +82,7 @@ export const DesktopContent = ({
 
 const StyledDesktopContent = styled.div`
   min-width: max-content;
+  position: relative;
   &:hover {
     .arrow svg {
       transform: rotate(0deg);

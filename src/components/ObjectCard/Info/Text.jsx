@@ -76,7 +76,7 @@ const StyledText = styled.div`
     font-family: Overpass;
     font-size: 20px;
     font-style: normal;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 118%; /* 23.6px */
     letter-spacing: 0.4px;
     margin-bottom: 10px;
@@ -90,7 +90,7 @@ const StyledText = styled.div`
     font-weight: var(--font-weight-100);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
-    opacity: 0.4;
+    opacity: var(--opacity-ligh);
     word-break: break-word;
   }
   @media (max-width: 1399.9px) {

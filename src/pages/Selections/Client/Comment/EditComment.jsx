@@ -76,7 +76,7 @@ const StyledEditComment = styled.div`
   .label {
     font-family: Overpass, sans-serif;
     font-size: 14px;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 17px;
     letter-spacing: 0em;
     margin-bottom: 4px;
@@ -94,7 +94,7 @@ const StyledEditComment = styled.div`
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     overflow: auto;
@@ -103,7 +103,7 @@ const StyledEditComment = styled.div`
       font-family: Overpass;
       font-size: 14px;
       font-style: normal;
-      font-weight: 200;
+      font-weight: var(--font-weight-200);
       line-height: 118%; /* 17.7px */
       letter-spacing: 0.3px;
     }
@@ -116,7 +116,7 @@ const StyledEditComment = styled.div`
     background: #5d63ffb2;
     font-family: Overpass, sans-serif;
     font-size: 15px;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 18px;
     letter-spacing: 0.02em;
     text-align: center;

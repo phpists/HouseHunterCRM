@@ -26,30 +26,33 @@ export const MoreButton = ({
   }
 
   return (
-    <StyledMoreButton
-      className={`flex items-center more noClickable ${className}`}
-      isfocusedbtn={isFocusedBtn?.toString()}
-    >
-      <div className="btn-wrapper relative noClickable">
-        <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />
-        <Dropdown
-          onDelete={onDelete}
-          onFavorite={onFavorite}
-          favorite={favorite}
-          editLink={editLink}
-          noFavorite={noFavorite}
-          noDelete={noDelete}
-          onSend={onSend}
-          isDeleted={isDeleted}
-          onRestore={onRestore}
-          onDeleteFinally={onDeleteFinally}
-          onDownload={onDownload}
-          onClick
-          onOpenDeleteReason={onOpenDeleteReason}
-        />
-      </div>
+    <div className="relative flex items-center">
+      {" "}
+      <StyledMoreButton
+        className={`flex items-center more noClickable ${className}`}
+        isfocusedbtn={isFocusedBtn?.toString()}
+      >
+        <div className="btn-wrapper relative noClickable">
+          <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />
+          <Dropdown
+            onDelete={onDelete}
+            onFavorite={onFavorite}
+            favorite={favorite}
+            editLink={editLink}
+            noFavorite={noFavorite}
+            noDelete={noDelete}
+            onSend={onSend}
+            isDeleted={isDeleted}
+            onRestore={onRestore}
+            onDeleteFinally={onDeleteFinally}
+            onDownload={onDownload}
+            onClick
+            onOpenDeleteReason={onOpenDeleteReason}
+          />
+        </div>
+      </StyledMoreButton>
       <Divider />
-    </StyledMoreButton>
+    </div>
   );
 };
 

@@ -34,7 +34,7 @@ const StyledSubtitle = styled.div`
   }
   .error {
     color: #ff4343;
-    font-weight: 400;
+    font-weight: var(--font-weight-light);
   }
   @media (max-width: 500px) {
     font-size: 7px !important;

@@ -54,6 +54,9 @@ html[data-theme="dark"] {
   --color-3: rgb(255, 255, 255);
   --font-weight-light: 300;
   --font-weight-100: 100;
+  --font-weight-light: 400;
+  --font-weight-200: 200;
+  --opacity-light: 0.4;
   --subtitle-color: #ffffff40;
   --card-bg-5: #3d3d3d;
   --active-input-bg: #fff;
@@ -88,6 +91,8 @@ html[data-theme="dark"] {
   --full-screen-toggle-bg: #ffffff2e;
   --title-divider-bg: #323232;
   --title-divider-border: #fff;
+  --green-tag: #81fb21;
+  --green-tag-bg: rgba(129, 251, 33, 0.15);
 }
 
 html[data-theme="light"] {
@@ -95,7 +100,7 @@ html[data-theme="light"] {
   --element-bg: #fff;
   --second-bg: #fff;
   --modals-bg: #fff;
-  --dark-card-bg: #fff;
+  --dark-card-bg: #f7f7f7;
   --dark-90: #171725;
   --element-inside-bg: #f5f5f6;
   --active-bg: #cfd0d4;
@@ -135,8 +140,10 @@ html[data-theme="light"] {
   --input-bg: #f5f5f6;
   --color-2: #171725;
   --color-3: #171725;
-  --font-weight-light: 400;
+  --font-weight-light: 600;
   --font-weight-100: 400;
+  --font-weight-200: 600;
+  --opacity-light: 1;
   --subtitle-color: #696974;
   --card-bg-5: #fff;
   --active-input-bg: #e2e2ea;
@@ -171,6 +178,8 @@ html[data-theme="light"] {
   --full-screen-toggle-bg: #cfd1d2;
   --title-divider-bg: #2c2c2c;
   --title-divider-border: #2c2c2c;
+  --green-tag: #fff;
+  --green-tag-bg: #459605ba;
 }
 
 html[data-theme="light"] {
@@ -215,9 +224,14 @@ html[data-theme="light"] {
   }
   .list-card-wrapper {
     background: none !important;
-    border: 1px solid #e2e2ea !important;
+    border: 1px solid #b7b7c4 !important;
+    transition: all 0.3s;
+    &:hover {
+      background: #eeeef1 !important;
+    }
     &.selected {
-      background: #f5f5f6 !important;
+      background: #eeeef1 !important;
+      border: 1px solid #171725 !important;
     }
   }
   .icon-btn {
@@ -254,7 +268,7 @@ html[data-theme="light"] {
     border-radius: 6px;
   }
   .selectionName {
-    font-weight: 400;
+    font-weight: var(--font-weight-light);
     color: #171725;
   }
   .auth-input input {
@@ -289,6 +303,17 @@ html[data-theme="light"] {
   }
   .react-calendar__tile--active {
     color: #fff;
+  }
+  .refferal-btn {
+    background: linear-gradient(
+      183deg,
+      rgba(45, 244, 125, 1) 28%,
+      rgba(45, 244, 220, 1) 100%
+    );
+    border: none;
+    path {
+      fill: #fff;
+    }
   }
 }
 
@@ -468,7 +493,7 @@ input[type="number"] {
   font-family: Overpass;
   font-size: 28px;
   font-style: normal;
-  font-weight: 200;
+  font-weight: var(--font-weight-200);
   line-height: normal;
   letter-spacing: 0.36px;
   margin-bottom: 10px;

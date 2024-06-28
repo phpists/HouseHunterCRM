@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {ReactComponent as Icon} from "../../../../assets/images/plus.svg";
+import { ReactComponent as Icon } from "../../../../assets/images/plus.svg";
 import { Modal } from "./Modal/Modal";
 import { useState } from "react";
 import { SmallButton } from "./SmallButton";
@@ -41,7 +41,7 @@ const StyledCreateUser = styled.button`
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 200;
+  font-weight: var(--font-weight-200);
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   text-transform: capitalize;

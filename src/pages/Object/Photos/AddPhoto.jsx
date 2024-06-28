@@ -48,7 +48,7 @@ const StyledAddPhoto = styled.div`
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     svg {
@@ -65,7 +65,7 @@ const StyledAddPhoto = styled.div`
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;

@@ -55,7 +55,7 @@ const StyledCard = styled.div`
       font-family: Overpass;
       font-size: 14px;
       font-style: normal;
-      font-weight: 200;
+      font-weight: var(--font-weight-200);
       line-height: 120%;
       margin-right: 10px;
     }

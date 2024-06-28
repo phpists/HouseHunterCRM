@@ -47,7 +47,7 @@ const StyledInput = styled.div`
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 120%;
     margin-bottom: 4px;
     text-align: left;
@@ -63,7 +63,7 @@ const StyledInput = styled.div`
     font-family: Overpass;
     font-size: 14px;
     font-style: normal;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 120%;
     width: 100%;
     transition: all 0.3s;

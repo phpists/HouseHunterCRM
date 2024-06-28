@@ -41,7 +41,7 @@ const StyledList = styled.button`
       border-bottom: 1px solid var(--bg-10);
       text-align: left;
       .price {
-        font-weight: 400;
+        font-weight: var(--font-weight-light);
       }
     }
     div:last-child {

@@ -1,9 +1,12 @@
 import styled from "styled-components";
-import icon from "../../../assets/images/dollar.svg";
+import { ReactComponent as Icon } from "../../../assets/images/dollar.svg";
 
 export const Button = ({ onClick }) => (
-  <StyledButton className="flex items-center justify-center" onClick={onClick}>
-    <img src={icon} alt="" />
+  <StyledButton
+    className="flex items-center justify-center refferal-btn"
+    onClick={onClick}
+  >
+    <Icon />
   </StyledButton>
 );
 

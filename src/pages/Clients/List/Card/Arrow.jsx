@@ -7,12 +7,17 @@ export const Arrow = ({ id }) => (
     className="flex items-center justify-center h-full arrow"
     to={`/client/${id}`}
   >
-    <ArrowIcon />
+    <button>
+      <ArrowIcon />
+    </button>
   </StyledArrow>
 );
 
 const StyledArrow = styled(NavLink)`
   margin-right: 18px;
+  height: 100%;
+  display: block;
+  width: 32px;
   svg {
     transform: rotate(-45deg);
     opacity: 0.4;
@@ -23,8 +28,25 @@ const StyledArrow = styled(NavLink)`
       fill: #fff;
     }
   }
+  button {
+    position: absolute;
+    right: -14px;
+    width: 85px;
+    top: -12px;
+    bottom: -13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: red;
+  }
   @media (max-width: 1399.5px) {
     margin: 0 0 21px;
+    position: relative;
+    width: max-content;
+    button {
+      position: relative;
+    }
   }
   @media (max-width: 850px) {
     margin: 0;

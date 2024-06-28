@@ -16,7 +16,7 @@ const StyledTags = styled.div`
   z-index: 10;
   font-family: "Open Sans", sans-serif;
   font-size: 11px;
-  font-weight: 200;
+  font-weight: var(--font-weight-200);
   line-height: 15px;
   letter-spacing: 0.02em;
   text-align: left;

@@ -74,7 +74,7 @@ const StyledTitle = styled.h1`
   font-family: Overpass;
   font-size: 32px;
   font-style: normal;
-  font-weight: 200;
+  font-weight: var(--font-weight-200);
   line-height: 118%; /* 40.12px */
   letter-spacing: 0.64px;
   max-width: 500px;

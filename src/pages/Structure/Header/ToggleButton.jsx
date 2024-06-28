@@ -18,7 +18,7 @@ const StyledToggleShowButton = styled.div`
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 200;
+  font-weight: var(--font-weight-200);
   letter-spacing: 0.3px;
   text-transform: capitalize;
   transition: all 0.3s;

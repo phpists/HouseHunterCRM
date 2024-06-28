@@ -15,7 +15,7 @@ const StyledSaveButton = styled.button`
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 200;
+  font-weight: var(--font-weight-200);
   padding: 6px 28px 6px;
   border-radius: 8px;
   background: var(--bg-20);

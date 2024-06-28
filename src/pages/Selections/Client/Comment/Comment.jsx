@@ -40,7 +40,7 @@ const StyledComment = styled.div`
     text-overflow: ellipsis;
     font-family: Overpass, sans-serif;
     font-size: 14px;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 17px;
     letter-spacing: 0.02em;
     text-align: left;
@@ -58,7 +58,7 @@ const StyledComment = styled.div`
   .label {
     font-family: Open Sans, sans-serif;
     font-size: 11px;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 15px;
     letter-spacing: 0.02em;
     text-align: left;

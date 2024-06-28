@@ -70,7 +70,7 @@ const StyledCalendar = styled.div`
     font-family: Overpass;
     font-size: 11px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     height: 34px;
     display: flex;
@@ -88,7 +88,7 @@ const StyledCalendar = styled.div`
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: var(--font-weight-light);
     line-height: normal;
     height: 24px;
     width: 22px;

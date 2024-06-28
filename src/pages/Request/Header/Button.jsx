@@ -16,7 +16,7 @@ const StyledButton = styled.button`
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 200;
+  font-weight: var(--font-weight-200);
   padding: 6px 14px 6px;
   border-radius: 8px;
   opacity: 1;

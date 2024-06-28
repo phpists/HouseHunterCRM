@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export const Tag = ({ icon, title }) => (
+export const Tag = ({ Icon, title }) => (
   <StyledTag className="flex items-center clickable">
-    {icon && <img src={icon} alt="" />}
+    {Icon && <Icon />}
     {title}
   </StyledTag>
 );
@@ -21,7 +21,7 @@ const StyledTag = styled.div`
   line-height: normal;
   letter-spacing: 0.22px;
   height: 20px;
-  img {
+  svg {
     width: 12px;
     height: 12px;
     margin-right: 4px;

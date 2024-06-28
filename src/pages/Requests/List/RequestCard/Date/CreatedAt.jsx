@@ -12,7 +12,7 @@ export const CreatedAt = ({ dateCreate }) => (
 const StyledCreatedAt = styled.div`
   font-family: Open Sans;
   font-size: 11px;
-  font-weight: 200;
+  font-weight: var(--font-weight-200);
   line-height: 14.98px;
   letter-spacing: 0.02em;
   text-align: left;

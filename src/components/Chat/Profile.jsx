@@ -37,7 +37,7 @@ const StyledProfile = styled.div`
   }
   .role {
     font-size: ${({ small }) => (small ? 12 : 14)}px;
-    font-weight: 400;
+    font-weight: var(--font-weight-light);
     line-height: 118%;
     letter-spacing: 0.28px;
     color: var(--subtitle-color);

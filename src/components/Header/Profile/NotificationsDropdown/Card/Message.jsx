@@ -15,7 +15,7 @@ const StyledMessage = styled(NavLink)`
   font-family: Overpass;
   font-size: 14px;
   font-style: normal;
-  font-weight: 200;
+  font-weight: var(--font-weight-200);
   line-height: 20px; /* 142.857% */
   cursor: pointer;
   padding: 0 12px 12px;

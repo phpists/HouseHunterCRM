@@ -33,7 +33,7 @@ const StyledMoreButton = styled.button`
       opacity: 1;
     }
   }
-  @media (min-width: 800px) {
+  @media (min-width: 1350px) {
     display: none;
   }
 `;

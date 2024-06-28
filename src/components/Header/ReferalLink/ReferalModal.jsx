@@ -64,7 +64,7 @@ const StyledReferalModal = styled.div`
   .label {
     font-family: Overpass;
     font-size: 15px;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 17.7px;
     letter-spacing: 0.02em;
     text-align: left;
@@ -81,7 +81,7 @@ const StyledReferalModal = styled.div`
     border-radius: 6px;
     border: 1px solid #5d63ff;
     font-size: 14px;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 16.8px;
     text-align: left;
     color: var(--main-color);

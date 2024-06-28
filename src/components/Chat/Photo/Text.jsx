@@ -11,7 +11,7 @@ export const Text = ({ text, isOwner, date, isSelected }) => (
 const StyledText = styled.div`
   color: #fff;
   font-size: 15px;
-  font-weight: 400;
+  font-weight: var(--font-weight-light);
   line-height: 118%;
   letter-spacing: 0.3px;
   padding: 8px 11px 5px;

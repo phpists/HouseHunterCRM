@@ -18,7 +18,7 @@ const StyledAddButton = styled.div`
   font-family: Overpass;
   font-size: 12px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: var(--font-weight-light);
   line-height: 118%; /* 14.16px */
   letter-spacing: 0.24px;
   transition: all 0.3s;

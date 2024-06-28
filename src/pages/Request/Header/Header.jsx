@@ -155,19 +155,6 @@ export const Header = ({
                     onClick={handleToggleFavorites}
                     active={favorite}
                   />
-
-                  {data?.fields?.[0]?.id_group ? (
-                    <NavLink
-                      to={`/selections/${data?.fields?.[0]?.id_group}`}
-                      title="Відкрити підбірку"
-                    >
-                      <IconButton
-                        Icon={OpenIcon}
-                        className="ml-2.5 icon-btn restore-btn"
-                      />
-                    </NavLink>
-                  ) : null}
-
                   {handleCheckAccess(accessData, "requests", "delete") && (
                     <IconButton
                       Icon={RemoveIcon}
@@ -176,9 +163,9 @@ export const Header = ({
                     />
                   )}
                   {/* <Id id={id} /> */}
-                  <MoreButton data={data} onChangeField={onChangeField} />
                 </>
               )}
+              <MoreButton data={data} onChangeField={onChangeField} />
             </>
           )}
         </div>
@@ -209,6 +196,16 @@ export const Header = ({
                 })
               }
             />
+            {data?.fields?.[0]?.id_group ? (
+              <NavLink
+                to={`/selections/${data?.fields?.[0]?.id_group}`}
+                title="Перейти в підбірку"
+                className="ml-3"
+              >
+                <Button title={"Перейти в підбірку"} />
+              </NavLink>
+            ) : null}
+
             <Button
               title={
                 data?.general_group?.not_actual === "0"
@@ -223,55 +220,44 @@ export const Header = ({
                 })
               }
             />
-          </>
-        )}
-        {id && !isDataLoading && (
-          <div className="desktop-action-btns flex items-center">
-            {isDeleted ? (
-              <>
-                <IconButton
-                  Icon={RestoreIcon}
-                  className="icon-btn restore-btn"
-                  onClick={handleRestoreRequest}
-                />
-                {user?.struct_level === 1 ? (
-                  <IconButton
-                    Icon={RemoveIcon}
-                    className="icon-btn remove-btn"
-                    onClick={() => setDeleteModal(true)}
-                  />
-                ) : null}
-              </>
-            ) : (
-              <>
-                <IconButton
-                  Icon={StarIcon}
-                  className="icon-btn"
-                  onClick={handleToggleFavorites}
-                  active={favorite}
-                />
-                {handleCheckAccess(accessData, "requests", "delete") && (
-                  <IconButton
-                    Icon={RemoveIcon}
-                    className="icon-btn remove-btn"
-                    onClick={() => setDeleteModal(true)}
-                  />
-                )}
-                {data?.fields?.[0]?.id_group ? (
-                  <NavLink
-                    to={`/selections/${data?.fields?.[0]?.id_group}`}
-                    title="Відкрити підбірку"
-                  >
+            {id && !isDataLoading && (
+              <div className="desktop-action-btns flex items-center">
+                {isDeleted ? (
+                  <>
                     <IconButton
-                      Icon={OpenIcon}
-                      className="ml-2 icon-btn restore-btn"
+                      Icon={RestoreIcon}
+                      className="icon-btn restore-btn"
+                      onClick={handleRestoreRequest}
                     />
-                  </NavLink>
-                ) : null}
-                <Id id={id} />
-              </>
+                    {user?.struct_level === 1 ? (
+                      <IconButton
+                        Icon={RemoveIcon}
+                        className="icon-btn remove-btn"
+                        onClick={() => setDeleteModal(true)}
+                      />
+                    ) : null}
+                  </>
+                ) : (
+                  <>
+                    <IconButton
+                      Icon={StarIcon}
+                      className="icon-btn"
+                      onClick={handleToggleFavorites}
+                      active={favorite}
+                    />
+                    {handleCheckAccess(accessData, "requests", "delete") && (
+                      <IconButton
+                        Icon={RemoveIcon}
+                        className="icon-btn remove-btn"
+                        onClick={() => setDeleteModal(true)}
+                      />
+                    )}
+                    <Id id={id} />
+                  </>
+                )}
+              </div>
             )}
-          </div>
+          </>
         )}
       </div>
     </StyledHeader>
@@ -302,7 +288,12 @@ const StyledHeader = styled.div`
       }
     }
   }
-  @media (max-width: 1250px) {
+  .goToFolderLink {
+    button {
+      margin: 0 !important;
+    }
+  }
+  @media (max-width: 1350px) {
     flex-direction: column;
     align-items: start;
     .bts {
@@ -310,6 +301,7 @@ const StyledHeader = styled.div`
       justify-content: space-between;
       width: 100%;
       gap: 20px;
+      display: none;
       button {
         width: 100%;
         margin: 0;

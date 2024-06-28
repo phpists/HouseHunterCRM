@@ -33,7 +33,7 @@ const StyledCreatedAt = styled.div`
   font-weight: var(--font-weight-light);
   line-height: normal;
   letter-spacing: 0.22px;
-  opacity: 0.4;
+  opacity: var(--opacity-light);
   &.deleted {
     color: #f94343;
     font-weight: 600;

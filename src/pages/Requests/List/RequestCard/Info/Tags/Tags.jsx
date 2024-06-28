@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import doorIcon from "../../../../../../assets/images/tag-door.svg";
-import expendIcon from "../../../../../../assets/images/tag-expanded.svg";
-import stairsIcon from "../../../../../../assets/images/tag-stairs.svg";
+import { ReactComponent as DoorsIcon } from "../../../../../../assets/images/tag-door.svg";
+import { ReactComponent as ExpandedIcon } from "../../../../../../assets/images/tag-expanded.svg";
+import { ReactComponent as StairsIcon } from "../../../../../../assets/images/tag-stairs.svg";
 import homeIcon from "../../../../../../assets/images/tag-home.svg";
 import childIcon from "../../../../../../assets/images/tag-child.svg";
 import petIcon from "../../../../../../assets/images/tag-pet.svg";
@@ -10,11 +10,13 @@ import { Tag } from "./Tag";
 export const Tags = ({ roomMin, roomMax, areaMin, storeyMin, storeyMax }) => {
   const TAGS = [
     ...(roomMax > 0
-      ? [{ title: `від ${roomMin} до ${roomMax}`, icon: doorIcon }]
+      ? [{ title: `від ${roomMin} до ${roomMax}`, Icon: DoorsIcon }]
       : []),
-    ...(areaMin > 0 ? [{ title: `від ${areaMin} м²`, icon: expendIcon }] : []),
+    ...(areaMin > 0
+      ? [{ title: `від ${areaMin} м²`, Icon: ExpandedIcon }]
+      : []),
     ...(storeyMax > 0
-      ? [{ title: `від ${storeyMin} до ${storeyMax}`, icon: stairsIcon }]
+      ? [{ title: `від ${storeyMin} до ${storeyMax}`, Icon: StairsIcon }]
       : []),
     // { title: "Хрущьовка", icon: homeIcon },
     // { title: "Діти", icon: childIcon },
@@ -23,8 +25,8 @@ export const Tags = ({ roomMin, roomMax, areaMin, storeyMin, storeyMax }) => {
 
   return (
     <StyledTags className="flex flex-wrap items-center clickable">
-      {TAGS.map(({ title, icon }, i) => (
-        <Tag key={i} title={title} icon={icon} />
+      {TAGS.map(({ title, Icon }, i) => (
+        <Tag key={i} title={title} Icon={Icon} />
       ))}
     </StyledTags>
   );

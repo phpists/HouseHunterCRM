@@ -38,7 +38,7 @@ const StyledObjectCard = styled.div`
   letter-spacing: 0.22px;
   color: var(--dark-90);
   position: relative;
-  margin-right: 5px;
+  margin: 6px 5px 6px 6px;
   &::before {
     content: "";
     display: block;
@@ -60,6 +60,7 @@ const StyledObjectCard = styled.div`
       opacity: 1;
     }
   }
+
   @media (max-width: 800px) {
     .date {
       font-size: 6px;

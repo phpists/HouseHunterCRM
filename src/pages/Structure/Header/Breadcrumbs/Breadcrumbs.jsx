@@ -65,7 +65,7 @@ const StyledBreadcrumbs = styled.div`
     color: var(--second-color);
     font-family: Overpass;
     font-style: normal;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: normal;
     letter-spacing: 0.36px;
     font-size: 18px;

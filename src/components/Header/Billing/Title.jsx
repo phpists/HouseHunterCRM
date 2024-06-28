@@ -19,7 +19,7 @@ const StyledTitle = styled.div`
   font-family: Overpass;
   font-size: ${({ open }) => (open ? 20 : 15)}px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: var(--font-weight-light);
   line-height: 118%;
   letter-spacing: ${({ open }) => (open ? 0.4 : 0.3)}px;
   transition: all 0.3s;

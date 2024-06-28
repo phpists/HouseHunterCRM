@@ -642,7 +642,7 @@ const StyledPage = styled.div`
     font-family: Overpass;
     font-size: 32px;
     font-style: normal;
-    font-weight: 200;
+    font-weight: var(--font-weight-200);
     line-height: 118%;
     letter-spacing: 0.64px;
     text-align: center;

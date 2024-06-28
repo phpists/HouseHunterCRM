@@ -31,7 +31,7 @@ const StyledDropdown = styled.div`
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: var(--font-weight-light);
   line-height: 118%;
   letter-spacing: 0.3px;
   z-index: 56;

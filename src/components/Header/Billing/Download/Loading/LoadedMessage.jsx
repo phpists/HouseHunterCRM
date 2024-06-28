@@ -10,7 +10,7 @@ const StyledLoadedMessage = styled.div`
   font-family: Open Sans;
   font-size: 11px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: var(--font-weight-light);
   line-height: normal;
   letter-spacing: 0.22px;
   @media (max-width: 600px) {

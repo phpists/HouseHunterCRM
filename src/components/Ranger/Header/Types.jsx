@@ -40,7 +40,7 @@ const StyledTypes = styled.div`
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: var(--font-weight-light);
     line-height: 0.5;
     letter-spacing: 0.22px;
     text-transform: uppercase;

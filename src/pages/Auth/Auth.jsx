@@ -83,7 +83,7 @@ const StyledAuth = styled.div`
     backdrop-filter: blur(4.5px);
   }
   button {
-    font-weight: 400;
+    font-weight: var(--font-weight-light);
   }
 `;
 
