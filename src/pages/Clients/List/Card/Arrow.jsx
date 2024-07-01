@@ -38,7 +38,6 @@ const StyledArrow = styled(NavLink)`
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background: red;
   }
   @media (max-width: 1399.5px) {
     margin: 0 0 21px;

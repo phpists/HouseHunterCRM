@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ObjectCard } from "../../components/ObjectCard/ObjectCard";
-import { handleCheckAccess } from "../../utilits";
+import { handleCheckAccess, handleCopy } from "../../utilits";
 import { Empty } from "../../components/Empty/Empty";
 import { ObjectHistory } from "../../components/ObjectHistory/ObjectHistory";
 import { useState } from "react";
@@ -32,6 +32,7 @@ export const List = ({
   onChangeTags,
   onChangeObject,
 }) => {
+  const { user } = useAppSelect((state) => state.auth);
   const { accessData } = useAppSelect((state) => state.auth);
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
   const [openCommentHistoryModal, setOpenCommentHistoryModal] = useState(null);
@@ -47,6 +48,14 @@ export const List = ({
   const onChangeType = (val) => setType(val);
 
   const handleCloseEditObjectModal = () => setEditObject(false);
+
+  const handleCopyFastFolderLink = (id) => {
+    const LINK = `https://fast-selection.house-hunter.info/?us=${
+      user?.id
+    }&id=${btoa(`["${id}"]`)}`;
+
+    handleCopy(LINK);
+  };
 
   return (
     <>
@@ -152,6 +161,11 @@ export const List = ({
               }
               editable
               onEdit={() => setEditObject(d)}
+              onFastSelection={
+                user?.show_fast_folder
+                  ? () => handleCopyFastFolderLink(d?.id)
+                  : null
+              }
             />
           ))
         )}

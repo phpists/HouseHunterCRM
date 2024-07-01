@@ -32,6 +32,7 @@ export const Header = ({
   showClient,
   onToggleShowClient,
   newMessege,
+  onFastCopy,
 }) => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -106,6 +107,7 @@ export const Header = ({
               noFavorite
               isHideObjects={showObjectHide}
               onAddToSelection={handleAddToSelection}
+              onFastCopy={onFastCopy}
             />
           </div>
         </div>
@@ -122,6 +124,7 @@ export const Header = ({
           noFavorite
           isHideObjects={showObjectHide}
           onAddToSelection={handleAddToSelection}
+          onFastCopy={onFastCopy}
         />
       </div>
     </StyledHeader>

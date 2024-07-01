@@ -9,7 +9,10 @@ export const Name = ({
 }) => (
   <StyledName type={type} isError={typeText === "ШАХРАЙ"}>
     <div className="name" title={name}>
-      {name?.replaceAll("&amp;#039;", "'")}
+      {name
+        ?.replaceAll("&amp;#039;", "'")
+        ?.replaceAll("В&#039;", "'")
+        ?.replaceAll("&quot;", "'")}
     </div>
     <div
       className="role"

@@ -12,15 +12,23 @@ import { handleCheckAccess } from "../../utilits";
 
 export const NavBar = ({ accessData }) => {
   const LINKS = [
-    { icon: GridIcon, link: "/" },
+    { icon: GridIcon, link: "/", title: "Дашборд" },
     ...(handleCheckAccess(accessData, "clients", "view")
-      ? [{ icon: UsersIcon, link: "/clients", childrenLinks: ["client"] }]
+      ? [
+          {
+            icon: UsersIcon,
+            link: "/clients",
+            title: "Клієнти",
+            childrenLinks: ["client"],
+          },
+        ]
       : []),
     ...(handleCheckAccess(accessData, "objects", "view")
       ? [
           {
             icon: HomeIcon,
             link: "/objects",
+            title: "Об'єкти",
             childrenLinks: ["create-object", "edit-object"],
           },
         ]
@@ -30,15 +38,30 @@ export const NavBar = ({ accessData }) => {
           {
             icon: MegaphoneIcon,
             link: "/requests",
+            title: "Запити",
             childrenLinks: ["create-request", "edit-request", "selections"],
           },
         ]
       : []),
     ...(handleCheckAccess(accessData, "structure", "view")
-      ? [{ icon: CopyIcon, link: "/structure", childrenLinks: [] }]
+      ? [
+          {
+            icon: CopyIcon,
+            link: "/structure",
+            title: "Структура",
+            childrenLinks: [],
+          },
+        ]
       : []),
     ...(handleCheckAccess(accessData, "calls", "view")
-      ? [{ icon: PhoneIcon, link: "/calls", childrenLinks: [] }]
+      ? [
+          {
+            icon: PhoneIcon,
+            link: "/calls",
+            title: "Дзвінки",
+            childrenLinks: [],
+          },
+        ]
       : []),
     //   { icon: XbaseIcon, link: "/note" },
     //   { icon: CalendarIcon, link: "/calendar" },
@@ -47,11 +70,12 @@ export const NavBar = ({ accessData }) => {
 
   return (
     <StyledNavBar>
-      {LINKS.map(({ icon, link, childrenLinks = [] }, i) => (
+      {LINKS.map(({ icon, link, title, childrenLinks = [] }, i) => (
         <NavBarItem
           key={i}
           Icon={icon}
           link={link}
+          title={title}
           childrenLinks={childrenLinks}
         />
       ))}

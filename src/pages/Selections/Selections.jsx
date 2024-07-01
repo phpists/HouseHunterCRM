@@ -8,9 +8,10 @@ import {
 import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useLazyGetRubricFieldsQuery } from "../../store/objects/objects.api";
-import { handleGetRange, handleResponse } from "../../utilits";
+import { handleCopy, handleGetRange, handleResponse } from "../../utilits";
 import cogoToast from "cogo-toast";
 import { useActions } from "../../hooks/actions";
+import { useAppSelect } from "../../hooks/redux";
 
 const INIT_FILTERS = {
   id_rubric: "",
@@ -26,6 +27,7 @@ const INIT_FILTERS = {
 
 const Selections = () => {
   const { id } = useParams();
+  const { user } = useAppSelect((state) => state.auth);
   const [getSelections] = useLazyGetSelectionsQuery();
   const [getRubricField] = useLazyGetRubricFieldsQuery();
   const [hideObject] = useLazyHideObjectFromSelectionsQuery();
@@ -322,6 +324,15 @@ const Selections = () => {
     setObjects(updatedData);
   };
 
+  const handleCopyFastFolderLink = () => {
+    const LINK = `https://fast-selection.house-hunter.info/?us=${
+      user?.id
+    }&id=${btoa(JSON.stringify(selected))}`;
+
+    handleCopy(LINK);
+    setSelected([]);
+  };
+
   return (
     <StyledSelections>
       <Header
@@ -342,6 +353,7 @@ const Selections = () => {
         showClient={showClient}
         onToggleShowClient={(val) => setShowClient(val)}
         newMessege={clientData?.new_messege}
+        onFastCopy={user?.show_fast_folder ? handleCopyFastFolderLink : null}
       />
       <List
         data={objects}

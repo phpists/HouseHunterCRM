@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { NavLink, useLocation } from "react-router-dom";
 
-export const NavBarItem = ({ Icon, link, childrenLinks }) => {
+export const NavBarItem = ({ Icon, link, title, childrenLinks }) => {
   const { pathname } = useLocation();
 
   return (
@@ -11,6 +11,7 @@ export const NavBarItem = ({ Icon, link, childrenLinks }) => {
         childrenLinks.includes(pathname?.split("/")?.[1]) && "active"
       }`}
       activeclassname="active"
+      title={title}
     >
       <Icon />
     </StyledNavbarItem>
@@ -61,5 +62,4 @@ const StyledNavbarItem = styled(NavLink)`
       background: #5d63ff;
     }
   }
-
 `;

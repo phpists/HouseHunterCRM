@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ReactComponent as Icon } from "../../assets/images/support.svg";
 
 export const Support = ({ onClick }) => (
-  <StyledSupport className="flex items-center justify-center">
+  <StyledSupport className="flex items-center justify-center" title="Підтримка">
     <Icon className="support-icon" onClick={onClick} />
   </StyledSupport>
 );

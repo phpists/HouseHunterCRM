@@ -34,17 +34,17 @@ export const Header = ({ data }) => {
       ) : null}
       {data?.type_object === "street_base"
         ? null
+        : data?.type_object === "Company"
+        ? null
         : data?.id_street_base !== "0" && (
             <Tag title={"Перенесено з StreetBase"} color={"red"} />
           )}
-      {data?.dt_end_agreement === "0" &&
-        data?.type_object === "Company" &&
-        data?.id_street_base === "0" && (
-          <Tag
-            title={data?.obj_is_actual === "1" ? "Актуально" : "Не актуально"}
-            color={data?.obj_is_actual === "1" ? "green" : "red"}
-          />
-        )}
+      {data?.dt_end_agreement === "0" && data?.type_object === "Company" && (
+        <Tag
+          title={data?.obj_is_actual === "1" ? "Актуально" : "Не актуально"}
+          color={data?.obj_is_actual === "1" ? "green" : "red"}
+        />
+      )}
 
       {data?.dt_end_agreement !== "0" && (
         <Tag

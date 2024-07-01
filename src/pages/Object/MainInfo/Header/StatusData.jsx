@@ -54,7 +54,6 @@ const StyledDate = styled.button`
   border-radius: 9px;
   min-width: max-content;
   .modal-overlay {
-    background: red;
   }
   .text-data {
     transition: all 0.3s;
