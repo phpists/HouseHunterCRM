@@ -3,14 +3,16 @@ import { ReactComponent as GridIcon } from "../../assets/images/grid.svg";
 import { ReactComponent as UsersIcon } from "../../assets/images/users.svg";
 import { ReactComponent as MegaphoneIcon } from "../../assets/images/megaphone.svg";
 import { ReactComponent as HomeIcon } from "../../assets/images/home-sidebar.svg";
-import { ReactComponent as XbaseIcon } from "../../assets/images/xbase.svg";
+import { ReactComponent as MarketIcon } from "../../assets/images/market.svg";
 import { ReactComponent as CalendarIcon } from "../../assets/images/calendar.svg";
 import { ReactComponent as CopyIcon } from "../../assets/images/copy.svg";
 import { ReactComponent as PhoneIcon } from "../../assets/images/phone-menu.svg";
 import { NavBarItem } from "./NavBarItem";
 import { handleCheckAccess } from "../../utilits";
+import { useAppSelect } from "../../hooks/redux";
 
 export const NavBar = ({ accessData }) => {
+  const { user } = useAppSelect((state) => state.auth);
   const LINKS = [
     { icon: GridIcon, link: "/", title: "Дашборд" },
     ...(handleCheckAccess(accessData, "clients", "view")
@@ -63,8 +65,10 @@ export const NavBar = ({ accessData }) => {
           },
         ]
       : []),
-    //   { icon: XbaseIcon, link: "/note" },
-    //   { icon: CalendarIcon, link: "/calendar" },
+    ...(user?.id === "ae191c45f814262d747cf24d7f3799fd"
+      ? [{ icon: MarketIcon, link: "/advertising", title: "Реклама" }]
+      : []),
+
     ,
   ];
 

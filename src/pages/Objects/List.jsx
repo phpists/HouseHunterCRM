@@ -18,6 +18,7 @@ import { MarkObjectPhones } from "../../components/MarkObjectPhones/MarkObjectPh
 import { FindClientsObjects } from "./FindClientsObjects";
 import { DeleteInfo } from "../../components/DeleteInfo/DeleteInfo";
 import { FastSelection } from "../../components/FastSelection/FastSelection";
+import { ObjectAdModal } from "../../components/ObjectAdModal/ObjectAdModal";
 
 export const List = ({
   selected,
@@ -54,6 +55,7 @@ export const List = ({
   const [confirmText, setConfimText] = useState("");
   const [deleteInfo, setDeleteInfo] = useState(null);
   const [fastSelection, setFastSelection] = useState(null);
+  const [advertaseObject, setAdvertaseObject] = useState(null);
 
   const onChangeCurrency = (val) => setCurrency(val);
   const onChangeType = (val) => setType(val);
@@ -160,6 +162,13 @@ export const List = ({
       {deleteInfo ? (
         <DeleteInfo onClose={() => setDeleteInfo(false)} text={deleteInfo} />
       ) : null}
+      {advertaseObject ? (
+        <ObjectAdModal
+          onClose={() => setAdvertaseObject(null)}
+          object={advertaseObject}
+        />
+      ) : null}
+
       <StyledList ref={innerRef}>
         {data?.length === 0 || actionLoading ? (
           <Empty loading={loading || actionLoading || deleting} />
@@ -236,6 +245,11 @@ export const List = ({
                 onFastSelection={
                   user?.show_fast_folder
                     ? () => handleCopyFastFolderLink(d?.id)
+                    : null
+                }
+                onAdvertise={
+                  user?.id === "ae191c45f814262d747cf24d7f3799fd"
+                    ? () => setAdvertaseObject(d)
                     : null
                 }
               />

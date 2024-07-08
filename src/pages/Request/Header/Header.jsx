@@ -142,11 +142,7 @@ export const Header = ({
             </>
           ) : (
             <>
-              <SaveButton
-                className="desktop-save-btn"
-                onClick={onSave}
-                loading={loading}
-              />
+              <SaveButton onClick={onSave} loading={loading} />
               {id && (
                 <>
                   <IconButton

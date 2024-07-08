@@ -28,6 +28,7 @@ const Structure = lazy(() => import("./pages/Structure/Structure"));
 const Calls = lazy(() => import("./pages/Calls/Calls"));
 const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
 const Selections = lazy(() => import("./pages/Selections/Selections"));
+const Advertising = lazy(() => import("./pages/Advertising/Advertising"));
 
 export const App = () => {
   const [getProfile] = useLazyGetUserQuery();
@@ -269,6 +270,10 @@ export const App = () => {
                           <Route
                             path="/selections/:id"
                             element={<Selections />}
+                          />
+                          <Route
+                            path="/advertising"
+                            element={<Advertising />}
                           />
                           <Route path="*" element={<Dashboard />} />
                         </Routes>

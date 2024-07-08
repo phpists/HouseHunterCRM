@@ -43,6 +43,7 @@ export const MobileContent = ({
   showClientObjectsCount,
   onOpenDeleteReason,
   onFastSelection,
+  onAdvertise,
 }) => (
   <StyledMobileContent className="clickable">
     <Header data={data} />
@@ -107,6 +108,7 @@ export const MobileContent = ({
       onDeleteFinally={onDeleteFinally}
       onOpenDeleteReason={onOpenDeleteReason}
       onFastSelection={onFastSelection}
+      onAdvertise={onAdvertise}
     />
   </StyledMobileContent>
 );

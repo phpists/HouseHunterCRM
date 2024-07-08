@@ -44,6 +44,8 @@ export const Subtitle = () => {
         return handleCheckAccess(accessData, "calls", "view")
           ? `Всього ${callsCount} дзвінків`
           : "";
+      case "/advertising":
+        return "Всього 0 оголошень";
       default:
         return pathname.split("/")[1] === "client"
           ? "Створенний  03.10.2022  13:19"

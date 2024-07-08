@@ -40,6 +40,7 @@ export const ObjectCard = memo(
     showClientObjectsCount,
     onOpenDeleteReason,
     onFastSelection,
+    onAdvertise,
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
     const { ref, inView } = useInView({ triggerOnce: true });
@@ -104,6 +105,7 @@ export const ObjectCard = memo(
             showClientObjectsCount={showClientObjectsCount}
             onOpenDeleteReason={onOpenDeleteReason}
             onFastSelection={onFastSelection}
+            onAdvertise={onAdvertise}
           />
         ) : (
           <MobileContent
@@ -139,6 +141,7 @@ export const ObjectCard = memo(
             showClientObjectsCount={showClientObjectsCount}
             onOpenDeleteReason={onOpenDeleteReason}
             onFastSelection={onFastSelection}
+            onAdvertise={onAdvertise}
           />
         )}
       </StyledObjectCard>

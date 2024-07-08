@@ -86,14 +86,19 @@ const StyledObjects = styled.div`
     margin-right: 4px;
     padding: 4px;
   }
+  .divider {
+    display: none !important;
+  }
   .more-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     opacity: 1;
     position: absolute;
-    right: 5px;
     top: 50%;
     transform: translateY(-50%);
     .divider {
-      display: none;
+      display: none !important;
     }
   }
   @media (max-width: 1100px) {

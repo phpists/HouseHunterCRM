@@ -77,6 +77,7 @@ html[data-theme="dark"] {
   --bg-33: #333;
   --bg-4: rgba(255, 255, 255, 0.04);
   --bg-52: rgb(52 52 52);
+  --bg-5: #ffffff0d;
   --chat-bg: #343434;
   --chat-tag-bg: rgba(0, 0, 0, 0.4);
   --chat-bg: #454545;
@@ -164,6 +165,7 @@ html[data-theme="light"] {
   --bg-33: #fafafb;
   --bg-4: #fafafb;
   --bg-52: rgb(255, 255, 255);
+  --bg-5: #f7f7f7;
   --chat-bg: #fff;
   --chat-tag-bg: rgba(255, 255, 255, 0.5);
   --chat-bg: #fff;

@@ -49,6 +49,8 @@ export const Title = () => {
         return "Створення нового запиту";
       case "/calls":
         return handleCheckAccess(accessData, "calls", "view") ? "Дзвінки" : "";
+      case "/advertising":
+        return "Реклама";
       default:
         return pathname.split("/")[1] === "client"
           ? "Клієнт"

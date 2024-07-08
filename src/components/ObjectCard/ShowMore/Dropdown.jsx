@@ -15,6 +15,7 @@ import { ReactComponent as ToObjectIcon } from "../../../assets/images/my-object
 import { ReactComponent as PhoneIcon } from "../../../assets/images/phone-menu.svg";
 import { ReactComponent as RestoreIcon } from "../../../assets/images/refresh-icon.svg";
 import { ReactComponent as DeleteInfoIcon } from "../../../assets/images/delete-info.svg";
+import { ReactComponent as MarketIcon } from "../../../assets/images/market.svg";
 import {
   useLazyAddStreetBaseObjectQuery,
   useLazyDownloadObjectQuery,
@@ -48,6 +49,7 @@ export const Dropdown = ({
   onDeleteFinally,
   onOpenDeleteReason,
   onFastSelection,
+  onAdvertise,
 }) => {
   const [addStreetBaseObject] = useLazyAddStreetBaseObjectQuery();
   const [added, setAdded] = useState(false);
@@ -240,6 +242,14 @@ export const Dropdown = ({
             >
               <span>Редагувати </span> <Edit />
             </NavLink>
+          )}
+          {onAdvertise && (
+            <div
+              className="flex items-center justify-between"
+              onClick={onAdvertise}
+            >
+              <span>Рекламувати</span> <MarketIcon className="selection-icon" />
+            </div>
           )}
           {onDelete && (
             <div

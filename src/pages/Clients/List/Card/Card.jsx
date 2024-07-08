@@ -99,6 +99,7 @@ const StyledCard = styled.div`
   background: var(--card-bg-5);
   transition: all 0.3s;
   cursor: pointer;
+  overflow-x: hidden;
   &:hover {
     background: var(--hover-card);
   }
