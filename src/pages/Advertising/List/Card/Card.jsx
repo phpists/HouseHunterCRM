@@ -45,8 +45,8 @@ export const Card = ({
     >
       <Object />
       <Divider className="object-divider" />
-      <div className="flex items-center w-full mobile-footer">
-        <div className="flex items-center w-full ">
+      <div className="flex items-center  mobile-footer">
+        <div className="flex items-center w-full mobile-footer-main ">
           <Platform />
           <Divider />
           <Agent />
@@ -90,10 +90,17 @@ const StyledCard = styled.div`
     opacity: 1;
     transform: translateX(0px);
   }
+  .mobile-footer,
+  .mobile-footer-main {
+    min-width: max-content;
+  }
   @media (max-width: 1200px) {
     flex-direction: column;
     .object-divider {
       display: none;
+    }
+    .mobile-footer {
+      width: 100%;
     }
   }
   @media (max-width: 700px) {

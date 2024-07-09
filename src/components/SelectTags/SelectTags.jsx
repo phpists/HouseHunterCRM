@@ -245,7 +245,7 @@ const StyledSelectTags = styled.button`
     font-family: Open Sans;
     font-size: 11px;
     font-style: normal;
-    font-weight: var(--font-weight-light);
+    font-weight: var(--font-weight-200);
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;

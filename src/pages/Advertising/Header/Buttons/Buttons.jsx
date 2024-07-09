@@ -1,13 +1,14 @@
 import { IconButton } from "../../../../components/IconButton";
 import { ReactComponent as StarIcon } from "../../../../assets/images/card-star.svg";
 import { ReactComponent as PlusIcon } from "../../../../assets/images/plus.svg";
+import { ReactComponent as SettingIcon } from "../../../../assets/images/settings.svg";
 import { Search } from "./Search";
 import { styled } from "styled-components";
 import { SelectItems } from "../../../../components/SelectItems/SelectItems";
 import { useEffect, useState } from "react";
 import { AddClient } from "../../../../components/AddClient/AddClient";
 import { handleCheckAccess } from "../../../../utilits";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useAppSelect } from "../../../../hooks/redux";
 
 export const Buttons = ({
@@ -45,6 +46,13 @@ export const Buttons = ({
 
   return (
     <StyledButtons className="flex items-center">
+      <NavLink to="/advertising-setting">
+        <IconButton
+          Icon={SettingIcon}
+          className="icon-btn"
+          onClick={() => setAddClient(true)}
+        />
+      </NavLink>
       {addClient && (
         <AddClient
           onClose={() => setAddClient(false)}

@@ -66,7 +66,14 @@ export const NavBar = ({ accessData }) => {
         ]
       : []),
     ...(user?.id === "ae191c45f814262d747cf24d7f3799fd"
-      ? [{ icon: MarketIcon, link: "/advertising", title: "Реклама" }]
+      ? [
+          {
+            icon: MarketIcon,
+            link: "/advertising",
+            title: "Реклама",
+            childrenLinks: ["advertising-setting"],
+          },
+        ]
       : []),
 
     ,

@@ -53,7 +53,7 @@ export const PositionCard = ({
 const StyledPositionCard = styled.div`
   padding: 3px 10px 1px 7px;
   border-radius: 7px;
-  background: var(--bg-5);
+  background: var(--range-input-bg);
   min-width: 113px;
   transition: all 0.3s;
   border: 1px solid rgba(255, 255, 255, 0);

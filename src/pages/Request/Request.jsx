@@ -709,7 +709,7 @@ const StyledRequest = styled.div`
     }
   }
   @media (max-width: 500px) {
-    margin-left: -13px;
+    margin-left: -9px;
   }
 `;
 

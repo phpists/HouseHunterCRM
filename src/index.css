@@ -94,6 +94,7 @@ html[data-theme="dark"] {
   --title-divider-border: #fff;
   --green-tag: #81fb21;
   --green-tag-bg: rgba(129, 251, 33, 0.15);
+  --range-input-bg: #2c2c2c70;
 }
 
 html[data-theme="light"] {
@@ -182,6 +183,7 @@ html[data-theme="light"] {
   --title-divider-border: #2c2c2c;
   --green-tag: #fff;
   --green-tag-bg: #459605ba;
+  --range-input-bg: #e2e2ea;
 }
 
 html[data-theme="light"] {
