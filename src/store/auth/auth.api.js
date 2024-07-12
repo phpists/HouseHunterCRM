@@ -227,6 +227,20 @@ export const auth = createApi({
         }),
       }),
     }),
+    connectAccount: build.query({
+      query: ({ resource, code, state }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "connetctAccount",
+          resource,
+          code,
+          state,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -245,4 +259,5 @@ export const {
   useGetBannersQuery,
   useLazyCheckUserQuery,
   useLazyShowFastFolderQuery,
+  useLazyConnectAccountQuery
 } = auth;

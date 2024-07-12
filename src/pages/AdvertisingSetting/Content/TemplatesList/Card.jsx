@@ -1,27 +1,35 @@
 import styled from "styled-components";
 
-export const Card = () => (
-  <StyledCard className="flex items-center justify-between">
-    <div>
+export const Card = ({ selected, onSelect, last, olxAuth }) => (
+  <StyledCard
+    className={`flex items-center justify-between ${selected && "active"}`}
+    onClick={onSelect}
+    last={last}
+  >
+    {/* <div>
       <div className="value">Реклама OLX test</div>
       <div className="subtitle">Назва</div>
-    </div>
+    </div> */}
     <div>
       <div className="value">OLX</div>
       <div className="subtitle">Майданчик</div>
     </div>
     <div className="right">
-      <div className="value">05.06.2024</div>
-      <div className="subtitle">Дата створення</div>
+      <div className="value ">
+        {olxAuth ? "Авторизовано" : "Не авторизовано"}
+      </div>
+      <div className="subtitle">Авторизація</div>
     </div>
   </StyledCard>
 );
 
 const StyledCard = styled.div`
-  padding: 0 10px;
+  padding: 6.5px 10px;
   cursor: pointer;
   transition: all 0.3s;
-
+  border-bottom: 1px solid var(--company-filter-dropdown-bg);
+  border-radius: 0;
+  ${({ last }) => last && "border: none;"}
   .value {
     font-size: 14px;
     font-weight: var(--font-weight-200);
@@ -40,6 +48,12 @@ const StyledCard = styled.div`
   }
   .right {
     text-align: right;
+  }
+
+  &.active {
+    background: var(--company-filter-dropdown-bg);
+    border: none;
+    border-radius: 10px;
   }
   @media (max-width: 800px) {
     .value {

@@ -5,12 +5,17 @@ import { Header } from "./Header/Header";
 import { Platforms } from "./Platforms/Platforms";
 import { Info } from "./Info/Info";
 import { useEffect, useState } from "react";
+import { useLazyPublishObjectQuery } from "../../store/objects/objects.api";
+import { handleResponse } from "../../utilits";
+import cogoToast from "cogo-toast";
 
 export const ObjectAdModal = ({ onClose, object }) => {
   const [data, setData] = useState({
     title: "",
     desciption: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [publishObject] = useLazyPublishObjectQuery();
 
   const handleChangeField = (field, value) =>
     setData({ ...data, [field]: value });
@@ -22,12 +27,26 @@ export const ObjectAdModal = ({ onClose, object }) => {
     });
   }, [object]);
 
+  const handleSubmit = () => {
+    setLoading(true);
+    publishObject(object?.id).then((resp) => {
+      setLoading(false);
+      handleResponse(resp, () => {
+        onClose();
+        cogoToast.success("Оголошення успішно опубліковано", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      });
+    });
+  };
+
   return (
     <StyledObjectAdModal>
       <div className="modal-wrapper">
         <CloseButton onClick={onClose} />
         <Title />
-        <Header />
+        <Header onSubmit={handleSubmit} loading={loading} />
         <div className="content">
           <Platforms />
           <Info data={data} onChange={handleChangeField} />

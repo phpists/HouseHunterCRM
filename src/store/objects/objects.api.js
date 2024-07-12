@@ -497,6 +497,54 @@ export const objects = createApi({
         }),
       }),
     }),
+    getAdverstionResource: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getAdverstionResource",
+          mod: "system_info",
+        }),
+      }),
+    }),
+    getListAddsPublich: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getListAddsPublich",
+          mod: "publication",
+          resource: "1",
+        }),
+      }),
+    }),
+    getStatusAccount: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getStatusAccount",
+          mod: "publication",
+          resource: "olx",
+        }),
+      }),
+    }),
+    publishObject: build.query({
+      query: (id_obj) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "publish",
+          mod: "publication",
+          resource: "olx",
+          id_obj,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -536,5 +584,9 @@ export const {
   useLazyRestoreObjectsQuery,
   useGetSortObjectViewQuery,
   useLazyGetObjectsStatusticQuery,
-  useGetStreetsListQuery
+  useGetStreetsListQuery,
+  useGetAdverstionResourceQuery,
+  useGetStatusAccountQuery,
+  useGetListAddsPublichQuery,
+  useLazyPublishObjectQuery,
 } = objects;

@@ -242,7 +242,7 @@ export const Profile = () => {
     localStorage.removeItem("objectsLastFilters");
     localStorage.removeItem("requestFilter");
     localStorage.removeItem("callsFilter");
-    window.location.href = "/#/auth";
+    window.location.href = "/auth";
     window.location.reload(true);
   };
 

@@ -1,7 +1,10 @@
 import styled from "styled-components";
 
-export const CancelButton = () => (
-  <StyledCancelButton className="flex items-center justify-center">
+export const CancelButton = ({ disabled }) => (
+  <StyledCancelButton
+    className="flex items-center justify-center"
+    disabled={disabled}
+  >
     Зупинити
   </StyledCancelButton>
 );

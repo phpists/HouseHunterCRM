@@ -16,8 +16,10 @@ import {
   handleResponse,
 } from "../../utilits";
 import cogoToast from "cogo-toast";
+import { useGetListAddsPublichQuery } from "../../store/objects/objects.api";
 
 const Advertising = () => {
+  const { data } = useGetListAddsPublichQuery();
   const [favoritesFilter, setFavoritesFilter] = useState(false);
   const [selected, setSelected] = useState([]);
   const { saveClientsCount } = useActions();
@@ -185,16 +187,16 @@ const Advertising = () => {
     handleGetClients();
   };
 
-  useEffect(() => {
-    if (listRef.current) {
-      listRef.current.addEventListener("scroll", handleScroll);
-      return () =>
-        listRef.current &&
-        // eslint-disable-next-line
-        listRef.current.removeEventListener("scroll", handleScroll);
-    }
-    // eslint-disable-next-line
-  }, [listRef, isLoading.current, isAllPages, clients]);
+  //   useEffect(() => {
+  //     if (listRef.current) {
+  //       listRef.current.addEventListener("scroll", handleScroll);
+  //       return () =>
+  //         listRef.current &&
+  //         // eslint-disable-next-line
+  //         listRef.current.removeEventListener("scroll", handleScroll);
+  //     }
+  //     // eslint-disable-next-line
+  //   }, [listRef, isLoading.current, isAllPages, clients]);
 
   const handleApplyFilters = (isApply) => {
     isFilters.current = isApply;
@@ -300,20 +302,6 @@ const Advertising = () => {
     setSendClients([id]);
   };
 
-  const handleSuccessSend = () => {
-    const updatedClients = dataRef.current?.filter(
-      (c) => !sendClients.find((s) => s === c?.id)
-    );
-    dataRef.current = updatedClients;
-    setClients(updatedClients);
-    const updatedCount = allCount - sendClients?.length;
-    setAllCount(updatedCount);
-    saveClientsCount(updatedCount);
-    allCountRef.current = updatedCount;
-    setSendClients([]);
-    setSelected([]);
-  };
-
   const handleChangeComment = (comment, id) => {
     const updatedClients = dataRef.current?.map((c) =>
       c?.id === id ? { ...c, comment } : c
@@ -371,6 +359,7 @@ const Advertising = () => {
         isDeleted={isDeleted}
       />
       <List
+        data={data?.data ?? []}
         selected={selected}
         onSelect={handleSelectClient}
         clients={clients}

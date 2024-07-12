@@ -122,7 +122,7 @@ export const Terms = () => (
     <p>
       2.7. Тип ліцензії - тарифний план, обраний Ліцензіатом зі списку,
       розміщеного Ліцензіаром в особистому кабінеті користувача на
-      Інтернет-сторінці: https://house-hunter.info/#/company . 
+      Інтернет-сторінці: https://house-hunter.info/company . 
     </p>
     <p>
       2.8. Користувач  - фізична особа, яка від імені та (або) з дозволу
@@ -229,8 +229,8 @@ export const Terms = () => (
         <li>
           Політика конфіденційності, яка розміщена та доступна в мережі Інтернет
           за адресою: 
-          <a target="_blank" href="https://house-hunter.info/#/info/privacy">
-            https://house-hunter.info/#/info/privacy"
+          <a target="_blank" href="https://house-hunter.info/info/privacy">
+            https://house-hunter.info/info/privacy"
           </a>
             та встановлює правила обробки персональної інформації, включаючи
           персональні дані Користувача.
@@ -238,8 +238,8 @@ export const Terms = () => (
         <li>
           Публічна пропозиція укласти Ліцензійний договір, розміщена та/або
           доступна в мережі Інтернет на сайті: 
-          <a target="_blank" href="https://house-hunter.info/#/info/license">
-            https://house-hunter.info/#/info/license
+          <a target="_blank" href="https://house-hunter.info/info/license">
+            https://house-hunter.info/info/license
           </a>
            . 
         </li>
@@ -261,8 +261,8 @@ export const Terms = () => (
       </li>
       <li>
         Поточна версія цієї Угоди опублікована за адресою: 
-        <a target="_blank" href="https://house-hunter.info/#/info/terms">
-          https://house-hunter.info/#/info/terms
+        <a target="_blank" href="https://house-hunter.info/info/terms">
+          https://house-hunter.info/info/terms
         </a>
          . 
       </li>
@@ -358,8 +358,8 @@ export const Terms = () => (
         ознайомлення (пробної версії) протягом обмеженого періоду часу,
         визначеного умовами чинними на момент реєстрації, встановленими
         Ліцензіаром та розміщеними в мережі Інтернет на веб-сайті: 
-        <a target="_blank" href="https://house-hunter.info/#/company">
-          https://house-hunter.info/#/company
+        <a target="_blank" href="https://house-hunter.info/company">
+          https://house-hunter.info/company
         </a>
           . 
       </b>
@@ -395,7 +395,7 @@ export const Terms = () => (
     <p>
       7.7 Ліцензіар має право в односторонньому порядку змінювати типи ліцензій
       шляхом розміщення нового їх списку на
-      Інтернет-сторінці: https://house-hunter.info/#/company  . Типи ліцензій
+      Інтернет-сторінці: https://house-hunter.info/company  . Типи ліцензій
       застосовуються в Ліцензійних договорах, підписаних, починаючи з дати
       публікації відповідної (модифікованої) інформації про типи ліцензій на
       вищевказаній сторінці в мережі Інтернет. Модифікація типів ліцензій у
@@ -429,7 +429,10 @@ export const Terms = () => (
     <p>
       8.2.2. Реєстрація здійснюється Ліцензіатом самостійно шляхом заповнення
       реєстраційної форми на сайті  
-      <a target="_blank" href="https://house-hunter.info/">https://house-hunter.info/</a> .
+      <a target="_blank" href="https://house-hunter.info/">
+        https://house-hunter.info/
+      </a>
+       .
     </p>
     <p>8.2.3. Реєстрація в HH є безкоштовною та добровільною.</p>
     <p>
@@ -467,7 +470,7 @@ export const Terms = () => (
     <p>
       8.2.8. Інформація про Користувача, що міститься в особистому кабінеті
       Користувача, зберігається і обробляється HH  відповідно до політики
-      конфіденційності https://house-hunter.info/#/info/privacy . 
+      конфіденційності https://house-hunter.info/info/privacy . 
     </p>
     <p>
       8.2.9. Користувач самостійно визначає процедуру використання облікового
@@ -933,8 +936,8 @@ export const Terms = () => (
       зняття Користувачем шляхом надсилання відповідного повідомлення на
       електронну адресу Ліцензіара або передачі такого повідомлення
       співробітникам Ліцензіара телефоном 
-      <a target="_blank" href="https://house-hunter.info/#/info/contact">
-        https://house-hunter.info/#/info/contact
+      <a target="_blank" href="https://house-hunter.info/info/contact">
+        https://house-hunter.info/info/contact
       </a>
        . Користувач розуміє і погоджується, що якщо ця згода анульована, йому
       буде відмовлено в можливості використовувати частину або всі можливості
@@ -967,7 +970,7 @@ export const Terms = () => (
     <p>
       12.4. Ліцензіар має право в односторонньому порядку змінити умови цієї
       Угоди, розмістивши змінений текст в мережі Інтернет на
-      веб-сайті: https://house-hunter.info/#/info/terms . 
+      веб-сайті: https://house-hunter.info/info/terms . 
     </p>
     <p>
       12.5. Якщо з будь-якої причини один або кілька положень цієї Угоди визнані
@@ -1022,8 +1025,8 @@ export const Terms = () => (
       <b>
         Запити щодо умов цієї Угоди приймаються за електронною адресою
         Ліцензіара 
-        <a target="_blank" href="https://house-hunter.info/#/info/contact">
-          https://house-hunter.info/#/info/contact
+        <a target="_blank" href="https://house-hunter.info/info/contact">
+          https://house-hunter.info/info/contact
         </a>
          . 
       </b>

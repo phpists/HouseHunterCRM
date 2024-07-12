@@ -26,6 +26,25 @@ export const Dropdown = ({ open, data, onChangeField }) => {
         />
       </div>
       <div className="flex items-center justify-between toggle-wrapper">
+        <span>Приховувати опис клієнту</span>
+        <Toggle
+          value={Number(data?.general_group?.hide_title_client) > 0}
+          onChange={() =>
+            onChangeField("general_group", {
+              ...data.general_group,
+              hide_title_client:
+                data?.general_group?.hide_title_client === "0" ? "1" : "0",
+            })
+          }
+          className={
+            Number(data?.general_group?.hide_title_client) > 0
+              ? "toggle--active "
+              : "toggle"
+          }
+        />
+      </div>
+
+      <div className="flex items-center justify-between toggle-wrapper">
         <span>Пуста підбірка</span>
         <Toggle
           value={data?.general_group?.folder_empty === "1"}

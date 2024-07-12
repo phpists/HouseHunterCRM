@@ -5,6 +5,8 @@ import { ReactComponent as RemoveIcon } from "../../../assets/images/remove.svg"
 import { ReactComponent as RestoreIcon } from "../../../assets/images/refresh-icon.svg";
 import { ReactComponent as DeleteInfoIcon } from "../../../assets/images/delete-info.svg";
 import { ReactComponent as OpenIcon } from "../../../assets/images/open-folder.svg";
+import { ReactComponent as EyeIcon } from "../../../assets/images/eye-access.svg";
+
 import { IconButton } from "../../../components/IconButton";
 import { Title } from "./Title";
 import { Button } from "./Button";
@@ -151,6 +153,20 @@ export const Header = ({
                     onClick={handleToggleFavorites}
                     active={favorite}
                   />
+                  <IconButton
+                    Icon={EyeIcon}
+                    className="icon-btn icon-margin "
+                    onClick={() =>
+                      onChangeField("general_group", {
+                        ...data.general_group,
+                        hide_title_client:
+                          data?.general_group?.hide_title_client === "0"
+                            ? "1"
+                            : "0",
+                      })
+                    }
+                    active={data?.general_group?.hide_title_client === "1"}
+                  />
                   {handleCheckAccess(accessData, "requests", "delete") && (
                     <IconButton
                       Icon={RemoveIcon}
@@ -216,6 +232,18 @@ export const Header = ({
                 })
               }
             />
+            <IconButton
+              Icon={EyeIcon}
+              className="icon-btn icon-margin "
+              onClick={() =>
+                onChangeField("general_group", {
+                  ...data.general_group,
+                  hide_title_client:
+                    data?.general_group?.hide_title_client === "0" ? "1" : "0",
+                })
+              }
+              active={data?.general_group?.hide_title_client === "1"}
+            />
             {id && !isDataLoading && (
               <div className="desktop-action-btns flex items-center">
                 {isDeleted ? (
@@ -241,6 +269,7 @@ export const Header = ({
                       onClick={handleToggleFavorites}
                       active={favorite}
                     />
+
                     {handleCheckAccess(accessData, "requests", "delete") && (
                       <IconButton
                         Icon={RemoveIcon}
@@ -262,6 +291,9 @@ export const Header = ({
 
 const StyledHeader = styled.div`
   margin-bottom: 20px;
+  .icon-margin {
+    margin-right: 10px;
+  }
   .remove-btn {
     margin-left: 10px;
   }
@@ -292,6 +324,9 @@ const StyledHeader = styled.div`
   @media (max-width: 1350px) {
     flex-direction: column;
     align-items: start;
+    .icon-margin {
+      display: none;
+    }
     .bts {
       margin-top: 10px;
       justify-content: space-between;

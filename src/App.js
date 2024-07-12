@@ -282,6 +282,10 @@ export const App = () => {
                             path="/advertising-setting"
                             element={<AdvertisingSetting />}
                           />
+                          <Route
+                            path="/advertising-login-success"
+                            element={<AdvertisingSetting />}
+                          />
                           <Route path="*" element={<Dashboard />} />
                         </Routes>
                       </Suspense>

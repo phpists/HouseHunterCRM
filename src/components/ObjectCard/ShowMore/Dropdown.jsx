@@ -98,7 +98,7 @@ export const Dropdown = ({
                 if (window.event?.which === 2) {
                   window
                     .open(
-                      `/#/edit-object/${clientId}/${id}${searchTag ?? ""}`,
+                      `/edit-object/${clientId}/${id}${searchTag ?? ""}`,
                       "_blank"
                     )
                     .focus();
@@ -233,7 +233,7 @@ export const Dropdown = ({
                 if (window.event?.which === 2) {
                   window
                     .open(
-                      `/#/edit-object/${clientId}/${id}${searchTag ?? ""}`,
+                      `/edit-object/${clientId}/${id}${searchTag ?? ""}`,
                       "_blank"
                     )
                     .focus();

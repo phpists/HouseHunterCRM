@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
-export const SubmitButton = () => (
-  <StyledSubmitButton className="flex items-center justify-center">
+export const SubmitButton = ({ onClick, disabled }) => (
+  <StyledSubmitButton
+    className="flex items-center justify-center"
+    onClick={onClick}
+    disabled={disabled}
+  >
     Рекламувати
   </StyledSubmitButton>
 );
@@ -17,5 +21,4 @@ const StyledSubmitButton = styled.button`
   letter-spacing: 0.02em;
   border-radius: 8px;
   height: 38px;
-  
 `;

@@ -40,7 +40,7 @@ export const Objects = ({
         <MoreButton
           onDelete={onDelete}
           onFavorite={onToggleFavorite}
-          editLink={`/#/edit-request/${data?.client_hash}/${id}`}
+          editLink={`/edit-request/${data?.client_hash}/${id}`}
           className="more-btn"
           favorite={data?.favorite}
         />

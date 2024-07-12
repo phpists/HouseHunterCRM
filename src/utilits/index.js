@@ -377,6 +377,7 @@ export const handleCheckFields = ({
       ...additionalTitles,
     };
 
+    console.log(emptyFields);
     const handleTitles = emptyFields?.map(
       (f, i) => `${1 + i}. ${fieldsTitles[f] ?? ""}`
     );

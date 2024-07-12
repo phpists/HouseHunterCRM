@@ -6,29 +6,45 @@ import { CheckOption } from "../../../../components/CheckOption";
 import { ObjectsCountInput } from "./ObjectsCountInput";
 import { AutoEndInput } from "./AutoEndInput";
 import { TitleDivider } from "./TitleDivider";
+import { Button } from "./Button";
+import { useAppSelect } from "../../../../hooks/redux";
+import { useGetAdverstionResourceQuery } from "../../../../store/objects/objects.api";
+import { Footer } from "./Footer/Footer";
 
-export const Setting = () => (
-  <StyledSetting className="content-card">
-    <SelectTags
-      label="Торговий майданчик"
-      placeholder="Оберіть"
-      options={[
-        {
-          title: "olx",
-          value: "1",
-        },
-        {
-          title: "olx",
-          value: "2",
-        },
-      ]}
-      value={null}
-      onChange={(val) => null}
-      isSearch
-      notMultiSelect
-    />
-    <Divider />
-    <Field label="Назва" value="Реклама OLX test" />
+export const Setting = ({ data, onChange, onCreate }) => {
+  const { user } = useAppSelect((state) => state.auth);
+  const { data: adverstionResources } = useGetAdverstionResourceQuery();
+
+  return (
+    <StyledSetting className="content-card">
+      <div className="fields">
+        <SelectTags
+          label="Торговий майданчик"
+          placeholder="Оберіть"
+          options={
+            adverstionResources?.resource
+              ? adverstionResources?.resource?.map((r) => ({
+                  title: r.name,
+                  value: r?.id,
+                }))
+              : []
+          }
+          value={data?.place}
+          onChange={(val) => onChange("place", val)}
+          isSearch
+          notMultiSelect
+        />
+
+        {data?.place === "1" ? (
+          <>
+            <Divider />
+            <Button
+              title="Увійти через olx"
+              href={`https://www.olx.ua/uk/oauth/authorize/?client_id=201818&response_type=code&scope=read+write+v2&state=${user?.id}`}
+            />
+          </>
+        ) : null}
+        {/* <Field label="Назва" value="Реклама OLX test" />
     <Divider />
     <ObjectsCountInput />
     <Divider />
@@ -76,12 +92,20 @@ export const Setting = () => (
       onChange={(val) => null}
       isSearch
       notMultiSelect
-    />
-  </StyledSetting>
-);
+    /> */}
+      </div>
+      <Footer onCreate={onCreate} />
+    </StyledSetting>
+  );
+};
 
 const StyledSetting = styled.div`
   padding: 6px 8px;
   border-radius: 12px;
   background: var(--tag-bg-2);
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;

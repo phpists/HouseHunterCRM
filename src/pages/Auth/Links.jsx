@@ -2,16 +2,16 @@ import styled from "styled-components";
 
 export const Links = () => (
   <StyledLinks>
-    <a href="/#/info/terms" target="_blank">
+    <a href="info/terms" target="_blank">
       Угода користувача
     </a>
-    <a href="/#/info/license" target="_blank">
+    <a href="/info/license" target="_blank">
       Ліцензійний договір
     </a>
-    <a href="/#/info/privacy" target="_blank">
+    <a href="/info/privacy" target="_blank">
       Конфіденційність
     </a>
-    <a href="/#/info/cookie-policy" target="_blank">
+    <a href="/info/cookie-policy" target="_blank">
       Використання cookie
     </a>
   </StyledLinks>

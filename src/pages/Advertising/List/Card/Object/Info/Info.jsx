@@ -2,16 +2,19 @@ import styled from "styled-components";
 import { Title } from "./Title";
 import { Description } from "./Description";
 import { Status } from "./Status";
+import { handleFormatDate } from "../../../../../../utilits";
 
-export const Info = () => (
+export const Info = ({ publicateDate, status }) => (
   <StyledInfo>
     <div>
       <Title />
       <Description text="Оренда квартири" />
     </div>
     <div>
-      <Status status="active" />
-      <Description text="з 05.06.2024" />
+      <Status status={status} />
+      <Description
+        text={`з ${handleFormatDate(Number(publicateDate) * 1000)}`}
+      />
     </div>
   </StyledInfo>
 );

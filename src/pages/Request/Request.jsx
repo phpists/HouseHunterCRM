@@ -31,6 +31,7 @@ export const REQUEST_INIT = {
   general_group: {
     dt_deadline: new Date(),
     not_actual: "0",
+    hide_title_client: "0",
     deleted: "0",
     only_company_obj: "1",
     only_street_base_obj: "0",
@@ -200,6 +201,7 @@ const Request = () => {
           price_min: "Ціна від",
           price_max: "Ціна до",
           id_rubric: "Категорія",
+          price_currency: "Валюта"
         },
       });
 
@@ -343,6 +345,7 @@ const Request = () => {
         company_object,
         street_base_object,
         mls_object,
+        hide_title_client
       } = data?.general_group;
       editRequest({
         ...data,
@@ -353,6 +356,7 @@ const Request = () => {
           stop_showing,
           folder_empty,
           not_actual,
+          hide_title_client,
           company_object: company_object
             ? {
                 ...company_object,

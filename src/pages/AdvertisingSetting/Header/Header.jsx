@@ -15,7 +15,6 @@ export const Header = () => {
         <BackButton onClick={handleBack} />
         <Title />
       </div>
-      <Actions />
     </StyledHeader>
   );
 };

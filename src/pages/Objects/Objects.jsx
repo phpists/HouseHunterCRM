@@ -468,7 +468,7 @@ const Objects = () => {
       price_currency: "1",
     };
 
-    const objUrl = `/#/objects?findSelectionSimilar=true${Object.entries(
+    const objUrl = `/objects?findSelectionSimilar=true${Object.entries(
       objData
     )
       ?.map((d) => `&${d[0]}=${d[1]}`)

@@ -6,33 +6,7 @@ import { Agent } from "./Agent/Agent";
 import { Comment } from "./Comment";
 import { MoreButton } from "../../../../components/MoreButton/MoreButton";
 
-export const Card = ({
-  selected,
-  onSelect,
-  name,
-  id,
-  dateCreate,
-  phones,
-  requestsCount,
-  objectsCount,
-  comment,
-  onDelete,
-  isDelete,
-  onAddToFavorite,
-  favorite,
-  agent,
-  agentPhone,
-  onSend,
-  firstName,
-  lastName,
-  email,
-  onEditComment,
-  isDeleted,
-  onRestore,
-  onDeleteFinally,
-  deleteDate,
-  onOpenDeleteReason,
-}) => {
+export const Card = ({ selected, onSelect, publicateDate, status }) => {
   const handleClick = (e) => {
     e.target.classList.contains("card") && onSelect();
   };
@@ -43,7 +17,7 @@ export const Card = ({
       onClick={handleClick}
       selected={selected}
     >
-      <Object />
+      <Object publicateDate={publicateDate} status={status} />
       <Divider className="object-divider" />
       <div className="flex items-center  mobile-footer">
         <div className="flex items-center w-full mobile-footer-main ">

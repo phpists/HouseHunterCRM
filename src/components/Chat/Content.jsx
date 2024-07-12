@@ -97,7 +97,7 @@ export const Content = ({ open, data, selected, onSelect, rieltorName }) => {
                   isObject={!!msg?.messege?.object?.id}
                   onOpenObject={() =>
                     msg?.messege?.object?.id
-                      ? window.open(`/#/objects/${msg?.messege?.object?.id}`)
+                      ? window.open(`/objects/${msg?.messege?.object?.id}`)
                       : null
                   }
                 />

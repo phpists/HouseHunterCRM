@@ -2,25 +2,46 @@ import styled from "styled-components";
 import { Title } from "./Title";
 import { TemplatesList } from "./TemplatesList/TemplatesList";
 import { Setting } from "./Setting/Setting";
+import { useGetStatusAccountQuery } from "../../../store/objects/objects.api";
 
-export const Content = () => {
+export const Content = ({
+  templates,
+  selectedTemplate,
+  onChange,
+  onCreate,
+  onSelect,
+}) => {
+  const { data: status } = useGetStatusAccountQuery();
+
   return (
-    <StyledContent>
+    <StyledContent selectedTemplate={selectedTemplate}>
       <div>
         <Title title="Створені та Шаблони" />
-        <TemplatesList />
+        <TemplatesList
+          templates={templates}
+          selectedTemplate={selectedTemplate}
+          onSelect={onSelect}
+          olxAuth={!!status?.user}
+        />
       </div>
-      <div>
-        <Title title="Налаштування" />
-        <Setting />
-      </div>
+      {selectedTemplate ? (
+        <div>
+          <Title title="Налаштування" />
+          <Setting
+            data={selectedTemplate}
+            onChange={onChange}
+            onCreate={onCreate}
+          />
+        </div>
+      ) : null}
     </StyledContent>
   );
 };
 
 const StyledContent = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: ${({ selectedTemplate }) =>
+    selectedTemplate ? "1fr 1fr" : "1fr"};
   gap: 15px;
   padding: 20px;
   background: var(--modal-bg);
@@ -34,6 +55,7 @@ const StyledContent = styled.div`
   @media (max-width: 1200px) {
     grid-template-columns: 1fr;
     overflow: auto;
+    grid-template-rows: max-content;
     .content-card {
       max-height: max-content;
       overflow: unset;

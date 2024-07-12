@@ -32,7 +32,7 @@ export const Objects = ({ idGroup, onOpenChat, data, onChangeNewCount }) => {
               "footer-hide"
             }`}
           >
-            <OpenButton link={`/#/selections/${idGroup}`} />
+            <OpenButton link={`/selections/${idGroup}`} />
             <Buttons
               onOpenChat={onOpenChat}
               idGroup={idGroup}

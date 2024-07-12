@@ -204,9 +204,7 @@ const Selections = () => {
       price_currency: "1",
     };
 
-    const objUrl = `/#/objects?findSelectionSimilar=true${Object.entries(
-      objData
-    )
+    const objUrl = `/objects?findSelectionSimilar=true${Object.entries(objData)
       ?.map((d) => `&${d[0]}=${d[1]}`)
       ?.join("")}`;
 

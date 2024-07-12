@@ -47,7 +47,7 @@ export const FindClientsObjects = ({ onClose, id }) => {
                   className="phone-card"
                   onClick={() =>
                     window.open(
-                      `/#/objects?findClientsObjects=${p?.phone}`,
+                      `/objects?findClientsObjects=${p?.phone}`,
                       "_blank"
                     )
                   }

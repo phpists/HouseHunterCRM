@@ -21,8 +21,8 @@ export const License = () => (
       строки, які визначаються цим Договором. Укладаючи цей Договір, Ліцензіат
       також повністю приймає умови Угоди користувача, текст якої розміщений
       Ліцензіаром на інтернет-сторінці: 
-      <a target="_blank" href="https://house-hunter.info/#/info/terms">
-        https://house-hunter.info/#/info/terms
+      <a target="_blank" href="https://house-hunter.info/info/terms">
+        https://house-hunter.info/info/terms
       </a>
       .
     </p>
@@ -35,8 +35,8 @@ export const License = () => (
       <b>Публічна пропозиція/пропозиція -</b>  вміст цього документу з усіма
       додатками, доповненнями та доповненнями, викладеними на веб-сайті та
       доступними за адресою: 
-      <a target="_blank" href="https://house-hunter.info/#/info/license">
-        https://house-hunter.info/#/info/license
+      <a target="_blank" href="https://house-hunter.info/info/license">
+        https://house-hunter.info/info/license
       </a>
     </p>
     <p>
@@ -254,8 +254,8 @@ export const License = () => (
           Надати Ліцензіату, який уклав окремий договір, що забезпечує доступ до
           сервісу (сервісів), список яких розміщений Ліцензіаром в мережі
           Інтернет на сторінці {" "}
-          <a target="_blank" href="https://house-hunter.info/#/info/terms">
-            https://house-hunter.info/#/info/terms
+          <a target="_blank" href="https://house-hunter.info/info/terms">
+            https://house-hunter.info/info/terms
           </a>
           , можливість доступу до відповідних сервісу (сервісів) з використанням
           інтерфейсу Програми.
@@ -280,8 +280,8 @@ export const License = () => (
           Заблокувати доступ Ліцензіата до Програми, якщо Ліцензіат порушує
           умови цього Договору або Угоди користувача, текст якої публікується
           Ліцензіаром в мережі Інтернет на веб-сайті:
-          <a target="_blank" href="https://house-hunter.info/#/terms">
-            https://house-hunter.info/#/terms
+          <a target="_blank" href="https://house-hunter.info/terms">
+            https://house-hunter.info/terms
           </a>
           .
         </li>
@@ -333,9 +333,9 @@ export const License = () => (
           Інтернет на сторінці: 
           <a
             target="_blank"
-            href="https://house-hunter.info/#/info/service-agreement"
+            href="https://house-hunter.info/info/service-agreement"
           >
-            https://house-hunter.info/#/info/service-agreement
+            https://house-hunter.info/info/service-agreement
           </a>
           . Порядок надання доступу до цих послуг встановлюється окремою угодою.
         </li>
@@ -589,8 +589,8 @@ export const License = () => (
       Ліцензіар має право в односторонньому порядку змінювати умови цього
       Договору шляхом публікації нового тексту Договору в мережі Інтернет на
       сторінці: 
-      <a target="_blank" href="https://house-hunter.info/#/info/license">
-        https://house-hunter.info/#/info/license
+      <a target="_blank" href="https://house-hunter.info/info/license">
+        https://house-hunter.info/info/license
       </a>
       . Договір, змінений таким чином, поширюється на відносини між Ліцензіаром
       та Ліцензіатом, що виникають після дати його публікації, якщо тільки

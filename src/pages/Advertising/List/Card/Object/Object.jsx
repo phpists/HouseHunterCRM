@@ -3,10 +3,10 @@ import { Photo } from "./Photo";
 import photo from "../../../../../assets/images/object.png";
 import { Info } from "./Info/Info";
 
-export const Object = () => (
+export const Object = ({ publicateDate, status }) => (
   <StyledObject>
     <Photo photo={photo} />
-    <Info />
+    <Info publicateDate={publicateDate} status={status} />
   </StyledObject>
 );
 

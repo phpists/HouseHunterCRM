@@ -68,8 +68,8 @@ export const MobileContent = ({
               !isEdit
                 ? null
                 : isObject
-                ? `/#/edit-object/${clientId}/${id}`
-                : `/#/edit-request/${clientId}/${id}`
+                ? `/edit-object/${clientId}/${id}`
+                : `/edit-request/${clientId}/${id}`
             }
             noDelete={!isDelete}
             isDeleted={isDeleted}
