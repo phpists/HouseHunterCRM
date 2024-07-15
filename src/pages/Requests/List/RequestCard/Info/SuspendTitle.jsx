@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SuspendTitle = () => (
-  <StyledSuspendTitle>Показ призупинено</StyledSuspendTitle>
+  <StyledSuspendTitle>Надсилання призупинено</StyledSuspendTitle>
 );
 
 const StyledSuspendTitle = styled.div`

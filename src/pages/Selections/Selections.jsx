@@ -50,6 +50,7 @@ const Selections = () => {
   const [actionLoading, setActionLoading] = useState(false);
   const [clientData, setClientData] = useState(null);
   const [showClient, setShowClient] = useState(true);
+  const [hideTitle, setHideTitle] = useState(false);
 
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => {
@@ -129,6 +130,8 @@ const Selections = () => {
           comment_group: resp?.data?.comment_group,
           new_messege: resp?.data?.new_messege,
         });
+        resp?.data?.hide_title_client &&
+          setHideTitle(resp?.data?.hide_title_client === "1");
         handleResponse(
           resp,
           () => {
@@ -331,6 +334,8 @@ const Selections = () => {
     setSelected([]);
   };
 
+  const handleToggleHideTitle = (val) => setHideTitle(val);
+
   return (
     <StyledSelections>
       <Header
@@ -352,6 +357,8 @@ const Selections = () => {
         onToggleShowClient={(val) => setShowClient(val)}
         newMessege={clientData?.new_messege}
         onFastCopy={user?.show_fast_folder ? handleCopyFastFolderLink : null}
+        hideTitle={hideTitle}
+        onToggleHideTitle={handleToggleHideTitle}
       />
       <List
         data={objects}

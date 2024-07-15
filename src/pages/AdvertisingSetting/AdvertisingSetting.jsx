@@ -1,6 +1,6 @@
 import cogoToast from "cogo-toast";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useLazyConnectAccountQuery } from "../../store/auth/auth.api";
 import { handleResponse } from "../../utilits";
@@ -9,6 +9,7 @@ import { Header } from "./Header/Header";
 
 const AdvertisingSetting = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [connectAccount] = useLazyConnectAccountQuery();
   const [templates, setTemplates] = useState([{}]);
   const [selectedTemplate, setSelectedTemplate] = useState(templates[0]);
@@ -44,14 +45,15 @@ const AdvertisingSetting = () => {
   const handleLoginSuccess = () => {
     const { code, state } = handleGetSearchValues();
     if (code && state) {
-      connectAccount({ code, state, resource: "olx" }).then((resp) =>
+      connectAccount({ code, state, resource: "olx" }).then((resp) => {
+        navigate("/advertising-setting");
         handleResponse(resp, () => {
           cogoToast.success("Успішно авторизовано через olx", {
             hideAfter: 3,
             position: "top-right",
           });
-        })
-      );
+        });
+      });
     }
   };
 

@@ -13,6 +13,7 @@ import { useState } from "react";
 import { AddToSelections } from "../../Objects/AddToSelections";
 import { ClientButton } from "./ClientButton";
 import { BackButton } from "../../../components/BackButton";
+import { VisivilityButton } from "./VisivilityButton";
 
 export const Header = ({
   onRefresh,
@@ -33,6 +34,8 @@ export const Header = ({
   onToggleShowClient,
   newMessege,
   onFastCopy,
+  hideTitle,
+  onToggleHideTitle,
 }) => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -84,6 +87,7 @@ export const Header = ({
             <ChatButton newMessege={newMessege} />
           </div>
           <div className="action-btns flex items-center">
+            <VisivilityButton active={hideTitle} onChange={onToggleHideTitle} />
             <ShowButton
               active={showObjectHide === "1"}
               onClick={onToggleHidden}

@@ -4,7 +4,7 @@ import { CancelButton } from "./CancelButton";
 
 export const Actions = ({ onSubmit, loading }) => (
   <StyledActions className="flex items-center">
-    <SubmitButton onClick={onSubmit} disabled={loading} />
+    <SubmitButton onClick={onSubmit} loading={loading} />
     <CancelButton disabled={loading} />
   </StyledActions>
 );

@@ -201,7 +201,7 @@ export const Dropdown = ({
               className="flex items-center justify-between"
               onClick={onFastSelection}
             >
-              <span>Додати в швидку підбірку</span>{" "}
+              <span>Швидка підбірка</span>{" "}
               <Selection className="selection-icon" />
             </div>
           )}

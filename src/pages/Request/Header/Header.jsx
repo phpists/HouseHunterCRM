@@ -5,7 +5,7 @@ import { ReactComponent as RemoveIcon } from "../../../assets/images/remove.svg"
 import { ReactComponent as RestoreIcon } from "../../../assets/images/refresh-icon.svg";
 import { ReactComponent as DeleteInfoIcon } from "../../../assets/images/delete-info.svg";
 import { ReactComponent as OpenIcon } from "../../../assets/images/open-folder.svg";
-import { ReactComponent as EyeIcon } from "../../../assets/images/eye-access.svg";
+import { ReactComponent as NoFontIcon } from "../../../assets/images/no-a.svg";
 
 import { IconButton } from "../../../components/IconButton";
 import { Title } from "./Title";
@@ -154,7 +154,7 @@ export const Header = ({
                     active={favorite}
                   />
                   <IconButton
-                    Icon={EyeIcon}
+                    Icon={NoFontIcon}
                     className="icon-btn icon-margin "
                     onClick={() =>
                       onChangeField("general_group", {
@@ -233,7 +233,7 @@ export const Header = ({
               }
             />
             <IconButton
-              Icon={EyeIcon}
+              Icon={NoFontIcon}
               className="icon-btn icon-margin "
               onClick={() =>
                 onChangeField("general_group", {

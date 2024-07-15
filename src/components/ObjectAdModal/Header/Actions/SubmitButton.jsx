@@ -1,12 +1,13 @@
 import styled from "styled-components";
+import { Loader } from "../../../Loader";
 
-export const SubmitButton = ({ onClick, disabled }) => (
+export const SubmitButton = ({ onClick, loading }) => (
   <StyledSubmitButton
     className="flex items-center justify-center"
     onClick={onClick}
-    disabled={disabled}
+    disabled={loading}
   >
-    Рекламувати
+    {loading ? <Loader white className="loader" /> : " Рекламувати"}
   </StyledSubmitButton>
 );
 
@@ -21,4 +22,8 @@ const StyledSubmitButton = styled.button`
   letter-spacing: 0.02em;
   border-radius: 8px;
   height: 38px;
+  .loader {
+    height: 25px;
+    width: 94px;
+  }
 `;

@@ -11,7 +11,7 @@ export const FastSelection = ({ onClose, id }) => {
 
   return (
     <StyledFastSelection>
-      <Modal onClose={onClose} title="Додати в швидку підбірку">
+      <Modal onClose={onClose} title="Швидка підбірка">
         <div className="modal-content">
           <div className="flex items-center">
             {" "}

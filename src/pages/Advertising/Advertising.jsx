@@ -70,97 +70,93 @@ const Advertising = () => {
   };
 
   const handleGetClients = (isReset, isFilter) => {
-    if ((!isLoading.current && !isAllPages) || isReset) {
-      isLoading.current = true;
-
-      if (isReset) {
-        setIsAllPages(false);
-        listRef.current.scroll({ top: 0 });
-        setClients([]);
-        setSelected([]);
-        currentPage.current = 0;
-        dataRef.current = [];
-        allCountRef.current = 0;
-      }
-
-      setLoading(true);
-      const sendData = {
-        current_page: currentPage.current,
-        item_on_page: 50,
-        show_favorite: favoritesFilter ? "1" : undefined,
-        search_phone_code: isFilters.current ? searchPhoneCode : undefined,
-        search_phone: isFilters.current
-          ? filter.search_phone
-              ?.replaceAll("-", "")
-              ?.replace("(", "")
-              ?.replace(")", "")
-              ?.replaceAll("_", "")
-          : undefined,
-        search_key: isFilters.current ? filter.search_key : undefined,
-        my_struct: isFilters.current ? filter.my_struct : undefined,
-        ...(isFilters.current
-          ? {
-              filters: {
-                ...filter.filters,
-                dt_reg_from: filter?.filters?.dt_reg_from
-                  ? handleFormatFilterDate(filter?.filters?.dt_reg_from, true)
-                  : undefined,
-                dt_reg_to: filter?.filters?.dt_reg_to
-                  ? handleFormatFilterDate(filter?.filters?.dt_reg_to)
-                  : undefined,
-                findPhone:
-                  filter?.filters?.findPhone?.length > 0
-                    ? filter?.filters?.findPhone
-                        ?.replaceAll("-", "")
-                        ?.replace("(", "")
-                        ?.replace(")", "")
-                        ?.replaceAll("_", "")
-                    : null,
-              },
-            }
-          : []),
-      };
-
-      if (isFirstRequest.current || !isFilter) {
-        isFirstRequest.current = false;
-        getClients({ ...sendData, only_count_item: "1" }).then((resp) =>
-          saveClientsCount(resp?.data?.all_item ?? 0)
-        );
-      }
-
-      getClients(sendData).then((resp) => {
-        isLoading.current = false;
-        setLoading(false);
-        // firstThousand.current = resp?.data?.data?.first_1000;
-        handleResponse(
-          resp,
-          () => {
-            if (resp?.data?.error === 0 && resp?.data.data?.clients?.length) {
-              const respItemsCount = resp?.data?.data?.clients?.length;
-              const updatedCount = isReset
-                ? respItemsCount
-                : allCountRef.current + respItemsCount;
-              allCountRef.current = updatedCount;
-              setAllCount(updatedCount ?? 0);
-              const updatedClients = isReset
-                ? resp?.data?.data?.clients
-                : [...dataRef.current, ...resp?.data.data?.clients];
-              dataRef.current = updatedClients;
-              setClients(updatedClients);
-            }
-          },
-          () => {
-            setIsAllPages(true);
-            if (isReset) {
-              setAllCount(0);
-              setClients([]);
-              dataRef.current = [];
-              allCountRef.current = 0;
-            }
-          }
-        );
-      });
-    }
+    // if ((!isLoading.current && !isAllPages) || isReset) {
+    //   isLoading.current = true;
+    //   if (isReset) {
+    //     setIsAllPages(false);
+    //     listRef.current.scroll({ top: 0 });
+    //     setClients([]);
+    //     setSelected([]);
+    //     currentPage.current = 0;
+    //     dataRef.current = [];
+    //     allCountRef.current = 0;
+    //   }
+    //   setLoading(true);
+    //   const sendData = {
+    //     current_page: currentPage.current,
+    //     item_on_page: 50,
+    //     show_favorite: favoritesFilter ? "1" : undefined,
+    //     search_phone_code: isFilters.current ? searchPhoneCode : undefined,
+    //     search_phone: isFilters.current
+    //       ? filter.search_phone
+    //           ?.replaceAll("-", "")
+    //           ?.replace("(", "")
+    //           ?.replace(")", "")
+    //           ?.replaceAll("_", "")
+    //       : undefined,
+    //     search_key: isFilters.current ? filter.search_key : undefined,
+    //     my_struct: isFilters.current ? filter.my_struct : undefined,
+    //     ...(isFilters.current
+    //       ? {
+    //           filters: {
+    //             ...filter.filters,
+    //             dt_reg_from: filter?.filters?.dt_reg_from
+    //               ? handleFormatFilterDate(filter?.filters?.dt_reg_from, true)
+    //               : undefined,
+    //             dt_reg_to: filter?.filters?.dt_reg_to
+    //               ? handleFormatFilterDate(filter?.filters?.dt_reg_to)
+    //               : undefined,
+    //             findPhone:
+    //               filter?.filters?.findPhone?.length > 0
+    //                 ? filter?.filters?.findPhone
+    //                     ?.replaceAll("-", "")
+    //                     ?.replace("(", "")
+    //                     ?.replace(")", "")
+    //                     ?.replaceAll("_", "")
+    //                 : null,
+    //           },
+    //         }
+    //       : []),
+    //   };
+    //   if (isFirstRequest.current || !isFilter) {
+    //     isFirstRequest.current = false;
+    //     getClients({ ...sendData, only_count_item: "1" }).then((resp) =>
+    //       saveClientsCount(resp?.data?.all_item ?? 0)
+    //     );
+    //   }
+    //   getClients(sendData).then((resp) => {
+    //     isLoading.current = false;
+    //     setLoading(false);
+    //     // firstThousand.current = resp?.data?.data?.first_1000;
+    //     handleResponse(
+    //       resp,
+    //       () => {
+    //         if (resp?.data?.error === 0 && resp?.data.data?.clients?.length) {
+    //           const respItemsCount = resp?.data?.data?.clients?.length;
+    //           const updatedCount = isReset
+    //             ? respItemsCount
+    //             : allCountRef.current + respItemsCount;
+    //           allCountRef.current = updatedCount;
+    //           setAllCount(updatedCount ?? 0);
+    //           const updatedClients = isReset
+    //             ? resp?.data?.data?.clients
+    //             : [...dataRef.current, ...resp?.data.data?.clients];
+    //           dataRef.current = updatedClients;
+    //           setClients(updatedClients);
+    //         }
+    //       },
+    //       () => {
+    //         setIsAllPages(true);
+    //         if (isReset) {
+    //           setAllCount(0);
+    //           setClients([]);
+    //           dataRef.current = [];
+    //           allCountRef.current = 0;
+    //         }
+    //       }
+    //     );
+    //   });
+    // }
   };
 
   const handleSelectClient = (id) => {

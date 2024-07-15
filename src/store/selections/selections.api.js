@@ -135,6 +135,18 @@ export const selections = createApi({
         };
       },
     }),
+    changeHideTitle: build.query({
+      query: (id_group) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "changeHideTitle",
+          mod: "requests",
+          id_group,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -148,4 +160,5 @@ export const {
   useLazyAddMessageQuery,
   useLazyAddMessageClientQuery,
   useLazyAddNewDescriptionRequstQuery,
+  useLazyChangeHideTitleQuery
 } = selections;

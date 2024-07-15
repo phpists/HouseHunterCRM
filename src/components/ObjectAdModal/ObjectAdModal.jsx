@@ -32,11 +32,29 @@ export const ObjectAdModal = ({ onClose, object }) => {
     publishObject(object?.id).then((resp) => {
       setLoading(false);
       handleResponse(resp, () => {
+        const messages = {
+          new: "Нове оголошення, до активації та провірки",
+          active: "Опубліковано на olx",
+          limited:
+            "Вичерпаний ліміт безкоштовних оголошень у вибраній категорії",
+          removed_by_user: "Видалено користувачем",
+          outdated: "Оголошення досягло дати придатності",
+          unconfirmed: "Оголошення очікує на підтвердження ",
+          unpaid: "Очікується оплата",
+          moderated: "Відхилено модератором",
+          blocked: "Заблоковано модератором",
+          disabled:
+            "Вимкнено модерацією, пропозиція заблокована та очікує перевірки",
+          removed_by_moderator: "Видалено",
+        };
         onClose();
-        cogoToast.success("Оголошення успішно опубліковано", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        cogoToast.info(
+          messages[resp?.data?.status] ?? "Оголошення успішно опубліковано",
+          {
+            hideAfter: 3,
+            position: "top-right",
+          }
+        );
       });
     });
   };
