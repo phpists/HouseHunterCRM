@@ -1,12 +1,13 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const OpenButton = ({ link }) => (
-  <StyledOpenButton href={link} className="toSelectionBtn">
-    Перейти в добірку
+  <StyledOpenButton to={link} className="toSelectionBtn">
+    Перейти в підбірку
   </StyledOpenButton>
 );
 
-const StyledOpenButton = styled.a`
+const StyledOpenButton = styled(Link)`
   margin-right: 20px;
   border-radius: 8px;
   background: var(--btn-transparent-bg);

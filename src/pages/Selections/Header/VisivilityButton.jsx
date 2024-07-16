@@ -25,11 +25,36 @@ export const VisivilityButton = ({ active, onChange }) => {
 
   return (
     <StyledVisivilityButton onClick={handleToggle}>
-      <IconButton Icon={NoAIcon} active={active} />
+      <IconButton Icon={NoAIcon} active={active} className="icon-btn" />
     </StyledVisivilityButton>
   );
 };
 
 const StyledVisivilityButton = styled.button`
   margin-right: 15px;
+  .icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid var(--bg-20) !important;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    g {
+      opacity: 0.4 !important;
+    }
+    &:hover {
+      background: var(--bg-20);
+      g {
+        opacity: 1 !important;
+      }
+    }
+    &:active {
+      border: 1.2px solid #fff;
+      g {
+        opacity: 1 !important;
+      }
+    }
+  }
 `;

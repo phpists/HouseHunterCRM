@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const OpenButton = ({ onClick }) => (
   <StyledOpenButton onClick={onClick} className="toSelectionBtn">
-    Перейти в добірку
+    Перейти в підбірку
   </StyledOpenButton>
 );
 

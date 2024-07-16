@@ -61,15 +61,18 @@ const StyledMoreButton = styled.button`
   transition: all 0.3s;
   opacity: 0;
   transform: translateX(-10px);
+  overflow: hidden;
   ${({ isfocusedbtn }) =>
     isfocusedbtn === "true" &&
     `
+      overflow: visible;
    .dropdown {
       opacity: 1;
       visibility: visible;
     }
 `}
   &:focus {
+    overflow: visible;
     .dropdown {
       opacity: 1;
       visibility: visible;
