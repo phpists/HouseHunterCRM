@@ -19,6 +19,7 @@ import { FindClientsObjects } from "./FindClientsObjects";
 import { DeleteInfo } from "../../components/DeleteInfo/DeleteInfo";
 import { FastSelection } from "../../components/FastSelection/FastSelection";
 import { ObjectAdModal } from "../../components/ObjectAdModal/ObjectAdModal";
+import { ADVERTISING_ACCOUNTS } from "../../constants";
 
 export const List = ({
   selected,
@@ -248,7 +249,7 @@ export const List = ({
                     : null
                 }
                 onAdvertise={
-                  user?.id === "ae191c45f814262d747cf24d7f3799fd"
+                  ADVERTISING_ACCOUNTS.includes(user?.id)
                     ? () => setAdvertaseObject(d)
                     : null
                 }

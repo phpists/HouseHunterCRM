@@ -53,3 +53,10 @@ export const SELECTION_TAGS = [
   { title: "Рекомендовано", value: "label_recomendation" },
   { title: "Показ", value: "label_showing" },
 ];
+
+export const ADVERTISING_ACCOUNTS = [
+  "ae191c45f814262d747cf24d7f3799fd",
+  "d623867fff2e5e00e5dd9f96b202f1f1",
+  "5e1af1737b0afe306b3b166462681aa8",
+  "70f6940244c7778fceef6e1348dd9af6",
+];

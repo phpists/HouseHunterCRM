@@ -19,7 +19,7 @@ import cogoToast from "cogo-toast";
 import { useGetListAddsPublichQuery } from "../../store/objects/objects.api";
 
 const Advertising = () => {
-  const { data } = useGetListAddsPublichQuery();
+  const { data, refetch } = useGetListAddsPublichQuery();
   const [favoritesFilter, setFavoritesFilter] = useState(false);
   const [selected, setSelected] = useState([]);
   const { saveClientsCount } = useActions();
@@ -168,6 +168,7 @@ const Advertising = () => {
 
   useEffect(() => {
     handleGetClients();
+    data && refetch();
     // eslint-disable-next-line
   }, []);
 

@@ -10,6 +10,7 @@ import { ReactComponent as PhoneIcon } from "../../assets/images/phone-menu.svg"
 import { NavBarItem } from "./NavBarItem";
 import { handleCheckAccess } from "../../utilits";
 import { useAppSelect } from "../../hooks/redux";
+import { ADVERTISING_ACCOUNTS } from "../../constants";
 
 export const NavBar = ({ accessData }) => {
   const { user } = useAppSelect((state) => state.auth);
@@ -65,7 +66,7 @@ export const NavBar = ({ accessData }) => {
           },
         ]
       : []),
-    ...(user?.id === "ae191c45f814262d747cf24d7f3799fd"
+    ...(ADVERTISING_ACCOUNTS.includes(user?.id)
       ? [
           {
             icon: MarketIcon,

@@ -3,10 +3,7 @@ import { Title } from "./Title";
 import { Buttons } from "./Buttons/Buttons";
 import { BackButton } from "./BackButton";
 import { SelectItems } from "../../../components/SelectItems/SelectItems";
-import {
-  useLazyDeleteCientQuery,
-  useLazyGetNewClientsCountQuery,
-} from "../../../store/clients/clients.api";
+import { useLazyDeleteCientQuery } from "../../../store/clients/clients.api";
 import { useEffect, useState } from "react";
 import { useActions } from "../../../hooks/actions";
 import { useAppSelect } from "../../../hooks/redux";
@@ -37,16 +34,10 @@ export const Header = ({
   isDeleted,
 }) => {
   const navigate = useNavigate();
-  const [getNewClientsCount] = useLazyGetNewClientsCountQuery();
   const { saveNewClientsCount } = useActions();
-  const { newClientsCount } = useAppSelect((state) => state.clients);
   const [deleteClient] = useLazyDeleteCientQuery();
   const { accessData, user } = useAppSelect((state) => state.auth);
   const [confirmText, setConfimText] = useState("");
-
-  useEffect(() => {
-    getNewClientsCount().then((resp) => saveNewClientsCount(resp?.data?.count));
-  }, [isDeleted]);
 
   const handleDeleteClients = (isFinal) => {
     if (selected?.length > 0) {
