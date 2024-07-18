@@ -538,7 +538,22 @@ export const Base = ({
               }
             />
           )}
-
+          {onlyNotmyClient ? (
+            <CheckOption
+              label="Виключити клієнтів компанії"
+              className="check-opt"
+              value={data?.street_base_object?.onlyNotClientsCompany}
+              onChange={() =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  onlyNotClientsCompany:
+                    data?.street_base_object?.onlyNotClientsCompany === "1"
+                      ? undefined
+                      : "1",
+                })
+              }
+            />
+          ) : null}
           {countObjectOwner ? (
             <Ranger
               label="Кількість об'єктів за номером"
@@ -565,22 +580,6 @@ export const Base = ({
               }
               onFocus={onFocus}
               onBlur={onBlur}
-            />
-          ) : null}
-          {onlyNotmyClient ? (
-            <CheckOption
-              label="Виключити клієнтів компанії"
-              className="check-opt"
-              value={data?.street_base_object?.onlyNotmyClient}
-              onChange={() =>
-                onChange("street_base_object", {
-                  ...data?.street_base_object,
-                  onlyNotmyClient:
-                    data?.street_base_object?.onlyNotmyClient === "1"
-                      ? undefined
-                      : "1",
-                })
-              }
             />
           ) : null}
         </>
