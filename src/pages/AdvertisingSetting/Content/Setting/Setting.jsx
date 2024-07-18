@@ -13,29 +13,11 @@ import { Footer } from "./Footer/Footer";
 
 export const Setting = ({ data, onChange, onCreate }) => {
   const { user } = useAppSelect((state) => state.auth);
-  const { data: adverstionResources } = useGetAdverstionResourceQuery();
 
   return (
     <StyledSetting className="content-card">
       <div className="fields">
-        <SelectTags
-          label="Торговий майданчик"
-          placeholder="Оберіть"
-          options={
-            adverstionResources?.resource
-              ? adverstionResources?.resource?.map((r) => ({
-                  title: r.name,
-                  value: r?.id,
-                }))
-              : []
-          }
-          value={data?.place}
-          onChange={(val) => onChange("place", val)}
-          isSearch
-          notMultiSelect
-        />
-
-        {data?.place === "1" ? (
+        {data?.id === "1" ? (
           <>
             <Divider />
             <Button

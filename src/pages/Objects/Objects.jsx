@@ -288,7 +288,7 @@ const Objects = () => {
             dataRef.current = updatedObjects;
             setObjects(updatedObjects);
 
-            if (isFirstRequest.current || !isApply) {
+            if (isFirstRequest.current) {
               isFirstRequest.current = false;
               getAllObjects({ ...data, only_count_item: "1" }).then((resp) =>
                 saveObjectsCount(resp?.data?.count_item ?? 0)
@@ -468,9 +468,7 @@ const Objects = () => {
       price_currency: "1",
     };
 
-    const objUrl = `/objects?findSelectionSimilar=true${Object.entries(
-      objData
-    )
+    const objUrl = `/objects?findSelectionSimilar=true${Object.entries(objData)
       ?.map((d) => `&${d[0]}=${d[1]}`)
       ?.join("")}`;
 

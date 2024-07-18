@@ -6,25 +6,24 @@ import { useLazyConnectAccountQuery } from "../../store/auth/auth.api";
 import { handleResponse } from "../../utilits";
 import { Content } from "./Content/Content";
 import { Header } from "./Header/Header";
+import { useGetAdverstionResourceQuery } from "../../store/objects/objects.api";
 
 const AdvertisingSetting = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [connectAccount] = useLazyConnectAccountQuery();
-  const [templates, setTemplates] = useState([{}]);
-  const [selectedTemplate, setSelectedTemplate] = useState(templates[0]);
+  const { data: adverstionResources } = useGetAdverstionResourceQuery();
+  const [selectedTemplate, setSelectedTemplate] = useState(
+    adverstionResources?.resource?.[0]
+  );
 
-  const handleCreateTemplate = () => {
-    setTemplates([...templates, { id: templates?.length }]);
-  };
+  useEffect(() => {
+    !selectedTemplate &&
+      setSelectedTemplate(adverstionResources?.resource?.[0]);
+  }, [adverstionResources]);
 
   const handleChangeField = (field, value) => {
     setSelectedTemplate({ ...selectedTemplate, [field]: value });
-    setTemplates(
-      templates?.map((t) =>
-        t.id === selectedTemplate?.id ? { ...t, [field]: value } : t
-      )
-    );
   };
 
   const handleSelectTemplate = (template) => setSelectedTemplate(template);
@@ -67,10 +66,9 @@ const AdvertisingSetting = () => {
     <StyledAdvertisingSetting>
       <Header selectedTemplate={selectedTemplate} />
       <Content
-        templates={templates}
-        selectedTemplate={selectedTemplate}
+        resources={adverstionResources?.resource}
+        selectedResources={selectedTemplate}
         onChange={handleChangeField}
-        onCreate={handleCreateTemplate}
         onSelect={handleSelectTemplate}
       />
     </StyledAdvertisingSetting>

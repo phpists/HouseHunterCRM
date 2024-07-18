@@ -5,8 +5,8 @@ import { Setting } from "./Setting/Setting";
 import { useGetStatusAccountQuery } from "../../../store/objects/objects.api";
 
 export const Content = ({
-  templates,
-  selectedTemplate,
+  resources,
+  selectedResources,
   onChange,
   onCreate,
   onSelect,
@@ -14,21 +14,21 @@ export const Content = ({
   const { data: status } = useGetStatusAccountQuery();
 
   return (
-    <StyledContent selectedTemplate={selectedTemplate}>
+    <StyledContent selectedTemplate={selectedResources}>
       <div>
         <Title title="Створені та Шаблони" />
         <TemplatesList
-          templates={templates}
-          selectedTemplate={selectedTemplate}
+          resources={resources}
+          selectedResources={selectedResources}
           onSelect={onSelect}
           olxAuth={!!status?.user}
         />
       </div>
-      {selectedTemplate ? (
+      {selectedResources ? (
         <div>
           <Title title="Налаштування" />
           <Setting
-            data={selectedTemplate}
+            data={selectedResources}
             onChange={onChange}
             onCreate={onCreate}
           />

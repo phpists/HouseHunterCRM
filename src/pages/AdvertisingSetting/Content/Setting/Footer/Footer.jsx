@@ -7,8 +7,8 @@ import { IconButton } from "../../../../../components/IconButton";
 export const Footer = ({ onCreate }) => (
   <StyledFooter className="flex items-center">
     <SaveButton />
-    <IconButton Icon={RemoveIcon} />
-    <IconButton Icon={PlusIcon} onClick={onCreate} />
+    {/* <IconButton Icon={RemoveIcon} />
+    <IconButton Icon={PlusIcon} onClick={onCreate} /> */}
   </StyledFooter>
 );
 

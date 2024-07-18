@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Card = ({ selected, onSelect, last, olxAuth }) => (
+export const Card = ({ selected, onSelect, last, olxAuth, name }) => (
   <StyledCard
     className={`flex items-center justify-between ${selected && "active"}`}
     onClick={onSelect}
@@ -11,12 +11,16 @@ export const Card = ({ selected, onSelect, last, olxAuth }) => (
       <div className="subtitle">Назва</div>
     </div> */}
     <div>
-      <div className="value">OLX</div>
+      <div className="value">{name}</div>
       <div className="subtitle">Майданчик</div>
     </div>
     <div className="right">
       <div className="value ">
-        {olxAuth ? "Авторизовано" : "Не авторизовано"}
+        {name === "olx"
+          ? olxAuth
+            ? "Авторизовано"
+            : "Не авторизовано"
+          : "Не авторизовано"}
       </div>
       <div className="subtitle">Авторизація</div>
     </div>

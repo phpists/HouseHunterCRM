@@ -48,6 +48,7 @@ export const Base = ({
   requestPage,
   allObjectsWorker,
   publicAccess,
+  onlyNotmyClient,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -564,6 +565,22 @@ export const Base = ({
               }
               onFocus={onFocus}
               onBlur={onBlur}
+            />
+          ) : null}
+          {onlyNotmyClient ? (
+            <CheckOption
+              label="Виключити клієнтів компанії"
+              className="check-opt"
+              value={data?.street_base_object?.onlyNotmyClient}
+              onChange={() =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  onlyNotmyClient:
+                    data?.street_base_object?.onlyNotmyClient === "1"
+                      ? undefined
+                      : "1",
+                })
+              }
             />
           ) : null}
         </>

@@ -5,22 +5,23 @@ import { Empty } from "../../../../components/Empty";
 import React from "react";
 
 export const TemplatesList = ({
-  templates,
-  selectedTemplate,
+  resources,
+  selectedResources,
   onSelect,
   olxAuth,
 }) => (
   <StyledTemplatesList>
-    {templates?.length > 0 ? (
+    {resources?.length > 0 ? (
       <div className="list-wrapper content-card">
-        {templates?.map((t, i) => (
+        {resources?.map((t, i) => (
           <React.Fragment key={i}>
             <Card
               key={i}
               onSelect={() => onSelect(t)}
-              selected={selectedTemplate?.id === t?.id}
-              last={i === templates?.length - 1}
+              selected={selectedResources?.id === t?.id}
+              last={i === resources?.length - 1}
               olxAuth={olxAuth}
+              name={t?.name}
             />
           </React.Fragment>
         ))}

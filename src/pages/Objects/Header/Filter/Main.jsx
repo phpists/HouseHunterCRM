@@ -425,6 +425,7 @@ export const Main = ({
         countObjectOwner
         allObjectsWorker
         publicAccess
+        onlyNotmyClient
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
       />
