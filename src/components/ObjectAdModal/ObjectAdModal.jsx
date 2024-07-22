@@ -5,7 +5,10 @@ import { Header } from "./Header/Header";
 import { Platforms } from "./Platforms/Platforms";
 import { Info } from "./Info/Info";
 import { useEffect, useState } from "react";
-import { useLazyPublishObjectQuery } from "../../store/objects/objects.api";
+import {
+  useGetStatusAccountQuery,
+  useLazyPublishObjectQuery,
+} from "../../store/objects/objects.api";
 import { handleResponse } from "../../utilits";
 import cogoToast from "cogo-toast";
 
@@ -16,6 +19,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
   });
   const [loading, setLoading] = useState(false);
   const [publishObject] = useLazyPublishObjectQuery();
+  const { data: adAAccounts } = useGetStatusAccountQuery();
 
   const handleChangeField = (field, value) =>
     setData({ ...data, [field]: value });
@@ -29,7 +33,10 @@ export const ObjectAdModal = ({ onClose, object }) => {
 
   const handleSubmit = () => {
     setLoading(true);
-    publishObject(object?.id).then((resp) => {
+    publishObject({
+      id_obj: object?.id,
+      id_user_olx: adAAccounts?.accounts?.[0]?.data?.id,
+    }).then((resp) => {
       setLoading(false);
       handleResponse(resp, () => {
         const messages = {

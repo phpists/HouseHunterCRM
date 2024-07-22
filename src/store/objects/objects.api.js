@@ -533,7 +533,7 @@ export const objects = createApi({
       }),
     }),
     publishObject: build.query({
-      query: (id_obj) => ({
+      query: ({ id_obj, id_user_olx }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -542,6 +542,7 @@ export const objects = createApi({
           mod: "publication",
           resource: "olx",
           id_obj,
+          id_user_olx,
         }),
       }),
     }),

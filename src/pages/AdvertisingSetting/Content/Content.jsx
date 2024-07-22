@@ -21,7 +21,7 @@ export const Content = ({
           resources={resources}
           selectedResources={selectedResources}
           onSelect={onSelect}
-          olxAuth={!!status?.user}
+          olxAuth={!!status?.accounts?.[0]?.data?.id}
         />
       </div>
       {selectedResources ? (
