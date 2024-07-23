@@ -1,21 +1,26 @@
 import styled from "styled-components";
 import { Card } from "./Card";
 import olxIcon from "../../../../assets/images/olx.png";
+import { useGetStatusAccountQuery } from "../../../../store/objects/objects.api";
 
-const PLATFORMS = [
-  { icon: olxIcon, title: "olx" },
-  { icon: olxIcon, title: "olx" },
-  { icon: olxIcon, title: "olx" },
-  { icon: olxIcon, title: "olx" },
-];
+export const List = ({ data, onChange }) => {
+  const { data: accounts } = useGetStatusAccountQuery();
 
-export const List = () => (
-  <StyledList>
-    {PLATFORMS?.map(({ title, icon }, i) => (
-      <Card key={i} icon={icon} title={title} />
-    ))}
-  </StyledList>
-);
+  console.log(accounts);
+  return (
+    <StyledList>
+      {accounts?.accounts?.map((account, i) => (
+        <Card
+          key={i}
+          icon={olxIcon}
+          title={account?.data?.email}
+          onClick={() => onChange("id_user_olx", account?.data?.id)}
+          active={data?.id_user_olx === account?.data?.id}
+        />
+      ))}
+    </StyledList>
+  );
+};
 
 const StyledList = styled.div`
   display: grid;

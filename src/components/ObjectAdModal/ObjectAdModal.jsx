@@ -16,6 +16,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
   const [data, setData] = useState({
     title: "",
     desciption: "",
+    id_user_olx: null,
   });
   const [loading, setLoading] = useState(false);
   const [publishObject] = useLazyPublishObjectQuery();
@@ -35,7 +36,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
     setLoading(true);
     publishObject({
       id_obj: object?.id,
-      id_user_olx: adAAccounts?.accounts?.[0]?.data?.id,
+      id_user_olx: data?.id_user_olx,
     }).then((resp) => {
       setLoading(false);
       handleResponse(resp, () => {
@@ -71,9 +72,13 @@ export const ObjectAdModal = ({ onClose, object }) => {
       <div className="modal-wrapper">
         <CloseButton onClick={onClose} />
         <Title />
-        <Header onSubmit={handleSubmit} loading={loading} />
+        <Header
+          onSubmit={handleSubmit}
+          loading={loading}
+          disabled={!data?.id_user_olx}
+        />
         <div className="content">
-          <Platforms />
+          <Platforms data={data} onChange={handleChangeField} />
           <Info data={data} onChange={handleChangeField} />
         </div>
       </div>

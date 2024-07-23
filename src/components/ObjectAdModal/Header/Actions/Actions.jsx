@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { SubmitButton } from "./SubmitButton";
 import { CancelButton } from "./CancelButton";
 
-export const Actions = ({ onSubmit, loading }) => (
+export const Actions = ({ onSubmit, loading, disabled }) => (
   <StyledActions className="flex items-center">
-    <SubmitButton onClick={onSubmit} loading={loading} />
+    <SubmitButton onClick={onSubmit} loading={loading} disabled={disabled} />
     <CancelButton disabled={loading} />
   </StyledActions>
 );

@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { Title } from "./Title";
 import { List } from "./List/List";
 
-export const Platforms = () => {
+export const Platforms = ({ data, onChange }) => {
   return (
     <StyledPlatforms>
       <Title />
-      <List />
+      <List data={data} onChange={onChange} />
     </StyledPlatforms>
   );
 };

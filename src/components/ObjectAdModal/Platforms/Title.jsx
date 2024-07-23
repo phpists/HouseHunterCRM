@@ -3,14 +3,15 @@ import { CheckOption } from "../../CheckOption";
 
 export const Title = () => (
   <StyledTitle>
-    <CheckOption onlyCheck small />
+    {/* <CheckOption onlyCheck small /> */}
     <span>Дошки оголошень</span>
   </StyledTitle>
 );
 
 const StyledTitle = styled.div`
   display: grid;
-  grid-template-columns: 17px 1fr;
+  /* grid-template-columns: 17px 1fr; */
+  grid-template-columns: 1fr;
   gap: 15px;
   align-items: center;
   font-size: 18px;

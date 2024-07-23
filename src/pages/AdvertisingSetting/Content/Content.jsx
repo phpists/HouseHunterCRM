@@ -3,6 +3,8 @@ import { Title } from "./Title";
 import { TemplatesList } from "./TemplatesList/TemplatesList";
 import { Setting } from "./Setting/Setting";
 import { useGetStatusAccountQuery } from "../../../store/objects/objects.api";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 export const Content = ({
   resources,
@@ -11,7 +13,12 @@ export const Content = ({
   onCreate,
   onSelect,
 }) => {
-  const { data: status } = useGetStatusAccountQuery();
+  const location = useLocation();
+  const { data: status, refetch } = useGetStatusAccountQuery();
+
+  useEffect(() => {
+    status && refetch();
+  }, [location]);
 
   return (
     <StyledContent selectedTemplate={selectedResources}>
@@ -31,6 +38,7 @@ export const Content = ({
             data={selectedResources}
             onChange={onChange}
             onCreate={onCreate}
+            olxAccounts={status?.accounts}
           />
         </div>
       ) : null}

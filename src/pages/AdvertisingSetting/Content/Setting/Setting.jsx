@@ -10,22 +10,25 @@ import { Button } from "./Button";
 import { useAppSelect } from "../../../../hooks/redux";
 import { useGetAdverstionResourceQuery } from "../../../../store/objects/objects.api";
 import { Footer } from "./Footer/Footer";
+import { Accounts } from "./Accounts/Accounts";
 
-export const Setting = ({ data, onChange, onCreate }) => {
+export const Setting = ({ data, onChange, onCreate, olxAccounts }) => {
   const { user } = useAppSelect((state) => state.auth);
 
+  console.log(olxAccounts);
   return (
     <StyledSetting className="content-card">
       <div className="fields">
         {data?.id === "1" ? (
           <>
-            <Divider />
             <Button
-              title="Увійти через olx"
+              title="Додати акаунт olx"
               href={`https://www.olx.ua/uk/oauth/authorize/?client_id=201818&response_type=code&scope=read+write+v2&state=${user?.id}`}
             />
+            <Divider />
           </>
         ) : null}
+        <Accounts accounts={olxAccounts} />
         {/* <Field label="Назва" value="Реклама OLX test" />
     <Divider />
     <ObjectsCountInput />
