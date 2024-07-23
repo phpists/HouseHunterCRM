@@ -6,16 +6,27 @@ import { useGetStatusAccountQuery } from "../../../../store/objects/objects.api"
 export const List = ({ data, onChange }) => {
   const { data: accounts } = useGetStatusAccountQuery();
 
-  console.log(accounts);
   return (
     <StyledList>
       {accounts?.accounts?.map((account, i) => (
         <Card
           key={i}
           icon={olxIcon}
-          title={account?.data?.email}
-          onClick={() => onChange("id_user_olx", account?.data?.id)}
-          active={data?.id_user_olx === account?.data?.id}
+          title={
+            account?.data?.name ??
+            account?.data?.phone ??
+            account?.data?.email ??
+            account?.data?.id
+          }
+          onClick={() =>
+            onChange(
+              "id_user_olx",
+              data?.id_user_olx?.includes(account?.data?.id)
+                ? data?.id_user_olx.filter((id) => id !== account?.data?.id)
+                : [...data?.id_user_olx, account?.data?.id]
+            )
+          }
+          active={data?.id_user_olx?.includes(account?.data?.id)}
         />
       ))}
     </StyledList>

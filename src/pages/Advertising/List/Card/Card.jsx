@@ -6,7 +6,13 @@ import { Agent } from "./Agent/Agent";
 import { Comment } from "./Comment";
 import { MoreButton } from "../../../../components/MoreButton/MoreButton";
 
-export const Card = ({ selected, onSelect, publicateDate, status }) => {
+export const Card = ({
+  selected,
+  onSelect,
+  publicateDate,
+  status,
+  olxInfo,
+}) => {
   const handleClick = (e) => {
     e.target.classList.contains("card") && onSelect();
   };
@@ -20,10 +26,17 @@ export const Card = ({ selected, onSelect, publicateDate, status }) => {
       <Object publicateDate={publicateDate} status={status} />
       <Divider className="object-divider" />
       <div className="flex items-center  mobile-footer">
-        <div className="flex items-center w-full mobile-footer-main ">
-          <Platform />
-          <Divider />
-          <Agent />
+        <div className="flex items-center mobile-footer-main ">
+          <Platform
+            title={
+              olxInfo?.data?.name ??
+              olxInfo?.data?.phone ??
+              olxInfo?.data?.email ??
+              olxInfo?.data?.id
+            }
+          />
+          {/* <Divider />
+          <Agent /> */}
           <Divider className="agent-divider" />
         </div>
         <div className="flex items-center w-full ">

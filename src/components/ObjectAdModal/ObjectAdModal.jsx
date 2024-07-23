@@ -16,7 +16,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
   const [data, setData] = useState({
     title: "",
     desciption: "",
-    id_user_olx: null,
+    id_user_olx: [],
   });
   const [loading, setLoading] = useState(false);
   const [publishObject] = useLazyPublishObjectQuery();
@@ -29,40 +29,43 @@ export const ObjectAdModal = ({ onClose, object }) => {
     setData({
       title: object?.title ?? "",
       description: object?.description?.replaceAll("<br />", "\n") ?? "",
+      id_user_olx: [],
     });
   }, [object]);
 
   const handleSubmit = () => {
     setLoading(true);
-    publishObject({
-      id_obj: object?.id,
-      id_user_olx: data?.id_user_olx,
-    }).then((resp) => {
-      setLoading(false);
-      handleResponse(resp, () => {
-        const messages = {
-          new: "Нове оголошення, до активації та провірки",
-          active: "Опубліковано на olx",
-          limited:
-            "Вичерпаний ліміт безкоштовних оголошень у вибраній категорії",
-          removed_by_user: "Видалено користувачем",
-          outdated: "Оголошення досягло дати придатності",
-          unconfirmed: "Оголошення очікує на підтвердження ",
-          unpaid: "Очікується оплата",
-          moderated: "Відхилено модератором",
-          blocked: "Заблоковано модератором",
-          disabled:
-            "Вимкнено модерацією, пропозиція заблокована та очікує перевірки",
-          removed_by_moderator: "Видалено",
-        };
-        onClose();
-        cogoToast.info(
-          messages[resp?.data?.status] ?? "Оголошення успішно опубліковано",
-          {
-            hideAfter: 3,
-            position: "top-right",
-          }
-        );
+    data?.id_user_olx?.forEach((id_user_olx) => {
+      publishObject({
+        id_obj: object?.id,
+        id_user_olx,
+      }).then((resp) => {
+        setLoading(false);
+        handleResponse(resp, () => {
+          const messages = {
+            new: "Нове оголошення, до активації та провірки",
+            active: "Опубліковано на olx",
+            limited:
+              "Вичерпаний ліміт безкоштовних оголошень у вибраній категорії",
+            removed_by_user: "Видалено користувачем",
+            outdated: "Оголошення досягло дати придатності",
+            unconfirmed: "Оголошення очікує на підтвердження ",
+            unpaid: "Очікується оплата",
+            moderated: "Відхилено модератором",
+            blocked: "Заблоковано модератором",
+            disabled:
+              "Вимкнено модерацією, пропозиція заблокована та очікує перевірки",
+            removed_by_moderator: "Видалено",
+          };
+          onClose();
+          cogoToast.info(
+            messages[resp?.data?.status] ?? "Оголошення успішно опубліковано",
+            {
+              hideAfter: 3,
+              position: "top-right",
+            }
+          );
+        });
       });
     });
   };
@@ -75,7 +78,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
         <Header
           onSubmit={handleSubmit}
           loading={loading}
-          disabled={!data?.id_user_olx}
+          disabled={data?.id_user_olx?.length === 0}
         />
         <div className="content">
           <Platforms data={data} onChange={handleChangeField} />

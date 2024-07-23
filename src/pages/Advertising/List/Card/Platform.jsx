@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import logo from "../../../../assets/images/olx.png";
 
-export const Platform = () => (
+export const Platform = ({ title }) => (
   <StyledPlatform className="flex items-center" logo={logo}>
     <div></div>
-    <span>olx</span>
+    <span>{title}</span>
   </StyledPlatform>
 );
 

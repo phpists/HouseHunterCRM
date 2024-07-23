@@ -9,6 +9,7 @@ import { Loader } from "../../../components/Loader";
 import { EditComment } from "./EditComment";
 import { useAppSelect } from "../../../hooks/redux";
 import { DeleteInfo } from "../../../components/DeleteInfo/DeleteInfo";
+import { useGetStatusAccountQuery } from "../../../store/objects/objects.api";
 
 export const List = ({
   selected,
@@ -32,6 +33,7 @@ export const List = ({
   const { data: phonesCodes } = useGetPhonesCodesQuery();
   const [confirmText, setConfimText] = useState("");
   const [deleteInfo, setDeleteInfo] = useState(null);
+  const { data: accounts } = useGetStatusAccountQuery();
 
   const handleOpenDeleteModal = (id, isFinally) => {
     setDeleteModal(id);
@@ -45,7 +47,6 @@ export const List = ({
     setConfimText("");
   };
 
-  console.log(data);
   return (
     <>
       {deleteModal && (
@@ -77,16 +78,21 @@ export const List = ({
         {data?.length === 0 || actionLoading ? (
           <Empty loading={loading || actionLoading} />
         ) : (
-          data?.map(({ id, id_resource, status, dt_publicate }, i) => (
-            <Card
-              key={i}
-              selected={!!selected.find((s) => s === id)}
-              onSelect={() => onSelect(id)}
-              id_resource={id_resource}
-              status={status}
-              publicateDate={dt_publicate}
-            />
-          ))
+          data?.map(
+            ({ id, id_resource, status, dt_publicate, id_user_olx }, i) => (
+              <Card
+                key={i}
+                selected={!!selected.find((s) => s === id)}
+                onSelect={() => onSelect(id)}
+                id_resource={id_resource}
+                status={status}
+                publicateDate={dt_publicate}
+                olxInfo={accounts?.accounts?.find(
+                  (a) => a.data?.id?.toString() === id_user_olx
+                )}
+              />
+            )
+          )
         )}
         <div className="loader relative">
           {loading && clients?.length > 0 && (

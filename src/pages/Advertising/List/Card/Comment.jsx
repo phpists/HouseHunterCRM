@@ -13,6 +13,7 @@ const StyledComment = styled.div`
   height: 60px;
   min-width: 204px;
   padding: 9px 8px 11px;
+  width: 100%;
   .value {
     font-size: 14px;
     font-weight: var(--font-weight-100);
