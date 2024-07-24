@@ -1,9 +1,15 @@
 import styled from "styled-components";
+import { useGetRubricsQuery } from "../../../../../../store/requests/requests.api";
 
-export const Description = ({ text }) => (
-  <StyledDescription>{text}</StyledDescription>
-);
+export const Description = ({ rubricId }) => {
+  const { data: rubricsList } = useGetRubricsQuery();
 
+  return (
+    <StyledDescription>
+      {rubricsList?.find((r) => r.id === rubricId)?.name}
+    </StyledDescription>
+  );
+};
 const StyledDescription = styled.div`
   font-size: 11px;
   font-weight: var(--font-weight-100);

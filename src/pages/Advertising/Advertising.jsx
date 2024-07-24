@@ -16,7 +16,10 @@ import {
   handleResponse,
 } from "../../utilits";
 import cogoToast from "cogo-toast";
-import { useGetListAddsPublichQuery } from "../../store/objects/objects.api";
+import {
+  useGetListAddsPublichQuery,
+  useLazyDeleteAdQuery,
+} from "../../store/objects/objects.api";
 
 const Advertising = () => {
   const { data, refetch } = useGetListAddsPublichQuery();
@@ -44,7 +47,7 @@ const Advertising = () => {
     !!prevClientsFilters && !!JSON.parse(prevClientsFilters)
   );
   const [allCount, setAllCount] = useState(0);
-  const [deleteClient] = useLazyDeleteCientQuery();
+  const [deleteAd] = useLazyDeleteAdQuery();
   const [loading, setLoading] = useState(false);
   const dataRef = useRef([]);
   const allCountRef = useRef(0);
@@ -53,7 +56,6 @@ const Advertising = () => {
   const [actionLoading, setActionLoading] = useState(false);
   const isFirstRender = useRef(true);
   const isFirstRequest = useRef(true);
-  const [restoreClients] = useLazyRestoreClientsQuery();
   const [isDeleted, setIsDeleted] = useState(filter?.filters?.show_deleted);
 
   const handleChangeFilter = (field, value) =>
@@ -209,25 +211,18 @@ const Advertising = () => {
   };
 
   const handleSelectAll = (isReset, count) => {
-    const clientsIds = clients?.map((c) => c.id);
-    setSelected(isReset ? [] : clientsIds);
+    const ids = data?.data?.map((c) => c.id_obj);
+    setSelected(isReset ? [] : ids);
   };
 
-  const handleDeleteClient = (clientId, reasone_remove, isFinally) => {
-    deleteClient({
-      id_client: [clientId],
-      final_remove:
-        filter?.filters?.show_deleted || isFinally ? "1" : undefined,
-      reasone_remove,
-    }).then((resp) => {
+  const handleDeleteAd = ({ id_user_olx, id_obj }) => {
+    deleteAd({ id_user_olx, id_obj }).then((resp) => {
       handleResponse(resp, () => {
-        cogoToast.success("Клієнта успішно видалено", {
+        cogoToast.success("Оголошення успішно видалено", {
           hideAfter: 3,
           position: "top-right",
         });
-        setClients(clients.filter((c) => c.id !== clientId));
-        saveClientsCount(allCount - 1);
-        setAllCount(allCount - 1);
+        refetch();
       });
     });
   };
@@ -307,28 +302,9 @@ const Advertising = () => {
     setClients(updatedClients);
   };
 
-  const handleDeleteClients = (ids, isSelected) => {
-    saveClientsCount(allCount - ids?.length);
-    setAllCount(allCount - ids?.length);
-    setClients(clients.filter((c) => !ids.find((sc) => sc === c.id)));
+  const handleDeleteAds = (ids, isSelected) => {
+    refetch();
     isSelected && setSelected([]);
-  };
-
-  const handleRestore = (ids, isSelected) => {
-    if (ids?.length > 0) {
-      restoreClients(ids).then((resp) =>
-        handleResponse(resp, () => {
-          handleDeleteClients(ids, isSelected);
-          cogoToast.success(
-            `Клієнт${ids?.length === 1 ? "а" : "ів"} успішно відновлено`,
-            {
-              hideAfter: 3,
-              position: "top-right",
-            }
-          );
-        })
-      );
-    }
   };
 
   return (
@@ -345,15 +321,14 @@ const Advertising = () => {
         searchPhoneCodeSecond={searchPhoneCodeSecond}
         onChangeSearchCodeSecond={(val) => setSearchPhoneCodeSecond(val)}
         onApplyFilters={handleApplyFilters}
-        allCount={allCount}
+        allCount={data?.data?.length}
         onSelectAll={handleSelectAll}
         selected={selected}
-        onDelete={() => handleDeleteClients(selected, true)}
+        onDelete={() => handleDeleteAds(selected, true)}
         onFavorite={handleAddClientsToFavorite}
-        onSendClients={() => setSendClients(selected)}
         onChangeActionLoading={(val) => setActionLoading(val)}
-        onRestore={() => handleRestore(selected, true)}
         isDeleted={isDeleted}
+        data={data?.data ?? []}
       />
       <List
         data={data?.data ?? []}
@@ -361,13 +336,12 @@ const Advertising = () => {
         onSelect={handleSelectClient}
         clients={clients}
         innerRef={listRef}
-        onDelete={handleDeleteClient}
+        onDelete={handleDeleteAd}
         loading={loading}
         onAddToFavorite={handleAddClientToFavorite}
         onSend={handleSendClient}
         actionLoading={actionLoading}
         onChangeComment={handleChangeComment}
-        onRestore={handleRestore}
         isDeleted={filter?.filters?.show_deleted}
       />
     </StyledAdvertising>

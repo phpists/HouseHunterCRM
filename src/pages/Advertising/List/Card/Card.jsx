@@ -12,6 +12,11 @@ export const Card = ({
   publicateDate,
   status,
   olxInfo,
+  title,
+  rubricId,
+  img,
+  onDelete,
+  urlResource,
 }) => {
   const handleClick = (e) => {
     e.target.classList.contains("card") && onSelect();
@@ -23,7 +28,13 @@ export const Card = ({
       onClick={handleClick}
       selected={selected}
     >
-      <Object publicateDate={publicateDate} status={status} />
+      <Object
+        publicateDate={publicateDate}
+        status={status}
+        img={img}
+        title={title}
+        rubricId={rubricId}
+      />
       <Divider className="object-divider" />
       <div className="flex items-center  mobile-footer">
         <div className="flex items-center mobile-footer-main ">
@@ -42,7 +53,11 @@ export const Card = ({
         <div className="flex items-center w-full ">
           <Comment />
           <Divider />
-          <MoreButton />
+          <MoreButton
+            noFavorite
+            onDelete={onDelete}
+            urlResource={urlResource}
+          />
         </div>
       </div>
     </StyledCard>

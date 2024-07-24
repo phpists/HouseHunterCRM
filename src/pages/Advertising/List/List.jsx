@@ -3,11 +3,8 @@ import { Card } from "./Card/Card";
 import { Empty } from "../../../components/Empty/Empty";
 import { useState } from "react";
 import { Confirm } from "../../../components/Confirm/Confirm";
-import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
-import { handleCheckAccess } from "../../../utilits";
 import { Loader } from "../../../components/Loader";
 import { EditComment } from "./EditComment";
-import { useAppSelect } from "../../../hooks/redux";
 import { DeleteInfo } from "../../../components/DeleteInfo/DeleteInfo";
 import { useGetStatusAccountQuery } from "../../../store/objects/objects.api";
 
@@ -18,49 +15,31 @@ export const List = ({
   innerRef,
   onDelete,
   loading,
-  onAddToFavorite,
-  onSend,
   actionLoading,
   onChangeComment,
-  onRestore,
-  isDeleted,
   data,
 }) => {
   const [deleteModal, setDeleteModal] = useState(null);
-  const [isDeleteFinally, setIsDeleteFinally] = useState(null);
   const [editComment, setEditComment] = useState(false);
-  const { accessData, user } = useAppSelect((state) => state.auth);
-  const { data: phonesCodes } = useGetPhonesCodesQuery();
-  const [confirmText, setConfimText] = useState("");
   const [deleteInfo, setDeleteInfo] = useState(null);
   const { data: accounts } = useGetStatusAccountQuery();
 
-  const handleOpenDeleteModal = (id, isFinally) => {
-    setDeleteModal(id);
-    setIsDeleteFinally(isFinally);
-    setConfimText("");
+  const handleOpenDeleteModal = (data) => {
+    setDeleteModal(data);
   };
 
   const handleDelete = () => {
-    onDelete(deleteModal, confirmText, isDeleteFinally);
+    onDelete(deleteModal);
     setDeleteModal(null);
-    setConfimText("");
   };
 
   return (
     <>
       {deleteModal && (
         <Confirm
-          title={
-            isDeleteFinally || isDeleted
-              ? "Видалити клієнта остаточно?"
-              : "Видалити клієнта?"
-          }
+          title={"Видалити оголошення?"}
           onSubmit={handleDelete}
           onClose={() => setDeleteModal(null)}
-          passwordCheck={isDeleted || isDeleteFinally}
-          confirmText={isDeleteFinally || isDeleted ? null : confirmText}
-          onChangeConfirmText={(val) => setConfimText(val)}
         />
       )}
       {editComment && (
@@ -79,17 +58,36 @@ export const List = ({
           <Empty loading={loading || actionLoading} />
         ) : (
           data?.map(
-            ({ id, id_resource, status, dt_publicate, id_user_olx }, i) => (
+            (
+              {
+                id,
+                id_resource,
+                status,
+                dt_publicate,
+                id_user_olx,
+                url_resource,
+                img,
+                title,
+                id_rubric,
+                id_obj,
+              },
+              i
+            ) => (
               <Card
                 key={i}
-                selected={!!selected.find((s) => s === id)}
-                onSelect={() => onSelect(id)}
+                selected={!!selected.find((s) => s === id_obj)}
+                onSelect={() => onSelect(id_obj)}
                 id_resource={id_resource}
                 status={status}
                 publicateDate={dt_publicate}
                 olxInfo={accounts?.accounts?.find(
                   (a) => a.data?.id?.toString() === id_user_olx
                 )}
+                title={title}
+                rubricId={id_rubric}
+                img={img}
+                onDelete={() => handleOpenDeleteModal({ id_user_olx, id_obj })}
+                urlResource={url_resource}
               />
             )
           )

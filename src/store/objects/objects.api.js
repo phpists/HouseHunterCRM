@@ -546,6 +546,20 @@ export const objects = createApi({
         }),
       }),
     }),
+    deleteAd: build.query({
+      query: ({ id_obj, id_user_olx }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "deleteAdds",
+          mod: "publication",
+          resource: "olx",
+          id_obj,
+          id_user_olx,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -590,4 +604,5 @@ export const {
   useGetStatusAccountQuery,
   useGetListAddsPublichQuery,
   useLazyPublishObjectQuery,
+  useLazyDeleteAdQuery
 } = objects;

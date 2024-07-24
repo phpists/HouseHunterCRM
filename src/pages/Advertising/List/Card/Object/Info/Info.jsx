@@ -4,11 +4,11 @@ import { Description } from "./Description";
 import { Status } from "./Status";
 import { handleFormatDate } from "../../../../../../utilits";
 
-export const Info = ({ publicateDate, status }) => (
+export const Info = ({ publicateDate, status, title, rubricId }) => (
   <StyledInfo>
     <div>
-      <Title />
-      <Description text="Оренда квартири" />
+      <Title title={title} />
+      <Description rubricId={rubricId} />
     </div>
     <div>
       <Status status={status} />

@@ -84,18 +84,16 @@ export const Buttons = ({
         favoritesFilter={favoritesFilter}
       />
       <SelectItems
-        title="клієнтів"
+        title="оголошень"
         className="select-wrapper-desktop"
         selectedCount={selectedCount}
         allCount={allCount}
         onSelectAll={onSelectAll}
         onToggleFavorite={isDeleted ? null : onFavorite}
-        onDelete={
-          isDeleted ? (user?.struct_level === 1 ? onDelete : null) : onDelete
-        }
+        onDelete={onDelete}
         deleteConfirmTitle={deleteConfirmTitle}
         onSend={isDeleted ? null : onSendClients}
-        noFavorite={isDeleted}
+        noFavorite
         onRestore={onRestore}
         onDeleteFinally={onDeleteFinally}
         finalDeleteConfirmTitle={finalDeleteConfirmTitle}

@@ -10,6 +10,7 @@ import { useAppSelect } from "../../../hooks/redux";
 import cogoToast from "cogo-toast";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
 import { useNavigate } from "react-router-dom";
+import { useLazyDeleteAdQuery } from "../../../store/objects/objects.api";
 
 export const Header = ({
   favoritesFilter,
@@ -28,43 +29,26 @@ export const Header = ({
   selected,
   onDelete,
   onFavorite,
-  onSendClients,
   onChangeActionLoading,
-  onRestore,
   isDeleted,
+  data,
 }) => {
-  const navigate = useNavigate();
-  const { saveNewClientsCount } = useActions();
-  const [deleteClient] = useLazyDeleteCientQuery();
+  const [deleteAd] = useLazyDeleteAdQuery();
   const { accessData, user } = useAppSelect((state) => state.auth);
   const [confirmText, setConfimText] = useState("");
 
-  const handleDeleteClients = (isFinal) => {
+  const handleDeleteAds = () => {
     if (selected?.length > 0) {
-      onChangeActionLoading(true);
-      deleteClient({
-        id_client: selected,
-        final_remove: isFinal ? "1" : undefined,
-        reasone_remove: confirmText,
-      }).then((resp) => {
-        handleResponse(
-          resp,
-          () => {
-            cogoToast.success(
-              `Клієнт${selected?.length === 1 ? "a" : "ів"} успішно видалено`,
-              {
-                hideAfter: 3,
-                position: "top-right",
-              }
-            );
-
-            if (isFinal || !filter?.filters?.show_deleted) {
-              onDelete();
-            }
-            onChangeActionLoading(false);
-          },
-          () => onChangeActionLoading(false)
-        );
+      const selectedAds = data?.filter((a) => selected?.includes(a?.id_obj));
+      Promise.all(
+        selectedAds?.map(({ id_user_olx, id_obj }) =>
+          deleteAd({ id_user_olx, id_obj })
+        )
+      ).then((resp) => {
+        onDelete();
+        resp?.forEach((res) => {
+          handleResponse(res);
+        });
       });
     }
   };
@@ -75,11 +59,8 @@ export const Header = ({
         <div className="flex items-center">
           {favoritesFilter && <BackButton onClick={onToggleFavoriteFilter} />}
           <Title title={`Обрано ${selectedCount}`} isDeleted={isDeleted} />
-          {/* {favoritesFilter && <Subtitle subtitle="54 обрано" />} */}
         </div>
         <Buttons
-          favoritesFilter={favoritesFilter}
-          onToggleFavoriteFilter={onToggleFavoriteFilter}
           onRefreshData={onRefreshData}
           filter={filter}
           onChangeFilter={onChangeFilter}
@@ -91,60 +72,18 @@ export const Header = ({
           selectedCount={selectedCount}
           allCount={allCount}
           onSelectAll={onSelectAll}
-          onDelete={
-            handleCheckAccess(accessData, "clients", "delete")
-              ? handleDeleteClients
-              : null
-          }
-          deleteConfirmTitle={`Видалити клієнт${
-            selected?.length > 1 ? "ів" : "а"
-          }?`}
-          finalDeleteConfirmTitle={`Видалити клієнт${
-            selected?.length > 1 ? "ів" : "а"
-          } остаточно?`}
-          onFavorite={onFavorite}
-          onSendClients={onSendClients}
-          isDeleted={filter?.filters?.show_deleted === "1"}
-          onRestore={filter?.filters?.show_deleted === "1" ? onRestore : null}
-          onDeleteFinally={
-            user?.struct_level === 1 ? () => handleDeleteClients(true) : null
-          }
-          confirmText={confirmText}
-          onChangeConfirmText={(val) => setConfimText(val)}
+          onDelete={handleDeleteAds}
+          deleteConfirmTitle={`Видалити оголошеня?`}
         />
       </div>
       <SelectItems
-        deleteConfirmTitle={`Видалити клієнт${
-          selected?.length > 1 ? "ів" : "а"
-        }?`}
-        title="клієнтів"
+        deleteConfirmTitle={`Видалити оголошеня?`}
+        title="оголошень"
         className="select-wrapper-mobile"
         selectedCount={selectedCount}
         allCount={allCount}
         onSelectAll={onSelectAll}
-        onToggleFavorite={
-          filter?.filters?.show_deleted === "1" ? null : onFavorite
-        }
-        noFavorite={filter?.filters?.show_deleted === "1"}
-        onDelete={
-          filter?.filters?.show_deleted === "1"
-            ? user?.struct_level === 1
-              ? handleDeleteClients
-              : null
-            : handleCheckAccess(accessData, "clients", "delete")
-            ? handleDeleteClients
-            : null
-        }
-        onSend={filter?.filters?.show_deleted === "1" ? null : onSendClients}
-        onRestore={filter?.filters?.show_deleted === "1" ? onRestore : null}
-        onDeleteFinally={
-          user?.struct_level === 1 ? () => handleDeleteClients(true) : null
-        }
-        finalDeleteConfirmTitle={`Видалити клієнт${
-          selected?.length > 1 ? "ів" : "а"
-        } остаточно?`}
-        confirmText={confirmText}
-        onChangeConfirmText={(val) => setConfimText(val)}
+        onDelete={handleDeleteAds}
       />
     </StyledHeader>
   );

@@ -6,6 +6,7 @@ import { ReactComponent as EditIcon } from "../../assets/images/edit-company.svg
 import { ReactComponent as RestoreIcon } from "../../assets/images/refresh-icon.svg";
 import { ReactComponent as DownloadIcon } from "../../assets/images/file.svg";
 import { ReactComponent as DeleteInfo } from "../../assets/images/delete-info.svg";
+import { ReactComponent as Link } from "../../assets/images/link.svg";
 
 export const Dropdown = ({
   onDelete,
@@ -20,6 +21,7 @@ export const Dropdown = ({
   onDeleteFinally,
   onDownload,
   onOpenDeleteReason,
+  urlResource,
 }) => (
   <StyledDropdown className="dropdown noClickable">
     {isDeleted ? (
@@ -40,6 +42,15 @@ export const Dropdown = ({
           >
             <span className="noClickable">Відновити</span>
             <RestoreIcon className="refresh noClickable" />
+          </div>
+        )}
+        {urlResource && (
+          <div
+            className="flex items-center justify-between noClickable"
+            onClick={() => window.open(urlResource, "_blank")}
+          >
+            <span className="noClickable">Посилання на ресурс</span>
+            <Link className="refresh noClickable" />
           </div>
         )}
         {/* {!noDelete && !onDeleteFinally && (
@@ -85,6 +96,15 @@ export const Dropdown = ({
             <span className="noClickable">Редагувати</span>
             <EditIcon className="noClickable" />
           </a>
+        )}
+        {urlResource && (
+          <div
+            className="flex items-center justify-between noClickable"
+            onClick={() => window.open(urlResource, "_blank")}
+          >
+            <span className="noClickable">Посилання на оголошення</span>
+            <Link className="refresh noClickable" />
+          </div>
         )}
         {!noDelete && (
           <div
