@@ -39,6 +39,7 @@ export const Content = ({
             onChange={onChange}
             onCreate={onCreate}
             olxAccounts={status?.accounts}
+            onRefreshAccountsData={refetch}
           />
         </div>
       ) : null}

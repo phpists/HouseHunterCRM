@@ -12,10 +12,9 @@ import { useGetAdverstionResourceQuery } from "../../../../store/objects/objects
 import { Footer } from "./Footer/Footer";
 import { Accounts } from "./Accounts/Accounts";
 
-export const Setting = ({ data, onChange, onCreate, olxAccounts }) => {
+export const Setting = ({ data, olxAccounts, onRefreshAccountsData }) => {
   const { user } = useAppSelect((state) => state.auth);
 
-  console.log(olxAccounts);
   return (
     <StyledSetting className="content-card">
       <div className="fields">
@@ -28,7 +27,10 @@ export const Setting = ({ data, onChange, onCreate, olxAccounts }) => {
             <Divider />
           </>
         ) : null}
-        <Accounts accounts={olxAccounts} />
+        <Accounts
+          accounts={olxAccounts}
+          onRefreshAccountsData={onRefreshAccountsData}
+        />
         {/* <Field label="Назва" value="Реклама OLX test" />
     <Divider />
     <ObjectsCountInput />
@@ -79,7 +81,7 @@ export const Setting = ({ data, onChange, onCreate, olxAccounts }) => {
       notMultiSelect
     /> */}
       </div>
-      <Footer onCreate={onCreate} />
+      {/* <Footer onCreate={onCreate} /> */}
     </StyledSetting>
   );
 };

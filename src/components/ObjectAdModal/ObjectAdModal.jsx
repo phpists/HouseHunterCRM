@@ -6,6 +6,7 @@ import { Platforms } from "./Platforms/Platforms";
 import { Info } from "./Info/Info";
 import { useEffect, useState } from "react";
 import {
+  useGetCommentsToFieldsQuery,
   useGetStatusAccountQuery,
   useLazyPublishObjectQuery,
 } from "../../store/objects/objects.api";
@@ -21,6 +22,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
   const [loading, setLoading] = useState(false);
   const [publishObject] = useLazyPublishObjectQuery();
   const { data: adAAccounts } = useGetStatusAccountQuery();
+  const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
   const handleChangeField = (field, value) =>
     setData({ ...data, [field]: value });
@@ -41,31 +43,51 @@ export const ObjectAdModal = ({ onClose, object }) => {
         id_user_olx,
       }).then((resp) => {
         setLoading(false);
-        handleResponse(resp, () => {
-          const messages = {
-            new: "Нове оголошення, до активації та провірки",
-            active: "Опубліковано на olx",
-            limited:
-              "Вичерпаний ліміт безкоштовних оголошень у вибраній категорії",
-            removed_by_user: "Видалено користувачем",
-            outdated: "Оголошення досягло дати придатності",
-            unconfirmed: "Оголошення очікує на підтвердження ",
-            unpaid: "Очікується оплата",
-            moderated: "Відхилено модератором",
-            blocked: "Заблоковано модератором",
-            disabled:
-              "Вимкнено модерацією, пропозиція заблокована та очікує перевірки",
-            removed_by_moderator: "Видалено",
-          };
-          onClose();
-          cogoToast.info(
-            messages[resp?.data?.status] ?? "Оголошення успішно опубліковано",
-            {
-              hideAfter: 3,
-              position: "top-right",
-            }
-          );
-        });
+        handleResponse(
+          resp,
+          () => {
+            const messages = {
+              new: "Нове оголошення, до активації та провірки",
+              active: "Опубліковано на olx",
+              limited:
+                "Вичерпаний ліміт безкоштовних оголошень у вибраній категорії",
+              removed_by_user: "Видалено користувачем",
+              outdated: "Оголошення досягло дати придатності",
+              unconfirmed: "Оголошення очікує на підтвердження ",
+              unpaid: "Очікується оплата",
+              moderated: "Відхилено модератором",
+              blocked: "Заблоковано модератором",
+              disabled:
+                "Вимкнено модерацією, пропозиція заблокована та очікує перевірки",
+              removed_by_moderator: "Видалено",
+            };
+            onClose();
+            cogoToast.info(
+              messages[resp?.data?.status] ?? "Оголошення успішно опубліковано",
+              {
+                hideAfter: 3,
+                position: "top-right",
+              }
+            );
+          },
+          () => {
+            const message = resp?.data?.messege;
+            const fields = resp?.data?.fields_validation?.map(
+              (f) => commentsToFields?.object[f]
+            );
+            console.log("here", resp?.data?.fields_validation, fields);
+            cogoToast.error(
+              <>
+                {message} {fields?.join(",")}{" "}
+              </>,
+              {
+                hideAfter: 3,
+                position: "top-right",
+              }
+            );
+          },
+          true
+        );
       });
     });
   };
