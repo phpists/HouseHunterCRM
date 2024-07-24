@@ -6,10 +6,12 @@ export const Card = ({ expireAt, email, id, name }) => (
       <div className="value">{expireAt}</div>
       <div className="subtitle">Авторизація дійсна до</div>
     </div>
-    <div>
-      <div className="value">{email}</div>
-      <div className="subtitle">Email</div>
-    </div>
+    {email?.length > 0 ? (
+      <div>
+        <div className="value">{email}</div>
+        <div className="subtitle">Email</div>
+      </div>
+    ) : null}
     <div>
       <div className="value">{id}</div>
       <div className="subtitle">Id</div>

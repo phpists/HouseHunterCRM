@@ -69,14 +69,14 @@ export const List = ({
                 img,
                 title,
                 id_rubric,
-                id_obj,
+                id_ad_in_source,
               },
               i
             ) => (
               <Card
                 key={i}
-                selected={!!selected.find((s) => s === id_obj)}
-                onSelect={() => onSelect(id_obj)}
+                selected={!!selected.find((s) => s === id_ad_in_source)}
+                onSelect={() => onSelect(id_ad_in_source)}
                 id_resource={id_resource}
                 status={status}
                 publicateDate={dt_publicate}
@@ -86,7 +86,9 @@ export const List = ({
                 title={title}
                 rubricId={id_rubric}
                 img={img}
-                onDelete={() => handleOpenDeleteModal({ id_user_olx, id_obj })}
+                onDelete={() =>
+                  handleOpenDeleteModal({ id_user_olx, id_ad_in_source })
+                }
                 urlResource={url_resource}
               />
             )

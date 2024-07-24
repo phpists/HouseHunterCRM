@@ -215,8 +215,8 @@ const Advertising = () => {
     setSelected(isReset ? [] : ids);
   };
 
-  const handleDeleteAd = ({ id_user_olx, id_obj }) => {
-    deleteAd({ id_user_olx, id_obj }).then((resp) => {
+  const handleDeleteAd = ({ id_user_olx, id_ad_in_source }) => {
+    deleteAd({ id_user_olx, id_obj: id_ad_in_source }).then((resp) => {
       handleResponse(resp, () => {
         cogoToast.success("Оголошення успішно видалено", {
           hideAfter: 3,

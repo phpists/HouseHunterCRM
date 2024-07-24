@@ -39,10 +39,12 @@ export const Header = ({
 
   const handleDeleteAds = () => {
     if (selected?.length > 0) {
-      const selectedAds = data?.filter((a) => selected?.includes(a?.id_obj));
+      const selectedAds = data?.filter((a) =>
+        selected?.includes(a?.id_ad_in_source)
+      );
       Promise.all(
-        selectedAds?.map(({ id_user_olx, id_obj }) =>
-          deleteAd({ id_user_olx, id_obj })
+        selectedAds?.map(({ id_user_olx, id_ad_in_source }) =>
+          deleteAd({ id_user_olx, id_obj: id_ad_in_source })
         )
       ).then((resp) => {
         onDelete();
