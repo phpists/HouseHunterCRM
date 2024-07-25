@@ -8,16 +8,16 @@ export const Card = ({ expireAt, email, id, name, onDelete }) => (
       <div className="value">{expireAt}</div>
       <div className="subtitle">Авторизація дійсна до</div>
     </div>
+    <div>
+      <div className="value">{id}</div>
+      <div className="subtitle">Id</div>
+    </div>
     {email?.length > 0 ? (
       <div title={email}>
         <div className="value email">{email}</div>
         <div className="subtitle">Email</div>
       </div>
     ) : null}
-    <div>
-      <div className="value">{id}</div>
-      <div className="subtitle">Id</div>
-    </div>
     {name?.length > 0 ? (
       <div title={name}>
         <div className="value">{name}</div>

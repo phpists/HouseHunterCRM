@@ -75,11 +75,11 @@ export const Header = ({
           allCount={allCount}
           onSelectAll={onSelectAll}
           onDelete={handleDeleteAds}
-          deleteConfirmTitle={`Видалити оголошеня?`}
+          deleteConfirmTitle={`Оголошення видалиться на ОЛХ та з історії публікацій. Видалити оголошення?`}
         />
       </div>
       <SelectItems
-        deleteConfirmTitle={`Видалити оголошеня?`}
+        deleteConfirmTitle={`Оголошення видалиться на ОЛХ та з історії публікацій. Видалити оголошення?`}
         title="оголошень"
         className="select-wrapper-mobile"
         selectedCount={selectedCount}

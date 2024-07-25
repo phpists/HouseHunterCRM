@@ -37,7 +37,9 @@ export const List = ({
     <>
       {deleteModal && (
         <Confirm
-          title={"Видалити оголошення?"}
+          title={
+            "Оголошення видалиться на ОЛХ та з історії публікацій. Видалити оголошення?"
+          }
           onSubmit={handleDelete}
           onClose={() => setDeleteModal(null)}
         />
