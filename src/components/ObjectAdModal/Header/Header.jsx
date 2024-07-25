@@ -6,8 +6,8 @@ import { StatusDate } from "./StatusDate";
 export const Header = ({ onSubmit, loading, disabled }) => (
   <StyledHeader className="flex items-center justify-between">
     <div className="flex items-center status-btns">
-      <StatusButton type="actual" />
-      <StatusDate />
+      {/* <StatusButton type="actual" />
+      <StatusDate /> */}
     </div>
     <Actions onSubmit={onSubmit} loading={loading} disabled={disabled} />
   </StyledHeader>

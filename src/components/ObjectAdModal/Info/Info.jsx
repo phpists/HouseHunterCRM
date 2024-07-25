@@ -8,22 +8,26 @@ export const Info = ({ data, onChange, loading }) => (
     <ProfileField
       value={data?.title}
       placeholder="Введіть заголовок"
-      onChange={(val) => (loading ? null : onChange("title", val))}
+      //   onChange={(val) => (loading ? null : onChange("title", val))}
+      onChange={() => null}
       big
       className="title"
       initOpen
       alwaysOpen
       label="Опис"
+      readOnly
     />
     <ProfileField
       value={data?.description}
       placeholder="Введіть опис"
-      onChange={(val) => (loading ? null : onChange("description", val))}
+      //   onChange={(val) => (loading ? null : onChange("description", val))}
+      onChange={() => null}
       textarea
       className="title desciption"
       label="Опис"
       initOpen
       alwaysOpen
+      readOnly
     />
   </StyledInfo>
 );
