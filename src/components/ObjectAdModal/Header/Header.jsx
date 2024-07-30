@@ -14,7 +14,7 @@ export const Header = ({ onSubmit, loading, disabled }) => (
 );
 
 const StyledHeader = styled.div`
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
   @media (max-width: 800px) {
     flex-direction: column;
     gap: 10px;

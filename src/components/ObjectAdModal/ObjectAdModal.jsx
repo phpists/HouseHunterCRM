@@ -96,12 +96,14 @@ export const ObjectAdModal = ({ onClose, object }) => {
     <StyledObjectAdModal>
       <div className="modal-wrapper">
         <CloseButton onClick={onClose} />
-        <Title />
-        <Header
-          onSubmit={handleSubmit}
-          loading={loading}
-          disabled={data?.id_user_olx?.length === 0}
-        />
+        <div className="flex items-center justify-between mb-3 header-modal-ad">
+          <Title />
+          <Header
+            onSubmit={handleSubmit}
+            loading={loading}
+            disabled={data?.id_user_olx?.length === 0}
+          />
+        </div>
         <div className="content">
           <Platforms data={data} onChange={handleChangeField} />
           <Info data={data} onChange={handleChangeField} />
@@ -137,6 +139,10 @@ const StyledObjectAdModal = styled.div`
     gap: 40px;
     @media (max-width: 800px) {
       grid-template-columns: 1fr;
+      .header-modal-ad {
+        flex-direction: column;
+        gap: 10px;
+      }
     }
   }
 `;

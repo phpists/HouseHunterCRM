@@ -274,18 +274,23 @@ export const App = () => {
                             path="/selections/:id"
                             element={<Selections />}
                           />
-                          <Route
-                            path="/advertising"
-                            element={<Advertising />}
-                          />
-                          <Route
-                            path="/advertising-setting"
-                            element={<AdvertisingSetting />}
-                          />
-                          <Route
-                            path="/advertising-login-success"
-                            element={<AdvertisingSetting />}
-                          />
+                          {companyInfo?.data?.id_hash ===
+                          "ae191c45f814262d747cf24d7f3799fd" ? (
+                            <>
+                              <Route
+                                path="/advertising"
+                                element={<Advertising />}
+                              />
+                              <Route
+                                path="/advertising-setting"
+                                element={<AdvertisingSetting />}
+                              />
+                              <Route
+                                path="/advertising-login-success"
+                                element={<AdvertisingSetting />}
+                              />
+                            </>
+                          ) : null}
                           <Route path="*" element={<Dashboard />} />
                         </Routes>
                       </Suspense>

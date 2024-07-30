@@ -19,6 +19,7 @@ import { FindClientsObjects } from "./FindClientsObjects";
 import { DeleteInfo } from "../../components/DeleteInfo/DeleteInfo";
 import { FastSelection } from "../../components/FastSelection/FastSelection";
 import { ObjectAdModal } from "../../components/ObjectAdModal/ObjectAdModal";
+import { useGetCompanyInfoQuery } from "../../store/billing/billing.api";
 
 export const List = ({
   selected,
@@ -38,6 +39,7 @@ export const List = ({
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { accessData } = useAppSelect((state) => state.auth);
+  const { data: companyInfo } = useGetCompanyInfoQuery();
   const [openAddModal, setOpenAddModal] = useState(null);
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
   const [openHistoryPriceModal, setOpenHistoryPriceModal] = useState(null);
@@ -247,7 +249,12 @@ export const List = ({
                     ? () => handleCopyFastFolderLink(d?.id)
                     : null
                 }
-                onAdvertise={() => setAdvertaseObject(d)}
+                onAdvertise={
+                  companyInfo?.data?.id_hash ===
+                  "ae191c45f814262d747cf24d7f3799fd"
+                    ? () => setAdvertaseObject(d)
+                    : null
+                }
               />
             ))}
           </>
