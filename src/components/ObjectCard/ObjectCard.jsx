@@ -43,7 +43,7 @@ export const ObjectCard = memo(
     onAdvertise,
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
-    const { ref, inView } = useInView({ triggerOnce: true });
+    const { ref, inView } = useInView({ triggerOnce: false });
 
     const handleClick = (e) =>
       e.target.classList.contains("clickable") && onSelect();

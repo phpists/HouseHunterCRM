@@ -95,12 +95,13 @@ export const App = () => {
   }, [companyInfo]);
 
   const handleRefreshData = () => {
-    navigator?.serviceWorker?.getRegistrations().then((registrations) => {
-      registrations.forEach((registration) => {
-        registration.unregister();
+    try {
+      navigator?.serviceWorker?.getRegistrations().then((registrations) => {
+        registrations.forEach((registration) => {
+          registration.unregister();
+        });
       });
-    });
-
+    } catch {}
     localStorage.removeItem("modalClosed");
     localStorage.removeItem("clientsFilters");
     localStorage.removeItem("objectsLastFilters");
@@ -108,12 +109,8 @@ export const App = () => {
     localStorage.removeItem("callsFilter");
 
     try {
-      caches.keys().then((keyList) => {
-        return Promise.all(
-          keyList.map((key) => {
-            return caches.delete(key);
-          })
-        );
+      caches.keys().then((names) => {
+        for (let name of names) caches.delete(name);
       });
       setTimeout(() => {
         window.location.reload(true);
@@ -129,7 +126,6 @@ export const App = () => {
       ?.then((resp) => {
         const buildDate = resp?.buildDate;
         const lastUpdate = localStorage.getItem("buildDate");
-        const token = localStorage.getItem("token");
         const isNewBuild = Number(buildDate) > Number(lastUpdate);
 
         if (lastUpdate && isNewBuild) {
