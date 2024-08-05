@@ -26,6 +26,8 @@ export const Header = ({
   onSendSuccess,
   calls,
   showTelegram,
+  telegramCalls,
+  refreshTelegramCalls,
 }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClientOpen, setAddClientOpen] = useState(false);
@@ -45,6 +47,7 @@ export const Header = ({
             setSendModal(false);
             onSendSuccess();
           }}
+          telegramCalls={telegramCalls}
           massiveAction
         />
       )}

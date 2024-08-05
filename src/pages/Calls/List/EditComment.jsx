@@ -66,7 +66,7 @@ const StyleEditComment = styled.div`
     line-height: 17px;
     letter-spacing: 0em;
     margin-bottom: 4px;
-    var(--main-color)fff99;
+    color: var(--main-color);
   }
   .edit-comment-content {
     max-height: 60vh;
@@ -110,6 +110,6 @@ const StyleEditComment = styled.div`
     line-height: 18px;
     letter-spacing: 0.02em;
     text-align: center;
-    color: #FFF;
+    color: #fff;
   }
 `;

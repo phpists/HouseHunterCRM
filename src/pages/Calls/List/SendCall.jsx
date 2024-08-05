@@ -23,6 +23,7 @@ export const SendCall = ({
   clients,
   massiveAction,
   telegram,
+  telegramCalls,
 }) => {
   const { data } = useGetWorkerToMoveClientsQuery();
   const [selectedUser, setSelectedUser] = useState(null);
@@ -54,10 +55,22 @@ export const SendCall = ({
     );
   };
 
+  const handleSendTelegramCalls = async () => {
+    await Promise.all(
+      telegramCalls.map((c) =>
+        sendTelegramCall({
+          id_user_hash: selectedUser,
+          id_order: c,
+        })
+      )
+    );
+  };
+
   const handleSubmit = async () => {
     if (massiveAction) {
       await handleSendCliens();
       await handleSendCalls();
+      await handleSendTelegramCalls();
       cogoToast.success("Успішно передано", {
         hideAfter: 3,
         position: "top-right",

@@ -331,7 +331,12 @@ const Calls = () => {
         onApplyFilter={handleApplyFilter}
         onSetCallsStatus={handleSetCallsStatus}
         onSelectAll={handleSelectAll}
-        allCount={allCount}
+        allCount={
+          allCount +
+          (showTelegram || filters?.type_call?.length === 0
+            ? telegramData?.length
+            : 0)
+        }
         clients={
           data
             ?.filter((c) => selected?.includes(c.id))
@@ -347,6 +352,12 @@ const Calls = () => {
             ?.map((c) => c?.id) ?? []
         }
         showTelegram={showTelegram}
+        telegramCalls={
+          telegramData
+            ?.filter((c) => selected?.includes(c.id_order))
+            ?.map((c) => c?.id_order) ?? []
+        }
+        refreshTelegramCalls={handleGetgetTelegramOrders}
       />
       <List
         selected={selected}

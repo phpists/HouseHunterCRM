@@ -41,6 +41,11 @@ export const List = ({
     setSendTelegramCall(null);
   };
 
+  console.log(
+    data?.length === 0 && (telegramData?.length === 0 || !showTelegram),
+    showTelegram,
+    telegramData
+  );
   return (
     <StyledList ref={listRef}>
       {sendCall && (
@@ -82,45 +87,43 @@ export const List = ({
         />
       )}
       {data?.length === 0 &&
-      ((telegramData?.length === 0 && showTelegram) ||
-        (telegramData?.length > 0 && !showTelegram)) ? (
+      (telegramData?.length === 0 || !showTelegram || !telegramData) ? (
         <Empty loading={loading} />
       ) : (
         <>
-          {!showTelegram ? (
-            <>her</>
-          ) : (
-            telegramData.map(
-              ({
-                user_name,
-                phone,
-                dt_order,
-                filters,
-                type_order,
-                id_order,
-              }) => (
-                <CallCard
-                  key={id_order}
-                  callType="Телеграм"
-                  clientName={user_name}
-                  phone={phone}
-                  date={handleFormatDate(Number(dt_order) * 1000)}
-                  comment={filters}
-                  status={type_order}
-                  telegram
-                  onSendCall={() => handleSendTelegramCall(id_order)}
-                  onSelect={() => null}
-                  onEditComment={() =>
-                    setCommentModal({
-                      id: id_order,
-                      coment: filters,
-                      readOnly: true,
-                    })
-                  }
-                />
-              )
-            )
-          )}
+          {!showTelegram
+            ? null
+            : telegramData?.map(
+                ({
+                  user_name,
+                  phone,
+                  dt_order,
+                  filters,
+                  type_order,
+                  id_order,
+                }) => (
+                  <CallCard
+                    key={id_order}
+                    callType="Телеграм"
+                    clientName={user_name}
+                    phone={phone}
+                    date={handleFormatDate(Number(dt_order) * 1000)}
+                    comment={filters}
+                    status={type_order}
+                    telegram
+                    onSendCall={() => handleSendTelegramCall(id_order)}
+                    selected={!!selected.find((j) => j === id_order)}
+                    onSelect={() => onSelect(id_order)}
+                    onEditComment={() =>
+                      setCommentModal({
+                        id: id_order,
+                        coment: filters,
+                        readOnly: true,
+                      })
+                    }
+                  />
+                )
+              )}
           {data.map(
             (
               {
