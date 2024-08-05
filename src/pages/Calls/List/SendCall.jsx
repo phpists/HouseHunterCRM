@@ -9,7 +9,10 @@ import { handleResponse } from "../../../utilits";
 import { Modal } from "../../../components/Modal/Modal";
 import { Select } from "../../../components/Select/Select";
 import { Button } from "../../../components/Button";
-import { useLazyMoveCallQuery } from "../../../store/calls/calls.api";
+import {
+  useLazyMoveCallQuery,
+  useLazySendOrderTelegrambotQuery,
+} from "../../../store/calls/calls.api";
 
 export const SendCall = ({
   callId,
@@ -19,10 +22,12 @@ export const SendCall = ({
   calls,
   clients,
   massiveAction,
+  telegram,
 }) => {
   const { data } = useGetWorkerToMoveClientsQuery();
   const [selectedUser, setSelectedUser] = useState(null);
   const [moveCall] = useLazyMoveCallQuery();
+  const [sendTelegramCall] = useLazySendOrderTelegrambotQuery();
   const [moveClients] = useLazyMoveClientsQuery();
 
   const handleSendCliens = async () => {
@@ -62,26 +67,49 @@ export const SendCall = ({
       onSendSuccess && onSendSuccess();
     } else {
       onChangeLoading && onChangeLoading(true);
-      moveCall({
-        id_call: callId,
-        id_user_to: selectedUser,
-      }).then((resp) =>
-        handleResponse(
-          resp,
-          () => {
-            cogoToast.success("Успішно передано", {
-              hideAfter: 3,
-              position: "top-right",
-            });
-            onChangeLoading && onChangeLoading(false);
-            onClose();
-            onSendSuccess && onSendSuccess();
-          },
-          () => {
-            onChangeLoading && onChangeLoading(false);
-          }
-        )
-      );
+      if (telegram) {
+        sendTelegramCall({
+          id_user_hash: selectedUser,
+          id_order: callId,
+        }).then((resp) =>
+          handleResponse(
+            resp,
+            () => {
+              cogoToast.success("Успішно передано", {
+                hideAfter: 3,
+                position: "top-right",
+              });
+              onChangeLoading && onChangeLoading(false);
+              onClose();
+              onSendSuccess && onSendSuccess();
+            },
+            () => {
+              onChangeLoading && onChangeLoading(false);
+            }
+          )
+        );
+      } else {
+        moveCall({
+          id_call: callId,
+          id_user_to: selectedUser,
+        }).then((resp) =>
+          handleResponse(
+            resp,
+            () => {
+              cogoToast.success("Успішно передано", {
+                hideAfter: 3,
+                position: "top-right",
+              });
+              onChangeLoading && onChangeLoading(false);
+              onClose();
+              onSendSuccess && onSendSuccess();
+            },
+            () => {
+              onChangeLoading && onChangeLoading(false);
+            }
+          )
+        );
+      }
     }
   };
 

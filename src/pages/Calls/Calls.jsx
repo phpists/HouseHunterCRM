@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   useLazyAddCommentToCallQuery,
   useLazyGetCallsQuery,
+  useLazyGetOrdersTelegrambotQuery,
   useLazySetStatusCallQuery,
 } from "../../store/calls/calls.api";
 import {
@@ -34,11 +35,13 @@ const INIT_FILTERS = {
 const Calls = () => {
   const location = useLocation();
   const [getCalls] = useLazyGetCallsQuery();
+  const [getTelegramOrders] = useLazyGetOrdersTelegrambotQuery();
   const [setCallStatus] = useLazySetStatusCallQuery();
   const [addComment] = useLazyAddCommentToCallQuery();
   const { saveCallsCount } = useActions();
   const [selected, setSelected] = useState([]);
   const [data, setData] = useState(null);
+  const [telegramData, setTelegramData] = useState([]);
   const prevFilters = localStorage.getItem("callsFilter");
   const [filters, setFilters] = useState(
     !!prevFilters && !!checkIsJSON(prevFilters)
@@ -58,11 +61,16 @@ const Calls = () => {
   const [filterPhoneCode, setFilterPhoneCode] = useState("1");
   const { data: phonesCodes } = useGetPhonesCodesQuery();
   const { callsCount } = useAppSelect((state) => state.calls);
+  const [showTelegram, setShowTelegram] = useState(true);
 
   const handleChangePhoneCode = (val) => setFilterPhoneCode(val);
 
   const handleChangeFilter = (fieldName, value) => {
-    setFilters({ ...filters, [fieldName]: value });
+    if (fieldName === "type_call" && value?.includes("telegram")) {
+      setShowTelegram(showTelegram === "show" ? false : "show");
+    } else {
+      setFilters({ ...filters, [fieldName]: value });
+    }
   };
 
   const handleSelect = (index) =>
@@ -80,6 +88,13 @@ const Calls = () => {
     date.setSeconds(isFrom ? 0 : 59);
 
     return Math.floor(date?.getTime() / 1000);
+  };
+
+  const handleGetgetTelegramOrders = () => {
+    getTelegramOrders().then((resp) => {
+      const orders = resp?.data?.data ?? [];
+      setTelegramData(Array.isArray(orders) ? orders : [orders]);
+    });
   };
 
   const handleGetCalls = (isReset) => {
@@ -120,6 +135,7 @@ const Calls = () => {
         getCalls({ ...sendData, only_count_item: "1" }).then((resp) =>
           saveCallsCount(Number(resp?.data?.all_item ?? 0))
         );
+        handleGetgetTelegramOrders();
       }
 
       getCalls(sendData).then((resp) => {
@@ -226,6 +242,7 @@ const Calls = () => {
     } else {
       setFilters(INIT_FILTERS);
       localStorage.removeItem("callsFilter");
+      setShowTelegram(false);
     }
     handleGetCalls(true);
   };
@@ -264,6 +281,10 @@ const Calls = () => {
         status: undefined,
       });
       setIsDefaultFilterSet(true);
+    } else if (filterApply === "?telegram") {
+      setFilters(INIT_FILTERS);
+      setShowTelegram("show");
+      setIsDefaultFilterSet(true);
     } else {
       handleGetCalls(true);
     } // eslint-disable-next-line
@@ -299,6 +320,7 @@ const Calls = () => {
       )
     );
   };
+  console.log(showTelegram || data?.type_call?.length === 0);
 
   return (
     <StyledCalls>
@@ -324,6 +346,7 @@ const Calls = () => {
             ?.filter((c) => !c?.client_id)
             ?.map((c) => c?.id) ?? []
         }
+        showTelegram={showTelegram}
       />
       <List
         selected={selected}
@@ -335,6 +358,9 @@ const Calls = () => {
         loading={loading}
         onSendSuccess={handleSendCliens}
         onAddClient={handleClientAdded}
+        telegramData={telegramData}
+        showTelegram={showTelegram || filters?.type_call?.length === 0}
+        refreshTelegramCalls={handleGetgetTelegramOrders}
       />
     </StyledCalls>
   );

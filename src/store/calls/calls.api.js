@@ -98,6 +98,42 @@ export const calls = createApi({
         }),
       }),
     }),
+    getOrdersTelegrambot: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getOrders",
+          mod: "telegrambot",
+        }),
+      }),
+    }),
+    sendOrderTelegrambot: build.query({
+      query: ({ id_order, id_user_hash }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "sendOrder",
+          mod: "telegrambot",
+          id_order,
+          id_user_hash,
+        }),
+      }),
+    }),
+    setStatusOrderTelegrambot: build.query({
+      query: (id_order) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "setStatusOrder",
+          mod: "telegrambot",
+          id_order,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -109,4 +145,8 @@ export const {
   useLazyGetAllCallsPhonesQuery,
   useLazyMoveCallQuery,
   useGetWorkerMyStructureQuery,
+  useLazyGetCallsTypeQuery,
+  useLazyGetOrdersTelegrambotQuery,
+  useLazySendOrderTelegrambotQuery,
+  useLazySetStatusOrderTelegrambotQuery,
 } = calls;

@@ -13,9 +13,9 @@ const STATUS = {
   },
 };
 
-export const Tag = ({ status }) => (
+export const Tag = ({ status, telegram }) => (
   <StyledTag status={STATUS[status]} className="clickable">
-    {STATUS[status]?.title ?? "Відсутні в базі"}
+    {telegram ? status : STATUS[status]?.title ?? "Відсутні в базі"}
   </StyledTag>
 );
 

@@ -4,14 +4,14 @@ import { Divider } from "./Divider";
 import { Message } from "./Message";
 import React from "react";
 
-export const Card = ({ type, messages, info, link, onClose }) => {
+export const Card = ({ type, messages, info, links, onClose }) => {
   return (
     <StyledCard>
       <Header type={type} info={info} onClose={onClose} />
       <Divider />
       {messages.map((msg, i) => (
         <React.Fragment key={i}>
-          <Message message={msg} info={info} link={link} />
+          <Message message={msg} info={info} link={links?.[i] ?? links[0]} />
           {i < messages.length - 1 && <Divider />}
         </React.Fragment>
       ))}

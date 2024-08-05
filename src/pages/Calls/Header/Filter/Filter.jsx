@@ -17,6 +17,7 @@ export const Filter = ({
   onApplyFilter,
   filterPhoneCode,
   onChangeFilterPhoneCode,
+  showTelegram,
 }) => {
   const controls = useAnimationControls();
 
@@ -51,6 +52,7 @@ export const Filter = ({
               onChangeFilter={onChangeFilter}
               filterPhoneCode={filterPhoneCode}
               onChangeFilterPhoneCode={onChangeFilterPhoneCode}
+              showTelegram={showTelegram}
             />
             <Divider />
           </div>

@@ -20,6 +20,7 @@ import { DeleteInfo } from "../../components/DeleteInfo/DeleteInfo";
 import { FastSelection } from "../../components/FastSelection/FastSelection";
 import { ObjectAdModal } from "../../components/ObjectAdModal/ObjectAdModal";
 import { useGetCompanyInfoQuery } from "../../store/billing/billing.api";
+import { XHOUSE_COMPANY_ID } from "../../constants";
 
 export const List = ({
   selected,
@@ -250,8 +251,7 @@ export const List = ({
                     : null
                 }
                 onAdvertise={
-                  companyInfo?.data?.id_hash ===
-                  "ae191c45f814262d747cf24d7f3799fd"
+                  companyInfo?.data?.id_hash === XHOUSE_COMPANY_ID
                     ? () => setAdvertaseObject(d)
                     : null
                 }

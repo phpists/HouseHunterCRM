@@ -33,9 +33,10 @@ export const MobileContent = ({
   callCount,
   clientId,
   commentDate,
+  telegram,
 }) => (
   <StyledMobileContent className="flex flex-col items-start clickable">
-    <Type callType={callType} agentPhone={agentPhone} />
+    <Type callType={callType} agentPhone={agentPhone} telegram={telegram} />
     <div className="phones-mobile-wrapper w-full">
       <Phones
         open={open}
@@ -45,6 +46,7 @@ export const MobileContent = ({
         callsData={callsData}
         clientName={clientName}
         callCount={callCount}
+        telegram={telegram}
       />
       <PhonesMobile
         open={open}
@@ -75,6 +77,7 @@ export const MobileContent = ({
       onEditComment={onEditComment}
       onSendCall={onSendCall}
       clientId={clientId}
+      telegram={telegram}
     />
   </StyledMobileContent>
 );

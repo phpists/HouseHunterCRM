@@ -14,45 +14,69 @@ export const Dropdown = ({
   onCloseDropdown,
   onSendCall,
   clientId,
+  telegram,
 }) => {
   const navigate = useNavigate();
 
   return (
     <StyledDropdown className="dropdown" onClick={onCloseDropdown}>
-      <div className="flex items-center justify-between" onClick={onSetStatus}>
-        <span>{status === "1" ? "Не опрацьовано" : "Опрацьовано"}</span>
-        <History className="selection-icon" />
-      </div>
-      {clientId?.length > 0 ? (
-        <div
-          className="flex items-center justify-between"
-          onClick={() => navigate(`/client/${clientId}`)}
-        >
-          <span>Редагувати клієнта</span>{" "}
-          <Selection className="selection-icon" />
-        </div>
+      {telegram ? (
+        <>
+          {onSendCall && (
+            <div
+              className="flex items-center justify-between"
+              onClick={onSendCall}
+            >
+              <span>Передати дзвінок</span>{" "}
+              <ToObjectIcon className="selection-icon" />
+            </div>
+          )}
+        </>
       ) : (
-        <div className="flex items-center justify-between" onClick={onAdd}>
-          <span>Додати клієнта</span> <Selection className="selection-icon" />
-        </div>
-      )}
-      <div
-        className="flex items-center justify-between"
-        onClick={onEditComment}
-      >
-        <span>Додати коментар</span> <Comment className="selection-icon" />
-      </div>
-      {onSend && (
-        <div className="flex items-center justify-between" onClick={onSend}>
-          <span>Передати клієнта</span>{" "}
-          <ToObjectIcon className="selection-icon" />
-        </div>
-      )}
-      {onSendCall && (
-        <div className="flex items-center justify-between" onClick={onSendCall}>
-          <span>Передати дзвінок</span>{" "}
-          <ToObjectIcon className="selection-icon" />
-        </div>
+        <>
+          <div
+            className="flex items-center justify-between"
+            onClick={onSetStatus}
+          >
+            <span>{status === "1" ? "Не опрацьовано" : "Опрацьовано"}</span>
+            <History className="selection-icon" />
+          </div>
+          {clientId?.length > 0 ? (
+            <div
+              className="flex items-center justify-between"
+              onClick={() => navigate(`/client/${clientId}`)}
+            >
+              <span>Редагувати клієнта</span>{" "}
+              <Selection className="selection-icon" />
+            </div>
+          ) : (
+            <div className="flex items-center justify-between" onClick={onAdd}>
+              <span>Додати клієнта</span>{" "}
+              <Selection className="selection-icon" />
+            </div>
+          )}
+          <div
+            className="flex items-center justify-between"
+            onClick={onEditComment}
+          >
+            <span>Додати коментар</span> <Comment className="selection-icon" />
+          </div>
+          {onSend && (
+            <div className="flex items-center justify-between" onClick={onSend}>
+              <span>Передати клієнта</span>{" "}
+              <ToObjectIcon className="selection-icon" />
+            </div>
+          )}
+          {onSendCall && (
+            <div
+              className="flex items-center justify-between"
+              onClick={onSendCall}
+            >
+              <span>Передати дзвінок</span>{" "}
+              <ToObjectIcon className="selection-icon" />
+            </div>
+          )}
+        </>
       )}
     </StyledDropdown>
   );

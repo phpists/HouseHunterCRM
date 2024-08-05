@@ -35,7 +35,10 @@ export const EditComment = ({ onClose, call, onChange }) => {
 
   return (
     <StyleEditComment>
-      <Modal onClose={onClose} title="Редагування коментаря">
+      <Modal
+        onClose={onClose}
+        title={`${call?.readOnly ? "Перегляд" : "Редагування"} коментаря`}
+      >
         <div className="edit-comment-content hide-scroll">
           <div className="label">Коментар</div>
           <textarea
@@ -44,8 +47,11 @@ export const EditComment = ({ onClose, call, onChange }) => {
             placeholder="Введіть значення"
             ref={textareaRef}
             autoFocus
+            readOnly={call?.readOnly}
           />
-          <button onClick={handleSave}>Зберегти</button>
+          {call?.readOnly ? null : (
+            <button onClick={handleSave}>Зберегти</button>
+          )}
         </div>
       </Modal>
     </StyleEditComment>

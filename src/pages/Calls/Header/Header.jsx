@@ -25,6 +25,7 @@ export const Header = ({
   onChangeFilterPhoneCode,
   onSendSuccess,
   calls,
+  showTelegram,
 }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClientOpen, setAddClientOpen] = useState(false);
@@ -101,6 +102,7 @@ export const Header = ({
           onApplyFilter={onApplyFilter}
           filterPhoneCode={filterPhoneCode}
           onChangeFilterPhoneCode={onChangeFilterPhoneCode}
+          showTelegram={showTelegram}
         />
       )}
       {addClientOpen && <AddClient onClose={() => setAddClientOpen(false)} />}

@@ -1,12 +1,17 @@
 import styled from "styled-components";
 import { Tag } from "./Tag";
 
-export const Type = ({ callType, agentPhone }) => {
+export const Type = ({ callType, agentPhone, telegram }) => {
   return (
     <StyledType className="clickable">
       <Tag callType={callType} />
-      <div className="title clickable">Назва потоку</div>
-      <div className="title clickable">{agentPhone ?? "-"}</div>
+      {telegram ? null : (
+        <>
+          {" "}
+          <div className="title clickable">Назва потоку</div>
+          <div className="title clickable">{agentPhone ?? "-"}</div>
+        </>
+      )}
     </StyledType>
   );
 };

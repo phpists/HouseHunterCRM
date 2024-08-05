@@ -33,9 +33,10 @@ export const DesktopContent = ({
   callCount,
   clientId,
   commentDate,
+  telegram,
 }) => (
   <StyledDesktopContent className="flex items-start clickable">
-    <Type callType={callType} agentPhone={agentPhone} />
+    <Type callType={callType} agentPhone={agentPhone} telegram={telegram}/>
     <Divider />
     <Phones
       open={open}
@@ -45,12 +46,13 @@ export const DesktopContent = ({
       callsData={callsData}
       clientName={clientName}
       callCount={callCount}
+      telegram={telegram}
     />
     <Divider />
-    <Status status={status} />
+    <Status status={status} telegram={telegram} />
     <Field
       placeholder="Почніть писати"
-      label={`Коментар ${commentDate}`}
+      label={`Коментар ${commentDate ?? ""}`}
       className="comment"
       full
       value={comment}
@@ -69,6 +71,7 @@ export const DesktopContent = ({
       onSend={onSend}
       onSendCall={onSendCall}
       clientId={clientId}
+      telegram={telegram}
     />
   </StyledDesktopContent>
 );

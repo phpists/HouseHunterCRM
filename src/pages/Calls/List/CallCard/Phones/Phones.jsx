@@ -11,6 +11,7 @@ export const Phones = ({
   callsData,
   clientName,
   callCount,
+  telegram,
 }) => {
   return (
     <StyledPhones onClick={onToggleOpen} open={open}>
@@ -21,8 +22,13 @@ export const Phones = ({
         callsData={callsData}
         clientName={clientName}
       />
-      <PhoneCalls count={callCount} />
-      <Arrow className="arrow-card" />
+      {telegram ? null : (
+        <>
+          {" "}
+          <PhoneCalls count={callCount} />
+          <Arrow className="arrow-card" />
+        </>
+      )}
     </StyledPhones>
   );
 };

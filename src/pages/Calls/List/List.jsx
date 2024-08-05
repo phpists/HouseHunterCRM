@@ -20,23 +20,40 @@ export const List = ({
   loading,
   onSendSuccess,
   onAddClient,
+  telegramData,
+  showTelegram,
+  refreshTelegramCalls,
 }) => {
   const [openMore, setOpenMore] = useState(null);
   const [commentModal, setCommentModal] = useState(false);
   const [sendModal, setSendModal] = useState(false);
   const [addModal, setAddModal] = useState(false);
   const [sendCall, setSendCall] = useState(false);
+  const [sendTelegramCall, setSendTelegramCall] = useState(false);
+
+  const handleSendTelegramCall = (id) => {
+    setSendCall(id);
+    setSendTelegramCall(true);
+  };
+
+  const handleCloseSendModal = () => {
+    setSendCall(false);
+    setSendTelegramCall(null);
+  };
 
   return (
     <StyledList ref={listRef}>
       {sendCall && (
         <SendCall
-          onClose={() => setSendCall(false)}
+          onClose={handleCloseSendModal}
           callId={sendCall}
           onSendSuccess={() => {
-            onSendSuccess([sendCall]);
-            setSendCall(false);
+            sendTelegramCall
+              ? refreshTelegramCalls()
+              : onSendSuccess([sendCall]);
+            handleCloseSendModal();
           }}
+          telegram={sendTelegramCall}
         />
       )}
       {commentModal && (
@@ -64,66 +81,104 @@ export const List = ({
           onAdded={onAddClient}
         />
       )}
-      {data?.length === 0 ? (
+      {data?.length === 0 &&
+      ((telegramData?.length === 0 && showTelegram) ||
+        (telegramData?.length > 0 && !showTelegram)) ? (
         <Empty loading={loading} />
       ) : (
-        data.map(
-          (
-            {
-              id,
-              call_type,
-              phone_call,
-              dt_incoming,
-              full_name,
-              photo,
-              coment,
-              status,
-              struct_level_user,
-              client_id,
-              client_first_name,
-              client_last_name,
-              phone_binotel,
-              Count_call,
-              type,
-              comment_date,
-            },
-            i
-          ) => (
-            <CallCard
-              key={i}
-              selected={!!selected.find((j) => j === id)}
-              onSelect={() => onSelect(id)}
-              openMore={openMore === id}
-              onOpenMore={() => setOpenMore(openMore === id ? null : id)}
-              callType={call_type}
-              phone={phone_call}
-              agentPhone={phone_binotel}
-              date={handleFormatDate(Number(dt_incoming) * 1000)}
-              name={full_name}
-              photo={photo}
-              comment={coment}
-              status={status}
-              clientName={
-                type?.type_agent
-                  ? type?.type_agent
-                  : client_id
-                  ? `${client_first_name ?? "-"} ${client_last_name}`
-                  : null
-              }
-              onSetStatus={() => onSetStatus(id, status === "1" ? "0" : "1")}
-              onAddComment={(comment) => onAddComment(id, comment)}
-              level={struct_level_user}
-              onEditComment={() => setCommentModal({ id, coment })}
-              onAdd={() => setAddModal({ phone_call, id })}
-              onSend={client_id ? () => setSendModal(client_id) : null}
-              onSendCall={client_id ? null : () => setSendCall(id)}
-              id={id}
-              callCount={Count_call}
-              clientId={client_id}
-              commentDate={comment_date}
-            />
-          )
-        )
+        <>
+          {!showTelegram ? (
+            <>her</>
+          ) : (
+            telegramData.map(
+              ({
+                user_name,
+                phone,
+                dt_order,
+                filters,
+                type_order,
+                id_order,
+              }) => (
+                <CallCard
+                  key={id_order}
+                  callType="Телеграм"
+                  clientName={user_name}
+                  phone={phone}
+                  date={handleFormatDate(Number(dt_order) * 1000)}
+                  comment={filters}
+                  status={type_order}
+                  telegram
+                  onSendCall={() => handleSendTelegramCall(id_order)}
+                  onSelect={() => null}
+                  onEditComment={() =>
+                    setCommentModal({
+                      id: id_order,
+                      coment: filters,
+                      readOnly: true,
+                    })
+                  }
+                />
+              )
+            )
+          )}
+          {data.map(
+            (
+              {
+                id,
+                call_type,
+                phone_call,
+                dt_incoming,
+                full_name,
+                photo,
+                coment,
+                status,
+                struct_level_user,
+                client_id,
+                client_first_name,
+                client_last_name,
+                phone_binotel,
+                Count_call,
+                type,
+                comment_date,
+              },
+              i
+            ) => (
+              <CallCard
+                key={i}
+                selected={!!selected.find((j) => j === id)}
+                onSelect={() => onSelect(id)}
+                openMore={openMore === id}
+                onOpenMore={() => setOpenMore(openMore === id ? null : id)}
+                callType={call_type}
+                phone={phone_call}
+                agentPhone={phone_binotel}
+                date={handleFormatDate(Number(dt_incoming) * 1000)}
+                name={full_name}
+                photo={photo}
+                comment={coment}
+                status={status}
+                clientName={
+                  type?.type_agent
+                    ? type?.type_agent
+                    : client_id
+                    ? `${client_first_name ?? "-"} ${client_last_name}`
+                    : null
+                }
+                onSetStatus={() => onSetStatus(id, status === "1" ? "0" : "1")}
+                onAddComment={(comment) => onAddComment(id, comment)}
+                level={struct_level_user}
+                onEditComment={() => setCommentModal({ id, coment })}
+                onAdd={() => setAddModal({ phone_call, id })}
+                onSend={client_id ? () => setSendModal(client_id) : null}
+                onSendCall={client_id ? null : () => setSendCall(id)}
+                id={id}
+                callCount={Count_call}
+                clientId={client_id}
+                commentDate={comment_date}
+              />
+            )
+          )}
+        </>
       )}
       <div className="loader relative">
         {loading && data?.length > 0 && (

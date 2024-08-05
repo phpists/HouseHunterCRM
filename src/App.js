@@ -15,6 +15,7 @@ import { Privacy } from "./pages/Privacy";
 import { Terms } from "./pages/Terms";
 import { License } from "./pages/License";
 import { CookiePolicy } from "./pages/CookiePolicy";
+import { XHOUSE_COMPANY_ID } from "./constants";
 
 const Company = lazy(() => import("./pages/Company/Company"));
 const Auth = lazy(() => import("./pages/Auth/Auth"));
@@ -271,7 +272,7 @@ export const App = () => {
                             element={<Selections />}
                           />
                           {companyInfo?.data?.id_hash ===
-                          "ae191c45f814262d747cf24d7f3799fd" ? (
+                          XHOUSE_COMPANY_ID ? (
                             <>
                               <Route
                                 path="/advertising"

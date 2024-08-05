@@ -31,7 +31,7 @@ export const NotificationsDropdown = ({
         <Card
           type="objects"
           messages={[data?.objectDeadline]}
-          link="/objects?showDeadline=true"
+          links={["/objects?showDeadline=true"]}
           onClose={() => onClose("objectDeadline")}
         />
       )}
@@ -39,7 +39,7 @@ export const NotificationsDropdown = ({
         <Card
           type="objects"
           messages={[data?.objectLiquidity]}
-          link="/objects?showLiquidity=true"
+          links={["/objects?showLiquidity=true"]}
           onClose={() => onClose("objectLiquidity")}
         />
       )}
@@ -47,11 +47,11 @@ export const NotificationsDropdown = ({
         <Card
           type="objects"
           messages={["Є об'єкти перенесені з StreetBase"]}
-          link={
+          links={[
             search === "?moderationAfterStreetBase=true"
               ? "/objects?moderationAfterStreetBase=refresh"
-              : "/objects?moderationAfterStreetBase=true"
-          }
+              : "/objects?moderationAfterStreetBase=true",
+          ]}
           onClose={() =>
             onClose("needs_moderation_after_adding_from_street_base")
           }
@@ -61,28 +61,29 @@ export const NotificationsDropdown = ({
         <Card
           type="requests"
           messages={[data?.requestDtDeadline]}
-          link={
+          links={[
             search === "?showDeadline=true"
               ? "/requests?showDeadline=refresh"
-              : "/requests?showDeadline=true"
-          }
+              : "/requests?showDeadline=true",
+          ]}
           onClose={() => onClose("requestDtDeadline")}
         />
       )}
-      {data?.calls && (
+      {(data?.calls || data?.telegramMessege) && (
         <Card
           type="calls"
-          messages={[data?.calls]}
+          messages={[data?.calls, data?.telegramMessege]}
           onClose={() => onClose("calls")}
-          link="/calls?view=true"
+          links={["/calls?view=true", "/calls?telegram=true"]}
         />
       )}
+
       {data?.chatMessege && (
         <Card
           type="requests"
           messages={[data?.chatMessege]}
           onClose={() => onClose("chatMessege")}
-          link="/requests?showUnreadMessege=true"
+          links={["/requests?showUnreadMessege=true"]}
         />
       )}
     </StyledNotificationsDropdown>

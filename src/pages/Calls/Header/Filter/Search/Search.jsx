@@ -21,6 +21,7 @@ export const Search = ({
   onChangeFilter,
   filterPhoneCode,
   onChangeFilterPhoneCode,
+  showTelegram,
 }) => {
   const { data: callsType } = useGetCallsTypeQuery();
   const { data: phonesCodes } = useGetPhonesCodesQuery();
@@ -81,14 +82,19 @@ export const Search = ({
       <Divider />
       <SelectTags
         label="Пошук по потоку"
-        tags={filters?.type_call?.map((t) => ({
-          title: callsType
-            ? Object.entries(callsType)?.find(
-                (c) => c[1]?.id?.toString() === t
-              )?.[1].name
-            : "-",
-          value: t?.toString(),
-        }))}
+        tags={[
+          ...filters?.type_call?.map((t) => ({
+            title: callsType
+              ? Object.entries(callsType)?.find(
+                  (c) => c[1]?.id?.toString() === t
+                )?.[1].name
+              : "-",
+            value: t?.toString(),
+          })),
+          ...(showTelegram === "show"
+            ? [{ title: "Телеграм", value: "telegram" }]
+            : []),
+        ]}
         placeholder="Оберіть"
         onChange={(val, title) => {
           onChangeFilter(
@@ -100,16 +106,17 @@ export const Search = ({
               : [...filters?.type_call, val?.toString()]
           );
         }}
-        options={
-          callsType
+        options={[
+          ...(callsType
             ? Object.entries(callsType)
                 ?.filter((t) => t[0] !== "error")
                 ?.map((t) => ({
                   title: t[1]?.name,
                   value: t[1]?.id?.toString(),
                 }))
-            : []
-        }
+            : []),
+          { title: "Телеграм", value: "telegram" },
+        ]}
         showTags
         hideArrow
       />
