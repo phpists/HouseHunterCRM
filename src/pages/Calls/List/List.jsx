@@ -41,11 +41,6 @@ export const List = ({
     setSendTelegramCall(null);
   };
 
-  console.log(
-    data?.length === 0 && (telegramData?.length === 0 || !showTelegram),
-    showTelegram,
-    telegramData
-  );
   return (
     <StyledList ref={listRef}>
       {sendCall && (

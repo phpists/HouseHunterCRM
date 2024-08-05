@@ -54,4 +54,4 @@ export const SELECTION_TAGS = [
   { title: "Показ", value: "label_showing" },
 ];
 
-export const XHOUSE_COMPANY_ID = "ae191c45f814262d747cf24d7f3799fd";
+export const XHOUSE_COMPANY_ID = "0022b718e5a80c0e3992686fd10ff1dc";

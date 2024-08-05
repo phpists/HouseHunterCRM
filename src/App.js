@@ -44,8 +44,7 @@ export const App = () => {
   const [loading, setLoading] = useState(true);
   const [load, setLoad] = useState(false);
   const { data, refetch } = useGetAccessQuery(null, { skip: !user });
-  const { data: companyInfo, refetch: refetchCompanyInfo } =
-    useGetCompanyInfoQuery();
+  const { data: companyInfo } = useGetCompanyInfoQuery();
 
   useEffect(() => {
     saveAccess(data);
@@ -261,9 +260,17 @@ export const App = () => {
                           {handleCheckAccess(data, "structure", "view") && (
                             <Route path="/structure" element={<Structure />} />
                           )}
-                          {handleCheckAccess(data, "calls", "view") && (
-                            <Route path="/calls" element={<Calls />} />
-                          )}
+                          {handleCheckAccess(data, "calls", "view") &&
+                            companyInfo?.data?.id_hash && (
+                              <Route
+                                path="/calls"
+                                element={
+                                  <Calls
+                                    companyId={companyInfo?.data?.id_hash}
+                                  />
+                                }
+                              />
+                            )}
                           {user?.struct_level === 1 && (
                             <Route path="/company" element={<Company />} />
                           )}
@@ -271,8 +278,7 @@ export const App = () => {
                             path="/selections/:id"
                             element={<Selections />}
                           />
-                          {companyInfo?.data?.id_hash ===
-                          XHOUSE_COMPANY_ID ? (
+                          {companyInfo?.data?.id_hash === XHOUSE_COMPANY_ID ? (
                             <>
                               <Route
                                 path="/advertising"

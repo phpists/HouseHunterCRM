@@ -21,6 +21,8 @@ import cogoToast from "cogo-toast";
 import { useLocation } from "react-router-dom";
 import { useGetPhonesCodesQuery } from "../../store/auth/auth.api";
 import { useAppSelect } from "../../hooks/redux";
+import { XHOUSE_COMPANY_ID } from "../../constants";
+import { useGetCompanyInfoQuery } from "../../store/billing/billing.api";
 
 const INIT_FILTERS = {
   search_key: "",
@@ -32,7 +34,7 @@ const INIT_FILTERS = {
   date_to: Math.floor(new Date().getTime() / 1000),
 };
 
-const Calls = () => {
+const Calls = ({ companyId }) => {
   const location = useLocation();
   const [getCalls] = useLazyGetCallsQuery();
   const [getTelegramOrders] = useLazyGetOrdersTelegrambotQuery();
@@ -91,10 +93,13 @@ const Calls = () => {
   };
 
   const handleGetgetTelegramOrders = () => {
-    getTelegramOrders().then((resp) => {
-      const orders = resp?.data?.data ?? [];
-      setTelegramData(Array.isArray(orders) ? orders : [orders]);
-    });
+    console.log(companyId);
+    if (companyId === XHOUSE_COMPANY_ID) {
+      getTelegramOrders().then((resp) => {
+        const orders = resp?.data?.data ?? [];
+        setTelegramData(Array.isArray(orders) ? orders : [orders]);
+      });
+    }
   };
 
   const handleGetCalls = (isReset) => {
@@ -320,7 +325,6 @@ const Calls = () => {
       )
     );
   };
-  console.log(showTelegram || data?.type_call?.length === 0);
 
   return (
     <StyledCalls>
