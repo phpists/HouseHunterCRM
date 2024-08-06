@@ -68,8 +68,13 @@ const Calls = ({ companyId }) => {
   const handleChangePhoneCode = (val) => setFilterPhoneCode(val);
 
   const handleChangeFilter = (fieldName, value) => {
-    if (fieldName === "type_call" && value?.includes("telegram")) {
-      setShowTelegram(showTelegram === "show" ? false : "show");
+    if (fieldName === "type_call") {
+      if (value?.includes("telegram")) {
+        setShowTelegram(showTelegram === "show" ? false : "show");
+      } else {
+        setFilters({ ...filters, [fieldName]: value });
+        setShowTelegram(false);
+      }
     } else {
       setFilters({ ...filters, [fieldName]: value });
     }
@@ -93,7 +98,6 @@ const Calls = ({ companyId }) => {
   };
 
   const handleGetgetTelegramOrders = () => {
-    console.log(companyId);
     if (companyId === XHOUSE_COMPANY_ID) {
       getTelegramOrders().then((resp) => {
         const orders = resp?.data?.data ?? [];
@@ -140,7 +144,10 @@ const Calls = ({ companyId }) => {
         getCalls({ ...sendData, only_count_item: "1" }).then((resp) =>
           saveCallsCount(Number(resp?.data?.all_item ?? 0))
         );
-        handleGetgetTelegramOrders();
+        if (showTelegram || filters?.type_call?.length === 0) {
+          console.log(showTelegram, filters?.type_call?.length === 0);
+          handleGetgetTelegramOrders();
+        }
       }
 
       getCalls(sendData).then((resp) => {

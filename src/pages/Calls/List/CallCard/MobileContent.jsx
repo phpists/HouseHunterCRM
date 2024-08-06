@@ -34,6 +34,7 @@ export const MobileContent = ({
   clientId,
   commentDate,
   telegram,
+  downloadLink,
 }) => (
   <StyledMobileContent className="flex flex-col items-start clickable">
     <Type callType={callType} agentPhone={agentPhone} telegram={telegram} />
@@ -55,11 +56,13 @@ export const MobileContent = ({
         date={date}
       />
     </div>
-    <div className="footer-mobile-content">
-      <Agent name={name} photo={photo} workerLevel={level} />
+    <div className={`footer-mobile-content ${telegram && "footer-telegram"}`}>
+      {telegram ? null : (
+        <Agent name={name} photo={photo} workerLevel={level} />
+      )}
       <Field
         placeholder="Почніть писати"
-        label={`Коментар ${commentDate}`}
+        label={`Коментар ${commentDate ?? ""}`}
         className="comment"
         full
         value={comment}
@@ -78,6 +81,7 @@ export const MobileContent = ({
       onSendCall={onSendCall}
       clientId={clientId}
       telegram={telegram}
+      downloadLink={downloadLink}
     />
   </StyledMobileContent>
 );
@@ -103,6 +107,10 @@ const StyledMobileContent = styled.div`
     gap: 8px;
     margin-top: 10px;
     width: 100%;
+    &.footer-telegram {
+      grid-template-columns: 1fr;
+      width: 98.6%;
+    }
   }
   @media (min-width: 1400px) {
     display: none;

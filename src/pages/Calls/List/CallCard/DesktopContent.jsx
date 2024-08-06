@@ -34,9 +34,10 @@ export const DesktopContent = ({
   clientId,
   commentDate,
   telegram,
+  downloadLink,
 }) => (
   <StyledDesktopContent className="flex items-start clickable">
-    <Type callType={callType} agentPhone={agentPhone} telegram={telegram}/>
+    <Type callType={callType} agentPhone={agentPhone} telegram={telegram} />
     <Divider />
     <Phones
       open={open}
@@ -53,7 +54,7 @@ export const DesktopContent = ({
     <Field
       placeholder="Почніть писати"
       label={`Коментар ${commentDate ?? ""}`}
-      className="comment"
+      className={`comment ${telegram && "comment-telegram"}`}
       full
       value={comment}
       onChange={onChangeComment}
@@ -62,7 +63,7 @@ export const DesktopContent = ({
       onClick={onEditComment}
     />
     <Divider />
-    <Agent name={name} photo={photo} workerLevel={level} />
+    {telegram ? null : <Agent name={name} photo={photo} workerLevel={level} />}
     <ShowMore
       status={status}
       onSetStatus={onSetStatus}
@@ -72,6 +73,7 @@ export const DesktopContent = ({
       onSendCall={onSendCall}
       clientId={clientId}
       telegram={telegram}
+      downloadLink={downloadLink}
     />
   </StyledDesktopContent>
 );
@@ -90,6 +92,11 @@ const StyledDesktopContent = styled.div`
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+    }
+    &-telegram {
+      width: 25vw !important;
+      max-width: 400px;
+      flex-shrink: 1;
     }
     &:hover {
       background: var(--bg-10);

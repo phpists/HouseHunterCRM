@@ -84,6 +84,6 @@ const StyledSendModal = styled.div`
     margin-top: 20px;
   }
   .modal {
-    overflow: visible;
+    overflow: visible !important;
   }
 `;

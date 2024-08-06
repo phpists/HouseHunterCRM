@@ -12,6 +12,7 @@ export const ShowMore = ({
   onSendCall,
   clientId,
   telegram,
+  downloadLink,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -31,6 +32,7 @@ export const ShowMore = ({
         onSendCall={onSendCall}
         clientId={clientId}
         telegram={telegram}
+        downloadLink={downloadLink}
       />
     </StyledShowMore>
   );

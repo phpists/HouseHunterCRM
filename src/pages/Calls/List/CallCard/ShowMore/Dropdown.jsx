@@ -3,6 +3,7 @@ import { ReactComponent as History } from "../../../../../assets/images/history-
 import { ReactComponent as Selection } from "../../../../../assets/images/home.svg";
 import { ReactComponent as Comment } from "../../../../../assets/images/message-object.svg";
 import { ReactComponent as ToObjectIcon } from "../../../../../assets/images/my-object.svg";
+import { ReactComponent as DownloadIcon } from "../../../../../assets/images/download.svg";
 import { useNavigate } from "react-router-dom";
 
 export const Dropdown = ({
@@ -15,6 +16,7 @@ export const Dropdown = ({
   onSendCall,
   clientId,
   telegram,
+  downloadLink,
 }) => {
   const navigate = useNavigate();
 
@@ -27,9 +29,19 @@ export const Dropdown = ({
               className="flex items-center justify-between"
               onClick={onSendCall}
             >
-              <span>Передати дзвінок</span>{" "}
+              <span>Передати телеграм клієнта</span>{" "}
               <ToObjectIcon className="selection-icon" />
             </div>
+          )}
+          {downloadLink && (
+            <a
+              className="flex items-center justify-between"
+              href={downloadLink}
+              target="_blank"
+              download
+            >
+              <span>Завантажити</span> <DownloadIcon className="star-icon" />
+            </a>
           )}
         </>
       ) : (
@@ -95,7 +107,7 @@ const StyledDropdown = styled.div`
   font-weight: var(--font-weight-light);
   line-height: 118%; /* 14.16px */
   letter-spacing: 0.24px;
-  width: 180px;
+  width: 200px;
   overflow: hidden;
   top: 0;
   right: -5px;

@@ -31,6 +31,7 @@ export const CallCard = ({
   clientId,
   commentDate,
   telegram,
+  downloadLink,
 }) => {
   const [open, setOpen] = useState();
   const [commentEdit, setCommentEdit] = useState(comment);
@@ -99,6 +100,7 @@ export const CallCard = ({
         clientId={clientId}
         commentDate={commentDate}
         telegram={telegram}
+        downloadLink={downloadLink}
       />
       <MobileContent
         open={open}
@@ -127,6 +129,7 @@ export const CallCard = ({
         clientId={clientId}
         commentDate={commentDate}
         telegram={telegram}
+        downloadLink={downloadLink}
       />
     </StyledCallCard>
   );

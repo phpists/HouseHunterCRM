@@ -78,6 +78,7 @@ export const Dropdown = ({
             />
           </div>
         )}
+
         {onSend && (
           <div
             className="flex items-center justify-between noClickable"

@@ -41,6 +41,26 @@ export const List = ({
     setSendTelegramCall(null);
   };
 
+  const handleCreateTelegramCommentInfo = (data) => {
+    const FIELDS_NAMES = {
+      description: "Опис",
+      rooms: "Кількість кімнат",
+      floor: "Повер",
+      floor_count: "Поверховість",
+      id_location: "Локація",
+      type_deal: "Оренда",
+      adress: "Адреса",
+      price_usd: "Ціна $",
+      other_pay: "Інші платежі",
+    };
+    const fieldsValues = Object.entries(data)
+      ?.filter((f) => !!FIELDS_NAMES[f[0]] && f[1]?.length > 0)
+      ?.map((f) => `${FIELDS_NAMES[f[0]]}: ${f[1]}`)
+      ?.join("\n\n");
+
+    return fieldsValues?.length > 0 ? fieldsValues : "-";
+  };
+
   return (
     <StyledList ref={listRef}>
       {sendCall && (
@@ -96,6 +116,7 @@ export const List = ({
                   filters,
                   type_order,
                   id_order,
+                  added_object,
                 }) => (
                   <CallCard
                     key={id_order}
@@ -103,16 +124,17 @@ export const List = ({
                     clientName={user_name}
                     phone={phone}
                     date={handleFormatDate(Number(dt_order) * 1000)}
-                    comment={filters}
+                    comment={handleCreateTelegramCommentInfo(added_object)}
                     status={type_order}
                     telegram
                     onSendCall={() => handleSendTelegramCall(id_order)}
                     selected={!!selected.find((j) => j === id_order)}
                     onSelect={() => onSelect(id_order)}
+                    downloadLink={added_object?.link_to_zip}
                     onEditComment={() =>
                       setCommentModal({
                         id: id_order,
-                        coment: filters,
+                        coment: handleCreateTelegramCommentInfo(added_object),
                         readOnly: true,
                       })
                     }
