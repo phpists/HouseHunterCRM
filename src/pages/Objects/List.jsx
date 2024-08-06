@@ -251,7 +251,7 @@ export const List = ({
                     : null
                 }
                 onAdvertise={
-                  companyInfo?.data?.id_hash === XHOUSE_COMPANY_ID
+                  XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash)
                     ? () => setAdvertaseObject(d)
                     : null
                 }

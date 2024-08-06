@@ -278,7 +278,9 @@ export const App = () => {
                             path="/selections/:id"
                             element={<Selections />}
                           />
-                          {companyInfo?.data?.id_hash === XHOUSE_COMPANY_ID ? (
+                          {XHOUSE_COMPANY_ID.includes(
+                            companyInfo?.data?.id_hash
+                          ) ? (
                             <>
                               <Route
                                 path="/advertising"

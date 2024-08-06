@@ -98,7 +98,7 @@ const Calls = ({ companyId }) => {
   };
 
   const handleGetgetTelegramOrders = () => {
-    if (companyId === XHOUSE_COMPANY_ID) {
+    if (XHOUSE_COMPANY_ID.includes(companyId)) {
       getTelegramOrders().then((resp) => {
         const orders = resp?.data?.data ?? [];
         setTelegramData(Array.isArray(orders) ? orders : [orders]);

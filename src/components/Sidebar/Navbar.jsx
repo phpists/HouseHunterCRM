@@ -10,9 +10,13 @@ import { ReactComponent as PhoneIcon } from "../../assets/images/phone-menu.svg"
 import { NavBarItem } from "./NavBarItem";
 import { handleCheckAccess } from "../../utilits";
 import { useAppSelect } from "../../hooks/redux";
+import { useGetCompanyInfoQuery } from "../../store/billing/billing.api";
+import { XHOUSE_COMPANY_ID } from "../../constants";
 
 export const NavBar = ({ accessData }) => {
   const { user } = useAppSelect((state) => state.auth);
+  const { data: companyInfo } = useGetCompanyInfoQuery();
+
   const LINKS = [
     { icon: GridIcon, link: "/", title: "Дашборд" },
     ...(handleCheckAccess(accessData, "clients", "view")
@@ -65,12 +69,16 @@ export const NavBar = ({ accessData }) => {
           },
         ]
       : []),
-    {
-      icon: MarketIcon,
-      link: "/advertising",
-      title: "Реклама",
-      childrenLinks: ["advertising-setting"],
-    },
+    ...(XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash)
+      ? [
+          {
+            icon: MarketIcon,
+            link: "/advertising",
+            title: "Реклама",
+            childrenLinks: ["advertising-setting"],
+          },
+        ]
+      : []),
 
     ,
   ];
