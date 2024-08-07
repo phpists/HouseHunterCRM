@@ -42,6 +42,7 @@ export const DesktopContent = ({
   onOpenDeleteReason,
   onFastSelection,
   onAdvertise,
+  onAdvertiseTelegram,
 }) => {
   return (
     <StyledDesktopContent className="flex items-center justify-between clickable">
@@ -104,6 +105,7 @@ export const DesktopContent = ({
         onOpenDeleteReason={onOpenDeleteReason}
         onFastSelection={onFastSelection}
         onAdvertise={onAdvertise}
+        onAdvertiseTelegram={onAdvertiseTelegram}
       />
       <div className="mobile-footer w-full">
         <Info data={data} editable={editable} onEdit={onEdit} />

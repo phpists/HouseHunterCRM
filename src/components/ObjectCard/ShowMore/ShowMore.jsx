@@ -28,6 +28,7 @@ export const ShowMore = ({
   onOpenDeleteReason,
   onFastSelection,
   onAdvertise,
+  onAdvertiseTelegram,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -79,6 +80,7 @@ export const ShowMore = ({
         onOpenDeleteReason={onOpenDeleteReason}
         onFastSelection={onFastSelection}
         onAdvertise={onAdvertise}
+        onAdvertiseTelegram={onAdvertiseTelegram}
       />
     </StyledShowMore>
   );

@@ -41,6 +41,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
       publishObject({
         id_obj: object?.id,
         id_user_olx,
+        resource: "olx",
       }).then((resp) => {
         setLoading(false);
         handleResponse(

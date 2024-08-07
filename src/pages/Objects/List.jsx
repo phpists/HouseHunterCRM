@@ -9,7 +9,10 @@ import { Loader } from "../../components/Loader";
 import { ObjectPriceHistory } from "../../components/ObjectPriceHistory";
 import { ObjectCommentHistory } from "../../components/ObjectCommentHistory/ObjectCommentHistory";
 import { ObjectHistory } from "../../components/ObjectHistory/ObjectHistory";
-import { useLazyDeleteObjectQuery } from "../../store/objects/objects.api";
+import {
+  useLazyDeleteObjectQuery,
+  useLazyPublishObjectQuery,
+} from "../../store/objects/objects.api";
 import cogoToast from "cogo-toast";
 import { useAppSelect } from "../../hooks/redux";
 import { EditObjectComment } from "../../components/EditObjectComment";
@@ -41,6 +44,7 @@ export const List = ({
   const { user } = useAppSelect((state) => state.auth);
   const { accessData } = useAppSelect((state) => state.auth);
   const { data: companyInfo } = useGetCompanyInfoQuery();
+  const [publishObject] = useLazyPublishObjectQuery();
   const [openAddModal, setOpenAddModal] = useState(null);
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
   const [openHistoryPriceModal, setOpenHistoryPriceModal] = useState(null);
@@ -92,6 +96,50 @@ export const List = ({
     }&id=${btoa(`["${id}"]`)}`;
 
     handleCopy(LINK);
+  };
+
+  const handleTelegramPublish = (id) => {
+    publishObject({
+      id_obj: id,
+      resource: "telegram",
+    }).then((resp) => {
+      handleResponse(
+        resp,
+        () => {
+          const messages = {
+            new: "Нове оголошення, до активації та провірки",
+            active: "Опубліковано на olx",
+            limited:
+              "Вичерпаний ліміт безкоштовних оголошень у вибраній категорії",
+            removed_by_user: "Видалено користувачем",
+            outdated: "Оголошення досягло дати придатності",
+            unconfirmed: "Оголошення очікує на підтвердження ",
+            unpaid: "Очікується оплата",
+            moderated: "Відхилено модератором",
+            blocked: "Заблоковано модератором",
+            disabled:
+              "Вимкнено модерацією, пропозиція заблокована та очікує перевірки",
+            removed_by_moderator: "Видалено",
+          };
+          cogoToast.info(
+            messages[resp?.data?.status] ?? "Оголошення успішно опубліковано",
+            {
+              hideAfter: 3,
+              position: "top-right",
+            }
+          );
+        },
+        () => {
+          const message = resp?.data?.messege;
+
+          cogoToast.error(<>{message}</>, {
+            hideAfter: 3,
+            position: "top-right",
+          });
+        },
+        true
+      );
+    });
   };
 
   return (
@@ -253,6 +301,13 @@ export const List = ({
                 onAdvertise={
                   XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash)
                     ? () => setAdvertaseObject(d)
+                    : null
+                }
+                onAdvertiseTelegram={
+                  XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) &&
+                  d?.type_object !== "street_base" &&
+                  d?.type_object !== "mls"
+                    ? () => handleTelegramPublish(d?.id)
                     : null
                 }
               />

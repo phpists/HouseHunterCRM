@@ -533,14 +533,14 @@ export const objects = createApi({
       }),
     }),
     publishObject: build.query({
-      query: ({ id_obj, id_user_olx }) => ({
+      query: ({ id_obj, id_user_olx, resource }) => ({
         url: "",
         method: "POST",
         headers: headers(),
         body: handleToFormData({
           action: "publish",
           mod: "publication",
-          resource: "olx",
+          resource,
           id_obj,
           id_user_olx,
         }),

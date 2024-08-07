@@ -50,6 +50,7 @@ export const Dropdown = ({
   onOpenDeleteReason,
   onFastSelection,
   onAdvertise,
+  onAdvertiseTelegram,
 }) => {
   const [addStreetBaseObject] = useLazyAddStreetBaseObjectQuery();
   const [added, setAdded] = useState(false);
@@ -249,6 +250,15 @@ export const Dropdown = ({
               onClick={onAdvertise}
             >
               <span>Рекламувати</span> <MarketIcon className="selection-icon" />
+            </div>
+          )}{" "}
+          {onAdvertiseTelegram && (
+            <div
+              className="flex items-center justify-between"
+              onClick={onAdvertiseTelegram}
+            >
+              <span>Рекламувати в телеграм</span>{" "}
+              <MarketIcon className="selection-icon" />
             </div>
           )}
           {onDelete && (
