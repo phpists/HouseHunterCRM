@@ -99,46 +99,52 @@ export const List = ({
   };
 
   const handleTelegramPublish = (id) => {
+    const { hide } = cogoToast.loading("Опублікування реклами в телеграмі", {
+      position: "top-right",
+    });
     publishObject({
       id_obj: id,
       resource: "telegram",
     }).then((resp) => {
-      handleResponse(
-        resp,
-        () => {
-          const messages = {
-            new: "Нове оголошення, до активації та провірки",
-            active: "Опубліковано на olx",
-            limited:
-              "Вичерпаний ліміт безкоштовних оголошень у вибраній категорії",
-            removed_by_user: "Видалено користувачем",
-            outdated: "Оголошення досягло дати придатності",
-            unconfirmed: "Оголошення очікує на підтвердження ",
-            unpaid: "Очікується оплата",
-            moderated: "Відхилено модератором",
-            blocked: "Заблоковано модератором",
-            disabled:
-              "Вимкнено модерацією, пропозиція заблокована та очікує перевірки",
-            removed_by_moderator: "Видалено",
-          };
-          cogoToast.info(
-            messages[resp?.data?.status] ?? "Оголошення успішно опубліковано",
-            {
+      setTimeout(() => {
+        hide();
+        handleResponse(
+          resp,
+          () => {
+            const messages = {
+              new: "Нове оголошення, до активації та провірки",
+              active: "Опубліковано на olx",
+              limited:
+                "Вичерпаний ліміт безкоштовних оголошень у вибраній категорії",
+              removed_by_user: "Видалено користувачем",
+              outdated: "Оголошення досягло дати придатності",
+              unconfirmed: "Оголошення очікує на підтвердження ",
+              unpaid: "Очікується оплата",
+              moderated: "Відхилено модератором",
+              blocked: "Заблоковано модератором",
+              disabled:
+                "Вимкнено модерацією, пропозиція заблокована та очікує перевірки",
+              removed_by_moderator: "Видалено",
+            };
+            cogoToast.info(
+              messages[resp?.data?.status] ?? "Оголошення успішно опубліковано",
+              {
+                hideAfter: 3,
+                position: "top-right",
+              }
+            );
+          },
+          () => {
+            const message = resp?.data?.messege;
+
+            cogoToast.error(<>{message}</>, {
               hideAfter: 3,
               position: "top-right",
-            }
-          );
-        },
-        () => {
-          const message = resp?.data?.messege;
-
-          cogoToast.error(<>{message}</>, {
-            hideAfter: 3,
-            position: "top-right",
-          });
-        },
-        true
-      );
+            });
+          },
+          true
+        );
+      }, 1000);
     });
   };
 

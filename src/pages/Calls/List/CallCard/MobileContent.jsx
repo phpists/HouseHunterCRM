@@ -35,6 +35,7 @@ export const MobileContent = ({
   commentDate,
   telegram,
   downloadLink,
+  idObject,
 }) => (
   <StyledMobileContent className="flex flex-col items-start clickable">
     <Type callType={callType} agentPhone={agentPhone} telegram={telegram} />
@@ -82,6 +83,7 @@ export const MobileContent = ({
       clientId={clientId}
       telegram={telegram}
       downloadLink={downloadLink}
+      idObject={idObject}
     />
   </StyledMobileContent>
 );

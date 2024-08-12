@@ -117,6 +117,7 @@ export const List = ({
                   type_order,
                   id_order,
                   added_object,
+                  id_obj,
                 }) => (
                   <CallCard
                     key={id_order}
@@ -138,6 +139,7 @@ export const List = ({
                         readOnly: true,
                       })
                     }
+                    idObject={id_obj}
                   />
                 )
               )}

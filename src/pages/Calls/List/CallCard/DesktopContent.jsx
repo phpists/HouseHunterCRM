@@ -35,6 +35,7 @@ export const DesktopContent = ({
   commentDate,
   telegram,
   downloadLink,
+  idObject,
 }) => (
   <StyledDesktopContent className="flex items-start clickable">
     <Type callType={callType} agentPhone={agentPhone} telegram={telegram} />
@@ -74,6 +75,7 @@ export const DesktopContent = ({
       clientId={clientId}
       telegram={telegram}
       downloadLink={downloadLink}
+      idObject={idObject}
     />
   </StyledDesktopContent>
 );

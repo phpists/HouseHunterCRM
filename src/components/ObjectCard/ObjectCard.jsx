@@ -41,7 +41,8 @@ export const ObjectCard = memo(
     onOpenDeleteReason,
     onFastSelection,
     onAdvertise,
-    onAdvertiseTelegram
+    onAdvertiseTelegram,
+    telegramAdLoader,
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
     const { ref, inView } = useInView({ triggerOnce: false });

@@ -4,7 +4,7 @@ import { ReactComponent as Selection } from "../../../../../assets/images/home.s
 import { ReactComponent as Comment } from "../../../../../assets/images/message-object.svg";
 import { ReactComponent as ToObjectIcon } from "../../../../../assets/images/my-object.svg";
 import { ReactComponent as DownloadIcon } from "../../../../../assets/images/download.svg";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export const Dropdown = ({
   status,
@@ -17,6 +17,7 @@ export const Dropdown = ({
   clientId,
   telegram,
   downloadLink,
+  idObject,
 }) => {
   const navigate = useNavigate();
 
@@ -24,6 +25,15 @@ export const Dropdown = ({
     <StyledDropdown className="dropdown" onClick={onCloseDropdown}>
       {telegram ? (
         <>
+          {idObject?.length > 0 && (
+            <div
+              className="flex items-center justify-between"
+              onClick={() => window.open(`/objects/${idObject}`)}
+            >
+              <span>Переглянути об'єкт</span>{" "}
+              <Selection className="selection-icon" />
+            </div>
+          )}
           {onSendCall && (
             <div
               className="flex items-center justify-between"

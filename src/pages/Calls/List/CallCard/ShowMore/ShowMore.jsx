@@ -13,6 +13,7 @@ export const ShowMore = ({
   clientId,
   telegram,
   downloadLink,
+  idObject,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -33,6 +34,7 @@ export const ShowMore = ({
         clientId={clientId}
         telegram={telegram}
         downloadLink={downloadLink}
+        idObject={idObject}
       />
     </StyledShowMore>
   );

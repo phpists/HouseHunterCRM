@@ -75,80 +75,78 @@ export const List = ({
         {clients?.length === 0 || actionLoading ? (
           <Empty loading={loading || actionLoading} />
         ) : (
-          clients
-            ?.slice(0, 1)
-            ?.map(
-              (
-                {
-                  full_name,
-                  id,
-                  dt_add,
-                  phones,
-                  all_req,
-                  all_obj,
-                  comment,
-                  first_name,
-                  last_name,
-                  favorite,
-                  agent,
-                  email,
-                  deleted,
-                  dt_start_delete,
-                  reasone_remove,
-                },
-                i
-              ) => (
-                <Card
-                  key={i}
-                  selected={!!selected.find((s) => s === id)}
-                  onSelect={() => onSelect(id)}
-                  name={`${first_name} ${last_name}`}
-                  id={id}
-                  dateCreate={dt_add}
-                  phones={phones?.map((p) => ({
-                    ...p,
-                    phone: `${phonesCodes?.find((c) => c.id === p.code)?.code}${
-                      p?.phone
-                    }`,
-                  }))}
-                  requestsCount={all_req}
-                  objectsCount={all_obj}
-                  comment={comment}
-                  onDelete={() => handleOpenDeleteModal(id)}
-                  isDelete={
-                    isDeleted
-                      ? user?.struct_level === 1
-                      : handleCheckAccess(accessData, "clients", "delete")
-                  }
-                  onAddToFavorite={() => onAddToFavorite(id)}
-                  onSend={() => onSend(id)}
-                  favorite={favorite}
-                  agent={agent}
-                  agentPhone={`${
-                    phonesCodes?.find(
-                      (c) => c.id === agent?.phones[0].id_phone_code
-                    )?.code
-                  }${agent?.phones[0]?.phone ?? ""}`}
-                  firstName={first_name}
-                  lastName={last_name}
-                  email={email}
-                  onEditComment={() => setEditComment({ comment, id })}
-                  isDeleted={deleted === "1"}
-                  onRestore={() => onRestore([id])}
-                  onDeleteFinally={
-                    user?.struct_level === 1
-                      ? () => handleOpenDeleteModal(id, true)
-                      : null
-                  }
-                  deleteDate={dt_start_delete}
-                  onOpenDeleteReason={
-                    reasone_remove?.length > 0
-                      ? () => setDeleteInfo(reasone_remove)
-                      : null
-                  }
-                />
-              )
+          clients?.map(
+            (
+              {
+                full_name,
+                id,
+                dt_add,
+                phones,
+                all_req,
+                all_obj,
+                comment,
+                first_name,
+                last_name,
+                favorite,
+                agent,
+                email,
+                deleted,
+                dt_start_delete,
+                reasone_remove,
+              },
+              i
+            ) => (
+              <Card
+                key={i}
+                selected={!!selected.find((s) => s === id)}
+                onSelect={() => onSelect(id)}
+                name={`${first_name} ${last_name}`}
+                id={id}
+                dateCreate={dt_add}
+                phones={phones?.map((p) => ({
+                  ...p,
+                  phone: `${phonesCodes?.find((c) => c.id === p.code)?.code}${
+                    p?.phone
+                  }`,
+                }))}
+                requestsCount={all_req}
+                objectsCount={all_obj}
+                comment={comment}
+                onDelete={() => handleOpenDeleteModal(id)}
+                isDelete={
+                  isDeleted
+                    ? user?.struct_level === 1
+                    : handleCheckAccess(accessData, "clients", "delete")
+                }
+                onAddToFavorite={() => onAddToFavorite(id)}
+                onSend={() => onSend(id)}
+                favorite={favorite}
+                agent={agent}
+                agentPhone={`${
+                  phonesCodes?.find(
+                    (c) => c.id === agent?.phones[0].id_phone_code
+                  )?.code
+                }${agent?.phones[0]?.phone ?? ""}`}
+                firstName={first_name}
+                lastName={last_name}
+                email={email}
+                onEditComment={() => setEditComment({ comment, id })}
+                isDeleted={deleted === "1"}
+                onRestore={() => onRestore([id])}
+                onDeleteFinally={
+                  user?.struct_level === 1
+                    ? () => handleOpenDeleteModal(id, true)
+                    : null
+                }
+                deleteDate={dt_start_delete}
+                onOpenDeleteReason={
+                  reasone_remove?.length > 0
+                    ? () => setDeleteInfo(reasone_remove)
+                    : null
+                }
+              />
             )
+          )
         )}
         <div className="loader relative">
           {loading && clients?.length > 0 && (

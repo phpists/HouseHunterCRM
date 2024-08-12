@@ -15,13 +15,12 @@ export const Tags = ({ data }) => {
     ...(data?.location_name && data?.location_name?.length > 0
       ? [
           {
-            title: `${data?.location_name} ${
-              data?.street?.length > 0 ? `/ ${data?.street}` : ""
-            }`,
+            title: `${data?.location_name}`,
             Icon: <Home />,
           },
         ]
       : []),
+    ...(data?.street?.length > 0 ? [{ title: `вул. ${data?.street}` }] : []),
     ...(data?.rooms > 0
       ? [{ title: `${data?.rooms} кімнати`, Icon: <Door /> }]
       : []),
