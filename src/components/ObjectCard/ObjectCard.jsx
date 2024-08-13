@@ -45,7 +45,7 @@ export const ObjectCard = memo(
     telegramAdLoader,
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
-    const { ref, inView } = useInView({ triggerOnce: false });
+    const { ref, inView } = useInView({ triggerOnce: window.innerWidth < 801 });
 
     const handleClick = (e) =>
       e.target.classList.contains("clickable") && onSelect();
