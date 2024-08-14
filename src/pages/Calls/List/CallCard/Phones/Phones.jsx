@@ -22,13 +22,8 @@ export const Phones = ({
         callsData={callsData}
         clientName={clientName}
       />
-      {telegram ? null : (
-        <>
-          {" "}
-          <PhoneCalls count={callCount} />
-          <Arrow className="arrow-card" />
-        </>
-      )}
+      <PhoneCalls count={callCount} telegram={telegram} />
+      <Arrow className="arrow-card" />
     </StyledPhones>
   );
 };

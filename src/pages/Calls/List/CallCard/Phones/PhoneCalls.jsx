@@ -2,12 +2,12 @@ import styled from "styled-components";
 import { ReactComponent as Phone } from "../../../../../assets/images/small-phone.svg";
 import { ReactComponent as Arrow } from "../../../../../assets/images/call-arrow.svg";
 
-export const PhoneCalls = ({ count = 0 }) => (
+export const PhoneCalls = ({ count = 0, telegram }) => (
   <StyledPhoneCalls className="flex items-center">
     <div>
       <div className="flex items-center title">
         <Phone />
-        {count}
+        {telegram ? "Історія" : count}
       </div>
       <div className="subtitle">Викликів</div>
     </div>

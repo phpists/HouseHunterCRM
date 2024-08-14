@@ -2,8 +2,11 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { DesktopContent } from "./DesktopContent";
 import { MobileContent } from "./MobileContent";
-import { useLazyGetAllCallsPhonesQuery } from "../../../../store/calls/calls.api";
-import { handleResponse } from "../../../../utilits";
+import {
+  useLazyGetAllCallsPhonesQuery,
+  useLazyGetHistoryOrderQuery,
+} from "../../../../store/calls/calls.api";
+import { handleFormatDate, handleResponse } from "../../../../utilits";
 
 export const CallCard = ({
   selected,
@@ -33,10 +36,13 @@ export const CallCard = ({
   telegram,
   downloadLink,
   idObject,
+  chatId,
 }) => {
   const [open, setOpen] = useState();
   const [commentEdit, setCommentEdit] = useState(comment);
   const [getCalls, { data: callsData }] = useLazyGetAllCallsPhonesQuery();
+  const [getHistoryOrder, { data: telegramCallsData }] =
+    useLazyGetHistoryOrderQuery();
 
   const handleClick = (e) =>
     e.target.classList.contains("clickable") && onSelect();
@@ -55,11 +61,19 @@ export const CallCard = ({
   const handleToggleOpen = () => {
     if (!open) {
       if (!callsData) {
-        getCalls(phone).then((resp) =>
-          handleResponse(resp, () => {
-            setOpen(true);
-          })
-        );
+        if (telegram) {
+          getHistoryOrder(chatId).then((resp) =>
+            handleResponse(resp, () => {
+              setOpen(true);
+            })
+          );
+        } else {
+          getCalls(phone).then((resp) =>
+            handleResponse(resp, () => {
+              setOpen(true);
+            })
+          );
+        }
       } else {
         setOpen(true);
       }
@@ -90,7 +104,13 @@ export const CallCard = ({
         status={status}
         onSetStatus={onSetStatus}
         level={level}
-        callsData={callsData?.data ?? []}
+        callsData={
+          telegram
+            ? telegramCallsData?.data?.map((c) => ({
+                dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
+              })) ?? []
+            : callsData?.data ?? []
+        }
         onEditComment={onEditComment}
         onAdd={onAdd}
         onSend={onSend}
@@ -120,7 +140,13 @@ export const CallCard = ({
         status={status}
         onSetStatus={onSetStatus}
         level={level}
-        callsData={callsData?.data ?? []}
+        callsData={
+          telegram
+            ? telegramCallsData?.data?.map((c) => ({
+                dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
+              })) ?? []
+            : callsData?.data ?? []
+        }
         onEditComment={onEditComment}
         onAdd={onAdd}
         onSend={onSend}

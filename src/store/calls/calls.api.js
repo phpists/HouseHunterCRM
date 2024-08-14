@@ -134,6 +134,18 @@ export const calls = createApi({
         }),
       }),
     }),
+    getHistoryOrder: build.query({
+      query: (chat_id) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getHistoryOrder",
+          mod: "telegrambot",
+          chat_id,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -149,4 +161,5 @@ export const {
   useLazyGetOrdersTelegrambotQuery,
   useLazySendOrderTelegrambotQuery,
   useLazySetStatusOrderTelegrambotQuery,
+  useLazyGetHistoryOrderQuery,
 } = calls;

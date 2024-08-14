@@ -118,6 +118,7 @@ export const List = ({
                   id_order,
                   added_object,
                   id_obj,
+                  chat_id,
                 }) => (
                   <CallCard
                     key={id_order}
@@ -140,6 +141,8 @@ export const List = ({
                       })
                     }
                     idObject={id_obj}
+                    callCount={1}
+                    chatId={chat_id}
                   />
                 )
               )}
