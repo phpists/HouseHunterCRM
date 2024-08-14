@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { ReactComponent as Phone } from "../../../../../assets/images/small-phone.svg";
 import { ReactComponent as Arrow } from "../../../../../assets/images/call-arrow.svg";
 
-export const PhoneCalls = ({ count = 0, telegram }) => (
-  <StyledPhoneCalls className="flex items-center">
+export const PhoneCalls = ({ count = 0, telegram, onToggleOpen }) => (
+  <StyledPhoneCalls className="flex items-center" onClick={onToggleOpen}>
     <div>
       <div className="flex items-center title">
         <Phone />
@@ -22,6 +22,9 @@ const StyledPhoneCalls = styled.div`
   background: var(--bg-80);
   height: max-content;
   height: 60px;
+  display: flex;
+  flex-shrink: 0;
+  width: max-content;
   .title {
     color: var(--main-color);
     leading-trim: both;
@@ -51,6 +54,7 @@ const StyledPhoneCalls = styled.div`
     height: 24px;
     width: 24px;
     margin-left: 10px;
+    flex-shrink: 0;
   }
 
   @media (min-width: 1400px) {

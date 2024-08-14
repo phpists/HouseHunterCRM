@@ -36,6 +36,8 @@ export const DesktopContent = ({
   telegram,
   downloadLink,
   idObject,
+  statusText,
+  onChangeHistoryOrderStatus,
 }) => (
   <StyledDesktopContent className="flex items-start clickable">
     <Type callType={callType} agentPhone={agentPhone} telegram={telegram} />
@@ -49,9 +51,10 @@ export const DesktopContent = ({
       clientName={clientName}
       callCount={callCount}
       telegram={telegram}
+      onChangeHistoryOrderStatus={onChangeHistoryOrderStatus}
     />
     <Divider />
-    <Status status={status} telegram={telegram} />
+    <Status status={statusText} telegram={telegram} statusText={statusText} />
     <Field
       placeholder="Почніть писати"
       label={`Коментар ${commentDate ?? ""}`}

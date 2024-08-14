@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { CallCard } from "./CallCard/CallCard";
 import { useState } from "react";
-import { handleFormatDate } from "../../../utilits";
+import { handleFormatDate, handleResponse } from "../../../utilits";
 
 import { Empty } from "../../../components/Empty";
 import { Loader } from "../../../components/Loader";
@@ -9,6 +9,8 @@ import { SendModal } from "../../Clients/SendModal";
 import { EditComment } from "./EditComment";
 import { AddClient } from "../../../components/AddClient/AddClient";
 import { SendCall } from "./SendCall";
+import { useLazySetStatusTelegramOrderQuery } from "../../../store/calls/calls.api";
+import cogoToast from "cogo-toast";
 
 export const List = ({
   selected,
@@ -23,6 +25,7 @@ export const List = ({
   telegramData,
   showTelegram,
   refreshTelegramCalls,
+  onToggleTelegramOrderStatus,
 }) => {
   const [openMore, setOpenMore] = useState(null);
   const [commentModal, setCommentModal] = useState(false);
@@ -30,6 +33,7 @@ export const List = ({
   const [addModal, setAddModal] = useState(false);
   const [sendCall, setSendCall] = useState(false);
   const [sendTelegramCall, setSendTelegramCall] = useState(false);
+  const [setTelegramOrderStatus] = useLazySetStatusTelegramOrderQuery();
 
   const handleSendTelegramCall = (id) => {
     setSendCall(id);
@@ -59,6 +63,18 @@ export const List = ({
       ?.join("\n\n");
 
     return fieldsValues?.length > 0 ? fieldsValues : "-";
+  };
+
+  const handleChangeTelegramOrderStatus = (id) => {
+    setTelegramOrderStatus(id).then((resp) => {
+      handleResponse(resp, () => {
+        cogoToast.success("Статус успішно змінено!", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        onToggleTelegramOrderStatus(id);
+      });
+    });
   };
 
   return (
@@ -119,6 +135,7 @@ export const List = ({
                   added_object,
                   id_obj,
                   chat_id,
+                  status,
                 }) => (
                   <CallCard
                     key={id_order}
@@ -127,7 +144,6 @@ export const List = ({
                     phone={phone}
                     date={handleFormatDate(Number(dt_order) * 1000)}
                     comment={handleCreateTelegramCommentInfo(added_object)}
-                    status={type_order}
                     telegram
                     onSendCall={() => handleSendTelegramCall(id_order)}
                     selected={!!selected.find((j) => j === id_order)}
@@ -143,6 +159,11 @@ export const List = ({
                     idObject={id_obj}
                     callCount={1}
                     chatId={chat_id}
+                    onSetStatus={() =>
+                      handleChangeTelegramOrderStatus(id_order)
+                    }
+                    status={status}
+                    statusText={type_order}
                   />
                 )
               )}

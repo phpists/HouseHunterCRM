@@ -333,6 +333,14 @@ const Calls = ({ companyId }) => {
     );
   };
 
+  const handleToggleTelegramOrderStatus = (id) => {
+    setTelegramData(
+      telegramData.map((o) =>
+        o.id_order === id ? { ...o, status: o?.status === "1" ? "0" : "1" } : o
+      )
+    );
+  };
+
   return (
     <StyledCalls>
       <Header
@@ -383,6 +391,7 @@ const Calls = ({ companyId }) => {
         telegramData={telegramData}
         showTelegram={showTelegram || filters?.type_call?.length === 0}
         refreshTelegramCalls={handleGetgetTelegramOrders}
+        onToggleTelegramOrderStatus={handleToggleTelegramOrderStatus}
       />
     </StyledCalls>
   );

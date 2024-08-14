@@ -36,6 +36,7 @@ export const MobileContent = ({
   telegram,
   downloadLink,
   idObject,
+  onChangeHistoryOrderStatus,
 }) => (
   <StyledMobileContent className="flex flex-col items-start clickable">
     <Type callType={callType} agentPhone={agentPhone} telegram={telegram} />
@@ -49,6 +50,7 @@ export const MobileContent = ({
         clientName={clientName}
         callCount={callCount}
         telegram={telegram}
+        onChangeHistoryOrderStatus={onChangeHistoryOrderStatus}
       />
       <PhonesMobile
         open={open}

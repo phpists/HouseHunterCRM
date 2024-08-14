@@ -12,18 +12,26 @@ export const Phones = ({
   clientName,
   callCount,
   telegram,
+  onChangeHistoryOrderStatus,
 }) => {
   return (
-    <StyledPhones onClick={onToggleOpen} open={open}>
+    <StyledPhones open={open}>
       <Phone
         open={open}
         phone={phone}
         date={date}
         callsData={callsData}
         clientName={clientName}
+        telegram={telegram}
+        onChangeHistoryOrderStatus={onChangeHistoryOrderStatus}
+        onToggleOpen={onToggleOpen}
       />
-      <PhoneCalls count={callCount} telegram={telegram} />
-      <Arrow className="arrow-card" />
+      <PhoneCalls
+        count={callCount}
+        telegram={telegram}
+        onToggleOpen={onToggleOpen}
+      />
+      <Arrow className="arrow-card" onClick={onToggleOpen} />
     </StyledPhones>
   );
 };
@@ -38,6 +46,7 @@ const StyledPhones = styled.div`
     transition: all 0.3s;
     transform: rotate(${({ open }) => (open ? 180 : 0)}deg);
     display: none;
+    flex-shrink: 0;
     ${({ open }) =>
       open &&
       `

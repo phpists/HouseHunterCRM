@@ -25,6 +25,13 @@ export const Dropdown = ({
     <StyledDropdown className="dropdown" onClick={onCloseDropdown}>
       {telegram ? (
         <>
+          <div
+            className="flex items-center justify-between"
+            onClick={onSetStatus}
+          >
+            <span>{status === "1" ? "Не опрацьовано" : "Опрацьовано"}</span>
+            <History className="selection-icon" />
+          </div>
           {idObject?.length > 0 && (
             <div
               className="flex items-center justify-between"

@@ -5,8 +5,10 @@ import { MobileContent } from "./MobileContent";
 import {
   useLazyGetAllCallsPhonesQuery,
   useLazyGetHistoryOrderQuery,
+  useLazySetStatusTelegramOrderQuery,
 } from "../../../../store/calls/calls.api";
 import { handleFormatDate, handleResponse } from "../../../../utilits";
+import cogoToast from "cogo-toast";
 
 export const CallCard = ({
   selected,
@@ -37,12 +39,14 @@ export const CallCard = ({
   downloadLink,
   idObject,
   chatId,
+  statusText,
 }) => {
   const [open, setOpen] = useState();
   const [commentEdit, setCommentEdit] = useState(comment);
   const [getCalls, { data: callsData }] = useLazyGetAllCallsPhonesQuery();
   const [getHistoryOrder, { data: telegramCallsData }] =
     useLazyGetHistoryOrderQuery();
+  const [setTelegramOrderStatus] = useLazySetStatusTelegramOrderQuery();
 
   const handleClick = (e) =>
     e.target.classList.contains("clickable") && onSelect();
@@ -82,6 +86,18 @@ export const CallCard = ({
     }
   };
 
+  const handleChangeTelegramOrderStatus = (id) => {
+    setTelegramOrderStatus(id).then((resp) => {
+      handleResponse(resp, () => {
+        cogoToast.success("Статус успішно змінено!", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        getHistoryOrder(chatId);
+      });
+    });
+  };
+
   return (
     <StyledCallCard
       className=" clickable"
@@ -108,6 +124,8 @@ export const CallCard = ({
           telegram
             ? telegramCallsData?.data?.map((c) => ({
                 dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
+                id: c?.id_order,
+                status: c?.status,
               })) ?? []
             : callsData?.data ?? []
         }
@@ -123,6 +141,8 @@ export const CallCard = ({
         telegram={telegram}
         downloadLink={downloadLink}
         idObject={idObject}
+        statusText={statusText}
+        onChangeHistoryOrderStatus={handleChangeTelegramOrderStatus}
       />
       <MobileContent
         open={open}
@@ -159,6 +179,8 @@ export const CallCard = ({
         telegram={telegram}
         downloadLink={downloadLink}
         idObject={idObject}
+        statusText={statusText}
+        onChangeHistoryOrderStatus={handleChangeTelegramOrderStatus}
       />
     </StyledCallCard>
   );
