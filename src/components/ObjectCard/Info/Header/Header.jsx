@@ -46,7 +46,7 @@ export const Header = ({ data }) => {
         />
       )}
 
-      {data?.dt_end_agreement !== "0" && (
+      {data?.dt_end_agreement !== "0" && data?.obj_is_actual !== "1" && (
         <Tag
           title={`здано до  ${handleFormatDate(
             Number(data?.dt_end_agreement) * 1000,

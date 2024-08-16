@@ -40,6 +40,7 @@ export const List = ({
   onRestore,
   isDeleted,
   onChangeTags,
+  filters,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { accessData } = useAppSelect((state) => state.auth);
@@ -236,7 +237,13 @@ export const List = ({
                 key={d?.id}
                 selected={!!selected.find((j) => j === d?.id)}
                 onSelect={() => onSelect(d?.id)}
-                data={d}
+                data={{
+                  ...d,
+                  dt_end_agreement:
+                    filters?.company_object?.not_actual === "1"
+                      ? "0"
+                      : d?.dt_end_agreement,
+                }}
                 onToggleFavoriteStatus={() => toggleFavoriteStatus(d?.id)}
                 onFindSimilar={() => onFindSimilar(d)}
                 isEdit={handleCheckAccess(accessData, "objects", "edit")}

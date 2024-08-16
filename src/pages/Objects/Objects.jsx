@@ -744,6 +744,7 @@ const Objects = () => {
         onRestore={handleRestoreObjects}
         isDeleted={filters?.company_object?.show_deleted === "1"}
         onChangeTags={handleChangeTags}
+        filters={filters}
       />
     </StyledObjects>
   );
