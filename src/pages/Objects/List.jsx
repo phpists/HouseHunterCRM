@@ -239,6 +239,10 @@ export const List = ({
                 onSelect={() => onSelect(d?.id)}
                 data={{
                   ...d,
+                  obj_is_actual:
+                    filters?.company_object?.not_actual === "1"
+                      ? "0"
+                      : d?.obj_is_actual,
                   dt_end_agreement:
                     filters?.company_object?.not_actual === "1"
                       ? "0"

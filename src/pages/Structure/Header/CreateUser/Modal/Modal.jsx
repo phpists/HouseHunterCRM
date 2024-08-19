@@ -33,6 +33,8 @@ const INITIAL_DATA = {
   photo: { file: null, url: null },
   dt_birthday: null,
   public_access: "0",
+  is_orenda: "0",
+  is_sell: "0",
 };
 
 export const Modal = ({ onClose, onCreatedUser }) => {

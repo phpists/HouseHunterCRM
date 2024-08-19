@@ -73,6 +73,22 @@ export const PersonalData = ({ data, onChangeField, errors }) => {
             data?.public_access === "1" ? "0" : "1"
           )
         }
+      />{" "}
+      <Divider />
+      <CheckOption
+        label="Займаюся орендою"
+        value={data?.is_orenda === "1" ? "1" : "0"}
+        onChange={() =>
+          onChangeField("is_orenda", data?.is_orenda === "1" ? "0" : "1")
+        }
+      />{" "}
+      <Divider />
+      <CheckOption
+        label="Займаюся продажем"
+        value={data?.is_sell === "1" ? "1" : "0"}
+        onChange={() =>
+          onChangeField("is_sell", data?.is_sell === "1" ? "0" : "1")
+        }
       />
     </StyledPersonalData>
   );

@@ -41,6 +41,8 @@ const INITIAL_DATA = {
   active: "1",
   dt_birthday: null,
   public_access: "0",
+  is_orenda: "0",
+  is_sell: "0",
 };
 
 export const WorkerModal = ({
@@ -202,6 +204,8 @@ export const WorkerModal = ({
         password,
         photo,
         public_access,
+        is_orenda,
+        is_sell,
       } = profileData;
 
       editProfile({
@@ -227,6 +231,8 @@ export const WorkerModal = ({
                 handleFromInputDate(profileData?.dt_birthday)
               )?.getTime() / 1000
         ),
+        is_orenda,
+        is_sell,
       }).then((resp) => {
         setLoading(false);
         handleResponse(resp, () => {

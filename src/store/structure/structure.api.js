@@ -19,6 +19,8 @@ export const structure = createApi({
         dt_birthday,
         photo,
         public_access,
+        is_orenda,
+        is_sell,
       }) => ({
         url: "",
         method: "POST",
@@ -36,6 +38,8 @@ export const structure = createApi({
             structure_parent,
             dt_birthday,
             public_access,
+            is_orenda,
+            is_sell,
           },
           photo ? { photo } : null
         ),
@@ -55,6 +59,8 @@ export const structure = createApi({
         photo,
         dt_birthday,
         public_access,
+        is_orenda,
+        is_sell,
       }) => ({
         url: "",
         method: "POST",
@@ -74,6 +80,8 @@ export const structure = createApi({
             phones_json,
             dt_birthday,
             public_access,
+            is_orenda,
+            is_sell,
           },
           { photo }
         ),

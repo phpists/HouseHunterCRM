@@ -141,6 +141,8 @@ export const Profile = () => {
       photo,
       id_baner,
       public_access,
+      is_orenda,
+      is_sell,
     } = profileData;
     if (handleCheckAllFields()) {
       setLoading(true);
@@ -168,6 +170,8 @@ export const Profile = () => {
                 handleFromInputDate(profileData?.dt_birthday)
               )?.getTime() / 1000
         ),
+        is_orenda,
+        is_sell,
       }).then((resp) => {
         setLoading(false);
         handleResponse(resp, () => {

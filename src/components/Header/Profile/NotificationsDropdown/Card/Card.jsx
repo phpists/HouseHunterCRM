@@ -11,7 +11,7 @@ export const Card = ({ type, messages, info, links, onClose }) => {
       <Divider />
       {messages.map((msg, i) => (
         <React.Fragment key={i}>
-          <Message message={msg} info={info} link={links?.[i] ?? links[0]} />
+          <Message message={msg} info={info} link={links?.[i] ?? links?.[0]} />
           {i < messages.length - 1 && <Divider />}
         </React.Fragment>
       ))}
