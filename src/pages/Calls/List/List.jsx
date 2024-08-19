@@ -9,7 +9,10 @@ import { SendModal } from "../../Clients/SendModal";
 import { EditComment } from "./EditComment";
 import { AddClient } from "../../../components/AddClient/AddClient";
 import { SendCall } from "./SendCall";
-import { useLazySetStatusTelegramOrderQuery } from "../../../store/calls/calls.api";
+import {
+  useLazySendOrderQuery,
+  useLazySetStatusTelegramOrderQuery,
+} from "../../../store/calls/calls.api";
 import cogoToast from "cogo-toast";
 
 export const List = ({
@@ -26,6 +29,9 @@ export const List = ({
   showTelegram,
   refreshTelegramCalls,
   onToggleTelegramOrderStatus,
+  orders,
+  onToggleOrderStatus,
+  refreshOrders,
 }) => {
   const [openMore, setOpenMore] = useState(null);
   const [commentModal, setCommentModal] = useState(false);
@@ -33,6 +39,7 @@ export const List = ({
   const [addModal, setAddModal] = useState(false);
   const [sendCall, setSendCall] = useState(false);
   const [sendTelegramCall, setSendTelegramCall] = useState(false);
+  const [sendOrder, setSendOrder] = useState(false);
   const [setTelegramOrderStatus] = useLazySetStatusTelegramOrderQuery();
 
   const handleSendTelegramCall = (id) => {
@@ -40,9 +47,15 @@ export const List = ({
     setSendTelegramCall(true);
   };
 
+  const handleSendOrder = (id) => {
+    setSendCall(id);
+    setSendOrder(true);
+  };
+
   const handleCloseSendModal = () => {
     setSendCall(false);
     setSendTelegramCall(null);
+    setSendOrder(null);
   };
 
   const handleCreateTelegramCommentInfo = (data) => {
@@ -86,10 +99,13 @@ export const List = ({
           onSendSuccess={() => {
             sendTelegramCall
               ? refreshTelegramCalls()
+              : sendOrder
+              ? refreshOrders()
               : onSendSuccess([sendCall]);
             handleCloseSendModal();
           }}
           telegram={sendTelegramCall}
+          order={sendOrder}
         />
       )}
       {commentModal && (
@@ -118,10 +134,36 @@ export const List = ({
         />
       )}
       {data?.length === 0 &&
-      (telegramData?.length === 0 || !showTelegram || !telegramData) ? (
+      (telegramData?.length === 0 || !showTelegram || !telegramData) &&
+      orders?.length === 0 ? (
         <Empty loading={loading} />
       ) : (
         <>
+          {orders?.length > 0
+            ? orders?.map(({ comment, dt_order, id, status, type }) => (
+                <CallCard
+                  key={id}
+                  callType={type}
+                  clientName={"-"}
+                  phone={"-"}
+                  date={handleFormatDate(Number(dt_order) * 1000)}
+                  comment={comment}
+                  onSendCall={() => handleSendOrder(id)}
+                  selected={!!selected.find((j) => j === id)}
+                  onSelect={() => onSelect(id)}
+                  onEditComment={() =>
+                    setCommentModal({
+                      id,
+                      coment: comment,
+                      readOnly: true,
+                    })
+                  }
+                  callCount={1}
+                  status={status}
+                  xcorp
+                />
+              ))
+            : null}
           {!showTelegram
             ? null
             : telegramData?.map(

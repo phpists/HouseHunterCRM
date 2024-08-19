@@ -2,10 +2,10 @@ import styled from "styled-components";
 import { Tag } from "./Tag";
 import { Title } from "./Title";
 
-export const Status = ({ status, telegram }) => {
+export const Status = ({ status, telegram, statusText }) => {
   return (
     <StyledStatus className={`clickable ${telegram && "telegram"}`}>
-      <Tag status={status} telegram={telegram} />
+      <Tag status={status} telegram={telegram} statusText={statusText} />
       <Title />
     </StyledStatus>
   );

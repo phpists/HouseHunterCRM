@@ -158,6 +158,30 @@ export const calls = createApi({
         }),
       }),
     }),
+    getOrders: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getOrders",
+          mod: "xcorp",
+        }),
+      }),
+    }),
+    sendOrder: build.query({
+      query: ({ id_order, id_user_hash }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "sendOrder",
+          mod: "xcorp",
+          id_order,
+          id_user_hash,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -174,5 +198,7 @@ export const {
   useLazySendOrderTelegrambotQuery,
   useLazySetStatusOrderTelegrambotQuery,
   useLazyGetHistoryOrderQuery,
-  useLazySetStatusTelegramOrderQuery
+  useLazySetStatusTelegramOrderQuery,
+  useLazyGetOrdersQuery,
+  useLazySendOrderQuery,
 } = calls;

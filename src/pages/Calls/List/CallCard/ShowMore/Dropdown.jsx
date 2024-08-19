@@ -18,12 +18,22 @@ export const Dropdown = ({
   telegram,
   downloadLink,
   idObject,
+  xcorp,
 }) => {
   const navigate = useNavigate();
 
   return (
     <StyledDropdown className="dropdown" onClick={onCloseDropdown}>
-      {telegram ? (
+      {xcorp ? (
+        <>
+          <div
+            className="flex items-center justify-between"
+            onClick={onSendCall}
+          >
+            <span>Передати </span> <ToObjectIcon className="selection-icon" />
+          </div>
+        </>
+      ) : telegram ? (
         <>
           <div
             className="flex items-center justify-between"

@@ -16,7 +16,7 @@ export const Phone = ({
 }) => (
   <div>
     <StyledPhone
-      className="flex items-center"
+      className="flex items-center phones-phone-wrapper"
       open={open}
       onClick={onToggleOpen}
     >

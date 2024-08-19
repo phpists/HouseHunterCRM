@@ -14,6 +14,7 @@ export const ShowMore = ({
   telegram,
   downloadLink,
   idObject,
+  xcorp,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -35,6 +36,7 @@ export const ShowMore = ({
         telegram={telegram}
         downloadLink={downloadLink}
         idObject={idObject}
+        xcorp={xcorp}
       />
     </StyledShowMore>
   );

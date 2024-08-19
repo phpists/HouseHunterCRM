@@ -40,6 +40,7 @@ export const CallCard = ({
   idObject,
   chatId,
   statusText,
+  xcorp,
 }) => {
   const [open, setOpen] = useState();
   const [commentEdit, setCommentEdit] = useState(comment);
@@ -143,6 +144,7 @@ export const CallCard = ({
         idObject={idObject}
         statusText={statusText}
         onChangeHistoryOrderStatus={handleChangeTelegramOrderStatus}
+        xcorp={xcorp}
       />
       <MobileContent
         open={open}
@@ -181,6 +183,7 @@ export const CallCard = ({
         idObject={idObject}
         statusText={statusText}
         onChangeHistoryOrderStatus={handleChangeTelegramOrderStatus}
+        xcorp={xcorp}
       />
     </StyledCallCard>
   );

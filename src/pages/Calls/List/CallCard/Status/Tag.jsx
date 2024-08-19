@@ -13,9 +13,12 @@ const STATUS = {
   },
 };
 
-export const Tag = ({ status, telegram }) => (
-  <StyledTag status={STATUS[status]} className="clickable">
-    {telegram ? status : STATUS[status]?.title ?? "Відсутні в базі"}
+export const Tag = ({ status, telegram, statusText }) => (
+  <StyledTag
+    status={telegram ? undefined : STATUS[status]}
+    className="clickable"
+  >
+    {telegram ? statusText : STATUS[status]?.title ?? "Відсутні в базі"}
   </StyledTag>
 );
 

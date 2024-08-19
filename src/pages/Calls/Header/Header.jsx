@@ -28,6 +28,7 @@ export const Header = ({
   showTelegram,
   telegramCalls,
   refreshTelegramCalls,
+  orders,
 }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClientOpen, setAddClientOpen] = useState(false);
@@ -48,6 +49,7 @@ export const Header = ({
             onSendSuccess();
           }}
           telegramCalls={telegramCalls}
+          orders={orders}
           massiveAction
         />
       )}

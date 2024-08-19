@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   useLazyAddCommentToCallQuery,
   useLazyGetCallsQuery,
+  useLazyGetOrdersQuery,
   useLazyGetOrdersTelegrambotQuery,
   useLazySetStatusCallQuery,
 } from "../../store/calls/calls.api";
@@ -38,12 +39,14 @@ const Calls = ({ companyId }) => {
   const location = useLocation();
   const [getCalls] = useLazyGetCallsQuery();
   const [getTelegramOrders] = useLazyGetOrdersTelegrambotQuery();
+  const [getOrders] = useLazyGetOrdersQuery();
   const [setCallStatus] = useLazySetStatusCallQuery();
   const [addComment] = useLazyAddCommentToCallQuery();
   const { saveCallsCount } = useActions();
   const [selected, setSelected] = useState([]);
   const [data, setData] = useState(null);
   const [telegramData, setTelegramData] = useState([]);
+  const [orders, setOrders] = useState([]);
   const prevFilters = localStorage.getItem("callsFilter");
   const [filters, setFilters] = useState(
     !!prevFilters && !!checkIsJSON(prevFilters)
@@ -105,6 +108,24 @@ const Calls = ({ companyId }) => {
       });
     }
   };
+
+  const handleGetOrders = () => {
+    if (XHOUSE_COMPANY_ID.includes(companyId)) {
+      getOrders().then((resp) => {
+        const orders = resp?.data?.data ?? [];
+        const types = resp?.data?.type;
+        setOrders(
+          Array.isArray(orders)
+            ? orders?.map((o) => ({ ...o, type: types[o?.type] }))
+            : [{ ...orders, type: types[orders?.type] }]
+        );
+      });
+    }
+  };
+
+  useEffect(() => {
+    handleGetOrders();
+  }, []);
 
   const handleGetCalls = (isReset) => {
     if ((!isLoading.current && !isAllPages) || isReset) {
@@ -341,6 +362,14 @@ const Calls = ({ companyId }) => {
     );
   };
 
+  const handleToggleOrderStatus = (id) => {
+    setOrders(
+      orders.map((o) =>
+        o.id === id ? { ...o, status: o?.status === "1" ? "0" : "1" } : o
+      )
+    );
+  };
+
   return (
     <StyledCalls>
       <Header
@@ -376,6 +405,10 @@ const Calls = ({ companyId }) => {
             ?.filter((c) => selected?.includes(c.id_order))
             ?.map((c) => c?.id_order) ?? []
         }
+        orders={
+          orders?.filter((c) => selected?.includes(c.id))?.map((c) => c?.id) ??
+          []
+        }
         refreshTelegramCalls={handleGetgetTelegramOrders}
       />
       <List
@@ -392,6 +425,9 @@ const Calls = ({ companyId }) => {
         showTelegram={showTelegram || filters?.type_call?.length === 0}
         refreshTelegramCalls={handleGetgetTelegramOrders}
         onToggleTelegramOrderStatus={handleToggleTelegramOrderStatus}
+        onToggleOrderStatus={handleToggleOrderStatus}
+        orders={orders}
+        refreshOrders={handleGetOrders}
       />
     </StyledCalls>
   );

@@ -37,9 +37,14 @@ export const MobileContent = ({
   downloadLink,
   idObject,
   onChangeHistoryOrderStatus,
+  xcorp,
 }) => (
   <StyledMobileContent className="flex flex-col items-start clickable">
-    <Type callType={callType} agentPhone={agentPhone} telegram={telegram} />
+    <Type
+      callType={callType}
+      agentPhone={agentPhone}
+      telegram={telegram || xcorp}
+    />
     <div className="phones-mobile-wrapper w-full">
       <Phones
         open={open}
@@ -51,6 +56,7 @@ export const MobileContent = ({
         callCount={callCount}
         telegram={telegram}
         onChangeHistoryOrderStatus={onChangeHistoryOrderStatus}
+        xcorp={xcorp}
       />
       <PhonesMobile
         open={open}
@@ -59,8 +65,12 @@ export const MobileContent = ({
         date={date}
       />
     </div>
-    <div className={`footer-mobile-content ${telegram && "footer-telegram"}`}>
-      {telegram ? null : (
+    <div
+      className={`footer-mobile-content ${
+        telegram || (xcorp && "footer-telegram")
+      }`}
+    >
+      {telegram || xcorp ? null : (
         <Agent name={name} photo={photo} workerLevel={level} />
       )}
       <Field
@@ -86,6 +96,7 @@ export const MobileContent = ({
       telegram={telegram}
       downloadLink={downloadLink}
       idObject={idObject}
+      xcorp={xcorp}
     />
   </StyledMobileContent>
 );

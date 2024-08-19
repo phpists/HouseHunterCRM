@@ -38,9 +38,14 @@ export const DesktopContent = ({
   idObject,
   statusText,
   onChangeHistoryOrderStatus,
+  xcorp,
 }) => (
   <StyledDesktopContent className="flex items-start clickable">
-    <Type callType={callType} agentPhone={agentPhone} telegram={telegram} />
+    <Type
+      callType={callType}
+      agentPhone={agentPhone}
+      telegram={telegram || xcorp}
+    />
     <Divider />
     <Phones
       open={open}
@@ -52,13 +57,14 @@ export const DesktopContent = ({
       callCount={callCount}
       telegram={telegram}
       onChangeHistoryOrderStatus={onChangeHistoryOrderStatus}
+      xcorp={xcorp}
     />
     <Divider />
-    <Status status={statusText} telegram={telegram} statusText={statusText} />
+    <Status status={status} telegram={telegram} statusText={statusText} />
     <Field
       placeholder="Почніть писати"
       label={`Коментар ${commentDate ?? ""}`}
-      className={`comment ${telegram && "comment-telegram"}`}
+      className={`comment ${(telegram || xcorp) && "comment-telegram"}`}
       full
       value={comment}
       onChange={onChangeComment}
@@ -67,7 +73,9 @@ export const DesktopContent = ({
       onClick={onEditComment}
     />
     <Divider />
-    {telegram ? null : <Agent name={name} photo={photo} workerLevel={level} />}
+    {telegram || xcorp ? null : (
+      <Agent name={name} photo={photo} workerLevel={level} />
+    )}
     <ShowMore
       status={status}
       onSetStatus={onSetStatus}
@@ -79,6 +87,7 @@ export const DesktopContent = ({
       telegram={telegram}
       downloadLink={downloadLink}
       idObject={idObject}
+      xcorp={xcorp}
     />
   </StyledDesktopContent>
 );

@@ -11,6 +11,7 @@ import { Select } from "../../../components/Select/Select";
 import { Button } from "../../../components/Button";
 import {
   useLazyMoveCallQuery,
+  useLazySendOrderQuery,
   useLazySendOrderTelegrambotQuery,
 } from "../../../store/calls/calls.api";
 
@@ -24,12 +25,15 @@ export const SendCall = ({
   massiveAction,
   telegram,
   telegramCalls,
+  order,
+  orders,
 }) => {
   const { data } = useGetWorkerToMoveClientsQuery();
   const [selectedUser, setSelectedUser] = useState(null);
   const [moveCall] = useLazyMoveCallQuery();
   const [sendTelegramCall] = useLazySendOrderTelegrambotQuery();
   const [moveClients] = useLazyMoveClientsQuery();
+  const [sendOrder] = useLazySendOrderQuery();
 
   const handleSendCliens = async () => {
     if (clients?.length > 0) {
@@ -66,11 +70,23 @@ export const SendCall = ({
     );
   };
 
+  const handleSendOrders = async () => {
+    await Promise.all(
+      orders.map((c) =>
+        sendOrder({
+          id_user_hash: selectedUser,
+          id_order: c,
+        })
+      )
+    );
+  };
+
   const handleSubmit = async () => {
     if (massiveAction) {
       await handleSendCliens();
       await handleSendCalls();
       await handleSendTelegramCalls();
+      await handleSendOrders();
       cogoToast.success("Успішно передано", {
         hideAfter: 3,
         position: "top-right",
@@ -82,6 +98,27 @@ export const SendCall = ({
       onChangeLoading && onChangeLoading(true);
       if (telegram) {
         sendTelegramCall({
+          id_user_hash: selectedUser,
+          id_order: callId,
+        }).then((resp) =>
+          handleResponse(
+            resp,
+            () => {
+              cogoToast.success("Успішно передано", {
+                hideAfter: 3,
+                position: "top-right",
+              });
+              onChangeLoading && onChangeLoading(false);
+              onClose();
+              onSendSuccess && onSendSuccess();
+            },
+            () => {
+              onChangeLoading && onChangeLoading(false);
+            }
+          )
+        );
+      } else if (order) {
+        sendOrder({
           id_user_hash: selectedUser,
           id_order: callId,
         }).then((resp) =>

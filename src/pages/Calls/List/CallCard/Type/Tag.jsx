@@ -7,7 +7,7 @@ export const Tag = ({ callType = "-" }) => (
 const StyledTag = styled.div`
   border-radius: 5px;
   background: rgba(88, 175, 255, 0.3);
-  height: 20px;
+  min-height: 20px;
   color: #58afff;
   leading-trim: both;
   text-edge: cap;
@@ -21,6 +21,8 @@ const StyledTag = styled.div`
   margin-bottom: 8px;
   padding: 5.5px 8px 6.5px;
   width: max-content;
+  word-break: normal;
+  max-width: 70px;
   @media (max-width: 1399.9px) {
     margin: 0 0 0 4px;
   }

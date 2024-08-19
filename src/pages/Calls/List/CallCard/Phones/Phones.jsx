@@ -13,9 +13,10 @@ export const Phones = ({
   callCount,
   telegram,
   onChangeHistoryOrderStatus,
+  xcorp,
 }) => {
   return (
-    <StyledPhones open={open}>
+    <StyledPhones open={open} fullWidth={xcorp}>
       <Phone
         open={open}
         phone={phone}
@@ -26,12 +27,17 @@ export const Phones = ({
         onChangeHistoryOrderStatus={onChangeHistoryOrderStatus}
         onToggleOpen={onToggleOpen}
       />
-      <PhoneCalls
-        count={callCount}
-        telegram={telegram}
-        onToggleOpen={onToggleOpen}
-      />
-      <Arrow className="arrow-card" onClick={onToggleOpen} />
+      {xcorp ? null : (
+        <>
+          {" "}
+          <PhoneCalls
+            count={callCount}
+            telegram={telegram}
+            onToggleOpen={onToggleOpen}
+          />
+          <Arrow className="arrow-card" onClick={onToggleOpen} />
+        </>
+      )}
     </StyledPhones>
   );
 };
@@ -58,6 +64,15 @@ const StyledPhones = styled.div`
       display: block;
     }
   }
+  ${({ fullWidth }) =>
+    fullWidth &&
+    `
+    grid-template-columns: 1fr;
+    width: 37%;
+    .phones-phone-wrapper {
+        width: 100%;
+    }
+  `}
   &:hover {
     g {
       opacity: 1;
