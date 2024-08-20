@@ -39,22 +39,24 @@ export const Header = ({ data }) => {
         : data?.id_street_base !== "0" && (
             <Tag title={"Перенесено з StreetBase"} color={"red"} />
           )}
-      {data?.dt_end_agreement === "0" && data?.type_object === "Company" && (
-        <Tag
-          title={data?.obj_is_actual === "1" ? "Актуально" : "Не актуально"}
-          color={data?.obj_is_actual === "1" ? "green" : "red"}
-        />
-      )}
+      {(data?.dt_end_agreement === "0" || data?.obj_is_actual === "0") &&
+        data?.type_object === "Company" && (
+          <Tag
+            title={data?.obj_is_actual === "1" ? "Актуально" : "Не актуально"}
+            color={data?.obj_is_actual === "1" ? "green" : "red"}
+          />
+        )}
 
-      {data?.dt_end_agreement !== "0" && (
-        <Tag
-          title={`здано до  ${handleFormatDate(
-            Number(data?.dt_end_agreement) * 1000,
-            true
-          )}`}
-          color="orange"
-        />
-      )}
+      {Number(data?.dt_end_agreement) * 1000 > new Date().getTime() &&
+        data?.obj_is_actual === "1" && (
+          <Tag
+            title={`здано до  ${handleFormatDate(
+              Number(data?.dt_end_agreement) * 1000,
+              true
+            )}`}
+            color="orange"
+          />
+        )}
       {handleCheckIsEndDateAgrement() && (
         <Tag title={"Протерміновано"} color={"red"} />
       )}
