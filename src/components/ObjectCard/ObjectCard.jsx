@@ -177,9 +177,9 @@ const StyledObjectCard = styled.div`
   }
   @media (min-width: 1400px) {
     padding: 20px;
-    min-height: 240px;
+    min-height: 255px;
     &.notInView {
-      min-height: 260px !important;
+      min-height: 255px !important;
     }
   }
   .tagsSelectDropdown {
