@@ -237,17 +237,7 @@ export const List = ({
                 key={d?.id}
                 selected={!!selected.find((j) => j === d?.id)}
                 onSelect={() => onSelect(d?.id)}
-                data={{
-                  ...d,
-                  obj_is_actual:
-                    filters?.company_object?.not_actual === "1"
-                      ? "0"
-                      : d?.obj_is_actual,
-                  dt_end_agreement:
-                    filters?.company_object?.not_actual === "1"
-                      ? "0"
-                      : d?.dt_end_agreement,
-                }}
+                data={d}
                 onToggleFavoriteStatus={() => toggleFavoriteStatus(d?.id)}
                 onFindSimilar={() => onFindSimilar(d)}
                 isEdit={handleCheckAccess(accessData, "objects", "edit")}
