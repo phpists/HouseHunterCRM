@@ -61,14 +61,12 @@ export const Dropdown = ({
             </div>
           )}
           {downloadLink && (
-            <a
+            <div
               className="flex items-center justify-between"
-              href={downloadLink}
-              target="_blank"
-              download
+              onClick={() => window.open(downloadLink)}
             >
               <span>Завантажити</span> <DownloadIcon className="star-icon" />
-            </a>
+            </div>
           )}
         </>
       ) : (
