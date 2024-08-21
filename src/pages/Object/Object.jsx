@@ -148,7 +148,9 @@ const ObjectPage = () => {
         ...data,
         [fieldName]: fieldType === "int" && value?.length === 0 ? "0" : value,
         obj_is_actual:
-          fieldName === "obj_is_actual_dt"
+          fieldName === "dt_end_agreement"
+            ? "1"
+            : fieldName === "obj_is_actual_dt"
             ? "1"
             : fieldName === "obj_is_actual"
             ? value
