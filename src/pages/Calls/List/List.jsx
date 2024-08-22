@@ -143,7 +143,7 @@ export const List = ({
             ? orders?.map(({ comment, dt_order, id, status, type }) => (
                 <CallCard
                   key={id}
-                  callType={type}
+                  callType={"Сайт"}
                   clientName={"-"}
                   phone={"-"}
                   date={handleFormatDate(Number(dt_order) * 1000)}
@@ -159,7 +159,7 @@ export const List = ({
                     })
                   }
                   callCount={1}
-                  status={status}
+                  statusText={type}
                   xcorp
                 />
               ))

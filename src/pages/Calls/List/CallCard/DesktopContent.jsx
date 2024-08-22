@@ -60,7 +60,11 @@ export const DesktopContent = ({
       xcorp={xcorp}
     />
     <Divider />
-    <Status status={status} telegram={telegram} statusText={statusText} />
+    <Status
+      status={status}
+      telegram={telegram || xcorp}
+      statusText={statusText}
+    />
     <Field
       placeholder="Почніть писати"
       label={`Коментар ${commentDate ?? ""}`}

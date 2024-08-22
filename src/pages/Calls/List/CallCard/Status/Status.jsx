@@ -13,7 +13,7 @@ export const Status = ({ status, telegram, statusText }) => {
 
 const StyledStatus = styled.div`
   width: 140px;
-  height: 60px;
+  min-height: 60px;
   padding: 8px 10px;
   border-radius: 9px;
   transition: all 0.3s;

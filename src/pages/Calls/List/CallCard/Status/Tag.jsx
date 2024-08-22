@@ -24,7 +24,7 @@ export const Tag = ({ status, telegram, statusText }) => (
 
 const StyledTag = styled.div`
   padding: 1px 8px 2px 8px;
-  height: 20px;
+  min-height: 20px;
   leading-trim: both;
   text-edge: cap;
   font-family: Open Sans;
@@ -39,4 +39,6 @@ const StyledTag = styled.div`
   margin-bottom: 8px;
   border-radius: 5px;
   width: max-content;
+  max-width: 150px;
+
 `;
