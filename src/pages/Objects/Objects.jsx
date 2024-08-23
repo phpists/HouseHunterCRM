@@ -483,6 +483,7 @@ const Objects = () => {
     // eslint-disable-next-line
   }, [updateData]);
 
+  console.log(filters);
   const handleApplyDefaultFilters = () => {
     filterActive.current = false;
     isFirstRender.current = false;
@@ -544,6 +545,24 @@ const Objects = () => {
       if (initFiltersObject?.id_rubric) {
         handleGetRubricsFields(initFiltersObject?.id_rubric);
       }
+      filterActive.current = true;
+      setUpdateData(true);
+    } else if (filterApply === "?findWorker") {
+      const initFilters =
+        location?.search
+          ?.replace("?findWorker=true", "")
+          ?.split("&")
+          ?.filter((f) => f?.length > 0)
+          ?.map((f) => f?.split("=")) ?? [];
+      let initFiltersObject = {};
+
+      try {
+        initFiltersObject = Object.fromEntries(initFilters);
+      } catch {
+        initFiltersObject = {};
+      }
+
+      setFilters({ company_object: initFiltersObject });
       filterActive.current = true;
       setUpdateData(true);
     } else if (filterApply === "?showDeadline") {

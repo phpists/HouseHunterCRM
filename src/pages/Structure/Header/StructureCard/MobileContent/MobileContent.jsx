@@ -56,7 +56,7 @@ export const MobileContent = ({
         <Structure data={data?.structure_worker} />
       </div>
       <div className="footer-info-wrapper  more-content-wrapper">
-        <Statistic statisticData={statisticData} />
+        <Statistic statisticData={statisticData} id={id} />
         <TotalInfo open={totalInfoOpened} onToggleOpen={() => null} id={id} />
       </div>
       <MoreButton

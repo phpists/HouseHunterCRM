@@ -448,6 +448,34 @@ const Requests = () => {
       });
       filterActive.current = true;
       setIsDefaultFiltersSet(true);
+    } else if (filterApply === "?findWorker") {
+      const defaultData = {
+        id_rubric: "",
+        id_location: "",
+        price_currency: "1",
+        price_min: "",
+        price_max: "",
+        price_for: "4",
+        only_my_structure: "1",
+      };
+      const initFilters =
+        location?.search
+          ?.replace("?findWorker=true", "")
+          ?.split("&")
+          ?.filter((f) => f?.length > 0)
+          ?.map((f) => f?.split("=")) ?? [];
+      let initFiltersObject = {};
+
+      try {
+        initFiltersObject = Object.fromEntries(initFilters);
+      } catch {
+        initFiltersObject = {};
+      }
+
+      filterActive.current = true;
+
+      setFilters({ ...initFiltersObject, ...defaultData });
+      setIsDefaultFiltersSet(true);
     } else if (!!prevFilters && !!checkIsJSON(prevFilters)) {
       filterActive.current = true;
       setFilters(JSON.parse(prevFilters) ?? INIT_FILTERS);

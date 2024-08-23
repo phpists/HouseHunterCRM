@@ -17,8 +17,10 @@ import {
 } from "../../utilits";
 import cogoToast from "cogo-toast";
 import { SendModal } from "./SendModal";
+import { useLocation } from "react-router-dom";
 
 const Clients = () => {
+  const location = useLocation();
   const [favoritesFilter, setFavoritesFilter] = useState(false);
   const [selected, setSelected] = useState([]);
   const { saveClientsCount } = useActions();
@@ -54,6 +56,8 @@ const Clients = () => {
   const isFirstRequest = useRef(true);
   const [restoreClients] = useLazyRestoreClientsQuery();
   const [isDeleted, setIsDeleted] = useState(filter?.filters?.show_deleted);
+  const [defaultFilter, setDefaultFilter] = useState(false);
+  const defaultFilterLoaded = useRef(false);
 
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
@@ -170,7 +174,7 @@ const Clients = () => {
   };
 
   useEffect(() => {
-    handleGetClients();
+    !location?.search?.split("=")[0] && handleGetClients();
     // eslint-disable-next-line
   }, []);
 
@@ -235,7 +239,7 @@ const Clients = () => {
   };
 
   useEffect(() => {
-    if (!isFirstRender.current) {
+    if (!isFirstRender.current && !location?.search?.split("=")[0]) {
       currentPage.current = 0;
       setIsAllPages(false);
       handleApplyFilters(false);
@@ -346,6 +350,36 @@ const Clients = () => {
       );
     }
   };
+
+  useEffect(() => {
+    const filterApply = location?.search?.split("=")[0];
+    if (filterApply === "?findWorker") {
+      const initFilters =
+        location?.search
+          ?.replace("?findWorker=true", "")
+          ?.split("&")
+          ?.filter((f) => f?.length > 0)
+          ?.map((f) => f?.split("=")) ?? [];
+      let initFiltersObject = {};
+
+      try {
+        initFiltersObject = Object.fromEntries(initFilters);
+      } catch {
+        initFiltersObject = {};
+      }
+      isFilters.current = true;
+
+      setFilter({ filters: initFiltersObject, my_struct: "1" });
+      setDefaultFilter(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (defaultFilter && !defaultFilterLoaded.current) {
+      handleGetClients(true, true);
+      defaultFilterLoaded.current = true;
+    }
+  }, [defaultFilter]);
 
   return (
     <StyledClients>

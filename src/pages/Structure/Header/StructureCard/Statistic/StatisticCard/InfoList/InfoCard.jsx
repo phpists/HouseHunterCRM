@@ -1,14 +1,19 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const InfoCard = ({ title, value }) => (
-  <StyledInfoCard className="flex items-center justify-between">
+export const InfoCard = ({ title, value, link }) => (
+  <StyledInfoCard className="flex items-center justify-between" to={link}>
     <div className="title">{title}</div>
     <div className="value">{value}</div>
   </StyledInfoCard>
 );
 
-const StyledInfoCard = styled.div`
-  height: 11px;
+const StyledInfoCard = styled(Link)`
+  height: 31px;
+  padding: 10px 0;
+  &:hover {
+    background: var(--bg-20);
+  }
   .title {
     color: var(--main-color);
     leading-trim: both;

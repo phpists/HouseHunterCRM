@@ -6,9 +6,9 @@ import { Divider } from "./Divider";
 export const InfoList = ({ infoData }) => {
   return (
     <StyledInfoList>
-      {infoData.map(({ title, value }, i) => (
+      {infoData.map(({ title, value, link }, i) => (
         <React.Fragment key={i}>
-          <InfoCard title={title} value={value} />
+          <InfoCard title={title} value={value} link={link} />
           {i < infoData.length - 1 && <Divider />}
         </React.Fragment>
       ))}

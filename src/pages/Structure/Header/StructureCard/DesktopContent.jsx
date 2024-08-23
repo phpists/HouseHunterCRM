@@ -19,7 +19,7 @@ export const DesktopContent = ({
   <StyledDesktopContent>
     <ProfilleInfo onOpenInfo={onOpenInfo} data={data} />
     <Biling open={!totalInfoOpened} data={data} user={user} />
-    <Statistic statisticData={statisticData} />
+    <Statistic statisticData={statisticData} id={id} />
     <TotalInfo open={totalInfoOpened} onToggleOpen={onToggleOpen} id={id} />
     {isMore ? <Arrow onClick={onNextLevel} /> : null}
   </StyledDesktopContent>
