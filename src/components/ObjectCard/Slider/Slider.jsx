@@ -222,6 +222,7 @@ const StyledSlider = styled.div`
   @media (max-width: 1399.9px) {
     flex-direction: column;
     height: auto;
+    overflow: hidden;
   }
 
   @media (min-width: 1400px) {

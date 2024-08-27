@@ -121,4 +121,10 @@ const StyledContacts = styled.div`
       width: max-content;
     }
   }
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+    .mb-4 {
+        margin: 0;
+    }
+  }
 `;
