@@ -67,8 +67,11 @@ const Calls = ({ companyId }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
   const { callsCount } = useAppSelect((state) => state.calls);
   const [showTelegram, setShowTelegram] = useState(true);
+  const [activeType, setActiveType] = useState("phone");
+  const [editActiveType, setEditActiveType] = useState("phone");
 
   const handleChangePhoneCode = (val) => setFilterPhoneCode(val);
+  const handleChangeActiveType = (type) => setEditActiveType(type);
 
   const handleChangeFilter = (fieldName, value) => {
     if (fieldName === "type_call") {
@@ -124,8 +127,12 @@ const Calls = ({ companyId }) => {
   };
 
   useEffect(() => {
-    handleGetOrders();
-  }, []);
+    if (activeType === "site") {
+      handleGetOrders();
+    } else if (activeType === "telegram") {
+      handleGetgetTelegramOrders();
+    }
+  }, [activeType]);
 
   const handleGetCalls = (isReset) => {
     if ((!isLoading.current && !isAllPages) || isReset) {
@@ -165,10 +172,6 @@ const Calls = ({ companyId }) => {
         getCalls({ ...sendData, only_count_item: "1" }).then((resp) =>
           saveCallsCount(Number(resp?.data?.all_item ?? 0))
         );
-        if (showTelegram || filters?.type_call?.length === 0) {
-          console.log(showTelegram, filters?.type_call?.length === 0);
-          handleGetgetTelegramOrders();
-        }
       }
 
       getCalls(sendData).then((resp) => {
@@ -272,6 +275,7 @@ const Calls = ({ companyId }) => {
     isFilter.current = isApply;
     if (isApply) {
       localStorage.setItem("callsFilter", JSON.stringify(filters));
+      setActiveType(editActiveType);
     } else {
       setFilters(INIT_FILTERS);
       localStorage.removeItem("callsFilter");
@@ -380,10 +384,7 @@ const Calls = ({ companyId }) => {
         onSetCallsStatus={handleSetCallsStatus}
         onSelectAll={handleSelectAll}
         allCount={
-          allCount +
-          (showTelegram || filters?.type_call?.length === 0
-            ? telegramData?.length
-            : 0)
+          allCount + (activeType === "telegram" ? telegramData?.length : 0)
         }
         clients={
           data
@@ -399,7 +400,7 @@ const Calls = ({ companyId }) => {
             ?.filter((c) => !c?.client_id)
             ?.map((c) => c?.id) ?? []
         }
-        showTelegram={showTelegram}
+        showTelegram={activeType === "telegram"}
         telegramCalls={
           telegramData
             ?.filter((c) => selected?.includes(c.id_order))
@@ -410,6 +411,8 @@ const Calls = ({ companyId }) => {
           []
         }
         refreshTelegramCalls={handleGetgetTelegramOrders}
+        activeType={editActiveType}
+        onChangeActiveType={handleChangeActiveType}
       />
       <List
         selected={selected}
@@ -428,6 +431,7 @@ const Calls = ({ companyId }) => {
         onToggleOrderStatus={handleToggleOrderStatus}
         orders={orders}
         refreshOrders={handleGetOrders}
+        activeType={activeType}
       />
     </StyledCalls>
   );

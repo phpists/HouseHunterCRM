@@ -29,6 +29,8 @@ export const Header = ({
   telegramCalls,
   refreshTelegramCalls,
   orders,
+  activeType,
+  onChangeActiveType,
 }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClientOpen, setAddClientOpen] = useState(false);
@@ -108,6 +110,8 @@ export const Header = ({
           filterPhoneCode={filterPhoneCode}
           onChangeFilterPhoneCode={onChangeFilterPhoneCode}
           showTelegram={showTelegram}
+          activeType={activeType}
+          onChangeActiveType={onChangeActiveType}
         />
       )}
       {addClientOpen && <AddClient onClose={() => setAddClientOpen(false)} />}

@@ -32,6 +32,7 @@ export const List = ({
   orders,
   onToggleOrderStatus,
   refreshOrders,
+  activeType,
 }) => {
   const [openMore, setOpenMore] = useState(null);
   const [commentModal, setCommentModal] = useState(false);
@@ -133,13 +134,15 @@ export const List = ({
           onAdded={onAddClient}
         />
       )}
-      {data?.length === 0 &&
-      (telegramData?.length === 0 || !showTelegram || !telegramData) &&
-      orders?.length === 0 ? (
+      {activeType === "phone" && data?.length === 0 ? (
+        <Empty loading={loading} />
+      ) : activeType === "telegram" && telegramData?.length === 0 ? (
+        <Empty loading={loading} />
+      ) : activeType === "site" && orders?.length === 0 ? (
         <Empty loading={loading} />
       ) : (
         <>
-          {orders?.length > 0
+          {orders?.length > 0 && activeType === "site"
             ? orders?.map(({ comment, dt_order, id, status, type }) => (
                 <CallCard
                   key={id}
@@ -164,7 +167,7 @@ export const List = ({
                 />
               ))
             : null}
-          {!showTelegram
+          {activeType !== "telegram"
             ? null
             : telegramData?.map(
                 ({
@@ -209,63 +212,67 @@ export const List = ({
                   />
                 )
               )}
-          {data.map(
-            (
-              {
-                id,
-                call_type,
-                phone_call,
-                dt_incoming,
-                full_name,
-                photo,
-                coment,
-                status,
-                struct_level_user,
-                client_id,
-                client_first_name,
-                client_last_name,
-                phone_binotel,
-                Count_call,
-                type,
-                comment_date,
-              },
-              i
-            ) => (
-              <CallCard
-                key={i}
-                selected={!!selected.find((j) => j === id)}
-                onSelect={() => onSelect(id)}
-                openMore={openMore === id}
-                onOpenMore={() => setOpenMore(openMore === id ? null : id)}
-                callType={call_type}
-                phone={phone_call}
-                agentPhone={phone_binotel}
-                date={handleFormatDate(Number(dt_incoming) * 1000)}
-                name={full_name}
-                photo={photo}
-                comment={coment}
-                status={status}
-                clientName={
-                  type?.type_agent
-                    ? type?.type_agent
-                    : client_id
-                    ? `${client_first_name ?? "-"} ${client_last_name}`
-                    : null
-                }
-                onSetStatus={() => onSetStatus(id, status === "1" ? "0" : "1")}
-                onAddComment={(comment) => onAddComment(id, comment)}
-                level={struct_level_user}
-                onEditComment={() => setCommentModal({ id, coment })}
-                onAdd={() => setAddModal({ phone_call, id })}
-                onSend={client_id ? () => setSendModal(client_id) : null}
-                onSendCall={client_id ? null : () => setSendCall(id)}
-                id={id}
-                callCount={Count_call}
-                clientId={client_id}
-                commentDate={comment_date}
-              />
-            )
-          )}
+          {activeType !== "phone"
+            ? null
+            : data.map(
+                (
+                  {
+                    id,
+                    call_type,
+                    phone_call,
+                    dt_incoming,
+                    full_name,
+                    photo,
+                    coment,
+                    status,
+                    struct_level_user,
+                    client_id,
+                    client_first_name,
+                    client_last_name,
+                    phone_binotel,
+                    Count_call,
+                    type,
+                    comment_date,
+                  },
+                  i
+                ) => (
+                  <CallCard
+                    key={i}
+                    selected={!!selected.find((j) => j === id)}
+                    onSelect={() => onSelect(id)}
+                    openMore={openMore === id}
+                    onOpenMore={() => setOpenMore(openMore === id ? null : id)}
+                    callType={call_type}
+                    phone={phone_call}
+                    agentPhone={phone_binotel}
+                    date={handleFormatDate(Number(dt_incoming) * 1000)}
+                    name={full_name}
+                    photo={photo}
+                    comment={coment}
+                    status={status}
+                    clientName={
+                      type?.type_agent
+                        ? type?.type_agent
+                        : client_id
+                        ? `${client_first_name ?? "-"} ${client_last_name}`
+                        : null
+                    }
+                    onSetStatus={() =>
+                      onSetStatus(id, status === "1" ? "0" : "1")
+                    }
+                    onAddComment={(comment) => onAddComment(id, comment)}
+                    level={struct_level_user}
+                    onEditComment={() => setCommentModal({ id, coment })}
+                    onAdd={() => setAddModal({ phone_call, id })}
+                    onSend={client_id ? () => setSendModal(client_id) : null}
+                    onSendCall={client_id ? null : () => setSendCall(id)}
+                    id={id}
+                    callCount={Count_call}
+                    clientId={client_id}
+                    commentDate={comment_date}
+                  />
+                )
+              )}
         </>
       )}
       <div className="loader relative">

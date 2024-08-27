@@ -15,6 +15,8 @@ import { Select } from "../../../../../components/Select/Select";
 import { useEffect } from "react";
 import { useAppSelect } from "../../../../../hooks/redux";
 import { useGetCompanyStructureLevelQuery } from "../../../../../store/structure/structure.api";
+import { SectionTitle } from "../SectionTitle";
+import { TitleDivider } from "../TitleDivider";
 
 export const Search = ({
   filters,
@@ -22,6 +24,8 @@ export const Search = ({
   filterPhoneCode,
   onChangeFilterPhoneCode,
   showTelegram,
+  activeType,
+  onChangeActiveType,
 }) => {
   const { data: callsType } = useGetCallsTypeQuery();
   const { data: phonesCodes } = useGetPhonesCodesQuery();
@@ -66,124 +70,140 @@ export const Search = ({
       />
       <Divider />
       <Period filters={filters} onChangeFilter={onChangeFilter} />
-      <Divider />
-      <SelectTags
-        label="Статус"
-        notMultiSelect
-        options={[
-          { title: "Не опрацьовані", value: "0" },
-          { title: "Опрацьовані", value: "1" },
-        ]}
-        onChange={(val) =>
-          onChangeFilter("status", filters?.status === val ? undefined : val)
+      <TitleDivider title="Телефонія" />
+      <ToggleOption
+        label="База Телефонія"
+        value={activeType === "phone"}
+        onChange={() =>
+          onChangeActiveType(activeType === "phone" ? undefined : "phone")
         }
-        value={filters?.status}
       />
-      <Divider />
-      <SelectTags
-        label="Пошук по потоку"
-        tags={[
-          ...filters?.type_call?.map((t) => ({
-            title: callsType
-              ? Object.entries(callsType)?.find(
-                  (c) => c[1]?.id?.toString() === t
-                )?.[1].name
-              : "-",
-            value: t?.toString(),
-          })),
-          ...(showTelegram === "show"
-            ? [{ title: "Телеграм", value: "telegram" }]
-            : []),
-        ]}
-        placeholder="Оберіть"
-        onChange={(val, title) => {
-          onChangeFilter(
-            "type_call",
-            filters?.type_call?.find((t) => t === val?.toString())
-              ? filters?.type_call?.filter(
-                  (t) => t?.toString() !== val?.toString()
-                )
-              : [...filters?.type_call, val?.toString()]
-          );
-        }}
-        options={[
-          ...(callsType
-            ? Object.entries(callsType)
-                ?.filter((t) => t[0] !== "error")
-                ?.map((t) => ({
-                  title: t[1]?.name,
-                  value: t[1]?.id?.toString(),
-                }))
-            : []),
-          { title: "Телеграм", value: "telegram" },
-        ]}
-        showTags
-        hideArrow
-      />
-      <Divider />
-      {Number(user?.struct_level) !== Number(level) ? (
+      {activeType === "phone" ? (
         <>
-          {" "}
-          <ToggleOption
-            label="Дзвінки моєї структури"
-            value={filters?.call_my_struct?.length >= 0}
-            onChange={() => onChangeFilter("call_my_struct", "1")}
+          <SelectTags
+            label="Статус"
+            notMultiSelect
+            options={[
+              { title: "Не опрацьовані", value: "0" },
+              { title: "Опрацьовані", value: "1" },
+            ]}
+            onChange={(val) =>
+              onChangeFilter(
+                "status",
+                filters?.status === val ? undefined : val
+              )
+            }
+            value={filters?.status}
           />
-          {filters?.call_my_struct?.length >= 0 ? (
+          <Divider />
+          <SelectTags
+            label="Пошук по потоку"
+            tags={[
+              ...filters?.type_call?.map((t) => ({
+                title: callsType
+                  ? Object.entries(callsType)?.find(
+                      (c) => c[1]?.id?.toString() === t
+                    )?.[1].name
+                  : "-",
+                value: t?.toString(),
+              })),
+            ]}
+            placeholder="Оберіть"
+            onChange={(val, title) => {
+              onChangeFilter(
+                "type_call",
+                filters?.type_call?.find((t) => t === val?.toString())
+                  ? filters?.type_call?.filter(
+                      (t) => t?.toString() !== val?.toString()
+                    )
+                  : [...filters?.type_call, val?.toString()]
+              );
+            }}
+            options={[
+              ...(callsType
+                ? Object.entries(callsType)
+                    ?.filter((t) => t[0] !== "error")
+                    ?.map((t) => ({
+                      title: t[1]?.name,
+                      value: t[1]?.id?.toString(),
+                    }))
+                : []),
+            ]}
+            showTags
+            hideArrow
+          />
+          <Divider />
+          {Number(user?.struct_level) !== Number(level) ? (
             <>
-              <SelectTags
-                label="Пошук по працівнику"
-                placeholder="Оберіть працівника"
-                options={
-                  workers?.data
-                    ? workers?.data?.map(({ id, first_name, last_name }) => ({
-                        title: `${first_name} ${last_name}`,
-                        value: id,
-                      }))
-                    : []
-                }
-                value={filters?.id_worker_Search}
-                onChange={(val) =>
+              {" "}
+              <ToggleOption
+                label="Дзвінки моєї структури"
+                value={filters?.call_my_struct?.length >= 0}
+                onChange={() =>
                   onChangeFilter(
-                    "id_worker_Search",
-                    val === filters?.id_worker_Search ? undefined : val
+                    "call_my_struct",
+                    filters?.call_my_struct === "1" ? undefined : "1"
                   )
                 }
-                isSearch
-                notMultiSelect
               />
-              <Divider />
+              {filters?.call_my_struct?.length >= 0 ? (
+                <>
+                  <SelectTags
+                    label="Пошук по працівнику"
+                    placeholder="Оберіть працівника"
+                    options={
+                      workers?.data
+                        ? workers?.data?.map(
+                            ({ id, first_name, last_name }) => ({
+                              title: `${first_name} ${last_name}`,
+                              value: id,
+                            })
+                          )
+                        : []
+                    }
+                    value={filters?.id_worker_Search}
+                    onChange={(val) =>
+                      onChangeFilter(
+                        "id_worker_Search",
+                        val === filters?.id_worker_Search ? undefined : val
+                      )
+                    }
+                    isSearch
+                    notMultiSelect
+                  />
+                  <Divider />
+                </>
+              ) : null}
             </>
           ) : null}
           <ToggleOption
-            label="Тільки мої дзвінки"
-            value={!filters?.call_my_struct}
-            onChange={() => onChangeFilter("call_my_struct", undefined)}
+            label="Відсутній в базі"
+            value={filters?.missing_client}
+            onChange={() =>
+              onChangeFilter(
+                "missing_client",
+                filters?.missing_client ? undefined : "1"
+              )
+            }
           />
-          <Divider />
         </>
       ) : null}
+      <TitleDivider title="Сайт" />
       <ToggleOption
-        label="Відсутній в базі"
-        value={filters?.missing_client}
+        label="База Сайт"
+        value={activeType === "site"}
         onChange={() =>
-          onChangeFilter(
-            "missing_client",
-            filters?.missing_client ? undefined : "1"
-          )
+          onChangeActiveType(activeType === "site" ? undefined : "site")
         }
       />
-      {/* <ToggleOption
-        label="Переглянуті"
-        value={filters?.view === "1"}
+      <TitleDivider title="Телеграм" />
+      <ToggleOption
+        label="База Телеграм"
+        value={activeType === "telegram"}
         onChange={() =>
-          onChangeFilter("view", filters?.view === "1" ? "0" : "1")
+          onChangeActiveType(activeType === "telegram" ? undefined : "telegram")
         }
-      /> */}
-      {/* <Divider />
-      <SelectTags label="По номеру телефона" />
-      <Divider />
-      <SelectTags label="По агентах" Component={<Avatar />} search /> */}
+      />
     </StyledSearch>
   );
 };
