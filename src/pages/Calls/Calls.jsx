@@ -78,6 +78,7 @@ const Calls = ({ companyId }) => {
     localStorage.getItem("callsActiveType") ?? "phone"
   );
   const [ordersTypes, setOrdersTypes] = useState([]);
+  const [telegramTypes, setTelegramTypes] = useState([]);
 
   const handleChangePhoneCode = (val) => setFilterPhoneCode(val);
   const handleChangeActiveType = (type) => {
@@ -117,8 +118,35 @@ const Calls = ({ companyId }) => {
 
   const handleGetgetTelegramOrders = () => {
     if (XHOUSE_COMPANY_ID.includes(companyId)) {
-      getTelegramOrders().then((resp) => {
+      const sendData = {
+        filters: isFilter.current
+          ? {
+              ...filters,
+              ...(removePhoneMask(filters?.search_phone)?.length > 0
+                ? [{ search_phone: removePhoneMask(filters?.search_phone) }]
+                : []),
+              date_from: filters?.date_from
+                ? handleFormatFilterDate(filters?.date_from, true)
+                : undefined,
+              date_to: filters?.date_to
+                ? handleFormatFilterDate(filters?.date_to)
+                : undefined,
+            }
+          : {
+              date_from: Math.floor(getFirstDay(true).getTime() / 1000),
+              date_to: Math.floor(new Date().getTime() / 1000),
+            },
+      };
+      getTelegramOrders(sendData).then((resp) => {
         const orders = resp?.data?.data ?? [];
+        setTelegramTypes(
+          resp?.data?.type
+            ? Object.entries(resp?.data?.type)?.map((v) => ({
+                value: v[0],
+                title: v[1],
+              }))
+            : []
+        );
         setTelegramData(Array.isArray(orders) ? orders : [orders]);
       });
     }
@@ -140,10 +168,9 @@ const Calls = ({ companyId }) => {
           filters: isFilter.current
             ? {
                 ...filters,
-                search_phone:
-                  removePhoneMask(filters?.search_phone)?.length > 0
-                    ? removePhoneMask(filters?.search_phone)
-                    : undefined,
+                ...(removePhoneMask(filters?.search_phone)?.length > 0
+                  ? [{ search_phone: removePhoneMask(filters?.search_phone) }]
+                  : []),
                 date_from: filters?.date_from
                   ? handleFormatFilterDate(filters?.date_from, true)
                   : undefined,
@@ -182,7 +209,7 @@ const Calls = ({ companyId }) => {
                   ? formatedOrdersResp
                   : [...checkIsArray(orders), ...formatedOrdersResp]
               );
-              // saveCallsCount(resp?.data?.all_item ?? 0);
+              saveCallsCount(resp?.data?.all_item ?? 0);
               const respItemsCount = resp?.data?.data?.length;
               const updatedCount = isReset
                 ? respItemsCount
@@ -410,10 +437,15 @@ const Calls = ({ companyId }) => {
       setFilters(INIT_FILTERS);
       localStorage.removeItem("callsFilter");
       setShowTelegram(false);
-      setActiveType("phone");
-      localStorage.removeItem("callsActiveType");
+      setActiveType(undefined);
+      setEditActiveType(undefined);
+      localStorage.setItem("callsActiveType", "empty");
     }
-    activeType === "phone" ? handleGetCalls(true) : handleGetOrders(true);
+    activeType === "phone"
+      ? handleGetCalls(true)
+      : activeType === "site"
+      ? handleGetOrders(true)
+      : handleGetgetTelegramOrders();
   };
 
   const handleSetCallsStatus = (status) => {
@@ -546,6 +578,7 @@ const Calls = ({ companyId }) => {
         activeType={editActiveType}
         onChangeActiveType={handleChangeActiveType}
         ordersTypes={ordersTypes}
+        telegramTypes={telegramTypes}
       />
       <List
         selected={selected}

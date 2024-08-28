@@ -27,6 +27,7 @@ export const Search = ({
   activeType,
   onChangeActiveType,
   ordersTypes,
+  telegramTypes,
 }) => {
   const { data: callsType } = useGetCallsTypeQuery();
   const { data: phonesCodes } = useGetPhonesCodesQuery();
@@ -40,7 +41,6 @@ export const Search = ({
     }
   }, [filters?.call_my_struct]);
 
-  console.log(activeType);
   return (
     <StyledSearch>
       <Field
@@ -137,7 +137,7 @@ export const Search = ({
       {activeType === "phone" ? (
         <>
           <SelectTags
-            label="Пошук по потоку"
+            label="Пошук по типу"
             tags={[
               ...filters?.type_call?.map((t) => ({
                 title: callsType
@@ -197,27 +197,8 @@ export const Search = ({
         <>
           <SelectTags
             label="Пошук по типу"
-            tags={[
-              ...filters?.type_call?.map((t) => ({
-                title: ordersTypes
-                  ? Object.entries(ordersTypes)?.find(
-                      (c) => c[0]?.toString() === t
-                    )?.[1]
-                  : "-",
-                value: t?.toString(),
-              })),
-            ]}
+            notMultiSelect
             placeholder="Оберіть"
-            onChange={(val, title) => {
-              onChangeFilter(
-                "type_call",
-                filters?.type_call?.find((t) => t === val?.toString())
-                  ? filters?.type_call?.filter(
-                      (t) => t?.toString() !== val?.toString()
-                    )
-                  : [...filters?.type_call, val?.toString()]
-              );
-            }}
             options={[
               ...(ordersTypes
                 ? Object.entries(ordersTypes)
@@ -228,8 +209,10 @@ export const Search = ({
                     }))
                 : []),
             ]}
-            showTags
-            hideArrow
+            onChange={(val) =>
+              onChangeFilter("type", filters?.type === val ? undefined : val)
+            }
+            value={filters?.type}
           />
           <Divider />
           <ToggleOption
@@ -252,6 +235,20 @@ export const Search = ({
           onChangeActiveType(activeType === "telegram" ? undefined : "telegram")
         }
       />
+      {activeType === "telegram" ? (
+        <>
+          <SelectTags
+            label="Пошук по типу"
+            notMultiSelect
+            placeholder="Оберіть"
+            options={telegramTypes}
+            onChange={(val) =>
+              onChangeFilter("type", filters?.type === val ? undefined : val)
+            }
+            value={filters?.type}
+          />
+        </>
+      ) : null}
     </StyledSearch>
   );
 };

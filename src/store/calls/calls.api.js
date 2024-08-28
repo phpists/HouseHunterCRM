@@ -99,13 +99,14 @@ export const calls = createApi({
       }),
     }),
     getOrdersTelegrambot: build.query({
-      query: () => ({
+      query: (filters) => ({
         url: "",
         method: "POST",
         headers: headers(),
         body: handleToFormData({
           action: "getOrders",
           mod: "telegrambot",
+          ...filters,
         }),
       }),
     }),
@@ -147,7 +148,7 @@ export const calls = createApi({
       }),
     }),
     setStatusTelegramOrder: build.query({
-      query: (id_order) => ({
+      query: ({ id_order, status }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -155,6 +156,7 @@ export const calls = createApi({
           action: "setStatusOrder",
           mod: "telegrambot",
           id_order,
+          status,
         }),
       }),
     }),
@@ -176,11 +178,16 @@ export const calls = createApi({
         url: "",
         method: "POST",
         headers: headers(),
-        body: handleToFormData({
-          action: "getOrders",
-          mod: "xcorp",
-          ...filters,
-        }),
+        body: handleToFormData(
+          {
+            action: "getOrders",
+            mod: "xcorp",
+            ...filters,
+          },
+          [],
+          true,
+          true
+        ),
       }),
     }),
     sendOrder: build.query({

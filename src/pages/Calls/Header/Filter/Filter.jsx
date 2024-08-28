@@ -21,6 +21,7 @@ export const Filter = ({
   activeType,
   onChangeActiveType,
   ordersTypes,
+  telegramTypes,
 }) => {
   const controls = useAnimationControls();
 
@@ -59,6 +60,7 @@ export const Filter = ({
               activeType={activeType}
               onChangeActiveType={onChangeActiveType}
               ordersTypes={ordersTypes}
+              telegramTypes={telegramTypes}
             />
           </div>
         </div>

@@ -81,14 +81,14 @@ export const List = ({
     return fieldsValues?.length > 0 ? fieldsValues : "-";
   };
 
-  const handleChangeTelegramOrderStatus = (id) => {
-    setTelegramOrderStatus(id).then((resp) => {
+  const handleChangeTelegramOrderStatus = (id_order, status) => {
+    setTelegramOrderStatus({ id_order, status }).then((resp) => {
       handleResponse(resp, () => {
         cogoToast.success("Статус успішно змінено!", {
           hideAfter: 3,
           position: "top-right",
         });
-        onToggleTelegramOrderStatus(id);
+        onToggleTelegramOrderStatus(id_order);
       });
     });
   };
@@ -235,7 +235,10 @@ export const List = ({
                     callCount={1}
                     chatId={chat_id}
                     onSetStatus={() =>
-                      handleChangeTelegramOrderStatus(id_order)
+                      handleChangeTelegramOrderStatus(
+                        id_order,
+                        status === "1" ? "0" : "1"
+                      )
                     }
                     status={status}
                     statusText={type_order}
