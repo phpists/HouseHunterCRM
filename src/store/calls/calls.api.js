@@ -158,14 +158,28 @@ export const calls = createApi({
         }),
       }),
     }),
+    setTelegramCommentOrder: build.query({
+      query: ({ id_order, comment }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "setCommnet",
+          mod: "telegrambot",
+          id_order,
+          comment,
+        }),
+      }),
+    }),
     getOrders: build.query({
-      query: () => ({
+      query: (filters) => ({
         url: "",
         method: "POST",
         headers: headers(),
         body: handleToFormData({
           action: "getOrders",
           mod: "xcorp",
+          ...filters,
         }),
       }),
     }),
@@ -179,6 +193,44 @@ export const calls = createApi({
           mod: "xcorp",
           id_order,
           id_user_hash,
+        }),
+      }),
+    }),
+    setOrderComment: build.query({
+      query: ({ id_order, comment }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "changeComment",
+          mod: "xcorp",
+          id_order,
+          comment,
+        }),
+      }),
+    }),
+    getOrderHistory: build.query({
+      query: (id_order) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getHistory",
+          mod: "xcorp",
+          id_order,
+        }),
+      }),
+    }),
+    setOrderStatus: build.query({
+      query: ({ id_order, status }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "setStatus",
+          mod: "xcorp",
+          id_order,
+          status,
         }),
       }),
     }),
@@ -201,4 +253,13 @@ export const {
   useLazySetStatusTelegramOrderQuery,
   useLazyGetOrdersQuery,
   useLazySendOrderQuery,
+  useLazySetTelegramCommentOrderQuery,
+  useLazySetOrderCommentQuery,
+  useLazyGetOrderHistoryQuery,
+  useLazySetOrderStatusQuery,
 } = calls;
+
+// useLazySetTelegramCommentOrderQuery,
+// useLazySetOrderCommentQuery,
+// useLazyGetOrderHistoryQuery,
+// useLazySetOrderStatusQuery,

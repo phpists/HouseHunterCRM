@@ -11,6 +11,7 @@ import { AddClient } from "../../../components/AddClient/AddClient";
 import { SendCall } from "./SendCall";
 import {
   useLazySendOrderQuery,
+  useLazySetOrderStatusQuery,
   useLazySetStatusTelegramOrderQuery,
 } from "../../../store/calls/calls.api";
 import cogoToast from "cogo-toast";
@@ -42,6 +43,7 @@ export const List = ({
   const [sendTelegramCall, setSendTelegramCall] = useState(false);
   const [sendOrder, setSendOrder] = useState(false);
   const [setTelegramOrderStatus] = useLazySetStatusTelegramOrderQuery();
+  const [setOrderStatus] = useLazySetOrderStatusQuery();
 
   const handleSendTelegramCall = (id) => {
     setSendCall(id);
@@ -87,6 +89,18 @@ export const List = ({
           position: "top-right",
         });
         onToggleTelegramOrderStatus(id);
+      });
+    });
+  };
+
+  const handleChangeOrderStatus = (id_order, status) => {
+    setOrderStatus({ id_order, status }).then((resp) => {
+      handleResponse(resp, () => {
+        cogoToast.success("Статус успішно змінено!", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+        onToggleOrderStatus(id_order);
       });
     });
   };
@@ -143,29 +157,36 @@ export const List = ({
       ) : (
         <>
           {orders?.length > 0 && activeType === "site"
-            ? orders?.map(({ comment, dt_order, id, status, type }) => (
-                <CallCard
-                  key={id}
-                  callType={"Сайт"}
-                  clientName={"-"}
-                  phone={"-"}
-                  date={handleFormatDate(Number(dt_order) * 1000)}
-                  comment={comment}
-                  onSendCall={() => handleSendOrder(id)}
-                  selected={!!selected.find((j) => j === id)}
-                  onSelect={() => onSelect(id)}
-                  onEditComment={() =>
-                    setCommentModal({
-                      id,
-                      coment: comment,
-                      readOnly: true,
-                    })
-                  }
-                  callCount={1}
-                  statusText={type}
-                  xcorp
-                />
-              ))
+            ? orders?.map(
+                ({ comment, dt_order, id, status, type, phone, author }) => (
+                  <CallCard
+                    key={id}
+                    callType={"Сайт"}
+                    clientName={author ?? "-"}
+                    phone={phone ?? "-"}
+                    date={handleFormatDate(Number(dt_order) * 1000)}
+                    comment={comment}
+                    onSendCall={() => handleSendOrder(id)}
+                    selected={!!selected.find((j) => j === id)}
+                    onSelect={() => onSelect(id)}
+                    onEditComment={() =>
+                      setCommentModal({
+                        id,
+                        coment: comment,
+                        type: "site",
+                      })
+                    }
+                    callCount={1}
+                    statusText={type}
+                    id={id}
+                    xcorp
+                    onSetStatus={() =>
+                      handleChangeOrderStatus(id, status === "1" ? "0" : "1")
+                    }
+                    status={status}
+                  />
+                )
+              )
             : null}
           {activeType !== "telegram"
             ? null
@@ -181,6 +202,7 @@ export const List = ({
                   id_obj,
                   chat_id,
                   status,
+                  comment,
                 }) => (
                   <CallCard
                     key={id_order}
@@ -188,7 +210,7 @@ export const List = ({
                     clientName={user_name}
                     phone={phone}
                     date={handleFormatDate(Number(dt_order) * 1000)}
-                    comment={handleCreateTelegramCommentInfo(added_object)}
+                    comment={comment}
                     telegram
                     onSendCall={() => handleSendTelegramCall(id_order)}
                     selected={!!selected.find((j) => j === id_order)}
@@ -197,8 +219,8 @@ export const List = ({
                     onEditComment={() =>
                       setCommentModal({
                         id: id_order,
-                        coment: handleCreateTelegramCommentInfo(added_object),
-                        readOnly: true,
+                        coment: comment,
+                        type: "telegram",
                       })
                     }
                     idObject={id_obj}

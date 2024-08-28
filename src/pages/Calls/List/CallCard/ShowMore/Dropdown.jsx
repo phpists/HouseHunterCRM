@@ -28,6 +28,13 @@ export const Dropdown = ({
         <>
           <div
             className="flex items-center justify-between"
+            onClick={onSetStatus}
+          >
+            <span>{status === "1" ? "Не опрацьовано" : "Опрацьовано"}</span>
+            <History className="selection-icon" />
+          </div>
+          <div
+            className="flex items-center justify-between"
             onClick={onSendCall}
           >
             <span>Передати </span> <ToObjectIcon className="selection-icon" />

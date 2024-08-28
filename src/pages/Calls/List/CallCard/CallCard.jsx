@@ -5,6 +5,8 @@ import { MobileContent } from "./MobileContent";
 import {
   useLazyGetAllCallsPhonesQuery,
   useLazyGetHistoryOrderQuery,
+  useLazyGetOrderHistoryQuery,
+  useLazySetOrderStatusQuery,
   useLazySetStatusTelegramOrderQuery,
 } from "../../../../store/calls/calls.api";
 import { handleFormatDate, handleResponse } from "../../../../utilits";
@@ -47,7 +49,10 @@ export const CallCard = ({
   const [getCalls, { data: callsData }] = useLazyGetAllCallsPhonesQuery();
   const [getHistoryOrder, { data: telegramCallsData }] =
     useLazyGetHistoryOrderQuery();
+  const [getOrderHistory, { data: orderHistory }] =
+    useLazyGetOrderHistoryQuery();
   const [setTelegramOrderStatus] = useLazySetStatusTelegramOrderQuery();
+  const [setOrderStatus] = useLazySetOrderStatusQuery();
 
   const handleClick = (e) =>
     e.target.classList.contains("clickable") && onSelect();
@@ -65,8 +70,14 @@ export const CallCard = ({
 
   const handleToggleOpen = () => {
     if (!open) {
-      if (!callsData) {
-        if (telegram) {
+      if (!callsData && !telegramCallsData && !orderHistory) {
+        if (xcorp) {
+          getOrderHistory(id).then((resp) =>
+            handleResponse(resp, () => {
+              setOpen(true);
+            })
+          );
+        } else if (telegram) {
           getHistoryOrder(chatId).then((resp) =>
             handleResponse(resp, () => {
               setOpen(true);
@@ -87,14 +98,28 @@ export const CallCard = ({
     }
   };
 
-  const handleChangeTelegramOrderStatus = (id) => {
-    setTelegramOrderStatus(id).then((resp) => {
+  const handleChangeTelegramOrderStatus = (id, status) => {
+    if (status === "1") {
+      setTelegramOrderStatus(id).then((resp) => {
+        handleResponse(resp, () => {
+          cogoToast.success("Статус успішно змінено!", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          getHistoryOrder(chatId);
+        });
+      });
+    }
+  };
+
+  const handleChangeOrderStatus = (id, status) => {
+    setOrderStatus({ id_order: id, status: status }).then((resp) => {
       handleResponse(resp, () => {
         cogoToast.success("Статус успішно змінено!", {
           hideAfter: 3,
           position: "top-right",
         });
-        getHistoryOrder(chatId);
+        getOrderHistory(id);
       });
     });
   };
@@ -128,6 +153,12 @@ export const CallCard = ({
                 id: c?.id_order,
                 status: c?.status,
               })) ?? []
+            : xcorp
+            ? orderHistory?.data.map((c) => ({
+                dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
+                id: c?.id,
+                status: c?.status,
+              })) ?? []
             : callsData?.data ?? []
         }
         onEditComment={onEditComment}
@@ -143,7 +174,9 @@ export const CallCard = ({
         downloadLink={downloadLink}
         idObject={idObject}
         statusText={statusText}
-        onChangeHistoryOrderStatus={handleChangeTelegramOrderStatus}
+        onChangeHistoryOrderStatus={
+          xcorp ? handleChangeOrderStatus : handleChangeTelegramOrderStatus
+        }
         xcorp={xcorp}
       />
       <MobileContent
@@ -167,6 +200,12 @@ export const CallCard = ({
             ? telegramCallsData?.data?.map((c) => ({
                 dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
               })) ?? []
+            : xcorp
+            ? orderHistory?.data.map((c) => ({
+                dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
+                id: c?.id,
+                status: c?.status,
+              })) ?? []
             : callsData?.data ?? []
         }
         onEditComment={onEditComment}
@@ -182,7 +221,9 @@ export const CallCard = ({
         downloadLink={downloadLink}
         idObject={idObject}
         statusText={statusText}
-        onChangeHistoryOrderStatus={handleChangeTelegramOrderStatus}
+        onChangeHistoryOrderStatus={
+          xcorp ? handleChangeOrderStatus : handleChangeTelegramOrderStatus
+        }
         xcorp={xcorp}
       />
     </StyledCallCard>

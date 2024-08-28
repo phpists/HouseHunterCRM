@@ -39,6 +39,7 @@ export const DesktopContent = ({
   statusText,
   onChangeHistoryOrderStatus,
   xcorp,
+  orderHistory,
 }) => (
   <StyledDesktopContent className="flex items-start clickable">
     <Type
@@ -58,13 +59,10 @@ export const DesktopContent = ({
       telegram={telegram}
       onChangeHistoryOrderStatus={onChangeHistoryOrderStatus}
       xcorp={xcorp}
+      orderHistory={orderHistory}
     />
     <Divider />
-    <Status
-      status={status}
-      telegram={telegram || xcorp}
-      statusText={statusText}
-    />
+    <Status status={status} />
     <Field
       placeholder="Почніть писати"
       label={`Коментар ${commentDate ?? ""}`}
@@ -76,6 +74,11 @@ export const DesktopContent = ({
       viewOnly
       onClick={onEditComment}
     />
+    {telegram || xcorp ? (
+      <>
+        <Divider /> <Status status={status} type={statusText} />
+      </>
+    ) : null}
     <Divider />
     {telegram || xcorp ? null : (
       <Agent name={name} photo={photo} workerLevel={level} />
@@ -112,9 +115,9 @@ const StyledDesktopContent = styled.div`
       text-overflow: ellipsis;
     }
     &-telegram {
-      width: 25vw !important;
+      /* width: 25vw !important;
       max-width: 400px;
-      flex-shrink: 1;
+      flex-shrink: 1; */
     }
     &:hover {
       background: var(--bg-10);

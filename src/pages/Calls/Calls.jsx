@@ -7,7 +7,9 @@ import {
   useLazyGetCallsQuery,
   useLazyGetOrdersQuery,
   useLazyGetOrdersTelegrambotQuery,
+  useLazySetOrderCommentQuery,
   useLazySetStatusCallQuery,
+  useLazySetTelegramCommentOrderQuery,
 } from "../../store/calls/calls.api";
 import {
   checkIsArray,
@@ -42,6 +44,8 @@ const Calls = ({ companyId }) => {
   const [getOrders] = useLazyGetOrdersQuery();
   const [setCallStatus] = useLazySetStatusCallQuery();
   const [addComment] = useLazyAddCommentToCallQuery();
+  const [setTelegramOrderComment] = useLazySetTelegramCommentOrderQuery();
+  const [setOrderComment] = useLazySetOrderCommentQuery();
   const { saveCallsCount } = useActions();
   const [selected, setSelected] = useState([]);
   const [data, setData] = useState(null);
@@ -67,11 +71,17 @@ const Calls = ({ companyId }) => {
   const { data: phonesCodes } = useGetPhonesCodesQuery();
   const { callsCount } = useAppSelect((state) => state.calls);
   const [showTelegram, setShowTelegram] = useState(true);
-  const [activeType, setActiveType] = useState("phone");
+  const [activeType, setActiveType] = useState(
+    localStorage.getItem("callsActiveType") ?? "phone"
+  );
   const [editActiveType, setEditActiveType] = useState("phone");
+  const [ordersTypes, setOrdersTypes] = useState([]);
 
   const handleChangePhoneCode = (val) => setFilterPhoneCode(val);
-  const handleChangeActiveType = (type) => setEditActiveType(type);
+  const handleChangeActiveType = (type) => {
+    setEditActiveType(type);
+    localStorage.setItem("callsActiveType", type);
+  };
 
   const handleChangeFilter = (fieldName, value) => {
     if (fieldName === "type_call") {
@@ -112,30 +122,100 @@ const Calls = ({ companyId }) => {
     }
   };
 
-  const handleGetOrders = () => {
+  const handleGetOrders = (isReset) => {
     if (XHOUSE_COMPANY_ID.includes(companyId)) {
-      getOrders().then((resp) => {
-        const orders = resp?.data?.data ?? [];
-        const types = resp?.data?.type;
-        setOrders(
-          Array.isArray(orders)
-            ? orders?.map((o) => ({ ...o, type: types[o?.type] }))
-            : [{ ...orders, type: types[orders?.type] }]
-        );
-      });
+      if ((!isLoading.current && !isAllPages) || isReset) {
+        if (isReset) {
+          listRef.current.scroll({ top: 0 });
+          setSelected([]);
+          currentPage.current = 0;
+          setIsAllPages(false);
+        }
+        isLoading.current = true;
+        setLoading(true);
+
+        const sendData = {
+          filters: isFilter.current
+            ? {
+                ...filters,
+                search_phone:
+                  removePhoneMask(filters?.search_phone)?.length > 0
+                    ? removePhoneMask(filters?.search_phone)
+                    : undefined,
+                date_from: filters?.date_from
+                  ? handleFormatFilterDate(filters?.date_from, true)
+                  : undefined,
+                date_to: filters?.date_to
+                  ? handleFormatFilterDate(filters?.date_to)
+                  : undefined,
+              }
+            : {
+                date_from: Math.floor(getFirstDay(true).getTime() / 1000),
+                date_to: Math.floor(new Date().getTime() / 1000),
+              },
+          current_page: currentPage.current,
+        };
+
+        if (currentPage.current === 0 || isReset) {
+          setOrders([]);
+        }
+
+        getOrders(sendData).then((resp) => {
+          isLoading.current = false;
+          setLoading(false);
+          const ordersResp = resp?.data?.data ?? [];
+          const types = resp?.data?.type;
+          const formatedOrdersResp = ordersResp?.map((o) => ({
+            ...o,
+            type: types[o?.type],
+          }));
+
+          setOrdersTypes(types);
+          setIsAllPages(ordersResp?.length === 0);
+          handleResponse(
+            resp,
+            () => {
+              setOrders(
+                isReset
+                  ? formatedOrdersResp
+                  : [...checkIsArray(orders), ...formatedOrdersResp]
+              );
+              // saveCallsCount(resp?.data?.all_item ?? 0);
+              const respItemsCount = resp?.data?.data?.length;
+              const updatedCount = isReset
+                ? respItemsCount
+                : allCountRef.current + respItemsCount;
+              allCountRef.current = updatedCount;
+              setAllCount(updatedCount);
+            },
+            () => {
+              setIsAllPages(true);
+              if (isReset) {
+                setOrders([]);
+                //   saveCallsCount(0);
+                allCountRef.current = 0;
+                setAllCount(0);
+              }
+            }
+          );
+        });
+      }
     }
   };
 
   useEffect(() => {
     if (activeType === "site") {
-      handleGetOrders();
+      handleGetOrders(true);
     } else if (activeType === "telegram") {
       handleGetgetTelegramOrders();
     }
   }, [activeType]);
 
   const handleGetCalls = (isReset) => {
-    if ((!isLoading.current && !isAllPages) || isReset) {
+    if (
+      ((!isLoading.current && !isAllPages) || isReset) &&
+      activeType === "phone"
+    ) {
       if (isReset) {
         listRef.current.scroll({ top: 0 });
         setSelected([]);
@@ -216,7 +296,7 @@ const Calls = ({ companyId }) => {
       return;
     }
     currentPage.current += 1;
-    handleGetCalls();
+    activeType === "phone" ? handleGetCalls() : handleGetOrders();
   };
 
   useEffect(() => {
@@ -228,7 +308,7 @@ const Calls = ({ companyId }) => {
         listRef.current.removeEventListener("scroll", handleScroll);
     }
     // eslint-disable-next-line
-  }, [listRef, isLoading.current, isAllPages, data]);
+  }, [listRef, isLoading.current, isAllPages, data, activeType, orders]);
 
   const handleSetCallStatus = (id_call, status) => {
     setCallStatus({ id_call, status }).then((resp) =>
@@ -246,28 +326,74 @@ const Calls = ({ companyId }) => {
     );
   };
 
-  const handleAddComment = (id_call, comment) => {
-    addComment({ id_call, comment }).then((resp) =>
-      handleResponse(resp, () => {
+  const handleAddComment = (id_call, comment, type) => {
+    if (type === "telegram") {
+      setTelegramOrderComment({ id_order: id_call, comment }).then((resp) =>
         handleResponse(resp, () => {
-          cogoToast.success("Коментар успішно змінено!", {
-            hideAfter: 3,
-            position: "top-right",
+          handleResponse(resp, () => {
+            cogoToast.success("Коментар успішно змінено!", {
+              hideAfter: 3,
+              position: "top-right",
+            });
           });
-        });
-        setData(
-          data?.map((call) =>
-            call.id === id_call
-              ? {
-                  ...call,
-                  coment: comment,
-                  comment_date: handleFormatDate(new Date(), true),
-                }
-              : call
-          )
-        );
-      })
-    );
+          setTelegramData(
+            telegramData?.map((call) =>
+              call.id_order === id_call
+                ? {
+                    ...call,
+                    comment: comment,
+                    comment_date: handleFormatDate(new Date(), true),
+                  }
+                : call
+            )
+          );
+        })
+      );
+    } else if (type === "site") {
+      setOrderComment({ id_order: id_call, comment }).then((resp) =>
+        handleResponse(resp, () => {
+          handleResponse(resp, () => {
+            cogoToast.success("Коментар успішно змінено!", {
+              hideAfter: 3,
+              position: "top-right",
+            });
+          });
+          setOrders(
+            orders?.map((call) =>
+              call.id === id_call
+                ? {
+                    ...call,
+                    comment: comment,
+                    comment_date: handleFormatDate(new Date(), true),
+                  }
+                : call
+            )
+          );
+        })
+      );
+    } else {
+      addComment({ id_call, comment }).then((resp) =>
+        handleResponse(resp, () => {
+          handleResponse(resp, () => {
+            cogoToast.success("Коментар успішно змінено!", {
+              hideAfter: 3,
+              position: "top-right",
+            });
+          });
+          setData(
+            data?.map((call) =>
+              call.id === id_call
+                ? {
+                    ...call,
+                    coment: comment,
+                    comment_date: handleFormatDate(new Date(), true),
+                  }
+                : call
+            )
+          );
+        })
+      );
+    }
   };
 
   const handleApplyFilter = (isApply) => {
@@ -280,8 +406,10 @@ const Calls = ({ companyId }) => {
       setFilters(INIT_FILTERS);
       localStorage.removeItem("callsFilter");
       setShowTelegram(false);
+      setActiveType("phone");
+      localStorage.removeItem("callsActiveType");
     }
-    handleGetCalls(true);
+    activeType === "phone" ? handleGetCalls(true) : handleGetOrders(true);
   };
 
   const handleSetCallsStatus = (status) => {
@@ -413,6 +541,7 @@ const Calls = ({ companyId }) => {
         refreshTelegramCalls={handleGetgetTelegramOrders}
         activeType={editActiveType}
         onChangeActiveType={handleChangeActiveType}
+        ordersTypes={ordersTypes}
       />
       <List
         selected={selected}

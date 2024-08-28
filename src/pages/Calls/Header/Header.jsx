@@ -31,6 +31,7 @@ export const Header = ({
   orders,
   activeType,
   onChangeActiveType,
+  ordersTypes,
 }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClientOpen, setAddClientOpen] = useState(false);
@@ -112,6 +113,7 @@ export const Header = ({
           showTelegram={showTelegram}
           activeType={activeType}
           onChangeActiveType={onChangeActiveType}
+          ordersTypes={ordersTypes}
         />
       )}
       {addClientOpen && <AddClient onClose={() => setAddClientOpen(false)} />}

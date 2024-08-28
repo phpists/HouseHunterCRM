@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export const Title = () => (
-  <StyledTitle className="clickable">Статус</StyledTitle>
+export const Title = ({ type }) => (
+  <StyledTitle className="clickable">{type ? "Тип" : "Статус"}</StyledTitle>
 );
 
 const StyledTitle = styled.div`

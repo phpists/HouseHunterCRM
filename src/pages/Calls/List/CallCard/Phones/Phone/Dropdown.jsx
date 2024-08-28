@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Dropdown = ({
   callsData,
-  telegram,
+  changeStatus,
   onChangeHistoryOrderStatus,
 }) => (
   <StyledDropdown>
@@ -11,10 +11,10 @@ export const Dropdown = ({
         <span>{dt_incoming?.split(" ")[0] ?? "-"}</span>
         <div className="flex items-center">
           <span>{dt_incoming?.split(" ")[1] ?? "-"}</span>
-          {telegram ? (
+          {changeStatus ? (
             <button
               onClick={() =>
-                status === "1" ? null : onChangeHistoryOrderStatus(id)
+                onChangeHistoryOrderStatus(id, status === "1" ? "0" : "1")
               }
             >
               {status === "1" ? "Опрацьовано" : "Не опрацьовано"}

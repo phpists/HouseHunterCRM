@@ -13,12 +13,9 @@ const STATUS = {
   },
 };
 
-export const Tag = ({ status, telegram, statusText }) => (
-  <StyledTag
-    status={telegram ? undefined : STATUS[status]}
-    className="clickable"
-  >
-    {telegram ? statusText : STATUS[status]?.title ?? "Відсутні в базі"}
+export const Tag = ({ status, type }) => (
+  <StyledTag status={type ? undefined : STATUS[status]} className="clickable">
+    {type ? type : STATUS[status]?.title ?? "Відсутні в базі"}
   </StyledTag>
 );
 
@@ -40,5 +37,4 @@ const StyledTag = styled.div`
   border-radius: 5px;
   width: max-content;
   max-width: 150px;
-
 `;

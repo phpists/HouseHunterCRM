@@ -10,7 +10,7 @@ export const Phone = ({
   date,
   callsData,
   clientName,
-  telegram,
+  changeStatus,
   onChangeHistoryOrderStatus,
   onToggleOpen,
 }) => (
@@ -27,7 +27,7 @@ export const Phone = ({
     {open && (
       <Dropdown
         callsData={callsData}
-        telegram={telegram}
+        changeStatus={changeStatus}
         onChangeHistoryOrderStatus={onChangeHistoryOrderStatus}
       />
     )}

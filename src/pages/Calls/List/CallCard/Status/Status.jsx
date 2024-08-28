@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { Tag } from "./Tag";
 import { Title } from "./Title";
 
-export const Status = ({ status, telegram, statusText }) => {
+export const Status = ({ status, type }) => {
   return (
-    <StyledStatus className={`clickable ${telegram && "telegram"}`}>
-      <Tag status={status} telegram={telegram} statusText={statusText} />
-      <Title />
+    <StyledStatus className={`clickable ${type && "type"}`}>
+      <Tag status={status} type={type} />
+      <Title type={type} />
     </StyledStatus>
   );
 };
@@ -20,7 +20,7 @@ const StyledStatus = styled.div`
   /* &:hover {
     background:  var(--card-bg-2);
   } */
-  &.telegram {
+  &.type {
     width: 180px;
   }
   @media (min-width: 1400px) {
