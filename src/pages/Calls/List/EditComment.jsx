@@ -29,7 +29,7 @@ export const EditComment = ({ onClose, call, onChange }) => {
   }, [call?.coment]);
 
   const handleSave = () => {
-    onChange(call.id, value, call?.type);
+    onChange(call.id, value, call?.type, call?.onSuccess);
     onClose();
   };
 

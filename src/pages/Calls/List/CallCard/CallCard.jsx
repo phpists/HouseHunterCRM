@@ -43,6 +43,7 @@ export const CallCard = ({
   chatId,
   statusText,
   xcorp,
+  onEditHistoryComment,
 }) => {
   const [open, setOpen] = useState();
   const [commentEdit, setCommentEdit] = useState(comment);
@@ -152,12 +153,14 @@ export const CallCard = ({
                 dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
                 id: c?.id_order,
                 status: c?.status,
+                comment: c?.comment,
               })) ?? []
             : xcorp
             ? orderHistory?.data.map((c) => ({
                 dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
                 id: c?.id,
                 status: c?.status,
+                comment: c?.comment,
               })) ?? []
             : callsData?.data ?? []
         }
@@ -178,6 +181,13 @@ export const CallCard = ({
           xcorp ? handleChangeOrderStatus : handleChangeTelegramOrderStatus
         }
         xcorp={xcorp}
+        onEditHistoryComment={(id, comment) =>
+          onEditHistoryComment(
+            id,
+            comment,
+            xcorp ? () => getOrderHistory(id) : () => getHistoryOrder(chatId)
+          )
+        }
       />
       <MobileContent
         open={open}
@@ -199,12 +209,15 @@ export const CallCard = ({
           telegram
             ? telegramCallsData?.data?.map((c) => ({
                 dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
+                comment: c?.comment,
+                id: c?.id_order,
               })) ?? []
             : xcorp
             ? orderHistory?.data.map((c) => ({
                 dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
                 id: c?.id,
                 status: c?.status,
+                comment: c?.comment,
               })) ?? []
             : callsData?.data ?? []
         }
@@ -225,6 +238,13 @@ export const CallCard = ({
           xcorp ? handleChangeOrderStatus : handleChangeTelegramOrderStatus
         }
         xcorp={xcorp}
+        onEditHistoryComment={(id, comment) =>
+          onEditHistoryComment(
+            id,
+            comment,
+            xcorp ? () => getOrderHistory(id) : () => getHistoryOrder(chatId)
+          )
+        }
       />
     </StyledCallCard>
   );

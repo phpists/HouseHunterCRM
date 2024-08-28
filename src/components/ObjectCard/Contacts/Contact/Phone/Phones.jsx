@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Phones } from "../../../../Phones/Phones";
 import { ShowButton } from "./ShowButton";
 import { useGetPhonesCodesQuery } from "../../../../../store/auth/auth.api";
+import { handleAddPhoneMask } from "../../../../../utilits";
 
 export const Phone = ({ commentOpen, phones, error, onShow }) => {
   const { data } = useGetPhonesCodesQuery();
@@ -23,6 +24,7 @@ export const Phone = ({ commentOpen, phones, error, onShow }) => {
               phone: `${
                 code ?? data?.find(({ id }) => id === id_phone_code)?.code ?? ""
               }${phone}`,
+              maskedPhone: handleAddPhoneMask(phone),
               telegram,
               viber,
             })

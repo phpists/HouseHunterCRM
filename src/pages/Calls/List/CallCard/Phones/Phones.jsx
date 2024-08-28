@@ -14,6 +14,7 @@ export const Phones = ({
   telegram,
   onChangeHistoryOrderStatus,
   xcorp,
+  onEditHistoryComment,
 }) => {
   return (
     <StyledPhones open={open}>
@@ -26,6 +27,7 @@ export const Phones = ({
         changeStatus={telegram || xcorp}
         onChangeHistoryOrderStatus={onChangeHistoryOrderStatus}
         onToggleOpen={onToggleOpen}
+        onEditHistoryComment={onEditHistoryComment}
       />
       <PhoneCalls
         count={callCount}

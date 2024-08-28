@@ -1,24 +1,29 @@
 import styled from "styled-components";
+import { ReactComponent as CommentIcon } from "../../../../../../assets/images/comment.svg";
 
 export const Dropdown = ({
   callsData,
   changeStatus,
   onChangeHistoryOrderStatus,
+  onEditHistoryComment,
 }) => (
   <StyledDropdown>
-    {callsData?.map(({ dt_incoming, id, status }, i) => (
+    {callsData?.map(({ dt_incoming, id, status, comment }, i) => (
       <div className="item" key={i}>
         <span>{dt_incoming?.split(" ")[0] ?? "-"}</span>
         <div className="flex items-center">
           <span>{dt_incoming?.split(" ")[1] ?? "-"}</span>
           {changeStatus ? (
-            <button
-              onClick={() =>
-                onChangeHistoryOrderStatus(id, status === "1" ? "0" : "1")
-              }
-            >
-              {status === "1" ? "Опрацьовано" : "Не опрацьовано"}
-            </button>
+            <div className="flex items-center">
+              <button
+                onClick={() =>
+                  onChangeHistoryOrderStatus(id, status === "1" ? "0" : "1")
+                }
+              >
+                {status === "1" ? "Опрацьовано" : "Не опрацьовано"}
+              </button>
+              <CommentIcon onClick={() => onEditHistoryComment(id, comment)} />
+            </div>
           ) : null}
         </div>
       </div>
@@ -61,8 +66,18 @@ const StyledDropdown = styled.div`
       border-radius: 5px;
       width: 100px;
       margin-left: 10px;
+      flex-shrink: 0;
       &:hover {
         background: var(--color-2);
+      }
+    }
+    svg {
+      flex-shrink: 0;
+      height: 20px;
+      margin-left: 10px;
+      opacity: 0.5;
+      &:hover {
+        opacity: 1;
       }
     }
   }

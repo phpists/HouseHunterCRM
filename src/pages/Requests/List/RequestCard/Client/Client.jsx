@@ -4,6 +4,7 @@ import { Info } from "./Info";
 import { Phones } from "../../../../../components/Phones/Phones";
 import { Card } from "./Card/Card";
 import { useGetPhonesCodesQuery } from "../../../../../store/auth/auth.api";
+import { handleAddPhoneMask } from "../../../../../utilits";
 
 export const Client = ({ data }) => {
   const { data: phonesData } = useGetPhonesCodesQuery();
@@ -22,6 +23,7 @@ export const Client = ({ data }) => {
               phone: `${
                 phonesData?.find(({ id }) => id === id_phone_code)?.code ?? ""
               }${phone}`,
+              maskedPhone: handleAddPhoneMask(phone),
               viber,
               telegram,
             })
@@ -42,6 +44,7 @@ export const Client = ({ data }) => {
                 phonesData?.find(({ id }) => id === id_phone_code)?.code ??
                 ""
               }${phone}`,
+              maskedPhone: handleAddPhoneMask(phone),
               viber,
               telegram,
             })

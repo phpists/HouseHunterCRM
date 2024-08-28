@@ -184,6 +184,14 @@ export const List = ({
                       handleChangeOrderStatus(id, status === "1" ? "0" : "1")
                     }
                     status={status}
+                    onEditHistoryComment={(id, coment, onSuccess) =>
+                      setCommentModal({
+                        id,
+                        coment,
+                        type: "site",
+                        onSuccess,
+                      })
+                    }
                   />
                 )
               )
@@ -231,6 +239,14 @@ export const List = ({
                     }
                     status={status}
                     statusText={type_order}
+                    onEditHistoryComment={(id, coment, onSuccess) =>
+                      setCommentModal({
+                        id,
+                        coment,
+                        type: "telegram",
+                        onSuccess,
+                      })
+                    }
                   />
                 )
               )}

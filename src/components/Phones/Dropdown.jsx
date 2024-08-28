@@ -10,12 +10,17 @@ export const Dropdown = ({ open, onSelect, top, options, activePhone }) => (
     top={top}
     className="notClickable"
   >
-    {options?.map(({ phone }, i) =>
+    {options?.map(({ phone, maskedPhone }, i) =>
       activePhone === i ? (
         <div />
       ) : (
         <div key={i} onClick={() => onSelect(i)} className="notClickable">
-          <Phone className="phone-opt notClickable" phone={phone} readOnly />
+          <Phone
+            className="phone-opt notClickable"
+            phone={phone}
+            maskedPhone={maskedPhone ?? phone}
+            readOnly
+          />
         </div>
       )
     )}

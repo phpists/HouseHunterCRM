@@ -40,6 +40,7 @@ export const Search = ({
     }
   }, [filters?.call_my_struct]);
 
+  console.log(activeType);
   return (
     <StyledSearch>
       <Field
@@ -71,6 +72,60 @@ export const Search = ({
       />
       <Divider />
       <Period filters={filters} onChangeFilter={onChangeFilter} />
+      {Number(user?.struct_level) !== Number(level) ? (
+        <>
+          <Divider />
+          <ToggleOption
+            label="Ліди моєї структури"
+            value={filters?.call_my_struct?.length >= 0}
+            onChange={() =>
+              onChangeFilter(
+                "call_my_struct",
+                filters?.call_my_struct === "1" ? undefined : "1"
+              )
+            }
+          />
+          {filters?.call_my_struct?.length >= 0 ? (
+            <>
+              <SelectTags
+                label="Пошук по працівнику"
+                placeholder="Оберіть працівника"
+                options={
+                  workers?.data
+                    ? workers?.data?.map(({ id, first_name, last_name }) => ({
+                        title: `${first_name} ${last_name}`,
+                        value: id,
+                      }))
+                    : []
+                }
+                value={filters?.id_worker_Search}
+                onChange={(val) =>
+                  onChangeFilter(
+                    "id_worker_Search",
+                    val === filters?.id_worker_Search ? undefined : val
+                  )
+                }
+                isSearch
+                notMultiSelect
+              />
+              <Divider />
+            </>
+          ) : null}
+        </>
+      ) : null}
+      <Divider />
+      <SelectTags
+        label="Статус"
+        notMultiSelect
+        options={[
+          { title: "Не опрацьовані", value: "0" },
+          { title: "Опрацьовані", value: "1" },
+        ]}
+        onChange={(val) =>
+          onChangeFilter("status", filters?.status === val ? undefined : val)
+        }
+        value={filters?.status}
+      />
       <TitleDivider title="Телефонія" />
       <ToggleOption
         label="База Телефонія"
@@ -81,22 +136,6 @@ export const Search = ({
       />
       {activeType === "phone" ? (
         <>
-          <SelectTags
-            label="Статус"
-            notMultiSelect
-            options={[
-              { title: "Не опрацьовані", value: "0" },
-              { title: "Опрацьовані", value: "1" },
-            ]}
-            onChange={(val) =>
-              onChangeFilter(
-                "status",
-                filters?.status === val ? undefined : val
-              )
-            }
-            value={filters?.status}
-          />
-          <Divider />
           <SelectTags
             label="Пошук по потоку"
             tags={[
@@ -134,49 +173,6 @@ export const Search = ({
             hideArrow
           />
           <Divider />
-          {Number(user?.struct_level) !== Number(level) ? (
-            <>
-              {" "}
-              <ToggleOption
-                label="Дзвінки моєї структури"
-                value={filters?.call_my_struct?.length >= 0}
-                onChange={() =>
-                  onChangeFilter(
-                    "call_my_struct",
-                    filters?.call_my_struct === "1" ? undefined : "1"
-                  )
-                }
-              />
-              {filters?.call_my_struct?.length >= 0 ? (
-                <>
-                  <SelectTags
-                    label="Пошук по працівнику"
-                    placeholder="Оберіть працівника"
-                    options={
-                      workers?.data
-                        ? workers?.data?.map(
-                            ({ id, first_name, last_name }) => ({
-                              title: `${first_name} ${last_name}`,
-                              value: id,
-                            })
-                          )
-                        : []
-                    }
-                    value={filters?.id_worker_Search}
-                    onChange={(val) =>
-                      onChangeFilter(
-                        "id_worker_Search",
-                        val === filters?.id_worker_Search ? undefined : val
-                      )
-                    }
-                    isSearch
-                    notMultiSelect
-                  />
-                  <Divider />
-                </>
-              ) : null}
-            </>
-          ) : null}
           <ToggleOption
             label="Відсутній в базі"
             value={filters?.missing_client}
@@ -199,22 +195,6 @@ export const Search = ({
       />
       {activeType === "site" ? (
         <>
-          <SelectTags
-            label="Статус"
-            notMultiSelect
-            options={[
-              { title: "Не опрацьовані", value: "0" },
-              { title: "Опрацьовані", value: "1" },
-            ]}
-            onChange={(val) =>
-              onChangeFilter(
-                "status",
-                filters?.status === val ? undefined : val
-              )
-            }
-            value={filters?.status}
-          />
-          <Divider />
           <SelectTags
             label="Пошук по типу"
             tags={[
@@ -252,49 +232,6 @@ export const Search = ({
             hideArrow
           />
           <Divider />
-          {Number(user?.struct_level) !== Number(level) ? (
-            <>
-              {" "}
-              <ToggleOption
-                label="Дзвінки моєї структури"
-                value={filters?.call_my_struct?.length >= 0}
-                onChange={() =>
-                  onChangeFilter(
-                    "call_my_struct",
-                    filters?.call_my_struct === "1" ? undefined : "1"
-                  )
-                }
-              />
-              {filters?.call_my_struct?.length >= 0 ? (
-                <>
-                  <SelectTags
-                    label="Пошук по працівнику"
-                    placeholder="Оберіть працівника"
-                    options={
-                      workers?.data
-                        ? workers?.data?.map(
-                            ({ id, first_name, last_name }) => ({
-                              title: `${first_name} ${last_name}`,
-                              value: id,
-                            })
-                          )
-                        : []
-                    }
-                    value={filters?.id_worker_Search}
-                    onChange={(val) =>
-                      onChangeFilter(
-                        "id_worker_Search",
-                        val === filters?.id_worker_Search ? undefined : val
-                      )
-                    }
-                    isSearch
-                    notMultiSelect
-                  />
-                  <Divider />
-                </>
-              ) : null}
-            </>
-          ) : null}
           <ToggleOption
             label="Відсутній в базі"
             value={filters?.missing_client}

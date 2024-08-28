@@ -74,7 +74,9 @@ const Calls = ({ companyId }) => {
   const [activeType, setActiveType] = useState(
     localStorage.getItem("callsActiveType") ?? "phone"
   );
-  const [editActiveType, setEditActiveType] = useState("phone");
+  const [editActiveType, setEditActiveType] = useState(
+    localStorage.getItem("callsActiveType") ?? "phone"
+  );
   const [ordersTypes, setOrdersTypes] = useState([]);
 
   const handleChangePhoneCode = (val) => setFilterPhoneCode(val);
@@ -326,7 +328,7 @@ const Calls = ({ companyId }) => {
     );
   };
 
-  const handleAddComment = (id_call, comment, type) => {
+  const handleAddComment = (id_call, comment, type, onSuccess) => {
     if (type === "telegram") {
       setTelegramOrderComment({ id_order: id_call, comment }).then((resp) =>
         handleResponse(resp, () => {
@@ -336,6 +338,7 @@ const Calls = ({ companyId }) => {
               position: "top-right",
             });
           });
+          onSuccess && onSuccess();
           setTelegramData(
             telegramData?.map((call) =>
               call.id_order === id_call
@@ -358,6 +361,7 @@ const Calls = ({ companyId }) => {
               position: "top-right",
             });
           });
+          onSuccess && onSuccess();
           setOrders(
             orders?.map((call) =>
               call.id === id_call

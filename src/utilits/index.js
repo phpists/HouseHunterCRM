@@ -547,3 +547,6 @@ export const handleSetTheme = (theme) => {
   const htmlElem = document.querySelector("html");
   htmlElem.setAttribute("data-theme", theme);
 };
+
+export const handleAddPhoneMask = (phone) =>
+  `${phone?.substring(0, 3)}-${phone?.substring(3, 6)}-${phone?.substring(6)}`;

@@ -13,6 +13,7 @@ export const Phone = ({
   changeStatus,
   onChangeHistoryOrderStatus,
   onToggleOpen,
+  onEditHistoryComment,
 }) => (
   <div>
     <StyledPhone
@@ -29,6 +30,7 @@ export const Phone = ({
         callsData={callsData}
         changeStatus={changeStatus}
         onChangeHistoryOrderStatus={onChangeHistoryOrderStatus}
+        onEditHistoryComment={onEditHistoryComment}
       />
     )}
   </div>

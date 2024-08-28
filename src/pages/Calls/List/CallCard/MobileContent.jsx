@@ -38,6 +38,7 @@ export const MobileContent = ({
   idObject,
   onChangeHistoryOrderStatus,
   xcorp,
+  onEditHistoryComment,
 }) => (
   <StyledMobileContent className="flex flex-col items-start clickable">
     <Type
@@ -57,6 +58,7 @@ export const MobileContent = ({
         telegram={telegram}
         onChangeHistoryOrderStatus={onChangeHistoryOrderStatus}
         xcorp={xcorp}
+        onEditHistoryComment={onEditHistoryComment}
       />
       <PhonesMobile
         open={open}

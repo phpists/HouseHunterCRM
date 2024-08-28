@@ -11,6 +11,7 @@ export const Phone = ({
   hideIcon,
   small,
   onClick,
+  maskedPhone,
 }) => (
   <StyledPhone
     className={`${className} notClickable ${isLessThenOne && "less-then-one"}`}
@@ -20,7 +21,7 @@ export const Phone = ({
       className="flex items-center notClickable"
       onClick={() => (readOnly ? null : handleCopy(phone))}
     >
-      <div className="phone notClickable">{phone}</div>
+      <div className="phone notClickable">{maskedPhone}</div>
       {hideIcon ? null : readOnly ? (
         <img src={phoneIcon} alt="" className="notClickable" />
       ) : (

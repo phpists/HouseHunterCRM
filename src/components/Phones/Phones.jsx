@@ -32,6 +32,12 @@ export const Phones = ({
           isLessThenOne={phones?.length <= 1}
           hideIcon={hideIcon}
           small={small}
+          maskedPhone={
+            phones?.length > 0
+              ? phones?.[activePhone]?.maskedPhone ??
+                phones?.[activePhone]?.phone
+              : ""
+          }
         />
         {phones?.length <= 1 && !notHideArrow ? null : (
           <Arrow
