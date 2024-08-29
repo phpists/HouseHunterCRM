@@ -53,7 +53,19 @@ export const Search = ({
           { title: "Сайт", value: "site" },
           { title: "Телеграм", value: "telegram" },
         ]}
-        onChange={(val) => onChangeActiveType(val)}
+        onChange={(val) => {
+          onChangeActiveType(val === activeType ? undefined : val);
+          onChangeFilter(
+            "filters",
+            {
+              ...filters,
+              type: undefined,
+              type_call: [],
+              status: "0",
+            },
+            true
+          );
+        }}
         value={activeType}
       />
       <Divider />
@@ -99,7 +111,20 @@ export const Search = ({
           label="Пошук по типу"
           notMultiSelect
           placeholder="Оберіть"
-          options={telegramTypes}
+          options={[
+            {
+              value: "1",
+              title: "Передзвоніть мені",
+            },
+            {
+              value: "2",
+              title: "Запис на показ обєкту",
+            },
+            {
+              value: "3",
+              title: "Додав обєкт",
+            },
+          ]}
           onChange={(val) =>
             onChangeFilter("type", filters?.type === val ? undefined : val)
           }
@@ -111,14 +136,18 @@ export const Search = ({
           notMultiSelect
           placeholder="Оберіть"
           options={[
-            ...(ordersTypes
-              ? Object.entries(ordersTypes)
-                  ?.filter((t) => t[0] !== "error")
-                  ?.map((t) => ({
-                    title: t[1],
-                    value: t[0]?.toString(),
-                  }))
-              : []),
+            {
+              title: "Запит на пошук",
+              value: "1",
+            },
+            {
+              title: "Консультація",
+              value: "3",
+            },
+            {
+              title: "Робота в xhouse",
+              value: "2",
+            },
           ]}
           onChange={(val) =>
             onChangeFilter("type", filters?.type === val ? undefined : val)

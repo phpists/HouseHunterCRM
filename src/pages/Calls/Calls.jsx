@@ -32,7 +32,7 @@ const INIT_FILTERS = {
   //   id_worker_Search: "",
   type_call: [],
   call_my_struct: undefined,
-  status: undefined,
+  status: "0",
   date_from: Math.floor(getFirstDay(true).getTime() / 1000),
   date_to: Math.floor(new Date().getTime() / 1000),
 };
@@ -86,8 +86,10 @@ const Calls = ({ companyId }) => {
     localStorage.setItem("callsActiveType", type);
   };
 
-  const handleChangeFilter = (fieldName, value) => {
-    if (fieldName === "type_call") {
+  const handleChangeFilter = (fieldName, value, isUpdate) => {
+    if (isUpdate) {
+      setFilters(value);
+    } else if (fieldName === "type_call") {
       if (value?.includes("telegram")) {
         setShowTelegram(showTelegram === "show" ? false : "show");
       } else {
@@ -200,7 +202,7 @@ const Calls = ({ companyId }) => {
           const types = resp?.data?.type;
           const formatedOrdersResp = ordersResp?.map((o) => ({
             ...o,
-            type: types[o?.type],
+            type: o?.type === "1" ? "Запит на пошук" : types[o?.type],
           }));
 
           setOrdersTypes(types);
@@ -237,10 +239,13 @@ const Calls = ({ companyId }) => {
   };
 
   useEffect(() => {
+    currentPage.current = 0;
     if (activeType === "site") {
       handleGetOrders(true);
     } else if (activeType === "telegram") {
       handleGetgetTelegramOrders();
+    } else {
+      handleGetCalls();
     }
   }, [activeType]);
 

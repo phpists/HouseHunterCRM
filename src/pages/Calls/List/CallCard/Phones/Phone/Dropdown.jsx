@@ -13,7 +13,7 @@ export const Dropdown = ({
         <span>{dt_incoming?.split(" ")[0] ?? "-"}</span>
         <div className="flex items-center">
           <span>{dt_incoming?.split(" ")[1] ?? "-"}</span>
-          {changeStatus ? (
+          {/* {changeStatus ? (
             <div className="flex items-center">
               <button
                 onClick={() =>
@@ -24,7 +24,7 @@ export const Dropdown = ({
               </button>
               <CommentIcon onClick={() => onEditHistoryComment(id, comment)} />
             </div>
-          ) : null}
+          ) : null} */}
         </div>
       </div>
     ))}

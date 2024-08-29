@@ -148,11 +148,14 @@ export const List = ({
           onAdded={onAddClient}
         />
       )}
-      {activeType === "phone" && data?.length === 0 ? (
+      {activeType === "empty" || !activeType ? (
         <Empty loading={loading} />
-      ) : activeType === "telegram" && telegramData?.length === 0 ? (
+      ) : activeType === "phone" && (data?.length === 0 || !data) ? (
         <Empty loading={loading} />
-      ) : activeType === "site" && orders?.length === 0 ? (
+      ) : activeType === "telegram" &&
+        (telegramData?.length === 0 || !telegramData) ? (
+        <Empty loading={loading} />
+      ) : activeType === "site" && (orders?.length === 0 || !orders) ? (
         <Empty loading={loading} />
       ) : (
         <>
