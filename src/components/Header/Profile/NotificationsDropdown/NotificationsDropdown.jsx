@@ -69,12 +69,16 @@ export const NotificationsDropdown = ({
           onClose={() => onClose("requestDtDeadline")}
         />
       )}
-      {(data?.calls || data?.telegramMessege) && (
+      {(data?.calls || data?.telegramMessege || data?.xCorpNotify) && (
         <Card
           type="calls"
-          messages={[data?.calls, data?.telegramMessege]}
+          messages={[data?.calls, data?.telegramMessege, data?.xCorpNotify]}
           onClose={() => onClose("calls")}
-          links={["/calls?view=true", "/calls?telegram=true"]}
+          links={[
+            "/calls?view=true",
+            "/calls?telegram=true",
+            "/calls?site=true",
+          ]}
         />
       )}
 

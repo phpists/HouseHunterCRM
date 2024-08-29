@@ -491,6 +491,7 @@ const Calls = ({ companyId }) => {
   useEffect(() => {
     const filterApply = location?.search?.split("=")[0];
     if (filterApply === "?view") {
+      setActiveType("phone");
       setFilters({
         view: "0",
         type_call: [],
@@ -499,8 +500,13 @@ const Calls = ({ companyId }) => {
       });
       setIsDefaultFilterSet(true);
     } else if (filterApply === "?telegram") {
+      setActiveType("telegram");
       setFilters(INIT_FILTERS);
       setShowTelegram("show");
+      setIsDefaultFilterSet(true);
+    } else if (filterApply === "?site") {
+      setActiveType("site");
+      setFilters(INIT_FILTERS);
       setIsDefaultFilterSet(true);
     } else {
       handleGetCalls(true);

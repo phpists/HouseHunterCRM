@@ -7,7 +7,7 @@ import { ReactComponent as CloseIcon } from "../../../../../assets/images/close.
 
 const TYPES = {
   calls: {
-    title: "Дзвінки",
+    title: "Ліди",
     icon: callsIcon,
   },
   clients: {
