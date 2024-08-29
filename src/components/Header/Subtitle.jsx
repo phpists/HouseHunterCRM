@@ -42,7 +42,7 @@ export const Subtitle = () => {
         return "Запит об'єкта";
       case "/calls":
         return handleCheckAccess(accessData, "calls", "view")
-          ? `Всього ${callsCount} дзвінків`
+          ? `Всього ${callsCount}`
           : "";
       case "/advertising":
         return "Всього 0 оголошень";

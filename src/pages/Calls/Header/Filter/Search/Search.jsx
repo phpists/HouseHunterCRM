@@ -17,6 +17,7 @@ import { useAppSelect } from "../../../../../hooks/redux";
 import { useGetCompanyStructureLevelQuery } from "../../../../../store/structure/structure.api";
 import { SectionTitle } from "../SectionTitle";
 import { TitleDivider } from "../TitleDivider";
+import { CheckOption } from "../../../../../components/CheckOption";
 
 export const Search = ({
   filters,
@@ -43,6 +44,124 @@ export const Search = ({
 
   return (
     <StyledSearch>
+      <SelectTags
+        label="Джерело"
+        notMultiSelect
+        placeholder="Оберіть"
+        options={[
+          { title: "Телефонія", value: "phone" },
+          { title: "Сайт", value: "site" },
+          { title: "Телеграм", value: "telegram" },
+        ]}
+        onChange={(val) => onChangeActiveType(val)}
+        value={activeType}
+      />
+      <Divider />
+      {activeType === "phone" ? (
+        <SelectTags
+          label="Пошук по типу"
+          tags={[
+            ...filters?.type_call?.map((t) => ({
+              title: callsType
+                ? Object.entries(callsType)?.find(
+                    (c) => c[1]?.id?.toString() === t
+                  )?.[1].name
+                : "-",
+              value: t?.toString(),
+            })),
+          ]}
+          placeholder="Оберіть"
+          onChange={(val, title) => {
+            onChangeFilter(
+              "type_call",
+              filters?.type_call?.find((t) => t === val?.toString())
+                ? filters?.type_call?.filter(
+                    (t) => t?.toString() !== val?.toString()
+                  )
+                : [...filters?.type_call, val?.toString()]
+            );
+          }}
+          options={[
+            ...(callsType
+              ? Object.entries(callsType)
+                  ?.filter((t) => t[0] !== "error")
+                  ?.map((t) => ({
+                    title: t[1]?.name,
+                    value: t[1]?.id?.toString(),
+                  }))
+              : []),
+          ]}
+          showTags
+          hideArrow
+        />
+      ) : activeType === "telegram" ? (
+        <SelectTags
+          label="Пошук по типу"
+          notMultiSelect
+          placeholder="Оберіть"
+          options={telegramTypes}
+          onChange={(val) =>
+            onChangeFilter("type", filters?.type === val ? undefined : val)
+          }
+          value={filters?.type}
+        />
+      ) : activeType === "site" ? (
+        <SelectTags
+          label="Пошук по типу"
+          notMultiSelect
+          placeholder="Оберіть"
+          options={[
+            ...(ordersTypes
+              ? Object.entries(ordersTypes)
+                  ?.filter((t) => t[0] !== "error")
+                  ?.map((t) => ({
+                    title: t[1],
+                    value: t[0]?.toString(),
+                  }))
+              : []),
+          ]}
+          onChange={(val) =>
+            onChangeFilter("type", filters?.type === val ? undefined : val)
+          }
+          value={filters?.type}
+        />
+      ) : null}
+      {activeType && activeType !== "empty" ? (
+        <>
+          <Divider />
+          <SelectTags
+            label="Статус"
+            notMultiSelect
+            options={[
+              { title: "Не опрацьовані", value: "0" },
+              { title: "Опрацьовані", value: "1" },
+            ]}
+            onChange={(val) =>
+              onChangeFilter(
+                "status",
+                filters?.status === val ? undefined : val
+              )
+            }
+            value={filters?.status}
+          />
+          <Divider />
+        </>
+      ) : null}
+      {activeType === "phone" || activeType === "site" ? (
+        <>
+          <CheckOption
+            label="Відсутній в базі"
+            value={filters?.missing_client}
+            onChange={() =>
+              onChangeFilter(
+                "missing_client",
+                filters?.missing_client ? undefined : "1"
+              )
+            }
+          />
+          <Divider />
+        </>
+      ) : null}
       <Field
         label="По ключу"
         placeholder="Почніть писати"
@@ -111,141 +230,6 @@ export const Search = ({
               <Divider />
             </>
           ) : null}
-        </>
-      ) : null}
-      <Divider />
-      <SelectTags
-        label="Статус"
-        notMultiSelect
-        options={[
-          { title: "Не опрацьовані", value: "0" },
-          { title: "Опрацьовані", value: "1" },
-        ]}
-        onChange={(val) =>
-          onChangeFilter("status", filters?.status === val ? undefined : val)
-        }
-        value={filters?.status}
-      />
-      <TitleDivider title="Телефонія" />
-      <ToggleOption
-        label="База Телефонія"
-        value={activeType === "phone"}
-        onChange={() =>
-          onChangeActiveType(activeType === "phone" ? undefined : "phone")
-        }
-      />
-      {activeType === "phone" ? (
-        <>
-          <SelectTags
-            label="Пошук по типу"
-            tags={[
-              ...filters?.type_call?.map((t) => ({
-                title: callsType
-                  ? Object.entries(callsType)?.find(
-                      (c) => c[1]?.id?.toString() === t
-                    )?.[1].name
-                  : "-",
-                value: t?.toString(),
-              })),
-            ]}
-            placeholder="Оберіть"
-            onChange={(val, title) => {
-              onChangeFilter(
-                "type_call",
-                filters?.type_call?.find((t) => t === val?.toString())
-                  ? filters?.type_call?.filter(
-                      (t) => t?.toString() !== val?.toString()
-                    )
-                  : [...filters?.type_call, val?.toString()]
-              );
-            }}
-            options={[
-              ...(callsType
-                ? Object.entries(callsType)
-                    ?.filter((t) => t[0] !== "error")
-                    ?.map((t) => ({
-                      title: t[1]?.name,
-                      value: t[1]?.id?.toString(),
-                    }))
-                : []),
-            ]}
-            showTags
-            hideArrow
-          />
-          <Divider />
-          <ToggleOption
-            label="Відсутній в базі"
-            value={filters?.missing_client}
-            onChange={() =>
-              onChangeFilter(
-                "missing_client",
-                filters?.missing_client ? undefined : "1"
-              )
-            }
-          />
-        </>
-      ) : null}
-      <TitleDivider title="Сайт" />
-      <ToggleOption
-        label="База Сайт"
-        value={activeType === "site"}
-        onChange={() =>
-          onChangeActiveType(activeType === "site" ? undefined : "site")
-        }
-      />
-      {activeType === "site" ? (
-        <>
-          <SelectTags
-            label="Пошук по типу"
-            notMultiSelect
-            placeholder="Оберіть"
-            options={[
-              ...(ordersTypes
-                ? Object.entries(ordersTypes)
-                    ?.filter((t) => t[0] !== "error")
-                    ?.map((t) => ({
-                      title: t[1],
-                      value: t[0]?.toString(),
-                    }))
-                : []),
-            ]}
-            onChange={(val) =>
-              onChangeFilter("type", filters?.type === val ? undefined : val)
-            }
-            value={filters?.type}
-          />
-          <ToggleOption
-            label="Відсутній в базі"
-            value={filters?.missing_client}
-            onChange={() =>
-              onChangeFilter(
-                "missing_client",
-                filters?.missing_client ? undefined : "1"
-              )
-            }
-          />
-        </>
-      ) : null}
-      <TitleDivider title="Телеграм" />
-      <ToggleOption
-        label="База Телеграм"
-        value={activeType === "telegram"}
-        onChange={() =>
-          onChangeActiveType(activeType === "telegram" ? undefined : "telegram")
-        }
-      />
-      {activeType === "telegram" ? (
-        <>
-          <SelectTags
-            label="Пошук по типу"
-            notMultiSelect
-            placeholder="Оберіть"
-            options={telegramTypes}
-            onChange={(val) =>
-              onChangeFilter("type", filters?.type === val ? undefined : val)
-            }
-            value={filters?.type}
-          />
         </>
       ) : null}
     </StyledSearch>

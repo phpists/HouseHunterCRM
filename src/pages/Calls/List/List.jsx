@@ -158,7 +158,19 @@ export const List = ({
         <>
           {orders?.length > 0 && activeType === "site"
             ? orders?.map(
-                ({ comment, dt_order, id, status, type, phone, author }) => (
+                ({
+                  comment,
+                  dt_order,
+                  id,
+                  status,
+                  type,
+                  phone,
+                  author,
+                  permision_level,
+                  first_name,
+                  last_name,
+                  photo,
+                }) => (
                   <CallCard
                     key={id}
                     callType={"Сайт"}
@@ -192,6 +204,9 @@ export const List = ({
                         onSuccess,
                       })
                     }
+                    level={Number(permision_level)}
+                    name={`${first_name ?? ""} ${last_name}`}
+                    photo={photo}
                   />
                 )
               )
@@ -211,6 +226,10 @@ export const List = ({
                   chat_id,
                   status,
                   comment,
+                  permision_level,
+                  first_name,
+                  last_name,
+                  photo,
                 }) => (
                   <CallCard
                     key={id_order}
@@ -250,6 +269,9 @@ export const List = ({
                         onSuccess,
                       })
                     }
+                    level={Number(permision_level)}
+                    name={`${first_name ?? ""} ${last_name}`}
+                    photo={photo}
                   />
                 )
               )}

@@ -31,7 +31,7 @@ const StyledPhoneText = styled.div`
     line-height: 1;
     letter-spacing: 0.22px;
     opacity: 0.4;
-    max-width: 100px;
+    width: 100px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

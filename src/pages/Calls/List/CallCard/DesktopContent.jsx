@@ -45,7 +45,7 @@ export const DesktopContent = ({
   <StyledDesktopContent className="flex items-start clickable">
     <Type
       callType={callType}
-      agentPhone={agentPhone}
+      agentPhone={statusText ?? agentPhone}
       telegram={telegram || xcorp}
     />
     <Divider />
@@ -76,15 +76,13 @@ export const DesktopContent = ({
       viewOnly
       onClick={onEditComment}
     />
-    {telegram || xcorp ? (
+    {/* {telegram || xcorp ? (
       <>
         <Divider /> <Status status={status} type={statusText} />
       </>
-    ) : null}
+    ) : null} */}
     <Divider />
-    {telegram || xcorp ? null : (
-      <Agent name={name} photo={photo} workerLevel={level} />
-    )}
+    <Agent name={name} photo={photo} workerLevel={level} />
     <ShowMore
       status={status}
       onSetStatus={onSetStatus}

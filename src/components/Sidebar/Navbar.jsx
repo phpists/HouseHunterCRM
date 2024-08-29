@@ -64,7 +64,7 @@ export const NavBar = ({ accessData }) => {
           {
             icon: PhoneIcon,
             link: "/calls",
-            title: "Дзвінки",
+            title: "Ліди",
             childrenLinks: [],
           },
         ]

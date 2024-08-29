@@ -6,12 +6,11 @@ export const Type = ({ callType, agentPhone, telegram }) => {
     <StyledType className="clickable">
       <Tag callType={callType} />
       {telegram ? null : (
-        <>
-          {" "}
-          <div className="title clickable">Назва потоку</div>
-          <div className="title clickable">{agentPhone ?? "-"}</div>
-        </>
+        <div className="title clickable">
+          {telegram ? "Тип" : "Назва потоку"}
+        </div>
       )}
+      <div className="title clickable">{agentPhone ?? "-"}</div>
     </StyledType>
   );
 };
@@ -33,7 +32,6 @@ const StyledType = styled.div`
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
-    white-space: nowrap;
   }
 
   @media (max-width: 1399.9px) {

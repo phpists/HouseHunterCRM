@@ -48,7 +48,7 @@ export const Title = () => {
       case "/request":
         return "Створення нового запиту";
       case "/calls":
-        return handleCheckAccess(accessData, "calls", "view") ? "Дзвінки" : "";
+        return handleCheckAccess(accessData, "calls", "view") ? "Ліди" : "";
       case "/advertising":
         return "Реклама";
       case "/advertising-setting":
