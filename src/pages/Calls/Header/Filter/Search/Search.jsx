@@ -214,7 +214,6 @@ export const Search = ({
             }
             value={filters?.type}
           />
-          <Divider />
           <ToggleOption
             label="Відсутній в базі"
             value={filters?.missing_client}

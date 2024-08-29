@@ -139,6 +139,8 @@ const Calls = ({ companyId }) => {
       };
       getTelegramOrders(sendData).then((resp) => {
         const orders = resp?.data?.data ?? [];
+        saveCallsCount(resp?.data?.all_item ?? 0);
+
         setTelegramTypes(
           resp?.data?.type
             ? Object.entries(resp?.data?.type)?.map((v) => ({
@@ -167,7 +169,9 @@ const Calls = ({ companyId }) => {
         const sendData = {
           filters: isFilter.current
             ? {
-                ...filters,
+                ...Object.fromEntries(
+                  Object.entries(filters)?.filter((v) => v[1])
+                ),
                 ...(removePhoneMask(filters?.search_phone)?.length > 0
                   ? [{ search_phone: removePhoneMask(filters?.search_phone) }]
                   : []),
@@ -325,7 +329,14 @@ const Calls = ({ companyId }) => {
       return;
     }
     currentPage.current += 1;
-    activeType === "phone" ? handleGetCalls() : handleGetOrders();
+
+    if (activeType === "phone") {
+      handleGetCalls();
+    }
+
+    if (activeType === "site") {
+      handleGetOrders();
+    }
   };
 
   useEffect(() => {
