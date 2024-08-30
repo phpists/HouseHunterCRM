@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { ReactComponent as CommentIcon } from "../../../../../../assets/images/comment.svg";
+import { handleFormatDate } from "../../../../../../utilits";
 
 export const Dropdown = ({
   callsData,
@@ -8,12 +9,14 @@ export const Dropdown = ({
   onEditHistoryComment,
 }) => (
   <StyledDropdown>
-    {callsData?.map(({ dt_incoming, id, status, comment }, i) => (
-      <div className="item" key={i}>
-        <span>{dt_incoming?.split(" ")[0] ?? "-"}</span>
-        <div className="flex items-center">
-          <span>{dt_incoming?.split(" ")[1] ?? "-"}</span>
-          {/* {changeStatus ? (
+    {callsData
+      ?.sort((a, b) => b?.date - a?.date)
+      ?.map(({ dt_incoming, id, status, comment }, i) => (
+        <div className="item" key={i}>
+          <span>{dt_incoming?.split(" ")[0] ?? "-"}</span>
+          <div className="flex items-center">
+            <span>{dt_incoming?.split(" ")[1] ?? "-"}</span>
+            {/* {changeStatus ? (
             <div className="flex items-center">
               <button
                 onClick={() =>
@@ -25,9 +28,9 @@ export const Dropdown = ({
               <CommentIcon onClick={() => onEditHistoryComment(id, comment)} />
             </div>
           ) : null} */}
+          </div>
         </div>
-      </div>
-    ))}
+      ))}
   </StyledDropdown>
 );
 

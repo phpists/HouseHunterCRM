@@ -562,7 +562,12 @@ const Objects = () => {
         initFiltersObject = {};
       }
 
+      setIsDeleted(initFiltersObject?.show_deleted === "1");
       setFilters({ company_object: initFiltersObject });
+      localStorage.setItem(
+        "objectsLastFilters",
+        JSON.stringify({ company_object: initFiltersObject })
+      );
       filterActive.current = true;
       setUpdateData(true);
     } else if (filterApply === "?showDeadline") {

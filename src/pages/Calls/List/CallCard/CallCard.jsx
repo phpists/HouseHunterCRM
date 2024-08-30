@@ -154,13 +154,15 @@ export const CallCard = ({
                 id: c?.id_order,
                 status: c?.status,
                 comment: c?.comment,
+                date: Number(c.dt_order),
               })) ?? []
             : xcorp
-            ? orderHistory?.data.map((c) => ({
+            ? orderHistory?.data?.map((c) => ({
                 dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
                 id: c?.id,
                 status: c?.status,
                 comment: c?.comment,
+                date: Number(c.dt_order),
               })) ?? []
             : callsData?.data ?? []
         }
@@ -211,13 +213,15 @@ export const CallCard = ({
                 dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
                 comment: c?.comment,
                 id: c?.id_order,
+                date: Number(c.dt_order),
               })) ?? []
             : xcorp
-            ? orderHistory?.data.map((c) => ({
+            ? orderHistory?.data?.map((c) => ({
                 dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
                 id: c?.id,
                 status: c?.status,
                 comment: c?.comment,
+                date: Number(c.dt_order),
               })) ?? []
             : callsData?.data ?? []
         }

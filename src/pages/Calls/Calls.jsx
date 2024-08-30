@@ -252,7 +252,7 @@ const Calls = ({ companyId }) => {
   const handleGetCalls = (isReset) => {
     if (
       ((!isLoading.current && !isAllPages) || isReset) &&
-      activeType === "phone"
+      editActiveType === "phone"
     ) {
       if (isReset) {
         listRef.current.scroll({ top: 0 });
@@ -457,9 +457,10 @@ const Calls = ({ companyId }) => {
       setEditActiveType(undefined);
       localStorage.setItem("callsActiveType", "empty");
     }
-    activeType === "phone"
+
+    editActiveType === "phone"
       ? handleGetCalls(true)
-      : activeType === "site"
+      : editActiveType === "site"
       ? handleGetOrders(true)
       : handleGetgetTelegramOrders();
   };
@@ -492,21 +493,33 @@ const Calls = ({ companyId }) => {
     const filterApply = location?.search?.split("=")[0];
     if (filterApply === "?view") {
       setActiveType("phone");
+      setEditActiveType("phone");
       setFilters({
-        view: "0",
         type_call: [],
         call_my_struct: undefined,
-        status: undefined,
+        status: "0",
+        date_from: Math.floor(getFirstDay(true, true).getTime() / 1000),
+        date_to: Math.floor(new Date().getTime() / 1000),
       });
       setIsDefaultFilterSet(true);
     } else if (filterApply === "?telegram") {
       setActiveType("telegram");
-      setFilters(INIT_FILTERS);
+      setEditActiveType("telegram");
+      setFilters({
+        status: "0",
+        date_from: Math.floor(getFirstDay(true, true).getTime() / 1000),
+        date_to: Math.floor(new Date().getTime() / 1000),
+      });
       setShowTelegram("show");
       setIsDefaultFilterSet(true);
     } else if (filterApply === "?site") {
       setActiveType("site");
-      setFilters(INIT_FILTERS);
+      setEditActiveType("site");
+      setFilters({
+        status: "0",
+        date_from: Math.floor(getFirstDay(true, true).getTime() / 1000),
+        date_to: Math.floor(new Date().getTime() / 1000),
+      });
       setIsDefaultFilterSet(true);
     } else {
       handleGetCalls(true);
@@ -545,19 +558,11 @@ const Calls = ({ companyId }) => {
   };
 
   const handleToggleTelegramOrderStatus = (id) => {
-    setTelegramData(
-      telegramData.map((o) =>
-        o.id_order === id ? { ...o, status: o?.status === "1" ? "0" : "1" } : o
-      )
-    );
+    setTelegramData(telegramData.filter((o) => o.id_order !== id));
   };
 
   const handleToggleOrderStatus = (id) => {
-    setOrders(
-      orders.map((o) =>
-        o.id === id ? { ...o, status: o?.status === "1" ? "0" : "1" } : o
-      )
-    );
+    setOrders(orders.filter((o) => o.id !== id));
   };
 
   return (
