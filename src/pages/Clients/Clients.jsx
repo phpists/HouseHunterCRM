@@ -312,11 +312,15 @@ const Clients = () => {
     dataRef.current = updatedClients;
     setClients(updatedClients);
     const updatedCount = allCount - sendClients?.length;
-    setAllCount(updatedCount);
-    saveClientsCount(updatedCount);
-    allCountRef.current = updatedCount;
-    setSendClients([]);
-    setSelected([]);
+    if (updatedCount === 0) {
+      handleGetClients(true);
+    } else {
+      setAllCount(updatedCount);
+      saveClientsCount(updatedCount);
+      allCountRef.current = updatedCount;
+      setSendClients([]);
+      setSelected([]);
+    }
   };
 
   const handleChangeComment = (comment, id) => {

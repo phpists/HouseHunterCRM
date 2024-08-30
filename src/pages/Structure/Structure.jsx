@@ -62,7 +62,7 @@ const Structure = () => {
     if (level < currentLevel && !infoOpen) {
       const newLevel = 1 + level;
       setLevel(newLevel);
-      navigate(`/structure?level=${newLevel}`);
+      navigate(`/structure?level=${newLevel}&id=${id}`);
       if (newLevel > user?.struct_level + 1) {
         const childrens =
           Object.entries(children)
@@ -72,6 +72,7 @@ const Structure = () => {
         const updatedParents = [...parents];
         updatedParents[newLevel] = childrens;
         setParents(updatedParents);
+        localStorage.setItem("structParent", JSON.stringify(updatedParents));
       }
     }
   };
@@ -124,6 +125,7 @@ const Structure = () => {
           const updatedParents = [...parents];
           updatedParents[level] = childrens;
           setParents(updatedParents);
+          localStorage.setItem("structParent", JSON.stringify(updatedParents));
         }
       }
     });
@@ -137,12 +139,42 @@ const Structure = () => {
     // eslint-disable-next-line
   }, [search]);
 
+  const handleClickChangeLevel = (lvl) => {
+    setLevel(lvl);
+  };
+
+  useEffect(() => {
+    if (search?.length > 0) {
+      const level = search
+        ?.split("&")
+        ?.find((p) => p.includes("?level="))
+        ?.split("=")?.[1];
+      if (level) {
+        setLevel(Number(level));
+        let prevParents = [];
+
+        try {
+          prevParents = JSON.parse(localStorage.getItem("structParent"));
+        } catch {
+          prevParents = [];
+        }
+
+        setParents(prevParents);
+      }
+    }
+  }, []);
+
+  console.log(parents);
   return (
     <StyledStructure className="hide-scroll">
       <Header
         level={level}
         onChangeLevel={(lvl) =>
-          infoOpen ? null : lvl >= user?.struct_level ? setLevel(lvl) : null
+          infoOpen
+            ? null
+            : lvl >= user?.struct_level
+            ? handleClickChangeLevel(lvl)
+            : null
         }
         onRefetchData={refetch}
         showNotStructureWorkers={showNotStructureWorkers}

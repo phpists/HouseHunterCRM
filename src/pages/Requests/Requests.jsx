@@ -475,6 +475,8 @@ const Requests = () => {
       filterActive.current = true;
 
       setFilters({ ...initFiltersObject, ...defaultData });
+      setIsDeleted(initFiltersObject?.show_deleted === "1");
+
       setIsDefaultFiltersSet(true);
     } else if (!!prevFilters && !!checkIsJSON(prevFilters)) {
       filterActive.current = true;
