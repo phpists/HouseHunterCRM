@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { Header } from "./components/Header/Header";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { useGetAccessQuery, useLazyGetUserQuery } from "./store/auth/auth.api";
 import { useActions } from "./hooks/actions";
 import { useAppSelect } from "./hooks/redux";
@@ -45,14 +45,19 @@ export const App = () => {
   const [load, setLoad] = useState(false);
   const { data, refetch } = useGetAccessQuery(null, { skip: !user });
   const { data: companyInfo } = useGetCompanyInfoQuery();
+  const lastToken = useRef(localStorage.getItem("token"));
+  const loadingUser = useRef(false);
 
   useEffect(() => {
     saveAccess(data);
   }, [data]);
 
   const handleGetUserData = (noLoading) => {
+    loadingUser.current = true;
     getProfile().then((resp) => {
       loginUser(resp?.data?.data);
+      lastToken.current = localStorage.getItem("token");
+      loadingUser.current = false;
       if (!noLoading) {
         setLoad(true);
         setTimeout(() => setLoading(false), 1500);
@@ -93,6 +98,15 @@ export const App = () => {
       );
     } // eslint-disable-next-line
   }, [companyInfo]);
+
+  useEffect(() => {
+    window.addEventListener("storage", function (event) {
+      const currentToken = localStorage.getItem("token");
+      if (lastToken.current !== currentToken && !loadingUser.current) {
+        handleGetUserData(true);
+      }
+    });
+  }, []);
 
   const handleRefreshData = () => {
     try {

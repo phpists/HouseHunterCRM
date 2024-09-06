@@ -470,6 +470,7 @@ export const Tags = ({
             {
               ...filters,
               show_deleted: undefined,
+              not_actual: undefined,
               showDeadline: filters?.showDeadline === "1" ? "0" : "1",
             },
             true

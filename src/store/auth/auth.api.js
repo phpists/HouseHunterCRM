@@ -241,6 +241,65 @@ export const auth = createApi({
         }),
       }),
     }),
+    connectRealestateAccount: build.query({
+      query: ({ email, pass }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "connetctAccount",
+          resource: "realestate",
+          email,
+          pass,
+        }),
+      }),
+    }),
+    getRealestateStatus: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "getStatusAccount",
+          resource: "realestate",
+        }),
+      }),
+    }),
+    publishRealestate: build.query({
+      query: ({
+        id_obj,
+        id_account,
+        obl,
+        region,
+        city,
+        letter,
+        house,
+        street,
+        street2,
+        home,
+      }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "publish",
+          resource: "realestate",
+          id_obj,
+          id_account,
+          obl,
+          region,
+          city,
+          letter,
+          house,
+          street,
+          street2,
+          home,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -259,5 +318,12 @@ export const {
   useGetBannersQuery,
   useLazyCheckUserQuery,
   useLazyShowFastFolderQuery,
-  useLazyConnectAccountQuery
+  useLazyConnectAccountQuery,
+  useLazyConnectRealestateAccountQuery,
+  useGetRealestateStatusQuery,
+  useLazyPublishRealestateQuery,
 } = auth;
+
+// useLazyConnectRealestateAccountQuery,
+// useGetRealestateStatusQuery,
+// useLazyPublishRealestateQuery,

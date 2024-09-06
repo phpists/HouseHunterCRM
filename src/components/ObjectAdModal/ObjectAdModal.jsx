@@ -12,15 +12,26 @@ import {
 } from "../../store/objects/objects.api";
 import { handleResponse } from "../../utilits";
 import cogoToast from "cogo-toast";
+import { useLazyPublishRealestateQuery } from "../../store/auth/auth.api";
 
 export const ObjectAdModal = ({ onClose, object }) => {
   const [data, setData] = useState({
     title: "",
     desciption: "",
     id_user_olx: [],
+    id_realstate_users: [],
+    obl: "",
+    region: "",
+    city: "",
+    letter: "",
+    house: "",
+    street: "",
+    street2: "",
+    home: "",
   });
   const [loading, setLoading] = useState(false);
   const [publishObject] = useLazyPublishObjectQuery();
+  const [publishRealestate] = useLazyPublishRealestateQuery();
   const { data: adAAccounts } = useGetStatusAccountQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
@@ -32,6 +43,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
       title: object?.title ?? "",
       description: object?.description?.replaceAll("<br />", "\n") ?? "",
       id_user_olx: [],
+      id_realstate_users: [],
     });
   }, [object]);
 
@@ -76,7 +88,6 @@ export const ObjectAdModal = ({ onClose, object }) => {
             const fields = resp?.data?.fields_validation?.map(
               (f) => commentsToFields?.object[f]
             );
-            console.log("here", resp?.data?.fields_validation, fields);
             cogoToast.error(
               <>
                 {message} {fields?.join(",")}{" "}
@@ -91,6 +102,22 @@ export const ObjectAdModal = ({ onClose, object }) => {
         );
       });
     });
+    data?.id_realstate_users?.forEach((id_account) => {
+      publishRealestate({
+        id_obj: object?.id,
+        id_account,
+        ...data,
+      }).then((resp) => {
+        setLoading(false);
+        handleResponse(resp, () => {
+          onClose();
+          cogoToast.info("Оголошення успішно опубліковано", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+        });
+      });
+    });
   };
 
   return (
@@ -102,7 +129,10 @@ export const ObjectAdModal = ({ onClose, object }) => {
           <Header
             onSubmit={handleSubmit}
             loading={loading}
-            disabled={data?.id_user_olx?.length === 0}
+            disabled={
+              data?.id_user_olx?.length === 0 &&
+              data?.id_realstate_users?.length === 0
+            }
           />
         </div>
         <div className="content">

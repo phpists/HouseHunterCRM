@@ -1,6 +1,13 @@
 import styled from "styled-components";
 
-export const Card = ({ selected, onSelect, last, olxAuth, name }) => (
+export const Card = ({
+  selected,
+  onSelect,
+  last,
+  olxAuth,
+  name,
+  realestateStatus,
+}) => (
   <StyledCard
     className={`flex items-center justify-between ${selected && "active"}`}
     onClick={onSelect}
@@ -15,9 +22,25 @@ export const Card = ({ selected, onSelect, last, olxAuth, name }) => (
       <div className="subtitle">Майданчик</div>
     </div>
     <div className="right">
-      <div className="value ">
+      <div
+        className={`value ${
+          (
+            name === "olx"
+              ? olxAuth
+              : name === "realestate"
+              ? realestateStatus
+              : false
+          )
+            ? "active"
+            : "notActive"
+        }`}
+      >
         {name === "olx"
           ? olxAuth
+            ? "Авторизовано"
+            : "Не авторизовано"
+          : name === "realestate"
+          ? realestateStatus
             ? "Авторизовано"
             : "Не авторизовано"
           : "Не авторизовано"}
@@ -41,6 +64,12 @@ const StyledCard = styled.div`
     letter-spacing: 0.02em;
     text-align: left;
     margin-bottom: 2px;
+    &.notActive {
+      color: red;
+    }
+    &.active {
+      color: var(--green);
+    }
   }
   .subtitle {
     font-size: 11px;

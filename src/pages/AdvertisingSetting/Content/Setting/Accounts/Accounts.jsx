@@ -35,11 +35,15 @@ export const Accounts = ({ accounts, onRefreshAccountsData }) => {
         />
       )}
       <StyledAccounts>
-        {accounts?.map(({ TokenExpires, data }) => (
+        {accounts?.map(({ TokenExpires, data, id, email }) => (
           <Card
-            expireAt={handleFormatDate(Number(TokenExpires) * 1000)}
-            email={data?.email}
-            id={data?.id}
+            expireAt={
+              TokenExpires
+                ? handleFormatDate(Number(TokenExpires) * 1000)
+                : undefined
+            }
+            email={data?.email ?? email}
+            id={data?.id ?? id}
             name={data?.name?.length > 0 ? data?.name : null}
             onDelete={() => handleOpenDeleteConfirm(data?.id)}
           />

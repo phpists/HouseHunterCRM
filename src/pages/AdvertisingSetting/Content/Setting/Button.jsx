@@ -1,7 +1,16 @@
 import styled from "styled-components";
 
-export const Button = ({ title, href }) => (
-  <StyledButton href={href} target="_blank">
+export const Button = ({ title, href, onClick }) => (
+  <StyledButton
+    href={href}
+    target="_blank"
+    onClick={(e) => {
+      if (onClick) {
+        e.preventDefault();
+        onClick();
+      }
+    }}
+  >
     {title}
   </StyledButton>
 );
@@ -23,6 +32,7 @@ const StyledButton = styled.a`
   margin: 3px 0;
   display: block;
   width: max-content;
+  cursor: pointer;
   &:hover {
     color: #2c2c2c;
     background: var(--active-bg);

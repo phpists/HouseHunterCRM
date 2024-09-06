@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Title } from "./Title";
 import { ProfileField } from "../../ProfileField";
+import { RealestateForm } from "./RealestateForm";
 
 export const Info = ({ data, onChange, loading }) => (
   <StyledInfo>
@@ -29,10 +30,14 @@ export const Info = ({ data, onChange, loading }) => (
       alwaysOpen
       readOnly
     />
+    {data?.id_realstate_users?.length > 0 ? (
+      <RealestateForm data={data} onChange={onChange} />
+    ) : null}
   </StyledInfo>
 );
 
 const StyledInfo = styled.div`
+  width: 100%;
   .title {
     margin-bottom: 15px;
   }

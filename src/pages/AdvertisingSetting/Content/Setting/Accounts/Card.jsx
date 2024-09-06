@@ -4,10 +4,12 @@ import { ReactComponent as RemoveIcon } from "../../../../../assets/images/remov
 
 export const Card = ({ expireAt, email, id, name, onDelete }) => (
   <StyledCard className={`flex items-center`}>
-    <div>
-      <div className="value">{expireAt}</div>
-      <div className="subtitle">Авторизація дійсна до</div>
-    </div>
+    {expireAt ? (
+      <div>
+        <div className="value">{expireAt}</div>
+        <div className="subtitle">Авторизація дійсна до</div>
+      </div>
+    ) : null}
     <div>
       <div className="value">{id}</div>
       <div className="subtitle">Id</div>

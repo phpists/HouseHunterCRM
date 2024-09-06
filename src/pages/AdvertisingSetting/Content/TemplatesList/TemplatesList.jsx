@@ -9,6 +9,7 @@ export const TemplatesList = ({
   selectedResources,
   onSelect,
   olxAuth,
+  realestateStatus,
 }) => (
   <StyledTemplatesList>
     {resources?.length > 0 ? (
@@ -22,6 +23,7 @@ export const TemplatesList = ({
               last={i === resources?.length - 1}
               olxAuth={olxAuth}
               name={t?.name}
+              realestateStatus={realestateStatus}
             />
           </React.Fragment>
         ))}

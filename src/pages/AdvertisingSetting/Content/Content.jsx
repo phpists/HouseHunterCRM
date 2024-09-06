@@ -5,6 +5,7 @@ import { Setting } from "./Setting/Setting";
 import { useGetStatusAccountQuery } from "../../../store/objects/objects.api";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { useGetRealestateStatusQuery } from "../../../store/auth/auth.api";
 
 export const Content = ({
   resources,
@@ -15,11 +16,15 @@ export const Content = ({
 }) => {
   const location = useLocation();
   const { data: status, refetch } = useGetStatusAccountQuery();
+  const { data: realestateStatus, refetch: refetchRealestateStatus } =
+    useGetRealestateStatusQuery();
 
   useEffect(() => {
     status && refetch();
+    realestateStatus && refetchRealestateStatus();
   }, [location]);
 
+  console.log(realestateStatus);
   return (
     <StyledContent selectedTemplate={selectedResources}>
       <div>
@@ -29,6 +34,7 @@ export const Content = ({
           selectedResources={selectedResources}
           onSelect={onSelect}
           olxAuth={!!status?.accounts?.[0]?.data?.id}
+          realestateStatus={realestateStatus?.data?.length > 0}
         />
       </div>
       {selectedResources ? (
@@ -40,6 +46,8 @@ export const Content = ({
             onCreate={onCreate}
             olxAccounts={status?.accounts}
             onRefreshAccountsData={refetch}
+            onRefetchRealestateStatus={refetchRealestateStatus}
+            realestateAccounts={realestateStatus?.data}
           />
         </div>
       ) : null}
