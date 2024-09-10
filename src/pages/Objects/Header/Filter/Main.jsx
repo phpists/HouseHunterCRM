@@ -426,6 +426,8 @@ export const Main = ({
         allObjectsWorker
         publicAccess
         onlyNotmyClient
+        notCommentAndTags
+        showTagsObjarray
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
       />

@@ -8,12 +8,12 @@ import { useGetRealestateStatusQuery } from "../../../../store/auth/auth.api";
 
 export const List = ({ data, onChange }) => {
   const { data: accounts } = useGetStatusAccountQuery();
-  //   const { data: realestateAccounts } = useGetRealestateStatusQuery();
+  const { data: realestateAccounts } = useGetRealestateStatusQuery();
 
   return (
     <StyledList>
       {(accounts?.accounts?.length === 0 || !accounts?.accounts) &&
-      []?.length === 0 ? (
+      realestateAccounts?.data?.length === 0 ? (
         <div className="empty">
           <span>Потрібно</span>
           <Link to="/advertising-setting">авторизуватись</Link>
@@ -42,24 +42,24 @@ export const List = ({ data, onChange }) => {
             />
           ))
         : null}
-      {/* {realestateAccounts?.data?.length > 0
-        ? realestateAccounts?.data?.map(({ id, email }, i) => (
+      {realestateAccounts?.data?.length > 0
+        ? realestateAccounts?.data?.map(({ id_account, email }, i) => (
             <Card
               key={i}
               icon={realstateIcon}
-              title={email ?? id}
+              title={email ?? id_account}
               onClick={() =>
                 onChange(
                   "id_realstate_users",
-                  data?.id_realstate_users?.includes(id)
-                    ? data?.id_realstate_users.filter((i) => i !== id)
-                    : [...data?.id_realstate_users, id]
+                  data?.id_realstate_users?.includes(id_account)
+                    ? data?.id_realstate_users.filter((i) => i !== id_account)
+                    : [...data?.id_realstate_users, id_account]
                 )
               }
-              active={data?.id_realstate_users?.includes(id)}
+              active={data?.id_realstate_users?.includes(id_account)}
             />
           ))
-        : null} */}
+        : null}
     </StyledList>
   );
 };

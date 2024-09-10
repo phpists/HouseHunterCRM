@@ -90,7 +90,6 @@ export const Statistic = ({ onClick, statisticData, id }) => {
             value: statisticData?.count_request_overdue ?? "0",
             link: handleRenderLink("requests?findWorker", {
               id_worker_Search: id,
-              not_actual: "1",
               showDeadline: "1",
             }),
           },

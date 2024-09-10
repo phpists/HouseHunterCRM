@@ -20,7 +20,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
     desciption: "",
     id_user_olx: [],
     id_realstate_users: [],
-    obl: "",
+    obl: "1",
     region: "",
     city: "",
     letter: "",
@@ -35,8 +35,8 @@ export const ObjectAdModal = ({ onClose, object }) => {
   const { data: adAAccounts } = useGetStatusAccountQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
-  const handleChangeField = (field, value) =>
-    setData({ ...data, [field]: value });
+  const handleChangeField = (field, value, changeAll) =>
+    setData(changeAll ? value : { ...data, [field]: value });
 
   useEffect(() => {
     setData({
@@ -44,6 +44,14 @@ export const ObjectAdModal = ({ onClose, object }) => {
       description: object?.description?.replaceAll("<br />", "\n") ?? "",
       id_user_olx: [],
       id_realstate_users: [],
+      obl: "1",
+      region: "",
+      city: "",
+      letter: "",
+      house: "",
+      street: "",
+      street2: "",
+      home: "",
     });
   }, [object]);
 

@@ -38,7 +38,7 @@ export const Setting = ({
         </div>
       ) : data?.id === "4" ? (
         <div className="fields">
-          {/* <Button
+          <Button
             title="Додати акаунт"
             onClick={() => setAddRealstateAccount(true)}
           />
@@ -48,7 +48,7 @@ export const Setting = ({
               id: a.id_account,
             }))}
             onRefreshAccountsData={onRefreshAccountsData}
-          /> */}
+          />
         </div>
       ) : null}
       {/* <Field label="Назва" value="Реклама OLX test" />

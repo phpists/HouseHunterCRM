@@ -1,7 +1,11 @@
 import { styled } from "styled-components";
 import { TitleDivider } from "./TitleDivider";
 import { CheckOption } from "../CheckOption";
-import { useGetSourcesQuery } from "../../store/objects/objects.api";
+import {
+  useGetCommentsToFieldsQuery,
+  useGetSourcesQuery,
+  useGetTagsListQuery,
+} from "../../store/objects/objects.api";
 import { useEffect, useState } from "react";
 import { Period } from "./Period/Period";
 import { Divider } from "./Divider";
@@ -49,6 +53,8 @@ export const Base = ({
   allObjectsWorker,
   publicAccess,
   onlyNotmyClient,
+  notCommentAndTags,
+  showTagsObjarray,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -62,6 +68,8 @@ export const Base = ({
   const [mlsBase, setMlsBase] = useState(!!data.mls_object || mlsBaseOpen);
   const { data: workers } = useGetWorkerMyStructureQuery();
   const { data: sources } = useGetSourcesQuery();
+  const { data: tagsList } = useGetTagsListQuery({ only_notepad: "0" });
+  const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
   useEffect(() => {
     setMlsBase(mlsBaseOpen);
@@ -155,6 +163,19 @@ export const Base = ({
             invert_company: newValue,
           }
     );
+  };
+
+  const handleChangeShowTagsObjarray = (val) => {
+    const prevValue = Array.isArray(data?.street_base_object?.showTagsObj)
+      ? data?.street_base_object?.showTagsObj
+      : [];
+
+    onChange("street_base_object", {
+      ...data?.street_base_object,
+      showTagsObj: prevValue?.find((t) => t === val?.toString())
+        ? prevValue?.filter((t) => t?.toString() !== val?.toString())
+        : [...prevValue, val?.toString()],
+    });
   };
 
   return (
@@ -552,6 +573,46 @@ export const Base = ({
                       : "1",
                 })
               }
+            />
+          ) : null}
+          {notCommentAndTags ? (
+            <CheckOption
+              label="Об'єкти без коментарів та тегів"
+              className="check-opt"
+              value={data?.street_base_object?.notCommentAndTags}
+              onChange={() =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  notCommentAndTags:
+                    data?.street_base_object?.notCommentAndTags === "1"
+                      ? undefined
+                      : "1",
+                })
+              }
+            />
+          ) : null}
+          {showTagsObjarray ? (
+            <SelectTags
+              label="Пошук по тегам"
+              className="mb-2"
+              placeholder="Оберіть"
+              options={tagsList?.data
+                ?.map((value, i) => ({
+                  title: commentsToFields?.object[value] ?? "",
+                  value: 1 + i,
+                }))
+                ?.filter((opt) => opt?.title?.length > 0)}
+              tags={
+                Array.isArray(data?.street_base_object?.showTagsObj)
+                  ? data?.street_base_object?.showTagsObj?.map((t) => ({
+                      title:
+                        commentsToFields?.object[tagsList?.data?.[t]] ?? "-",
+                      value: t?.toString(),
+                    }))
+                  : []
+              }
+              onChange={handleChangeShowTagsObjarray}
+              showTags
             />
           ) : null}
           {countObjectOwner ? (

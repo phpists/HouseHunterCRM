@@ -283,20 +283,95 @@ export const auth = createApi({
         url: "",
         method: "POST",
         headers: headers(),
+        body: handleToFormData(
+          {
+            mod: "publication",
+            action: "publish",
+            resource: "realestate",
+            id_obj,
+            id_account,
+            obl,
+            region,
+            city,
+            letter,
+            house,
+            street,
+            street2,
+            home,
+          },
+          [],
+          true,
+          true
+        ),
+      }),
+    }),
+    getRegions: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
         body: handleToFormData({
           mod: "publication",
-          action: "publish",
+          action: "getRegions",
           resource: "realestate",
-          id_obj,
-          id_account,
-          obl,
-          region,
-          city,
-          letter,
-          house,
-          street,
-          street2,
-          home,
+        }),
+      }),
+    }),
+    getCities: build.query({
+      query: (id_region) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "getCities",
+          resource: "realestate",
+          id_region,
+        }),
+      }),
+    }),
+    getLetterStreet: build.query({
+      query: (city_id) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "getLetterStreet",
+          resource: "realestate",
+          city_id,
+        }),
+      }),
+    }),
+    getStreet: build.query({
+      query: ({ city_id, letter }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData(
+          {
+            mod: "publication",
+            action: "getStreet",
+            resource: "realestate",
+            city_id,
+            letter,
+          },
+          [],
+          true,
+          true
+        ),
+      }),
+    }),
+    getHouseNumber: build.query({
+      query: (street_id) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "getHouseNumber",
+          resource: "realestate",
+          street_id,
         }),
       }),
     }),
@@ -322,8 +397,9 @@ export const {
   useLazyConnectRealestateAccountQuery,
   useGetRealestateStatusQuery,
   useLazyPublishRealestateQuery,
+  useGetRegionsQuery,
+  useLazyGetCitiesQuery,
+  useLazyGetLetterStreetQuery,
+  useLazyGetStreetQuery,
+  useLazyGetHouseNumberQuery,
 } = auth;
-
-// useLazyConnectRealestateAccountQuery,
-// useGetRealestateStatusQuery,
-// useLazyPublishRealestateQuery,
