@@ -19,10 +19,11 @@ import cogoToast from "cogo-toast";
 import {
   useGetListAddsPublichQuery,
   useLazyDeleteAdQuery,
+  useLazyGetListAddsPublichQuery,
 } from "../../store/objects/objects.api";
 
 const Advertising = () => {
-  const { data, refetch } = useGetListAddsPublichQuery();
+  const [getListAdds, { data }] = useLazyGetListAddsPublichQuery();
   const [favoritesFilter, setFavoritesFilter] = useState(false);
   const [selected, setSelected] = useState([]);
   const { saveClientsCount } = useActions();
@@ -161,6 +162,9 @@ const Advertising = () => {
     // }
   };
 
+  const handleGetAdds = () => {
+    getListAdds(filter?.filters?.resource ?? "1");
+  };
   const handleSelectClient = (id) => {
     const isExist = selected.find((w) => w === id);
     setSelected(
@@ -170,7 +174,7 @@ const Advertising = () => {
 
   useEffect(() => {
     handleGetClients();
-    data && refetch();
+    data && handleGetAdds();
     // eslint-disable-next-line
   }, []);
 
@@ -205,6 +209,8 @@ const Advertising = () => {
       setIsAllPages(false);
       setFilter({ search_key: "", search_phone: "" });
       localStorage.removeItem("clientsFilters");
+    } else {
+      handleGetAdds();
     }
     handleGetClients(true, isApply);
     setIsDeleted(isApply ? filter?.filters?.show_deleted : false);
@@ -222,7 +228,7 @@ const Advertising = () => {
           hideAfter: 3,
           position: "top-right",
         });
-        refetch();
+        handleGetAdds();
       });
     });
   };
@@ -303,7 +309,7 @@ const Advertising = () => {
   };
 
   const handleDeleteAds = (ids, isSelected) => {
-    refetch();
+    handleGetAdds();
     isSelected && setSelected([]);
   };
 

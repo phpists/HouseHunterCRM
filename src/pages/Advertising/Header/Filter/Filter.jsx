@@ -82,42 +82,41 @@ export const Filter = ({
   };
 
   const handleGetTotal = () => {
-    const sendData = {
-      current_page: 0,
-      item_on_page: 50,
-      show_favorite: favoritesFilter ? "1" : undefined,
-      search_phone_code:
-        removePhoneMask(filter.search_phone)?.length > 0
-          ? searchPhoneCode
-          : undefined,
-      search_phone:
-        removePhoneMask(filter.search_phone)?.length > 0
-          ? removePhoneMask(filter.search_phone)
-          : undefined,
-      search_key: filter.search_key,
-      my_struct: filter.my_struct,
-      filters: {
-        ...filter.filters,
-        dt_reg_from: filter?.filters?.dt_reg_from
-          ? handleFormatFilterDate(filter?.filters?.dt_reg_from, true)
-          : undefined,
-        dt_reg_to: filter?.filters?.dt_reg_to
-          ? handleFormatFilterDate(filter?.filters?.dt_reg_to)
-          : undefined,
-        findPhone:
-          filter?.filters?.findPhone?.length > 0
-            ? filter?.filters?.findPhone
-                ?.replaceAll("-", "")
-                ?.replace("(", "")
-                ?.replace(")", "")
-                ?.replaceAll("_", "")
-            : null,
-      },
-    };
-
-    getClients({ ...sendData, only_count_item: "1" }).then((resp) =>
-      setTotal(resp?.data?.all_item ?? 0)
-    );
+    // const sendData = {
+    //   current_page: 0,
+    //   item_on_page: 50,
+    //   show_favorite: favoritesFilter ? "1" : undefined,
+    //   search_phone_code:
+    //     removePhoneMask(filter.search_phone)?.length > 0
+    //       ? searchPhoneCode
+    //       : undefined,
+    //   search_phone:
+    //     removePhoneMask(filter.search_phone)?.length > 0
+    //       ? removePhoneMask(filter.search_phone)
+    //       : undefined,
+    //   search_key: filter.search_key,
+    //   my_struct: filter.my_struct,
+    //   filters: {
+    //     ...filter.filters,
+    //     dt_reg_from: filter?.filters?.dt_reg_from
+    //       ? handleFormatFilterDate(filter?.filters?.dt_reg_from, true)
+    //       : undefined,
+    //     dt_reg_to: filter?.filters?.dt_reg_to
+    //       ? handleFormatFilterDate(filter?.filters?.dt_reg_to)
+    //       : undefined,
+    //     findPhone:
+    //       filter?.filters?.findPhone?.length > 0
+    //         ? filter?.filters?.findPhone
+    //             ?.replaceAll("-", "")
+    //             ?.replace("(", "")
+    //             ?.replace(")", "")
+    //             ?.replaceAll("_", "")
+    //         : null,
+    //   },
+    // };
+    // getClients({ ...sendData, only_count_item: "1" }).then((resp) =>
+    //   setTotal(resp?.data?.all_item ?? 0)
+    // );
   };
 
   useEffect(() => {

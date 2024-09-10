@@ -509,14 +509,14 @@ export const objects = createApi({
       }),
     }),
     getListAddsPublich: build.query({
-      query: () => ({
+      query: (resource = "1") => ({
         url: "",
         method: "POST",
         headers: headers(),
         body: handleToFormData({
           action: "getListAddsPublich",
           mod: "publication",
-          resource: "1",
+          resource,
         }),
       }),
     }),
@@ -616,6 +616,7 @@ export const {
   useGetAdverstionResourceQuery,
   useGetStatusAccountQuery,
   useGetListAddsPublichQuery,
+  useLazyGetListAddsPublichQuery,
   useLazyPublishObjectQuery,
   useLazyDeleteAdQuery,
   useLazyDeleteAdAccountQuery,

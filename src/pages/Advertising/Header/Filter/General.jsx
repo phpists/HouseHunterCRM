@@ -11,6 +11,7 @@ import { useAppSelect } from "../../../../hooks/redux";
 import { useGetCompanyStructureLevelQuery } from "../../../../store/structure/structure.api";
 import { useGetWorkerMyStructureQuery } from "../../../../store/calls/calls.api";
 import { SelectTags } from "../../../../components/SelectTags/SelectTags";
+import { useGetAdverstionResourceQuery } from "../../../../store/objects/objects.api";
 
 export const General = ({
   filter,
@@ -26,9 +27,30 @@ export const General = ({
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
   const { data: workers } = useGetWorkerMyStructureQuery();
+  const { data: adverstionResources } = useGetAdverstionResourceQuery();
 
   return (
     <StyledGeneral>
+      <SelectTags
+        label="Ресурс"
+        placeholder="Оберіть працівника"
+        options={
+          adverstionResources?.resource?.map((v) => ({
+            title: v?.name,
+            value: v?.id,
+          })) ?? []
+        }
+        value={filter?.filters?.resource}
+        onChange={(val) =>
+          onChangeFilter("filters", {
+            ...filter.filters,
+            resource: val === filter?.filters?.resource ? undefined : val,
+          })
+        }
+        isSearch
+        notMultiSelect
+      />
+      <Divider />
       <ProfileField
         label="Пошук"
         placeholder="Введіть значення..."

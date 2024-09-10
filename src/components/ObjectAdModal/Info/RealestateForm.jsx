@@ -105,7 +105,7 @@ export const RealestateForm = ({ data, onChange }) => {
   return (
     <StyledRealestateForm>
       <Select
-        label="Адреса"
+        label="Район"
         options={
           regions?.data?.map(({ id_region, name }) => ({
             title: name,
@@ -159,9 +159,9 @@ export const RealestateForm = ({ data, onChange }) => {
           <Select
             label="Номер будинку"
             options={
-              houseNumbers?.data?.map(({ id_city, name }) => ({
+              houseNumbers?.data?.map(({ id_house, name }) => ({
                 title: name,
-                value: id_city,
+                value: id_house,
               })) ?? []
             }
             value={data?.house}
