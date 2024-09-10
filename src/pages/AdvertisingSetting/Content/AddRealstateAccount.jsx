@@ -47,6 +47,7 @@ export const AddRealstateAccount = ({ onClose, onSuccess }) => {
           alwaysOpen
           initOpen
           className="field"
+          type="password"
         />
         <button
           className="submit-btn"

@@ -37,7 +37,7 @@ export const RealestateForm = ({ data, onChange }) => {
       "region",
       {
         ...data,
-        region: handleGetValueById(regions?.data, val, "id_region")?.name,
+        region: val,
         obl: val === "1" ? "1" : "2",
         city: "",
         letter: "",
@@ -56,7 +56,7 @@ export const RealestateForm = ({ data, onChange }) => {
       "region",
       {
         ...data,
-        city: handleGetValueById(cities?.data, val, "id_city")?.name,
+        city: val,
         letter: "",
         house: "",
         street: "",
@@ -91,7 +91,7 @@ export const RealestateForm = ({ data, onChange }) => {
       {
         ...data,
         house: "",
-        street: handleGetValueById(streets?.data, val, "id_street")?.name,
+        street: val,
         home: "",
         street2: "",
       },
@@ -100,11 +100,7 @@ export const RealestateForm = ({ data, onChange }) => {
     getHouseNumber(val);
   };
 
-  const handleChangeHouse = (val) =>
-    onChange(
-      "house",
-      handleGetValueById(houseNumbers?.data, val, "id_house")?.name
-    );
+  const handleChangeHouse = (val) => onChange("house", val);
 
   return (
     <StyledRealestateForm>
@@ -116,10 +112,9 @@ export const RealestateForm = ({ data, onChange }) => {
             value: id_region,
           })) ?? []
         }
-        value={
-          handleGetValueById(regions?.data, data?.region, "name")?.id_region
-        }
+        value={data?.region}
         onChange={handleChangeRegion}
+        isSearch
       />
       <Select
         label="Місто"
@@ -129,8 +124,9 @@ export const RealestateForm = ({ data, onChange }) => {
             value: id_city,
           })) ?? []
         }
-        value={handleGetValueById(cities?.data, data?.city, "name")?.id_city}
+        value={data?.city}
         onChange={handleChangeCity}
+        isSearch
       />
       {letters?.data?.length > 0 ? (
         <>
@@ -145,6 +141,7 @@ export const RealestateForm = ({ data, onChange }) => {
               }
               value={data?.letter}
               onChange={handleChangeLetter}
+              isSearch
             />
             <Select
               label="Вулиця"
@@ -154,11 +151,9 @@ export const RealestateForm = ({ data, onChange }) => {
                   value: id_street,
                 })) ?? []
               }
-              value={
-                handleGetValueById(streets?.data, data?.street, "name")
-                  ?.id_street
-              }
+              value={data?.street}
               onChange={handleChangeStreet}
+              isSearch
             />
           </div>
           <Select
@@ -169,10 +164,7 @@ export const RealestateForm = ({ data, onChange }) => {
                 value: id_city,
               })) ?? []
             }
-            value={
-              handleGetValueById(houseNumbers?.data, data?.house, "name")
-                ?.id_house
-            }
+            value={data?.house}
             onChange={handleChangeHouse}
           />
         </>

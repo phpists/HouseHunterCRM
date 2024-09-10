@@ -599,7 +599,7 @@ export const Base = ({
               options={tagsList?.data
                 ?.map((value, i) => ({
                   title: commentsToFields?.object[value] ?? "",
-                  value: 1 + i,
+                  value: i,
                 }))
                 ?.filter((opt) => opt?.title?.length > 0)}
               tags={

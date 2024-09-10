@@ -138,8 +138,14 @@ export const ObjectAdModal = ({ onClose, object }) => {
             onSubmit={handleSubmit}
             loading={loading}
             disabled={
-              data?.id_user_olx?.length === 0 &&
-              data?.id_realstate_users?.length === 0
+              (data?.id_user_olx?.length === 0 &&
+                data?.id_realstate_users?.length === 0) ||
+              (data?.id_realstate_users?.length > 0
+                ? data?.region?.length === 0 ||
+                  data?.city?.length === 0 ||
+                  (data?.house?.length === 0 && data?.home?.length === 0) ||
+                  (data?.street?.length === 0 && data?.street2?.length === 0)
+                : true)
             }
           />
         </div>
