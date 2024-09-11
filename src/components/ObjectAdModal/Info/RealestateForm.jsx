@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Select } from "../../Select/Select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { handleGetRegion } from "../../../api/realeState";
 import {
   useGetRegionsQuery,
@@ -20,7 +20,7 @@ import { ProfileField } from "../../ProfileField";
 // street2: "",
 // home: "",
 
-export const RealestateForm = ({ data, onChange }) => {
+export const RealestateForm = ({ data, onChange, onChangeCitiesCount }) => {
   const { data: regions } = useGetRegionsQuery();
   const [getCities, { data: cities }] = useLazyGetCitiesQuery();
   const [getLetters, { data: letters }] = useLazyGetLetterStreetQuery();
@@ -101,6 +101,10 @@ export const RealestateForm = ({ data, onChange }) => {
   };
 
   const handleChangeHouse = (val) => onChange("house", val);
+
+  useEffect(() => {
+    onChangeCitiesCount(cities?.data?.length);
+  }, [cities]);
 
   return (
     <StyledRealestateForm>

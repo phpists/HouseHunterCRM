@@ -34,9 +34,12 @@ export const ObjectAdModal = ({ onClose, object }) => {
   const [publishRealestate] = useLazyPublishRealestateQuery();
   const { data: adAAccounts } = useGetStatusAccountQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
+  const [citiesCount, setCitiesCount] = useState(0);
 
   const handleChangeField = (field, value, changeAll) =>
     setData(changeAll ? value : { ...data, [field]: value });
+
+  const handleChangeCitiesCount = (val) => setCitiesCount(val);
 
   useEffect(() => {
     setData({
@@ -142,7 +145,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
                 data?.id_realstate_users?.length === 0) ||
               (data?.id_realstate_users?.length > 0
                 ? data?.region?.length === 0 ||
-                  data?.city?.length === 0 ||
+                  (data?.city?.length === 0 && citiesCount > 0) ||
                   (data?.house?.length === 0 && data?.home?.length === 0) ||
                   (data?.street?.length === 0 && data?.street2?.length === 0)
                 : true)
@@ -151,7 +154,11 @@ export const ObjectAdModal = ({ onClose, object }) => {
         </div>
         <div className="content">
           <Platforms data={data} onChange={handleChangeField} />
-          <Info data={data} onChange={handleChangeField} />
+          <Info
+            data={data}
+            onChange={handleChangeField}
+            onChangeCitiesCount={handleChangeCitiesCount}
+          />
         </div>
       </div>
     </StyledObjectAdModal>

@@ -33,9 +33,16 @@ export const List = ({ data, onChange }) => {
               onClick={() =>
                 onChange(
                   "id_user_olx",
-                  data?.id_user_olx?.includes(account?.data?.id)
-                    ? data?.id_user_olx.filter((id) => id !== account?.data?.id)
-                    : [...data?.id_user_olx, account?.data?.id]
+                  {
+                    ...data,
+                    id_user_olx: data?.id_user_olx?.includes(account?.data?.id)
+                      ? data?.id_user_olx.filter(
+                          (id) => id !== account?.data?.id
+                        )
+                      : [...data?.id_user_olx, account?.data?.id],
+                    id_realstate_users: [],
+                  },
+                  true
                 )
               }
               active={data?.id_user_olx?.includes(account?.data?.id)}
@@ -50,10 +57,17 @@ export const List = ({ data, onChange }) => {
               title={email ?? id_account}
               onClick={() =>
                 onChange(
-                  "id_realstate_users",
-                  data?.id_realstate_users?.includes(id_account)
-                    ? data?.id_realstate_users.filter((i) => i !== id_account)
-                    : [...data?.id_realstate_users, id_account]
+                  "id_user_olx",
+                  {
+                    ...data,
+                    id_user_olx: [],
+                    id_realstate_users: data?.id_realstate_users?.includes(
+                      id_account
+                    )
+                      ? data?.id_realstate_users.filter((i) => i !== id_account)
+                      : [...data?.id_realstate_users, id_account],
+                  },
+                  true
                 )
               }
               active={data?.id_realstate_users?.includes(id_account)}
