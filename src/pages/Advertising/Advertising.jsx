@@ -64,7 +64,6 @@ const Advertising = () => {
   const [isDeleted, setIsDeleted] = useState(filter?.filters?.show_deleted);
   const [removeObjectREalstate] = useLazyRemoveObjectRealestateQuery();
   const { data: realestateStatus } = useGetRealestateStatusQuery();
-
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
 

@@ -3,9 +3,15 @@ import { Title } from "./Title";
 import { ProfileField } from "../../ProfileField";
 import { RealestateForm } from "./RealestateForm";
 
-export const Info = ({ data, onChange, loading, onChangeCitiesCount }) => (
+export const Info = ({
+  data,
+  onChange,
+  loading,
+  onChangeCitiesCount,
+  activeTab,
+}) => (
   <StyledInfo>
-    {data?.id_realstate_users?.length > 0 ? (
+    {activeTab === 1 ? (
       <>
         {" "}
         <Title />
@@ -15,7 +21,7 @@ export const Info = ({ data, onChange, loading, onChangeCitiesCount }) => (
           onChangeCitiesCount={onChangeCitiesCount}
         />
       </>
-    ) : data?.id_user_olx?.length > 0 ? (
+    ) : activeTab === 0 ? (
       <>
         <Title />
         <ProfileField

@@ -1,10 +1,15 @@
 import styled from "styled-components";
 import { CheckOption } from "../../../CheckOption";
 
-export const Card = ({ icon, title, active, onClick }) => (
-  <StyledCard icon={icon} onClick={onClick}>
-    <CheckOption onlyCheck small value={active ? "1" : "0"} />
-    <div className="card-content flex items-center">
+export const Card = ({ icon, title, active, onClick, onChangeActiveTab }) => (
+  <StyledCard icon={icon}>
+    <CheckOption
+      onlyCheck
+      small
+      value={active ? "1" : "0"}
+      onChange={onClick}
+    />
+    <div className="card-content flex items-center" onClick={onChangeActiveTab}>
       <div></div>
       <span>{title}</span>
     </div>

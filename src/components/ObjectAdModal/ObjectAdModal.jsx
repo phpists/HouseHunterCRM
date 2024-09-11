@@ -35,11 +35,13 @@ export const ObjectAdModal = ({ onClose, object }) => {
   const { data: adAAccounts } = useGetStatusAccountQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [citiesCount, setCitiesCount] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
 
   const handleChangeField = (field, value, changeAll) =>
     setData(changeAll ? value : { ...data, [field]: value });
 
   const handleChangeCitiesCount = (val) => setCitiesCount(val);
+  const handleChangeActiveTab = (val) => setActiveTab(val);
 
   useEffect(() => {
     setData({
@@ -153,11 +155,16 @@ export const ObjectAdModal = ({ onClose, object }) => {
           />
         </div>
         <div className="content">
-          <Platforms data={data} onChange={handleChangeField} />
+          <Platforms
+            data={data}
+            onChange={handleChangeField}
+            onChangeActiveTab={handleChangeActiveTab}
+          />
           <Info
             data={data}
             onChange={handleChangeField}
             onChangeCitiesCount={handleChangeCitiesCount}
+            activeTab={activeTab}
           />
         </div>
       </div>

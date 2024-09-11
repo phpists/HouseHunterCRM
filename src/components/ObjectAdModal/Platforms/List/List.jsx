@@ -6,7 +6,7 @@ import { useGetStatusAccountQuery } from "../../../../store/objects/objects.api"
 import { Link } from "react-router-dom";
 import { useGetRealestateStatusQuery } from "../../../../store/auth/auth.api";
 
-export const List = ({ data, onChange }) => {
+export const List = ({ data, onChange, onChangeActiveTab }) => {
   const { data: accounts } = useGetStatusAccountQuery();
   const { data: realestateAccounts } = useGetRealestateStatusQuery();
 
@@ -33,18 +33,12 @@ export const List = ({ data, onChange }) => {
               onClick={() =>
                 onChange(
                   "id_user_olx",
-                  {
-                    ...data,
-                    id_user_olx: data?.id_user_olx?.includes(account?.data?.id)
-                      ? data?.id_user_olx.filter(
-                          (id) => id !== account?.data?.id
-                        )
-                      : [...data?.id_user_olx, account?.data?.id],
-                    id_realstate_users: [],
-                  },
-                  true
+                  data?.id_user_olx?.includes(account?.data?.id)
+                    ? data?.id_user_olx.filter((id) => id !== account?.data?.id)
+                    : [...data?.id_user_olx, account?.data?.id]
                 )
               }
+              onChangeActiveTab={() => onChangeActiveTab(0)}
               active={data?.id_user_olx?.includes(account?.data?.id)}
             />
           ))
@@ -57,19 +51,13 @@ export const List = ({ data, onChange }) => {
               title={email ?? id_account}
               onClick={() =>
                 onChange(
-                  "id_user_olx",
-                  {
-                    ...data,
-                    id_user_olx: [],
-                    id_realstate_users: data?.id_realstate_users?.includes(
-                      id_account
-                    )
-                      ? data?.id_realstate_users.filter((i) => i !== id_account)
-                      : [...data?.id_realstate_users, id_account],
-                  },
-                  true
+                  "id_realstate_users",
+                  data?.id_realstate_users?.includes(id_account)
+                    ? data?.id_realstate_users.filter((i) => i !== id_account)
+                    : [...data?.id_realstate_users, id_account]
                 )
               }
+              onChangeActiveTab={() => onChangeActiveTab(1)}
               active={data?.id_realstate_users?.includes(id_account)}
             />
           ))
