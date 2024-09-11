@@ -116,18 +116,20 @@ export const RealestateForm = ({ data, onChange }) => {
         onChange={handleChangeRegion}
         isSearch
       />
-      <Select
-        label="Місто"
-        options={
-          cities?.data?.map(({ id_city, name }) => ({
-            title: name,
-            value: id_city,
-          })) ?? []
-        }
-        value={data?.city}
-        onChange={handleChangeCity}
-        isSearch
-      />
+      {cities?.data?.length > 0 ? (
+        <Select
+          label="Місто"
+          options={
+            cities?.data?.map(({ id_city, name }) => ({
+              title: name,
+              value: id_city,
+            })) ?? []
+          }
+          value={data?.city}
+          onChange={handleChangeCity}
+          isSearch
+        />
+      ) : null}
       {letters?.data?.length > 0 ? (
         <>
           <div className="fields-group">

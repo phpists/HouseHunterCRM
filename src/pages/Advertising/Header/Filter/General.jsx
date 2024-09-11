@@ -33,7 +33,7 @@ export const General = ({
     <StyledGeneral>
       <SelectTags
         label="Ресурс"
-        placeholder="Оберіть працівника"
+        placeholder="Оберіть ресурс"
         options={
           adverstionResources?.resource?.map((v) => ({
             title: v?.name,
@@ -50,7 +50,7 @@ export const General = ({
         isSearch
         notMultiSelect
       />
-      <Divider />
+      {/* <Divider />
       <ProfileField
         label="Пошук"
         placeholder="Введіть значення..."
@@ -200,7 +200,7 @@ export const General = ({
               filter?.filters?.show_deleted === "1" ? undefined : "1",
           })
         }
-      />
+      /> */}
     </StyledGeneral>
   );
 };

@@ -375,6 +375,46 @@ export const auth = createApi({
         }),
       }),
     }),
+    removeObjectRealestate: build.query({
+      query: ({ id_account, id_obj }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "removeObject",
+          resource: "realestate",
+          id_account,
+          id_obj,
+        }),
+      }),
+    }),
+    removeAccountRealestate: build.query({
+      query: (id_account) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "removeAccount",
+          resource: "realestate",
+          id_account,
+        }),
+      }),
+    }),
+    deleteAccountOlx: build.query({
+      query: (id_user_olx) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "deleteAccount",
+          resource: "olx",
+          id_user_olx,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -402,4 +442,7 @@ export const {
   useLazyGetLetterStreetQuery,
   useLazyGetStreetQuery,
   useLazyGetHouseNumberQuery,
+  useLazyRemoveObjectRealestateQuery,
+  useLazyDeleteAccountOlxQuery,
+  useLazyRemoveAccountRealestateQuery,
 } = auth;

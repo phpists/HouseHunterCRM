@@ -17,6 +17,7 @@ export const Card = ({
   img,
   onDelete,
   urlResource,
+  resource,
 }) => {
   const handleClick = (e) => {
     e.target.classList.contains("card") && onSelect();
@@ -45,6 +46,7 @@ export const Card = ({
               olxInfo?.data?.email ??
               olxInfo?.data?.id
             }
+            resource={resource}
           />
           {/* <Divider />
           <Agent /> */}

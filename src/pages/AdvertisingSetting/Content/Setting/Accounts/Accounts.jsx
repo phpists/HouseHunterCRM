@@ -1,27 +1,16 @@
 import styled from "styled-components";
 import { Card } from "./Card";
-import { handleFormatDate, handleResponse } from "../../../../../utilits";
+import { handleFormatDate } from "../../../../../utilits";
 import { useState } from "react";
 import { Confirm } from "../../../../../components/Confirm/Confirm";
-import { useLazyDeleteAdAccountQuery } from "../../../../../store/objects/objects.api";
-import cogoToast from "cogo-toast";
 
-export const Accounts = ({ accounts, onRefreshAccountsData }) => {
+export const Accounts = ({ accounts, onRefreshAccountsData, onDelete }) => {
   const [deleteConfirm, setDeleteConfirm] = useState(false);
-  const [deleteAdAccount] = useLazyDeleteAdAccountQuery();
 
   const handleOpenDeleteConfirm = (id) => setDeleteConfirm(id);
 
   const handleDelete = () => {
-    deleteAdAccount(deleteConfirm).then((resp) =>
-      handleResponse(resp, () => {
-        onRefreshAccountsData();
-        cogoToast.success("Акаунт успішно видалено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-      })
-    );
+    onDelete(deleteConfirm);
     setDeleteConfirm(null);
   };
 
@@ -45,7 +34,7 @@ export const Accounts = ({ accounts, onRefreshAccountsData }) => {
             email={data?.email ?? email}
             id={data?.id ?? id}
             name={data?.name?.length > 0 ? data?.name : null}
-            onDelete={() => handleOpenDeleteConfirm(data?.id)}
+            onDelete={() => handleOpenDeleteConfirm(data?.id ?? id)}
           />
         ))}
       </StyledAccounts>

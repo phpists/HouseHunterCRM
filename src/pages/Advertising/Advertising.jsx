@@ -21,6 +21,10 @@ import {
   useLazyDeleteAdQuery,
   useLazyGetListAddsPublichQuery,
 } from "../../store/objects/objects.api";
+import {
+  useGetRealestateStatusQuery,
+  useLazyRemoveObjectRealestateQuery,
+} from "../../store/auth/auth.api";
 
 const Advertising = () => {
   const [getListAdds, { data }] = useLazyGetListAddsPublichQuery();
@@ -33,7 +37,7 @@ const Advertising = () => {
   const isLoading = useRef(false);
   const listRef = useRef();
   const [isAllPages, setIsAllPages] = useState(false);
-  const prevClientsFilters = localStorage.getItem("clientsFilters");
+  const prevClientsFilters = localStorage.getItem("advertisingFilters");
   const [filter, setFilter] = useState(
     !!prevClientsFilters && !!JSON.parse(prevClientsFilters)
       ? JSON.parse(prevClientsFilters)
@@ -58,6 +62,8 @@ const Advertising = () => {
   const isFirstRender = useRef(true);
   const isFirstRequest = useRef(true);
   const [isDeleted, setIsDeleted] = useState(filter?.filters?.show_deleted);
+  const [removeObjectREalstate] = useLazyRemoveObjectRealestateQuery();
+  const { data: realestateStatus } = useGetRealestateStatusQuery();
 
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
@@ -72,96 +78,7 @@ const Advertising = () => {
     return date?.getTime() / 1000;
   };
 
-  const handleGetClients = (isReset, isFilter) => {
-    // if ((!isLoading.current && !isAllPages) || isReset) {
-    //   isLoading.current = true;
-    //   if (isReset) {
-    //     setIsAllPages(false);
-    //     listRef.current.scroll({ top: 0 });
-    //     setClients([]);
-    //     setSelected([]);
-    //     currentPage.current = 0;
-    //     dataRef.current = [];
-    //     allCountRef.current = 0;
-    //   }
-    //   setLoading(true);
-    //   const sendData = {
-    //     current_page: currentPage.current,
-    //     item_on_page: 50,
-    //     show_favorite: favoritesFilter ? "1" : undefined,
-    //     search_phone_code: isFilters.current ? searchPhoneCode : undefined,
-    //     search_phone: isFilters.current
-    //       ? filter.search_phone
-    //           ?.replaceAll("-", "")
-    //           ?.replace("(", "")
-    //           ?.replace(")", "")
-    //           ?.replaceAll("_", "")
-    //       : undefined,
-    //     search_key: isFilters.current ? filter.search_key : undefined,
-    //     my_struct: isFilters.current ? filter.my_struct : undefined,
-    //     ...(isFilters.current
-    //       ? {
-    //           filters: {
-    //             ...filter.filters,
-    //             dt_reg_from: filter?.filters?.dt_reg_from
-    //               ? handleFormatFilterDate(filter?.filters?.dt_reg_from, true)
-    //               : undefined,
-    //             dt_reg_to: filter?.filters?.dt_reg_to
-    //               ? handleFormatFilterDate(filter?.filters?.dt_reg_to)
-    //               : undefined,
-    //             findPhone:
-    //               filter?.filters?.findPhone?.length > 0
-    //                 ? filter?.filters?.findPhone
-    //                     ?.replaceAll("-", "")
-    //                     ?.replace("(", "")
-    //                     ?.replace(")", "")
-    //                     ?.replaceAll("_", "")
-    //                 : null,
-    //           },
-    //         }
-    //       : []),
-    //   };
-    //   if (isFirstRequest.current || !isFilter) {
-    //     isFirstRequest.current = false;
-    //     getClients({ ...sendData, only_count_item: "1" }).then((resp) =>
-    //       saveClientsCount(resp?.data?.all_item ?? 0)
-    //     );
-    //   }
-    //   getClients(sendData).then((resp) => {
-    //     isLoading.current = false;
-    //     setLoading(false);
-    //     // firstThousand.current = resp?.data?.data?.first_1000;
-    //     handleResponse(
-    //       resp,
-    //       () => {
-    //         if (resp?.data?.error === 0 && resp?.data.data?.clients?.length) {
-    //           const respItemsCount = resp?.data?.data?.clients?.length;
-    //           const updatedCount = isReset
-    //             ? respItemsCount
-    //             : allCountRef.current + respItemsCount;
-    //           allCountRef.current = updatedCount;
-    //           setAllCount(updatedCount ?? 0);
-    //           const updatedClients = isReset
-    //             ? resp?.data?.data?.clients
-    //             : [...dataRef.current, ...resp?.data.data?.clients];
-    //           dataRef.current = updatedClients;
-    //           setClients(updatedClients);
-    //         }
-    //       },
-    //       () => {
-    //         setIsAllPages(true);
-    //         if (isReset) {
-    //           setAllCount(0);
-    //           setClients([]);
-    //           dataRef.current = [];
-    //           allCountRef.current = 0;
-    //         }
-    //       }
-    //     );
-    //   });
-    // }
-  };
-
+  console.log(filter?.filters?.resource);
   const handleGetAdds = () => {
     getListAdds(filter?.filters?.resource ?? "1");
   };
@@ -173,7 +90,7 @@ const Advertising = () => {
   };
 
   useEffect(() => {
-    handleGetClients();
+    // handleGetClients();
     data && handleGetAdds();
     // eslint-disable-next-line
   }, []);
@@ -187,32 +104,22 @@ const Advertising = () => {
       return;
     }
     currentPage.current += 1;
-    handleGetClients();
+    // handleGetClients();
   };
-
-  //   useEffect(() => {
-  //     if (listRef.current) {
-  //       listRef.current.addEventListener("scroll", handleScroll);
-  //       return () =>
-  //         listRef.current &&
-  //         // eslint-disable-next-line
-  //         listRef.current.removeEventListener("scroll", handleScroll);
-  //     }
-  //     // eslint-disable-next-line
-  //   }, [listRef, isLoading.current, isAllPages, clients]);
 
   const handleApplyFilters = (isApply) => {
     isFilters.current = isApply;
-    isApply && localStorage.setItem("clientsFilters", JSON.stringify(filter));
+    isApply &&
+      localStorage.setItem("advertisingFilters", JSON.stringify(filter));
     if (!isApply) {
       currentPage.current = 0;
       setIsAllPages(false);
       setFilter({ search_key: "", search_phone: "" });
-      localStorage.removeItem("clientsFilters");
+      localStorage.removeItem("advertisingFilters");
     } else {
       handleGetAdds();
     }
-    handleGetClients(true, isApply);
+    // handleGetClients(true, isApply);
     setIsDeleted(isApply ? filter?.filters?.show_deleted : false);
   };
 
@@ -221,16 +128,37 @@ const Advertising = () => {
     setSelected(isReset ? [] : ids);
   };
 
-  const handleDeleteAd = ({ id_user_olx, id_ad_in_source }) => {
-    deleteAd({ id_user_olx, id_obj: id_ad_in_source }).then((resp) => {
-      handleResponse(resp, () => {
-        cogoToast.success("Оголошення успішно видалено", {
-          hideAfter: 3,
-          position: "top-right",
+  const handleDeleteAd = ({
+    id_user_olx,
+    id_ad_in_source,
+    id_account,
+    id_obj,
+    realstate,
+  }) => {
+    if (realstate) {
+      removeObjectREalstate({
+        id_account: realestateStatus?.data?.[0]?.id_account,
+        id_obj,
+      }).then((resp) => {
+        handleResponse(resp, () => {
+          cogoToast.success("Оголошення успішно видалено", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          handleGetAdds();
         });
-        handleGetAdds();
       });
-    });
+    } else {
+      deleteAd({ id_user_olx, id_obj: id_ad_in_source }).then((resp) => {
+        handleResponse(resp, () => {
+          cogoToast.success("Оголошення успішно видалено", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          handleGetAdds();
+        });
+      });
+    }
   };
 
   useEffect(() => {
@@ -239,7 +167,7 @@ const Advertising = () => {
       setIsAllPages(false);
       handleApplyFilters(false);
       isFilters.current = false;
-      handleGetClients(true);
+      //   handleGetClients(true);
     } else {
       isFirstRender.current = false;
     }
@@ -318,7 +246,8 @@ const Advertising = () => {
       <Header
         favoritesFilter={favoritesFilter}
         onToggleFavoriteFilter={() => setFavoritesFilter(!favoritesFilter)}
-        onRefreshData={() => handleGetClients(true)}
+        // onRefreshData={() => handleGetClients(true)}
+        onRefreshData={() => null}
         selectedCount={selected.length}
         filter={filter}
         onChangeFilter={handleChangeFilter}
@@ -335,6 +264,7 @@ const Advertising = () => {
         onChangeActionLoading={(val) => setActionLoading(val)}
         isDeleted={isDeleted}
         data={data?.data ?? []}
+        realstateAccountId={realestateStatus?.data?.[0]?.id_account}
       />
       <List
         data={data?.data ?? []}

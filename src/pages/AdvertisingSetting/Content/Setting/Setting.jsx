@@ -5,6 +5,12 @@ import { useAppSelect } from "../../../../hooks/redux";
 import { Accounts } from "./Accounts/Accounts";
 import { useState } from "react";
 import { AddRealstateAccount } from "../AddRealstateAccount";
+import {
+  useLazyDeleteAccountOlxQuery,
+  useLazyRemoveAccountRealestateQuery,
+} from "../../../../store/auth/auth.api";
+import { handleResponse } from "../../../../utilits";
+import cogoToast from "cogo-toast";
 
 export const Setting = ({
   data,
@@ -15,6 +21,29 @@ export const Setting = ({
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const [addRealstateAccount, setAddRealstateAccount] = useState(false);
+  const [removeRealstateAccount] = useLazyRemoveAccountRealestateQuery();
+  const [removeOlxAccount] = useLazyDeleteAccountOlxQuery();
+
+  const handleDeleteSuccess = (type) => {
+    cogoToast.success("Акаунт успішно видалено", {
+      hideAfter: 3,
+      position: "top-right",
+    });
+
+    type === "olx" ? onRefreshAccountsData() : onRefetchRealestateStatus();
+  };
+
+  const handleDeleteAccount = (id, type) => {
+    if (type === "olx") {
+      removeOlxAccount(id).then((resp) =>
+        handleResponse(resp, () => handleDeleteSuccess(type))
+      );
+    } else {
+      removeRealstateAccount(id).then((resp) =>
+        handleResponse(resp, () => handleDeleteSuccess(type))
+      );
+    }
+  };
 
   return (
     <StyledSetting className="content-card">
@@ -34,6 +63,7 @@ export const Setting = ({
           <Accounts
             accounts={olxAccounts}
             onRefreshAccountsData={onRefreshAccountsData}
+            onDelete={(id) => handleDeleteAccount(id, "olx")}
           />
         </div>
       ) : data?.id === "4" ? (
@@ -48,6 +78,7 @@ export const Setting = ({
               id: a.id_account,
             }))}
             onRefreshAccountsData={onRefreshAccountsData}
+            onDelete={(id) => handleDeleteAccount(id, "realstate")}
           />
         </div>
       ) : null}

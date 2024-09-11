@@ -11,6 +11,7 @@ import cogoToast from "cogo-toast";
 import { handleCheckAccess, handleResponse } from "../../../utilits";
 import { useNavigate } from "react-router-dom";
 import { useLazyDeleteAdQuery } from "../../../store/objects/objects.api";
+import { useLazyRemoveObjectRealestateQuery } from "../../../store/auth/auth.api";
 
 export const Header = ({
   favoritesFilter,
@@ -32,8 +33,10 @@ export const Header = ({
   onChangeActionLoading,
   isDeleted,
   data,
+  realstateAccountId,
 }) => {
   const [deleteAd] = useLazyDeleteAdQuery();
+  const [removeObjectRealstate] = useLazyRemoveObjectRealestateQuery();
   const { accessData, user } = useAppSelect((state) => state.auth);
   const [confirmText, setConfimText] = useState("");
 
@@ -43,8 +46,14 @@ export const Header = ({
         selected?.includes(a?.id_ad_in_source)
       );
       Promise.all(
-        selectedAds?.map(({ id_user_olx, id_ad_in_source }) =>
-          deleteAd({ id_user_olx, id_obj: id_ad_in_source })
+        selectedAds?.map(
+          ({ id_user_olx, id_ad_in_source, id_resource, id_account, id_obj }) =>
+            id_resource === "4"
+              ? removeObjectRealstate({
+                  id_account: realstateAccountId,
+                  id_obj,
+                })
+              : deleteAd({ id_user_olx, id_obj: id_ad_in_source })
         )
       ).then((resp) => {
         onDelete();
@@ -75,11 +84,11 @@ export const Header = ({
           allCount={allCount}
           onSelectAll={onSelectAll}
           onDelete={handleDeleteAds}
-          deleteConfirmTitle={`Оголошення видалиться на ОЛХ та з історії публікацій. Видалити оголошення?`}
+          deleteConfirmTitle={`Оголошення видалиться з історії публікацій. Видалити оголошення?`}
         />
       </div>
       <SelectItems
-        deleteConfirmTitle={`Оголошення видалиться на ОЛХ та з історії публікацій. Видалити оголошення?`}
+        deleteConfirmTitle={`Оголошення видалиться з історії публікацій. Видалити оголошення?`}
         title="оголошень"
         className="select-wrapper-mobile"
         selectedCount={selectedCount}

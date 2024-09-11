@@ -152,8 +152,8 @@ export const Filter = ({
           />
         </div>
         <div className="total">
-          Знайдено -{" "}
-          {loading ? <Loader white className="totalLoader" /> : total}
+          {/* Знайдено -{" "}
+          {loading ? <Loader white className="totalLoader" /> : total} */}
         </div>
         <Footer onReset={handleResetFilters} onSubmit={handleApply} />
       </StyledFilter>

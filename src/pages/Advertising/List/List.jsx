@@ -38,7 +38,7 @@ export const List = ({
       {deleteModal && (
         <Confirm
           title={
-            "Оголошення видалиться на ОЛХ та з історії публікацій. Видалити оголошення?"
+            "Оголошення видалиться з історії публікацій. Видалити оголошення?"
           }
           onSubmit={handleDelete}
           onClose={() => setDeleteModal(null)}
@@ -72,6 +72,8 @@ export const List = ({
                 title,
                 id_rubric,
                 id_ad_in_source,
+                id_account,
+                id_obj,
               },
               i
             ) => (
@@ -79,7 +81,7 @@ export const List = ({
                 key={i}
                 selected={!!selected.find((s) => s === id_ad_in_source)}
                 onSelect={() => onSelect(id_ad_in_source)}
-                id_resource={id_resource}
+                resource={id_resource}
                 status={status}
                 publicateDate={dt_publicate}
                 olxInfo={accounts?.accounts?.find(
@@ -89,7 +91,13 @@ export const List = ({
                 rubricId={id_rubric}
                 img={img}
                 onDelete={() =>
-                  handleOpenDeleteModal({ id_user_olx, id_ad_in_source })
+                  handleOpenDeleteModal({
+                    id_user_olx,
+                    id_ad_in_source,
+                    id_account,
+                    id_obj,
+                    realstate: id_resource === "4",
+                  })
                 }
                 urlResource={url_resource}
               />
