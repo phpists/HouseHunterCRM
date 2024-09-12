@@ -33,12 +33,13 @@ export const RealestateForm = ({ data, onChange, onChangeCitiesCount }) => {
       : undefined;
 
   const handleChangeRegion = (val) => {
+    const LVIV = ["18", "19", "20", "21", "22", "23", "24", "25", "26"];
     onChange(
       "region",
       {
         ...data,
         region: val,
-        obl: val === "1" ? "1" : "2",
+        obl: val === "1" || LVIV.includes(val) ? "1" : "2",
         city: "",
         letter: "",
         house: "",
@@ -104,6 +105,9 @@ export const RealestateForm = ({ data, onChange, onChangeCitiesCount }) => {
 
   useEffect(() => {
     onChangeCitiesCount(cities?.data?.length);
+    if (cities?.data?.length === 0 && data?.region) {
+      getLetters("0");
+    }
   }, [cities]);
 
   return (
@@ -162,17 +166,19 @@ export const RealestateForm = ({ data, onChange, onChangeCitiesCount }) => {
               isSearch
             />
           </div>
-          <Select
-            label="Номер будинку"
-            options={
-              houseNumbers?.data?.map(({ id_house, name }) => ({
-                title: name,
-                value: id_house,
-              })) ?? []
-            }
-            value={data?.house}
-            onChange={handleChangeHouse}
-          />
+          {houseNumbers?.data?.length > 0 ? (
+            <Select
+              label="Номер будинку"
+              options={
+                houseNumbers?.data?.map(({ id_house, name }) => ({
+                  title: name,
+                  value: id_house,
+                })) ?? []
+              }
+              value={data?.house}
+              onChange={handleChangeHouse}
+            />
+          ) : null}
         </>
       ) : (
         <div className="fields-group">
