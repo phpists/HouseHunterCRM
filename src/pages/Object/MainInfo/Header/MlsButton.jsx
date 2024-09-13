@@ -1,14 +1,30 @@
 import styled from "styled-components";
+import icon from "../../../../assets/images/BiRocket.svg";
+import { ObjectAdModal } from "../../../../components/ObjectAdModal/ObjectAdModal";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
-export const MlsButton = ({ value, onChange, visible }) => (
-  <StyledMlsButton
-    className={`${value && "active"}`}
-    onClick={onChange}
-    visible={visible}
-  >
-    MLS
-  </StyledMlsButton>
-);
+export const MlsButton = ({ value, onChange, visible }) => {
+  const { pathname } = useLocation();
+  const IS_AD = pathname?.includes("edit-ad");
+  const [modal, setModal] = useState(false);
+
+  return (
+    <>
+      {" "}
+      {modal ? (
+        <ObjectAdModal onClose={() => setModal(null)} object={modal} />
+      ) : null}
+      <StyledMlsButton
+        className={`${(value || IS_AD) && "active"}`}
+        onClick={IS_AD ? () => setModal(true) : () => onChange()}
+        visible={visible}
+      >
+        {IS_AD ? <img src={icon} alt="" /> : "MLS"}
+      </StyledMlsButton>
+    </>
+  );
+};
 
 const StyledMlsButton = styled.button`
   display: flex;

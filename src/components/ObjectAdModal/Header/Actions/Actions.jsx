@@ -1,16 +1,24 @@
 import styled from "styled-components";
 import { SubmitButton } from "./SubmitButton";
-import { CancelButton } from "./CancelButton";
+import { OutlineButton } from "./OutlineButton";
+import { ReactComponent as RemoveIcon } from "../../../../assets/images/remove.svg";
+import { IconButton } from "../../../IconButton";
 
 export const Actions = ({ onSubmit, loading, disabled }) => (
   <StyledActions className="flex items-center">
     <SubmitButton onClick={onSubmit} loading={loading} disabled={disabled} />
-    {/* <CancelButton disabled={loading} /> */}
+    <OutlineButton title="Запланувати" disabled={loading} />
+    <OutlineButton title="Зупинити" disabled={loading} />
+    <IconButton Icon={RemoveIcon} onClick={() => null} className="icon-btn" />
   </StyledActions>
 );
 
 const StyledActions = styled.div`
   gap: 10px;
+  .icon-btn {
+    height: 38px;
+    width: 38px;
+  }
   @media (max-width: 800px) {
     width: 100%;
     button {

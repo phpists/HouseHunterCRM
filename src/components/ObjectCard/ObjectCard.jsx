@@ -43,6 +43,7 @@ export const ObjectCard = memo(
     onAdvertise,
     onAdvertiseTelegram,
     telegramAdLoader,
+    ad,
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
     const { ref, inView } = useInView({ triggerOnce: window.innerWidth < 801 });
@@ -109,6 +110,7 @@ export const ObjectCard = memo(
             onFastSelection={onFastSelection}
             onAdvertise={onAdvertise}
             onAdvertiseTelegram={onAdvertiseTelegram}
+            ad={ad}
           />
         ) : (
           <MobileContent
@@ -146,6 +148,7 @@ export const ObjectCard = memo(
             onFastSelection={onFastSelection}
             onAdvertise={onAdvertise}
             onAdvertiseTelegram={onAdvertiseTelegram}
+            ad={ad}
           />
         )}
       </StyledObjectCard>

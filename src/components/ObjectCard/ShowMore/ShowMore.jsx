@@ -29,6 +29,7 @@ export const ShowMore = ({
   onFastSelection,
   onAdvertise,
   onAdvertiseTelegram,
+  ad,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -81,6 +82,7 @@ export const ShowMore = ({
         onFastSelection={onFastSelection}
         onAdvertise={onAdvertise}
         onAdvertiseTelegram={onAdvertiseTelegram}
+        ad={ad}
       />
     </StyledShowMore>
   );

@@ -45,6 +45,7 @@ export const MobileContent = ({
   onFastSelection,
   onAdvertise,
   onAdvertiseTelegram,
+  ad,
 }) => (
   <StyledMobileContent className="clickable">
     <Header data={data} />
@@ -77,6 +78,7 @@ export const MobileContent = ({
       onChangeComment={onChangeComment}
       selections={selections}
       onChangeTags={onChangeTags}
+      ad={ad}
     />
     <Contacts
       data={data}
@@ -111,6 +113,7 @@ export const MobileContent = ({
       onFastSelection={onFastSelection}
       onAdvertise={onAdvertise}
       onAdvertiseTelegram={onAdvertiseTelegram}
+      ad={ad}
     />
   </StyledMobileContent>
 );

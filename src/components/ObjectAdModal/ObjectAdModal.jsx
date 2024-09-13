@@ -35,12 +35,14 @@ export const ObjectAdModal = ({ onClose, object }) => {
   const { data: adAAccounts } = useGetStatusAccountQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [citiesCount, setCitiesCount] = useState(0);
+  const [streetsCount, setStreetsCount] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
 
   const handleChangeField = (field, value, changeAll) =>
     setData(changeAll ? value : { ...data, [field]: value });
 
   const handleChangeCitiesCount = (val) => setCitiesCount(val);
+  const handleChangeStreetsCount = (val) => setStreetsCount(val);
   const handleChangeActiveTab = (val) => setActiveTab(val);
 
   useEffect(() => {
@@ -145,11 +147,12 @@ export const ObjectAdModal = ({ onClose, object }) => {
             disabled={
               (data?.id_user_olx?.length === 0 &&
                 data?.id_realstate_users?.length === 0) ||
-              (data?.id_realstate_users?.length > 0
+              (data?.id_realstate_users?.length === 0
+                ? false
+                : data?.id_realstate_users?.length > 0
                 ? data?.region?.length === 0 ||
                   (data?.city?.length === 0 && citiesCount > 0) ||
-                  (data?.house?.length === 0 && data?.home?.length === 0) ||
-                  (data?.street?.length === 0 && data?.street2?.length === 0)
+                  (data?.street?.length === 0 && streetsCount > 0)
                 : true)
             }
           />
@@ -165,6 +168,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
             onChange={handleChangeField}
             onChangeCitiesCount={handleChangeCitiesCount}
             activeTab={activeTab}
+            onChangeStreetsCount={handleChangeStreetsCount}
           />
         </div>
       </div>
@@ -189,7 +193,7 @@ const StyledObjectAdModal = styled.div`
     padding: 40px;
     border-radius: 10px;
     width: 96svw;
-    max-width: 750px;
+    max-width: 1000px;
     position: relative;
   }
   .content {
@@ -202,6 +206,12 @@ const StyledObjectAdModal = styled.div`
         flex-direction: column;
         gap: 10px;
       }
+    }
+  }
+  @media (max-width: 800px) {
+    .header-modal-ad {
+      flex-direction: column;
+      gap: 10px;
     }
   }
 `;

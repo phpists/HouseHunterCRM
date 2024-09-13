@@ -1,7 +1,8 @@
 import { styled } from "styled-components";
 
-export const Label = ({ label }) => (
+export const Label = ({ label, required }) => (
   <StyledLabel className="selectLabel-wrapper">
+    {required ? <span className="required">*</span> : null}
     <span className="label">{label}</span>
   </StyledLabel>
 );
@@ -17,5 +18,10 @@ const StyledLabel = styled.div`
     line-height: normal;
     letter-spacing: 0.22px;
     opacity: 0.4;
+  }
+  .required {
+    margin-right: 5px;
+    color: red;
+    font-size: 12px;
   }
 `;

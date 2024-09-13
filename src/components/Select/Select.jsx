@@ -22,6 +22,7 @@ export const Select = ({
   isSearch,
   onOpen,
   editValue,
+  required,
 }) => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
@@ -111,7 +112,7 @@ export const Select = ({
                     placeholder={placeholder}
                   />
                 )}
-                {open ? null : <Label label={label} />}
+                {open ? null : <Label label={label} required={required} />}
               </div>
             </div>
             <button

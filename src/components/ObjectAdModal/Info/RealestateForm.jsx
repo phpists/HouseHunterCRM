@@ -20,7 +20,12 @@ import { ProfileField } from "../../ProfileField";
 // street2: "",
 // home: "",
 
-export const RealestateForm = ({ data, onChange, onChangeCitiesCount }) => {
+export const RealestateForm = ({
+  data,
+  onChange,
+  onChangeCitiesCount,
+  onChangeStreetsCount,
+}) => {
   const { data: regions } = useGetRegionsQuery();
   const [getCities, { data: cities }] = useLazyGetCitiesQuery();
   const [getLetters, { data: letters }] = useLazyGetLetterStreetQuery();
@@ -39,7 +44,7 @@ export const RealestateForm = ({ data, onChange, onChangeCitiesCount }) => {
       {
         ...data,
         region: val,
-        obl: val === "1" || LVIV.includes(val) ? "1" : "2",
+        obl: LVIV.includes(val) ? "1" : "2",
         city: "",
         letter: "",
         house: "",
@@ -110,6 +115,10 @@ export const RealestateForm = ({ data, onChange, onChangeCitiesCount }) => {
     }
   }, [cities]);
 
+  useEffect(() => {
+    onChangeStreetsCount(streets?.data?.length);
+  }, [streets]);
+
   return (
     <StyledRealestateForm>
       <Select
@@ -123,6 +132,7 @@ export const RealestateForm = ({ data, onChange, onChangeCitiesCount }) => {
         value={data?.region}
         onChange={handleChangeRegion}
         isSearch
+        required
       />
       {cities?.data?.length > 0 ? (
         <Select
@@ -136,6 +146,7 @@ export const RealestateForm = ({ data, onChange, onChangeCitiesCount }) => {
           value={data?.city}
           onChange={handleChangeCity}
           isSearch
+          required
         />
       ) : null}
       {letters?.data?.length > 0 ? (
@@ -152,6 +163,7 @@ export const RealestateForm = ({ data, onChange, onChangeCitiesCount }) => {
               value={data?.letter}
               onChange={handleChangeLetter}
               isSearch
+              required
             />
             <Select
               label="Вулиця"
@@ -164,6 +176,7 @@ export const RealestateForm = ({ data, onChange, onChangeCitiesCount }) => {
               value={data?.street}
               onChange={handleChangeStreet}
               isSearch
+              required
             />
           </div>
           {houseNumbers?.data?.length > 0 ? (

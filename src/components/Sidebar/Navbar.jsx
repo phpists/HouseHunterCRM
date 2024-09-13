@@ -7,6 +7,7 @@ import { ReactComponent as MarketIcon } from "../../assets/images/market.svg";
 import { ReactComponent as CalendarIcon } from "../../assets/images/calendar.svg";
 import { ReactComponent as CopyIcon } from "../../assets/images/copy.svg";
 import { ReactComponent as PhoneIcon } from "../../assets/images/phone-menu.svg";
+import { ReactComponent as RocketIcon } from "../../assets/images/BiRocket.svg";
 import { NavBarItem } from "./NavBarItem";
 import { handleCheckAccess } from "../../utilits";
 import { useAppSelect } from "../../hooks/redux";
@@ -79,19 +80,29 @@ export const NavBar = ({ accessData }) => {
           },
         ]
       : []),
-
-    ,
+    ...(XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash)
+      ? [
+          {
+            icon: RocketIcon,
+            link: "/ad",
+            title: "Реклама 2",
+            childrenLinks: ["edit-ad"],
+            className: "red",
+          },
+        ]
+      : []),
   ];
 
   return (
     <StyledNavBar>
-      {LINKS.map(({ icon, link, title, childrenLinks = [] }, i) => (
+      {LINKS.map(({ icon, link, title, childrenLinks = [], className }, i) => (
         <NavBarItem
           key={i}
           Icon={icon}
           link={link}
           title={title}
           childrenLinks={childrenLinks}
+          className={className}
         />
       ))}
     </StyledNavBar>

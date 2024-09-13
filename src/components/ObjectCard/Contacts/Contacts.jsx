@@ -39,6 +39,19 @@ export const Contacts = ({
 
   return (
     <StyledContacts className={`hide-scroll clickable ${className}`}>
+      <Contact
+        type="rieltor"
+        name={data?.clients_inf?.contact?.owner?.name}
+        phones={
+          data?.clients_inf?.contact?.owner?.phone
+            ? data?.clients_inf?.contact?.owner?.phone
+            : data?.clients_inf?.contact?.owner?.phones
+        }
+        typeText="Реклама"
+        error={error}
+        onShow={handleShowClient}
+        className="mb-4"
+      />
       {data?.clients_inf?.contact?.owner &&
       data?.clients_inf?.contact?.owner?.phone ? (
         <Contact
@@ -96,6 +109,7 @@ const StyledContacts = styled.div`
   height: max-content;
   width: 230px;
   overflow: auto;
+  max-height: 200px;
   .show-client {
     padding: 5px 10px 6px;
   }
@@ -124,7 +138,7 @@ const StyledContacts = styled.div`
   @media (max-width: 500px) {
     grid-template-columns: 1fr;
     .mb-4 {
-        margin: 0;
+      margin: 0;
     }
   }
 `;

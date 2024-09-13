@@ -51,6 +51,8 @@ export const Title = () => {
         return handleCheckAccess(accessData, "calls", "view") ? "Ліди" : "";
       case "/advertising":
         return "Реклама";
+      case "/ad":
+        return "Реклама 2";
       case "/advertising-setting":
         return "Реклама";
       default:
@@ -61,6 +63,8 @@ export const Title = () => {
           ? "Картка запиту"
           : pathname.split("/")[1] === "create-object" ||
             pathname.split("/")[1] === "edit-object"
+          ? "Картка об’єкта"
+          : pathname.split("/")[1] === "edit-ad"
           ? "Картка об’єкта"
           : pathname.split("/")[1] === "selections"
           ? selectionName ?? "Підбірки"

@@ -12,6 +12,7 @@ import { handleFormatDate, handleResponse } from "../../../utilits";
 import { Comment } from "./Comment";
 import { TAGS, SELECTION_TAGS } from "../../../constants";
 import { useParams } from "react-router-dom";
+import { AdTags } from "./AdTags/AdTags";
 
 export const Tags = ({
   className,
@@ -20,6 +21,7 @@ export const Tags = ({
   onChangeComment,
   selections,
   onChangeTags,
+  ad,
 }) => {
   const { id } = useParams();
   const { data: tagsList } = useGetTagsListQuery({ only_notepad: "1" });
@@ -166,33 +168,40 @@ export const Tags = ({
 
   return (
     <StyledTags className={`flex flex-col hide-scroll clickable ${className}`}>
-      <SelectTags
-        label="Теги"
-        showTags
-        tags={tags}
-        options={[
-          ...TAGS?.map((value) => ({
-            title: commentsToFields?.object[value] ?? "-",
-            value,
-          })),
-          ...(selections ? SELECTION_TAGS : []),
-        ]}
-        onChange={handleSelect}
-        hide
-      />
-      {data?.acsses_change || data?.type_object === "street_base" ? (
-        <Comment
-          id={data?.id}
-          comment={data?.comment}
-          onChangeComment={onChangeComment}
-        />
-      ) : data?.comment?.length > 0 ? (
-        <Comment
-          id={data?.id}
-          comment={data?.comment}
-          onChangeComment={onChangeComment}
-        />
-      ) : null}
+      {ad ? (
+        <AdTags />
+      ) : (
+        <>
+          {" "}
+          <SelectTags
+            label="Теги"
+            showTags
+            tags={tags}
+            options={[
+              ...TAGS?.map((value) => ({
+                title: commentsToFields?.object[value] ?? "-",
+                value,
+              })),
+              ...(selections ? SELECTION_TAGS : []),
+            ]}
+            onChange={handleSelect}
+            hide
+          />
+          {data?.acsses_change || data?.type_object === "street_base" ? (
+            <Comment
+              id={data?.id}
+              comment={data?.comment}
+              onChangeComment={onChangeComment}
+            />
+          ) : data?.comment?.length > 0 ? (
+            <Comment
+              id={data?.id}
+              comment={data?.comment}
+              onChangeComment={onChangeComment}
+            />
+          ) : null}
+        </>
+      )}
     </StyledTags>
   );
 };

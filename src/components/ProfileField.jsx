@@ -40,6 +40,7 @@ export const ProfileField = ({
   initOpen,
   onClickOnIconEdit,
   alwaysOpen,
+  noAutoFill,
 }) => {
   const fieldRef = useRef();
   const [active, setActive] = useState(initOpen);
@@ -223,6 +224,7 @@ export const ProfileField = ({
                     ? ""
                     : value
                 }
+                autocomplete={noAutoFill ? "new-password" : undefined}
                 placeholder={placeholder}
                 onChange={(e) =>
                   type === "number"

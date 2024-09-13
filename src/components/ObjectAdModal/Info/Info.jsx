@@ -9,6 +9,7 @@ export const Info = ({
   loading,
   onChangeCitiesCount,
   activeTab,
+  onChangeStreetsCount,
 }) => (
   <StyledInfo>
     {activeTab === 1 ? (
@@ -19,6 +20,7 @@ export const Info = ({
           data={data}
           onChange={onChange}
           onChangeCitiesCount={onChangeCitiesCount}
+          onChangeStreetsCount={onChangeStreetsCount}
         />
       </>
     ) : activeTab === 0 ? (

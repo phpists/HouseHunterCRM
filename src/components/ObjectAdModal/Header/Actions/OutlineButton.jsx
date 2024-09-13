@@ -1,16 +1,15 @@
 import styled from "styled-components";
 
-export const CancelButton = ({ disabled }) => (
-  <StyledCancelButton
+export const OutlineButton = ({ disabled, title }) => (
+  <StyledOutlineButton
     className="flex items-center justify-center"
     disabled={disabled}
   >
-    Зупинити
-  </StyledCancelButton>
+    {title}
+  </StyledOutlineButton>
 );
 
-const StyledCancelButton = styled.button`
-  padding: 0 25px;
+const StyledOutlineButton = styled.button`
   height: 38px;
   border: 1px solid var(--color-2);
   font-weight: var(--font-weight-200);
@@ -20,4 +19,7 @@ const StyledCancelButton = styled.button`
   letter-spacing: 0.02em;
   text-align: center;
   border-radius: 8px;
+  width: 120px;
+  min-width: max-content;
+  padding: 0 25px;
 `;

@@ -39,6 +39,7 @@ export const AddRealstateAccount = ({ onClose, onSuccess }) => {
           initOpen
           className="field"
           error={emailValidation(data?.email)}
+          noAutoFill
         />
         <ProfileField
           label="Пароль"
@@ -48,6 +49,7 @@ export const AddRealstateAccount = ({ onClose, onSuccess }) => {
           initOpen
           className="field"
           type="password"
+          noAutoFill
         />
         <button
           className="submit-btn"

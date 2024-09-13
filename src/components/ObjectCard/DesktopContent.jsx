@@ -43,6 +43,7 @@ export const DesktopContent = ({
   onFastSelection,
   onAdvertise,
   onAdvertiseTelegram,
+  ad,
 }) => {
   return (
     <StyledDesktopContent className="flex items-center justify-between clickable">
@@ -71,6 +72,7 @@ export const DesktopContent = ({
         onChangeComment={onChangeComment}
         selections={selections}
         onChangeTags={onChangeTags}
+        ad={ad}
       />
       <Contacts
         className="desktop-item"
@@ -106,6 +108,7 @@ export const DesktopContent = ({
         onFastSelection={onFastSelection}
         onAdvertise={onAdvertise}
         onAdvertiseTelegram={onAdvertiseTelegram}
+        ad={ad}
       />
       <div className="mobile-footer w-full">
         <Info data={data} editable={editable} onEdit={onEdit} />

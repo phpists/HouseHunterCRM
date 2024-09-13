@@ -51,6 +51,7 @@ export const Dropdown = ({
   onFastSelection,
   onAdvertise,
   onAdvertiseTelegram,
+  ad,
 }) => {
   const [addStreetBaseObject] = useLazyAddStreetBaseObjectQuery();
   const [added, setAdded] = useState(false);
@@ -89,7 +90,9 @@ export const Dropdown = ({
           {isEdit && (
             <NavLink
               onClick={() => onFocus()}
-              to={`/edit-object/${clientId}/${id}${searchTag ?? ""}`}
+              to={`/edit-${ad ? "ad" : "object"}/${clientId}/${id}${
+                searchTag ?? ""
+              }`}
               className="flex items-center justify-between"
               onFocus={(e) => {
                 e.preventDefault();
@@ -99,7 +102,9 @@ export const Dropdown = ({
                 if (window.event?.which === 2) {
                   window
                     .open(
-                      `/edit-object/${clientId}/${id}${searchTag ?? ""}`,
+                      `/edit-${ad ? "ad" : "object"}/${clientId}/${id}${
+                        searchTag ?? ""
+                      }`,
                       "_blank"
                     )
                     .focus();
@@ -224,7 +229,9 @@ export const Dropdown = ({
           {isEdit && (
             <NavLink
               onClick={() => onFocus()}
-              to={`/edit-object/${clientId}/${id}${searchTag ?? ""}`}
+              to={`/edit-${ad ? "ad" : "object"}/${clientId}/${id}${
+                searchTag ?? ""
+              }`}
               className="flex items-center justify-between"
               onFocus={(e) => {
                 e.preventDefault();
@@ -234,7 +241,9 @@ export const Dropdown = ({
                 if (window.event?.which === 2) {
                   window
                     .open(
-                      `/edit-object/${clientId}/${id}${searchTag ?? ""}`,
+                      `/edit-${ad ? "ad" : "object"}/${clientId}/${id}${
+                        searchTag ?? ""
+                      }`,
                       "_blank"
                     )
                     .focus();

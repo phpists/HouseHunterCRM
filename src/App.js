@@ -16,6 +16,7 @@ import { Terms } from "./pages/Terms";
 import { License } from "./pages/License";
 import { CookiePolicy } from "./pages/CookiePolicy";
 import { XHOUSE_COMPANY_ID } from "./constants";
+import Ad from "./pages/Ad/Ad";
 
 const Company = lazy(() => import("./pages/Company/Company"));
 const Auth = lazy(() => import("./pages/Auth/Auth"));
@@ -294,12 +295,19 @@ export const App = () => {
                           />
                           {XHOUSE_COMPANY_ID.includes(
                             companyInfo?.data?.id_hash
-                          ) ? (
+                          ) || XHOUSE_COMPANY_ID.includes(user?.id) ? (
                             <>
                               <Route
                                 path="/advertising"
                                 element={<Advertising />}
                               />
+                              <Route path="/ad" element={<Ad />} />
+                              {handleCheckAccess(data, "objects", "view") && (
+                                <Route
+                                  path="/edit-ad/:clientId/:id"
+                                  element={<ObjectPage />}
+                                />
+                              )}
                               <Route
                                 path="/advertising-setting"
                                 element={<AdvertisingSetting />}
