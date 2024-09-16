@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Tag } from "./Tag";
 import { handleFormatDate } from "../../../../utilits";
+import { ReactComponent as RocketIcon } from "../../../../assets/images/BiRocket.svg";
 
 export const Header = ({ data }) => {
   const handleCheckIsEndDateAgrement = () => {
@@ -46,7 +47,7 @@ export const Header = ({ data }) => {
             color={data?.obj_is_actual === "1" ? "green" : "red"}
           />
         )}
-
+      {data?.mls === "1" && <Tag Icon={RocketIcon} title="1" color="blue" />}
       {Number(data?.dt_end_agreement) * 1000 > new Date().getTime() &&
         data?.obj_is_actual === "1" && (
           <Tag

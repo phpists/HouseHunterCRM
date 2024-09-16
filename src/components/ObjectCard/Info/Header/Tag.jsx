@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Tag = ({ title, color }) => {
+export const Tag = ({ title, color, Icon }) => {
   const COLORS = {
     orange: {
       color: "rgba(255, 159, 46, 0.90)",
@@ -14,16 +14,24 @@ export const Tag = ({ title, color }) => {
       color: "var(--green-tag)",
       background: "var(--green-tag-bg)",
     },
+    blue: {
+      color: "#4996d2",
+      background: "#3d8ecc53",
+    },
   };
 
   return (
     <StyledTag color={COLORS[color]} className="clickable">
+      {Icon ? <Icon /> : null}
       {title}
     </StyledTag>
   );
 };
 
 const StyledTag = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2px;
   color: ${({ color }) => color.color};
   leading-trim: both;
   text-edge: cap;
@@ -38,4 +46,14 @@ const StyledTag = styled.div`
   padding: 1px 4px 2px 4px;
   border-radius: 5px;
   background: ${({ color }) => color.background};
+  svg {
+    height: 10px;
+    width: 10px;
+    g {
+      opacity: 1;
+    }
+    path {
+      fill: ${({ color }) => color.color};
+    }
+  }
 `;
