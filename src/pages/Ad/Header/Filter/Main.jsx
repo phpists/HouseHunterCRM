@@ -27,6 +27,10 @@ import { MapButton } from "./MapButton";
 import { ReactComponent as RemoveIcon } from "../../../../assets/images/remove.svg";
 import { CheckOption } from "../../../../components/CheckOption";
 import { ToggleOption } from "../../../../components/ToggleOption";
+import { useGetWorkersMyCompanyQuery } from "../../../../store/billing/billing.api";
+import { useAppSelect } from "../../../../hooks/redux";
+import { useGetCompanyStructureLevelQuery } from "../../../../store/structure/structure.api";
+import { useGetWorkerMyStructureQuery } from "../../../../store/calls/calls.api";
 
 const notAllowedFields = [
   "comment",
@@ -78,12 +82,16 @@ export const Main = ({
   onChangePhoneCode,
   onOpenMap,
 }) => {
+  const { user } = useAppSelect((state) => state.auth);
+  const { data: level } = useGetCompanyStructureLevelQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: rubricsList } = useGetRubricsQuery();
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
   const { data: streets } = useGetStreetsListQuery();
+  const { data: companyWorkers } = useGetWorkersMyCompanyQuery();
+  const { data: workers } = useGetWorkerMyStructureQuery();
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -402,34 +410,127 @@ export const Main = ({
               })
           : null}
       </div>
-      <Base
-        className="base-wrapper"
-        data={filters}
-        onChange={onChangeFilter}
-        streetBaseOpen={filtersOpened?.street_base_object}
-        mlsBaseOpen={filtersOpened?.mls_object}
-        companyOpen={filtersOpened?.company}
-        onChangeDefaultFiltersOpened={(fieldName, value) =>
-          onChangeDefaultFiltersOpened({
-            ...filtersOpened,
-            [fieldName]: value,
+      <Divider />
+      <CheckOption
+        label="Вся реклама"
+        className="check-opt"
+        value={filters?.company_object?.show_only === "company" ? "1" : "0"}
+        onChange={() =>
+          onChangeFilter("company_object", {
+            ...filters?.company_object,
+            show_only: "company",
+            id_worker_Search: undefined,
           })
         }
-        dateAgreement
-        idAdInSource
-        showDeleted
-        workersSearch
-        potentialOwner
-        idSource
-        objMls
-        countObjectOwner
-        allObjectsWorker
-        publicAccess
-        onlyNotmyClient
-        notCommentAndTags
-        showTagsObjarray
-        onFocus={() => onChangeInputFocus(true)}
-        onBlur={() => onChangeInputFocus(false)}
+      />
+      {filters?.company_object?.show_only === "company" ? (
+        <SelectTags
+          label="Пошук по працівнику"
+          placeholder="Оберіть працівника"
+          options={
+            companyWorkers?.data
+              ? companyWorkers?.data?.map(({ id, name }) => ({
+                  title: name ?? "-",
+                  value: id,
+                }))
+              : []
+          }
+          value={filters?.company_object?.id_worker_Search}
+          onChange={(val) =>
+            onChangeFilter("company_object", {
+              ...filters?.company_object,
+              id_worker_Search:
+                val === filters?.company_object?.id_worker_Search
+                  ? undefined
+                  : val,
+            })
+          }
+          isSearch
+          notMultiSelect
+        />
+      ) : null}
+      {Number(user?.struct_level) !== Number(level) ? (
+        <>
+          {" "}
+          <CheckOption
+            label="Реклама моєї структури"
+            className="check-opt"
+            value={
+              filters?.company_object?.show_only === "my_structure" ? "1" : "0"
+            }
+            onChange={() =>
+              onChangeFilter("company_object", {
+                ...filters?.company_object,
+                show_only: "my_structure",
+              })
+            }
+          />
+          {filters?.company_object?.show_only === "my_structure" ? (
+            <>
+              <SelectTags
+                label="Пошук по працівнику"
+                placeholder="Оберіть працівника"
+                options={
+                  workers?.data
+                    ? workers?.data?.map(({ id, first_name, last_name }) => ({
+                        title: `${first_name} ${last_name}`,
+                        value: id,
+                      }))
+                    : []
+                }
+                value={filters?.company_object?.id_worker_Search}
+                onChange={(val) =>
+                  onChangeFilter("company_object", {
+                    ...filters?.company_object,
+                    id_worker_Search:
+                      val === filters?.company_object?.id_worker_Search
+                        ? undefined
+                        : val,
+                  })
+                }
+                isSearch
+                notMultiSelect
+              />
+              <Divider />
+            </>
+          ) : null}{" "}
+        </>
+      ) : null}
+      <CheckOption
+        label="Тільки моя реклама"
+        className="check-opt"
+        value={filters?.company_object?.show_only === "only_my" ? "1" : "0"}
+        onChange={() =>
+          onChangeFilter("company_object", {
+            ...filters?.company_object,
+            show_only: "only_my",
+            id_worker_Search: undefined,
+          })
+        }
+      />
+      <Divider />
+      <CheckOption
+        label="Aктуальна"
+        className="check-opt"
+        value={filters?.company_object?.actual}
+        onChange={() =>
+          onChangeFilter("company_object", {
+            ...filters?.company_object,
+            actual: filters?.company_object?.actual === "1" ? undefined : "1",
+          })
+        }
+      />
+      <CheckOption
+        label="Відхилена"
+        className="check-opt"
+        value={filters?.company_object?.canceled}
+        onChange={() =>
+          onChangeFilter("canceled", {
+            ...filters?.canceled,
+            canceled:
+              filters?.company_object?.canceled === "1" ? undefined : "1",
+          })
+        }
       />
     </StyledMain>
   );

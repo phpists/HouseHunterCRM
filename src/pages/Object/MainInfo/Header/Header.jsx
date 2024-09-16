@@ -23,6 +23,7 @@ export const Header = ({ className, data, onChangeField }) => {
           onChange={() => onChangeField("obj_is_actual", "1")}
         />
         <MlsButton
+          data={data}
           visible={
             data?.obj_is_actual === "1" &&
             (data?.dt_end_agreement === "0" || !data?.dt_end_agreement)

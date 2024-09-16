@@ -82,7 +82,8 @@ export const Header = ({
               position: "top-right",
             }
           );
-          !filters?.show_deleted && onDelete();
+          //   !filters?.show_deleted && onDelete();
+          onDelete();
         });
         onChangeActionLoading(false);
       });

@@ -234,20 +234,7 @@ const Requests = () => {
   };
 
   const handleDeleteRequestsSuccess = () => {
-    setRequests(
-      Object.fromEntries(
-        Object.entries(requests).filter(
-          (req) => !selected.find((s) => s === req[0])
-        )
-      )
-    );
-
-    if (selected === Object.entries(requests)) {
-      handleGetRequests(true);
-    }
-
-    saveRequestsCount(requestsCount - selected?.length);
-    setAllCount(allCount - selected?.length);
+    handleGetRequests(true);
     setSelected([]);
   };
 

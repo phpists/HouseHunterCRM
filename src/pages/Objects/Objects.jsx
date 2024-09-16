@@ -174,6 +174,7 @@ const Objects = () => {
         listRef.current.scroll({ top: 0 });
         setObjects([]);
         setSelected([]);
+        setAllCount(0);
         currentPage.current = 0;
         dataRef.current = [];
         allCountRef.current = 0;
@@ -689,7 +690,7 @@ const Objects = () => {
     dataRef.current = updateData;
     setObjects(updatedData);
     isSelected && setSelected([]);
-    // handleGetObjects();
+    ids?.length === allCount && handleGetObjects(true);
   };
 
   const handleRestoreObjects = (ids, isSelected) => {

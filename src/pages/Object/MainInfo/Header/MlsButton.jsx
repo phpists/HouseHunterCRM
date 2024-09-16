@@ -2,25 +2,36 @@ import styled from "styled-components";
 import icon from "../../../../assets/images/BiRocket.svg";
 import { ObjectAdModal } from "../../../../components/ObjectAdModal/ObjectAdModal";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
-export const MlsButton = ({ value, onChange, visible }) => {
+export const MlsButton = ({ value, onChange, visible, data }) => {
   const { pathname } = useLocation();
   const IS_AD = pathname?.includes("edit-ad");
   const [modal, setModal] = useState(false);
+  const { id } = useParams();
 
   return (
     <>
       {" "}
       {modal ? (
-        <ObjectAdModal onClose={() => setModal(null)} object={modal} />
+        <ObjectAdModal
+          onClose={() => setModal(null)}
+          object={{ ...(data ? data : {}), id }}
+        />
       ) : null}
       <StyledMlsButton
         className={`${(value || IS_AD) && "active"}`}
         onClick={IS_AD ? () => setModal(true) : () => onChange()}
         visible={visible}
+        isAd={IS_AD}
       >
-        {IS_AD ? <img src={icon} alt="" /> : "MLS"}
+        {IS_AD ? (
+          <span className="flex items-center">
+            <img src={icon} alt="" /> <div className="racket-count">2</div>
+          </span>
+        ) : (
+          "MLS"
+        )}
       </StyledMlsButton>
     </>
   );
@@ -52,10 +63,10 @@ const StyledMlsButton = styled.button`
   opacity: 0;
   width: 0;
   overflow: hidden;
-  ${({ visible }) =>
+  ${({ visible, isAd }) =>
     visible &&
     `
-    width: 50px;
+    width: ${isAd ? "max-content" : "50px"};
     opacity: 1;
     padding: 10px 10px;
     margin-left: 5px;
@@ -74,5 +85,9 @@ const StyledMlsButton = styled.button`
 
   @media (max-width: 800px) {
     font-size: 11px;
+  }
+  .racket-count {
+    font-size: 18px;
+    margin: 3px 0 0 5px;
   }
 `;

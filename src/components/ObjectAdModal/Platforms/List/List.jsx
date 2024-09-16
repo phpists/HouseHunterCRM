@@ -2,13 +2,74 @@ import styled from "styled-components";
 import { Card } from "./Card";
 import olxIcon from "../../../../assets/images/olx.png";
 import realstateIcon from "../../../../assets/images/realstate-icon.png";
-import { useGetStatusAccountQuery } from "../../../../store/objects/objects.api";
+import {
+  useGetStatusAccountQuery,
+  useLazyPublishObjectQuery,
+} from "../../../../store/objects/objects.api";
 import { Link } from "react-router-dom";
 import { useGetRealestateStatusQuery } from "../../../../store/auth/auth.api";
+import { Button } from "./Button";
+import { XHOUSE_COMPANY_ID } from "../../../../constants";
+import { useGetCompanyInfoQuery } from "../../../../store/billing/billing.api";
+import cogoToast from "cogo-toast";
+import { handleResponse } from "../../../../utilits";
 
 export const List = ({ data, onChange, onChangeActiveTab }) => {
   const { data: accounts } = useGetStatusAccountQuery();
   const { data: realestateAccounts } = useGetRealestateStatusQuery();
+  const { data: companyInfo } = useGetCompanyInfoQuery();
+  const [publishObject] = useLazyPublishObjectQuery();
+
+  const handleTelegramPublish = (id) => {
+    const { hide } = cogoToast.loading("Опублікування реклами в телеграмі", {
+      position: "top-right",
+    });
+    console.log(data);
+    publishObject({
+      id_obj: id,
+      resource: "telegram",
+    }).then((resp) => {
+      setTimeout(() => {
+        hide();
+        handleResponse(
+          resp,
+          () => {
+            const messages = {
+              new: "Нове оголошення, до активації та провірки",
+              active: "Опубліковано на olx",
+              limited:
+                "Вичерпаний ліміт безкоштовних оголошень у вибраній категорії",
+              removed_by_user: "Видалено користувачем",
+              outdated: "Оголошення досягло дати придатності",
+              unconfirmed: "Оголошення очікує на підтвердження ",
+              unpaid: "Очікується оплата",
+              moderated: "Відхилено модератором",
+              blocked: "Заблоковано модератором",
+              disabled:
+                "Вимкнено модерацією, пропозиція заблокована та очікує перевірки",
+              removed_by_moderator: "Видалено",
+            };
+            cogoToast.info(
+              messages[resp?.data?.status] ?? "Оголошення успішно опубліковано",
+              {
+                hideAfter: 3,
+                position: "top-right",
+              }
+            );
+          },
+          () => {
+            const message = resp?.data?.messege;
+
+            cogoToast.error(<>{message}</>, {
+              hideAfter: 3,
+              position: "top-right",
+            });
+          },
+          true
+        );
+      }, 1000);
+    });
+  };
 
   return (
     <StyledList>
@@ -62,6 +123,20 @@ export const List = ({ data, onChange, onChangeActiveTab }) => {
             />
           ))
         : null}
+      <Button
+        title="MLS"
+        active={data?.mls}
+        onClick={() => onChange("mls", !data?.mls)}
+      />
+
+      {XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) &&
+        data?.type_object !== "street_base" &&
+        data?.type_object !== "mls" && (
+          <Button
+            title="Рекламувати в телеграм"
+            onClick={() => handleTelegramPublish(data?.id)}
+          />
+        )}
     </StyledList>
   );
 };

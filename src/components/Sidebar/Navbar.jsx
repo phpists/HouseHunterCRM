@@ -73,7 +73,7 @@ export const NavBar = ({ accessData }) => {
     ...(XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash)
       ? [
           {
-            icon: MarketIcon,
+            icon: RocketIcon,
             link: "/advertising",
             title: "Реклама",
             childrenLinks: ["advertising-setting"],

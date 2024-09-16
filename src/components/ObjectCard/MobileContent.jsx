@@ -86,6 +86,7 @@ export const MobileContent = ({
       onShowContact={onShowContact}
       onOpenPhonesModal={onOpenPhonesModal}
       showClientObjectsCount={showClientObjectsCount}
+      ad={ad}
     />
     <ShowMore
       clientId={data?.id_client}

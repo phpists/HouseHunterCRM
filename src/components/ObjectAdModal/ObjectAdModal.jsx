@@ -59,6 +59,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
       street: "",
       street2: "",
       home: "",
+      ...object,
     });
   }, [object]);
 

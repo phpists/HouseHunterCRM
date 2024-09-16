@@ -201,7 +201,7 @@ const Request = () => {
           price_min: "Ціна від",
           price_max: "Ціна до",
           id_rubric: "Категорія",
-          price_currency: "Валюта"
+          price_currency: "Валюта",
         },
       });
 
@@ -345,7 +345,7 @@ const Request = () => {
         company_object,
         street_base_object,
         mls_object,
-        hide_title_client
+        hide_title_client,
       } = data?.general_group;
       editRequest({
         ...data,

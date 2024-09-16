@@ -13,6 +13,7 @@ export const Contacts = ({
   onShowContact,
   onOpenPhonesModal,
   showClientObjectsCount,
+  ad,
 }) => {
   const [getClient] = useLazyGetPhoneObjectQuery();
   const [error, setError] = useState(false);
@@ -39,19 +40,21 @@ export const Contacts = ({
 
   return (
     <StyledContacts className={`hide-scroll clickable ${className}`}>
-      <Contact
-        type="rieltor"
-        name={data?.clients_inf?.contact?.owner?.name}
-        phones={
-          data?.clients_inf?.contact?.owner?.phone
-            ? data?.clients_inf?.contact?.owner?.phone
-            : data?.clients_inf?.contact?.owner?.phones
-        }
-        typeText="Реклама"
-        error={error}
-        onShow={handleShowClient}
-        className="mb-4"
-      />
+      {ad ? (
+        <Contact
+          type="rieltor"
+          name={data?.clients_inf?.contact?.owner?.name}
+          phones={
+            data?.clients_inf?.contact?.owner?.phone
+              ? data?.clients_inf?.contact?.owner?.phone
+              : data?.clients_inf?.contact?.owner?.phones
+          }
+          typeText="Реклама"
+          error={error}
+          onShow={handleShowClient}
+          className="mb-4"
+        />
+      ) : null}
       {data?.clients_inf?.contact?.owner &&
       data?.clients_inf?.contact?.owner?.phone ? (
         <Contact
