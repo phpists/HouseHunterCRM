@@ -573,6 +573,18 @@ export const objects = createApi({
         }),
       }),
     }),
+    changeMlsObject: build.query({
+      query: (id_object) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "change_mls",
+          mod: "objects",
+          id_object,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -620,4 +632,5 @@ export const {
   useLazyPublishObjectQuery,
   useLazyDeleteAdQuery,
   useLazyDeleteAdAccountQuery,
+  useLazyChangeMlsObjectQuery,
 } = objects;

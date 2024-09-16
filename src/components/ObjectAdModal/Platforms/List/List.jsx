@@ -4,6 +4,7 @@ import olxIcon from "../../../../assets/images/olx.png";
 import realstateIcon from "../../../../assets/images/realstate-icon.png";
 import {
   useGetStatusAccountQuery,
+  useLazyChangeMlsObjectQuery,
   useLazyPublishObjectQuery,
 } from "../../../../store/objects/objects.api";
 import { Link } from "react-router-dom";
@@ -19,12 +20,12 @@ export const List = ({ data, onChange, onChangeActiveTab }) => {
   const { data: realestateAccounts } = useGetRealestateStatusQuery();
   const { data: companyInfo } = useGetCompanyInfoQuery();
   const [publishObject] = useLazyPublishObjectQuery();
+  const [changeMls] = useLazyChangeMlsObjectQuery();
 
   const handleTelegramPublish = (id) => {
     const { hide } = cogoToast.loading("Опублікування реклами в телеграмі", {
       position: "top-right",
     });
-    console.log(data);
     publishObject({
       id_obj: id,
       resource: "telegram",
@@ -69,6 +70,18 @@ export const List = ({ data, onChange, onChangeActiveTab }) => {
         );
       }, 1000);
     });
+  };
+
+  const handleChangeMls = () => {
+    changeMls(data?.id).then((resp) =>
+      handleResponse(resp, () => {
+        onChange("mls", !data?.mls);
+        cogoToast.success("Статус успішно змінено", {
+          hideAfter: 3,
+          position: "top-right",
+        });
+      })
+    );
   };
 
   return (
@@ -123,11 +136,7 @@ export const List = ({ data, onChange, onChangeActiveTab }) => {
             />
           ))
         : null}
-      <Button
-        title="MLS"
-        active={data?.mls}
-        onClick={() => onChange("mls", !data?.mls)}
-      />
+      <Button title="MLS" active={data?.mls} onClick={handleChangeMls} />
 
       {XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) &&
         data?.type_object !== "street_base" &&

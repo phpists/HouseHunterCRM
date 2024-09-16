@@ -66,6 +66,7 @@ export const DesktopContent = ({
         data={data}
         editable={editable}
         onEdit={onEdit}
+        ad={ad}
       />
       <Tags
         data={data}

@@ -48,7 +48,7 @@ export const MobileContent = ({
   ad,
 }) => (
   <StyledMobileContent className="clickable">
-    <Header data={data} />
+    <Header data={data} ad={ad} />
     <CardTitle title={data?.title} editable={editable} onEdit={onEdit} />
     <Slider
       photos={[...checkIsArray(data?.img)]?.sort((a, b) => b?.cover - a?.cover)}
