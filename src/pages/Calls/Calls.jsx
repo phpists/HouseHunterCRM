@@ -500,7 +500,7 @@ const Calls = ({ companyId }) => {
         type_call: [],
         call_my_struct: undefined,
         status: "0",
-        date_from: Math.floor(getFirstDay(true, true).getTime() / 1000),
+        date_from: Math.floor(getFirstDay(true, true, 7).getTime() / 1000),
         date_to: Math.floor(new Date().getTime() / 1000),
       });
       setIsDefaultFilterSet(true);
@@ -509,7 +509,7 @@ const Calls = ({ companyId }) => {
       setEditActiveType("telegram");
       setFilters({
         status: "0",
-        date_from: Math.floor(getFirstDay(true, true).getTime() / 1000),
+        date_from: Math.floor(getFirstDay(true, true, 7).getTime() / 1000),
         date_to: Math.floor(new Date().getTime() / 1000),
       });
       setShowTelegram("show");
@@ -519,7 +519,7 @@ const Calls = ({ companyId }) => {
       setEditActiveType("site");
       setFilters({
         status: "0",
-        date_from: Math.floor(getFirstDay(true, true).getTime() / 1000),
+        date_from: Math.floor(getFirstDay(true, true, 7).getTime() / 1000),
         date_to: Math.floor(new Date().getTime() / 1000),
       });
       setIsDefaultFilterSet(true);
