@@ -525,13 +525,13 @@ export const removePhoneMask = (val) =>
         ?.replaceAll("_", "")
     : undefined;
 
-export const getFirstDay = (isPrevMonth, notSetDay) => {
+export const getFirstDay = (isPrevMonth, notSetDay, monthBackCount = 1) => {
   const date = new Date();
   if (!notSetDay) {
     date.setDate(1);
   }
   if (isPrevMonth) {
-    date.setMonth(date.getMonth() - 1);
+    date.setMonth(date.getMonth() - monthBackCount);
   }
   return date;
 };

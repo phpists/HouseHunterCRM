@@ -33,7 +33,7 @@ const INIT_FILTERS = {
   type_call: [],
   call_my_struct: undefined,
   status: "0",
-  date_from: Math.floor(getFirstDay(true).getTime() / 1000),
+  date_from: Math.floor(getFirstDay(true, false, 7).getTime() / 1000),
   date_to: Math.floor(new Date().getTime() / 1000),
 };
 
@@ -279,7 +279,9 @@ const Calls = ({ companyId }) => {
                 : undefined,
             }
           : {
-              date_from: Math.floor(getFirstDay(true).getTime() / 1000),
+              date_from: Math.floor(
+                getFirstDay(true, false, 7).getTime() / 1000
+              ),
               date_to: Math.floor(new Date().getTime() / 1000),
             },
         current_page: currentPage.current,
