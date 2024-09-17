@@ -125,6 +125,7 @@ export const CallCard = ({
     });
   };
 
+  console.log(callsData);
   return (
     <StyledCallCard
       className=" clickable"
@@ -149,21 +150,25 @@ export const CallCard = ({
         level={level}
         callsData={
           telegram
-            ? telegramCallsData?.data?.map((c) => ({
-                dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
-                id: c?.id_order,
-                status: c?.status,
-                comment: c?.comment,
-                date: Number(c.dt_order),
-              })) ?? []
+            ? telegramCallsData?.data
+                ?.map((c) => ({
+                  dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
+                  id: c?.id_order,
+                  status: c?.status,
+                  comment: c?.comment,
+                  date: Number(c.dt_order),
+                }))
+                ?.sort((a, b) => b?.date ?? 0 - a?.date ?? 0) ?? []
             : xcorp
-            ? orderHistory?.data?.map((c) => ({
-                dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
-                id: c?.id,
-                status: c?.status,
-                comment: c?.comment,
-                date: Number(c.dt_order),
-              })) ?? []
+            ? orderHistory?.data
+                ?.map((c) => ({
+                  dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
+                  id: c?.id,
+                  status: c?.status,
+                  comment: c?.comment,
+                  date: Number(c.dt_order),
+                }))
+                ?.sort((a, b) => b?.date ?? 0 - a?.date ?? 0) ?? []
             : callsData?.data ?? []
         }
         onEditComment={onEditComment}
@@ -209,20 +214,24 @@ export const CallCard = ({
         level={level}
         callsData={
           telegram
-            ? telegramCallsData?.data?.map((c) => ({
-                dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
-                comment: c?.comment,
-                id: c?.id_order,
-                date: Number(c.dt_order),
-              })) ?? []
+            ? telegramCallsData?.data
+                ?.map((c) => ({
+                  dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
+                  comment: c?.comment,
+                  id: c?.id_order,
+                  date: Number(c.dt_order),
+                }))
+                ?.sort((a, b) => b?.date ?? 0 - a?.date ?? 0) ?? []
             : xcorp
-            ? orderHistory?.data?.map((c) => ({
-                dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
-                id: c?.id,
-                status: c?.status,
-                comment: c?.comment,
-                date: Number(c.dt_order),
-              })) ?? []
+            ? orderHistory?.data
+                ?.map((c) => ({
+                  dt_incoming: handleFormatDate(Number(c.dt_order) * 1000),
+                  id: c?.id,
+                  status: c?.status,
+                  comment: c?.comment,
+                  date: Number(c.dt_order),
+                }))
+                ?.sort((a, b) => b?.date ?? 0 - a?.date ?? 0) ?? []
             : callsData?.data ?? []
         }
         onEditComment={onEditComment}

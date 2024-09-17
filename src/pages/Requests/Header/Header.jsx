@@ -42,7 +42,8 @@ export const Header = ({
   const { accessData: data } = useAppSelect((state) => state.auth);
   const isPrevFilter = localStorage.getItem("requestFilter");
   const [restoreRequests] = useLazyRestoreRequestsQuery();
-  const isAllActions = filters?.only_company_obj !== "1";
+  const isAllActions =
+    filters?.only_company_obj !== "1" || user?.struct_level === 1;
   const [confirmText, setConfimText] = useState("");
 
   const handleToggleFavorites = () => {
@@ -104,6 +105,8 @@ export const Header = ({
       })
     );
   };
+
+  console.log(isAllActions);
 
   return (
     <StyledHeader>

@@ -7,15 +7,14 @@ export const Dropdown = ({
   changeStatus,
   onChangeHistoryOrderStatus,
   onEditHistoryComment,
-}) => (
-  <StyledDropdown>
-    {callsData
-      ?.sort((a, b) => b?.date - a?.date)
-      ?.map(({ dt_incoming, id, status, comment }, i) => (
+}) => {
+  return (
+    <StyledDropdown>
+      {callsData?.map(({ dt_incoming, id, status, comment }, i) => (
         <div className="item" key={i}>
-          <span>{dt_incoming?.split(" ")[0] ?? "-"}</span>
+          <span>{dt_incoming?.split(" ")?.[0] ?? "-"}</span>
           <div className="flex items-center">
-            <span>{dt_incoming?.split(" ")[1] ?? "-"}</span>
+            <span>{dt_incoming?.split(" ")?.[1] ?? "-"}</span>
             {/* {changeStatus ? (
             <div className="flex items-center">
               <button
@@ -31,8 +30,9 @@ export const Dropdown = ({
           </div>
         </div>
       ))}
-  </StyledDropdown>
-);
+    </StyledDropdown>
+  );
+};
 
 const StyledDropdown = styled.div`
   width: 360px;
