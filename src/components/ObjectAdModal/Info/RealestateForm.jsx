@@ -38,7 +38,7 @@ export const RealestateForm = ({
       : undefined;
 
   const handleChangeRegion = (val) => {
-    const LVIV = ["18", "19", "20", "21", "22", "23", "24", "25", "26"];
+    const LVIV = ["21", "22", "23", "24", "25", "26"];
     onChange(
       "region",
       {
