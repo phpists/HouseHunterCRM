@@ -7,6 +7,7 @@ import { useState } from "react";
 import { AddRealstateAccount } from "../AddRealstateAccount";
 import {
   useLazyDeleteAccountOlxQuery,
+  useLazyFlombuConnectAccountQuery,
   useLazyFlombuDeleteAccountQuery,
   useLazyRemoveAccountRealestateQuery,
 } from "../../../../store/auth/auth.api";
@@ -27,6 +28,7 @@ export const Setting = ({
   const [removeRealstateAccount] = useLazyRemoveAccountRealestateQuery();
   const [removeOlxAccount] = useLazyDeleteAccountOlxQuery();
   const [removeFlombuAccount] = useLazyFlombuDeleteAccountQuery();
+  const [flombuConnectAccount] = useLazyFlombuConnectAccountQuery();
 
   const handleDeleteSuccess = (type) => {
     cogoToast.success("Акаунт успішно видалено", {
@@ -57,6 +59,12 @@ export const Setting = ({
     }
   };
 
+  const handleFlombuConnect = () => {
+    flombuConnectAccount().then((resp) =>
+      handleResponse(resp, () => onRefreshFlombuStatus())
+    );
+  };
+
   return (
     <StyledSetting className="content-card">
       {addRealstateAccount && (
@@ -82,7 +90,7 @@ export const Setting = ({
         <div className="fields"></div>
       ) : data?.id === "3" ? (
         <div className="fields">
-          {" "}
+          <Button title="Додати акаунт" onClick={handleFlombuConnect} />
           <Accounts
             accounts={flombuAuth ? [{ id: "Акаунт у flombu" }] : []}
             onRefreshAccountsData={onRefreshFlombuStatus}

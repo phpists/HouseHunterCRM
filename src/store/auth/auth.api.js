@@ -427,6 +427,18 @@ export const auth = createApi({
         }),
       }),
     }),
+    flombuConnectStatus: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "accountAuth",
+          mod: "publication",
+          resource: "flombu",
+        }),
+      }),
+    }),
     flombuDeleteAccount: build.query({
       query: () => ({
         url: "",
@@ -500,4 +512,5 @@ export const {
   useLazyFlombuDeleteAccountQuery,
   useLazyFlombuPublishQuery,
   useLazyFlombuDeleteAdQuery,
+  useFlombuConnectStatusQuery,
 } = auth;

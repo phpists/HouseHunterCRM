@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import {
   useFlombuConnectAccountQuery,
+  useFlombuConnectStatusQuery,
   useGetRealestateStatusQuery,
 } from "../../../store/auth/auth.api";
 
@@ -22,13 +23,14 @@ export const Content = ({
   const { data: realestateStatus, refetch: refetchRealestateStatus } =
     useGetRealestateStatusQuery();
   const { data: flombuStatus, refetch: resetchFflombuStatus } =
-    useFlombuConnectAccountQuery();
+    useFlombuConnectStatusQuery();
 
   useEffect(() => {
     status && refetch();
     realestateStatus && refetchRealestateStatus();
   }, [location]);
 
+  console.log(flombuStatus);
   return (
     <StyledContent selectedTemplate={selectedResources}>
       <div>
@@ -39,7 +41,7 @@ export const Content = ({
           onSelect={onSelect}
           olxAuth={!!status?.accounts?.[0]?.data?.id}
           realestateStatus={realestateStatus?.data?.length > 0}
-          flombuAuth={flombuStatus?.messege === "Акаунт уже існує"}
+          flombuAuth={flombuStatus?.error === 0}
         />
       </div>
       {selectedResources ? (
@@ -54,7 +56,7 @@ export const Content = ({
             onRefetchRealestateStatus={refetchRealestateStatus}
             realestateAccounts={realestateStatus?.data}
             onRefreshFlombuStatus={resetchFflombuStatus}
-            flombuAuth={flombuStatus?.messege === "Акаунт уже існує"}
+            flombuAuth={flombuStatus?.error === 0}
           />
         </div>
       ) : null}

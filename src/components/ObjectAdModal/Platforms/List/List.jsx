@@ -100,64 +100,50 @@ export const List = ({ data, onChange, onChangeActiveTab }) => {
         </div>
       ) : null}
       {accounts?.accounts?.filter((a) => a?.error !== "invalid_token")?.length >
-      0 ? (
-        accounts?.accounts?.map((account, i) => (
-          <Card
-            key={i}
-            icon={olxIcon}
-            title={
-              account?.data?.name ??
-              account?.data?.phone ??
-              account?.data?.email ??
-              account?.data?.id
-            }
-            onClick={() =>
-              onChange(
-                "id_user_olx",
-                data?.id_user_olx?.includes(account?.data?.id)
-                  ? data?.id_user_olx.filter((id) => id !== account?.data?.id)
-                  : [...data?.id_user_olx, account?.data?.id]
-              )
-            }
-            onChangeActiveTab={() => onChangeActiveTab(0)}
-            active={data?.id_user_olx?.includes(account?.data?.id)}
-          />
-        ))
-      ) : (
-        <Card
-          icon={olxIcon}
-          title={"Потрібна авторизація"}
-          onChangeActiveTab={() => navigate("/advertising-setting?type=1")}
-          noAuth
-        />
-      )}
-      {realestateAccounts?.data?.length > 0 ? (
-        realestateAccounts?.data?.map(({ id_account, email }, i) => (
-          <Card
-            key={i}
-            icon={realstateIcon}
-            title={email ?? id_account}
-            onClick={() =>
-              onChange(
-                "id_realstate_users",
-                data?.id_realstate_users?.includes(id_account)
-                  ? data?.id_realstate_users.filter((i) => i !== id_account)
-                  : [...data?.id_realstate_users, id_account]
-              )
-            }
-            onChangeActiveTab={() => onChangeActiveTab(1)}
-            active={data?.id_realstate_users?.includes(id_account)}
-          />
-        ))
-      ) : (
-        <Card
-          icon={realstateIcon}
-          title={"Потрібна авторизація"}
-          onChangeActiveTab={() => navigate("/advertising-setting?type=4")}
-          noAuth
-        />
-      )}
-      {flombuAccounts?.messege === "Акаунт уже існує" ? (
+      0
+        ? accounts?.accounts?.map((account, i) => (
+            <Card
+              key={i}
+              icon={olxIcon}
+              title={
+                account?.data?.name ??
+                account?.data?.phone ??
+                account?.data?.email ??
+                account?.data?.id
+              }
+              onClick={() =>
+                onChange(
+                  "id_user_olx",
+                  data?.id_user_olx?.includes(account?.data?.id)
+                    ? data?.id_user_olx.filter((id) => id !== account?.data?.id)
+                    : [...data?.id_user_olx, account?.data?.id]
+                )
+              }
+              onChangeActiveTab={() => onChangeActiveTab(0)}
+              active={data?.id_user_olx?.includes(account?.data?.id)}
+            />
+          ))
+        : null}
+      {realestateAccounts?.data?.length > 0
+        ? realestateAccounts?.data?.map(({ id_account, email }, i) => (
+            <Card
+              key={i}
+              icon={realstateIcon}
+              title={email ?? id_account}
+              onClick={() =>
+                onChange(
+                  "id_realstate_users",
+                  data?.id_realstate_users?.includes(id_account)
+                    ? data?.id_realstate_users.filter((i) => i !== id_account)
+                    : [...data?.id_realstate_users, id_account]
+                )
+              }
+              onChangeActiveTab={() => onChangeActiveTab(1)}
+              active={data?.id_realstate_users?.includes(id_account)}
+            />
+          ))
+        : null}
+      {flombuAccounts?.error === 0 ? (
         <Card
           icon={flombuIcon}
           title={"Авторизовано"}
@@ -165,7 +151,26 @@ export const List = ({ data, onChange, onChangeActiveTab }) => {
           onChangeActiveTab={() => onChangeActiveTab(0)}
           active={data?.flombu}
         />
-      ) : (
+      ) : null}
+
+      {accounts?.accounts?.filter((a) => a?.error !== "invalid_token")?.length >
+      0 ? null : (
+        <Card
+          icon={olxIcon}
+          title={"Потрібна авторизація"}
+          onChangeActiveTab={() => navigate("/advertising-setting?type=1")}
+          noAuth
+        />
+      )}
+      {realestateAccounts?.data?.length > 0 ? null : (
+        <Card
+          icon={realstateIcon}
+          title={"Потрібна авторизація"}
+          onChangeActiveTab={() => navigate("/advertising-setting?type=4")}
+          noAuth
+        />
+      )}
+      {flombuAccounts?.error === 0 ? null : (
         <Card
           icon={flombuIcon}
           title={"Потрібна авторизація"}
