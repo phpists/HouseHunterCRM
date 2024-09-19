@@ -23,6 +23,7 @@ import {
 } from "../../store/objects/objects.api";
 import {
   useGetRealestateStatusQuery,
+  useLazyFlombuDeleteAdQuery,
   useLazyRemoveObjectRealestateQuery,
 } from "../../store/auth/auth.api";
 
@@ -64,6 +65,7 @@ const Advertising = () => {
   const [isDeleted, setIsDeleted] = useState(filter?.filters?.show_deleted);
   const [removeObjectREalstate] = useLazyRemoveObjectRealestateQuery();
   const { data: realestateStatus } = useGetRealestateStatusQuery();
+  const [deleteFlombuAd] = useLazyFlombuDeleteAdQuery();
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
 
@@ -127,35 +129,36 @@ const Advertising = () => {
     setSelected(isReset ? [] : ids);
   };
 
+  const handleDeleteSuccess = () => {
+    cogoToast.success("Оголошення успішно видалено", {
+      hideAfter: 3,
+      position: "top-right",
+    });
+    handleGetAdds();
+  };
+
   const handleDeleteAd = ({
     id_user_olx,
     id_ad_in_source,
     id_account,
     id_obj,
     realstate,
+    flombu,
   }) => {
     if (realstate) {
       removeObjectREalstate({
         id_account: realestateStatus?.data?.[0]?.id_account,
         id_obj,
       }).then((resp) => {
-        handleResponse(resp, () => {
-          cogoToast.success("Оголошення успішно видалено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
-          handleGetAdds();
-        });
+        handleResponse(resp, handleDeleteSuccess);
+      });
+    } else if (flombu) {
+      deleteFlombuAd(id_obj).then((resp) => {
+        handleResponse(resp, handleDeleteSuccess);
       });
     } else {
       deleteAd({ id_user_olx, id_obj: id_ad_in_source }).then((resp) => {
-        handleResponse(resp, () => {
-          cogoToast.success("Оголошення успішно видалено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
-          handleGetAdds();
-        });
+        handleResponse(resp, handleDeleteSuccess);
       });
     }
   };

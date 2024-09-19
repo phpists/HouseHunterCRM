@@ -1,11 +1,20 @@
 import styled from "styled-components";
 import logo from "../../../../assets/images/olx.png";
 import logo2 from "../../../../assets/images/realstate-icon.png";
+import logo3 from "../../../../assets/images/flombu.png";
 
 export const Platform = ({ title, resource }) => (
   <StyledPlatform
     className="flex items-center"
-    logo={resource === "4" ? logo2 : resource === "1" ? logo : ""}
+    logo={
+      resource === "4"
+        ? logo2
+        : resource === "1"
+        ? logo
+        : resource === "3"
+        ? logo3
+        : ""
+    }
   >
     <div></div>
     <span>{title}</span>

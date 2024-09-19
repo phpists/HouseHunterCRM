@@ -4,7 +4,12 @@ import { handleFormatDate } from "../../../../../utilits";
 import { useState } from "react";
 import { Confirm } from "../../../../../components/Confirm/Confirm";
 
-export const Accounts = ({ accounts, onRefreshAccountsData, onDelete }) => {
+export const Accounts = ({
+  accounts,
+  onRefreshAccountsData,
+  onDelete,
+  oneAccount,
+}) => {
   const [deleteConfirm, setDeleteConfirm] = useState(false);
 
   const handleOpenDeleteConfirm = (id) => setDeleteConfirm(id);
@@ -35,6 +40,7 @@ export const Accounts = ({ accounts, onRefreshAccountsData, onDelete }) => {
             id={data?.id ?? id}
             name={data?.name?.length > 0 ? data?.name : null}
             onDelete={() => handleOpenDeleteConfirm(data?.id ?? id)}
+            oneAccount={oneAccount}
           />
         ))}
       </StyledAccounts>

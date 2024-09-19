@@ -2,23 +2,36 @@ import styled from "styled-components";
 import { CheckOption } from "../../../CheckOption";
 import { Tag } from "./Tag";
 
-export const Card = ({ icon, title, active, onClick, onChangeActiveTab }) => (
+export const Card = ({
+  icon,
+  title,
+  active,
+  onClick,
+  onChangeActiveTab,
+  noAuth,
+}) => (
   <StyledCard icon={icon}>
-    <CheckOption
-      onlyCheck
-      small
-      value={active ? "1" : "0"}
-      onChange={onClick}
-    />
+    {noAuth ? (
+      <div />
+    ) : (
+      <CheckOption
+        onlyCheck
+        small
+        value={active ? "1" : "0"}
+        onChange={onClick}
+      />
+    )}
     <div className="card-content flex items-center" onClick={onChangeActiveTab}>
       <div className="icon" />
       <span className="card-title" title={title}>
         {title}
       </span>
-      <div className="status-wrapper">
-        <Tag title="Рекламується" color="green" />
-        <div className="status-wrapper-label">з 05.06.2024</div>
-      </div>
+      {noAuth ? null : (
+        <div className="status-wrapper">
+          <Tag title="Рекламується" color="green" />
+          <div className="status-wrapper-label">з 05.06.2024</div>
+        </div>
+      )}
     </div>
   </StyledCard>
 );

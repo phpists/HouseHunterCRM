@@ -7,6 +7,7 @@ import { useState } from "react";
 import { AddRealstateAccount } from "../AddRealstateAccount";
 import {
   useLazyDeleteAccountOlxQuery,
+  useLazyFlombuDeleteAccountQuery,
   useLazyRemoveAccountRealestateQuery,
 } from "../../../../store/auth/auth.api";
 import { handleResponse } from "../../../../utilits";
@@ -18,11 +19,14 @@ export const Setting = ({
   onRefreshAccountsData,
   onRefetchRealestateStatus,
   realestateAccounts,
+  onRefreshFlombuStatus,
+  flombuAuth,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const [addRealstateAccount, setAddRealstateAccount] = useState(false);
   const [removeRealstateAccount] = useLazyRemoveAccountRealestateQuery();
   const [removeOlxAccount] = useLazyDeleteAccountOlxQuery();
+  const [removeFlombuAccount] = useLazyFlombuDeleteAccountQuery();
 
   const handleDeleteSuccess = (type) => {
     cogoToast.success("Акаунт успішно видалено", {
@@ -30,12 +34,20 @@ export const Setting = ({
       position: "top-right",
     });
 
-    type === "olx" ? onRefreshAccountsData() : onRefetchRealestateStatus();
+    type === "olx"
+      ? onRefreshAccountsData()
+      : type === "flombu"
+      ? onRefreshFlombuStatus()
+      : onRefetchRealestateStatus();
   };
 
   const handleDeleteAccount = (id, type) => {
     if (type === "olx") {
       removeOlxAccount(id).then((resp) =>
+        handleResponse(resp, () => handleDeleteSuccess(type))
+      );
+    } else if (type === "flombu") {
+      removeFlombuAccount().then((resp) =>
         handleResponse(resp, () => handleDeleteSuccess(type))
       );
     } else {
@@ -64,6 +76,18 @@ export const Setting = ({
             accounts={olxAccounts}
             onRefreshAccountsData={onRefreshAccountsData}
             onDelete={(id) => handleDeleteAccount(id, "olx")}
+          />
+        </div>
+      ) : data?.id === "2" ? (
+        <div className="fields"></div>
+      ) : data?.id === "3" ? (
+        <div className="fields">
+          {" "}
+          <Accounts
+            accounts={flombuAuth ? [{ id: "Акаунт у flombu" }] : []}
+            onRefreshAccountsData={onRefreshFlombuStatus}
+            onDelete={(id) => handleDeleteAccount(id, "flombu")}
+            oneAccount
           />
         </div>
       ) : data?.id === "4" ? (

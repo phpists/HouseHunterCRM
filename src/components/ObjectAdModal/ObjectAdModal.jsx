@@ -12,7 +12,10 @@ import {
 } from "../../store/objects/objects.api";
 import { handleResponse } from "../../utilits";
 import cogoToast from "cogo-toast";
-import { useLazyPublishRealestateQuery } from "../../store/auth/auth.api";
+import {
+  useLazyFlombuPublishQuery,
+  useLazyPublishRealestateQuery,
+} from "../../store/auth/auth.api";
 
 export const ObjectAdModal = ({ onClose, object }) => {
   const [data, setData] = useState({
@@ -28,10 +31,12 @@ export const ObjectAdModal = ({ onClose, object }) => {
     street: "",
     street2: "",
     home: "",
+    flombu: false,
   });
   const [loading, setLoading] = useState(false);
   const [publishObject] = useLazyPublishObjectQuery();
   const [publishRealestate] = useLazyPublishRealestateQuery();
+  const [publishFlombu] = useLazyFlombuPublishQuery();
   const { data: adAAccounts } = useGetStatusAccountQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [citiesCount, setCitiesCount] = useState(0);
@@ -59,6 +64,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
       street: "",
       street2: "",
       home: "",
+      flombu: false,
       ...object,
     });
   }, [object]);
@@ -134,6 +140,19 @@ export const ObjectAdModal = ({ onClose, object }) => {
         });
       });
     });
+
+    if (data?.flombu) {
+      publishFlombu(object?.id).then((resp) => {
+        setLoading(false);
+        handleResponse(resp, () => {
+          onClose();
+          cogoToast.info("Оголошення успішно опубліковано", {
+            hideAfter: 3,
+            position: "top-right",
+          });
+        });
+      });
+    }
   };
 
   return (
@@ -147,7 +166,8 @@ export const ObjectAdModal = ({ onClose, object }) => {
             loading={loading}
             disabled={
               (data?.id_user_olx?.length === 0 &&
-                data?.id_realstate_users?.length === 0) ||
+                data?.id_realstate_users?.length === 0 &&
+                !data?.flombu) ||
               (data?.id_realstate_users?.length === 0
                 ? false
                 : data?.id_realstate_users?.length > 0

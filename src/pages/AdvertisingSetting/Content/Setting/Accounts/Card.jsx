@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { IconButton } from "../../../../../components/IconButton";
 import { ReactComponent as RemoveIcon } from "../../../../../assets/images/remove.svg";
 
-export const Card = ({ expireAt, email, id, name, onDelete }) => (
+export const Card = ({ expireAt, email, id, name, onDelete, oneAccount }) => (
   <StyledCard className={`flex items-center`}>
     {expireAt ? (
       <div>
@@ -12,7 +12,7 @@ export const Card = ({ expireAt, email, id, name, onDelete }) => (
     ) : null}
     <div>
       <div className="value">{id}</div>
-      <div className="subtitle">Id</div>
+      <div className="subtitle">{oneAccount ? "Авторизовано" : "Id"} </div>
     </div>
     {email?.length > 0 ? (
       <div title={email}>

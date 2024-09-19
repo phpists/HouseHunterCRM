@@ -62,6 +62,16 @@ const AdvertisingSetting = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (location?.search?.includes("?type=")) {
+      const typeId = location?.search?.replace("?type=", "");
+      const type = adverstionResources?.resource?.find((r) => r?.id === typeId);
+      if (type) {
+        setSelectedTemplate(type);
+      }
+    }
+  }, [adverstionResources]);
+
   return (
     <StyledAdvertisingSetting>
       <Header selectedTemplate={selectedTemplate} />

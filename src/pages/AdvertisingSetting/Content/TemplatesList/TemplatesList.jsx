@@ -10,6 +10,7 @@ export const TemplatesList = ({
   onSelect,
   olxAuth,
   realestateStatus,
+  flombuAuth,
 }) => (
   <StyledTemplatesList>
     {resources?.length > 0 ? (
@@ -24,6 +25,7 @@ export const TemplatesList = ({
               olxAuth={olxAuth}
               name={t?.name}
               realestateStatus={realestateStatus}
+              flombuAuth={flombuAuth}
             />
           </React.Fragment>
         ))}

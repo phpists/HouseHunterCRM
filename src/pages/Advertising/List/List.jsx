@@ -97,6 +97,7 @@ export const List = ({
                     id_account,
                     id_obj,
                     realstate: id_resource === "4",
+                    flombu: id_resource === "3",
                   })
                 }
                 urlResource={url_resource}

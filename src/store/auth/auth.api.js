@@ -415,6 +415,56 @@ export const auth = createApi({
         }),
       }),
     }),
+    flombuConnectAccount: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "connetctAccount",
+          mod: "publication",
+          resource: "flombu",
+        }),
+      }),
+    }),
+    flombuDeleteAccount: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "delete_account",
+          mod: "publication",
+          resource: "flombu",
+        }),
+      }),
+    }),
+    flombuPublish: build.query({
+      query: (id_obj) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "publish",
+          mod: "publication",
+          resource: "flombu",
+          id_obj,
+        }),
+      }),
+    }),
+    flombuDeleteAd: build.query({
+      query: (id_obj) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "close_adds",
+          mod: "publication",
+          resource: "flombu",
+          id_obj,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -445,4 +495,9 @@ export const {
   useLazyRemoveObjectRealestateQuery,
   useLazyDeleteAccountOlxQuery,
   useLazyRemoveAccountRealestateQuery,
+  useLazyFlombuConnectAccountQuery,
+  useFlombuConnectAccountQuery,
+  useLazyFlombuDeleteAccountQuery,
+  useLazyFlombuPublishQuery,
+  useLazyFlombuDeleteAdQuery,
 } = auth;

@@ -7,6 +7,7 @@ export const Card = ({
   olxAuth,
   name,
   realestateStatus,
+  flombuAuth,
 }) => (
   <StyledCard
     className={`flex items-center justify-between ${selected && "active"}`}
@@ -29,6 +30,8 @@ export const Card = ({
               ? olxAuth
               : name === "realestate"
               ? realestateStatus
+              : name === "flombu"
+              ? flombuAuth
               : false
           )
             ? "active"
@@ -41,6 +44,10 @@ export const Card = ({
             : "Не авторизовано"
           : name === "realestate"
           ? realestateStatus
+            ? "Авторизовано"
+            : "Не авторизовано"
+          : name === "flombu"
+          ? flombuAuth
             ? "Авторизовано"
             : "Не авторизовано"
           : "Не авторизовано"}

@@ -2,13 +2,17 @@ import styled from "styled-components";
 import { Card } from "./Card";
 import olxIcon from "../../../../assets/images/olx.png";
 import realstateIcon from "../../../../assets/images/realstate-icon.png";
+import flombuIcon from "../../../../assets/images/flombu.png";
 import {
   useGetStatusAccountQuery,
   useLazyChangeMlsObjectQuery,
   useLazyPublishObjectQuery,
 } from "../../../../store/objects/objects.api";
-import { Link } from "react-router-dom";
-import { useGetRealestateStatusQuery } from "../../../../store/auth/auth.api";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  useFlombuConnectAccountQuery,
+  useGetRealestateStatusQuery,
+} from "../../../../store/auth/auth.api";
 import { Button } from "./Button";
 import { XHOUSE_COMPANY_ID } from "../../../../constants";
 import { useGetCompanyInfoQuery } from "../../../../store/billing/billing.api";
@@ -16,9 +20,11 @@ import cogoToast from "cogo-toast";
 import { handleResponse } from "../../../../utilits";
 
 export const List = ({ data, onChange, onChangeActiveTab }) => {
+  const navigate = useNavigate();
   const { data: accounts } = useGetStatusAccountQuery();
   const { data: realestateAccounts } = useGetRealestateStatusQuery();
   const { data: companyInfo } = useGetCompanyInfoQuery();
+  const { data: flombuAccounts } = useFlombuConnectAccountQuery();
   const [publishObject] = useLazyPublishObjectQuery();
   const [changeMls] = useLazyChangeMlsObjectQuery();
 
@@ -93,49 +99,81 @@ export const List = ({ data, onChange, onChangeActiveTab }) => {
           <Link to="/advertising-setting">авторизуватись</Link>
         </div>
       ) : null}
-      {accounts?.accounts?.length > 0
-        ? accounts?.accounts?.map((account, i) => (
-            <Card
-              key={i}
-              icon={olxIcon}
-              title={
-                account?.data?.name ??
-                account?.data?.phone ??
-                account?.data?.email ??
-                account?.data?.id
-              }
-              onClick={() =>
-                onChange(
-                  "id_user_olx",
-                  data?.id_user_olx?.includes(account?.data?.id)
-                    ? data?.id_user_olx.filter((id) => id !== account?.data?.id)
-                    : [...data?.id_user_olx, account?.data?.id]
-                )
-              }
-              onChangeActiveTab={() => onChangeActiveTab(0)}
-              active={data?.id_user_olx?.includes(account?.data?.id)}
-            />
-          ))
-        : null}
-      {realestateAccounts?.data?.length > 0
-        ? realestateAccounts?.data?.map(({ id_account, email }, i) => (
-            <Card
-              key={i}
-              icon={realstateIcon}
-              title={email ?? id_account}
-              onClick={() =>
-                onChange(
-                  "id_realstate_users",
-                  data?.id_realstate_users?.includes(id_account)
-                    ? data?.id_realstate_users.filter((i) => i !== id_account)
-                    : [...data?.id_realstate_users, id_account]
-                )
-              }
-              onChangeActiveTab={() => onChangeActiveTab(1)}
-              active={data?.id_realstate_users?.includes(id_account)}
-            />
-          ))
-        : null}
+      {accounts?.accounts?.filter((a) => a?.error !== "invalid_token")?.length >
+      0 ? (
+        accounts?.accounts?.map((account, i) => (
+          <Card
+            key={i}
+            icon={olxIcon}
+            title={
+              account?.data?.name ??
+              account?.data?.phone ??
+              account?.data?.email ??
+              account?.data?.id
+            }
+            onClick={() =>
+              onChange(
+                "id_user_olx",
+                data?.id_user_olx?.includes(account?.data?.id)
+                  ? data?.id_user_olx.filter((id) => id !== account?.data?.id)
+                  : [...data?.id_user_olx, account?.data?.id]
+              )
+            }
+            onChangeActiveTab={() => onChangeActiveTab(0)}
+            active={data?.id_user_olx?.includes(account?.data?.id)}
+          />
+        ))
+      ) : (
+        <Card
+          icon={olxIcon}
+          title={"Потрібна авторизація"}
+          onChangeActiveTab={() => navigate("/advertising-setting?type=1")}
+          noAuth
+        />
+      )}
+      {realestateAccounts?.data?.length > 0 ? (
+        realestateAccounts?.data?.map(({ id_account, email }, i) => (
+          <Card
+            key={i}
+            icon={realstateIcon}
+            title={email ?? id_account}
+            onClick={() =>
+              onChange(
+                "id_realstate_users",
+                data?.id_realstate_users?.includes(id_account)
+                  ? data?.id_realstate_users.filter((i) => i !== id_account)
+                  : [...data?.id_realstate_users, id_account]
+              )
+            }
+            onChangeActiveTab={() => onChangeActiveTab(1)}
+            active={data?.id_realstate_users?.includes(id_account)}
+          />
+        ))
+      ) : (
+        <Card
+          icon={realstateIcon}
+          title={"Потрібна авторизація"}
+          onChangeActiveTab={() => navigate("/advertising-setting?type=4")}
+          noAuth
+        />
+      )}
+      {flombuAccounts?.messege === "Акаунт уже існує" ? (
+        <Card
+          icon={flombuIcon}
+          title={"Авторизовано"}
+          onClick={() => onChange("flombu", !data?.flombu)}
+          onChangeActiveTab={() => onChangeActiveTab(0)}
+          active={data?.flombu}
+        />
+      ) : (
+        <Card
+          icon={flombuIcon}
+          title={"Потрібна авторизація"}
+          onChangeActiveTab={() => navigate("/advertising-setting?type=3")}
+          noAuth
+        />
+      )}
+
       <Button title="MLS" active={data?.mls} onClick={handleChangeMls} />
 
       {XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) &&
