@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import closeIcon from "../../assets/images/close-.svg";
+import { ReactComponent as CloseIcon } from "../../assets/images/close-.svg";
 
 export const CloseButton = ({ onClick }) => (
   <StyledCloseButton
     className="flex items-center justify-center"
     onClick={onClick}
   >
-    <img src={closeIcon} alt="" />
+    <CloseIcon />
   </StyledCloseButton>
 );
 
@@ -16,7 +16,7 @@ const StyledCloseButton = styled.button`
   position: absolute;
   top: 0;
   right: 30px;
-  img {
-    height: 12px;
+  svg {
+    height: 22px;
   }
 `;
