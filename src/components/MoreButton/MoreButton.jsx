@@ -19,6 +19,7 @@ export const MoreButton = ({
   onDownload,
   onOpenDeleteReason,
   urlResource,
+  onDeleteHistory,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
 
@@ -50,6 +51,7 @@ export const MoreButton = ({
             onClick
             onOpenDeleteReason={onOpenDeleteReason}
             urlResource={urlResource}
+            onDeleteHistory={onDeleteHistory}
           />
         </div>
       </StyledMoreButton>

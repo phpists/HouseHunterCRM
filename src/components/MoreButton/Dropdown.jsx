@@ -22,6 +22,7 @@ export const Dropdown = ({
   onDownload,
   onOpenDeleteReason,
   urlResource,
+  onDeleteHistory,
 }) => (
   <StyledDropdown className="dropdown noClickable">
     {isDeleted ? (
@@ -112,7 +113,18 @@ export const Dropdown = ({
             className="flex items-center justify-between noClickable"
             onClick={onDelete}
           >
-            <span className="noClickable">Видалити</span>
+            <span className="noClickable">
+              {onDeleteHistory ? "Видалити на ресурсі" : "Видалити"}
+            </span>
+            <RemoveIcon className="remove-icon noClickable" />
+          </div>
+        )}
+        {onDeleteHistory && (
+          <div
+            className="flex items-center justify-between noClickable"
+            onClick={onDeleteHistory}
+          >
+            <span className="noClickable">Видалити із історії</span>
             <RemoveIcon className="remove-icon noClickable" />
           </div>
         )}

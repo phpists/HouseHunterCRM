@@ -100,6 +100,16 @@ export const List = ({
                     flombu: id_resource === "3",
                   })
                 }
+                onDeleteHistory={() =>
+                  handleOpenDeleteModal({
+                    id_user_olx,
+                    id_ad_in_source,
+                    id_account,
+                    id_obj,
+                    flombu: true,
+                    history: true,
+                  })
+                }
                 urlResource={url_resource}
               />
             )

@@ -18,6 +18,7 @@ export const Card = ({
   onDelete,
   urlResource,
   resource,
+  onDeleteHistory,
 }) => {
   const handleClick = (e) => {
     e.target.classList.contains("card") && onSelect();
@@ -59,6 +60,7 @@ export const Card = ({
             noFavorite
             onDelete={onDelete}
             urlResource={urlResource}
+            onDeleteHistory={onDeleteHistory}
           />
         </div>
       </div>

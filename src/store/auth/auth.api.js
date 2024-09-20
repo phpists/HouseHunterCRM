@@ -464,6 +464,19 @@ export const auth = createApi({
         }),
       }),
     }),
+    flombuDeleteAdHistory: build.query({
+      query: (id_obj) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "remove_adds",
+          mod: "publication",
+          resource: "flombu",
+          id_obj,
+        }),
+      }),
+    }),
     flombuDeleteAd: build.query({
       query: (id_obj) => ({
         url: "",
@@ -513,4 +526,5 @@ export const {
   useLazyFlombuPublishQuery,
   useLazyFlombuDeleteAdQuery,
   useFlombuConnectStatusQuery,
+  useLazyFlombuDeleteAdHistoryQuery,
 } = auth;

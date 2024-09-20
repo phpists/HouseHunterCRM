@@ -90,13 +90,16 @@ export const Setting = ({
         <div className="fields"></div>
       ) : data?.id === "3" ? (
         <div className="fields">
-          <Button title="Додати акаунт" onClick={handleFlombuConnect} />
-          <Accounts
-            accounts={flombuAuth ? [{ id: "Акаунт у flombu" }] : []}
-            onRefreshAccountsData={onRefreshFlombuStatus}
-            onDelete={(id) => handleDeleteAccount(id, "flombu")}
-            oneAccount
-          />
+          {flombuAuth ? (
+            <Accounts
+              accounts={flombuAuth ? [{ id: "Акаунт у flombu" }] : []}
+              onRefreshAccountsData={onRefreshFlombuStatus}
+              onDelete={(id) => handleDeleteAccount(id, "flombu")}
+              oneAccount
+            />
+          ) : (
+            <Button title="Додати акаунт" onClick={handleFlombuConnect} />
+          )}
         </div>
       ) : data?.id === "4" ? (
         <div className="fields">

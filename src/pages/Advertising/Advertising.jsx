@@ -23,6 +23,7 @@ import {
 } from "../../store/objects/objects.api";
 import {
   useGetRealestateStatusQuery,
+  useLazyFlombuDeleteAdHistoryQuery,
   useLazyFlombuDeleteAdQuery,
   useLazyRemoveObjectRealestateQuery,
 } from "../../store/auth/auth.api";
@@ -66,6 +67,8 @@ const Advertising = () => {
   const [removeObjectREalstate] = useLazyRemoveObjectRealestateQuery();
   const { data: realestateStatus } = useGetRealestateStatusQuery();
   const [deleteFlombuAd] = useLazyFlombuDeleteAdQuery();
+  const [deleteFlombuAdHistory] = useLazyFlombuDeleteAdHistoryQuery();
+
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
 
@@ -79,7 +82,6 @@ const Advertising = () => {
     return date?.getTime() / 1000;
   };
 
-  console.log(filter?.filters?.resource);
   const handleGetAdds = () => {
     getListAdds(filter?.filters?.resource ?? "1");
   };
@@ -144,6 +146,7 @@ const Advertising = () => {
     id_obj,
     realstate,
     flombu,
+    history,
   }) => {
     if (realstate) {
       removeObjectREalstate({
@@ -153,9 +156,15 @@ const Advertising = () => {
         handleResponse(resp, handleDeleteSuccess);
       });
     } else if (flombu) {
-      deleteFlombuAd(id_obj).then((resp) => {
-        handleResponse(resp, handleDeleteSuccess);
-      });
+      if (history) {
+        deleteFlombuAdHistory(id_obj).then((resp) => {
+          handleResponse(resp, handleDeleteSuccess);
+        });
+      } else {
+        deleteFlombuAd(id_obj).then((resp) => {
+          handleResponse(resp, handleDeleteSuccess);
+        });
+      }
     } else {
       deleteAd({ id_user_olx, id_obj: id_ad_in_source }).then((resp) => {
         handleResponse(resp, handleDeleteSuccess);
