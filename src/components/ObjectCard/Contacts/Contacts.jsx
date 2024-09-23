@@ -40,15 +40,11 @@ export const Contacts = ({
 
   return (
     <StyledContacts className={`hide-scroll clickable ${className}`}>
-      {ad ? (
+      {ad && data?.author_phone?.length > 0 ? (
         <Contact
           type="rieltor"
-          name={data?.clients_inf?.contact?.owner?.name}
-          phones={
-            data?.clients_inf?.contact?.owner?.phone
-              ? data?.clients_inf?.contact?.owner?.phone
-              : data?.clients_inf?.contact?.owner?.phones
-          }
+          name={data?.author_name ?? "-"}
+          phones={[{ phone: data?.author_phone }]}
           typeText="Реклама"
           error={error}
           onShow={handleShowClient}

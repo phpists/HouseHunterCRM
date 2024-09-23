@@ -490,6 +490,18 @@ export const auth = createApi({
         }),
       }),
     }),
+    getStatusesOlx: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getStatuses",
+          mod: "publication",
+          resource: "olx",
+        }),
+      }),
+    }),
   }),
 });
 
@@ -527,4 +539,5 @@ export const {
   useLazyFlombuDeleteAdQuery,
   useFlombuConnectStatusQuery,
   useLazyFlombuDeleteAdHistoryQuery,
+  useGetStatusesOlxQuery,
 } = auth;

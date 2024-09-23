@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import icon from "../../../../assets/images/olx.png";
 
-export const Resource = () => (
+export const Resource = ({ data }) => (
   <StyledResource icon={icon} className="flex items-center">
-    <div></div> Тест Тест
+    <div></div> {data?.name ?? data?.phone ?? data?.email ?? data?.id}
   </StyledResource>
 );
 

@@ -17,7 +17,6 @@ import {
 } from "../../utilits";
 import cogoToast from "cogo-toast";
 import {
-  useGetListAddsPublichQuery,
   useLazyDeleteAdQuery,
   useLazyGetListAddsPublichQuery,
 } from "../../store/objects/objects.api";
@@ -83,7 +82,7 @@ const Advertising = () => {
   };
 
   const handleGetAdds = () => {
-    getListAdds(filter?.filters?.resource ?? "1");
+    getListAdds({ resource: filter?.filters?.resource ?? "1" });
   };
   const handleSelectClient = (id) => {
     const isExist = selected.find((w) => w === id);

@@ -509,7 +509,7 @@ export const objects = createApi({
       }),
     }),
     getListAddsPublich: build.query({
-      query: (resource = "1") => ({
+      query: ({ resource = "1", status }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -517,6 +517,7 @@ export const objects = createApi({
           action: "getListAddsPublich",
           mod: "publication",
           resource,
+          status,
         }),
       }),
     }),
@@ -533,7 +534,13 @@ export const objects = createApi({
       }),
     }),
     publishObject: build.query({
-      query: ({ id_obj, id_user_olx, resource }) => ({
+      query: ({
+        id_obj,
+        id_user_olx,
+        resource,
+        author_name,
+        author_phone,
+      }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -543,6 +550,8 @@ export const objects = createApi({
           resource,
           id_obj,
           id_user_olx,
+          author_name,
+          author_phone,
         }),
       }),
     }),

@@ -74,6 +74,8 @@ export const List = ({
                 id_ad_in_source,
                 id_account,
                 id_obj,
+                author_name,
+                author_phone,
               },
               i
             ) => (

@@ -21,7 +21,10 @@ import { Price } from "../../../Request/Main/Price/Price";
 import { IconButton } from "../../../../components/IconButton";
 import { Base } from "../../../../components/Base/Base";
 import { TagsFilter } from "../../../../components/TagsFilter/TagsFilter";
-import { useGetPhonesCodesQuery } from "../../../../store/auth/auth.api";
+import {
+  useGetPhonesCodesQuery,
+  useGetStatusesOlxQuery,
+} from "../../../../store/auth/auth.api";
 import { Ranger } from "../../../../components/Ranger/Ranger";
 import { MapButton } from "./MapButton";
 import { ReactComponent as RemoveIcon } from "../../../../assets/images/remove.svg";
@@ -92,6 +95,7 @@ export const Main = ({
   const { data: streets } = useGetStreetsListQuery();
   const { data: companyWorkers } = useGetWorkersMyCompanyQuery();
   const { data: workers } = useGetWorkerMyStructureQuery();
+  const { data: statuses } = useGetStatusesOlxQuery();
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -238,7 +242,6 @@ export const Main = ({
         }
         onChange={(val) => onChangeFilter("search_not_like", val)}
       />
-
       <Divider />
       <ProfileField
         placeholder="Введіть значення"
@@ -274,7 +277,6 @@ export const Main = ({
         onBlur={() => onChangeInputFocus(false)}
         type="number"
       />
-
       <div className="fields-wrapper">
         {filtersFields?.main_field
           ? Object.entries(filtersFields?.main_field)
@@ -531,6 +533,25 @@ export const Main = ({
               filters?.company_object?.canceled === "1" ? undefined : "1",
           })
         }
+      />{" "}
+      <Divider />
+      <SelectTags
+        label="Пошук по статусу"
+        placeholder="Оберіть статус"
+        options={
+          statuses?.data
+            ? Object.entries(statuses?.data)?.map((s) => ({
+                title: s[1],
+                value: s[0],
+              }))
+            : []
+        }
+        value={filters?.status}
+        onChange={(val) =>
+          onChangeFilter("status", val === filters?.status ? undefined : val)
+        }
+        isSearch
+        notMultiSelect
       />
     </StyledMain>
   );

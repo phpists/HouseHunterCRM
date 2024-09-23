@@ -14,6 +14,8 @@ export const PhoneInput = ({
   onBlur,
   onKeyDown,
   onFocus,
+  mask,
+  placeholder,
 }) => {
   const inputRef = useRef(null);
 
@@ -51,20 +53,25 @@ export const PhoneInput = ({
 
   return (
     <div className="flex items-center relative">
-      <CodeSelect
-        value={phoneCode}
-        className="code-select-wrapper"
-        options={phonesCodes}
-        onChange={onChangePhoneCode}
-        onFocus={onFocus}
-      />
+      {mask ? null : (
+        <CodeSelect
+          value={phoneCode}
+          className="code-select-wrapper"
+          options={phonesCodes}
+          onChange={onChangePhoneCode}
+          onFocus={onFocus}
+        />
+      )}
       <IMaskInput
         className={inputClassName}
-        mask={handleGetMask()?.slice(
-          0,
-          Number(phonesCodes?.find(({ id }) => id === phoneCode)?.num_count) +
-            handleGetMaskSymbolsNumber()
-        )}
+        mask={
+          mask ??
+          handleGetMask()?.slice(
+            0,
+            Number(phonesCodes?.find(({ id }) => id === phoneCode)?.num_count) +
+              handleGetMaskSymbolsNumber()
+          )
+        }
         value={value}
         unmask={true} // true|false|'typed'
         inputRef={inputRef} // access to nested input
@@ -74,6 +81,7 @@ export const PhoneInput = ({
         onBlur={onBlur}
         onKeyDown={onKeyDown}
         onPaste={handlePaste}
+        placeholder={placeholder}
       />
     </div>
   );

@@ -16,6 +16,7 @@ import {
   useLazyFlombuPublishQuery,
   useLazyPublishRealestateQuery,
 } from "../../store/auth/auth.api";
+import { useAppSelect } from "../../hooks/redux";
 
 export const ObjectAdModal = ({ onClose, object }) => {
   const [data, setData] = useState({
@@ -32,6 +33,8 @@ export const ObjectAdModal = ({ onClose, object }) => {
     street2: "",
     home: "",
     flombu: false,
+    author_name: "",
+    author_phone: "",
   });
   const [loading, setLoading] = useState(false);
   const [publishObject] = useLazyPublishObjectQuery();
@@ -42,6 +45,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
   const [citiesCount, setCitiesCount] = useState(0);
   const [streetsCount, setStreetsCount] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
+  const { user } = useAppSelect((state) => state.auth);
 
   const handleChangeField = (field, value, changeAll) =>
     setData(changeAll ? value : { ...data, [field]: value });
@@ -50,6 +54,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
   const handleChangeStreetsCount = (val) => setStreetsCount(val);
   const handleChangeActiveTab = (val) => setActiveTab(val);
 
+  console.log(user);
   useEffect(() => {
     setData({
       title: object?.title ?? "",
@@ -65,6 +70,8 @@ export const ObjectAdModal = ({ onClose, object }) => {
       street2: "",
       home: "",
       flombu: false,
+      author_name: `${user?.first_name ?? ""} ${user?.last_name ?? ""}`,
+      author_phone: user?.phones?.[0]?.phone ?? "",
       ...object,
     });
   }, [object]);
@@ -76,6 +83,8 @@ export const ObjectAdModal = ({ onClose, object }) => {
         id_obj: object?.id,
         id_user_olx,
         resource: "olx",
+        author_name: data?.author_name,
+        author_phone: data?.author_phone,
       }).then((resp) => {
         setLoading(false);
         handleResponse(

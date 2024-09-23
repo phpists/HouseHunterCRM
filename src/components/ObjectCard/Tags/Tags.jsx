@@ -169,7 +169,7 @@ export const Tags = ({
   return (
     <StyledTags className={`flex flex-col hide-scroll clickable ${className}`}>
       {ad ? (
-        <AdTags />
+        <AdTags data={data} />
       ) : (
         <>
           {" "}

@@ -26,7 +26,9 @@ export const Footer = ({
       {idSource !== "0" && typeObject !== "company" ? (
         <>
           <Tag title={`ID на ресурсі`} copyValue={idSource} isCopy />{" "}
-          <Tag title={data?.[nameSource] ?? ""} />
+          {data?.[nameSource]?.length > 0 ? (
+            <Tag title={data?.[nameSource] ?? ""} />
+          ) : null}
         </>
       ) : null}
       <Tag

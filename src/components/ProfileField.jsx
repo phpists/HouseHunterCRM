@@ -41,6 +41,8 @@ export const ProfileField = ({
   onClickOnIconEdit,
   alwaysOpen,
   noAutoFill,
+  mask,
+  phonePlaceholder,
 }) => {
   const fieldRef = useRef();
   const [active, setActive] = useState(initOpen);
@@ -172,6 +174,8 @@ export const ProfileField = ({
                 inputClassName="value"
                 onKeyDown={handlePressKey}
                 onFocus={onFocus}
+                mask={mask}
+                placeholder={phonePlaceholder}
               />
             ) : textarea ? (
               <textarea

@@ -48,9 +48,13 @@ export const DesktopContent = ({
   return (
     <StyledDesktopContent className="flex items-center justify-between clickable">
       <Slider
-        photos={[...checkIsArray(data?.img)]?.sort(
-          (a, b) => b?.cover - a?.cover
-        )}
+        photos={
+          ad
+            ? data?.img
+              ? [{ name: data?.img }]
+              : []
+            : [...checkIsArray(data?.img)]?.sort((a, b) => b?.cover - a?.cover)
+        }
         data={data}
         showLike={showLike}
       />

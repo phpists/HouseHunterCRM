@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import {
   useLazyAddToFavoritesQuery,
   useLazyGetAllObjectsQuery,
+  useLazyGetListAddsPublichQuery,
   useLazyGetRubricFieldsQuery,
   useLazyRestoreObjectsQuery,
 } from "../../store/objects/objects.api";
@@ -23,6 +24,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { useAppSelect } from "../../hooks/redux";
 
 const Ad = () => {
+  const [getListAdds, { data }] = useLazyGetListAddsPublichQuery();
   const { user } = useAppSelect((state) => state.auth);
   const { id } = useParams();
   const location = useLocation();
@@ -337,11 +339,15 @@ const Ad = () => {
       setIsAllPages(false);
       //   setFilters(INIT_FILTERS);
       //   filterActive.current = false;
-      handleGetObjects(true);
+      //   handleGetObjects(true);
       //   localStorage.removeItem("objectsLastFilters");
     }
     // eslint-disable-next-line
   }, [isFavorite]);
+
+  useEffect(() => {
+    getListAdds({ status: filters?.status });
+  }, []);
 
   const handleApplyFilter = (isApply) => {
     filterActive.current = isApply;
@@ -353,6 +359,7 @@ const Ad = () => {
     currentPage.current = 0;
     setIsAllPages(false);
     handleGetObjects(true, isApply);
+    getListAdds({ status: isApply ? filters?.status : undefined });
     setIsDeleted(
       isApply ? filters?.company_object?.show_deleted === "1" : false
     );
@@ -483,7 +490,6 @@ const Ad = () => {
     // eslint-disable-next-line
   }, [updateData]);
 
-  console.log(filters);
   const handleApplyDefaultFilters = () => {
     filterActive.current = false;
     isFirstRender.current = false;
@@ -640,15 +646,15 @@ const Ad = () => {
   }, []);
 
   const handleScroll = () => {
-    if (
-      listRef.current.offsetHeight + listRef.current.scrollTop <=
-        listRef.current.scrollHeight - 200 ||
-      isLoading.current
-    ) {
-      return;
-    }
-    currentPage.current += 1;
-    handleGetObjects();
+    // if (
+    //   listRef.current.offsetHeight + listRef.current.scrollTop <=
+    //     listRef.current.scrollHeight - 200 ||
+    //   isLoading.current
+    // ) {
+    //   return;
+    // }
+    // currentPage.current += 1;
+    // handleGetObjects();
   };
 
   useEffect(() => {
@@ -752,7 +758,7 @@ const Ad = () => {
       <List
         selected={selected}
         onSelect={handleSelect}
-        data={objects ?? []}
+        data={data?.data ?? []}
         toggleFavoriteStatus={handleToggleFavoriteStatus}
         onFindSimilar={handleFindSimilarTo}
         innerRef={listRef}
