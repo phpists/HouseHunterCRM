@@ -30,6 +30,8 @@ export const ShowMore = ({
   onAdvertise,
   onAdvertiseTelegram,
   ad,
+  onDeleteHistory,
+  onDeleteAd,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -83,6 +85,8 @@ export const ShowMore = ({
         onAdvertise={onAdvertise}
         onAdvertiseTelegram={onAdvertiseTelegram}
         ad={ad}
+        onDeleteHistory={onDeleteHistory}
+        onDeleteAd={onDeleteAd}
       />
     </StyledShowMore>
   );

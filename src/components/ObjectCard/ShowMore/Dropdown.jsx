@@ -52,6 +52,8 @@ export const Dropdown = ({
   onAdvertise,
   onAdvertiseTelegram,
   ad,
+  onDeleteHistory,
+  onDeleteAd,
 }) => {
   const [addStreetBaseObject] = useLazyAddStreetBaseObjectQuery();
   const [added, setAdded] = useState(false);
@@ -138,6 +140,54 @@ export const Dropdown = ({
             >
               <span>Видалити</span> <RemoveIcon className="selection-icon" />
             </div>
+          )}
+        </>
+      ) : ad ? (
+        <>
+          {onDeleteHistory && (
+            <div
+              className="flex items-center justify-between"
+              onClick={onDeleteHistory}
+            >
+              <span>Видалити з історії</span>{" "}
+              <RemoveIcon className="selection-icon" />
+            </div>
+          )}
+          {onDeleteAd && (
+            <div
+              className="flex items-center justify-between"
+              onClick={onDeleteAd}
+            >
+              <span>Видалити на ресурсі</span>{" "}
+              <RemoveIcon className="selection-icon" />
+            </div>
+          )}
+          {isEdit && (
+            <NavLink
+              onClick={() => onFocus()}
+              to={`/edit-${ad ? "ad" : "object"}/${clientId}/${id}${
+                searchTag ?? ""
+              }`}
+              className="flex items-center justify-between"
+              onFocus={(e) => {
+                e.preventDefault();
+                onFocus();
+              }}
+              onMouseDown={(e) => {
+                if (window.event?.which === 2) {
+                  window
+                    .open(
+                      `/edit-${ad ? "ad" : "object"}/${clientId}/${id}${
+                        searchTag ?? ""
+                      }`,
+                      "_blank"
+                    )
+                    .focus();
+                }
+              }}
+            >
+              <span>Редагувати </span> <Edit />
+            </NavLink>
           )}
         </>
       ) : (

@@ -148,7 +148,7 @@ export const List = ({ data, onChange, onChangeActiveTab }) => {
           icon={flombuIcon}
           title={"Авторизовано"}
           onClick={() => onChange("flombu", !data?.flombu)}
-          onChangeActiveTab={() => onChangeActiveTab(0)}
+          onChangeActiveTab={() => onChangeActiveTab(2)}
           active={data?.flombu}
         />
       ) : null}

@@ -23,7 +23,7 @@ export const Info = ({
           onChangeStreetsCount={onChangeStreetsCount}
         />
       </>
-    ) : activeTab === 0 ? (
+    ) : (
       <>
         <Title />
         <ProfileField
@@ -48,33 +48,41 @@ export const Info = ({
           alwaysOpen
           readOnly
         />
-        <ProfileField
-          value={data?.author_name}
-          placeholder="Введіть ім'я"
-          onChange={(val) => (loading ? null : onChange("author_name", val))}
-          big
-          className="title"
-          initOpen
-          alwaysOpen
-          label="Опис"
-          readOnly
-        />
-        <ProfileField
-          value={data?.author_phone}
-          phonePlaceholder="Введіть телефон"
-          label="Телефон"
-          onChange={(val) => (loading ? null : onChange("author_phone", val))}
-          big
-          className="title"
-          initOpen
-          alwaysOpen
-          readOnly
-          type="number"
-          phone
-          mask="0000000000"
-        />
+        {activeTab === 0 && (
+          <div className="flex items-center gap-5">
+            <ProfileField
+              value={data?.author_name}
+              placeholder="Введіть ім'я"
+              onChange={(val) =>
+                loading ? null : onChange("author_name", val)
+              }
+              big
+              className="title"
+              initOpen
+              alwaysOpen
+              label="Опис"
+              readOnly
+            />
+            <ProfileField
+              value={data?.author_phone}
+              phonePlaceholder="Введіть телефон"
+              label="Телефон"
+              onChange={(val) =>
+                loading ? null : onChange("author_phone", val)
+              }
+              big
+              className="title"
+              initOpen
+              alwaysOpen
+              readOnly
+              type="number"
+              phone
+              mask="0000000000"
+            />
+          </div>
+        )}
       </>
-    ) : null}
+    )}
   </StyledInfo>
 );
 

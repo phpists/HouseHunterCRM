@@ -4,7 +4,7 @@ import { Status } from "./Status";
 import { useGetStatusAccountQuery } from "../../../../store/objects/objects.api";
 import { handleFormatDate } from "../../../../utilits";
 
-export const AdTags = ({ data }) => {
+export const AdTags = ({ data, onUpdateField }) => {
   const { data: accounts } = useGetStatusAccountQuery();
 
   return (
@@ -19,6 +19,9 @@ export const AdTags = ({ data }) => {
       <Status
         status={data?.status}
         date={handleFormatDate(Number(data?.dt_publicate) * 1000, true)}
+        idAd={data?.id_ad_in_source}
+        idUserOlx={data?.id_user_olx}
+        onUpdateField={onUpdateField}
       />
     </StyledAdTags>
   );

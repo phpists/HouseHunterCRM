@@ -33,7 +33,9 @@ export const Header = ({ data, ad }) => {
       {data?.type_object === "street_base" ? (
         <Tag title="База StreetBase" color="green" />
       ) : null}
-      {data?.type_object === "street_base"
+      {ad
+        ? null
+        : data?.type_object === "street_base"
         ? null
         : data?.type_object === "Company"
         ? null

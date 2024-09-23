@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import { Tag } from "../../Info/Header/Tag";
-import { useGetStatusesOlxQuery } from "../../../../store/auth/auth.api";
+import {
+  useGetStatusesOlxQuery,
+  useLazyGetStatusAddQuery,
+} from "../../../../store/auth/auth.api";
+import { ReactComponent as RefreshIcon } from "../../../../assets/images/refresh-icon.svg";
+import { useState } from "react";
+import { handleResponse } from "../../../../utilits";
 
 const STATUSES = {
   error: {
@@ -65,20 +71,45 @@ const STATUSES = {
   },
 };
 
-export const Status = ({ status, date }) => {
+export const Status = ({ status, date, idAd, idUserOlx, onUpdateField }) => {
   const { data } = useGetStatusesOlxQuery();
+  const [getStatusAdd] = useLazyGetStatusAddQuery();
+  const [loading, setLoading] = useState(false);
+
+  const handleRefreshStatus = () => {
+    if (!loading) {
+      setLoading(true);
+      getStatusAdd({
+        id_ad_in_source: idAd,
+        id_user_olx: idUserOlx,
+      }).then((resp) => {
+        setTimeout(() => {
+          setLoading(false);
+          if (resp?.data?.status) {
+            onUpdateField("status", resp?.data?.status);
+          }
+        }, 1000);
+      });
+    }
+  };
 
   return (
     <StyledStatus>
-      <Tag
-        title={data?.data?.[status] ?? STATUSES[status]?.title}
-        color="green"
-        style={{
-          color: STATUSES[status]?.color,
-          background: STATUSES[status]?.bg,
-          maxWidth: 150,
-        }}
-      />
+      <div className="flex items-center gap-2">
+        <Tag
+          title={data?.data?.[status] ?? STATUSES[status]?.title}
+          color="green"
+          style={{
+            color: STATUSES[status]?.color,
+            background: STATUSES[status]?.bg,
+            maxWidth: 130,
+          }}
+        />
+        <RefreshIcon
+          onClick={handleRefreshStatus}
+          className={`refreshIcon  ${loading && "loading"}`}
+        />
+      </div>
       <div className="date">з {date}</div>
     </StyledStatus>
   );
@@ -109,5 +140,19 @@ const StyledStatus = styled.div`
     white-space: nowrap;
     max-width: 170px;
     overflow: hidden;
+  }
+  .refreshIcon {
+    height: 20px;
+    &.loading {
+      animation: 2s infinite loading linear;
+      @keyframes loading {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    }
   }
 `;

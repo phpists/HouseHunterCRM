@@ -22,6 +22,7 @@ export const Tags = ({
   selections,
   onChangeTags,
   ad,
+  onUpdateField,
 }) => {
   const { id } = useParams();
   const { data: tagsList } = useGetTagsListQuery({ only_notepad: "1" });
@@ -169,7 +170,7 @@ export const Tags = ({
   return (
     <StyledTags className={`flex flex-col hide-scroll clickable ${className}`}>
       {ad ? (
-        <AdTags data={data} />
+        <AdTags data={data} onUpdateField={onUpdateField} />
       ) : (
         <>
           {" "}

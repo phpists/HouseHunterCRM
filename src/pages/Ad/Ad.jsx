@@ -24,7 +24,8 @@ import { useLocation, useParams } from "react-router-dom";
 import { useAppSelect } from "../../hooks/redux";
 
 const Ad = () => {
-  const [getListAdds, { data }] = useLazyGetListAddsPublichQuery();
+  const [getListAdds] = useLazyGetListAddsPublichQuery();
+  const [data, setData] = useState([]);
   const { user } = useAppSelect((state) => state.auth);
   const { id } = useParams();
   const location = useLocation();
@@ -346,7 +347,9 @@ const Ad = () => {
   }, [isFavorite]);
 
   useEffect(() => {
-    getListAdds({ status: filters?.status });
+    getListAdds({ status: filters?.status }).then((resp) =>
+      setData(resp?.data?.data)
+    );
   }, []);
 
   const handleApplyFilter = (isApply) => {
@@ -359,7 +362,9 @@ const Ad = () => {
     currentPage.current = 0;
     setIsAllPages(false);
     handleGetObjects(true, isApply);
-    getListAdds({ status: isApply ? filters?.status : undefined });
+    getListAdds({ status: isApply ? filters?.status : undefined }).then(
+      (resp) => setData(resp?.data?.data)
+    );
     setIsDeleted(
       isApply ? filters?.company_object?.show_deleted === "1" : false
     );
@@ -490,161 +495,6 @@ const Ad = () => {
     // eslint-disable-next-line
   }, [updateData]);
 
-  const handleApplyDefaultFilters = () => {
-    filterActive.current = false;
-    isFirstRender.current = false;
-    setIsDeleted(false);
-    setFilterFields([]);
-    const filterApply = location?.search?.split("=")[0];
-    const filterApplyValue = location?.search?.split("=")[1];
-    if (id) {
-      setFilters({
-        id_hash: id,
-        company_object: {
-          show_only: "company",
-          actual: "1",
-          given_objects: "1",
-          not_actual: "1",
-          overdue: "1",
-          show_street_base_company: "1",
-        },
-        street_base_object: {
-          sorting_id: "16",
-        },
-        mls_object: {},
-      });
-      filterActive.current = true;
-      setUpdateData(true);
-    } else if (filterApply === "?findSelectionSimilar") {
-      const initFilters =
-        location?.search
-          ?.replace("?findSelectionSimilar=true", "")
-          ?.split("&")
-          ?.filter((f) => f?.length > 0)
-          ?.map((f) => f?.split("=")) ?? [];
-      let initFiltersObject = {};
-
-      try {
-        initFiltersObject = Object.fromEntries(initFilters);
-      } catch {
-        initFiltersObject = {};
-      }
-
-      setFilters({
-        ...initFiltersObject,
-        id_location: initFiltersObject?.id_location
-          ? [initFiltersObject?.id_location]
-          : undefined,
-        company_object: {
-          show_only: "company",
-          actual: "1",
-          given_objects: "1",
-          not_actual: "1",
-          overdue: "1",
-          show_street_base_company: "1",
-        },
-        street_base_object: {
-          sorting_id: "16",
-        },
-        mls_object: {},
-      });
-      if (initFiltersObject?.id_rubric) {
-        handleGetRubricsFields(initFiltersObject?.id_rubric);
-      }
-      filterActive.current = true;
-      setUpdateData(true);
-    } else if (filterApply === "?findWorker") {
-      const initFilters =
-        location?.search
-          ?.replace("?findWorker=true", "")
-          ?.split("&")
-          ?.filter((f) => f?.length > 0)
-          ?.map((f) => f?.split("=")) ?? [];
-      let initFiltersObject = {};
-
-      try {
-        initFiltersObject = Object.fromEntries(initFilters);
-      } catch {
-        initFiltersObject = {};
-      }
-
-      setIsDeleted(initFiltersObject?.show_deleted === "1");
-      setFilters({ company_object: initFiltersObject });
-      localStorage.setItem(
-        "objectsLastFilters",
-        JSON.stringify({ company_object: initFiltersObject })
-      );
-      filterActive.current = true;
-      setUpdateData(true);
-    } else if (filterApply === "?showDeadline") {
-      setFilters({ company_object: { overdue: "1", show_only: "only_my" } });
-      filterActive.current = true;
-      setUpdateData(true);
-    } else if (filterApply === "?showLiquidity") {
-      setFilters({ showLiquidity: "1" });
-      filterActive.current = true;
-      setUpdateData(true);
-    } else if (filterApply === "?my_objects") {
-      setFilters({
-        company_object: {
-          show_only: "only_my",
-          show_street_base_company: "1",
-          overdue: "1",
-          not_actual: "1",
-          given_objects: "1",
-          actual: "1",
-        },
-      });
-      filterActive.current = true;
-      setUpdateData(true);
-    } else if (filterApply === "?moderationAfterStreetBase") {
-      setFilters({
-        company_object: {
-          show_only: "only_my",
-          show_street_base_company: "1",
-        },
-      });
-      filterActive.current = true;
-      setUpdateData(true);
-    } else if (filterApply === "?findClientsObjects") {
-      setFilters({
-        search_phone: filterApplyValue,
-        street_base_object: {
-          sorting_id: "16",
-        },
-      });
-      filterActive.current = true;
-      setUpdateData(true);
-    } else if (
-      filterApply === "?prev" ||
-      localStorage.getItem("objectsLastFilters")
-    ) {
-      const lastFilters = localStorage.getItem("objectsLastFilters")
-        ? checkIsJSON(localStorage.getItem("objectsLastFilters"))
-        : DEFAULT_FILTERS;
-
-      setFilters(lastFilters);
-      setIsDeleted(lastFilters?.company_object?.show_deleted === "1");
-      filterActive.current = true;
-      setUpdateData(true);
-      if (lastFilters?.id_rubric) {
-        handleGetRubricsFields(lastFilters?.id_rubric);
-      }
-    } else {
-      setFilters(DEFAULT_FILTERS);
-      filterActive.current = true;
-      setUpdateData(true);
-    }
-  };
-
-  useEffect(() => {
-    handleApplyDefaultFilters();
-  }, [location.search, id]);
-
-  useEffect(() => {
-    handleApplyDefaultFilters();
-  }, []);
-
   const handleScroll = () => {
     // if (
     //   listRef.current.offsetHeight + listRef.current.scrollTop <=
@@ -678,9 +528,9 @@ const Ad = () => {
     allCountRef.current = updatedCount;
     saveObjectsCount(objectsCount - 1);
     setAllCount(updatedCount);
-    const updatedData = objects.filter((obj) => obj.id !== id);
+    const updatedData = data.filter((obj) => obj.id_ad_in_source !== id);
     dataRef.current = updatedData;
-    setObjects(updatedData);
+    setData(updatedData);
     setSelected([]);
     // handleGetObjects();
   };
@@ -724,6 +574,13 @@ const Ad = () => {
     setSelected([]);
   };
 
+  const handleUpdateObjectValue = (id, field, value) =>
+    setData(
+      data?.map((e) =>
+        e.id_ad_in_source === id ? { ...e, [field]: value } : e
+      )
+    );
+
   return (
     <StyledObjects>
       <Header
@@ -758,7 +615,7 @@ const Ad = () => {
       <List
         selected={selected}
         onSelect={handleSelect}
-        data={data?.data ?? []}
+        data={data ?? []}
         toggleFavoriteStatus={handleToggleFavoriteStatus}
         onFindSimilar={handleFindSimilarTo}
         innerRef={listRef}
@@ -775,6 +632,7 @@ const Ad = () => {
         isDeleted={filters?.company_object?.show_deleted === "1"}
         onChangeTags={handleChangeTags}
         filters={filters}
+        onUpdateObject={handleUpdateObjectValue}
       />
     </StyledObjects>
   );

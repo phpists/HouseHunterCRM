@@ -14,6 +14,7 @@ import {
 import { useEffect } from "react";
 import { ProfileField } from "../../../../components/ProfileField";
 import {
+  useGetAdverstionResourceQuery,
   useGetCommentsToFieldsQuery,
   useGetStreetsListQuery,
 } from "../../../../store/objects/objects.api";
@@ -96,6 +97,7 @@ export const Main = ({
   const { data: companyWorkers } = useGetWorkersMyCompanyQuery();
   const { data: workers } = useGetWorkerMyStructureQuery();
   const { data: statuses } = useGetStatusesOlxQuery();
+  const { data: adverstionResources } = useGetAdverstionResourceQuery();
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -132,6 +134,25 @@ export const Main = ({
   return (
     <StyledMain className="section filterFieldsWrapper">
       <SelectTags
+        label="Ресурс"
+        placeholder="Оберіть ресурс"
+        options={
+          adverstionResources?.resource?.map((v) => ({
+            title: v?.name,
+            value: v?.id,
+          })) ?? []
+        }
+        value={filters?.resource}
+        onChange={(val) =>
+          onChangeFilter(
+            "resource",
+            val === filters?.resource ? undefined : val
+          )
+        }
+        isSearch
+        notMultiSelect
+      />
+      {/* <SelectTags
         label="Категорія"
         notMultiSelect
         value={filters?.id_rubric}
@@ -373,7 +394,7 @@ export const Main = ({
                 } else if (typeof field[1]?.field_option === "object") {
                   return (
                     <>
-                      {/* <Divider /> */}
+                      <Divider /> 
                       <Select
                         value={filters[field[0]]}
                         options={Object.entries(field[1]?.field_option)?.map(
@@ -392,7 +413,7 @@ export const Main = ({
                   }
                   return (
                     <>
-                      {/* <Divider /> */}
+                      <Divider />
                       <ProfileField
                         placeholder="Введіть значення"
                         value={filters[field[0]]}
@@ -453,7 +474,6 @@ export const Main = ({
       ) : null}
       {Number(user?.struct_level) !== Number(level) ? (
         <>
-          {" "}
           <CheckOption
             label="Реклама моєї структури"
             className="check-opt"
@@ -533,26 +553,34 @@ export const Main = ({
               filters?.company_object?.canceled === "1" ? undefined : "1",
           })
         }
-      />{" "}
-      <Divider />
-      <SelectTags
-        label="Пошук по статусу"
-        placeholder="Оберіть статус"
-        options={
-          statuses?.data
-            ? Object.entries(statuses?.data)?.map((s) => ({
-                title: s[1],
-                value: s[0],
-              }))
-            : []
-        }
-        value={filters?.status}
-        onChange={(val) =>
-          onChangeFilter("status", val === filters?.status ? undefined : val)
-        }
-        isSearch
-        notMultiSelect
       />
+      <Divider /> */}
+      {filters?.resource === "1" ? (
+        <>
+          <Divider />
+          <SelectTags
+            label="Пошук по статусу"
+            placeholder="Оберіть статус"
+            options={
+              statuses?.data
+                ? Object.entries(statuses?.data)?.map((s) => ({
+                    title: s[1],
+                    value: s[0],
+                  }))
+                : []
+            }
+            value={filters?.status}
+            onChange={(val) =>
+              onChangeFilter(
+                "status",
+                val === filters?.status ? undefined : val
+              )
+            }
+            isSearch
+            notMultiSelect
+          />
+        </>
+      ) : null}
     </StyledMain>
   );
 };

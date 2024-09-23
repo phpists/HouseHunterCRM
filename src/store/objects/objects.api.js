@@ -540,6 +540,8 @@ export const objects = createApi({
         resource,
         author_name,
         author_phone,
+        title,
+        description,
       }) => ({
         url: "",
         method: "POST",
@@ -552,6 +554,8 @@ export const objects = createApi({
           id_user_olx,
           author_name,
           author_phone,
+          title,
+          description,
         }),
       }),
     }),
@@ -562,6 +566,20 @@ export const objects = createApi({
         headers: headers(),
         body: handleToFormData({
           action: "deleteAdds",
+          mod: "publication",
+          resource: "olx",
+          id_obj,
+          id_user_olx,
+        }),
+      }),
+    }),
+    deleteAdHistory: build.query({
+      query: ({ id_obj, id_user_olx }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "deleteAddsDb",
           mod: "publication",
           resource: "olx",
           id_obj,
@@ -642,4 +660,5 @@ export const {
   useLazyDeleteAdQuery,
   useLazyDeleteAdAccountQuery,
   useLazyChangeMlsObjectQuery,
+  useLazyDeleteAdHistoryQuery
 } = objects;

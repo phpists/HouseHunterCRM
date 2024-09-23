@@ -10,6 +10,8 @@ import { ObjectPriceHistory } from "../../components/ObjectPriceHistory";
 import { ObjectCommentHistory } from "../../components/ObjectCommentHistory/ObjectCommentHistory";
 import { ObjectHistory } from "../../components/ObjectHistory/ObjectHistory";
 import {
+  useLazyDeleteAdHistoryQuery,
+  useLazyDeleteAdQuery,
   useLazyDeleteObjectQuery,
   useLazyPublishObjectQuery,
 } from "../../store/objects/objects.api";
@@ -41,6 +43,7 @@ export const List = ({
   isDeleted,
   onChangeTags,
   filters,
+  onUpdateObject,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { accessData } = useAppSelect((state) => state.auth);
@@ -64,30 +67,49 @@ export const List = ({
   const [deleteInfo, setDeleteInfo] = useState(null);
   const [fastSelection, setFastSelection] = useState(null);
   const [advertaseObject, setAdvertaseObject] = useState(null);
+  const [deleteAd] = useLazyDeleteAdQuery();
+  const [deleteAdHistory] = useLazyDeleteAdHistoryQuery();
 
   const onChangeCurrency = (val) => setCurrency(val);
   const onChangeType = (val) => setType(val);
 
-  const handleDelete = () => {
+  const handleDelete = (isHistory) => {
     setDeleting(true);
-    deleteObject({
-      id_objects: [deleteId],
-      final_remove: isDeleted || deleteModal === "finally" ? "1" : undefined,
-      reasone_remove: confirmText,
-    }).then((resp) => {
-      handleResponse(resp, () => {
-        cogoToast.success(`Обєкт успішно видалено!`, {
-          hideAfter: 3,
-          position: "top-right",
+    if (isHistory) {
+      deleteAdHistory({
+        id_obj: deleteId,
+        id_user_olx: data?.find((o) => o.id_ad_in_source === deleteId)
+          ?.id_user_olx,
+      }).then((resp) => {
+        handleResponse(resp, () => {
+          cogoToast.success(`Оголошення успішно видалено!`, {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          onDeleteSuccess(deleteId);
         });
-        onDeleteSuccess(deleteId);
+        setDeleting(false);
       });
-      setDeleting(false);
-    });
+    } else {
+      deleteAd({
+        id_obj: deleteId,
+        id_user_olx: data?.find((o) => o.id_ad_in_source === deleteId)
+          ?.id_user_olx,
+      }).then((resp) => {
+        handleResponse(resp, () => {
+          cogoToast.success(`Оголошення успішно видалено!`, {
+            hideAfter: 3,
+            position: "top-right",
+          });
+          onDeleteSuccess(deleteId);
+        });
+        setDeleting(false);
+      });
+    }
   };
 
-  const handleOpenDelete = (id, isFinally) => {
-    setDeleteModal(isFinally ? "finally" : true);
+  const handleOpenDelete = (id, isHistory) => {
+    setDeleteModal(isHistory ? "history" : true);
     setDeleteId(id);
   };
 
@@ -198,16 +220,10 @@ export const List = ({
       {deleteModal && (
         <Confirm
           title={
-            isDeleted || deleteModal === "finally"
-              ? "Видалити об'єкт остаточно?"
-              : "Видалити об'єкт?"
+            "Оголошення видалиться з історії публікацій. Видалити оголошення?"
           }
           onClose={() => setDeleteModal(false)}
-          onSubmit={handleDelete}
-          passwordCheck={isDeleted || deleteModal === "finally"}
-          confirmText={
-            isDeleted || deleteModal === "finally" ? null : confirmText
-          }
+          onSubmit={() => handleDelete(deleteModal === "history")}
           onChangeConfirmText={(val) => setConfimText(val)}
         />
       )}
@@ -234,14 +250,16 @@ export const List = ({
           <>
             {data.map((d) => (
               <ObjectCard
-                key={d?.id}
-                selected={!!selected.find((j) => j === d?.id)}
-                onSelect={() => onSelect(d?.id)}
-                data={d}
-                onToggleFavoriteStatus={() => toggleFavoriteStatus(d?.id)}
+                key={d?.id_ad_in_source}
+                selected={!!selected.find((j) => j === d?.id_ad_in_source)}
+                onSelect={() => onSelect(d?.id_ad_in_source)}
+                data={{ ...d, id: d?.id_ad_in_source }}
+                onToggleFavoriteStatus={() =>
+                  toggleFavoriteStatus(d?.id_ad_in_source)
+                }
                 onFindSimilar={() => onFindSimilar(d)}
                 isEdit={handleCheckAccess(accessData, "objects", "edit")}
-                onAddToSelection={() => setOpenAddModal(d?.id)}
+                onAddToSelection={() => setOpenAddModal(d?.id_ad_in_source)}
                 onOpenTagsHistory={() =>
                   setOpenHistoryModal({
                     id: d?.id,
@@ -254,20 +272,10 @@ export const List = ({
                 onOpenPriceHistory={() =>
                   setOpenHistoryPriceModal(d?.price_history_json)
                 }
-                onDelete={
-                  d?.deleted === "1"
-                    ? user?.struct_level === 1
-                      ? () => handleOpenDelete(d?.id)
-                      : null
-                    : () => handleOpenDelete(d?.id)
-                }
-                onDeleteFinally={
-                  d?.type_object !== "street_base" &&
-                  d?.type_object !== "mls" &&
-                  user?.struct_level === 1
-                    ? () => handleOpenDelete(d?.id, true)
-                    : null
-                }
+                onDelete={() => handleOpenDelete(d?.id_ad_in_source)}
+                // onDeleteFinally={() =>
+                //   handleOpenDelete(d?.id_ad_in_source, true)
+                // }
                 onChangeComment={() =>
                   setEditComment({
                     id: d?.id,
@@ -316,6 +324,13 @@ export const List = ({
                   d?.type_object !== "mls"
                     ? () => handleTelegramPublish(d?.id)
                     : null
+                }
+                onUpdateField={(field, value) =>
+                  onUpdateObject(d?.id_ad_in_source, field, value)
+                }
+                onDeleteAd={() => handleOpenDelete(d?.id_ad_in_source)}
+                onDeleteHistory={() =>
+                  handleOpenDelete(d?.id_ad_in_source, true)
                 }
                 ad
               />

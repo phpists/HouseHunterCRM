@@ -21,7 +21,7 @@ import { useAppSelect } from "../../hooks/redux";
 export const ObjectAdModal = ({ onClose, object }) => {
   const [data, setData] = useState({
     title: "",
-    desciption: "",
+    description: "",
     id_user_olx: [],
     id_realstate_users: [],
     obl: "1",
@@ -85,6 +85,8 @@ export const ObjectAdModal = ({ onClose, object }) => {
         resource: "olx",
         author_name: data?.author_name,
         author_phone: data?.author_phone,
+        title: data?.title,
+        description: data?.description,
       }).then((resp) => {
         setLoading(false);
         handleResponse(
