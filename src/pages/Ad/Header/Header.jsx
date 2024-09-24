@@ -49,8 +49,6 @@ export const Header = ({
   const { user } = useAppSelect((state) => state.auth);
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClient, setAddClient] = useState(false);
-  const [addToFavorites] = useLazyAddToFavoritesQuery();
-  const [deleteObject] = useLazyDeleteObjectQuery();
   const { accessData: data } = useAppSelect((state) => state.auth);
   const [defaultFiltersOpen, setDefalultFiltersOpen] = useState({
     company: true,
@@ -75,38 +73,38 @@ export const Header = ({
 
   const handleToggleFavorites = () => {
     onChangeActionLoading(true);
-    addToFavorites(selected).then((resp) => {
-      handleResponse(resp, () => {
-        cogoToast.success("Статус успішно змінено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-        onFavorite();
-      });
-      onChangeActionLoading(false);
-    });
+    // addToFavorites(selected).then((resp) => {
+    //   handleResponse(resp, () => {
+    //     cogoToast.success("Статус успішно змінено!", {
+    //       hideAfter: 3,
+    //       position: "top-right",
+    //     });
+    //     onFavorite();
+    //   });
+    //   onChangeActionLoading(false);
+    // });
   };
 
   const handleDelete = (isFinally) => {
     if (selected?.length > 0) {
       onChangeActionLoading(true);
-      deleteObject({
-        id_objects: selected,
-        final_remove: isFinally ? "1" : undefined,
-        reasone_remove: confirmText,
-      }).then((resp) => {
-        handleResponse(resp, () => {
-          cogoToast.success(
-            `Обєкт${selectedCount === 1 ? "" : "и"} успішно видалено!`,
-            {
-              hideAfter: 3,
-              position: "top-right",
-            }
-          );
-          filters?.company_object?.show_deleted !== "1" && onDelete();
-        });
-        onChangeActionLoading(false);
-      });
+      //   deleteObject({
+      //     id_objects: selected,
+      //     final_remove: isFinally ? "1" : undefined,
+      //     reasone_remove: confirmText,
+      //   }).then((resp) => {
+      //     handleResponse(resp, () => {
+      //       cogoToast.success(
+      //         `Обєкт${selectedCount === 1 ? "" : "и"} успішно видалено!`,
+      //         {
+      //           hideAfter: 3,
+      //           position: "top-right",
+      //         }
+      //       );
+      //       filters?.company_object?.show_deleted !== "1" && onDelete();
+      //     });
+      //     onChangeActionLoading(false);
+      //   });
     }
   };
 

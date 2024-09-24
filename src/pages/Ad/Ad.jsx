@@ -28,10 +28,6 @@ const Ad = () => {
   const [data, setData] = useState([]);
   const { user } = useAppSelect((state) => state.auth);
   const { id } = useParams();
-  const location = useLocation();
-  const [getAllObjects] = useLazyGetAllObjectsQuery();
-  const [getRubricField] = useLazyGetRubricFieldsQuery();
-  const [addObjectToFavorites] = useLazyAddToFavoritesQuery();
   const { saveObjectsCount } = useActions();
   const [selected, setSelected] = useState([]);
   const [objects, setObjects] = useState([]);
@@ -64,9 +60,9 @@ const Ad = () => {
   const filterActive = useRef(!!id);
   const [allCount, setAllCount] = useState(0);
   const handleGetRubricsFields = (id) => {
-    getRubricField(id).then((resp) => {
-      setFilterFields(resp?.data);
-    });
+    // getRubricField(id).then((resp) => {
+    //   setFilterFields(resp?.data);
+    // });
   };
   const currentPage = useRef(0);
   const isLoading = useRef(false);
@@ -170,150 +166,6 @@ const Ad = () => {
         : [...selected, index]
     );
 
-  const handleGetObjects = (isReset, isApply) => {
-    isFirstRender.current = false;
-    if ((!isLoading.current && !isAllPages) || isReset) {
-      if (isReset) {
-        listRef.current.scroll({ top: 0 });
-        setObjects([]);
-        setSelected([]);
-        currentPage.current = 0;
-        dataRef.current = [];
-        allCountRef.current = 0;
-      }
-
-      isLoading.current = true;
-
-      const {
-        company_object,
-        street_base_object,
-        mls_object,
-        sorting,
-        ...otherFilters
-      } = Object.fromEntries(
-        Object.entries(filters)?.filter((f) => f[1] !== "0")
-      );
-
-      let data = {
-        only_favorite: isFavorite ?? undefined,
-        current_page: currentPage.current,
-        item_on_page: 50,
-        sorting,
-      };
-
-      if (filterActive.current) {
-        let dt_end_agreement_to = company_object?.dt_end_agreement_to
-          ? new Date(handleFromInputDate(company_object?.dt_end_agreement_to))
-          : undefined;
-
-        if (dt_end_agreement_to) {
-          dt_end_agreement_to.setHours(23);
-          dt_end_agreement_to.setMinutes(59);
-          dt_end_agreement_to.setSeconds(59);
-        }
-
-        data = {
-          ...data,
-          company_object: {
-            ...company_object,
-            dt_end_agreement_to: dt_end_agreement_to?.getTime() / 1000,
-          },
-          street_base_object,
-          mls_object,
-          sorting,
-          filters: {
-            ...otherFilters,
-            search_phone_code:
-              removePhoneMask(filters?.search_phone)?.length > 0
-                ? phoneCode
-                : undefined,
-            findPhone:
-              filters?.findPhone?.length > 0 ? filters?.findPhone : undefined,
-            search_phone:
-              removePhoneMask(filters?.search_phone)?.length > 0
-                ? removePhoneMask(filters?.search_phone)
-                : undefined,
-          },
-        };
-
-        if (
-          !company_object &&
-          !street_base_object &&
-          !mls_object &&
-          Object.entries(filters)?.filter((f) => f?.[1])?.length > 0
-        ) {
-          data = {
-            ...data,
-            company_object: {
-              show_only: "company",
-              actual: "1",
-              given_objects: "1",
-              not_actual: "1",
-              overdue: "1",
-              show_street_base_company: "1",
-            },
-            street_base_object: {
-              sorting_id: "16",
-            },
-            mls_object: {},
-          };
-        }
-      } else {
-        const { company_object, ...filters } = DEFAULT_FILTERS;
-        data = {
-          ...data,
-          company_object,
-          filters,
-        };
-      }
-
-      setLoading(true);
-
-      getAllObjects(data).then((resp) => {
-        isLoading.current = false;
-        setLoading(false);
-
-        handleResponse(
-          resp,
-          () => {
-            const objectsResp = resp?.data?.objects
-              ? Object.entries(resp?.data?.objects)?.map((obj) => obj[1])
-              : [];
-            const updatedCount = isReset
-              ? objectsResp?.length
-              : allCountRef.current + objectsResp?.length;
-            allCountRef.current = updatedCount;
-            setAllCount(updatedCount);
-
-            const updatedObjects = isReset
-              ? objectsResp
-              : [...dataRef.current, ...objectsResp];
-            dataRef.current = updatedObjects;
-            setObjects(updatedObjects);
-
-            if (isFirstRequest.current) {
-              isFirstRequest.current = false;
-              getAllObjects({ ...data, only_count_item: "1" }).then((resp) =>
-                saveObjectsCount(resp?.data?.count_item ?? 0)
-              );
-            }
-          },
-          () => {
-            setIsAllPages(true);
-            if (isReset) {
-              setObjects([]);
-              setAllCount(0);
-              saveObjectsCount(0);
-              dataRef.current = [];
-              allCountRef.current = 0;
-            }
-          },
-          true
-        );
-      });
-    }
-  };
-
   const handleToggleFavoritesStatus = () => {
     const updatedData = isFavorite
       ? objects?.filter((obj) => !selected.find((i) => i === obj?.id))
@@ -361,7 +213,7 @@ const Ad = () => {
     }
     currentPage.current = 0;
     setIsAllPages(false);
-    handleGetObjects(true, isApply);
+    // handleGetObjects(true, isApply);
     getListAdds({ status: isApply ? filters?.status : undefined }).then(
       (resp) => setData(resp?.data?.data)
     );
@@ -381,7 +233,7 @@ const Ad = () => {
   useEffect(() => {
     if (!isFirstRender.current) {
       currentPage.current = 0;
-      handleGetObjects(true);
+      //   handleGetObjects(true);
     }
   }, [filters.sorting]);
 
@@ -391,27 +243,26 @@ const Ad = () => {
   };
 
   const handleToggleFavoriteStatus = (id) => {
-    addObjectToFavorites([id]).then((resp) => {
-      handleResponse(resp, () => {
-        const updatedData = isFavorite
-          ? objects?.filter((obj) => obj?.id !== id)
-          : objects?.map((obj) =>
-              obj?.id === id ? { ...obj, favorite: !obj.favorite } : obj
-            );
-        dataRef.current = updatedData;
-        setObjects(updatedData);
-        const updatedCount = isFavorite ? allCount - 1 : allCount;
-        allCountRef.current = updatedCount;
-        setAllCount(updatedCount);
-        const updatedAllCount = (objectsCount || 0) - 1;
-        saveObjectsCount(updatedAllCount);
-
-        cogoToast.success("Статус успішно змінено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
-      });
-    });
+    // addObjectToFavorites([id]).then((resp) => {
+    //   handleResponse(resp, () => {
+    //     const updatedData = isFavorite
+    //       ? objects?.filter((obj) => obj?.id !== id)
+    //       : objects?.map((obj) =>
+    //           obj?.id === id ? { ...obj, favorite: !obj.favorite } : obj
+    //         );
+    //     dataRef.current = updatedData;
+    //     setObjects(updatedData);
+    //     const updatedCount = isFavorite ? allCount - 1 : allCount;
+    //     allCountRef.current = updatedCount;
+    //     setAllCount(updatedCount);
+    //     const updatedAllCount = (objectsCount || 0) - 1;
+    //     saveObjectsCount(updatedAllCount);
+    //     cogoToast.success("Статус успішно змінено!", {
+    //       hideAfter: 3,
+    //       position: "top-right",
+    //     });
+    //   });
+    // });
   };
 
   const handleChangeComment = (id, comment) => {
@@ -490,7 +341,7 @@ const Ad = () => {
   useEffect(() => {
     if (updateData) {
       setUpdateData(false);
-      handleGetObjects(true);
+      //   handleGetObjects(true);
     }
     // eslint-disable-next-line
   }, [updateData]);
@@ -609,7 +460,7 @@ const Ad = () => {
           ),
         ]}
         isDeleted={isDeleted}
-        onRefetch={() => handleGetObjects(true, true)}
+        onRefetch={() => null}
         onFastCopy={user?.show_fast_folder ? handleCopyFastFolderLink : null}
       />
       <List
