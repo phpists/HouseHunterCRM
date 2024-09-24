@@ -9,6 +9,7 @@ export const Card = ({
   onClick,
   onChangeActiveTab,
   noAuth,
+  selected,
 }) => (
   <StyledCard icon={icon}>
     {noAuth ? (
@@ -21,7 +22,10 @@ export const Card = ({
         onChange={onClick}
       />
     )}
-    <div className="card-content flex items-center" onClick={onChangeActiveTab}>
+    <div
+      className={`card-content flex items-center ${selected && "selected"}`}
+      onClick={onChangeActiveTab}
+    >
       <div className="icon" />
       <span className="card-title" title={title}>
         {title}
@@ -47,6 +51,9 @@ const StyledCard = styled.div`
     padding: 10px;
     border-radius: 6px;
     gap: 10px;
+    &.selected {
+      background: var(--color-40-rgb);
+    }
     .icon {
       width: 32px;
       height: 32px;

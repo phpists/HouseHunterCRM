@@ -19,7 +19,7 @@ import { useGetCompanyInfoQuery } from "../../../../store/billing/billing.api";
 import cogoToast from "cogo-toast";
 import { handleResponse } from "../../../../utilits";
 
-export const List = ({ data, onChange, onChangeActiveTab }) => {
+export const List = ({ data, onChange, onChangeActiveTab, activeTab }) => {
   const navigate = useNavigate();
   const { data: accounts } = useGetStatusAccountQuery();
   const { data: realestateAccounts } = useGetRealestateStatusQuery();
@@ -121,6 +121,7 @@ export const List = ({ data, onChange, onChangeActiveTab }) => {
               }
               onChangeActiveTab={() => onChangeActiveTab(0)}
               active={data?.id_user_olx?.includes(account?.data?.id)}
+              selected={activeTab === 0}
             />
           ))
         : null}
@@ -140,6 +141,7 @@ export const List = ({ data, onChange, onChangeActiveTab }) => {
               }
               onChangeActiveTab={() => onChangeActiveTab(1)}
               active={data?.id_realstate_users?.includes(id_account)}
+              selected={activeTab === 1}
             />
           ))
         : null}
@@ -150,6 +152,7 @@ export const List = ({ data, onChange, onChangeActiveTab }) => {
           onClick={() => onChange("flombu", !data?.flombu)}
           onChangeActiveTab={() => onChangeActiveTab(2)}
           active={data?.flombu}
+          selected={activeTab === 2}
         />
       ) : null}
 

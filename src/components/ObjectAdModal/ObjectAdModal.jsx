@@ -194,6 +194,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
             data={data}
             onChange={handleChangeField}
             onChangeActiveTab={handleChangeActiveTab}
+            activeTab={activeTab}
           />
           <Info
             data={data}

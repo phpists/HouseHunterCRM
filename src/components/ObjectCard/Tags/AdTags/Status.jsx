@@ -102,7 +102,7 @@ export const Status = ({ status, date, idAd, idUserOlx, onUpdateField }) => {
           style={{
             color: STATUSES[status]?.color,
             background: STATUSES[status]?.bg,
-            maxWidth: 130,
+            maxWidth: 90,
           }}
         />
         <RefreshIcon
@@ -142,7 +142,7 @@ const StyledStatus = styled.div`
     overflow: hidden;
   }
   .refreshIcon {
-    height: 20px;
+    height: 15px;
     &.loading {
       animation: 2s infinite loading linear;
       @keyframes loading {

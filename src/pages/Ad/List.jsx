@@ -96,18 +96,30 @@ export const List = ({
         id_user_olx: data?.find((o) => o.id_ad_in_source === deleteId)
           ?.id_user_olx,
       }).then((resp) => {
-        handleResponse(resp, () => {
-          cogoToast.success(`Оголошення успішно видалено!`, {
-            hideAfter: 3,
-            position: "top-right",
-          });
-          onDeleteSuccess(deleteId);
-        });
+        handleResponse(
+          resp,
+          () => {
+            cogoToast.success(`Оголошення успішно видалено!`, {
+              hideAfter: 3,
+              position: "top-right",
+            });
+            onDeleteSuccess(deleteId);
+          },
+          (err) => {
+            if (resp?.data?.error === 151) {
+              setTimeout(() => {
+                setDeleteModal("history");
+                setDeleteId(deleteId);
+              }, 1000);
+            }
+          }
+        );
         setDeleting(false);
       });
     }
   };
 
+  console.log(deleteId, deleteModal);
   const handleOpenDelete = (id, isHistory) => {
     setDeleteModal(isHistory ? "history" : true);
     setDeleteId(id);
