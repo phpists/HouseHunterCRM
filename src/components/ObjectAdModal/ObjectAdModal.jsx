@@ -168,7 +168,6 @@ export const ObjectAdModal = ({ onClose, object }) => {
     }
   };
 
-  console.log(object);
   return (
     <StyledObjectAdModal>
       <div className="modal-wrapper">

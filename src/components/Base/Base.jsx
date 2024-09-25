@@ -55,6 +55,7 @@ export const Base = ({
   onlyNotmyClient,
   notCommentAndTags,
   showTagsObjarray,
+  hideAdvertsAdd,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -457,6 +458,22 @@ export const Base = ({
                 })
               }
               error={!!errors.find((e) => e === "company_object_more")}
+            />
+          ) : null}
+          {hideAdvertsAdd ? (
+            <CheckOption
+              label="Виключити рекламовані об'єкти"
+              className="check-opt"
+              value={data?.company_object?.hideAdvertsAdd}
+              onChange={() =>
+                onChange("company_object", {
+                  ...data?.company_object,
+                  hideAdvertsAdd:
+                    data?.company_object?.hideAdvertsAdd === "1"
+                      ? undefined
+                      : "1",
+                })
+              }
             />
           ) : null}
         </>

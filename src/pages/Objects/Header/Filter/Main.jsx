@@ -428,6 +428,7 @@ export const Main = ({
         onlyNotmyClient
         notCommentAndTags
         showTagsObjarray
+        hideAdvertsAdd
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
       />

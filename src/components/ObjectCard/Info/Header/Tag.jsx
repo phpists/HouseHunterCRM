@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Tag = ({ title, color, Icon, style }) => {
+export const Tag = ({ title, color, Icon, style, className, onClick }) => {
   const COLORS = {
     orange: {
       color: "rgba(255, 159, 46, 0.90)",
@@ -21,7 +21,12 @@ export const Tag = ({ title, color, Icon, style }) => {
   };
 
   return (
-    <StyledTag color={COLORS[color]} className="clickable" style={style}>
+    <StyledTag
+      color={COLORS[color]}
+      className={className}
+      style={style}
+      onClick={onClick}
+    >
       {Icon ? <Icon /> : null}
       {title}
     </StyledTag>

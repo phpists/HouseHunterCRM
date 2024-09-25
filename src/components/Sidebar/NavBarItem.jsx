@@ -37,7 +37,7 @@ const StyledNavbarItem = styled(NavLink)`
     top: 50%;
     transform: translateY(-50%);
     border-radius: 0px 10px 10px 0px;
-    transition: all 0.3s;
+    /* transition: all 0.3s; */
   }
 
   a {

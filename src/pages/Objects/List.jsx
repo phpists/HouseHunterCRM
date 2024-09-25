@@ -24,6 +24,7 @@ import { FastSelection } from "../../components/FastSelection/FastSelection";
 import { ObjectAdModal } from "../../components/ObjectAdModal/ObjectAdModal";
 import { useGetCompanyInfoQuery } from "../../store/billing/billing.api";
 import { XHOUSE_COMPANY_ID } from "../../constants";
+import { AdListModal } from "../../components/AdListModal/AdListModal";
 
 export const List = ({
   selected,
@@ -64,6 +65,7 @@ export const List = ({
   const [deleteInfo, setDeleteInfo] = useState(null);
   const [fastSelection, setFastSelection] = useState(null);
   const [advertaseObject, setAdvertaseObject] = useState(null);
+  const [adListModal, setAdListModal] = useState(null);
 
   const onChangeCurrency = (val) => setCurrency(val);
   const onChangeType = (val) => setType(val);
@@ -226,6 +228,9 @@ export const List = ({
           object={advertaseObject}
         />
       ) : null}
+      {adListModal ? (
+        <AdListModal onClose={() => setAdListModal(null)} data={adListModal} />
+      ) : null}
 
       <StyledList ref={innerRef}>
         {data?.length === 0 || actionLoading ? (
@@ -317,6 +322,7 @@ export const List = ({
                     ? () => handleTelegramPublish(d?.id)
                     : null
                 }
+                onOpenAdList={() => setAdListModal(d)}
               />
             ))}
           </>

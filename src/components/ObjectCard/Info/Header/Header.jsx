@@ -3,7 +3,7 @@ import { Tag } from "./Tag";
 import { handleFormatDate } from "../../../../utilits";
 import { ReactComponent as RocketIcon } from "../../../../assets/images/BiRocket.svg";
 
-export const Header = ({ data, ad }) => {
+export const Header = ({ data, ad, onOpenAdList }) => {
   const handleCheckIsEndDateAgrement = () => {
     if (data?.dt_end_agreement === "0") {
       return false;
@@ -28,10 +28,11 @@ export const Header = ({ data, ad }) => {
             true
           )}`}
           color="red"
+          className="clickable"
         />
       ) : null}
       {data?.type_object === "street_base" ? (
-        <Tag title="База StreetBase" color="green" />
+        <Tag title="База StreetBase" color="green" className="clickable" />
       ) : null}
       {ad
         ? null
@@ -40,17 +41,27 @@ export const Header = ({ data, ad }) => {
         : data?.type_object === "Company"
         ? null
         : data?.id_street_base !== "0" && (
-            <Tag title={"Перенесено з StreetBase"} color={"red"} />
+            <Tag
+              title={"Перенесено з StreetBase"}
+              color={"red"}
+              className="clickable"
+            />
           )}
       {(data?.dt_end_agreement === "0" || data?.obj_is_actual === "0") &&
         data?.type_object === "Company" && (
           <Tag
             title={data?.obj_is_actual === "1" ? "Актуально" : "Не актуально"}
             color={data?.obj_is_actual === "1" ? "green" : "red"}
+            className="clickable"
           />
         )}
-      {data?.mls === "1" && ad && (
-        <Tag Icon={RocketIcon} title="1" color="blue" />
+      {data?.arr_adverst_object?.length > 0 && (
+        <Tag
+          Icon={RocketIcon}
+          title={data?.arr_adverst_object?.length}
+          color="blue"
+          onClick={onOpenAdList}
+        />
       )}
       {Number(data?.dt_end_agreement) * 1000 > new Date().getTime() &&
         data?.obj_is_actual === "1" && (
@@ -60,10 +71,11 @@ export const Header = ({ data, ad }) => {
               true
             )}`}
             color="orange"
+            className="clickable"
           />
         )}
       {handleCheckIsEndDateAgrement() && (
-        <Tag title={"Протерміновано"} color={"red"} />
+        <Tag title={"Протерміновано"} color={"red"} className="clickable" />
       )}
     </StyledHeader>
   );

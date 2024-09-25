@@ -47,6 +47,7 @@ export const DesktopContent = ({
   onUpdateField,
   onDeleteHistory,
   onDeleteAd,
+  onOpenAdList,
 }) => {
   return (
     <StyledDesktopContent className="flex items-center justify-between clickable">
@@ -74,6 +75,7 @@ export const DesktopContent = ({
         editable={editable}
         onEdit={onEdit}
         ad={ad}
+        onOpenAdList={onOpenAdList}
       />
       <Tags
         data={data}
@@ -123,7 +125,13 @@ export const DesktopContent = ({
         onDeleteAd={onDeleteAd}
       />
       <div className="mobile-footer w-full">
-        <Info data={data} editable={editable} onEdit={onEdit} />
+        <Info
+          data={data}
+          editable={editable}
+          onEdit={onEdit}
+          ad={ad}
+          onOpenAdList={onOpenAdList}
+        />
         <Contacts
           data={data}
           showContactId={showContactId}
