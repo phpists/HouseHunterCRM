@@ -4,12 +4,18 @@ import { OutlineButton } from "./OutlineButton";
 import { ReactComponent as RemoveIcon } from "../../../../assets/images/remove.svg";
 import { IconButton } from "../../../IconButton";
 
-export const Actions = ({ onSubmit, loading, disabled }) => (
+export const Actions = ({ onSubmit, loading, disabled, onEdit }) => (
   <StyledActions className="flex items-center">
     <SubmitButton onClick={onSubmit} loading={loading} disabled={disabled} />
-    <OutlineButton title="Запланувати" disabled={loading} />
-    <OutlineButton title="Зупинити" disabled={loading} />
-    <IconButton Icon={RemoveIcon} onClick={() => null} className="icon-btn" />
+    {onEdit && (
+      <OutlineButton
+        title="Редагувати об'єкт"
+        disabled={loading}
+        onClick={onEdit}
+      />
+    )}
+    {/* <OutlineButton title="Зупинити" disabled={loading} />
+    <IconButton Icon={RemoveIcon} onClick={() => null} className="icon-btn" /> */}
   </StyledActions>
 );
 

@@ -52,7 +52,7 @@ export const Title = () => {
       case "/advertising":
         return "Реклама";
       case "/ad":
-        return "Реклама 2";
+        return "Реклама";
       case "/advertising-setting":
         return "Реклама";
       default:

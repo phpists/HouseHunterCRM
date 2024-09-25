@@ -17,6 +17,7 @@ import {
   useLazyPublishRealestateQuery,
 } from "../../store/auth/auth.api";
 import { useAppSelect } from "../../hooks/redux";
+import { useNavigate } from "react-router-dom";
 
 export const ObjectAdModal = ({ onClose, object }) => {
   const [data, setData] = useState({
@@ -36,6 +37,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
     author_name: "",
     author_phone: "",
   });
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [publishObject] = useLazyPublishObjectQuery();
   const [publishRealestate] = useLazyPublishRealestateQuery();
@@ -166,6 +168,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
     }
   };
 
+  console.log(object);
   return (
     <StyledObjectAdModal>
       <div className="modal-wrapper">
@@ -186,6 +189,15 @@ export const ObjectAdModal = ({ onClose, object }) => {
                   (data?.city?.length === 0 && citiesCount > 0) ||
                   (data?.street?.length === 0 && streetsCount > 0)
                 : true)
+            }
+            onEdit={
+              !object?.acsses_change
+                ? undefined
+                : () =>
+                    window.open(
+                      `${window.location.origin}/edit-object/${object?.id_client}/${object?.id}`,
+                      "_blank"
+                    )
             }
           />
         </div>
@@ -228,6 +240,8 @@ const StyledObjectAdModal = styled.div`
     width: 96svw;
     max-width: 1000px;
     position: relative;
+    max-height: 80vh;
+    overflow: auto;
   }
   .content {
     display: grid;

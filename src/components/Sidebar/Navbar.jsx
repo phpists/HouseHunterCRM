@@ -85,7 +85,7 @@ export const NavBar = ({ accessData }) => {
           {
             icon: RocketIcon,
             link: "/ad",
-            title: "Реклама 2",
+            title: "Реклама",
             childrenLinks: ["edit-ad"],
             className: "red",
           },

@@ -198,11 +198,19 @@ const Ad = () => {
     // eslint-disable-next-line
   }, [isFavorite]);
 
-  useEffect(() => {
+  const handleGetData = () => {
     getListAdds({ status: filters?.status }).then((resp) =>
       setData(resp?.data?.data)
     );
+  };
+
+  useEffect(() => {
+    handleGetData();
   }, []);
+
+  useEffect(() => {
+    setAllCount(data?.length);
+  }, [data]);
 
   const handleApplyFilter = (isApply) => {
     filterActive.current = isApply;
@@ -375,22 +383,13 @@ const Ad = () => {
   }, []);
 
   const handleDeleteObjectSuccess = (id) => {
-    const updatedCount = allCount - 1;
-    allCountRef.current = updatedCount;
-    saveObjectsCount(objectsCount - 1);
-    setAllCount(updatedCount);
-    const updatedData = data.filter((obj) => obj.id_ad_in_source !== id);
-    dataRef.current = updatedData;
-    setData(updatedData);
     setSelected([]);
-    // handleGetObjects();
+    handleGetData();
   };
 
   const handleDeleteObjectsFilterByIds = (ids, isSelected) => {
     const updatedCount = allCount - ids?.length;
     allCountRef.current = updatedCount;
-    const updatedAllCount = (objectsCount || 0) - ids.length;
-    saveObjectsCount(updatedAllCount);
     setAllCount(updatedCount);
     const updatedData = objects.filter((obj) => !ids.find((s) => s === obj.id));
     dataRef.current = updateData;

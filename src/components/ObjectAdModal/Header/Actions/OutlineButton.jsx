@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
-export const OutlineButton = ({ disabled, title }) => (
+export const OutlineButton = ({ disabled, title, onClick }) => (
   <StyledOutlineButton
     className="flex items-center justify-center"
     disabled={disabled}
+    onClick={onClick}
   >
     {title}
   </StyledOutlineButton>

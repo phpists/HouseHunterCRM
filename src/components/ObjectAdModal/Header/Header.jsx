@@ -3,13 +3,18 @@ import { Actions } from "./Actions/Actions";
 import { StatusButton } from "./StatusButton";
 import { StatusDate } from "./StatusDate";
 
-export const Header = ({ onSubmit, loading, disabled }) => (
+export const Header = ({ onSubmit, loading, disabled, onEdit }) => (
   <StyledHeader className="flex items-center justify-between">
     <div className="flex items-center status-btns">
       {/* <StatusButton type="actual" />
       <StatusDate /> */}
     </div>
-    <Actions onSubmit={onSubmit} loading={loading} disabled={disabled} />
+    <Actions
+      onSubmit={onSubmit}
+      loading={loading}
+      disabled={disabled}
+      onEdit={onEdit}
+    />
   </StyledHeader>
 );
 

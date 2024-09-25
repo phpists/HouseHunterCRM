@@ -39,6 +39,11 @@ const STATUSES = {
     bg: "#F93A3A26",
     title: "Видалено модератором",
   },
+  not_found: {
+    color: "#F93A3A",
+    bg: "#F93A3A26",
+    title: "Не знайдено",
+  },
   moderation: {
     color: "#FF9F2EE5",
     bg: "#FF9F2E26",
