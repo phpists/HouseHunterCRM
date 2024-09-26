@@ -298,45 +298,10 @@ const Ad = () => {
   };
 
   const handleFindSimilarTo = (obj) => {
-    const {
-      id_location,
-      id_rubric,
-      price_UAH,
-      rooms,
-      address_storey,
-      area_plot_sotka,
-      area_total,
-      storey_count,
-    } = obj;
+    const { id_obj } = obj;
 
     const objData = {
-      id_rubric,
-      id_location,
-      price_min: handleGetRange(Number(price_UAH), true)?.start.toFixed(0),
-      price_max: handleGetRange(Number(price_UAH), true)?.end.toFixed(0),
-      area_total_min: handleGetRange(Number(area_total), true)?.start.toFixed(
-        0
-      ),
-      area_total_max: handleGetRange(Number(area_total), true)?.end.toFixed(0),
-      area_plot_sotka_min: handleGetRange(
-        Number(area_plot_sotka),
-        true
-      )?.start.toFixed(0),
-      area_plot_sotka_max: handleGetRange(
-        Number(area_plot_sotka),
-        true
-      )?.end.toFixed(0),
-      room_min: handleGetRange(Number(rooms))?.start.toFixed(0),
-      room_max: handleGetRange(Number(rooms))?.end.toFixed(0),
-      storey_count_min: handleGetRange(Number(storey_count))?.start.toFixed(0),
-      storey_count_max: handleGetRange(Number(storey_count))?.end.toFixed(0),
-      address_storey_min: handleGetRange(Number(address_storey))?.start.toFixed(
-        0
-      ),
-      address_storey_max: handleGetRange(Number(address_storey))?.end.toFixed(
-        0
-      ),
-      price_currency: "1",
+      id_hash: id_obj,
     };
 
     const objUrl = `/objects?findSelectionSimilar=true${Object.entries(objData)

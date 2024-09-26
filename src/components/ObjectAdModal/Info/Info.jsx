@@ -29,24 +29,38 @@ export const Info = ({
         <ProfileField
           value={data?.title}
           placeholder="Введіть заголовок"
-          onChange={(val) => (loading ? null : onChange("title", val))}
+          onChange={(val) =>
+            loading || val.length > 70 ? null : onChange("title", val)
+          }
           big
           className="title"
           initOpen
           alwaysOpen
           label="Опис"
           readOnly
+          maxLength={70}
+          showCount
+          error={data?.title?.length > 0 && data?.title?.length < 16}
+          errorMessage="Мінімальна кількість символів - 16"
         />
         <ProfileField
           value={data?.description}
           placeholder="Введіть опис"
-          onChange={(val) => (loading ? null : onChange("description", val))}
+          onChange={(val) =>
+            loading || val.length > 9000 ? null : onChange("description", val)
+          }
           textarea
           className="title desciption"
           label="Опис"
           initOpen
           alwaysOpen
           readOnly
+          maxLength={9000}
+          showCount
+          errorMessage="Мінімальна кількість символів - 40"
+          error={
+            data?.description?.length > 0 && data?.description?.length < 40
+          }
         />
         {activeTab === 0 && (
           <div className="flex items-center gap-5">
@@ -92,7 +106,7 @@ const StyledInfo = styled.div`
     margin-bottom: 15px;
   }
   .desciption {
-    height: 170px;
+    height: 180px;
     .value {
       height: 130px !important;
     }

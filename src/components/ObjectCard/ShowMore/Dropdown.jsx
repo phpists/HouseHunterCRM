@@ -188,7 +188,24 @@ export const Dropdown = ({
             >
               <span>Редагувати </span> <Edit />
             </NavLink>
+          )}{" "}
+          {link?.length > 0 && (
+            <div
+              className="flex items-center justify-between"
+              onClick={() => window.open(link, "_blank")}
+            >
+              Перейти на першоджерело
+              <Link className="selection-icon" />
+            </div>
           )}
+          {onFindSimilar ? (
+            <div
+              className="flex items-center justify-between"
+              onClick={onFindSimilar}
+            >
+              <span>Знайти оригінальний обєкт</span> <Search />
+            </div>
+          ) : null}
         </>
       ) : (
         <>

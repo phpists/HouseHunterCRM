@@ -17,14 +17,16 @@ export const Info = ({
     >
       <Header data={data} ad={ad} onOpenAdList={onOpenAdList} />
       <Text data={data} editable={editable} onEdit={onEdit} />
-      <Footer
-        createDate={data?.dt_add}
-        dateEdit={data?.dt_edit}
-        id={data?.id}
-        idSource={data?.id_ad_in_source}
-        nameSource={data?.id_source}
-        typeObject={data?.type_object}
-      />
+      {ad ? null : (
+        <Footer
+          createDate={data?.dt_add}
+          dateEdit={data?.dt_edit}
+          id={data?.id}
+          idSource={data?.id_ad_in_source}
+          nameSource={data?.id_source}
+          typeObject={data?.type_object}
+        />
+      )}
     </StyledInfo>
   );
 };

@@ -48,7 +48,6 @@ export const ObjectAdModal = ({ onClose, object }) => {
   const [streetsCount, setStreetsCount] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
   const { user } = useAppSelect((state) => state.auth);
-
   const handleChangeField = (field, value, changeAll) =>
     setData(changeAll ? value : { ...data, [field]: value });
 
@@ -56,7 +55,6 @@ export const ObjectAdModal = ({ onClose, object }) => {
   const handleChangeStreetsCount = (val) => setStreetsCount(val);
   const handleChangeActiveTab = (val) => setActiveTab(val);
 
-  console.log(user);
   useEffect(() => {
     setData({
       title: object?.title ?? "",

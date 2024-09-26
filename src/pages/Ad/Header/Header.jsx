@@ -23,6 +23,8 @@ import { SendModal } from "../../Clients/SendModal";
 import { SortButton } from "./SortButton/SortButton";
 import { MapModal } from "./MapModal/MapModal";
 import { Statistic } from "./Statistic/Statistic";
+import { NavLink } from "react-router-dom";
+import { ReactComponent as SettingsIcon } from "../../../assets/images/settings.svg";
 
 export const Header = ({
   selectedCount,
@@ -187,7 +189,13 @@ export const Header = ({
             />
           </div>
           <div className="flex items-center bts">
-            {/* <Statistic filters={filters} allCount={allCount} /> */}
+            <NavLink to="/ad-setting">
+              <IconButton
+                Icon={SettingsIcon}
+                className="icon-btn"
+                onClick={() => setAddClient(true)}
+              />
+            </NavLink>
             <IconButton
               Icon={SettingIcon}
               className={`icon-btn ${isPrevFilter && "alert-btn"}`}

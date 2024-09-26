@@ -28,6 +28,7 @@ export const Field = ({
   onFocus,
   onBlur,
   onClick,
+  formatNumber,
 }) => {
   const [edit, setEdit] = useState(false);
 
@@ -50,6 +51,10 @@ export const Field = ({
       onBlur && onBlur();
     }
   };
+
+  function numberWithSpaces(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
 
   return (
     <StyleField
@@ -142,7 +147,9 @@ export const Field = ({
                 ? value
                 : "Введіть дату"
               : value?.length > 0
-              ? value
+              ? formatNumber
+                ? numberWithSpaces(value)
+                : value
               : placeholder}
           </div>
         )}

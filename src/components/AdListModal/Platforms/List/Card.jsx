@@ -23,7 +23,7 @@ export const Card = ({
       {noAuth ? null : (
         <div className="status-wrapper">
           <Tag title="Рекламується" color="green" />
-          <div className="status-wrapper-label">з 05.06.2024</div>
+          {/* <div className="status-wrapper-label">з 05.06.2024</div> */}
         </div>
       )}
     </div>

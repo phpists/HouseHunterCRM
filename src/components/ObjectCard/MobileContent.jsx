@@ -60,14 +60,16 @@ export const MobileContent = ({
       showLike={showLike}
     />
     <CardDescription text={data?.description} />
-    <Footer
-      createDate={data?.dt_add}
-      dateEdit={data?.dt_edit}
-      id={data?.id}
-      idSource={data?.id_ad_in_source}
-      nameSource={data?.id_source}
-      typeObject={data?.type_object}
-    />
+    {ad ? null : (
+      <Footer
+        createDate={data?.dt_add}
+        dateEdit={data?.dt_edit}
+        id={data?.id}
+        idSource={data?.id_ad_in_source}
+        nameSource={data?.id_source}
+        typeObject={data?.type_object}
+      />
+    )}
     <MainInfo
       className="mobile-main-info"
       data={data}
@@ -105,7 +107,7 @@ export const MobileContent = ({
       onOpenTagsHistory={onOpenTagsHistory}
       onOpenPriceHistory={onOpenPriceHistory}
       isAccess={data?.acsses_change}
-      link={data?.link}
+      link={data?.link ?? data?.url_resource}
       isHideObjects={isHideObjects}
       onOpenCommetHistory={onOpenCommetHistory}
       onDelete={onDelete}

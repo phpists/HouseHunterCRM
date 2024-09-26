@@ -42,6 +42,7 @@ export const Price = ({
         error={errors.find((e) => e === "price")}
         mobile={mobile}
         type="number"
+        formatNumber
       />
       <Divider />
       <SymbolSelect

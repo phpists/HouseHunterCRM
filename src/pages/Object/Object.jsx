@@ -285,13 +285,14 @@ const ObjectPage = () => {
               ?.map((f) => f[0])
           : []),
       ],
-      additionalFields: ["title", "id_rubric"],
+      additionalFields: ["title", "id_rubric", "description"],
       titles: commentsToFields?.object,
       additionalTitles: {
         title: "Заголовок",
         price: "Ціна",
         id_location: "Розташування",
         id_rubric: "Категорія",
+        description: "Опис",
       },
     });
 
@@ -307,6 +308,8 @@ const ObjectPage = () => {
             : data?.obj_is_actual_dt !== "0"
             ? Math.floor(new Date(data?.obj_is_actual_dt)?.getTime() / 1000)
             : "0",
+          obj_is_actual:
+            data?.obj_is_actual === undefined ? "0" : data?.obj_is_actual,
           dt_end_agreement: !data?.dt_end_agreement
             ? "0"
             : data?.dt_end_agreement !== "0"
@@ -325,7 +328,7 @@ const ObjectPage = () => {
             hideAfter: 3,
             position: "top-right",
           });
-          navigate(`/client/${clientId}`);
+          //   navigate(`/client/${clientId}`);
         });
       });
     } else if (!handleCheckArea()) {
@@ -363,13 +366,14 @@ const ObjectPage = () => {
               ?.map((f) => f[0])
           : []),
       ],
-      additionalFields: ["title", "id_rubric"],
+      additionalFields: ["title", "id_rubric", "description"],
       titles: commentsToFields?.object,
       additionalTitles: {
         title: "Заголовок",
         price: "Ціна",
         id_location: "Розташування",
         id_rubric: "Категорія",
+        description: "Опис",
       },
     });
 

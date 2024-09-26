@@ -34,6 +34,7 @@ const Advertising = lazy(() => import("./pages/Advertising/Advertising"));
 const AdvertisingSetting = lazy(() =>
   import("./pages/AdvertisingSetting/AdvertisingSetting")
 );
+const AdSettings = lazy(() => import("./pages/AdSettings/AdSettings"));
 
 export const App = () => {
   const [getProfile] = useLazyGetUserQuery();
@@ -311,6 +312,10 @@ export const App = () => {
                               <Route
                                 path="/advertising-setting"
                                 element={<AdvertisingSetting />}
+                              />{" "}
+                              <Route
+                                path="/ad-setting"
+                                element={<AdSettings />}
                               />
                               <Route
                                 path="/advertising-login-success"

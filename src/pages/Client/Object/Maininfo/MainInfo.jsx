@@ -70,7 +70,7 @@ export const Maininfo = ({
           <Divider />
         </>
       )}
-      <div className="flex items-center">
+      <div className="flex items-center category-wrapper">
         <SelectTags
           label="Категорія"
           notMultiSelect
@@ -267,5 +267,9 @@ const StyledMaininfo = styled.div`
     svg {
       transition: all 0.3s;
     }
+  }
+  .category-wrapper {
+    display: grid;
+    grid-template-columns: 217px max-content;
   }
 `;

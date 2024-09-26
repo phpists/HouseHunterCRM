@@ -32,6 +32,7 @@ export const ProfileField = ({
   readOnly,
   type,
   error,
+  errorMessage,
   onlyCalendar,
   onBlur,
   onClick,
@@ -43,6 +44,8 @@ export const ProfileField = ({
   noAutoFill,
   mask,
   phonePlaceholder,
+  showCount,
+  maxLength,
 }) => {
   const fieldRef = useRef();
   const [active, setActive] = useState(initOpen);
@@ -285,11 +288,26 @@ export const ProfileField = ({
           </div>
         )}
       </div>
-      {!big && (
-        <>
-          <div className="label labelItem">{label}</div>
-          <div className="label label-hover">{label}</div>
-        </>
+      <div className="flex items-center justify-between">
+        {!big && (
+          <>
+            <div className="label labelItem">{label}</div>
+            <div className="label label-hover">{label}</div>
+          </>
+        )}{" "}
+        {showCount && (
+          <>
+            <div className="input-count label labelItem">
+              {value?.length}/{maxLength}
+            </div>
+            <div className="input-count label label-hover">
+              {value?.length}/{maxLength}
+            </div>
+          </>
+        )}
+      </div>
+      {error && errorMessage && (
+        <div className="error-message label"> {errorMessage} </div>
       )}
       {open && active && !alwaysOpen && (
         <div
@@ -323,7 +341,7 @@ const StyledProfileField = styled.button`
   display: block;
   width: 100%;
   text-align: left;
-  ${({ error }) => error === "true" && "border: 1px solid red;"}
+  ${({ error }) => error === "true" && "border: 1px solid red !important;"}
 
   .value {
     color: var(--main-color);
@@ -524,5 +542,12 @@ const StyledProfileField = styled.button`
     path {
       fill: var(--main-color) !important;
     }
+  }
+  .input-count {
+    margin-left: auto;
+  }
+  .error-message {
+    color: red;
+    display: block !important;
   }
 `;
