@@ -77,6 +77,7 @@ export const MobileContent = ({
       onChangeCurrency={onChangeCurrency}
       type={type}
       onChangeType={onChangeType}
+      ad={ad}
     />
     <Tags
       className="mobile-tags"
@@ -124,6 +125,7 @@ export const MobileContent = ({
       ad={ad}
       onDeleteHistory={onDeleteHistory}
       onDeleteAd={onDeleteAd}
+      idRubric={data?.id_rubric}
     />
   </StyledMobileContent>
 );

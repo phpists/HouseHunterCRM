@@ -548,6 +548,32 @@ const Objects = () => {
       }
       filterActive.current = true;
       setUpdateData(true);
+    } else if (filterApply === "?findObject") {
+      const initFilters =
+        location?.search
+          ?.replace("?findObject=true", "")
+          ?.split("&")
+          ?.filter((f) => f?.length > 0)
+          ?.map((f) => f?.split("=")) ?? [];
+      let initFiltersObject = {};
+
+      try {
+        initFiltersObject = Object.fromEntries(initFilters);
+      } catch {
+        initFiltersObject = {};
+      }
+
+      setFilters({
+        ...initFiltersObject,
+        id_location: initFiltersObject?.id_location
+          ? [initFiltersObject?.id_location]
+          : undefined,
+      });
+      if (initFiltersObject?.id_rubric) {
+        handleGetRubricsFields(initFiltersObject?.id_rubric);
+      }
+      filterActive.current = true;
+      setUpdateData(true);
     } else if (filterApply === "?findWorker") {
       const initFilters =
         location?.search

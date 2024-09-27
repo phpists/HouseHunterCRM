@@ -4,10 +4,12 @@ import { ReactComponent as Door } from "../../../../assets/images/tag-door.svg";
 import { ReactComponent as Expand } from "../../../../assets/images/tag-expanded.svg";
 import { ReactComponent as Stairs } from "../../../../assets/images/tag-stairs.svg";
 import { ReactComponent as Box } from "../../../../assets/images/tag-box-select.svg";
+import { ReactComponent as Rocket } from "../../../../assets/images/BiRocket.svg";
 import brickIcon from "../../../../assets/images/tag-brick.svg";
 import { Tag } from "./Tag";
+import { handleFormatDate } from "../../../../utilits";
 
-export const Tags = ({ data }) => {
+export const Tags = ({ data, ad }) => {
   const TAGS = [
     ...(data?.rubric_name && data?.rubric_name?.length > 0
       ? [{ title: data?.rubric_name }]
@@ -52,6 +54,17 @@ export const Tags = ({ data }) => {
       : []),
     ...(data.area_kitchen > 0
       ? [{ title: `${data?.area_kitchen} м² кухні`, Icon: <Expand /> }]
+      : []),
+    ...(ad
+      ? [
+          {
+            title: `рекламується з ${handleFormatDate(
+              Number(data?.dt_publicate) * 1000,
+              true
+            )}`,
+            Icon: <Rocket />,
+          },
+        ]
       : []),
     // { title: "Купівля-продаж" },
     // { title: "Хрущьовка", icon: homeIcon },

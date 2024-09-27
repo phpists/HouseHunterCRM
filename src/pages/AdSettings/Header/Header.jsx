@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export const Header = () => {
   const navigate = useNavigate();
 
-  const handleBack = () => navigate("/advertising");
+  const handleBack = () => navigate("/ad");
 
   return (
     <StyledHeader className="flex items-center justify-between">

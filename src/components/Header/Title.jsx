@@ -53,7 +53,7 @@ export const Title = () => {
         return "Реклама";
       case "/ad":
         return "Реклама";
-      case "/advertising-setting":
+      case "/ad-setting":
         return "Реклама";
       default:
         return pathname.split("/")[1] === "client"

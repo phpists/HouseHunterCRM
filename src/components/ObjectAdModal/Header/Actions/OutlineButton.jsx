@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import editIcon from "../../../../assets/images/edit.svg";
 
 export const OutlineButton = ({ disabled, title, onClick }) => (
   <StyledOutlineButton
@@ -6,6 +7,7 @@ export const OutlineButton = ({ disabled, title, onClick }) => (
     disabled={disabled}
     onClick={onClick}
   >
+    <img src={editIcon} alt="" />
     {title}
   </StyledOutlineButton>
 );
@@ -23,4 +25,7 @@ const StyledOutlineButton = styled.button`
   width: 120px;
   min-width: max-content;
   padding: 0 25px;
+  img {
+    margin-right: 5px;
+  }
 `;

@@ -1,8 +1,17 @@
 import styled from "styled-components";
 import { IconButton } from "../../../../../components/IconButton";
 import { ReactComponent as RemoveIcon } from "../../../../../assets/images/remove.svg";
+import { ReactComponent as RefreshIcon } from "../../../../../assets/images/reload.svg";
 
-export const Card = ({ expireAt, email, id, name, onDelete, oneAccount }) => (
+export const Card = ({
+  expireAt,
+  email,
+  id,
+  name,
+  onDelete,
+  oneAccount,
+  onRefresh,
+}) => (
   <StyledCard className={`flex items-center`}>
     {expireAt ? (
       <div>
@@ -26,7 +35,17 @@ export const Card = ({ expireAt, email, id, name, onDelete, oneAccount }) => (
         <div className="subtitle">Ім'я</div>
       </div>
     ) : null}
-    <IconButton onClick={onDelete} Icon={RemoveIcon} className="removeIcon" />
+    <div className="actions flex items-center gap-2">
+      {onRefresh ? (
+        <IconButton
+          onClick={onRefresh}
+          Icon={RefreshIcon}
+          className="iconBtn reloadIcon"
+          title="Оновити історію всіх оголошень"
+        />
+      ) : null}
+      <IconButton onClick={onDelete} Icon={RemoveIcon} className="iconBtn" />
+    </div>
   </StyledCard>
 );
 
@@ -61,11 +80,25 @@ const StyledCard = styled.div`
   .right {
     text-align: right;
   }
-  .removeIcon {
+  .actions {
     margin-left: auto;
+  }
+  .iconBtn {
     &:hover {
       border: 1px solid #fff;
       background: var(--bg-20);
+    }
+  }
+
+  .reloadIcon {
+    svg {
+      height: 13px;
+      opacity: 0.5;
+    }
+    &:hover {
+      svg {
+        opacity: 1;
+      }
     }
   }
 

@@ -1,11 +1,18 @@
 import { styled } from "styled-components";
 
-export const IconButton = ({ Icon, onClick, className, active }) => (
+export const IconButton = ({
+  Icon,
+  onClick,
+  className,
+  active,
+  title = "",
+}) => (
   <StyledIconButton
     onClick={onClick}
     className={`flex items-center justify-center iconButton ${className} ${
       active && "active"
     }`}
+    title={title}
   >
     <Icon />
   </StyledIconButton>

@@ -68,6 +68,7 @@ export const DesktopContent = ({
         onChangeCurrency={onChangeCurrency}
         type={type}
         onChangeType={onChangeType}
+        ad={ad}
       />
       <Info
         className="desktop-item"
@@ -123,6 +124,7 @@ export const DesktopContent = ({
         ad={ad}
         onDeleteHistory={onDeleteHistory}
         onDeleteAd={onDeleteAd}
+        idRubric={data?.id_rubric}
       />
       <div className="mobile-footer w-full">
         <Info

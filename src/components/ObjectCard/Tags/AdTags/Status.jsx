@@ -99,7 +99,7 @@ export const Status = ({ status, date, idAd, idUserOlx, onUpdateField }) => {
   };
 
   return (
-    <StyledStatus>
+    <StyledStatus onClick={handleRefreshStatus}>
       <div className="flex items-center gap-2">
         <Tag
           title={data?.data?.[status] ?? STATUSES[status]?.title}
@@ -107,15 +107,10 @@ export const Status = ({ status, date, idAd, idUserOlx, onUpdateField }) => {
           style={{
             color: STATUSES[status]?.color,
             background: STATUSES[status]?.bg,
-            maxWidth: 90,
           }}
         />
-        <RefreshIcon
-          onClick={handleRefreshStatus}
-          className={`refreshIcon  ${loading && "loading"}`}
-        />
+        <RefreshIcon className={`refreshIcon  ${loading && "loading"}`} />
       </div>
-      <div className="date">з {date}</div>
     </StyledStatus>
   );
 };
@@ -143,11 +138,11 @@ const StyledStatus = styled.div`
     opacity: 0.4;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 170px;
     overflow: hidden;
   }
   .refreshIcon {
     height: 15px;
+    flex-shrink: 0;
     &.loading {
       animation: 2s infinite loading linear;
       @keyframes loading {

@@ -552,3 +552,15 @@ input[type="number"] {
 .PhotoView-Slider__BannerWrap {
   background: var(--main-bg) !important;
 }
+
+.close-alert-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.ct-toast {
+  position: relative;
+  padding: 10px 30px 10px 20px !important;
+}

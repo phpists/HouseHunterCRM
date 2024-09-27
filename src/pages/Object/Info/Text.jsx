@@ -66,6 +66,7 @@ export const Text = ({ data, onChangeField, errors, objectData }) => {
         error={!!errors.find((e) => e === "title")}
         showCount
         maxLength={70}
+        errorMessage="Мінімальна кількість символів - 16"
       />
       <ProfileField
         value={data?.description}
@@ -81,6 +82,7 @@ export const Text = ({ data, onChangeField, errors, objectData }) => {
         onClickOnIconEdit={() => setDescrModal(true)}
         showCount
         maxLength={9000}
+        errorMessage="Мінімальна кількість символів - 100"
       />
       <ProfileField
         value={data?.comment}

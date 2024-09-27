@@ -15,16 +15,18 @@ export const List = ({ data }) => {
 
   return (
     <StyledList>
-      {data?.arr_adverst_object?.map(({ resource, id_user_olx }, i) => (
-        <Card
-          icon={resource === "olx" ? olxIcon : flombuIcon}
-          title={
-            resource === "olx"
-              ? handleGetOlxTitle(handleGetOlxAccount(id_user_olx))
-              : ""
-          }
-        />
-      ))}
+      {data?.arr_adverst_object?.map(
+        ({ resource, id_user_olx, realestateEmail }, i) => (
+          <Card
+            icon={resource === "olx" ? olxIcon : flombuIcon}
+            title={
+              resource === "olx"
+                ? handleGetOlxTitle(handleGetOlxAccount(id_user_olx))
+                : realestateEmail ?? ""
+            }
+          />
+        )
+      )}
     </StyledList>
   );
 };

@@ -42,7 +42,7 @@ export const Text = ({ data, editable, onEdit }) => {
 
 const StyledText = styled.div`
   width: 400px;
-  max-height: 130px;
+  max-height: 97px;
   overflow: auto;
   margin-bottom: 15px;
   position: relative;

@@ -18,8 +18,16 @@ import { XHOUSE_COMPANY_ID } from "../../../../constants";
 import { useGetCompanyInfoQuery } from "../../../../store/billing/billing.api";
 import cogoToast from "cogo-toast";
 import { handleResponse } from "../../../../utilits";
+import { Confirm } from "../../../Confirm/Confirm";
+import { useState } from "react";
 
-export const List = ({ data, onChange, onChangeActiveTab, activeTab }) => {
+export const List = ({
+  data,
+  onChange,
+  onChangeActiveTab,
+  activeTab,
+  activeAds,
+}) => {
   const navigate = useNavigate();
   const { data: accounts } = useGetStatusAccountQuery();
   const { data: realestateAccounts } = useGetRealestateStatusQuery();
@@ -27,6 +35,7 @@ export const List = ({ data, onChange, onChangeActiveTab, activeTab }) => {
   const { data: flombuAccounts } = useFlombuConnectAccountQuery();
   const [publishObject] = useLazyPublishObjectQuery();
   const [changeMls] = useLazyChangeMlsObjectQuery();
+  const [openAuthConfirm, setOpenAuthConfirm] = useState(null);
 
   const handleTelegramPublish = (id) => {
     const { hide } = cogoToast.loading("Опублікування реклами в телеграмі", {
@@ -90,6 +99,7 @@ export const List = ({ data, onChange, onChangeActiveTab, activeTab }) => {
     );
   };
 
+  console.log(activeAds);
   return (
     <StyledList>
       {(accounts?.accounts?.length === 0 || !accounts?.accounts) &&
@@ -99,6 +109,23 @@ export const List = ({ data, onChange, onChangeActiveTab, activeTab }) => {
           <Link to="/advertising-setting">авторизуватись</Link>
         </div>
       ) : null}
+      {openAuthConfirm && (
+        <Confirm
+          title={`В ${
+            openAuthConfirm === "4"
+              ? "Realstate"
+              : openAuthConfirm === "3"
+              ? "Flombu"
+              : openAuthConfirm === "1"
+              ? "Olx"
+              : ""
+          } потрібна авторизація, перейти на сторінку авторизації?`}
+          onClose={() => setOpenAuthConfirm(null)}
+          onSubmit={() => {
+            navigate(`/advertising-setting?type=${openAuthConfirm}`);
+          }}
+        />
+      )}
       {accounts?.accounts?.filter((a) => a?.error !== "invalid_token")?.length >
       0
         ? accounts?.accounts?.map((account, i) => (
@@ -122,6 +149,11 @@ export const List = ({ data, onChange, onChangeActiveTab, activeTab }) => {
               onChangeActiveTab={() => onChangeActiveTab(0)}
               active={data?.id_user_olx?.includes(account?.data?.id)}
               selected={activeTab === 0}
+              activeAd={
+                !!activeAds?.find(
+                  (a) => Number(a.id_user_olx) === account?.data?.id
+                )
+              }
             />
           ))
         : null}
@@ -161,7 +193,7 @@ export const List = ({ data, onChange, onChangeActiveTab, activeTab }) => {
         <Card
           icon={olxIcon}
           title={"Потрібна авторизація"}
-          onChangeActiveTab={() => navigate("/advertising-setting?type=1")}
+          onChangeActiveTab={() => setOpenAuthConfirm("1")}
           noAuth
         />
       )}
@@ -169,7 +201,7 @@ export const List = ({ data, onChange, onChangeActiveTab, activeTab }) => {
         <Card
           icon={realstateIcon}
           title={"Потрібна авторизація"}
-          onChangeActiveTab={() => navigate("/advertising-setting?type=4")}
+          onChangeActiveTab={() => setOpenAuthConfirm("4")}
           noAuth
         />
       )}
@@ -177,7 +209,7 @@ export const List = ({ data, onChange, onChangeActiveTab, activeTab }) => {
         <Card
           icon={flombuIcon}
           title={"Потрібна авторизація"}
-          onChangeActiveTab={() => navigate("/advertising-setting?type=3")}
+          onChangeActiveTab={() => setOpenAuthConfirm("3")}
           noAuth
         />
       )}

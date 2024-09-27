@@ -63,8 +63,6 @@ const notAllowedFields = [
   "type_obj_garage",
 ];
 
-const notAllowedCategories = ["73", "74"];
-
 export const Main = ({
   filters,
   onChangeFilter,
@@ -128,9 +126,7 @@ export const Main = ({
         }
         options={
           rubricsList
-            ? rubricsList
-                ?.map(({ id, name }) => ({ title: name, value: id }))
-                ?.filter((c) => !notAllowedCategories.includes(c.value))
+            ? rubricsList?.map(({ id, name }) => ({ title: name, value: id }))
             : []
         }
       />

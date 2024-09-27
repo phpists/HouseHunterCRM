@@ -84,6 +84,7 @@ export const Setting = ({
             accounts={olxAccounts}
             onRefreshAccountsData={onRefreshAccountsData}
             onDelete={(id) => handleDeleteAccount(id, "olx")}
+            refresh
           />
         </div>
       ) : data?.id === "2" ? (

@@ -10,6 +10,7 @@ export const MainInfo = ({
   onChangeCurrency,
   type,
   onChangeType,
+  ad,
 }) => {
   const TYPES = ["", "metr", "sotka", "hektar", "object"];
   const CURRENCIES = ["uah", "usd", "eur"];
@@ -17,7 +18,11 @@ export const MainInfo = ({
   return (
     <StyledMainInfo className={`${className} clickable`}>
       <Price
-        price={data?.[`price_per_${TYPES[type]}_${CURRENCIES[currency]}`]}
+        price={
+          ad
+            ? data?.price
+            : data?.[`price_per_${TYPES[type]}_${CURRENCIES[currency]}`]
+        }
         currency={currency}
         onChangeCurrency={onChangeCurrency}
         priceFor={
@@ -27,8 +32,9 @@ export const MainInfo = ({
         rubricId={data?.id_rubric}
         type={type}
         onChangeType={onChangeType}
+        notChangeCurrency={ad}
       />
-      <Tags data={data} />
+      <Tags data={data} ad={ad} />
     </StyledMainInfo>
   );
 };

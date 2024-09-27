@@ -16,6 +16,7 @@ import { ReactComponent as PhoneIcon } from "../../../assets/images/phone-menu.s
 import { ReactComponent as RestoreIcon } from "../../../assets/images/refresh-icon.svg";
 import { ReactComponent as DeleteInfoIcon } from "../../../assets/images/delete-info.svg";
 import { ReactComponent as MarketIcon } from "../../../assets/images/market.svg";
+import { ReactComponent as RoketIcon } from "../../../assets/images/BiRocket.svg";
 import {
   useLazyAddStreetBaseObjectQuery,
   useLazyDownloadObjectQuery,
@@ -54,7 +55,10 @@ export const Dropdown = ({
   ad,
   onDeleteHistory,
   onDeleteAd,
+  idRubric,
 }) => {
+  const NO_AD_RUBRICS = ["60", "70", "72", "73", "74"];
+  const noAd = NO_AD_RUBRICS.includes(idRubric);
   const [addStreetBaseObject] = useLazyAddStreetBaseObjectQuery();
   const [added, setAdded] = useState(false);
   const navigate = useNavigate();
@@ -82,6 +86,13 @@ export const Dropdown = ({
         const link = resp?.data?.link;
         link && handleDownloadFile(link);
       });
+    });
+  };
+
+  const handleAdDisabled = () => {
+    cogoToast.error("Дана рубрика для реклами не підримується", {
+      hideAfter: 3,
+      position: "top-right",
     });
   };
 
@@ -322,10 +333,12 @@ export const Dropdown = ({
           )}
           {onAdvertise && (
             <div
-              className="flex items-center justify-between"
-              onClick={onAdvertise}
+              className={`flex items-center justify-between ${
+                noAd && "disabled"
+              }`}
+              onClick={noAd ? handleAdDisabled : onAdvertise}
             >
-              <span>Рекламувати</span> <MarketIcon className="selection-icon" />
+              <span>Рекламувати</span> <RoketIcon className="selection-icon" />
             </div>
           )}{" "}
           {onAdvertiseTelegram && (
@@ -411,6 +424,10 @@ const StyledDropdown = styled.div`
     white-space: nowrap;
     &:hover {
       background: var(--active-bg);
+    }
+    &.disabled {
+      opacity: 0.8;
+      cursor: not-allowed;
     }
   }
   div:first-child {

@@ -57,9 +57,9 @@ export const Info = ({
           readOnly
           maxLength={9000}
           showCount
-          errorMessage="Мінімальна кількість символів - 40"
+          errorMessage="Мінімальна кількість символів - 100"
           error={
-            data?.description?.length > 0 && data?.description?.length < 40
+            data?.description?.length > 0 && data?.description?.length < 100
           }
         />
         {activeTab === 0 && (

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Loader } from "../../../Loader";
+import { ReactComponent as Icon } from "../../../../assets/images/BiRocket.svg";
 
 export const SubmitButton = ({ onClick, loading, disabled }) => (
   <StyledSubmitButton
@@ -7,7 +8,14 @@ export const SubmitButton = ({ onClick, loading, disabled }) => (
     onClick={onClick}
     disabled={loading || disabled}
   >
-    {loading ? <Loader white className="loader" /> : " Рекламувати"}
+    {loading ? (
+      <Loader white className="loader" />
+    ) : (
+      <>
+        <Icon />
+        Рекламувати
+      </>
+    )}
   </StyledSubmitButton>
 );
 
@@ -25,5 +33,12 @@ const StyledSubmitButton = styled.button`
   .loader {
     height: 25px;
     width: 94px;
+  }
+  svg {
+    width: 20px;
+    margin-right: 5px;
+    g {
+      opacity: 1;
+    }
   }
 `;

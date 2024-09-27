@@ -136,7 +136,7 @@ export const objects = createApi({
         body: handleToFormData(
           { action: "edit", mod: "objects", field, id_object },
           { photos },
-          [],
+          ["household_appliances_json"],
           true
         ),
       }),
@@ -509,7 +509,7 @@ export const objects = createApi({
       }),
     }),
     getListAddsPublich: build.query({
-      query: ({ resource = "1", status }) => ({
+      query: ({ resource = "1", status, id_user_olx }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -518,6 +518,7 @@ export const objects = createApi({
           mod: "publication",
           resource,
           status,
+          id_user_olx,
         }),
       }),
     }),
@@ -660,5 +661,5 @@ export const {
   useLazyDeleteAdQuery,
   useLazyDeleteAdAccountQuery,
   useLazyChangeMlsObjectQuery,
-  useLazyDeleteAdHistoryQuery
+  useLazyDeleteAdHistoryQuery,
 } = objects;

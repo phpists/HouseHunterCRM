@@ -516,6 +516,19 @@ export const auth = createApi({
         }),
       }),
     }),
+    refreshOlxAdsAccount: build.query({
+      query: (id_user_olx) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "refreshAddsAccount",
+          mod: "publication",
+          resource: "olx",
+          id_user_olx,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -554,5 +567,6 @@ export const {
   useFlombuConnectStatusQuery,
   useLazyFlombuDeleteAdHistoryQuery,
   useGetStatusesOlxQuery,
-  useLazyGetStatusAddQuery
+  useLazyGetStatusAddQuery,
+  useLazyRefreshOlxAdsAccountQuery,
 } = auth;

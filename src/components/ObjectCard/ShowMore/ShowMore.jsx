@@ -32,6 +32,7 @@ export const ShowMore = ({
   ad,
   onDeleteHistory,
   onDeleteAd,
+  idRubric,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -87,6 +88,7 @@ export const ShowMore = ({
         ad={ad}
         onDeleteHistory={onDeleteHistory}
         onDeleteAd={onDeleteAd}
+        idRubric={idRubric}
       />
     </StyledShowMore>
   );

@@ -124,10 +124,12 @@ export const RealestateForm = ({
       <Select
         label="Район"
         options={
-          regions?.data?.map(({ id_region, name }) => ({
-            title: name,
-            value: id_region,
-          })) ?? []
+          regions?.data
+            ?.map(({ id_region, name }) => ({
+              title: name,
+              value: id_region,
+            }))
+            .sort((a, b) => a.title.localeCompare(b.title)) ?? []
         }
         value={data?.region}
         onChange={handleChangeRegion}
@@ -138,10 +140,12 @@ export const RealestateForm = ({
         <Select
           label="Місто"
           options={
-            cities?.data?.map(({ id_city, name }) => ({
-              title: name,
-              value: id_city,
-            })) ?? []
+            cities?.data
+              ?.map(({ id_city, name }) => ({
+                title: name,
+                value: id_city,
+              }))
+              .sort((a, b) => a.title.localeCompare(b.title)) ?? []
           }
           value={data?.city}
           onChange={handleChangeCity}
@@ -155,10 +159,12 @@ export const RealestateForm = ({
             <Select
               label="Буква вулиці"
               options={
-                letters?.data?.map(({ id_letter }) => ({
-                  title: id_letter,
-                  value: id_letter,
-                })) ?? []
+                letters?.data
+                  ?.map(({ id_letter }) => ({
+                    title: id_letter,
+                    value: id_letter,
+                  }))
+                  .sort((a, b) => a.title.localeCompare(b.title)) ?? []
               }
               value={data?.letter}
               onChange={handleChangeLetter}
@@ -168,10 +174,12 @@ export const RealestateForm = ({
             <Select
               label="Вулиця"
               options={
-                streets?.data?.map(({ id_street, name }) => ({
-                  title: name,
-                  value: id_street,
-                })) ?? []
+                streets?.data
+                  ?.map(({ id_street, name }) => ({
+                    title: name,
+                    value: id_street,
+                  }))
+                  .sort((a, b) => a.title.localeCompare(b.title)) ?? []
               }
               value={data?.street}
               onChange={handleChangeStreet}

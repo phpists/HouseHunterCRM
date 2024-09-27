@@ -18,6 +18,7 @@ import {
 } from "../../store/auth/auth.api";
 import { useAppSelect } from "../../hooks/redux";
 import { useNavigate } from "react-router-dom";
+import { ReactComponent as CloseIcon } from "../../assets/images/close-modal.svg";
 
 export const ObjectAdModal = ({ onClose, object }) => {
   const [data, setData] = useState({
@@ -76,6 +77,19 @@ export const ObjectAdModal = ({ onClose, object }) => {
     });
   }, [object]);
 
+  const handleShowError = (msg) => {
+    const { hide } = cogoToast.error(
+      <>
+        {msg}
+        <CloseIcon className="close-alert-icon" onClick={() => hide()} />
+      </>,
+      {
+        position: "top-right",
+        hideAfter: 20,
+      }
+    );
+  };
+
   const handleSubmit = () => {
     setLoading(true);
     data?.id_user_olx?.forEach((id_user_olx) => {
@@ -118,18 +132,11 @@ export const ObjectAdModal = ({ onClose, object }) => {
           },
           () => {
             const message = resp?.data?.messege;
-            const fields = resp?.data?.fields_validation?.map(
-              (f) => commentsToFields?.object[f]
-            );
-            cogoToast.error(
-              <>
-                {message} {fields?.join(",")}{" "}
-              </>,
-              {
-                hideAfter: 3,
-                position: "top-right",
-              }
-            );
+            const fields = resp?.data?.fields_validation
+              ?.map((f) => commentsToFields?.object[f])
+              ?.filter((v) => v);
+
+            handleShowError(`${message} ${fields?.join(",")}`);
           },
           true
         );
@@ -142,13 +149,25 @@ export const ObjectAdModal = ({ onClose, object }) => {
         ...data,
       }).then((resp) => {
         setLoading(false);
-        handleResponse(resp, () => {
-          onClose();
-          cogoToast.info("Оголошення успішно опубліковано", {
-            hideAfter: 3,
-            position: "top-right",
-          });
-        });
+        handleResponse(
+          resp,
+          () => {
+            onClose();
+            cogoToast.info("Оголошення успішно опубліковано", {
+              hideAfter: 3,
+              position: "top-right",
+            });
+          },
+          () => {
+            const fields = resp?.data?.fields_validation
+              ? Object.entries(resp?.data?.fields_validation)?.map(
+                  (f) => commentsToFields?.object[f[0]]
+                )
+              : [];
+            handleShowError(`${resp?.data?.messege} ${fields?.join(",")}`);
+          },
+          true
+        );
       });
     });
 
@@ -204,6 +223,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
             onChange={handleChangeField}
             onChangeActiveTab={handleChangeActiveTab}
             activeTab={activeTab}
+            activeAds={object?.arr_adverst_object ?? []}
           />
           <Info
             data={data}

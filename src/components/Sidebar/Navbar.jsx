@@ -70,24 +70,14 @@ export const NavBar = ({ accessData }) => {
           },
         ]
       : []),
-    ...(XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash)
-      ? [
-          {
-            icon: RocketIcon,
-            link: "/advertising",
-            title: "Реклама",
-            childrenLinks: ["advertising-setting"],
-          },
-        ]
-      : []),
+
     ...(XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash)
       ? [
           {
             icon: RocketIcon,
             link: "/ad",
             title: "Реклама",
-            childrenLinks: ["edit-ad"],
-            className: "red",
+            childrenLinks: ["edit-ad", "ad-setting"],
           },
         ]
       : []),

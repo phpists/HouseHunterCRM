@@ -222,8 +222,8 @@ const Ad = () => {
     currentPage.current = 0;
     setIsAllPages(false);
     // handleGetObjects(true, isApply);
-    getListAdds({ status: isApply ? filters?.status : undefined }).then(
-      (resp) => setData(resp?.data?.data)
+    getListAdds(isApply ? filters : {}).then((resp) =>
+      setData(resp?.data?.data)
     );
     setIsDeleted(
       isApply ? filters?.company_object?.show_deleted === "1" : false
@@ -304,7 +304,7 @@ const Ad = () => {
       id_hash: id_obj,
     };
 
-    const objUrl = `/objects?findSelectionSimilar=true${Object.entries(objData)
+    const objUrl = `/objects?findObject=true${Object.entries(objData)
       ?.map((d) => `&${d[0]}=${d[1]}`)
       ?.join("")}`;
 

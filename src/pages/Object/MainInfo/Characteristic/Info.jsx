@@ -93,7 +93,11 @@ export const Info = ({ fields, data, onChangeField, errors, onOpenSelect }) => {
       />
 
       {handleCheckIsCollapsed() ? (
-        <ToggleContent title="Інше">
+        <ToggleContent
+          title="Інше"
+          error={errors.filter((e) => collapsedFields?.[e])?.length > 0}
+          errorsUpdated={errors.includes("updated")}
+        >
           <Categories
             data={data}
             onChangeField={onChangeField}

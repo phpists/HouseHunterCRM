@@ -10,6 +10,7 @@ export const Card = ({
   onChangeActiveTab,
   noAuth,
   selected,
+  activeAd,
 }) => (
   <StyledCard icon={icon}>
     {noAuth ? (
@@ -30,12 +31,12 @@ export const Card = ({
       <span className="card-title" title={title}>
         {title}
       </span>
-      {noAuth ? null : (
+      {noAuth ? null : activeAd ? (
         <div className="status-wrapper">
           <Tag title="Рекламується" color="green" />
-          <div className="status-wrapper-label">з 05.06.2024</div>
+          {/* <div className="status-wrapper-label">з 05.06.2024</div> */}
         </div>
-      )}
+      ) : null}
     </div>
   </StyledCard>
 );

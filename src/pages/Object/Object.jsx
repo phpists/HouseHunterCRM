@@ -169,6 +169,14 @@ const ObjectPage = () => {
             : data.dt_end_agreement,
       };
       setData(newData);
+
+      if (fieldName === "title" && value?.length < 16) {
+        setErrors([...errors.filter((e) => e !== "updated"), "title"]);
+      }
+
+      if (fieldName === "description" && value?.length < 100) {
+        setErrors([...errors.filter((e) => e !== "updated"), "description"]);
+      }
     }
   };
 
@@ -380,6 +388,9 @@ const ObjectPage = () => {
     if (isEmptyFields?.length === 0 && handleCheckArea()) {
       setErrors([]);
       setLoading(true);
+      console.log(
+        handleFormatDatesToTimestamp(data, fields)?.household_appliances_json
+      );
       editObject({
         id_object: id,
         field: {

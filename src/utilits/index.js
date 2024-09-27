@@ -62,10 +62,15 @@ export const handleToFormData = (
       if (Object.entries(field[1])?.length > 0) {
         Object.entries(field[1]).forEach((fField) => {
           if (Array.isArray(fField[1])) {
-            fField[1].forEach((f, i) => {
-              formData.append(`${field[0]}[${fField[0]}][]`, f);
-            });
+            if (fField[1]?.length > 0) {
+              fField[1].forEach((f, i) => {
+                formData.append(`${field[0]}[${fField[0]}][]`, f);
+              });
+            } else {
+              formData.append(`${field[0]}[${fField[0]}][]`, []);
+            }
           } else if (typeof fField[1] === "object" && fField[1]) {
+            console.log("4 ", fField[0]);
             if (Object.entries(fField[1])?.length > 0) {
               Object.entries(fField[1]).forEach((innerFField) => {
                 if (Array.isArray(innerFField[1])) {
@@ -86,6 +91,7 @@ export const handleToFormData = (
                 }
               });
             } else {
+              console.log(`${field[0]}[${fField[0]}][]`);
               formData.append(`${field[0]}[${fField[0]}][]`, []);
             }
           } else {
@@ -96,6 +102,7 @@ export const handleToFormData = (
           }
         });
       } else {
+        console.log(field[0]);
         formData.append(`${field[0]}[]`, []);
       }
     } else {
