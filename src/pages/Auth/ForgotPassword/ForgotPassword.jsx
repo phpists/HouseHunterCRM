@@ -4,9 +4,8 @@ import { Description } from "../Description";
 import { Input } from "../Input";
 import { Button } from "../../../components/Button";
 import { useState } from "react";
-import { emailValidation, handleResponse } from "../../../utilits";
+import { emailValidation, handleResponse, showAlert } from "../../../utilits";
 import { useLazyForgotPasswordQuery } from "../../../store/auth/auth.api";
-import cogoToast from "cogo-toast";
 
 export const ForgotPassword = ({ onClose }) => {
   const [forgotPassword] = useLazyForgotPasswordQuery();
@@ -21,13 +20,11 @@ export const ForgotPassword = ({ onClose }) => {
   const handleSubmit = () => {
     forgotPassword({ email }).then((resp) => {
       handleResponse(resp, () => {
-        cogoToast.success(
-          "Для зміни паролю перейдіть за посиланням у листі, який відправлено Вам на електронну пошту!",
-          {
-            hideAfter: 3,
-            position: "top-right",
-          }
+        showAlert(
+          "success",
+          "Для зміни паролю перейдіть за посиланням у листі, який відправлено Вам на електронну пошту!"
         );
+
         onClose();
       });
     });

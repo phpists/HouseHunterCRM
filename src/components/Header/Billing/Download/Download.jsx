@@ -3,8 +3,7 @@ import { Dropzone } from "./Dropzone";
 import { Loading } from "./Loading/Loading";
 import { useLazyPayByBankQuery } from "../../../../store/billing/billing.api";
 import { useState } from "react";
-import { formatBytes, handleResponse } from "../../../../utilits";
-import cogoToast from "cogo-toast";
+import { formatBytes, handleResponse, showAlert } from "../../../../utilits";
 
 export const Download = ({
   download,
@@ -36,10 +35,7 @@ export const Download = ({
               setTimeout(() => {
                 refetchBalance();
                 onClose();
-                cogoToast.success("Успішно поповнено", {
-                  hideAfter: 3,
-                  position: "top-right",
-                });
+                showAlert("success", "Успішно поповнено");
               }, 2000);
             },
             () => {
@@ -48,16 +44,10 @@ export const Download = ({
           )
         );
       } else {
-        cogoToast.error("Файл розміром більше 30 МБ", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("error", "Файл розміром більше 30 МБ");
       }
     } else {
-      cogoToast.error("Введіть суму поповнення", {
-        hideAfter: 3,
-        position: "top-right",
-      });
+      showAlert("error", "Введіть суму поповнення");
     }
   };
 

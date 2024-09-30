@@ -6,8 +6,7 @@ import {
   useGetFoldersListQuery,
   useLazyAddObjectToSelectionsQuery,
 } from "../../store/selections/selections.api";
-import { checkIsArray, handleResponse } from "../../utilits";
-import cogoToast from "cogo-toast";
+import { checkIsArray, handleResponse, showAlert } from "../../utilits";
 import { Modal } from "../../components/Modal/Modal";
 import { SelectionsSelect } from "../../components/SelectionsSelect/SelectionsSelect";
 
@@ -22,14 +21,11 @@ export const AddToSelections = ({ onClose, idObject, onSuccess }) => {
       id_objects: Array.isArray(idObject) ? idObject : [idObject],
     }).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success(
+        showAlert(
+          "success",
           `Об'єкт ${
             checkIsArray(idObject)?.length > 0 ? "и" : ""
-          } успішно додано`,
-          {
-            hideAfter: 3,
-            position: "top-right",
-          }
+          } успішно додано`
         );
         onClose();
         onSuccess && onSuccess();

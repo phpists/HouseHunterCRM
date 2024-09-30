@@ -16,10 +16,10 @@ import {
 import { Button } from "./Button";
 import { XHOUSE_COMPANY_ID } from "../../../../constants";
 import { useGetCompanyInfoQuery } from "../../../../store/billing/billing.api";
-import cogoToast from "cogo-toast";
-import { handleResponse } from "../../../../utilits";
+import { handleResponse, showAlert } from "../../../../utilits";
 import { Confirm } from "../../../Confirm/Confirm";
 import { useState } from "react";
+import cogoToast from "cogo-toast";
 
 export const List = ({
   data,
@@ -65,21 +65,15 @@ export const List = ({
                 "Вимкнено модерацією, пропозиція заблокована та очікує перевірки",
               removed_by_moderator: "Видалено",
             };
-            cogoToast.info(
-              messages[resp?.data?.status] ?? "Оголошення успішно опубліковано",
-              {
-                hideAfter: 3,
-                position: "top-right",
-              }
+            showAlert(
+              "info",
+              messages[resp?.data?.status] ?? "Оголошення успішно опубліковано"
             );
           },
           () => {
             const message = resp?.data?.messege;
 
-            cogoToast.error(<>{message}</>, {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("error", message);
           },
           true
         );
@@ -91,10 +85,7 @@ export const List = ({
     changeMls(data?.id).then((resp) =>
       handleResponse(resp, () => {
         onChange("mls", !data?.mls);
-        cogoToast.success("Статус успішно змінено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Статус успішно змінено");
       })
     );
   };

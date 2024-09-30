@@ -6,8 +6,7 @@ import { Button } from "../../components/Button";
 import arrow from "../../assets/images/arrow.svg";
 import { useLazyAddNewDescriptionRequstQuery } from "../../store/selections/selections.api";
 import { useParams } from "react-router-dom";
-import { handleResponse } from "../../utilits";
-import cogoToast from "cogo-toast";
+import { handleResponse, showAlert } from "../../utilits";
 
 export const EditObject = ({ onClose, data, onSuccess }) => {
   const { id } = useParams();
@@ -40,10 +39,7 @@ export const EditObject = ({ onClose, data, onSuccess }) => {
     }).then((resp) => {
       setLoading(false);
       handleResponse(resp, () => {
-        cogoToast.success("Зміни успішно збережено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Зміни успішно збережено");
         onSuccess(data?.id, { title_agent: title, description_agent: value });
         onClose();
       });

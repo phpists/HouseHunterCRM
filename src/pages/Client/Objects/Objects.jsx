@@ -19,8 +19,7 @@ import {
   useLazyDeleteRequestQuery,
   useLazyRestoreRequestsQuery,
 } from "../../../store/requests/requests.api";
-import { handleCheckAccess, handleResponse } from "../../../utilits";
-import cogoToast from "cogo-toast";
+import { handleCheckAccess, handleResponse, showAlert } from "../../../utilits";
 import { useAppSelect } from "../../../hooks/redux";
 
 export const Objects = ({
@@ -82,12 +81,9 @@ export const Objects = ({
       reasone_remove: confirmText,
     }).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success(
-          `Обєкт${objects?.length === 1 ? "" : "и"} успішно видалено!`,
-          {
-            hideAfter: 3,
-            position: "top-right",
-          }
+        showAlert(
+          "success",
+          `Обєкт${objects?.length === 1 ? "" : "и"} успішно видалено!`
         );
         handleRefreshObjects(true);
         handleClearSelectedItemsByType("object");
@@ -102,12 +98,9 @@ export const Objects = ({
       reasone_remove: confirmText,
     }).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success(
-          `Запит${requests?.length === 1 ? "" : "и"} успішно видалено!`,
-          {
-            hideAfter: 3,
-            position: "top-right",
-          }
+        showAlert(
+          "success",
+          `Запит${requests?.length === 1 ? "" : "и"} успішно видалено!`
         );
         handleClearSelectedItemsByType("request");
         handleRefreshRequests(true);
@@ -126,10 +119,7 @@ export const Objects = ({
   const handleToggleObjectsFavorites = (objects) => {
     addObjectsToFavorites(objects).then((resp) => {
       handleResponse(resp, () => {
-        cogoToast.success("Статус успішно змінено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Статус успішно змінено!");
         handleClearSelectedItemsByType("object");
         handleRefreshObjects(true);
       });
@@ -141,10 +131,7 @@ export const Objects = ({
       requests?.map((id) =>
         addRequestsToFavorites(id).then((resp) => {
           handleResponse(resp, () => {
-            cogoToast.success("Статус успішно змінено!", {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("success", "Статус успішно змінено!");
           });
         })
       )
@@ -170,12 +157,9 @@ export const Objects = ({
   const handleRestoreObjects = (objects) => {
     restoreObjects(objects).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success(
-          `Обєкт${objects?.length === 1 ? "" : "и"} успішно відновлено!`,
-          {
-            hideAfter: 3,
-            position: "top-right",
-          }
+        showAlert(
+          "success",
+          `Обєкт${objects?.length === 1 ? "" : "и"} успішно відновлено!`
         );
         handleRefreshObjects(true);
         handleClearSelectedItemsByType("object");
@@ -186,12 +170,9 @@ export const Objects = ({
   const handleRestoreRequests = (requests, isFinally) => {
     restoreRequests(requests).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success(
-          `Запит${requests?.length === 1 ? "" : "и"} успішно відновлено`,
-          {
-            hideAfter: 3,
-            position: "top-right",
-          }
+        showAlert(
+          "success",
+          `Запит${requests?.length === 1 ? "" : "и"} успішно відновлено`
         );
         handleClearSelectedItemsByType("request");
         handleRefreshRequests(true);

@@ -6,16 +6,13 @@ import { ProfileModal } from "./ProfileModal";
 import { UserCard } from "../Profile/Header/UserCard";
 import maskBackground from "../../../assets/images/add-client-bg.svg";
 import { useParams } from "react-router-dom";
-import {
-  useLazyEditClientQuery,
-  useLazyGetClientPhotosQuery,
-} from "../../../store/clients/clients.api";
+import { useLazyEditClientQuery } from "../../../store/clients/clients.api";
 import { useEffect } from "react";
-import cogoToast from "cogo-toast";
 import {
   handleCheckAccess,
   handleRemovePhoneMask,
   handleResponse,
+  showAlert,
 } from "../../../utilits";
 import { useRef } from "react";
 import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
@@ -29,7 +26,6 @@ export const ProfileMobile = ({ data, onRefreshClientData, isDeleted }) => {
   const [editClient] = useLazyEditClientQuery();
   const [loading, setLoading] = useState(false);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
-  const [getClientPhotos] = useLazyGetClientPhotosQuery();
   const [photos, setPhotos] = useState([]);
   const [isAccess, setIsAccess] = useState(false);
   const { accessData } = useAppSelect((state) => state.auth);
@@ -78,10 +74,7 @@ export const ProfileMobile = ({ data, onRefreshClientData, isDeleted }) => {
       setLoading(false);
       handleResponse(resp, () => {
         handleRefreshData();
-        cogoToast.success("Зміни успішно збережено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Зміни успішно збережено");
       });
     });
   };

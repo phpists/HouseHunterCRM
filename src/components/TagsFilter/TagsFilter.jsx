@@ -4,7 +4,7 @@ import { Tag } from "./Tag";
 import { Count } from "./Count";
 import { motion } from "framer-motion";
 import { ReactComponent as SearchIcon } from "../../assets/images/search.svg";
-import cogoToast from "cogo-toast";
+import { showAlert } from "../../utilits";
 
 export const TagsFilter = ({
   label,
@@ -23,15 +23,9 @@ export const TagsFilter = ({
     if (Array.isArray(tags)) {
       const isExist = !!tags?.find((t) => t === value);
       if (isExist) {
-        cogoToast.error("Значення вже додано", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("error", "Значення вже додано");
       } else if (tags?.length > 40) {
-        cogoToast.error("Максимальне кількість тегів - 40", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("error", "Максимальне кількість тегів - 40");
       } else if (value?.length > 0) {
         onChange([...tags, value]);
         setValue("");

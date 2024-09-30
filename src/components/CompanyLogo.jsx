@@ -3,8 +3,7 @@ import { ReactComponent as OfficeIcon } from "../assets/images/office.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ReactComponent as DeleteIcon } from "../assets/images/delete-access.svg";
 import { useLazyDeleteCompanyImgQuery } from "../store/billing/billing.api";
-import { handleResponse } from "../utilits";
-import cogoToast from "cogo-toast";
+import { handleResponse, showAlert } from "../utilits";
 
 export const CompanyLogo = ({ value, onEdit, onRefreshData }) => {
   const navigate = useNavigate();
@@ -14,10 +13,7 @@ export const CompanyLogo = ({ value, onEdit, onRefreshData }) => {
     deleteImg().then((resp) =>
       handleResponse(resp, () => {
         onRefreshData();
-        cogoToast.success("Зображення успішно видалено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Зображення успішно видалено");
       })
     );
   };

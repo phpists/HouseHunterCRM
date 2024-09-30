@@ -8,11 +8,7 @@ import { PersonalData } from "./PersonalData";
 import { Footer } from "./Footer";
 import { useState } from "react";
 import {
-  useGetAllPerimissionsLevelsQuery,
   useGetPerimissionDirectorQuery,
-  useGetStructureUsersCompanyQuery,
-  useLazyChangeWorkerLevelQuery,
-  useLazyCreateStructureQuery,
   useLazyCreateWorkerQuery,
   useLazyGetStructureUsersCompanyQuery,
 } from "../../../../../store/structure/structure.api";
@@ -21,8 +17,8 @@ import {
   handleFromInputDate,
   handleRemovePhoneMask,
   handleResponse,
+  showAlert,
 } from "../../../../../utilits";
-import cogoToast from "cogo-toast";
 
 const INITIAL_DATA = {
   email: "",
@@ -39,8 +35,6 @@ const INITIAL_DATA = {
 
 export const Modal = ({ onClose, onCreatedUser }) => {
   const [createWorker] = useLazyCreateWorkerQuery();
-  const [createStructure] = useLazyCreateStructureQuery();
-  const [changeWorkerLevel] = useLazyChangeWorkerLevelQuery();
   const [getStructureUsers, { data: structureUsersCompany }] =
     useLazyGetStructureUsersCompanyQuery();
   const [data, setData] = useState(INITIAL_DATA);
@@ -92,10 +86,7 @@ export const Modal = ({ onClose, onCreatedUser }) => {
 
     if (errorsData?.length > 0) {
       setErrors(errorsData);
-      cogoToast.error("Заповніть обов'язкові поля", {
-        hideAfter: 3,
-        position: "top-right",
-      });
+      showAlert("error", "Заповніть обов'язкові поля");
     } else {
       return true;
     }
@@ -128,10 +119,7 @@ export const Modal = ({ onClose, onCreatedUser }) => {
       }).then((resp) => {
         setLoading(false);
         handleResponse(resp, () => {
-          cogoToast.success("Працівника успішно створено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Працівника успішно створено");
           onCreatedUser && onCreatedUser(data?.structure_parent);
           handleReset();
         });

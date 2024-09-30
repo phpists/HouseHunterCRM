@@ -2,20 +2,9 @@ import { styled } from "styled-components";
 import { Header } from "./Header/Header";
 import { List } from "./List/List";
 import { useEffect, useState } from "react";
-import {
-  useLazyAddClientToFavoriteQuery,
-  useLazyDeleteCientQuery,
-  useLazyGetClientsQuery,
-  useLazyRestoreClientsQuery,
-} from "../../store/clients/clients.api";
-import { useActions } from "../../hooks/actions";
+import { useLazyAddClientToFavoriteQuery } from "../../store/clients/clients.api";
 import { useRef } from "react";
-import {
-  checkIsJSON,
-  handleFromInputDate,
-  handleResponse,
-} from "../../utilits";
-import cogoToast from "cogo-toast";
+import { handleFromInputDate, handleResponse, showAlert } from "../../utilits";
 import {
   useLazyDeleteAdQuery,
   useLazyGetListAddsPublichQuery,
@@ -31,9 +20,7 @@ const Advertising = () => {
   const [getListAdds, { data }] = useLazyGetListAddsPublichQuery();
   const [favoritesFilter, setFavoritesFilter] = useState(false);
   const [selected, setSelected] = useState([]);
-  const { saveClientsCount } = useActions();
   const [clients, setClients] = useState([]);
-  const [getClients] = useLazyGetClientsQuery();
   const currentPage = useRef(0);
   const isLoading = useRef(false);
   const listRef = useRef();
@@ -56,12 +43,10 @@ const Advertising = () => {
   const [deleteAd] = useLazyDeleteAdQuery();
   const [loading, setLoading] = useState(false);
   const dataRef = useRef([]);
-  const allCountRef = useRef(0);
   const [addClientToFavorite] = useLazyAddClientToFavoriteQuery();
   const [sendClients, setSendClients] = useState([]);
   const [actionLoading, setActionLoading] = useState(false);
   const isFirstRender = useRef(true);
-  const isFirstRequest = useRef(true);
   const [isDeleted, setIsDeleted] = useState(filter?.filters?.show_deleted);
   const [removeObjectREalstate] = useLazyRemoveObjectRealestateQuery();
   const { data: realestateStatus } = useGetRealestateStatusQuery();
@@ -70,16 +55,6 @@ const Advertising = () => {
 
   const handleChangeFilter = (field, value) =>
     setFilter({ ...filter, [field]: value });
-
-  const handleFormatFilterDate = (d, isFrom) => {
-    const date = new Date(handleFromInputDate(d));
-
-    date.setHours(isFrom ? 0 : 23);
-    date.setMinutes(isFrom ? 0 : 59);
-    date.setSeconds(isFrom ? 0 : 59);
-
-    return date?.getTime() / 1000;
-  };
 
   const handleGetAdds = () => {
     getListAdds({ resource: filter?.filters?.resource ?? "1" });
@@ -131,10 +106,7 @@ const Advertising = () => {
   };
 
   const handleDeleteSuccess = () => {
-    cogoToast.success("Оголошення успішно видалено", {
-      hideAfter: 3,
-      position: "top-right",
-    });
+    showAlert("success", "Оголошення успішно видалено");
     handleGetAdds();
   };
 
@@ -194,10 +166,7 @@ const Advertising = () => {
         dataRef.current = updatedClients;
         setClients(updatedClients);
         setAllCount(favoritesFilter ? allCount - 1 : allCount);
-        cogoToast.success("Статус успішно обновлено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Статус успішно обновлено");
       });
     });
   };
@@ -208,10 +177,7 @@ const Advertising = () => {
       selected?.map((id) =>
         addClientToFavorite(id).then((resp) => {
           handleResponse(resp, () => {
-            cogoToast.success("Статус успішно обновлено", {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("success", "Статус успішно обновлено");
           });
         })
       )

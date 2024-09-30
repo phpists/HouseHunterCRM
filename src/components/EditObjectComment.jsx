@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { Modal } from "./Modal/Modal";
 import { useEffect, useRef, useState } from "react";
-import cogoToast from "cogo-toast";
-import { handleResponse } from "../utilits";
+import { handleResponse, showAlert } from "../utilits";
 import { useLazyEditObjectCommentQuery } from "../store/objects/objects.api";
 
 export const EditObjectComment = ({ onClose, object, onChange }) => {
@@ -46,10 +45,8 @@ export const EditObjectComment = ({ onClose, object, onChange }) => {
       handleResponse(
         resp,
         () => {
-          cogoToast.success("Зміни успішно збережено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Зміни успішно збережено");
+
           onChange(object?.id, value);
           onClose();
         },
@@ -91,7 +88,7 @@ const StyleEditObjectComment = styled.div`
     line-height: 17px;
     letter-spacing: 0em;
     margin-bottom: 4px;
-    var(--main-color)fff99;
+    color: var(--main-color);
   }
   .edit-comment-content {
     max-height: 60vh;

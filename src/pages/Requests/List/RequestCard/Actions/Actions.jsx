@@ -7,8 +7,7 @@ import { ReactComponent as Refresh } from "../../../../../assets/images/refresh-
 import { ReactComponent as DeleteInfoIcon } from "../../../../../assets/images/delete-info.svg";
 import { useNavigate } from "react-router-dom";
 import { useLazyAddToFavoriteQuery } from "../../../../../store/requests/requests.api";
-import { handleResponse } from "../../../../../utilits";
-import cogoToast from "cogo-toast";
+import { handleResponse, showAlert } from "../../../../../utilits";
 import { useAppSelect } from "../../../../../hooks/redux";
 
 export const Actions = ({
@@ -35,10 +34,7 @@ export const Actions = ({
   const handleToggleFavorites = () => {
     addToFavorites(idGroup).then((resp) => {
       handleResponse(resp, () => {
-        cogoToast.success("Статус успішно змінено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Статус успішно змінено!");
         onFavorite(idGroup);
       });
     });

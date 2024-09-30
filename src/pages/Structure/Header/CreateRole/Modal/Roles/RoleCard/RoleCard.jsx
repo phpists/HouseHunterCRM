@@ -6,8 +6,7 @@ import { useState } from "react";
 import { Dropdown } from "./Dropdown/Dropdown";
 import { useEffect } from "react";
 import { useLazyEditPerimissionQuery } from "../../../../../../../store/structure/structure.api";
-import { handleResponse } from "../../../../../../../utilits";
-import cogoToast from "cogo-toast";
+import { handleResponse, showAlert } from "../../../../../../../utilits";
 
 export const RoleCard = ({
   IconImg,
@@ -63,10 +62,7 @@ export const RoleCard = ({
       permission_list_json: JSON.stringify(values),
     }).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Зміни успішно збережені", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Зміни успішно збережені");
         onRefetchData();
         onClose();
       })

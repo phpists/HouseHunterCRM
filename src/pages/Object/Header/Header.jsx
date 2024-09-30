@@ -9,8 +9,7 @@ import { ReactComponent as DeleteInfoIcon } from "../../../assets/images/delete-
 import { Confirm } from "../../../components/Confirm/Confirm";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { handleCheckAccess, handleResponse } from "../../../utilits";
-import cogoToast from "cogo-toast";
+import { handleCheckAccess, handleResponse, showAlert } from "../../../utilits";
 import {
   useLazyAddToFavoritesQuery,
   useLazyDeleteObjectQuery,
@@ -51,10 +50,7 @@ export const Header = ({
     }).then((resp) =>
       handleResponse(resp, () => {
         setDeleteReason(confirmText);
-        cogoToast.success("Об'єкт успішно видалено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Об'єкт успішно видалено!");
         if (isDeleted) {
           navigate("/objects");
         } else {
@@ -69,10 +65,7 @@ export const Header = ({
       addToFavorites([id]).then((resp) => {
         handleResponse(resp, () => {
           onToggleFavorite();
-          cogoToast.success("Статус успішно змінено!", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Об'єкт успішно видалено!");
         });
       });
     }
@@ -81,10 +74,7 @@ export const Header = ({
   const handleRestoreObject = () => {
     restoreObjects([id]).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success(`Oб'єкт успішно відновлено`, {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Oб'єкт успішно відновлено");
         onChangeRestoreObject("0");
         setDeleteReason(null);
       })

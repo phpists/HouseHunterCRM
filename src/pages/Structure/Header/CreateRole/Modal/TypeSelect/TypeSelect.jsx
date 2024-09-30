@@ -7,10 +7,7 @@ import {
   useGetCompanyStructureLevelQuery,
   useLazyChangeCompanyStructureLevelQuery,
 } from "../../../../../../store/structure/structure.api";
-import { TypeCard } from "./TypeCard/TypeCard";
-import { handleResponse } from "../../../../../../utilits";
-import cogoToast from "cogo-toast";
-import { Confirm } from "../../../../../../components/Confirm/Confirm";
+import { handleResponse, showAlert } from "../../../../../../utilits";
 
 export const TypeSelect = ({ onConfirm, onRefetchStructureData }) => {
   const [open, setOpen] = useState(false);
@@ -29,10 +26,7 @@ export const TypeSelect = ({ onConfirm, onRefetchStructureData }) => {
     setOpen(false);
     changeCompanyLevel(level).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Рівень успішно змінено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Рівень успішно змінено");
         refetch();
         onRefetchStructureData();
       })

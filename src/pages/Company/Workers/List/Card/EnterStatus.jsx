@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import { useLazyEditProfileQuery } from "../../../../../store/auth/auth.api";
-import { useLazyEditWorkerQuery } from "../../../../../store/structure/structure.api";
 import { useLazyToggleActiveWorkerStatusQuery } from "../../../../../store/billing/billing.api";
-import { handleResponse } from "../../../../../utilits";
-import cogoToast from "cogo-toast";
+import { handleResponse, showAlert } from "../../../../../utilits";
 
 export const EnterStatus = ({ status, id, isCurrentUser }) => {
   const [stat, setStat] = useState(status);
@@ -19,10 +16,7 @@ export const EnterStatus = ({ status, id, isCurrentUser }) => {
       (resp) =>
         handleResponse(resp, () => {
           setStat(!stat);
-          cogoToast.success("Статус успішно змінено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Статус успішно змінено");
         })
     );
   };

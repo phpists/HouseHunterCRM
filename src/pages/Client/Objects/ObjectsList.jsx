@@ -8,9 +8,7 @@ import {
   useLazyDeleteObjectQuery,
   useLazyRestoreObjectsQuery,
 } from "../../../store/objects/objects.api";
-import { handleResponse } from "../../../utilits";
-import cogoToast from "cogo-toast";
-import { PRICES_FOR_TITLE } from "../../../constants";
+import { handleResponse, showAlert } from "../../../utilits";
 import { useAppSelect } from "../../../hooks/redux";
 
 export const ObjectsList = ({
@@ -103,10 +101,7 @@ export const ObjectsList = ({
       reasone_remove: confirmText,
     }).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Об'єкт успішно видалено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Об'єкт успішно видалено!");
         handleGetObjectById(selectedCard)?.deleted === "1"
           ? handleDeleteObjectSuccess(selectedCard)
           : handleToggleDeletedStatus(selectedCard, "1");
@@ -122,10 +117,7 @@ export const ObjectsList = ({
   const handleRestoreObject = (id) => {
     restoreObjects([id]).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success(`Oб'єкт успішно відновлено`, {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Об'єкт успішно видалено!");
         handleToggleDeletedStatus(id, "0");
       })
     );

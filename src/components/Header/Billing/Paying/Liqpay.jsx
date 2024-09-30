@@ -2,8 +2,7 @@ import { styled } from "styled-components";
 import smallIcon from "../../../../assets/images/pay.svg";
 import icon from "../../../../assets/images/liqPay.svg";
 import { useLazyPayByLiqpayQuery } from "../../../../store/billing/billing.api";
-import { handleResponse } from "../../../../utilits";
-import cogoToast from "cogo-toast";
+import { handleResponse, showAlert } from "../../../../utilits";
 
 export const Liqpay = ({ value, onClose, refetchBalance }) => {
   const [pay] = useLazyPayByLiqpayQuery();
@@ -12,19 +11,13 @@ export const Liqpay = ({ value, onClose, refetchBalance }) => {
     if (value > 0) {
       pay({ ammount: value }).then((resp) =>
         handleResponse(resp, () => {
-          cogoToast.success("Успішно поповнено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Успішно поповнено");
           onClose();
           refetchBalance();
         })
       );
     } else {
-      cogoToast.error("Введіть суму поповнення", {
-        hideAfter: 3,
-        position: "top-right",
-      });
+      showAlert("error", "Введіть суму поповнення");
     }
   };
 

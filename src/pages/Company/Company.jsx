@@ -7,10 +7,9 @@ import {
   useLazyContinueBillingQuery,
   useViewCompanyBalanceQuery,
 } from "../../store/billing/billing.api";
-import { handleResponse } from "../../utilits";
+import { handleResponse, showAlert } from "../../utilits";
 import { useActions } from "../../hooks/actions";
 import { useLazyGetUserQuery } from "../../store/auth/auth.api";
-import cogoToast from "cogo-toast";
 import { useLocation } from "react-router-dom";
 
 const Company = () => {
@@ -70,10 +69,7 @@ const Company = () => {
             setPaying(true);
             refetch();
             handleGetUserData();
-            cogoToast.success("Оплата пройшла успішно", {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("success", "Оплата пройшла успішно");
             setRefetchWorkers(true);
             setTimeout(() => {
               setPaying(false);
@@ -90,10 +86,7 @@ const Company = () => {
         )
       );
     } else {
-      cogoToast.error("Оберіть користувачів для поповнення", {
-        hideAfter: 3,
-        position: "top-right",
-      });
+      showAlert("error", "Оберіть користувачів для поповнення");
     }
   };
 

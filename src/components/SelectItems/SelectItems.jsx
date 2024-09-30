@@ -30,6 +30,7 @@ export const SelectItems = ({
   confirmText,
   onChangeConfirmText,
   onFastCopy,
+  onDeleteHistory,
 }) => {
   const [type, setType] = useState(null);
   const [open, setOpen] = useState(false);
@@ -68,6 +69,8 @@ export const SelectItems = ({
       onSendClients();
     } else if (opt === "onFastCopy") {
       onFastCopy();
+    } else if (opt === "onDeleteHistory") {
+      setDeleteModal("history");
     }
   };
 
@@ -84,7 +87,8 @@ export const SelectItems = ({
           onAddToSelection ||
           onRestore ||
           onSendClients ||
-          allowSelectAll
+          allowSelectAll ||
+          onDeleteHistory
         ) {
           onSelectAll && onSelectAll(isTheSame);
         }
@@ -107,6 +111,9 @@ export const SelectItems = ({
           onSubmit={() => {
             if (deleteModal === "finally") {
               onDeleteFinally && onDeleteFinally();
+            }
+            if (deleteModal === "history") {
+              onDeleteHistory && onDeleteHistory();
             } else {
               onDelete && onDelete();
             }
@@ -153,6 +160,7 @@ export const SelectItems = ({
                   onDeleteFinally={onDeleteFinally}
                   onSendClients={onSendClients}
                   onFastCopy={onFastCopy}
+                  onDeleteHistory={onDeleteHistory}
                 />
               )}
             </>

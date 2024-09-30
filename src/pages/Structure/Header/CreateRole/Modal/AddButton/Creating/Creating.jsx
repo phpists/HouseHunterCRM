@@ -8,8 +8,7 @@ import {
   useLazyCreatePerimissionQuery,
 } from "../../../../../../../store/structure/structure.api";
 import { PERMISSION_INIT } from "../../Roles/initValue";
-import { handleResponse } from "../../../../../../../utilits";
-import cogoToast from "cogo-toast";
+import { handleResponse, showAlert } from "../../../../../../../utilits";
 
 export const Creating = ({ onClose, onRefetchData }) => {
   const [createPermission] = useLazyCreatePerimissionQuery();
@@ -33,10 +32,7 @@ export const Creating = ({ onClose, onRefetchData }) => {
       structure_level: structureLevel,
     }).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Роль успішно створена", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Роль успішно створена");
         onRefetchData();
         onClose();
       })

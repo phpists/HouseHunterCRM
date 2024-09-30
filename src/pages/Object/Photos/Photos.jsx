@@ -2,16 +2,13 @@ import { styled } from "styled-components";
 import { MainPhoto } from "./MainPhoto/MainPhoto";
 import { AddPhoto } from "./AddPhoto";
 import { Photo } from "./Photo/Photo";
-import noPhoto from "../../../assets/images/no-photo.svg";
-import { memo, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   useLazyDeleteObjectPhotoQuery,
   useLazySetCoverPhotoQuery,
 } from "../../../store/objects/objects.api";
-import { handleResponse } from "../../../utilits";
-import cogoToast from "cogo-toast";
-import { useEffect } from "react";
+import { handleResponse, showAlert } from "../../../utilits";
 import { PhotoSlider } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 
@@ -26,10 +23,7 @@ export const Photos = ({ photos, onChange }) => {
     deletePhoto({ id_object: id, id_img }).then((resp) =>
       handleResponse(resp, () => {
         onChange(photos.filter((p) => p?.id !== id_img));
-        cogoToast.success("Фото успішно видалено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Фото успішно видалено");
       })
     );
   };

@@ -7,9 +7,36 @@ import { ReactComponent as Box } from "../../../../assets/images/tag-box-select.
 import { ReactComponent as Rocket } from "../../../../assets/images/BiRocket.svg";
 import brickIcon from "../../../../assets/images/tag-brick.svg";
 import { Tag } from "./Tag";
-import { handleFormatDate } from "../../../../utilits";
+import {
+  handleFormatDate,
+  handleGetLocationAllPath,
+} from "../../../../utilits";
+import { useGetLocationsQuery } from "../../../../store/requests/requests.api";
+import { useEffect, useState } from "react";
 
 export const Tags = ({ data, ad }) => {
+  const { data: locationsList } = useGetLocationsQuery();
+  const [formatedLocations, setFormatedLocations] = useState([]);
+
+  const handleFormatLocations = () => {
+    if (locationsList) {
+      const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
+      const locations = Object.entries(locationsList)
+        .sort((a, b) => Number(b[1].id_parent) - Number(a[1].id_parent))
+        ?.map((loc) => loc[1])
+        //   .filter((loc) => Number(loc?.id_parent) !== 0)
+        .map(({ id, id_parent, name }) => {
+          return handleGetLocationAllPath(locList, id, id_parent, name);
+        });
+
+      setFormatedLocations(locations);
+    }
+  };
+
+  useEffect(() => {
+    handleFormatLocations();
+  }, [locationsList]);
+
   const TAGS = [
     ...(data?.rubric_name && data?.rubric_name?.length > 0
       ? [{ title: data?.rubric_name }]
@@ -22,6 +49,16 @@ export const Tags = ({ data, ad }) => {
           },
         ]
       : []),
+    ...(formatedLocations?.find((l) => l.id === data?.location_id)?.title && ad
+      ? [
+          {
+            title: `${
+              formatedLocations?.find((l) => l.id === data?.location_id)?.title
+            }`,
+            Icon: <Home />,
+          },
+        ]
+      : []),
     ...(data?.street?.length > 0 ? [{ title: `вул. ${data?.street}` }] : []),
     ...(data?.rooms > 0
       ? [{ title: `${data?.rooms} кімнати`, Icon: <Door /> }]
@@ -29,10 +66,7 @@ export const Tags = ({ data, ad }) => {
     ...(data?.area_total > 0
       ? [{ title: `${data?.area_total} м²`, Icon: <Expand /> }]
       : []),
-    ...(data?.address_storey > 0 &&
-    data?.storey_count > 0 &&
-    data?.storey_count &&
-    data?.address_storey
+    ...(data?.storey_count || data?.address_storey
       ? [
           {
             title: `${data?.address_storey} / ${data?.storey_count}`,

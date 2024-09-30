@@ -9,8 +9,11 @@ import {
   useLazySetOrderStatusQuery,
   useLazySetStatusTelegramOrderQuery,
 } from "../../../../store/calls/calls.api";
-import { handleFormatDate, handleResponse } from "../../../../utilits";
-import cogoToast from "cogo-toast";
+import {
+  handleFormatDate,
+  handleResponse,
+  showAlert,
+} from "../../../../utilits";
 
 export const CallCard = ({
   selected,
@@ -103,10 +106,7 @@ export const CallCard = ({
     if (status === "1") {
       setTelegramOrderStatus(id).then((resp) => {
         handleResponse(resp, () => {
-          cogoToast.success("Статус успішно змінено!", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Статус успішно змінено!");
           getHistoryOrder(chatId);
         });
       });
@@ -116,10 +116,7 @@ export const CallCard = ({
   const handleChangeOrderStatus = (id, status) => {
     setOrderStatus({ id_order: id, status: status }).then((resp) => {
       handleResponse(resp, () => {
-        cogoToast.success("Статус успішно змінено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Статус успішно змінено!");
         getOrderHistory(id);
       });
     });

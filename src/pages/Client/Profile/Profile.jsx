@@ -8,18 +8,15 @@ import { Comment } from "./Comment";
 import { OtherInfo } from "./OtherInfo/OtherInfo";
 import maskBackground from "../../../assets/images/add-client-bg.svg";
 import { useEffect, useState } from "react";
-import {
-  useLazyEditClientQuery,
-  useLazyGetClientPhotosQuery,
-} from "../../../store/clients/clients.api";
+import { useLazyEditClientQuery } from "../../../store/clients/clients.api";
 import { useParams } from "react-router-dom";
-import cogoToast from "cogo-toast";
 import {
   checkIsJSON,
   handleCheckAccess,
   handleRemovePhoneMask,
   handleResponse,
   isJson,
+  showAlert,
 } from "../../../utilits";
 import { Footer } from "./Footer";
 import { useGetPhonesCodesQuery } from "../../../store/auth/auth.api";
@@ -38,7 +35,6 @@ export const Profile = ({
   const [editClient] = useLazyEditClientQuery();
   const [loading, setLoading] = useState(false);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
-  const [getClientPhotos] = useLazyGetClientPhotosQuery();
   const [photos, setPhotos] = useState([]);
   const [isAccess, setIsAccess] = useState(false);
   const { accessData } = useAppSelect((state) => state.auth);
@@ -88,10 +84,7 @@ export const Profile = ({
       setLoading(false);
       handleResponse(resp, () => {
         handleRefreshData();
-        cogoToast.success("Зміни успішно збережено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Зміни успішно збережено");
       });
     });
   };

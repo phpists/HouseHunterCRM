@@ -8,8 +8,7 @@ import { motion, useAnimationControls } from "framer-motion";
 import { Field } from "../Field";
 import { useLazyCheckUserQuery } from "../../store/auth/auth.api";
 import { useAppSelect } from "../../hooks/redux";
-import cogoToast from "cogo-toast";
-import { handleResponse } from "../../utilits";
+import { handleResponse, showAlert } from "../../utilits";
 
 export const Confirm = ({
   onClose,
@@ -33,10 +32,7 @@ export const Confirm = ({
   const handleSubmit = () => {
     if (passwordCheck) {
       if (password?.length === 0) {
-        cogoToast.error("Введіть пароль для підтвердження", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("error", "Введіть пароль для підтвердження");
       } else {
         checkUser({
           password,

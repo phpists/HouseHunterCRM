@@ -9,8 +9,7 @@ import {
   useGetCompanyInfoQuery,
   useLazyEditCompanyInfoQuery,
 } from "../../../store/billing/billing.api";
-import { handleResponse } from "../../../utilits";
-import cogoToast from "cogo-toast";
+import { handleResponse, showAlert } from "../../../utilits";
 import { useEffect } from "react";
 import { useActions } from "../../../hooks/actions";
 
@@ -38,10 +37,7 @@ export const Info = ({ tarifOpen, onCloseTarif }) => {
 
     editCompany(formData).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Зміни успішно збережено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Зміни успішно збережено");
         refetch();
       })
     );

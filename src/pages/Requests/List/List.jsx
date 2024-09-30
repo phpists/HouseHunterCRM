@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { RequestCard } from "./RequestCard/RequestCard";
 import { useLazyDeleteRequestQuery } from "../../../store/requests/requests.api";
 import { useState } from "react";
-import { handleCheckAccess, handleResponse } from "../../../utilits";
-import cogoToast from "cogo-toast";
+import { handleCheckAccess, handleResponse, showAlert } from "../../../utilits";
 import { Confirm } from "../../../components/Confirm/Confirm";
 import { Empty } from "../../../components/Empty/Empty";
 import { Chat } from "../../../components/Chat/Chat";
@@ -53,10 +52,7 @@ export const List = ({
       reasone_remove: confirmText,
     }).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Заявку успішно видалено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Заявку успішно видалено!");
         onDeleteRequest(selectedCard);
         setSelectedCard(null);
       })

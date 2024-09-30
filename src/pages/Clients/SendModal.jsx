@@ -7,8 +7,7 @@ import {
 import { Select } from "../../components/Select/Select";
 import { useState } from "react";
 import { Button } from "../../components/Button";
-import { handleResponse } from "../../utilits";
-import cogoToast from "cogo-toast";
+import { handleResponse, showAlert } from "../../utilits";
 
 export const SendModal = ({
   clients,
@@ -31,10 +30,7 @@ export const SendModal = ({
           resp,
           () => {
             onSendSuccess();
-            cogoToast.success("Успішно передано", {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("success", "Успішно передано");
             onChangeLoading && onChangeLoading(false);
           },
           () => {

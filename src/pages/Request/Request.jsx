@@ -12,7 +12,6 @@ import {
   useLazyGetRubricsFieldsQuery,
 } from "../../store/requests/requests.api";
 import { useEffect, useRef, useState } from "react";
-import cogoToast from "cogo-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   checkIsJSON,
@@ -21,6 +20,7 @@ import {
   handleFormatInputDate,
   handleReformatDate,
   handleResponse,
+  showAlert,
 } from "../../utilits";
 import { useGetCommentsToFieldsQuery } from "../../store/objects/objects.api";
 import { Base } from "../../components/Base/Base";
@@ -212,19 +212,13 @@ const Request = () => {
 
     if (data?.fields?.length === 0) {
       errorData.push({ id: "general", errors: ["id_rubric"] });
-      cogoToast.error("Оберіть категорію", {
-        hideAfter: 3,
-        position: "top-right",
-      });
+      showAlert("error", "Оберіть категорію");
     } else if (
       !data?.general_group?.dt_deadline ||
       data?.general_group?.dt_deadline?.length === 0
     ) {
       errorData.push({ id: "general", errors: ["dt_deadline"] });
-      cogoToast.error("Вкажіть дату дедлайну", {
-        hideAfter: 3,
-        position: "top-right",
-      });
+      showAlert("error", "Вкажіть дату дедлайну");
     } else if (
       data?.general_group?.company_object &&
       !data?.general_group?.company_object?.show_only
@@ -249,12 +243,9 @@ const Request = () => {
       typeof data?.general_group?.mls_object !== "object"
     ) {
       errorData.push({ id: "general", errors: ["base"] });
-      cogoToast.error(
-        "Щоб зберегти/додати запит потрібно вибрати хочаб одну базу",
-        {
-          hideAfter: 3,
-          position: "top-right",
-        }
+      showAlert(
+        "error",
+        "Щоб зберегти/додати запит потрібно вибрати хочаб одну базу"
       );
     } else {
       errorData.push({ id: "general", errors: [] });
@@ -323,10 +314,7 @@ const Request = () => {
       })?.then((resp) => {
         setLoading(false);
         handleResponse(resp, () => {
-          cogoToast.success("Заявка успішно створена", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Заявка успішно створена");
           navigate(`/client/${clientId}`);
         });
       });
@@ -386,10 +374,7 @@ const Request = () => {
       })?.then((resp) => {
         setLoading(false);
         handleResponse(resp, () => {
-          cogoToast.success("Зміни успішно збережено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Зміни успішно збережено");
         });
       });
     }

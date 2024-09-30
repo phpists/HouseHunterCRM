@@ -38,16 +38,20 @@ export const Characteristic = ({ data, onChangeField, fields, errors }) => {
     }
   }, [locationsList]);
 
+  const handleScrollToErrorFields = () => {
+    const firstErrorField = document.querySelectorAll(
+      ".object-characteristic-wrapper .error-field"
+    );
+    if (firstErrorField[0]) {
+      contentRef.current.scrollTo({
+        top: firstErrorField[0].offsetTop - contentRef.current.offsetTop - 10,
+      });
+    }
+  };
+
   useEffect(() => {
     if (!!errors?.find((e) => e === "updated")) {
-      const firstErrorField = document.querySelectorAll(
-        ".object-characteristic-wrapper .error-field"
-      );
-      if (firstErrorField[0]) {
-        contentRef.current.scrollTo({
-          top: firstErrorField[0].offsetTop - contentRef.current.offsetTop - 10,
-        });
-      }
+      handleScrollToErrorFields();
     }
   }, [errors]);
 
@@ -114,6 +118,7 @@ export const Characteristic = ({ data, onChangeField, fields, errors }) => {
             onChangeField={onChangeField}
             errors={errors}
             onOpenSelect={() => setSelectOpend(true)}
+            onScrollToErrorFields={handleScrollToErrorFields}
           />
         )}
       </div>

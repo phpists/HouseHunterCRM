@@ -12,10 +12,44 @@ export const Info = ({
   onChangeStreetsCount,
 }) => (
   <StyledInfo>
+    <Title />
+    <ProfileField
+      value={data?.title}
+      placeholder="Введіть заголовок"
+      onChange={(val) =>
+        loading || val.length > 70 ? null : onChange("title", val)
+      }
+      big
+      className="title"
+      initOpen
+      alwaysOpen
+      label="Опис"
+      readOnly
+      maxLength={70}
+      showCount
+      error={data?.title?.length > 0 && data?.title?.length < 16}
+      errorMessage="Мінімальна кількість символів - 16"
+    />
+    <ProfileField
+      value={data?.description}
+      placeholder="Введіть опис"
+      onChange={(val) =>
+        loading || val.length > 9000 ? null : onChange("description", val)
+      }
+      textarea
+      className="title desciption"
+      label="Опис"
+      initOpen
+      alwaysOpen
+      readOnly
+      maxLength={9000}
+      showCount
+      errorMessage="Мінімальна кількість символів - 100"
+      error={data?.description?.length > 0 && data?.description?.length < 100}
+    />
     {activeTab === 1 ? (
       <>
         {" "}
-        <Title />
         <RealestateForm
           data={data}
           onChange={onChange}
@@ -25,43 +59,6 @@ export const Info = ({
       </>
     ) : (
       <>
-        <Title />
-        <ProfileField
-          value={data?.title}
-          placeholder="Введіть заголовок"
-          onChange={(val) =>
-            loading || val.length > 70 ? null : onChange("title", val)
-          }
-          big
-          className="title"
-          initOpen
-          alwaysOpen
-          label="Опис"
-          readOnly
-          maxLength={70}
-          showCount
-          error={data?.title?.length > 0 && data?.title?.length < 16}
-          errorMessage="Мінімальна кількість символів - 16"
-        />
-        <ProfileField
-          value={data?.description}
-          placeholder="Введіть опис"
-          onChange={(val) =>
-            loading || val.length > 9000 ? null : onChange("description", val)
-          }
-          textarea
-          className="title desciption"
-          label="Опис"
-          initOpen
-          alwaysOpen
-          readOnly
-          maxLength={9000}
-          showCount
-          errorMessage="Мінімальна кількість символів - 100"
-          error={
-            data?.description?.length > 0 && data?.description?.length < 100
-          }
-        />
         {activeTab === 0 && (
           <div className="flex items-center gap-5">
             <ProfileField

@@ -3,13 +3,7 @@ import { Title } from "./Title";
 import { Buttons } from "./Buttons/Buttons";
 import { BackButton } from "./BackButton";
 import { SelectItems } from "../../../components/SelectItems/SelectItems";
-import { useLazyDeleteCientQuery } from "../../../store/clients/clients.api";
-import { useEffect, useState } from "react";
-import { useActions } from "../../../hooks/actions";
-import { useAppSelect } from "../../../hooks/redux";
-import cogoToast from "cogo-toast";
-import { handleCheckAccess, handleResponse } from "../../../utilits";
-import { useNavigate } from "react-router-dom";
+import { handleResponse } from "../../../utilits";
 import { useLazyDeleteAdQuery } from "../../../store/objects/objects.api";
 import { useLazyRemoveObjectRealestateQuery } from "../../../store/auth/auth.api";
 
@@ -37,8 +31,6 @@ export const Header = ({
 }) => {
   const [deleteAd] = useLazyDeleteAdQuery();
   const [removeObjectRealstate] = useLazyRemoveObjectRealestateQuery();
-  const { accessData, user } = useAppSelect((state) => state.auth);
-  const [confirmText, setConfimText] = useState("");
 
   const handleDeleteAds = () => {
     if (selected?.length > 0) {

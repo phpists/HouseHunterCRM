@@ -11,8 +11,7 @@ import {
   useLazyFlombuDeleteAccountQuery,
   useLazyRemoveAccountRealestateQuery,
 } from "../../../../store/auth/auth.api";
-import { handleResponse } from "../../../../utilits";
-import cogoToast from "cogo-toast";
+import { handleResponse, showAlert } from "../../../../utilits";
 
 export const Setting = ({
   data,
@@ -31,10 +30,7 @@ export const Setting = ({
   const [flombuConnectAccount] = useLazyFlombuConnectAccountQuery();
 
   const handleDeleteSuccess = (type) => {
-    cogoToast.success("Акаунт успішно видалено", {
-      hideAfter: 3,
-      position: "top-right",
-    });
+    showAlert("success", "Акаунт успішно видалено");
 
     type === "olx"
       ? onRefreshAccountsData()

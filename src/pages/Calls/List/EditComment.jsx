@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
-import cogoToast from "cogo-toast";
 import { Modal } from "../../../components/Modal/Modal";
 
 export const EditComment = ({ onClose, call, onChange }) => {

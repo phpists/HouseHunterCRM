@@ -21,8 +21,8 @@ import {
   handleFromInputDate,
   handleRemovePhoneMask,
   handleResponse,
+  showAlert,
 } from "../../../utilits";
-import cogoToast from "cogo-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Confirm } from "../../Confirm/Confirm";
 
@@ -175,10 +175,7 @@ export const Profile = () => {
       }).then((resp) => {
         setLoading(false);
         handleResponse(resp, () => {
-          cogoToast.success("Зміни успішно збережено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Зміни успішно збережено");
           setOpenEdit(false);
           handleGetUserData();
         });
@@ -231,10 +228,7 @@ export const Profile = () => {
     if (data?.count_notify > 0) {
       setOpenNotifications(!openNotifications);
     } else {
-      cogoToast.error("Немає сповіщень", {
-        hideAfter: 3,
-        position: "top-right",
-      });
+      showAlert("error", "Немає сповіщень");
     }
   };
 

@@ -8,8 +8,12 @@ import {
 import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useLazyGetRubricFieldsQuery } from "../../store/objects/objects.api";
-import { handleCopy, handleGetRange, handleResponse } from "../../utilits";
-import cogoToast from "cogo-toast";
+import {
+  handleCopy,
+  handleGetRange,
+  handleResponse,
+  showAlert,
+} from "../../utilits";
 import { useActions } from "../../hooks/actions";
 import { useAppSelect } from "../../hooks/redux";
 
@@ -51,12 +55,6 @@ const Selections = () => {
   const [clientData, setClientData] = useState(null);
   const [showClient, setShowClient] = useState(true);
   const [hideTitle, setHideTitle] = useState(false);
-
-  const handleGetRubricsFields = (id) => {
-    getRubricField(id).then((resp) => {
-      setFilterFields(resp?.data);
-    });
-  };
 
   const handleChangeFilter = (field, value, isDataUpdate) => {
     if (isDataUpdate) {
@@ -237,10 +235,7 @@ const Selections = () => {
   const handleHideObject = (id_object) => {
     hideObject({ id_request_group: id, id_objects: [id_object] }).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Статус об'єкта успішно обновлено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Статус об'єкта успішно обновлено");
         const updatedObjects = objects?.filter((o) => o?.id !== id_object);
         setObjects(updatedObjects);
         setAllCount(allCount - 1);

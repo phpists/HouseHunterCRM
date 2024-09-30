@@ -5,6 +5,7 @@ import { ReactComponent as CheckIcon } from "../assets/images/check.svg";
 import ReactInputMask from "react-input-mask";
 import { PhoneInput } from "./PhoneInput";
 import { handleFormatDate } from "../utilits";
+import { IMaskInput } from "react-imask";
 
 export const Field = ({
   value,
@@ -103,6 +104,19 @@ export const Field = ({
                 value={value}
                 placeholder={placeholder}
                 onChange={(e) => onChange(e.target.value)}
+                autoFocus
+                onKeyDown={handlePressEnter}
+                onFocus={onFocus}
+                onBlur={onBlur}
+              />
+            ) : formatNumber ? (
+              <IMaskInput
+                mask={Number}
+                thousandsSeparator=" "
+                className="value"
+                value={value}
+                placeholder={placeholder}
+                onAccept={(value, mask) => onChange(value)}
                 autoFocus
                 onKeyDown={handlePressEnter}
                 onFocus={onFocus}

@@ -8,11 +8,10 @@ import {
   handleFromInputDate,
   handleResponse,
   removePhoneMask,
+  showAlert,
 } from "../../../../utilits";
 import { Loader } from "../../../../components/Loader";
-import { Price } from "../../../../components/Price/Price";
 import { PriceCard } from "./PriceCard";
-import cogoToast from "cogo-toast";
 
 export const Statistic = ({ filters, allCount }) => {
   const [open, setOpen] = useState(false);
@@ -81,16 +80,10 @@ export const Statistic = ({ filters, allCount }) => {
 
   const handleCheckIsAllow = () => {
     if (!filters?.id_rubric) {
-      cogoToast.error("Оберіть категорію", {
-        hideAfter: 3,
-        position: "top-right",
-      });
+      showAlert("error", "Оберіть категорію");
       return false;
     } else if (allCount === 0) {
-      cogoToast.error("Не знайдено об'єктів для обрахування статистики", {
-        hideAfter: 3,
-        position: "top-right",
-      });
+      showAlert("error", "Не знайдено об'єктів для обрахування статистики");
     } else {
       return true;
     }

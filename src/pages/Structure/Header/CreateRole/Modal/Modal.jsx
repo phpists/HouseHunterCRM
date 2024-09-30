@@ -17,8 +17,11 @@ import {
   useLazyGetUserQuery,
 } from "../../../../../store/auth/auth.api";
 import { useActions } from "../../../../../hooks/actions";
-import { handleRemovePhoneMask, handleResponse } from "../../../../../utilits";
-import cogoToast from "cogo-toast";
+import {
+  handleRemovePhoneMask,
+  handleResponse,
+  showAlert,
+} from "../../../../../utilits";
 
 export const Modal = ({ onClose, onRefetchStructureData }) => {
   const controls = useAnimationControls();
@@ -74,10 +77,7 @@ export const Modal = ({ onClose, onRefetchStructureData }) => {
     }).then((resp) => {
       handleResponse(resp, () => {
         handleGetUserData();
-        cogoToast.success("Зміни успішно збережено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Зміни успішно збережено");
       });
     });
   };

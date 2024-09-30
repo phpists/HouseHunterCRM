@@ -17,8 +17,8 @@ import {
   handleGetRange,
   handleResponse,
   removePhoneMask,
+  showAlert,
 } from "../../utilits";
-import cogoToast from "cogo-toast";
 import { useLocation, useParams } from "react-router-dom";
 import { useAppSelect } from "../../hooks/redux";
 
@@ -75,7 +75,6 @@ const Objects = () => {
   const dataRef = useRef([]);
   const allCountRef = useRef(0);
   const [updateData, setUpdateData] = useState(false);
-  const firstThousand = useRef([]);
   const [actionLoading, setActionLoading] = useState(false);
   const [phoneCode, setPhoneCode] = useState("1");
   const [restoreObjects] = useLazyRestoreObjectsQuery();
@@ -394,11 +393,7 @@ const Objects = () => {
         setAllCount(updatedCount);
         const updatedAllCount = (objectsCount || 0) - 1;
         saveObjectsCount(updatedAllCount);
-
-        cogoToast.success("Статус успішно змінено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Статус успішно змінено!");
       });
     });
   };
@@ -723,12 +718,9 @@ const Objects = () => {
     if (ids?.length > 0) {
       restoreObjects(ids).then((resp) =>
         handleResponse(resp, () => {
-          cogoToast.success(
-            `Oб'єкт${ids?.length === 1 ? "" : "и"} успішно відновлено`,
-            {
-              hideAfter: 3,
-              position: "top-right",
-            }
+          showAlert(
+            "success",
+            `Oб'єкт${ids?.length === 1 ? "" : "и"} успішно відновлено`
           );
           handleDeleteObjectsFilterByIds(ids, isSelected);
         })

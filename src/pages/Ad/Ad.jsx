@@ -3,24 +3,13 @@ import { Header } from "./Header/Header";
 import { List } from "./List";
 import { useEffect, useState } from "react";
 import {
-  useLazyAddToFavoritesQuery,
-  useLazyGetAllObjectsQuery,
   useLazyGetListAddsPublichQuery,
-  useLazyGetRubricFieldsQuery,
   useLazyRestoreObjectsQuery,
 } from "../../store/objects/objects.api";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
-import {
-  checkIsJSON,
-  handleCopy,
-  handleFromInputDate,
-  handleGetRange,
-  handleResponse,
-  removePhoneMask,
-} from "../../utilits";
-import cogoToast from "cogo-toast";
-import { useLocation, useParams } from "react-router-dom";
+import { handleResponse, showAlert } from "../../utilits";
+import { useParams } from "react-router-dom";
 import { useAppSelect } from "../../hooks/redux";
 
 const Ad = () => {
@@ -32,49 +21,21 @@ const Ad = () => {
   const [selected, setSelected] = useState([]);
   const [objects, setObjects] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
-
-  const INIT_FILTERS = {
-    id_rubric: "",
-    id_location: [],
-    price_currency: "1",
-    price: "",
-    price_max: "",
-    price_min: "",
-    id_hash: id ?? "",
-    price_for: "4",
-    sorting: "0",
-  };
-
-  const DEFAULT_FILTERS = {
-    // price_for: "4",
-    // price_currency: "1",
-    // sorting: "0",
-    // company_object: {
-    //   show_only: "only_my",
-    //   actual: "1",
-    // },
-  };
+  const DEFAULT_FILTERS = {};
   const { objectsCount } = useAppSelect((state) => state.objects);
-  const [filters, setFilters] = useState(INIT_FILTERS);
+  const [filters, setFilters] = useState({});
   const [filtersFields, setFilterFields] = useState([]);
   const filterActive = useRef(!!id);
   const [allCount, setAllCount] = useState(0);
-  const handleGetRubricsFields = (id) => {
-    // getRubricField(id).then((resp) => {
-    //   setFilterFields(resp?.data);
-    // });
-  };
   const currentPage = useRef(0);
   const isLoading = useRef(false);
   const listRef = useRef();
   const [isAllPages, setIsAllPages] = useState(false);
   const isFirstRender = useRef(true);
-  const isFirstRequest = useRef(true);
   const [loading, setLoading] = useState(false);
   const dataRef = useRef([]);
   const allCountRef = useRef(0);
   const [updateData, setUpdateData] = useState(false);
-  const firstThousand = useRef([]);
   const [actionLoading, setActionLoading] = useState(false);
   const [phoneCode, setPhoneCode] = useState("1");
   const [restoreObjects] = useLazyRestoreObjectsQuery();
@@ -85,77 +46,12 @@ const Ad = () => {
   const handleChangeFilter = (field, value, isDataUpdate) => {
     if (isDataUpdate) {
       setFilters(value);
-      localStorage.setItem("objectsLastFilters", JSON.stringify(value));
+      localStorage.setItem("adLastFilters", JSON.stringify(value));
     } else {
       let updatedFilters = { ...filters, [field]: value };
 
-      if (field === "price_max" || field === "price_min") {
-        updatedFilters = {
-          ...updatedFilters,
-          price_currency: updatedFilters?.price_currency ?? "1",
-          price_for: updatedFilters?.price_for ?? "4",
-        };
-      } else if (field?.includes("_min") || field?.includes("_max")) {
-        const fieldMinName = field?.includes("_min")
-          ? field
-          : field?.replace("_max", "_min");
-        const fieldMaxName = field?.includes("_max")
-          ? field
-          : field?.replace("_min", "_max");
-
-        const valMin = field?.includes("_min")
-          ? value
-          : updatedFilters[fieldMinName] ?? 0;
-        const valMax = field?.includes("_max")
-          ? value
-          : updatedFilters[fieldMaxName] ?? 0;
-
-        if (
-          valMin > valMax &&
-          field?.includes("_min") &&
-          valMin !== 0 &&
-          valMax
-        ) {
-          updatedFilters = {
-            ...updatedFilters,
-            [fieldMinName]: valMin,
-            [fieldMaxName]: valMin,
-          };
-        } else if (
-          valMax < valMin &&
-          field?.includes("_max") &&
-          valMax !== 0 &&
-          valMin
-        ) {
-          updatedFilters = {
-            ...updatedFilters,
-            [fieldMinName]: valMax,
-            [fieldMaxName]: valMax,
-          };
-        }
-      }
-
-      if (field === "street_base_object") {
-        const isEmpty =
-          Object.entries(updatedFilters?.street_base_object)?.filter(
-            (v) => v[1]
-          )?.length === 0 ||
-          Object.entries(updatedFilters?.street_base_object)?.[0]?.[1]
-            ?.length === 0;
-
-        if (isEmpty) {
-          updatedFilters = { ...updatedFilters, street_base_object: {} };
-        }
-      }
-
       setFilters(updatedFilters);
-      localStorage.setItem(
-        "objectsLastFilters",
-        JSON.stringify(updatedFilters)
-      );
-      if (field === "id_rubric") {
-        handleGetRubricsFields(value);
-      }
+      localStorage.setItem("adLastFilters", JSON.stringify(updatedFilters));
     }
   };
 
@@ -193,7 +89,7 @@ const Ad = () => {
       //   setFilters(INIT_FILTERS);
       //   filterActive.current = false;
       //   handleGetObjects(true);
-      //   localStorage.removeItem("objectsLastFilters");
+      //   localStorage.removeItem("adLastFilters");
     }
     // eslint-disable-next-line
   }, [isFavorite]);
@@ -217,7 +113,7 @@ const Ad = () => {
     if (!isApply) {
       setFilters(DEFAULT_FILTERS);
       setFilterFields([]);
-      localStorage.removeItem("objectsLastFilters");
+      localStorage.removeItem("adLastFilters");
     }
     currentPage.current = 0;
     setIsAllPages(false);
@@ -246,31 +142,8 @@ const Ad = () => {
   }, [filters.sorting]);
 
   const handleSelectAll = (isReset, count) => {
-    const objectsIds = objects?.map((o) => o.id);
+    const objectsIds = data?.map((o) => o.id_obj);
     setSelected(isReset ? [] : objectsIds);
-  };
-
-  const handleToggleFavoriteStatus = (id) => {
-    // addObjectToFavorites([id]).then((resp) => {
-    //   handleResponse(resp, () => {
-    //     const updatedData = isFavorite
-    //       ? objects?.filter((obj) => obj?.id !== id)
-    //       : objects?.map((obj) =>
-    //           obj?.id === id ? { ...obj, favorite: !obj.favorite } : obj
-    //         );
-    //     dataRef.current = updatedData;
-    //     setObjects(updatedData);
-    //     const updatedCount = isFavorite ? allCount - 1 : allCount;
-    //     allCountRef.current = updatedCount;
-    //     setAllCount(updatedCount);
-    //     const updatedAllCount = (objectsCount || 0) - 1;
-    //     saveObjectsCount(updatedAllCount);
-    //     cogoToast.success("Статус успішно змінено!", {
-    //       hideAfter: 3,
-    //       position: "top-right",
-    //     });
-    //   });
-    // });
   };
 
   const handleChangeComment = (id, comment) => {
@@ -347,7 +220,7 @@ const Ad = () => {
     // eslint-disable-next-line
   }, []);
 
-  const handleDeleteObjectSuccess = (id) => {
+  const handleDeleteObjectSuccess = () => {
     setSelected([]);
     handleGetData();
   };
@@ -367,26 +240,14 @@ const Ad = () => {
     if (ids?.length > 0) {
       restoreObjects(ids).then((resp) =>
         handleResponse(resp, () => {
-          cogoToast.success(
-            `Oб'єкт${ids?.length === 1 ? "" : "и"} успішно відновлено`,
-            {
-              hideAfter: 3,
-              position: "top-right",
-            }
+          showAlert(
+            "success",
+            `Oб'єкт${ids?.length === 1 ? "" : "и"} успішно відновлено`
           );
           handleDeleteObjectsFilterByIds(ids, isSelected);
         })
       );
     }
-  };
-
-  const handleCopyFastFolderLink = () => {
-    const LINK = `https://fast-selection.house-hunter.info/?us=${
-      user?.id
-    }&id=${btoa(JSON.stringify(selected))}`;
-
-    handleCopy(LINK);
-    setSelected([]);
   };
 
   const handleUpdateObjectValue = (id, field, value) =>
@@ -414,24 +275,15 @@ const Ad = () => {
         onChangeActionLoading={(val) => setActionLoading(val)}
         phoneCode={phoneCode}
         onChangePhoneCode={handleChangePhoneCode}
-        onRestore={() => handleRestoreObjects(selected, true)}
-        selectedClients={[
-          ...new Set(
-            objects
-              ?.filter((o) => selected?.includes(o.id))
-              ?.map((o) => o?.id_client)
-              ?.filter((clientId) => !!clientId)
-          ),
-        ]}
         isDeleted={isDeleted}
         onRefetch={() => null}
-        onFastCopy={user?.show_fast_folder ? handleCopyFastFolderLink : null}
+        onDeleteSuccess={handleDeleteObjectSuccess}
+        data={data ?? []}
       />
       <List
         selected={selected}
         onSelect={handleSelect}
         data={data ?? []}
-        toggleFavoriteStatus={handleToggleFavoriteStatus}
         onFindSimilar={handleFindSimilarTo}
         innerRef={listRef}
         loading={loading}

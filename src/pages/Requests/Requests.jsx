@@ -10,10 +10,9 @@ import {
 import { useEffect } from "react";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
-import { checkIsJSON, handleResponse } from "../../utilits";
+import { checkIsJSON, handleResponse, showAlert } from "../../utilits";
 import { useAppSelect } from "../../hooks/redux";
 import { useLocation } from "react-router-dom";
-import cogoToast from "cogo-toast";
 
 const INIT_FILTERS = {
   id_rubric: "",
@@ -487,10 +486,7 @@ const Requests = () => {
     restoreRequests([idGroup]).then((resp) =>
       handleResponse(resp, () => {
         handleDeleteRequestSuccess(id);
-        cogoToast.success("Запит успішно відновлено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Запит успішно відновлено");
       })
     );
   };

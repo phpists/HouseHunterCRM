@@ -2,11 +2,9 @@ import styled from "styled-components";
 import { ProfileField } from "../../../../components/ProfileField";
 import { useEffect, useState } from "react";
 import { useLazyEditRequestCommentQuery } from "../../../../store/requests/requests.api";
-import { handleResponse } from "../../../../utilits";
-import cogoToast from "cogo-toast";
+import { handleResponse, showAlert } from "../../../../utilits";
 
 export const Comment = ({ comment = "", id, onOpenEdit }) => {
-  const [edit, setEdit] = useState(false);
   const [value, setValue] = useState("");
   const [editComment] = useLazyEditRequestCommentQuery();
 
@@ -23,10 +21,7 @@ export const Comment = ({ comment = "", id, onOpenEdit }) => {
         handleResponse(
           resp,
           () => {
-            cogoToast.success("Зміни успішно збережено", {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("success", "Зміни успішно збережено");
           },
           () => setValue(comment)
         )

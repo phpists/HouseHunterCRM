@@ -1,10 +1,13 @@
 import styled from "styled-components";
 import { Card } from "./Card";
-import { handleFormatDate, handleResponse } from "../../../../../utilits";
+import {
+  handleFormatDate,
+  handleResponse,
+  showAlert,
+} from "../../../../../utilits";
 import { useState } from "react";
 import { Confirm } from "../../../../../components/Confirm/Confirm";
 import { useLazyRefreshOlxAdsAccountQuery } from "../../../../../store/auth/auth.api";
-import cogoToast from "cogo-toast";
 
 export const Accounts = ({
   accounts,
@@ -26,10 +29,7 @@ export const Accounts = ({
   const handleRefresh = (id) => {
     refreshOlxAdsAccount(id).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Успішно обновлено історію всіх оголошень", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Успішно обновлено історію всіх оголошень");
       })
     );
   };

@@ -8,6 +8,7 @@ export const ToggleContent = ({
   error,
   children,
   errorsUpdated,
+  onScrollToErrorFields,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -15,7 +16,13 @@ export const ToggleContent = ({
     if (error) {
       setOpen(error);
     }
-  }, [errorsUpdated]);
+  }, [errorsUpdated, error]);
+
+  useEffect(() => {
+    if (onScrollToErrorFields && error) {
+      setTimeout(onScrollToErrorFields, 200);
+    }
+  }, [errorsUpdated, error]);
 
   return (
     <StyledToggleContent

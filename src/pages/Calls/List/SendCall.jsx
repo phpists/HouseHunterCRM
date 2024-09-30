@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import cogoToast from "cogo-toast";
 import {
   useGetWorkerToMoveClientsQuery,
   useLazyMoveClientsQuery,
 } from "../../../store/clients/clients.api";
 import { useState } from "react";
-import { handleResponse } from "../../../utilits";
+import { handleResponse, showAlert } from "../../../utilits";
 import { Modal } from "../../../components/Modal/Modal";
 import { Select } from "../../../components/Select/Select";
 import { Button } from "../../../components/Button";
@@ -87,10 +86,7 @@ export const SendCall = ({
       await handleSendCalls();
       await handleSendTelegramCalls();
       await handleSendOrders();
-      cogoToast.success("Успішно передано", {
-        hideAfter: 3,
-        position: "top-right",
-      });
+      showAlert("success", "Успішно передано!");
       onChangeLoading && onChangeLoading(false);
       onClose();
       onSendSuccess && onSendSuccess();
@@ -104,10 +100,7 @@ export const SendCall = ({
           handleResponse(
             resp,
             () => {
-              cogoToast.success("Успішно передано", {
-                hideAfter: 3,
-                position: "top-right",
-              });
+              showAlert("success", "Успішно передано!");
               onChangeLoading && onChangeLoading(false);
               onClose();
               onSendSuccess && onSendSuccess();
@@ -125,10 +118,7 @@ export const SendCall = ({
           handleResponse(
             resp,
             () => {
-              cogoToast.success("Успішно передано", {
-                hideAfter: 3,
-                position: "top-right",
-              });
+              showAlert("success", "Успішно передано!");
               onChangeLoading && onChangeLoading(false);
               onClose();
               onSendSuccess && onSendSuccess();
@@ -146,10 +136,7 @@ export const SendCall = ({
           handleResponse(
             resp,
             () => {
-              cogoToast.success("Успішно передано", {
-                hideAfter: 3,
-                position: "top-right",
-              });
+              showAlert("success", "Успішно передано!");
               onChangeLoading && onChangeLoading(false);
               onClose();
               onSendSuccess && onSendSuccess();

@@ -18,8 +18,8 @@ import {
   handleCheckFields,
   handleFromInputDate,
   handleResponse,
+  showAlert,
 } from "../../utilits";
-import cogoToast from "cogo-toast";
 
 const INIT_DATA = {
   title: "",
@@ -32,8 +32,8 @@ const INIT_DATA = {
 };
 
 const ObjectPage = () => {
-  const { clientId, id } = useParams();
   const navigate = useNavigate();
+  const { clientId, id } = useParams();
   const [createObject] = useLazyCreateObjectQuery();
   const [editObject] = useLazyEditObjectQuery();
   const [getRubricFields] = useLazyGetRubricFieldsQuery();
@@ -243,7 +243,8 @@ const ObjectPage = () => {
       ];
       setErrors(["area_total", ...fieldsError, "updated"]);
 
-      cogoToast.error(
+      showAlert(
+        "error",
         `${fieldsError
           ?.map(
             (f) =>
@@ -251,11 +252,7 @@ const ObjectPage = () => {
                 ?.substring(0, 1)
                 ?.toUpperCase()}${commentsToFields?.object[f]?.substring(1)}`
           )
-          ?.join(", \n")}  не може бути більшою за загальну`,
-        {
-          hideAfter: 3,
-          position: "top-right",
-        }
+          ?.join(", \n")}  не може бути більшою за загальну`
       );
 
       return false;
@@ -311,6 +308,7 @@ const ObjectPage = () => {
         field: {
           ...handleFormatDatesToTimestamp(data, fields),
           id_client: clientId,
+          price: data?.price?.replaceAll(" ", ""),
           obj_is_actual_dt: !data?.obj_is_actual_dt
             ? "0"
             : data?.obj_is_actual_dt !== "0"
@@ -332,11 +330,8 @@ const ObjectPage = () => {
       }).then((resp) => {
         setLoading(false);
         handleResponse(resp, () => {
-          cogoToast.success("Об'єкт успішно створено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
-          //   navigate(`/client/${clientId}`);
+          showAlert("success", "Об'єкт успішно створено");
+          navigate(`/client/${clientId}`);
         });
       });
     } else if (!handleCheckArea()) {
@@ -395,6 +390,7 @@ const ObjectPage = () => {
         id_object: id,
         field: {
           ...handleFormatDatesToTimestamp(data, fields),
+          price: data?.price?.replaceAll(" ", ""),
           id_client: clientId,
           obj_is_actual_dt: !data?.obj_is_actual_dt
             ? "0"
@@ -415,10 +411,7 @@ const ObjectPage = () => {
       }).then((resp) => {
         setLoading(false);
         handleResponse(resp, () => {
-          cogoToast.success("Зміни успішно збережено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Зміни успішно збережено");
           setPhotos(photos.map((p) => (p?.file ? { ...p, status: "old" } : p)));
           handleGetObject();
         });

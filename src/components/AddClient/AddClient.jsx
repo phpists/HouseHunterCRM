@@ -16,8 +16,8 @@ import {
   emailValidation,
   handleRemovePhoneMask,
   handleResponse,
+  showAlert,
 } from "../../utilits";
-import cogoToast from "cogo-toast";
 import { useActions } from "../../hooks/actions";
 import { useGetPhonesCodesQuery } from "../../store/auth/auth.api";
 
@@ -85,10 +85,7 @@ export const AddClient = ({ onClose, onAdded, initPhone, callId }) => {
       handleResponse(resp, () => {
         // setSuccess(true);
         handleClose();
-        cogoToast.success("Клієнта успішно додано", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Клієнта успішно додано");
         handleGetClientsCount();
         onAdded &&
           onAdded(callId, {

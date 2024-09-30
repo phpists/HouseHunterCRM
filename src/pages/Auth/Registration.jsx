@@ -14,7 +14,6 @@ import {
   handleRemovePhoneMask,
   handleResponse,
 } from "../../utilits";
-import cogoToast from "cogo-toast";
 import { InfoText } from "./InfoText";
 import { Links } from "./Links";
 import { AgreeCheckbox } from "./AgreeCheckbox";

@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { CallCard } from "./CallCard/CallCard";
 import { useState } from "react";
-import { handleFormatDate, handleResponse } from "../../../utilits";
-
+import { handleFormatDate, handleResponse, showAlert } from "../../../utilits";
 import { Empty } from "../../../components/Empty";
 import { Loader } from "../../../components/Loader";
 import { SendModal } from "../../Clients/SendModal";
@@ -10,11 +9,9 @@ import { EditComment } from "./EditComment";
 import { AddClient } from "../../../components/AddClient/AddClient";
 import { SendCall } from "./SendCall";
 import {
-  useLazySendOrderQuery,
   useLazySetOrderStatusQuery,
   useLazySetStatusTelegramOrderQuery,
 } from "../../../store/calls/calls.api";
-import cogoToast from "cogo-toast";
 
 export const List = ({
   selected,
@@ -61,33 +58,10 @@ export const List = ({
     setSendOrder(null);
   };
 
-  const handleCreateTelegramCommentInfo = (data) => {
-    const FIELDS_NAMES = {
-      description: "Опис",
-      rooms: "Кількість кімнат",
-      floor: "Повер",
-      floor_count: "Поверховість",
-      id_location: "Локація",
-      type_deal: "Оренда",
-      adress: "Адреса",
-      price_usd: "Ціна $",
-      other_pay: "Інші платежі",
-    };
-    const fieldsValues = Object.entries(data)
-      ?.filter((f) => !!FIELDS_NAMES[f[0]] && f[1]?.length > 0)
-      ?.map((f) => `${FIELDS_NAMES[f[0]]}: ${f[1]}`)
-      ?.join("\n\n");
-
-    return fieldsValues?.length > 0 ? fieldsValues : "-";
-  };
-
   const handleChangeTelegramOrderStatus = (id_order, status) => {
     setTelegramOrderStatus({ id_order, status }).then((resp) => {
       handleResponse(resp, () => {
-        cogoToast.success("Статус успішно змінено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Статус успішно змінено!");
         onToggleTelegramOrderStatus(id_order);
       });
     });
@@ -96,10 +70,7 @@ export const List = ({
   const handleChangeOrderStatus = (id_order, status) => {
     setOrderStatus({ id_order, status }).then((resp) => {
       handleResponse(resp, () => {
-        cogoToast.success("Статус успішно змінено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Статус успішно змінено!");
         onToggleOrderStatus(id_order);
       });
     });

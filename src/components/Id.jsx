@@ -1,5 +1,5 @@
-import cogoToast from "cogo-toast";
 import { styled } from "styled-components";
+import { showAlert } from "../utilits";
 
 export const Id = ({ id }) => {
   const handleCopy = () => {
@@ -9,10 +9,7 @@ export const Id = ({ id }) => {
     link.select();
     document.execCommand("copy");
     document.body.removeChild(link);
-    cogoToast.success("Успішно скопійовано", {
-      hideAfter: 3,
-      position: "top-right",
-    });
+    showAlert("success", "Успішно скопійовано");
   };
 
   return (

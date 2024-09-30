@@ -10,12 +10,7 @@ import {
 } from "../../store/clients/clients.api";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
-import {
-  checkIsJSON,
-  handleFromInputDate,
-  handleResponse,
-} from "../../utilits";
-import cogoToast from "cogo-toast";
+import { handleFromInputDate, handleResponse, showAlert } from "../../utilits";
 import { SendModal } from "./SendModal";
 import { useLocation } from "react-router-dom";
 
@@ -227,10 +222,7 @@ const Clients = () => {
       reasone_remove,
     }).then((resp) => {
       handleResponse(resp, () => {
-        cogoToast.success("Клієнта успішно видалено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Клієнта успішно видалено");
         setClients(clients.filter((c) => c.id !== clientId));
         saveClientsCount(allCount - 1);
         setAllCount(allCount - 1);
@@ -261,10 +253,7 @@ const Clients = () => {
         dataRef.current = updatedClients;
         setClients(updatedClients);
         setAllCount(favoritesFilter ? allCount - 1 : allCount);
-        cogoToast.success("Статус успішно обновлено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Статус успішно обновлено");
       });
     });
   };
@@ -275,10 +264,7 @@ const Clients = () => {
       selected?.map((id) =>
         addClientToFavorite(id).then((resp) => {
           handleResponse(resp, () => {
-            cogoToast.success("Статус успішно обновлено", {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("success", "Статус успішно обновлено");
           });
         })
       )
@@ -343,12 +329,9 @@ const Clients = () => {
       restoreClients(ids).then((resp) =>
         handleResponse(resp, () => {
           handleDeleteClients(ids, isSelected);
-          cogoToast.success(
-            `Клієнт${ids?.length === 1 ? "а" : "ів"} успішно відновлено`,
-            {
-              hideAfter: 3,
-              position: "top-right",
-            }
+          showAlert(
+            "success",
+            `Клієнт${ids?.length === 1 ? "а" : "ів"} успішно відновлено`
           );
         })
       );

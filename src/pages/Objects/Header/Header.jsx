@@ -8,21 +8,17 @@ import { SelectItems } from "../../../components/SelectItems/SelectItems";
 import { Filter } from "./Filter/Filter";
 import { useEffect, useState } from "react";
 import { AddClient } from "../../../components/AddClient/AddClient";
-import { handleCheckAccess, handleResponse } from "../../../utilits";
+import { handleCheckAccess, handleResponse, showAlert } from "../../../utilits";
 import {
-  useGetSortObjectViewQuery,
   useLazyAddToFavoritesQuery,
   useLazyDeleteObjectQuery,
 } from "../../../store/objects/objects.api";
-import cogoToast from "cogo-toast";
 import { BackButton } from "../../Clients/Header/BackButton";
-import { useGetAccessQuery } from "../../../store/auth/auth.api";
 import { useAppSelect } from "../../../hooks/redux";
 import { AddToSelections } from "../AddToSelections";
 import { SendModal } from "../../Clients/SendModal";
 import { SortButton } from "./SortButton/SortButton";
 import { MapModal } from "./MapModal/MapModal";
-import { Statistic } from "./Statistic/Statistic";
 
 export const Header = ({
   selectedCount,
@@ -77,10 +73,7 @@ export const Header = ({
     onChangeActionLoading(true);
     addToFavorites(selected).then((resp) => {
       handleResponse(resp, () => {
-        cogoToast.success("Статус успішно змінено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Статус успішно змінено!");
         onFavorite();
       });
       onChangeActionLoading(false);
@@ -96,12 +89,9 @@ export const Header = ({
         reasone_remove: confirmText,
       }).then((resp) => {
         handleResponse(resp, () => {
-          cogoToast.success(
-            `Обєкт${selectedCount === 1 ? "" : "и"} успішно видалено!`,
-            {
-              hideAfter: 3,
-              position: "top-right",
-            }
+          showAlert(
+            "success",
+            `Обєкт${selectedCount === 1 ? "" : "и"} успішно видалено!`
           );
           filters?.company_object?.show_deleted !== "1" && onDelete();
         });

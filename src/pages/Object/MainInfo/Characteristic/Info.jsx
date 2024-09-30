@@ -1,15 +1,19 @@
 import { styled } from "styled-components";
 import { Divider } from "../Divider";
-import { ProfileField } from "../../../../components/ProfileField";
-import { Select } from "../../../../components/Select/Select";
 import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.api";
-import { CheckOption } from "../../../../components/CheckOption";
 import { ToggleContent } from "./ToggleContent";
 import { Fields } from "./Fields";
 import { Categories } from "./Categories";
 import { useEffect, useState } from "react";
 
-export const Info = ({ fields, data, onChangeField, errors, onOpenSelect }) => {
+export const Info = ({
+  fields,
+  data,
+  onChangeField,
+  errors,
+  onOpenSelect,
+  onScrollToErrorFields,
+}) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [collapsedFields, setCollapsedFields] = useState({});
 
@@ -97,6 +101,7 @@ export const Info = ({ fields, data, onChangeField, errors, onOpenSelect }) => {
           title="Інше"
           error={errors.filter((e) => collapsedFields?.[e])?.length > 0}
           errorsUpdated={errors.includes("updated")}
+          onScrollToErrorFields={onScrollToErrorFields}
         >
           <Categories
             data={data}

@@ -1,6 +1,4 @@
-import ReactInputMask from "react-input-mask";
 import { CodeSelect } from "./Select copy/CodeSelect";
-import { handleRemovePhoneMask, removePhoneMask } from "../utilits";
 import { useRef } from "react";
 import { IMaskInput } from "react-imask";
 

@@ -1,9 +1,8 @@
-import cogoToast from "cogo-toast";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useLazyConnectAccountQuery } from "../../store/auth/auth.api";
-import { handleResponse } from "../../utilits";
+import { handleResponse, showAlert } from "../../utilits";
 import { Content } from "./Content/Content";
 import { Header } from "./Header/Header";
 import { useGetAdverstionResourceQuery } from "../../store/objects/objects.api";
@@ -47,10 +46,7 @@ const AdSettings = () => {
       connectAccount({ code, state, resource: "olx" }).then((resp) => {
         navigate("/advertising-setting");
         handleResponse(resp, () => {
-          cogoToast.success("Успішно авторизовано через olx", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Успішно авторизовано через olx");
         });
       });
     }

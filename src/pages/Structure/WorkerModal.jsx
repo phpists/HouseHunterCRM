@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { UserInfoCard } from "../../components/UserInfoCard/UserInfoCard";
 import {
   useGetPerimissionDirectorQuery,
-  useLazyAddWorkerToStructureQuery,
-  useLazyChangeWorkerLevelQuery,
   useLazyDeleteWorkerImgQuery,
   useLazyDeleteWorkerQuery,
   useLazyEditWorkerPermissionQuery,
@@ -26,8 +24,8 @@ import {
   handleFromInputDate,
   handleRemovePhoneMask,
   handleResponse,
+  showAlert,
 } from "../../utilits";
-import cogoToast from "cogo-toast";
 import { Confirm } from "../../components/Confirm/Confirm";
 
 const INITIAL_DATA = {
@@ -65,7 +63,6 @@ export const WorkerModal = ({
   const [editWorker] = useLazyEditWorkerQuery();
   const { data: rolesPermission } = useGetPerimissionDirectorQuery();
   const [deleteWorker] = useLazyDeleteWorkerQuery();
-  const [changeWorkerLevel] = useLazyChangeWorkerLevelQuery();
   const [deleteModal, setDeleteModal] = useState(false);
   const [getStructureUsers, { data: structureUsersCompany }] =
     useLazyGetStructureUsersCompanyQuery();
@@ -127,10 +124,7 @@ export const WorkerModal = ({
 
     if (errorsData?.length > 0) {
       setErrors(errorsData);
-      cogoToast.error("Заповніть обов'язкові поля", {
-        hideAfter: 3,
-        position: "top-right",
-      });
+      showAlert("error", "Заповніть обов'язкові поля");
     } else {
       return true;
     }
@@ -237,10 +231,7 @@ export const WorkerModal = ({
         setLoading(false);
         handleResponse(resp, () => {
           onClose();
-          cogoToast.success("Зміни успішно збережено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Зміни успішно збережено");
           handleGetUserData();
         });
       });
@@ -248,10 +239,7 @@ export const WorkerModal = ({
   };
 
   const handleSuccessSaveWorker = () => {
-    cogoToast.success("Зміни успішно збережено", {
-      hideAfter: 3,
-      position: "top-right",
-    });
+    showAlert("success", "Зміни успішно збережено");
     onRefetchData();
     handleGetWorker();
     onClose();
@@ -307,10 +295,7 @@ export const WorkerModal = ({
   const handleDeleteWorker = () => {
     deleteWorker(profileData?.id).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Працівника успішно видалено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Працівника успішно видалено");
         onRefetchData();
         onClose();
       })

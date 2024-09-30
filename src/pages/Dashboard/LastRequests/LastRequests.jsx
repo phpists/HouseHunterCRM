@@ -8,10 +8,8 @@ import {
   useLazyDeleteRequestQuery,
   useLazyGetLastRequestsQuery,
 } from "../../../store/requests/requests.api";
-import { handleResponse } from "../../../utilits";
+import { handleResponse, showAlert } from "../../../utilits";
 import { Chat } from "../../../components/Chat/Chat";
-import cogoToast from "cogo-toast";
-import { retry } from "@reduxjs/toolkit/query";
 import { Confirm } from "../../../components/Confirm/Confirm";
 
 export const LastRequests = () => {
@@ -49,10 +47,8 @@ export const LastRequests = () => {
   const handleToggleFavorites = (idGroup, id) => {
     addToFavorites(idGroup).then((resp) => {
       handleResponse(resp, () => {
-        cogoToast.success("Статус успішно змінено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Статус успішно змінено");
+
         setRequests(
           Object.fromEntries(
             Object.entries(requests)?.map((r) => {
@@ -80,10 +76,7 @@ export const LastRequests = () => {
   const handleDelete = () => {
     deleteRequest({ id_groups: [deleteId?.id] }).then((resp) => {
       handleResponse(resp, () => {
-        cogoToast.success(`Заявку успішно видалено!`, {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Заявку успішно видалено!");
         setRequests(
           Object.fromEntries(
             Object.entries(requests)?.filter((r) => r[0] !== deleteId?.id)

@@ -18,14 +18,13 @@ import {
   handleFormatDate,
   handleResponse,
   removePhoneMask,
+  showAlert,
 } from "../../utilits";
 import { useActions } from "../../hooks/actions";
-import cogoToast from "cogo-toast";
 import { useLocation } from "react-router-dom";
 import { useGetPhonesCodesQuery } from "../../store/auth/auth.api";
 import { useAppSelect } from "../../hooks/redux";
 import { XHOUSE_COMPANY_ID } from "../../constants";
-import { useGetCompanyInfoQuery } from "../../store/billing/billing.api";
 
 const INIT_FILTERS = {
   search_key: "",
@@ -365,10 +364,7 @@ const Calls = ({ companyId }) => {
         saveCallsCount(callsCount - 1);
         allCountRef.current = updatedCount;
         setAllCount(updatedCount);
-        cogoToast.success("Статус успішно змінено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Статус успішно змінено!");
       })
     );
   };
@@ -378,11 +374,9 @@ const Calls = ({ companyId }) => {
       setTelegramOrderComment({ id_order: id_call, comment }).then((resp) =>
         handleResponse(resp, () => {
           handleResponse(resp, () => {
-            cogoToast.success("Коментар успішно змінено!", {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("success", "Коментар успішно змінено!");
           });
+
           onSuccess && onSuccess();
           setTelegramData(
             telegramData?.map((call) =>
@@ -401,10 +395,7 @@ const Calls = ({ companyId }) => {
       setOrderComment({ id_order: id_call, comment }).then((resp) =>
         handleResponse(resp, () => {
           handleResponse(resp, () => {
-            cogoToast.success("Коментар успішно змінено!", {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("success", "Коментар успішно змінено!");
           });
           onSuccess && onSuccess();
           setOrders(
@@ -424,10 +415,7 @@ const Calls = ({ companyId }) => {
       addComment({ id_call, comment }).then((resp) =>
         handleResponse(resp, () => {
           handleResponse(resp, () => {
-            cogoToast.success("Коментар успішно змінено!", {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("success", "Коментар успішно змінено!");
           });
           setData(
             data?.map((call) =>
@@ -475,10 +463,7 @@ const Calls = ({ companyId }) => {
           status,
         }).then((resp) => {
           handleResponse(resp, () => {
-            cogoToast.success("Статус успішно змінено!", {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("success", "Статус успішно змінено!");
           });
         })
       )

@@ -12,8 +12,8 @@ import {
   handleFormatDate,
   handleGetLocationAllPath,
   handleResponse,
+  showAlert,
 } from "../../../utilits";
-import cogoToast from "cogo-toast";
 import { Card } from "./Card/Card";
 import { Confirm } from "../../../components/Confirm/Confirm";
 import { useAppSelect } from "../../../hooks/redux";
@@ -189,10 +189,7 @@ export const RequestsList = ({
       reasone_remove: confirmText,
     }).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Запит успішно видалено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Запит успішно видалено!");
         handleGetRequestById(selectedCard)?.General_field_group?.deleted === "1"
           ? handleDeleteRequestSuccess(selectedCard)
           : handleToggleDeleteStatus(selectedCard, "1");
@@ -208,10 +205,7 @@ export const RequestsList = ({
   const handleRestoreRequest = (id, idGroup) => {
     restoreRequests([idGroup]).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Запит успішно відновлено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Запит успішно видалено!");
         handleToggleDeleteStatus(id, "0");
       })
     );

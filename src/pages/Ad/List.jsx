@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import { ObjectCard } from "../../components/ObjectCard/ObjectCard";
 import { Empty } from "../../components/Empty/Empty";
-import { useGetAccessQuery } from "../../store/auth/auth.api";
-import { handleCheckAccess, handleCopy, handleResponse } from "../../utilits";
+import {
+  handleCheckAccess,
+  handleCopy,
+  handleResponse,
+  showAlert,
+} from "../../utilits";
 import { useState } from "react";
 import { AddToSelections } from "./AddToSelections";
 import { Loader } from "../../components/Loader";
@@ -12,10 +16,8 @@ import { ObjectHistory } from "../../components/ObjectHistory/ObjectHistory";
 import {
   useLazyDeleteAdHistoryQuery,
   useLazyDeleteAdQuery,
-  useLazyDeleteObjectQuery,
   useLazyPublishObjectQuery,
 } from "../../store/objects/objects.api";
-import cogoToast from "cogo-toast";
 import { useAppSelect } from "../../hooks/redux";
 import { EditObjectComment } from "../../components/EditObjectComment";
 import { Confirm } from "../../components/Confirm/Confirm";
@@ -26,6 +28,7 @@ import { FastSelection } from "../../components/FastSelection/FastSelection";
 import { ObjectAdModal } from "../../components/ObjectAdModal/ObjectAdModal";
 import { useGetCompanyInfoQuery } from "../../store/billing/billing.api";
 import { XHOUSE_COMPANY_ID } from "../../constants";
+import cogoToast from "cogo-toast";
 
 export const List = ({
   selected,
@@ -53,7 +56,6 @@ export const List = ({
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
   const [openHistoryPriceModal, setOpenHistoryPriceModal] = useState(null);
   const [openCommentHistoryModal, setOpenCommentHistoryModal] = useState(null);
-  const [deleteObject] = useLazyDeleteObjectQuery();
   const [deleting, setDeleting] = useState(false);
   const [editComment, setEditComment] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -77,15 +79,12 @@ export const List = ({
     setDeleting(true);
     if (isHistory) {
       deleteAdHistory({
-        id_obj: deleteId,
+        id_obj: [deleteId],
         id_user_olx: data?.find((o) => o.id_ad_in_source === deleteId)
           ?.id_user_olx,
       }).then((resp) => {
         handleResponse(resp, () => {
-          cogoToast.success(`Оголошення успішно видалено!`, {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", `Оголошення успішно видалено!`);
           onDeleteSuccess(deleteId);
         });
         setDeleting(false);
@@ -99,10 +98,7 @@ export const List = ({
         handleResponse(
           resp,
           () => {
-            cogoToast.success(`Оголошення успішно видалено!`, {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("success", `Оголошення успішно видалено!`);
             onDeleteSuccess(deleteId);
           },
           (err) => {
@@ -161,21 +157,14 @@ export const List = ({
                 "Вимкнено модерацією, пропозиція заблокована та очікує перевірки",
               removed_by_moderator: "Видалено",
             };
-            cogoToast.info(
-              messages[resp?.data?.status] ?? "Оголошення успішно опубліковано",
-              {
-                hideAfter: 3,
-                position: "top-right",
-              }
+            showAlert(
+              "info",
+              messages[resp?.data?.status] ?? "Оголошення успішно опубліковано"
             );
           },
           () => {
             const message = resp?.data?.messege;
-
-            cogoToast.error(<>{message}</>, {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("error", message);
           },
           true
         );
@@ -263,8 +252,8 @@ export const List = ({
             {data.map((d) => (
               <ObjectCard
                 key={d?.id_ad_in_source}
-                selected={!!selected.find((j) => j === d?.id_ad_in_source)}
-                onSelect={() => onSelect(d?.id_ad_in_source)}
+                selected={!!selected.find((j) => j === d?.id_obj)}
+                onSelect={() => onSelect(d?.id_obj)}
                 data={{ ...d, id: d?.id_ad_in_source }}
                 onToggleFavoriteStatus={() =>
                   toggleFavoriteStatus(d?.id_ad_in_source)
@@ -340,10 +329,8 @@ export const List = ({
                 onUpdateField={(field, value) =>
                   onUpdateObject(d?.id_ad_in_source, field, value)
                 }
-                onDeleteAd={() => handleOpenDelete(d?.id_ad_in_source)}
-                onDeleteHistory={() =>
-                  handleOpenDelete(d?.id_ad_in_source, true)
-                }
+                onDeleteAd={() => handleOpenDelete(d?.id_obj)}
+                onDeleteHistory={() => handleOpenDelete(d?.id_obj, true)}
                 ad
               />
             ))}

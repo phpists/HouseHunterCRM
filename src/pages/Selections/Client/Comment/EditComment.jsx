@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { Modal } from "../../../../components/Modal/Modal";
 import { useEffect, useRef, useState } from "react";
 import { useLazyEditRequestCommentQuery } from "../../../../store/requests/requests.api";
-import { handleResponse } from "../../../../utilits";
-import cogoToast from "cogo-toast";
+import { handleResponse, showAlert } from "../../../../utilits";
 import { useParams } from "react-router-dom";
 
 export const EditComment = ({ onClose, comment, onChange }) => {
@@ -41,10 +40,7 @@ export const EditComment = ({ onClose, comment, onChange }) => {
       handleResponse(
         resp,
         () => {
-          cogoToast.success("Зміни успішно збережено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Зміни успішно збережено");
           onChange(value);
           onClose();
         },
@@ -80,7 +76,7 @@ const StyledEditComment = styled.div`
     line-height: 17px;
     letter-spacing: 0em;
     margin-bottom: 4px;
-    var(--main-color)fff99;
+    color: var(--main-color);
   }
   textarea {
     resize: none;
@@ -120,7 +116,6 @@ const StyledEditComment = styled.div`
     line-height: 18px;
     letter-spacing: 0.02em;
     text-align: center;
-    color: #FFF;
-
+    color: #fff;
   }
 `;

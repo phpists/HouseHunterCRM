@@ -2,8 +2,7 @@ import { styled } from "styled-components";
 import editIcon from "../assets/images/edit-company.svg";
 import { useEffect, useState } from "react";
 import { useLazyEditClientCommentQuery } from "../store/clients/clients.api";
-import cogoToast from "cogo-toast";
-import { handleResponse } from "../utilits";
+import { handleResponse, showAlert } from "../utilits";
 
 export const Comment = ({ className, comment, id, onEditComment }) => {
   const [commentValue, setCommentValue] = useState(comment ?? "");
@@ -24,10 +23,7 @@ export const Comment = ({ className, comment, id, onEditComment }) => {
       }).then((resp) => {
         handleResponse(resp, () => {
           setCommentValue(value);
-          cogoToast.success("Зміни успішно збережено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Зміни успішно збережено");
         });
       });
     }

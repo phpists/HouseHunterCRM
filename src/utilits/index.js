@@ -3,6 +3,27 @@ import avatar1 from "../assets/images/avatars/1.svg";
 import avatar2 from "../assets/images/avatars/2.svg";
 import avatar3 from "../assets/images/avatars/3.svg";
 import avatar4 from "../assets/images/avatars/4.svg";
+import { ReactComponent as CloseIcon } from "../assets/images/close-modal.svg";
+
+export const showAlert = (type, msg) => {
+  let timeout;
+  const { hide } = cogoToast[type](
+    <div
+      onMouseEnter={() => clearTimeout(timeout)}
+      onMouseLeave={() => {
+        timeout = setTimeout(hide, 5000);
+      }}
+    >
+      {msg}
+      <CloseIcon className="close-alert-icon" onClick={() => hide()} />
+    </div>,
+    {
+      position: "top-right",
+      hideAfter: 0,
+    }
+  );
+  timeout = setTimeout(hide, 5000);
+};
 
 export const addZero = (num) => (num < 10 ? `0${num}` : num);
 
@@ -277,21 +298,14 @@ export const handleResponse = (
     resp?.error === 128
   ) {
     localStorage.removeItem("token");
-    cogoToast.error(
-      resp?.data?.messege ? resp?.data?.messege : resp?.messege ?? "Помилка",
-      {
-        hideAfter: 3,
-        position: "top-right",
-      }
+    showAlert(
+      "error",
+      resp?.data?.messege ? resp?.data?.messege : resp?.messege ?? "Помилка"
     );
     window.location.replace("/");
   } else if (resp?.error?.data) {
     onError && onError();
-    !notShowErrorMessage &&
-      cogoToast.error("Помилка", {
-        hideAfter: 3,
-        position: "top-right",
-      });
+    !notShowErrorMessage && showAlert("error", "Помилка");
   } else if (
     (resp?.data?.error === 0 && resp?.data?.error !== undefined) ||
     (resp?.error !== undefined && resp?.error === 0)
@@ -325,14 +339,9 @@ export const handleResponse = (
       resp?.error !== 77
     ) {
       !notShowErrorMessage &&
-        cogoToast.error(
-          resp?.data?.messege
-            ? resp?.data?.messege
-            : resp?.messege ?? "Помилка",
-          {
-            hideAfter: 3,
-            position: "top-right",
-          }
+        showAlert(
+          "error",
+          resp?.data?.messege ? resp?.data?.messege : resp?.messege ?? "Помилка"
         );
     }
   } else {
@@ -389,17 +398,14 @@ export const handleCheckFields = ({
       (f, i) => `${1 + i}. ${fieldsTitles[f] ?? ""}`
     );
 
-    cogoToast.error(
+    showAlert(
+      "error",
       <>
         Заповніть обов'язкові поля {title ? `(${title})` : ""}:
         {handleTitles.map((t) => (
           <div>{t}</div>
         ))}
-      </>,
-      {
-        hideAfter: 5,
-        position: "top-right",
-      }
+      </>
     );
 
     return emptyFields;
@@ -497,10 +503,7 @@ export const handleCopy = (text) => {
   linkElem.select();
   document.execCommand("copy");
   document.body.removeChild(linkElem);
-  cogoToast.success("Успішно спопійовано", {
-    hideAfter: 3,
-    position: "top-right",
-  });
+  showAlert("success", "Успішно спопійовано");
 };
 
 export const isJson = (data) => {

@@ -11,7 +11,6 @@ import {
   useLazyLoginQuery,
   useLazyLogoutQuery,
 } from "../../../store/auth/auth.api";
-import cogoToast from "cogo-toast";
 
 export const Login = ({ onForgotPassword, onSuccess, onRegister }) => {
   const [login] = useLazyLoginQuery();

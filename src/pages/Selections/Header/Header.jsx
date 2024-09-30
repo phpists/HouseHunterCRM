@@ -6,8 +6,7 @@ import { SelectItems } from "../../../components/SelectItems/SelectItems";
 import { ChatButton } from "./ChatButton/ChatButton";
 import { FilterButton } from "./FilterButton/FilterButton";
 import { useLazyHideObjectFromSelectionsQuery } from "../../../store/selections/selections.api";
-import { handleResponse } from "../../../utilits";
-import cogoToast from "cogo-toast";
+import { handleResponse, showAlert } from "../../../utilits";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { AddToSelections } from "../../Objects/AddToSelections";
@@ -46,10 +45,7 @@ export const Header = ({
     onChangeActionLoading(true);
     hideObject({ id_request_group: id, id_objects: selected }).then((resp) => {
       handleResponse(resp, () => {
-        cogoToast.success("Статус успішно змінено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Статус успішно змінено!");
         onHide();
       });
       onChangeActionLoading(false);

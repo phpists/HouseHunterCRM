@@ -13,8 +13,7 @@ import {
   useLazyGetPhoneObjectQuery,
 } from "../../store/objects/objects.api";
 import { Button } from "../Button";
-import { handleResponse } from "../../utilits";
-import cogoToast from "cogo-toast";
+import { handleResponse, showAlert } from "../../utilits";
 
 export const MarkObjectPhones = ({ onClose, object, onSuccess }) => {
   const { data: agencies } = useGetAgenciesQuery();
@@ -38,10 +37,8 @@ export const MarkObjectPhones = ({ onClose, object, onSuccess }) => {
     if (type === 0) {
       cleanObjectMarks(object?.id).then((resp) => {
         handleResponse(resp, () => {
-          cogoToast.success("Успішно збережено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Успішно збережено");
+
           getClient(object?.id).then((resp) => {
             onSuccess && onSuccess(object?.id, resp?.data);
             onClose();
@@ -51,10 +48,7 @@ export const MarkObjectPhones = ({ onClose, object, onSuccess }) => {
     } else if (type === 2) {
       addPicatoon(object?.id).then((resp) => {
         handleResponse(resp, () => {
-          cogoToast.success("Успішно збережено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Успішно збережено");
           onSuccess &&
             onSuccess(object?.id, {
               type: "ШАХРАЙ",
@@ -74,10 +68,7 @@ export const MarkObjectPhones = ({ onClose, object, onSuccess }) => {
         rieltor_name: name?.length > 0 ? name : clientName,
       }).then((resp) => {
         handleResponse(resp, () => {
-          cogoToast.success("Успішно збережено", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("success", "Успішно збережено");
           onSuccess &&
             onSuccess(object?.id, {
               type: "Стороння агенція",

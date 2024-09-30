@@ -10,8 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { useActions } from "../../../hooks/actions";
 import { useAppSelect } from "../../../hooks/redux";
-import cogoToast from "cogo-toast";
-import { handleCheckAccess, handleResponse } from "../../../utilits";
+import { handleCheckAccess, handleResponse, showAlert } from "../../../utilits";
 import { useNavigate } from "react-router-dom";
 
 export const Header = ({
@@ -59,12 +58,9 @@ export const Header = ({
         handleResponse(
           resp,
           () => {
-            cogoToast.success(
-              `Клієнт${selected?.length === 1 ? "a" : "ів"} успішно видалено`,
-              {
-                hideAfter: 3,
-                position: "top-right",
-              }
+            showAlert(
+              "success",
+              `Клієнт${selected?.length === 1 ? "a" : "ів"} успішно видалено`
             );
 
             if (isFinal || !filter?.filters?.show_deleted) {

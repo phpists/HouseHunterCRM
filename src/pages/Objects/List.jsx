@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import { ObjectCard } from "../../components/ObjectCard/ObjectCard";
 import { Empty } from "../../components/Empty/Empty";
-import { useGetAccessQuery } from "../../store/auth/auth.api";
-import { handleCheckAccess, handleCopy, handleResponse } from "../../utilits";
+import {
+  handleCheckAccess,
+  handleCopy,
+  handleResponse,
+  showAlert,
+} from "../../utilits";
 import { useState } from "react";
 import { AddToSelections } from "./AddToSelections";
 import { Loader } from "../../components/Loader";
@@ -13,7 +17,6 @@ import {
   useLazyDeleteObjectQuery,
   useLazyPublishObjectQuery,
 } from "../../store/objects/objects.api";
-import cogoToast from "cogo-toast";
 import { useAppSelect } from "../../hooks/redux";
 import { EditObjectComment } from "../../components/EditObjectComment";
 import { Confirm } from "../../components/Confirm/Confirm";
@@ -25,6 +28,7 @@ import { ObjectAdModal } from "../../components/ObjectAdModal/ObjectAdModal";
 import { useGetCompanyInfoQuery } from "../../store/billing/billing.api";
 import { XHOUSE_COMPANY_ID } from "../../constants";
 import { AdListModal } from "../../components/AdListModal/AdListModal";
+import cogoToast from "cogo-toast";
 
 export const List = ({
   selected,
@@ -78,10 +82,7 @@ export const List = ({
       reasone_remove: confirmText,
     }).then((resp) => {
       handleResponse(resp, () => {
-        cogoToast.success(`Обєкт успішно видалено!`, {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Обєкт успішно видалено!");
         onDeleteSuccess(deleteId);
       });
       setDeleting(false);
@@ -129,21 +130,14 @@ export const List = ({
                 "Вимкнено модерацією, пропозиція заблокована та очікує перевірки",
               removed_by_moderator: "Видалено",
             };
-            cogoToast.info(
-              messages[resp?.data?.status] ?? "Оголошення успішно опубліковано",
-              {
-                hideAfter: 3,
-                position: "top-right",
-              }
+            showAlert(
+              "info",
+              messages[resp?.data?.status] ?? "Оголошення успішно опубліковано"
             );
           },
           () => {
             const message = resp?.data?.messege;
-
-            cogoToast.error(<>{message}</>, {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("error", message);
           },
           true
         );

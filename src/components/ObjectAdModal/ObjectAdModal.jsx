@@ -7,18 +7,14 @@ import { Info } from "./Info/Info";
 import { useEffect, useState } from "react";
 import {
   useGetCommentsToFieldsQuery,
-  useGetStatusAccountQuery,
   useLazyPublishObjectQuery,
 } from "../../store/objects/objects.api";
-import { handleResponse } from "../../utilits";
-import cogoToast from "cogo-toast";
+import { handleResponse, showAlert } from "../../utilits";
 import {
   useLazyFlombuPublishQuery,
   useLazyPublishRealestateQuery,
 } from "../../store/auth/auth.api";
 import { useAppSelect } from "../../hooks/redux";
-import { useNavigate } from "react-router-dom";
-import { ReactComponent as CloseIcon } from "../../assets/images/close-modal.svg";
 
 export const ObjectAdModal = ({ onClose, object }) => {
   const [data, setData] = useState({
@@ -38,12 +34,10 @@ export const ObjectAdModal = ({ onClose, object }) => {
     author_name: "",
     author_phone: "",
   });
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [publishObject] = useLazyPublishObjectQuery();
   const [publishRealestate] = useLazyPublishRealestateQuery();
   const [publishFlombu] = useLazyFlombuPublishQuery();
-  const { data: adAAccounts } = useGetStatusAccountQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [citiesCount, setCitiesCount] = useState(0);
   const [streetsCount, setStreetsCount] = useState(0);
@@ -77,19 +71,6 @@ export const ObjectAdModal = ({ onClose, object }) => {
     });
   }, [object]);
 
-  const handleShowError = (msg) => {
-    const { hide } = cogoToast.error(
-      <>
-        {msg}
-        <CloseIcon className="close-alert-icon" onClick={() => hide()} />
-      </>,
-      {
-        position: "top-right",
-        hideAfter: 20,
-      }
-    );
-  };
-
   const handleSubmit = () => {
     setLoading(true);
     data?.id_user_olx?.forEach((id_user_olx) => {
@@ -122,13 +103,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
               removed_by_moderator: "Видалено",
             };
             onClose();
-            cogoToast.info(
-              messages[resp?.data?.status] ?? "Оголошення успішно опубліковано",
-              {
-                hideAfter: 3,
-                position: "top-right",
-              }
-            );
+            showAlert("info", "Оголошення успішно опубліковано");
           },
           () => {
             const message = resp?.data?.messege;
@@ -136,7 +111,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
               ?.map((f) => commentsToFields?.object[f])
               ?.filter((v) => v);
 
-            handleShowError(`${message} ${fields?.join(",")}`);
+            showAlert("error", `${message} ${fields?.join(",")}`);
           },
           true
         );
@@ -153,10 +128,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
           resp,
           () => {
             onClose();
-            cogoToast.info("Оголошення успішно опубліковано", {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("info", "Оголошення успішно опубліковано");
           },
           () => {
             const fields = resp?.data?.fields_validation
@@ -164,7 +136,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
                   (f) => commentsToFields?.object[f[0]]
                 )
               : [];
-            handleShowError(`${resp?.data?.messege} ${fields?.join(",")}`);
+            showAlert("error", `${resp?.data?.messege} ${fields?.join(",")}`);
           },
           true
         );
@@ -176,10 +148,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
         setLoading(false);
         handleResponse(resp, () => {
           onClose();
-          cogoToast.info("Оголошення успішно опубліковано", {
-            hideAfter: 3,
-            position: "top-right",
-          });
+          showAlert("info", "Оголошення успішно опубліковано");
         });
       });
     }

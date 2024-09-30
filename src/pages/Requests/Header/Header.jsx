@@ -13,8 +13,7 @@ import {
   useLazyDeleteRequestQuery,
   useLazyRestoreRequestsQuery,
 } from "../../../store/requests/requests.api";
-import { handleCheckAccess, handleResponse } from "../../../utilits";
-import cogoToast from "cogo-toast";
+import { handleCheckAccess, handleResponse, showAlert } from "../../../utilits";
 import { BackButton } from "../../Clients/Header/BackButton";
 import { useAppSelect } from "../../../hooks/redux";
 
@@ -52,10 +51,7 @@ export const Header = ({
       selected?.map((id) =>
         addToFavorites(id).then((resp) => {
           handleResponse(resp, () => {
-            cogoToast.success("Статус успішно змінено!", {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("success", "Статус успішно змінено!");
           });
         })
       )
@@ -76,12 +72,9 @@ export const Header = ({
         reasone_remove: confirmText,
       }).then((resp) => {
         handleResponse(resp, () => {
-          cogoToast.success(
-            `Запит${selectedCount === 1 ? "" : "и"} успішно видалено!`,
-            {
-              hideAfter: 3,
-              position: "top-right",
-            }
+          showAlert(
+            "success",
+            `Запит${selectedCount === 1 ? "" : "и"} успішно видалено!`
           );
           //   !filters?.show_deleted && onDelete();
           onDelete();
@@ -94,12 +87,9 @@ export const Header = ({
   const handleRestore = () => {
     restoreRequests(selected).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success(
-          `Запит${selected?.length > 1 ? "и" : ""} успішно відновлено`,
-          {
-            hideAfter: 3,
-            position: "top-right",
-          }
+        showAlert(
+          "success",
+          `Запит${selected?.length > 1 ? "и" : ""} успішно відновлено`
         );
         onDelete();
       })

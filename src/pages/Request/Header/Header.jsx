@@ -4,7 +4,6 @@ import { ReactComponent as StarIcon } from "../../../assets/images/card-star.svg
 import { ReactComponent as RemoveIcon } from "../../../assets/images/remove.svg";
 import { ReactComponent as RestoreIcon } from "../../../assets/images/refresh-icon.svg";
 import { ReactComponent as DeleteInfoIcon } from "../../../assets/images/delete-info.svg";
-import { ReactComponent as OpenIcon } from "../../../assets/images/open-folder.svg";
 import { ReactComponent as NoFontIcon } from "../../../assets/images/no-a.svg";
 
 import { IconButton } from "../../../components/IconButton";
@@ -19,8 +18,7 @@ import {
 import { useEffect, useState } from "react";
 import { Confirm } from "../../../components/Confirm/Confirm";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { handleCheckAccess, handleResponse } from "../../../utilits";
-import cogoToast from "cogo-toast";
+import { handleCheckAccess, handleResponse, showAlert } from "../../../utilits";
 import { BackButton } from "../../../components/BackButton";
 import { useAppSelect } from "../../../hooks/redux";
 import { Id } from "../../../components/Id";
@@ -56,10 +54,7 @@ export const Header = ({
     }).then((resp) =>
       handleResponse(resp, () => {
         setDeleteReason(confirmText);
-        cogoToast.success("Запит успішно видалено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Запит успішно видалено!");
         isDeleted ? navigate("/requests") : onToggleDeleted(true);
       })
     );
@@ -69,10 +64,7 @@ export const Header = ({
     addToFavorites(id).then((resp) => {
       handleResponse(resp, () => {
         onToggleFavorite();
-        cogoToast.success("Статус успішно змінено!", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Статус успішно змінено!");
       });
     });
   };
@@ -82,10 +74,7 @@ export const Header = ({
       handleResponse(resp, () => {
         setDeleteReason(null);
         onToggleDeleted(false);
-        cogoToast.success("Запит успішно відновлено", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Запит успішно відновлено");
       })
     );
   };

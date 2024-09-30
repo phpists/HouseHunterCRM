@@ -21,9 +21,12 @@ import {
   useLazyAddStreetBaseObjectQuery,
   useLazyDownloadObjectQuery,
 } from "../../../store/objects/objects.api";
-import { handleDownloadFile, handleResponse } from "../../../utilits";
+import {
+  handleDownloadFile,
+  handleResponse,
+  showAlert,
+} from "../../../utilits";
 import { useEffect, useState } from "react";
-import cogoToast from "cogo-toast";
 
 export const Dropdown = ({
   clientId,
@@ -71,10 +74,7 @@ export const Dropdown = ({
   const handleAddStreetBaseObject = () => {
     addStreetBaseObject(id).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Об'єкт успішно додано", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Об'єкт успішно додано");
         setAdded(true);
       })
     );
@@ -90,10 +90,7 @@ export const Dropdown = ({
   };
 
   const handleAdDisabled = () => {
-    cogoToast.error("Дана рубрика для реклами не підримується", {
-      hideAfter: 3,
-      position: "top-right",
-    });
+    showAlert("error", "Дана рубрика для реклами не підримується");
   };
 
   return (

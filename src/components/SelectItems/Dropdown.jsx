@@ -13,6 +13,7 @@ export const Dropdown = ({
   onDeleteFinally,
   onSendClients,
   onFastCopy,
+  onDeleteHistory,
 }) => {
   const OPTIONS = [
     { title: "Додати в улюблене", value: "favorite" },
@@ -32,6 +33,9 @@ export const Dropdown = ({
       ? [{ title: "Додати до підбірки", value: "selection" }]
       : []),
     ...(onFastCopy ? [{ title: "Швидка підбірка", value: "onFastCopy" }] : []),
+    ...(onDeleteHistory
+      ? [{ title: "Видалити з історії", value: "onDeleteHistory" }]
+      : []),
   ];
 
   return (

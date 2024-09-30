@@ -2,8 +2,11 @@ import { styled } from "styled-components";
 import { DesktopContent } from "./DesktopContent";
 import { MobileContent } from "./MobileContent";
 import { useLazyAddToFavoriteQuery } from "../../../../store/requests/requests.api";
-import { handleDownloadFile, handleResponse } from "../../../../utilits";
-import cogoToast from "cogo-toast";
+import {
+  handleDownloadFile,
+  handleResponse,
+  showAlert,
+} from "../../../../utilits";
 import {
   useLazyAddToFavoritesQuery,
   useLazyDownloadObjectQuery,
@@ -66,19 +69,13 @@ export const Card = ({
       ? addObjectToFavorites([id]).then((resp) => {
           handleResponse(resp, () => {
             onChangeFavorite();
-            cogoToast.success("Статус успішно змінено!", {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("success", "Запит успішно видалено!");
           });
         })
       : addRequestToFavorites(id).then((resp) => {
           handleResponse(resp, () => {
             onChangeFavorite();
-            cogoToast.success("Статус успішно змінено!", {
-              hideAfter: 3,
-              position: "top-right",
-            });
+            showAlert("success", "Запит успішно видалено!");
           });
         });
   };

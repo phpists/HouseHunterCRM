@@ -1,12 +1,10 @@
 import styled from "styled-components";
 import { Modal } from "../../../../components/Modal/Modal";
-import { Select } from "../../../../components/Select/Select";
 import { useLazyGetAllObjectsQuery } from "../../../../store/objects/objects.api";
 import { useEffect, useState } from "react";
 import { useLazyAddObjectToSelectionsQuery } from "../../../../store/selections/selections.api";
 import { useParams } from "react-router-dom";
-import { handleResponse } from "../../../../utilits";
-import cogoToast from "cogo-toast";
+import { handleResponse, showAlert } from "../../../../utilits";
 import { SelectionsSelect } from "../../../../components/SelectionsSelect/SelectionsSelect";
 
 export const AddModal = ({ onClose, onRefresh, objectsIds }) => {
@@ -25,10 +23,7 @@ export const AddModal = ({ onClose, onRefresh, objectsIds }) => {
       id_objects: [selectedObj],
     }).then((resp) =>
       handleResponse(resp, () => {
-        cogoToast.success("Об'єкт успішно додано", {
-          hideAfter: 3,
-          position: "top-right",
-        });
+        showAlert("success", "Об'єкт успішно додано");
         onRefresh();
         onClose();
       })
