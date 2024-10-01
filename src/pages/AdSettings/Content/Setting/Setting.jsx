@@ -91,7 +91,7 @@ export const Setting = ({
       {realStateRefreshConfirm && (
         <Confirm
           onClose={() => setRealStateRefreshConfirm(false)}
-          title="Чи сихронізувати дані з Realestate?"
+          title="Синхронізувати дані з RealEstate?"
           onSubmit={handleRealStateRefresh}
         />
       )}

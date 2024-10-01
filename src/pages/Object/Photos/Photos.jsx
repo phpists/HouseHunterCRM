@@ -13,7 +13,7 @@ import { handleResponse, showAlert } from "../../../utilits";
 import { PhotoSlider } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 
-export const Photos = ({ photos, onChange, onRefresh }) => {
+export const Photos = ({ photos, onChange }) => {
   const { id } = useParams();
   const [setCoverPhoto] = useLazySetCoverPhotoQuery();
   const [deletePhoto] = useLazyDeleteObjectPhotoQuery();
@@ -36,6 +36,16 @@ export const Photos = ({ photos, onChange, onRefresh }) => {
       : handleDelete(photo?.id);
   };
 
+  const handleCalcRotate = (prevRotate = 0, newRotate) => {
+    let updatedRotate = prevRotate + newRotate;
+
+    if (updatedRotate === 360 || updatedRotate === -360) {
+      updatedRotate = 0;
+    }
+
+    return updatedRotate;
+  };
+
   const handleRotate = (photoId, rotate) => {
     rotateImage({
       id_object: id,
@@ -43,8 +53,7 @@ export const Photos = ({ photos, onChange, onRefresh }) => {
       rotate,
     }).then((resp) => {
       handleResponse(resp, () => {
-        onRefresh();
-        showAlert("success", "Фото успішно перевернуто");
+        // showAlert("success", "Фото успішно перевернуто");
       });
     });
   };
@@ -104,7 +113,9 @@ export const Photos = ({ photos, onChange, onRefresh }) => {
           onMakeMain={() => handleSetPhotoCover(0, photos[0])}
           onOpen={() => handleOpenPhoto(0)}
           onRotate={
-            photos[0]?.file ? null : () => handleRotate(photos[0]?.id, "90")
+            photos[0]?.file
+              ? null
+              : (rotate) => handleRotate(photos[0]?.id, rotate)
           }
         />
         {photos.length > 1 && (
@@ -140,7 +151,7 @@ export const Photos = ({ photos, onChange, onRefresh }) => {
                     onMakeMain={() => handleSetPhotoCover(1 + i, p)}
                     isFile={!!p?.file}
                     onOpen={() => handleOpenPhoto(2 + i)}
-                    onRotate={() => handleRotate(p?.id, "90")}
+                    onRotate={(rotate) => handleRotate(p?.id, rotate)}
                   />
                 ))}
                 {/* </DraggableList> */}

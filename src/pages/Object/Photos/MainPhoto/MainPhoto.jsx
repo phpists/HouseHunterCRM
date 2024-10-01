@@ -39,9 +39,17 @@ export const MainPhoto = memo(
                 <Remove />
               </div>
               {onRotate ? (
-                <div className="remove-btn" onClick={onRotate}>
-                  <Rotate />
-                </div>
+                <>
+                  <div
+                    className="remove-btn rotateBack"
+                    onClick={() => onRotate(90)}
+                  >
+                    <Rotate />
+                  </div>
+                  <div className="remove-btn" onClick={() => onRotate(-90)}>
+                    <Rotate />
+                  </div>
+                </>
               ) : null}
             </>
           )}
@@ -75,7 +83,7 @@ const StyledMainPhoto = styled.div`
       flex-shrink: 0;
       border-radius: 5px;
       border: 1px solid var(--bg-15);
-      background: var(--bg-5);
+      background: var(--element-bg);
       backdrop-filter: blur(5px);
       height: 20px;
       width: 20px;
@@ -89,6 +97,9 @@ const StyledMainPhoto = styled.div`
         height: 15px;
       }
     }
+  }
+  .rotateBack {
+    transform: scale(-1, 1);
   }
   @media (max-width: 1500px) {
     width: 350px;

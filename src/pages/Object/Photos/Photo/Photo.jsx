@@ -26,7 +26,12 @@ export const Photo = memo(
         <div className="photo-content flex flex-col items-center justify-cente openInfo">
           {!isFile && <Tag onClick={onMakeMain} />}
           <Remove onClick={onRemove} />
-          {!isFile && <Rotate onClick={onRotate} />}
+          {!isFile && (
+            <div className="flex">
+              <Rotate onClick={() => onRotate(90)} className="rotateBack" />
+              <Rotate onClick={() => onRotate(-90)} />
+            </div>
+          )}
         </div>
       </StyledPhoto>
     );
@@ -64,7 +69,7 @@ const StyledPhoto = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
-    background: var(--bg-5);
+    background: var(--element-bg);
     transition: all 0.3s;
     backdrop-filter: blur(1px);
     opacity: 0;
@@ -75,6 +80,9 @@ const StyledPhoto = styled.div`
     .photo-content {
       opacity: 1;
     }
+  }
+  .rotateBack {
+    transform: scale(-1, 1);
   }
   @media (max-width: 1500px) {
     width: 100%;

@@ -59,7 +59,7 @@ export const Tags = ({ data, ad }) => {
     ...(data?.area_total > 0
       ? [{ title: `${data?.area_total} м²`, Icon: <Expand /> }]
       : []),
-    ...(data?.storey_count || data?.address_storey
+    ...(data?.storey_count !== "0" || data?.address_storey !== "0"
       ? [
           {
             title: `${

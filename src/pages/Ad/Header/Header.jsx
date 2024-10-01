@@ -69,7 +69,7 @@ export const Header = ({
       if (ads?.length > 0) {
         requests.push({
           id_user_olx: accountId,
-          id_obj: ads?.map((a) => a.id_obj),
+          id_obj: ads?.map((a) => a.id_ad_in_source),
         });
       }
     });
@@ -82,11 +82,16 @@ export const Header = ({
       handleSortAdByUser().map((d) =>
         deleteAdHistory(d).then((resp) => {
           handleResponse(resp, () => {
-            showAlert("error", "Оголошення успішно видалено!");
+            showAlert("success", "Оголошення успішно видалено!");
           });
+          return resp;
         })
       )
-    ).then((resp) => onDeleteSuccess());
+    ).then((resp) => {
+      if (resp?.filter((r) => r?.data?.error !== 0)?.length === 0) {
+        onDeleteSuccess();
+      }
+    });
   };
 
   return (

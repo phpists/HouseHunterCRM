@@ -558,6 +558,7 @@ input[type="number"] {
   right: 10px;
   top: 10px;
   cursor: pointer;
+  z-index: 2;
 }
 
 .ct-toast {
@@ -571,4 +572,5 @@ input[type="number"] {
   right: 0;
   bottom: 0;
   left: 0;
+  cursor: pointer;
 }

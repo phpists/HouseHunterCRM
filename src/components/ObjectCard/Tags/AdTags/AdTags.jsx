@@ -7,7 +7,6 @@ import { handleFormatDate } from "../../../../utilits";
 export const AdTags = ({ data, onUpdateField }) => {
   const { data: accounts } = useGetStatusAccountQuery();
 
-  console.log(data);
   return (
     <StyledAdTags>
       <Resource
