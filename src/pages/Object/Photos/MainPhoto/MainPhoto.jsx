@@ -3,10 +3,20 @@ import { Counter } from "./Counter";
 import { Tag } from "./Tag";
 import noPhoto from "../../../../assets/images/no-photo.svg";
 import { ReactComponent as Remove } from "../../../../assets/images/remove.svg";
+import { ReactComponent as Rotate } from "../../../../assets/images/refresh.svg";
 import { memo } from "react";
 
 export const MainPhoto = memo(
-  ({ photo, photosCount, onRemove, isPhoto, isCover, onMakeMain, onOpen }) => {
+  ({
+    photo,
+    photosCount,
+    onRemove,
+    isPhoto,
+    isCover,
+    onMakeMain,
+    onOpen,
+    onRotate,
+  }) => {
     const handleOpen = (e) => {
       if (e.target.classList?.contains("openInfo")) {
         onOpen();
@@ -28,6 +38,11 @@ export const MainPhoto = memo(
               <div className="remove-btn" onClick={onRemove}>
                 <Remove />
               </div>
+              {onRotate ? (
+                <div className="remove-btn" onClick={onRotate}>
+                  <Rotate />
+                </div>
+              ) : null}
             </>
           )}
         </div>

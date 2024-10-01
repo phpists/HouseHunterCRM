@@ -31,9 +31,6 @@ const Calls = lazy(() => import("./pages/Calls/Calls"));
 const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
 const Selections = lazy(() => import("./pages/Selections/Selections"));
 const Advertising = lazy(() => import("./pages/Advertising/Advertising"));
-const AdvertisingSetting = lazy(() =>
-  import("./pages/AdvertisingSetting/AdvertisingSetting")
-);
 const AdSettings = lazy(() => import("./pages/AdSettings/AdSettings"));
 
 export const App = () => {
@@ -309,17 +306,14 @@ export const App = () => {
                                   element={<ObjectPage />}
                                 />
                               )}
-                              <Route
-                                path="/advertising-setting"
-                                element={<AdvertisingSetting />}
-                              />{" "}
+
                               <Route
                                 path="/ad-setting"
                                 element={<AdSettings />}
                               />
                               <Route
                                 path="/advertising-login-success"
-                                element={<AdvertisingSetting />}
+                                element={<AdSettings />}
                               />
                             </>
                           ) : null}

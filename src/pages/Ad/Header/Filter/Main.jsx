@@ -6,13 +6,23 @@ import {
   useGetStatusAccountQuery,
 } from "../../../../store/objects/objects.api";
 
-import { useGetStatusesOlxQuery } from "../../../../store/auth/auth.api";
+import {
+  useGetRealestateStatusQuery,
+  useGetStatusesOlxQuery,
+} from "../../../../store/auth/auth.api";
 
 export const Main = ({ filters, onChangeFilter }) => {
   const { data: statuses } = useGetStatusesOlxQuery();
   const { data: adverstionResources } = useGetAdverstionResourceQuery();
   const { data: accounts } = useGetStatusAccountQuery();
+  const { data: realestateAccounts } = useGetRealestateStatusQuery();
 
+  console.log(
+    adverstionResources?.resource?.map((v) => ({
+      title: v?.name,
+      value: v?.id,
+    }))
+  );
   return (
     <StyledMain className="section filterFieldsWrapper">
       <SelectTags
@@ -28,7 +38,8 @@ export const Main = ({ filters, onChangeFilter }) => {
         onChange={(val) =>
           onChangeFilter(
             "resource",
-            val === filters?.resource ? undefined : val
+            { resource: filters?.resource === val ? undefined : val },
+            true
           )
         }
         isSearch
@@ -74,6 +85,72 @@ export const Main = ({ filters, onChangeFilter }) => {
               onChangeFilter(
                 "id_user_olx",
                 val === filters?.id_user_olx ? undefined : val
+              )
+            }
+            isSearch
+            notMultiSelect
+          />
+        </>
+      ) : filters?.resource === "4" ? (
+        <>
+          <Divider />
+          <SelectTags
+            label="Пошук по статусу"
+            placeholder="Оберіть статус"
+            options={
+              statuses?.data
+                ? Object.entries(statuses?.data)?.map((s) => ({
+                    title: s[1],
+                    value: s[0],
+                  }))
+                : []
+            }
+            value={filters?.status}
+            onChange={(val) =>
+              onChangeFilter(
+                "status",
+                val === filters?.status ? undefined : val
+              )
+            }
+            isSearch
+            notMultiSelect
+          />
+          <SelectTags
+            label="Пошук по акаунту"
+            placeholder="Оберіть акаунт"
+            options={
+              realestateAccounts?.data?.map(({ email, id_account }) => ({
+                value: id_account,
+                title: email,
+              })) ?? []
+            }
+            value={filters?.id_realestate_account}
+            onChange={(val) =>
+              onChangeFilter(
+                "id_realestate_account",
+                val === filters?.id_realestate_account ? undefined : val
+              )
+            }
+            isSearch
+            notMultiSelect
+          />
+        </>
+      ) : filters?.resource === "3" ? (
+        <>
+          <Divider />
+          <SelectTags
+            label="Пошук по статусу"
+            placeholder="Оберіть статус"
+            options={[
+              { title: "В процесі", value: "processing" },
+              { title: "Успішний", value: "succeeded" },
+              { title: "Не успішний", value: "failed" },
+            ]}
+            value={filters?.status}
+            onChange={(val) =>
+              onChangeFilter(
+                "status",
+                val === filters?.status ? undefined : val
               )
             }
             isSearch

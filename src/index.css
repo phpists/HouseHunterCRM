@@ -564,3 +564,11 @@ input[type="number"] {
   position: relative;
   padding: 10px 40px 10px 20px !important;
 }
+
+.alert-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

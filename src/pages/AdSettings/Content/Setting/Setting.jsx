@@ -9,9 +9,11 @@ import {
   useLazyDeleteAccountOlxQuery,
   useLazyFlombuConnectAccountQuery,
   useLazyFlombuDeleteAccountQuery,
+  useLazyRefreshRealestateAdsAccountQuery,
   useLazyRemoveAccountRealestateQuery,
 } from "../../../../store/auth/auth.api";
 import { handleResponse, showAlert } from "../../../../utilits";
+import { Confirm } from "../../../../components/Confirm/Confirm";
 
 export const Setting = ({
   data,
@@ -28,6 +30,8 @@ export const Setting = ({
   const [removeOlxAccount] = useLazyDeleteAccountOlxQuery();
   const [removeFlombuAccount] = useLazyFlombuDeleteAccountQuery();
   const [flombuConnectAccount] = useLazyFlombuConnectAccountQuery();
+  const [realStateRefreshConfirm, setRealStateRefreshConfirm] = useState(false);
+  const [refreshRealestateAds] = useLazyRefreshRealestateAdsAccountQuery();
 
   const handleDeleteSuccess = (type) => {
     showAlert("success", "Акаунт успішно видалено");
@@ -61,12 +65,34 @@ export const Setting = ({
     );
   };
 
+  const handleSuccessRealeStateAuth = () => {
+    onRefetchRealestateStatus();
+    setRealStateRefreshConfirm(true);
+  };
+
+  const handleRealStateRefresh = () => {
+    refreshRealestateAds(
+      realestateAccounts[realestateAccounts?.length - 1]?.id_account
+    ).then((resp) =>
+      handleResponse(resp, () => {
+        showAlert("success", "Успішно обновлено історію всіх оголошень");
+      })
+    );
+  };
+
   return (
     <StyledSetting className="content-card">
       {addRealstateAccount && (
         <AddRealstateAccount
           onClose={() => setAddRealstateAccount(false)}
-          onSuccess={onRefetchRealestateStatus}
+          onSuccess={handleSuccessRealeStateAuth}
+        />
+      )}
+      {realStateRefreshConfirm && (
+        <Confirm
+          onClose={() => setRealStateRefreshConfirm(false)}
+          title="Чи сихронізувати дані з Realestate?"
+          onSubmit={handleRealStateRefresh}
         />
       )}
       {data?.id === "1" ? (
@@ -81,6 +107,7 @@ export const Setting = ({
             onRefreshAccountsData={onRefreshAccountsData}
             onDelete={(id) => handleDeleteAccount(id, "olx")}
             refresh
+            type="olx"
           />
         </div>
       ) : data?.id === "2" ? (
@@ -111,6 +138,8 @@ export const Setting = ({
             }))}
             onRefreshAccountsData={onRefreshAccountsData}
             onDelete={(id) => handleDeleteAccount(id, "realstate")}
+            refresh
+            type="realstate"
           />
         </div>
       ) : null}

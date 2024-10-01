@@ -59,7 +59,9 @@ export const Header = ({
 
   const handleSortAdByUser = () => {
     const requests = [];
-    const selectedAds = data?.filter((a) => selected.includes(a.id_obj));
+    const selectedAds = data?.filter((a) =>
+      selected.includes(a.id_ad_in_source)
+    );
 
     olxAccounts?.accounts?.forEach((a) => {
       const accountId = a?.data?.id?.toString();

@@ -481,7 +481,11 @@ const ObjectPage = () => {
         }
       />
       <div className="object-wrappper">
-        <Photos photos={photos} onChange={handleChangePhotos} />
+        <Photos
+          photos={photos}
+          onChange={handleChangePhotos}
+          onRefresh={handleGetObject}
+        />
         <MainInfo
           data={data}
           onChangeField={handleChangeField}

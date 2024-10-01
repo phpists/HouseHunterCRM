@@ -11,35 +11,22 @@ import {
   handleFormatDate,
   handleGetLocationAllPath,
 } from "../../../../utilits";
-import { useGetLocationsQuery } from "../../../../store/requests/requests.api";
+import {
+  useGetLocationsQuery,
+  useGetRubricsQuery,
+} from "../../../../store/requests/requests.api";
 import { useEffect, useState } from "react";
 
 export const Tags = ({ data, ad }) => {
   const { data: locationsList } = useGetLocationsQuery();
-  const [formatedLocations, setFormatedLocations] = useState([]);
-
-  const handleFormatLocations = () => {
-    if (locationsList) {
-      const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
-      const locations = Object.entries(locationsList)
-        .sort((a, b) => Number(b[1].id_parent) - Number(a[1].id_parent))
-        ?.map((loc) => loc[1])
-        //   .filter((loc) => Number(loc?.id_parent) !== 0)
-        .map(({ id, id_parent, name }) => {
-          return handleGetLocationAllPath(locList, id, id_parent, name);
-        });
-
-      setFormatedLocations(locations);
-    }
-  };
-
-  useEffect(() => {
-    handleFormatLocations();
-  }, [locationsList]);
+  const { data: rubricsList } = useGetRubricsQuery();
 
   const TAGS = [
     ...(data?.rubric_name && data?.rubric_name?.length > 0
       ? [{ title: data?.rubric_name }]
+      : []),
+    ...(ad && rubricsList?.find((r) => r.id === data?.id_rubric)?.name
+      ? [{ title: rubricsList?.find((r) => r.id === data?.id_rubric)?.name }]
       : []),
     ...(data?.location_name && data?.location_name?.length > 0
       ? [
@@ -49,11 +36,17 @@ export const Tags = ({ data, ad }) => {
           },
         ]
       : []),
-    ...(formatedLocations?.find((l) => l.id === data?.location_id)?.title && ad
+    ...(locationsList &&
+    Object.entries(locationsList)?.find(
+      (l) => l?.[1]?.id === data?.id_location
+    )?.[1]?.name &&
+    ad
       ? [
           {
             title: `${
-              formatedLocations?.find((l) => l.id === data?.location_id)?.title
+              Object.entries(locationsList)?.find(
+                (l) => l?.[1]?.id === data?.id_location
+              )?.[1]?.name
             }`,
             Icon: <Home />,
           },
@@ -69,7 +62,9 @@ export const Tags = ({ data, ad }) => {
     ...(data?.storey_count || data?.address_storey
       ? [
           {
-            title: `${data?.address_storey} / ${data?.storey_count}`,
+            title: `${
+              data?.address_storey === "0" ? "-" : data?.address_storey
+            } / ${data?.storey_count === "0" ? "-" : data?.storey_count}`,
             Icon: <Stairs />,
             hoverTitle: `${data?.address_storey} поверх / ${data?.storey_count} поверховість`,
           },

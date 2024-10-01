@@ -6,7 +6,6 @@ import { useGetStatusAccountQuery } from "../../../store/objects/objects.api";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import {
-  useFlombuConnectAccountQuery,
   useFlombuConnectStatusQuery,
   useGetRealestateStatusQuery,
 } from "../../../store/auth/auth.api";

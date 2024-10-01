@@ -3,6 +3,8 @@ import { Tag } from "../../Info/Header/Tag";
 import {
   useGetStatusesOlxQuery,
   useLazyGetStatusAddQuery,
+  useLazySyncRealestateAddsQuery,
+  useLazyUpdateRealestateStatusAddQuery,
 } from "../../../../store/auth/auth.api";
 import { ReactComponent as RefreshIcon } from "../../../../assets/images/refresh-icon.svg";
 import { useState } from "react";
@@ -76,25 +78,48 @@ const STATUSES = {
   },
 };
 
-export const Status = ({ status, date, idAd, idUserOlx, onUpdateField }) => {
+export const Status = ({
+  status,
+  date,
+  idAd,
+  idUserOlx,
+  onUpdateField,
+  idUserRealestate,
+  resource,
+}) => {
   const { data } = useGetStatusesOlxQuery();
   const [getStatusAdd] = useLazyGetStatusAddQuery();
+  const [updateRealestateStatusAdd] = useLazyUpdateRealestateStatusAddQuery();
   const [loading, setLoading] = useState(false);
 
   const handleRefreshStatus = () => {
     if (!loading) {
       setLoading(true);
-      getStatusAdd({
-        id_ad_in_source: idAd,
-        id_user_olx: idUserOlx,
-      }).then((resp) => {
-        setTimeout(() => {
-          setLoading(false);
-          if (resp?.data?.status) {
-            onUpdateField("status", resp?.data?.status);
-          }
-        }, 1000);
-      });
+      if (resource === "1") {
+        getStatusAdd({
+          id_ad_in_source: idAd,
+          id_user_olx: idUserOlx,
+        }).then((resp) => {
+          setTimeout(() => {
+            setLoading(false);
+            if (resp?.data?.status) {
+              onUpdateField("status", resp?.data?.status);
+            }
+          }, 1000);
+        });
+      } else {
+        updateRealestateStatusAdd({
+          id_ad_in_source: idAd,
+          id_account: idUserRealestate,
+        }).then((resp) => {
+          setTimeout(() => {
+            setLoading(false);
+            if (resp?.data?.status) {
+              onUpdateField("status", resp?.data?.status);
+            }
+          }, 1000);
+        });
+      }
     }
   };
 

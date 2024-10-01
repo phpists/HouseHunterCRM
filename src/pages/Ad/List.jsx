@@ -42,10 +42,7 @@ export const List = ({
   onDeleteSuccess,
   onChangeComment,
   onChangeContancts,
-  onRestore,
-  isDeleted,
   onChangeTags,
-  filters,
   onUpdateObject,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
@@ -65,7 +62,6 @@ export const List = ({
   const [markPhoneModal, setMarkPhoneModal] = useState(false);
   const [showContactId, setShowContactId] = useState(null);
   const [clientModal, setClientModal] = useState(null);
-  const [confirmText, setConfimText] = useState("");
   const [deleteInfo, setDeleteInfo] = useState(null);
   const [fastSelection, setFastSelection] = useState(null);
   const [advertaseObject, setAdvertaseObject] = useState(null);
@@ -225,7 +221,6 @@ export const List = ({
           }
           onClose={() => setDeleteModal(false)}
           onSubmit={() => handleDelete(deleteModal === "history")}
-          onChangeConfirmText={(val) => setConfimText(val)}
         />
       )}
       {clientModal ? (
@@ -252,8 +247,8 @@ export const List = ({
             {data.map((d) => (
               <ObjectCard
                 key={d?.id_ad_in_source}
-                selected={!!selected.find((j) => j === d?.id_obj)}
-                onSelect={() => onSelect(d?.id_obj)}
+                selected={!!selected.find((j) => j === d?.id_ad_in_source)}
+                onSelect={() => onSelect(d?.id_ad_in_source)}
                 data={{ ...d, id: d?.id_ad_in_source }}
                 onToggleFavoriteStatus={() =>
                   toggleFavoriteStatus(d?.id_ad_in_source)
@@ -296,7 +291,6 @@ export const List = ({
                     : null
                 }
                 isDeleted={d?.deleted === "1"}
-                onRestore={d?.acsses_change ? () => onRestore([d?.id]) : null}
                 showContactId={showContactId}
                 onShowContact={() => setShowContactId(d?.id)}
                 onChangeTags={(fieldName, val) =>
@@ -330,7 +324,9 @@ export const List = ({
                   onUpdateObject(d?.id_ad_in_source, field, value)
                 }
                 onDeleteAd={() => handleOpenDelete(d?.id_obj)}
-                onDeleteHistory={() => handleOpenDelete(d?.id_obj, true)}
+                onDeleteHistory={() =>
+                  handleOpenDelete(d?.id_ad_in_source, true)
+                }
                 ad
               />
             ))}

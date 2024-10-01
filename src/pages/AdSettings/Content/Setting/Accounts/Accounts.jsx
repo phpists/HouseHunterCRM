@@ -7,7 +7,10 @@ import {
 } from "../../../../../utilits";
 import { useState } from "react";
 import { Confirm } from "../../../../../components/Confirm/Confirm";
-import { useLazyRefreshOlxAdsAccountQuery } from "../../../../../store/auth/auth.api";
+import {
+  useLazyRefreshOlxAdsAccountQuery,
+  useLazyRefreshRealestateAdsAccountQuery,
+} from "../../../../../store/auth/auth.api";
 
 export const Accounts = ({
   accounts,
@@ -15,9 +18,11 @@ export const Accounts = ({
   onDelete,
   oneAccount,
   refresh,
+  type,
 }) => {
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [refreshOlxAdsAccount] = useLazyRefreshOlxAdsAccountQuery();
+  const [refreshRealestateAds] = useLazyRefreshRealestateAdsAccountQuery();
 
   const handleOpenDeleteConfirm = (id) => setDeleteConfirm(id);
 
@@ -27,11 +32,20 @@ export const Accounts = ({
   };
 
   const handleRefresh = (id) => {
-    refreshOlxAdsAccount(id).then((resp) =>
-      handleResponse(resp, () => {
-        showAlert("success", "Успішно обновлено історію всіх оголошень");
-      })
-    );
+    console.log(type, id);
+    if (type === "olx") {
+      refreshOlxAdsAccount(id).then((resp) =>
+        handleResponse(resp, () => {
+          showAlert("success", "Успішно обновлено історію всіх оголошень");
+        })
+      );
+    } else if (type === "realstate") {
+      refreshRealestateAds(id).then((resp) =>
+        handleResponse(resp, () => {
+          showAlert("success", "Успішно обновлено історію всіх оголошень");
+        })
+      );
+    }
   };
 
   return (
@@ -44,7 +58,7 @@ export const Accounts = ({
         />
       )}
       <StyledAccounts>
-        {accounts?.map(({ TokenExpires, data, id, email }) => (
+        {accounts?.map(({ TokenExpires, data, id, email, id_account }) => (
           <Card
             expireAt={
               TokenExpires
@@ -56,7 +70,9 @@ export const Accounts = ({
             name={data?.name?.length > 0 ? data?.name : null}
             onDelete={() => handleOpenDeleteConfirm(data?.id ?? id)}
             oneAccount={oneAccount}
-            onRefresh={refresh ? () => handleRefresh(data?.id) : undefined}
+            onRefresh={
+              refresh ? () => handleRefresh(id ?? data?.id) : undefined
+            }
           />
         ))}
       </StyledAccounts>

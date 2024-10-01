@@ -583,7 +583,7 @@ export const objects = createApi({
           action: "deleteAddsDb",
           mod: "publication",
           resource: "olx",
-          id_obj,
+          id_add_in_source: id_obj,
           id_user_olx,
         }),
       }),
@@ -610,6 +610,20 @@ export const objects = createApi({
           action: "change_mls",
           mod: "objects",
           id_object,
+        }),
+      }),
+    }),
+    rotateImage: build.query({
+      query: ({ id_object, id_img, rotate }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "rotateImage",
+          mod: "objects",
+          id_object,
+          id_img,
+          rotate,
         }),
       }),
     }),
@@ -662,4 +676,5 @@ export const {
   useLazyDeleteAdAccountQuery,
   useLazyChangeMlsObjectQuery,
   useLazyDeleteAdHistoryQuery,
+  useLazyRotateImageQuery,
 } = objects;

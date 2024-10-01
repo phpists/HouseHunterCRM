@@ -8,14 +8,16 @@ import { ReactComponent as CloseIcon } from "../assets/images/close-modal.svg";
 export const showAlert = (type, msg) => {
   let timeout;
   const { hide } = cogoToast[type](
-    <div
-      onMouseEnter={() => clearTimeout(timeout)}
-      onMouseLeave={() => {
-        timeout = setTimeout(hide, 5000);
-      }}
-    >
+    <div>
       {msg}
       <CloseIcon className="close-alert-icon" onClick={() => hide()} />
+      <div
+        className="alert-overlay"
+        onMouseEnter={() => clearTimeout(timeout)}
+        onMouseLeave={() => {
+          timeout = setTimeout(hide, 5000);
+        }}
+      />
     </div>,
     {
       position: "top-right",

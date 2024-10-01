@@ -2,20 +2,15 @@ import styled from "styled-components";
 import { Header } from "./Header/Header";
 import { List } from "./List";
 import { useEffect, useState } from "react";
-import {
-  useLazyGetListAddsPublichQuery,
-  useLazyRestoreObjectsQuery,
-} from "../../store/objects/objects.api";
+import { useLazyGetListAddsPublichQuery } from "../../store/objects/objects.api";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
-import { handleResponse, showAlert } from "../../utilits";
 import { useParams } from "react-router-dom";
 import { useAppSelect } from "../../hooks/redux";
 
 const Ad = () => {
   const [getListAdds] = useLazyGetListAddsPublichQuery();
   const [data, setData] = useState([]);
-  const { user } = useAppSelect((state) => state.auth);
   const { id } = useParams();
   const { saveObjectsCount } = useActions();
   const [selected, setSelected] = useState([]);
@@ -38,7 +33,6 @@ const Ad = () => {
   const [updateData, setUpdateData] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
   const [phoneCode, setPhoneCode] = useState("1");
-  const [restoreObjects] = useLazyRestoreObjectsQuery();
   const [isDeleted, setIsDeleted] = useState(false);
 
   const handleChangePhoneCode = (val) => setPhoneCode(val);
@@ -95,7 +89,7 @@ const Ad = () => {
   }, [isFavorite]);
 
   const handleGetData = () => {
-    getListAdds({ status: filters?.status }).then((resp) =>
+    getListAdds(filterActive.current ? filters : {}).then((resp) =>
       setData(resp?.data?.data)
     );
   };
@@ -118,9 +112,8 @@ const Ad = () => {
     currentPage.current = 0;
     setIsAllPages(false);
     // handleGetObjects(true, isApply);
-    getListAdds(isApply ? filters : {}).then((resp) =>
-      setData(resp?.data?.data)
-    );
+    handleGetData(!isApply);
+
     setIsDeleted(
       isApply ? filters?.company_object?.show_deleted === "1" : false
     );
@@ -142,7 +135,7 @@ const Ad = () => {
   }, [filters.sorting]);
 
   const handleSelectAll = (isReset, count) => {
-    const objectsIds = data?.map((o) => o.id_obj);
+    const objectsIds = data?.map((o) => o.id_ad_in_source);
     setSelected(isReset ? [] : objectsIds);
   };
 
@@ -225,31 +218,6 @@ const Ad = () => {
     handleGetData();
   };
 
-  const handleDeleteObjectsFilterByIds = (ids, isSelected) => {
-    const updatedCount = allCount - ids?.length;
-    allCountRef.current = updatedCount;
-    setAllCount(updatedCount);
-    const updatedData = objects.filter((obj) => !ids.find((s) => s === obj.id));
-    dataRef.current = updateData;
-    setObjects(updatedData);
-    isSelected && setSelected([]);
-    // handleGetObjects();
-  };
-
-  const handleRestoreObjects = (ids, isSelected) => {
-    if (ids?.length > 0) {
-      restoreObjects(ids).then((resp) =>
-        handleResponse(resp, () => {
-          showAlert(
-            "success",
-            `Oб'єкт${ids?.length === 1 ? "" : "и"} успішно відновлено`
-          );
-          handleDeleteObjectsFilterByIds(ids, isSelected);
-        })
-      );
-    }
-  };
-
   const handleUpdateObjectValue = (id, field, value) =>
     setData(
       data?.map((e) =>
@@ -265,7 +233,6 @@ const Ad = () => {
         onFavorite={handleToggleFavoritesStatus}
         isFavorite={isFavorite}
         onIsFavotite={() => setIsFavorite(!isFavorite)}
-        onDelete={() => handleDeleteObjectsFilterByIds(selected, true)}
         filters={filters}
         onChangeFilter={handleChangeFilter}
         filtersFields={filtersFields}
@@ -295,7 +262,6 @@ const Ad = () => {
           handleChangeFilter("price_currency", val + 1)
         }
         onChangeContancts={handleChangeContacts}
-        onRestore={handleRestoreObjects}
         isDeleted={filters?.company_object?.show_deleted === "1"}
         onChangeTags={handleChangeTags}
         filters={filters}

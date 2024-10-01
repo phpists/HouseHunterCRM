@@ -279,6 +279,8 @@ export const auth = createApi({
         street,
         street2,
         home,
+        title,
+        description,
       }) => ({
         url: "",
         method: "POST",
@@ -298,6 +300,8 @@ export const auth = createApi({
             street,
             street2,
             home,
+            title,
+            description,
           },
           [],
           true,
@@ -529,6 +533,33 @@ export const auth = createApi({
         }),
       }),
     }),
+    refreshRealestateAdsAccount: build.query({
+      query: (id_account) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "syncAdds",
+          mod: "publication",
+          resource: "realestate",
+          id_account,
+        }),
+      }),
+    }),
+    updateRealestateStatusAdd: build.query({
+      query: ({ id_account, id_add_in_source }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "syncAdds",
+          mod: "publication",
+          resource: "realestate",
+          id_account,
+          id_add_in_source,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -569,4 +600,6 @@ export const {
   useGetStatusesOlxQuery,
   useLazyGetStatusAddQuery,
   useLazyRefreshOlxAdsAccountQuery,
+  useLazyRefreshRealestateAdsAccountQuery,
+  useLazyUpdateRealestateStatusAddQuery,
 } = auth;

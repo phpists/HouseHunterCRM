@@ -6,16 +6,18 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   useLazyDeleteObjectPhotoQuery,
+  useLazyRotateImageQuery,
   useLazySetCoverPhotoQuery,
 } from "../../../store/objects/objects.api";
 import { handleResponse, showAlert } from "../../../utilits";
 import { PhotoSlider } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 
-export const Photos = ({ photos, onChange }) => {
+export const Photos = ({ photos, onChange, onRefresh }) => {
   const { id } = useParams();
   const [setCoverPhoto] = useLazySetCoverPhotoQuery();
   const [deletePhoto] = useLazyDeleteObjectPhotoQuery();
+  const [rotateImage] = useLazyRotateImageQuery();
   const [currentSlide, setCurrentSlide] = useState(1);
   const [openView, setOpenView] = useState(false);
 
@@ -32,6 +34,19 @@ export const Photos = ({ photos, onChange }) => {
     photo?.file
       ? onChange(photos.filter((p, j) => 1 + index !== j))
       : handleDelete(photo?.id);
+  };
+
+  const handleRotate = (photoId, rotate) => {
+    rotateImage({
+      id_object: id,
+      id_img: photoId,
+      rotate,
+    }).then((resp) => {
+      handleResponse(resp, () => {
+        onRefresh();
+        showAlert("success", "Фото успішно перевернуто");
+      });
+    });
   };
 
   const handleSetPhotoCover = (index, photo) => {
@@ -88,6 +103,9 @@ export const Photos = ({ photos, onChange }) => {
           isCover={photos[0]?.cover ?? 0}
           onMakeMain={() => handleSetPhotoCover(0, photos[0])}
           onOpen={() => handleOpenPhoto(0)}
+          onRotate={
+            photos[0]?.file ? null : () => handleRotate(photos[0]?.id, "90")
+          }
         />
         {photos.length > 1 && (
           <>
@@ -101,6 +119,7 @@ export const Photos = ({ photos, onChange }) => {
                     onMakeMain={() => handleSetPhotoCover(1 + i, p)}
                     isFile={!!p?.file}
                     onOpen={() => handleOpenPhoto(2 + i)}
+                    onRotate={() => handleRotate(p?.id, "90")}
                   />
                 ))}
                 {photos.length === 2 && (
@@ -121,6 +140,7 @@ export const Photos = ({ photos, onChange }) => {
                     onMakeMain={() => handleSetPhotoCover(1 + i, p)}
                     isFile={!!p?.file}
                     onOpen={() => handleOpenPhoto(2 + i)}
+                    onRotate={() => handleRotate(p?.id, "90")}
                   />
                 ))}
                 {/* </DraggableList> */}

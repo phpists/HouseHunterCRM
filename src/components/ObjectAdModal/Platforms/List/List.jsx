@@ -10,7 +10,7 @@ import {
 } from "../../../../store/objects/objects.api";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  useFlombuConnectAccountQuery,
+  useFlombuConnectStatusQuery,
   useGetRealestateStatusQuery,
 } from "../../../../store/auth/auth.api";
 import { Button } from "./Button";
@@ -32,7 +32,7 @@ export const List = ({
   const { data: accounts } = useGetStatusAccountQuery();
   const { data: realestateAccounts } = useGetRealestateStatusQuery();
   const { data: companyInfo } = useGetCompanyInfoQuery();
-  const { data: flombuAccounts } = useFlombuConnectAccountQuery();
+  const { data: flombuAccounts } = useFlombuConnectStatusQuery();
   const [publishObject] = useLazyPublishObjectQuery();
   const [changeMls] = useLazyChangeMlsObjectQuery();
   const [openAuthConfirm, setOpenAuthConfirm] = useState(null);
