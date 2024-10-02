@@ -46,6 +46,11 @@ const STATUSES = {
     bg: "#F93A3A26",
     title: "Не знайдено",
   },
+  inactive: {
+    color: "#F93A3A",
+    bg: "#F93A3A26",
+    title: "Не активний",
+  },
   moderation: {
     color: "#FF9F2EE5",
     bg: "#FF9F2E26",

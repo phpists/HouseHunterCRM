@@ -53,7 +53,12 @@ export const Photos = ({ photos, onChange }) => {
       rotate,
     }).then((resp) => {
       handleResponse(resp, () => {
-        // showAlert("success", "Фото успішно перевернуто");
+        showAlert("success", "Фото успішно перевернуто");
+        onChange(
+          photos.map((p) =>
+            p.id === photoId ? { ...p, url: resp?.data?.img } : p
+          )
+        );
       });
     });
   };

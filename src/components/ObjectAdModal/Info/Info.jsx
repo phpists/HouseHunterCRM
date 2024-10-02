@@ -112,6 +112,7 @@ const StyledInfo = styled.div`
   width: 100%;
   max-height: 350px;
   overflow: auto;
+  padding-right: 8px;
   .title {
     margin-bottom: 15px;
   }

@@ -29,6 +29,7 @@ import { ObjectAdModal } from "../../components/ObjectAdModal/ObjectAdModal";
 import { useGetCompanyInfoQuery } from "../../store/billing/billing.api";
 import { XHOUSE_COMPANY_ID } from "../../constants";
 import cogoToast from "cogo-toast";
+import { useLazyRemoveRealestateAdHistoryQuery } from "../../store/auth/auth.api";
 
 export const List = ({
   selected,
@@ -67,6 +68,8 @@ export const List = ({
   const [advertaseObject, setAdvertaseObject] = useState(null);
   const [deleteAd] = useLazyDeleteAdQuery();
   const [deleteAdHistory] = useLazyDeleteAdHistoryQuery();
+  const [deleteRealestateAdHistory] = useLazyRemoveRealestateAdHistoryQuery();
+  const [deleteType, setDeleteType] = useState(null);
 
   const onChangeCurrency = (val) => setCurrency(val);
   const onChangeType = (val) => setType(val);
@@ -74,17 +77,31 @@ export const List = ({
   const handleDelete = (isHistory) => {
     setDeleting(true);
     if (isHistory) {
-      deleteAdHistory({
-        id_obj: [deleteId],
-        id_user_olx: data?.find((o) => o.id_ad_in_source === deleteId)
-          ?.id_user_olx,
-      }).then((resp) => {
-        handleResponse(resp, () => {
-          showAlert("success", `Оголошення успішно видалено!`);
-          onDeleteSuccess(deleteId);
+      if (deleteType === "olx") {
+        deleteAdHistory({
+          id_obj: [deleteId],
+          id_user_olx: data?.find((o) => o.id_ad_in_source === deleteId)
+            ?.id_user_olx,
+        }).then((resp) => {
+          handleResponse(resp, () => {
+            showAlert("success", `Оголошення успішно видалено!`);
+            onDeleteSuccess(deleteId);
+          });
+          setDeleting(false);
         });
-        setDeleting(false);
-      });
+      } else {
+        deleteRealestateAdHistory({
+          id_obj: data?.find((o) => o.id_ad_in_source === deleteId)?.id_obj,
+          id_account: data?.find((o) => o.id_ad_in_source === deleteId)
+            ?.id_realestate_account,
+        }).then((resp) => {
+          handleResponse(resp, () => {
+            showAlert("success", `Оголошення успішно видалено!`);
+            onDeleteSuccess(deleteId);
+          });
+          setDeleting(false);
+        });
+      }
     } else {
       deleteAd({
         id_obj: deleteId,
@@ -111,10 +128,10 @@ export const List = ({
     }
   };
 
-  console.log(deleteId, deleteModal);
-  const handleOpenDelete = (id, isHistory) => {
+  const handleOpenDelete = (id, isHistory, type) => {
     setDeleteModal(isHistory ? "history" : true);
     setDeleteId(id);
+    setDeleteType(type);
   };
 
   const handleCopyFastFolderLink = (id) => {
@@ -323,9 +340,17 @@ export const List = ({
                 onUpdateField={(field, value) =>
                   onUpdateObject(d?.id_ad_in_source, field, value)
                 }
-                onDeleteAd={() => handleOpenDelete(d?.id_obj)}
+                onDeleteAd={
+                  d?.id_resource === "1"
+                    ? () => handleOpenDelete(d?.id_obj)
+                    : null
+                }
                 onDeleteHistory={() =>
-                  handleOpenDelete(d?.id_ad_in_source, true)
+                  handleOpenDelete(
+                    d?.id_ad_in_source,
+                    true,
+                    d?.id_resource === "1" ? "olx" : "realestate"
+                  )
                 }
                 ad
               />

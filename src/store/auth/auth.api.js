@@ -560,6 +560,20 @@ export const auth = createApi({
         }),
       }),
     }),
+    removeRealestateAdHistory: build.query({
+      query: ({ id_account, id_obj }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "removeObject",
+          mod: "publication",
+          resource: "realestate",
+          id_account,
+          id_obj,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -602,4 +616,5 @@ export const {
   useLazyRefreshOlxAdsAccountQuery,
   useLazyRefreshRealestateAdsAccountQuery,
   useLazyUpdateRealestateStatusAddQuery,
+  useLazyRemoveRealestateAdHistoryQuery,
 } = auth;

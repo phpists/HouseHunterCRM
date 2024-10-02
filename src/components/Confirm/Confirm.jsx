@@ -17,6 +17,8 @@ export const Confirm = ({
   passwordCheck,
   confirmText,
   onChangeConfirmText,
+  notClose,
+  loading,
 }) => {
   const controls = useAnimationControls();
   const [password, setPassword] = useState("");
@@ -41,14 +43,14 @@ export const Confirm = ({
           handleResponse(resp, () => {
             if (resp?.data?.error === 0) {
               onSubmit();
-              handleClose();
+              !notClose && handleClose();
             }
           })
         );
       }
     } else {
       onSubmit();
-      handleClose();
+      !notClose && handleClose();
     }
   };
 
@@ -58,7 +60,7 @@ export const Confirm = ({
   }, []);
 
   const handleClickOnOverlay = (e) =>
-    e.target.classList.contains("overlay") && handleClose();
+    loading ? null : e.target.classList.contains("overlay") && handleClose();
 
   return (
     <StyledConfirm
@@ -71,7 +73,7 @@ export const Confirm = ({
       isPassword={password?.length > 0}
     >
       <div className={`modal`}>
-        <Close className="close-btn" onClick={handleClose} />
+        <Close className="close-btn" onClick={loading ? null : handleClose} />
         <Title title={title} />
         {passwordCheck ? (
           <div className="checkPassword">
@@ -96,7 +98,7 @@ export const Confirm = ({
           </div>
         ) : null}
         <div className="buttons">
-          <Button title="Ні" cancel onClick={handleClose} />
+          <Button title="Ні" cancel onClick={handleClose} disabled={loading} />
           <Button
             title="Так"
             onClick={handleSubmit}
@@ -105,8 +107,9 @@ export const Confirm = ({
                 ? false
                 : typeof confirmText === "string"
                 ? confirmText?.length === 0
-                : false
+                : false || loading
             }
+            loading={loading}
           />
         </div>
       </div>

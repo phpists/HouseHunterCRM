@@ -31,6 +31,8 @@ export const Setting = ({
   const [removeFlombuAccount] = useLazyFlombuDeleteAccountQuery();
   const [flombuConnectAccount] = useLazyFlombuConnectAccountQuery();
   const [realStateRefreshConfirm, setRealStateRefreshConfirm] = useState(false);
+  const [realStateRefreshConfirmLoading, setRealStateRefreshConfirmLoading] =
+    useState(false);
   const [refreshRealestateAds] = useLazyRefreshRealestateAdsAccountQuery();
 
   const handleDeleteSuccess = (type) => {
@@ -71,13 +73,16 @@ export const Setting = ({
   };
 
   const handleRealStateRefresh = () => {
+    setRealStateRefreshConfirmLoading(true);
     refreshRealestateAds(
       realestateAccounts[realestateAccounts?.length - 1]?.id_account
-    ).then((resp) =>
+    ).then((resp) => {
+      setRealStateRefreshConfirmLoading(false);
+      setRealStateRefreshConfirm(false);
       handleResponse(resp, () => {
-        showAlert("success", "Успішно обновлено історію всіх оголошень");
-      })
-    );
+        showAlert("success", "Історію всіх оголошень оновлено");
+      });
+    });
   };
 
   return (
@@ -93,6 +98,8 @@ export const Setting = ({
           onClose={() => setRealStateRefreshConfirm(false)}
           title="Синхронізувати дані з RealEstate?"
           onSubmit={handleRealStateRefresh}
+          loading={realStateRefreshConfirmLoading}
+          notClose
         />
       )}
       {data?.id === "1" ? (

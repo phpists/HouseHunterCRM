@@ -5,22 +5,21 @@ import { useEffect, useState } from "react";
 import { useLazyGetListAddsPublichQuery } from "../../store/objects/objects.api";
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
-import { useParams } from "react-router-dom";
 import { useAppSelect } from "../../hooks/redux";
 
 const Ad = () => {
   const [getListAdds] = useLazyGetListAddsPublichQuery();
   const [data, setData] = useState([]);
-  const { id } = useParams();
   const { saveObjectsCount } = useActions();
   const [selected, setSelected] = useState([]);
   const [objects, setObjects] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
-  const DEFAULT_FILTERS = {};
+  const adLastFilters = localStorage.getItem("adLastFilters");
+  const DEFAULT_FILTERS = adLastFilters ? JSON.parse(adLastFilters) : {};
   const { objectsCount } = useAppSelect((state) => state.objects);
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState(DEFAULT_FILTERS);
   const [filtersFields, setFilterFields] = useState([]);
-  const filterActive = useRef(!!id);
+  const filterActive = useRef(!!adLastFilters);
   const [allCount, setAllCount] = useState(0);
   const currentPage = useRef(0);
   const isLoading = useRef(false);

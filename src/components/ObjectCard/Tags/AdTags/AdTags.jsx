@@ -15,6 +15,7 @@ export const AdTags = ({ data, onUpdateField }) => {
             (a) => a.data?.id?.toString() === data?.id_user_olx
           )?.data
         }
+        resource={data?.id_resource}
       />
       <Status
         status={data?.status}

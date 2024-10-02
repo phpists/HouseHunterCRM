@@ -13,6 +13,7 @@ import {
   useLazyDeleteAdHistoryQuery,
 } from "../../../store/objects/objects.api";
 import { handleResponse, showAlert } from "../../../utilits";
+import { useLazyRemoveRealestateAdHistoryQuery } from "../../../store/auth/auth.api";
 
 export const Header = ({
   selectedCount,
@@ -39,6 +40,7 @@ export const Header = ({
   const isPrevFilter = localStorage.getItem("objectsLastFilters");
   const [deleteAdHistory] = useLazyDeleteAdHistoryQuery();
   const { data: olxAccounts } = useGetStatusAccountQuery();
+  const [deleteRealestateAdHistory] = useLazyRemoveRealestateAdHistoryQuery();
 
   useEffect(() => {
     setDefalultFiltersOpen({
@@ -77,17 +79,35 @@ export const Header = ({
     return requests;
   };
 
+  const handleGetRealstate = () => {
+    const selectedAds = data
+      ?.filter((a) => selected.includes(a.id_ad_in_source))
+      ?.filter((a) => !a.id_realestate_account);
+
+    return selectedAds?.map(({ id_obj, id_realestate_account }) =>
+      deleteRealestateAdHistory({
+        id_obj: id_obj,
+        id_account: id_realestate_account,
+      }).then((resp) => {
+        handleResponse(resp, () => {
+          showAlert("success", `Оголошення успішно видалено!`);
+        });
+      })
+    );
+  };
+
   const handleDeleteHistory = () => {
-    Promise.all(
-      handleSortAdByUser().map((d) =>
+    Promise.all([
+      ...handleSortAdByUser().map((d) =>
         deleteAdHistory(d).then((resp) => {
           handleResponse(resp, () => {
             showAlert("success", "Оголошення успішно видалено!");
           });
           return resp;
         })
-      )
-    ).then((resp) => {
+      ),
+      ...handleGetRealstate(),
+    ]).then((resp) => {
       if (resp?.filter((r) => r?.data?.error !== 0)?.length === 0) {
         onDeleteSuccess();
       }

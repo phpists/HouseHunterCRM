@@ -1,8 +1,16 @@
 import styled from "styled-components";
-import icon from "../../../../assets/images/olx.png";
+import olxIcon from "../../../../assets/images/olx.png";
+import flombuIcon from "../../../../assets/images/flombu.png";
+import realestateIcon from "../../../../assets/images/realstate-icon.png";
 
-export const Resource = ({ data }) => (
-  <StyledResource icon={icon} className="flex items-center">
+const ICONS = {
+  1: olxIcon,
+  3: flombuIcon,
+  4: realestateIcon,
+};
+
+export const Resource = ({ data, resource }) => (
+  <StyledResource icon={ICONS?.[resource]} className="flex items-center">
     <div></div> {data?.name ?? data?.phone ?? data?.email ?? data?.id}
   </StyledResource>
 );

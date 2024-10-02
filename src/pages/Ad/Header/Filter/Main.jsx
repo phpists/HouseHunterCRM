@@ -97,14 +97,11 @@ export const Main = ({ filters, onChangeFilter }) => {
           <SelectTags
             label="Пошук по статусу"
             placeholder="Оберіть статус"
-            options={
-              statuses?.data
-                ? Object.entries(statuses?.data)?.map((s) => ({
-                    title: s[1],
-                    value: s[0],
-                  }))
-                : []
-            }
+            options={[
+              { title: "Не знайдено", value: "not_found" },
+              { title: "Активний", value: "active" },
+              { title: "Не активний", value: "inactive" },
+            ]}
             value={filters?.status}
             onChange={(val) =>
               onChangeFilter(

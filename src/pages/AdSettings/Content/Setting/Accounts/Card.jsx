@@ -11,6 +11,7 @@ export const Card = ({
   onDelete,
   oneAccount,
   onRefresh,
+  refreshing,
 }) => (
   <StyledCard className={`flex items-center`}>
     {expireAt ? (
@@ -38,9 +39,9 @@ export const Card = ({
     <div className="actions flex items-center gap-2">
       {onRefresh ? (
         <IconButton
-          onClick={onRefresh}
+          onClick={refreshing ? null : onRefresh}
           Icon={RefreshIcon}
-          className="iconBtn reloadIcon"
+          className={`iconBtn reloadIcon ${refreshing && "loading"}`}
           title="Оновити історію всіх оголошень"
         />
       ) : null}
@@ -91,6 +92,19 @@ const StyledCard = styled.div`
   }
 
   .reloadIcon {
+    &.loading {
+      svg {
+        animation: 2s infinite loading linear;
+        @keyframes loading {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      }
+    }
     svg {
       height: 13px;
       opacity: 0.5;

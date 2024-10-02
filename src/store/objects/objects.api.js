@@ -509,7 +509,12 @@ export const objects = createApi({
       }),
     }),
     getListAddsPublich: build.query({
-      query: ({ resource = "1", status, id_user_olx }) => ({
+      query: ({
+        resource = "1",
+        status,
+        id_user_olx,
+        id_realestate_account,
+      }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -519,6 +524,7 @@ export const objects = createApi({
           resource,
           status,
           id_user_olx,
+          id_realestate_account,
         }),
       }),
     }),

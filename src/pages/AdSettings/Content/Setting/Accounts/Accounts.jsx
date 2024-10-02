@@ -23,6 +23,7 @@ export const Accounts = ({
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [refreshOlxAdsAccount] = useLazyRefreshOlxAdsAccountQuery();
   const [refreshRealestateAds] = useLazyRefreshRealestateAdsAccountQuery();
+  const [refreshing, setRefreshing] = useState(false);
 
   const handleOpenDeleteConfirm = (id) => setDeleteConfirm(id);
 
@@ -32,19 +33,21 @@ export const Accounts = ({
   };
 
   const handleRefresh = (id) => {
-    console.log(type, id);
+    setRefreshing(true);
     if (type === "olx") {
-      refreshOlxAdsAccount(id).then((resp) =>
+      refreshOlxAdsAccount(id).then((resp) => {
+        setRefreshing(false);
         handleResponse(resp, () => {
-          showAlert("success", "Успішно обновлено історію всіх оголошень");
-        })
-      );
+          showAlert("success", "Історію всіх оголошень оновлено");
+        });
+      });
     } else if (type === "realstate") {
-      refreshRealestateAds(id).then((resp) =>
+      refreshRealestateAds(id).then((resp) => {
         handleResponse(resp, () => {
-          showAlert("success", "Успішно обновлено історію всіх оголошень");
-        })
-      );
+          setRefreshing(false);
+          showAlert("success", "Історію всіх оголошень оновлено");
+        });
+      });
     }
   };
 
@@ -73,6 +76,7 @@ export const Accounts = ({
             onRefresh={
               refresh ? () => handleRefresh(id ?? data?.id) : undefined
             }
+            refreshing={refreshing}
           />
         ))}
       </StyledAccounts>

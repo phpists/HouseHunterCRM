@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import { Loader } from "../Loader";
 
-export const Button = ({ onClick, disabled, title, cancel }) => (
+export const Button = ({ onClick, disabled, title, cancel, loading }) => (
   <StyledButton onClick={onClick} disabled={disabled} cancel={cancel}>
-    {title}
+    {loading ? <Loader white className="btn-loader" /> : title}
   </StyledButton>
 );
 
@@ -28,5 +29,9 @@ const StyledButton = styled.button`
     color: ${({ cancel }) => (cancel ? "var(--btn-color-hover-44)" : "#FFF")};
     background: ${({ cancel }) =>
       cancel ? "var(--color-2)" : "rgba(93, 99, 255, 1)"};
+  }
+  .btn-loader {
+    width: 20px;
+    margin: 0 auto;
   }
 `;
