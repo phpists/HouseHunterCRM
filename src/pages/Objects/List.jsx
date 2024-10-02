@@ -310,7 +310,8 @@ export const List = ({
                     : null
                 }
                 onAdvertiseTelegram={
-                  XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) &&
+                  companyInfo?.data?.id_hash ===
+                    "0022b718e5a80c0e3992686fd10ff1dc" &&
                   d?.type_object !== "street_base" &&
                   d?.type_object !== "mls"
                     ? () => handleTelegramPublish(d?.id)

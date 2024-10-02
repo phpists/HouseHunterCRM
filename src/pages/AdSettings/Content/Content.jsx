@@ -29,7 +29,6 @@ export const Content = ({
     realestateStatus && refetchRealestateStatus();
   }, [location]);
 
-  console.log(flombuStatus);
   return (
     <StyledContent selectedTemplate={selectedResources}>
       <div>

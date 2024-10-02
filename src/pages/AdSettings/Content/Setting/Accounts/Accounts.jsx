@@ -43,8 +43,8 @@ export const Accounts = ({
       });
     } else if (type === "realstate") {
       refreshRealestateAds(id).then((resp) => {
+        setRefreshing(false);
         handleResponse(resp, () => {
-          setRefreshing(false);
           showAlert("success", "Історію всіх оголошень оновлено");
         });
       });

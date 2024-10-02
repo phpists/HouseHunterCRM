@@ -337,8 +337,8 @@ export const List = ({
                     ? () => handleTelegramPublish(d?.id)
                     : null
                 }
-                onUpdateField={(field, value) =>
-                  onUpdateObject(d?.id_ad_in_source, field, value)
+                onUpdateField={(field, value, isObject) =>
+                  onUpdateObject(d?.id_ad_in_source, field, value, isObject)
                 }
                 onDeleteAd={
                   d?.id_resource === "1"

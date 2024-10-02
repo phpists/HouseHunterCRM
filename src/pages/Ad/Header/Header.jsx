@@ -82,7 +82,7 @@ export const Header = ({
   const handleGetRealstate = () => {
     const selectedAds = data
       ?.filter((a) => selected.includes(a.id_ad_in_source))
-      ?.filter((a) => !a.id_realestate_account);
+      ?.filter((a) => a.id_realestate_account?.length > 0);
 
     return selectedAds?.map(({ id_obj, id_realestate_account }) =>
       deleteRealestateAdHistory({
@@ -92,6 +92,8 @@ export const Header = ({
         handleResponse(resp, () => {
           showAlert("success", `Оголошення успішно видалено!`);
         });
+
+        return resp;
       })
     );
   };

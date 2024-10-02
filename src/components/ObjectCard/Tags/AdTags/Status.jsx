@@ -3,6 +3,7 @@ import { Tag } from "../../Info/Header/Tag";
 import {
   useGetStatusesOlxQuery,
   useLazyGetStatusAddQuery,
+  useLazySyncOtherDataRealestateAdQuery,
   useLazySyncRealestateAddsQuery,
   useLazyUpdateRealestateStatusAddQuery,
 } from "../../../../store/auth/auth.api";
@@ -94,7 +95,7 @@ export const Status = ({
 }) => {
   const { data } = useGetStatusesOlxQuery();
   const [getStatusAdd] = useLazyGetStatusAddQuery();
-  const [updateRealestateStatusAdd] = useLazyUpdateRealestateStatusAddQuery();
+  const [updateRealestateStatusAdd] = useLazySyncOtherDataRealestateAdQuery();
   const [loading, setLoading] = useState(false);
 
   const handleRefreshStatus = () => {
@@ -114,13 +115,15 @@ export const Status = ({
         });
       } else {
         updateRealestateStatusAdd({
-          id_ad_in_source: idAd,
+          id_add_in_source: idAd,
           id_account: idUserRealestate,
         }).then((resp) => {
           setTimeout(() => {
             setLoading(false);
-            if (resp?.data?.status) {
-              onUpdateField("status", resp?.data?.status);
+
+            if (resp?.data?.data) {
+              console.log(resp?.data);
+              onUpdateField("status", resp?.data?.data, true);
             }
           }, 1000);
         });
@@ -132,7 +135,11 @@ export const Status = ({
     <StyledStatus onClick={handleRefreshStatus}>
       <div className="flex items-center gap-2">
         <Tag
-          title={data?.data?.[status] ?? STATUSES[status]?.title}
+          title={
+            resource === "1"
+              ? data?.data?.[status] ?? STATUSES[status]?.title
+              : STATUSES[status]?.title
+          }
           color="green"
           style={{
             color: STATUSES[status]?.color,

@@ -150,56 +150,6 @@ export const Setting = ({
           />
         </div>
       ) : null}
-      {/* <Field label="Назва" value="Реклама OLX test" />
-        <Divider />
-        <ObjectsCountInput />
-        <Divider />
-        <AutoEndInput />
-        <Divider />
-        <CheckOption label="Додавати водяний знак" />
-        <Divider />
-        <CheckOption label="Автоматична публікація" />
-        <Divider />
-        <CheckOption label="Користувацьке обмеження" />
-        <TitleDivider title="Додатково" />
-        <SelectTags
-          label="Визначати користувачів за"
-          placeholder="Оберіть"
-          options={[
-            {
-              title: "olx",
-              value: "1",
-            },
-            {
-              title: "olx",
-              value: "2",
-            },
-          ]}
-          value={null}
-          onChange={(val) => null}
-          isSearch
-          notMultiSelect
-        />
-        <Divider />
-        <SelectTags
-          label="Email користувачів "
-          placeholder="Оберіть"
-          options={[
-            {
-              title: "olx",
-              value: "1",
-            },
-            {
-              title: "olx",
-              value: "2",
-            },
-          ]}
-          value={null}
-          onChange={(val) => null}
-          isSearch
-          notMultiSelect
-        /> */}
-      {/* <Footer onCreate={onCreate} /> */}
     </StyledSetting>
   );
 };

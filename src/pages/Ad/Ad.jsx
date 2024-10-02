@@ -217,10 +217,14 @@ const Ad = () => {
     handleGetData();
   };
 
-  const handleUpdateObjectValue = (id, field, value) =>
+  const handleUpdateObjectValue = (id, field, value, isObject) =>
     setData(
       data?.map((e) =>
-        e.id_ad_in_source === id ? { ...e, [field]: value } : e
+        e.id_ad_in_source === id
+          ? isObject
+            ? { ...e, ...value }
+            : { ...e, [field]: value }
+          : e
       )
     );
 

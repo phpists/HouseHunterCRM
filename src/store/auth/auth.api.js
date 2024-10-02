@@ -574,6 +574,20 @@ export const auth = createApi({
         }),
       }),
     }),
+    syncOtherDataRealestateAd: build.query({
+      query: ({ id_account, id_add_in_source }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "syncOtherData",
+          resource: "realestate",
+          id_account,
+          id_add_in_source,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -617,4 +631,5 @@ export const {
   useLazyRefreshRealestateAdsAccountQuery,
   useLazyUpdateRealestateStatusAddQuery,
   useLazyRemoveRealestateAdHistoryQuery,
+  useLazySyncOtherDataRealestateAdQuery,
 } = auth;
