@@ -33,7 +33,7 @@ export const Accounts = ({
   };
 
   const handleRefresh = (id) => {
-    setRefreshing(true);
+    setRefreshing(id);
     if (type === "olx") {
       refreshOlxAdsAccount(id).then((resp) => {
         setRefreshing(false);
@@ -76,7 +76,7 @@ export const Accounts = ({
             onRefresh={
               refresh ? () => handleRefresh(id ?? data?.id) : undefined
             }
-            refreshing={refreshing}
+            refreshing={refreshing === (id ?? data?.id)}
           />
         ))}
       </StyledAccounts>

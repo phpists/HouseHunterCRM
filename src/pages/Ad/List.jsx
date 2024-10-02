@@ -261,9 +261,9 @@ export const List = ({
           <Empty loading={loading || actionLoading || deleting} />
         ) : (
           <>
-            {data.map((d) => (
+            {data.map((d, i) => (
               <ObjectCard
-                key={d?.id_ad_in_source}
+                key={i}
                 selected={!!selected.find((j) => j === d?.id_ad_in_source)}
                 onSelect={() => onSelect(d?.id_ad_in_source)}
                 data={{ ...d, id: d?.id_ad_in_source }}
