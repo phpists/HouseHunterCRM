@@ -3,6 +3,7 @@ import { Tag } from "../../Info/Header/Tag";
 import {
   useGetStatusesOlxQuery,
   useLazyGetStatusAddQuery,
+  useLazyGetStatusFlombuAdQuery,
   useLazySyncOtherDataRealestateAdQuery,
   useLazySyncRealestateAddsQuery,
   useLazyUpdateRealestateStatusAddQuery,
@@ -92,10 +93,12 @@ export const Status = ({
   onUpdateField,
   idUserRealestate,
   resource,
+  idObj,
 }) => {
   const { data } = useGetStatusesOlxQuery();
   const [getStatusAdd] = useLazyGetStatusAddQuery();
   const [updateRealestateStatusAdd] = useLazySyncOtherDataRealestateAdQuery();
+  const [getStatusFlombuAd] = useLazyGetStatusFlombuAdQuery();
   const [loading, setLoading] = useState(false);
 
   const handleRefreshStatus = () => {
@@ -110,6 +113,16 @@ export const Status = ({
             setLoading(false);
             if (resp?.data?.status) {
               onUpdateField("status", resp?.data?.status);
+            }
+          }, 1000);
+        });
+      } else if (resource === "3") {
+        getStatusFlombuAd(idObj).then((resp) => {
+          setTimeout(() => {
+            setLoading(false);
+            if (resp?.data?.status) {
+              console.log(resp?.data);
+              //   onUpdateField("status", resp?.data?.data,);
             }
           }, 1000);
         });

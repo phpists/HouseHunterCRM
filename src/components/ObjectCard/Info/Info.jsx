@@ -16,7 +16,7 @@ export const Info = ({
       className={`flex flex-col justify-between hide clickable hide-scroll ${className}`}
     >
       <Header data={data} ad={ad} onOpenAdList={onOpenAdList} />
-      <Text data={data} editable={editable} onEdit={onEdit} />
+      <Text data={data} editable={editable} onEdit={onEdit} ad={ad} />
       {ad ? null : (
         <Footer
           createDate={data?.dt_add}

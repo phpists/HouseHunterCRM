@@ -111,7 +111,10 @@ export const ObjectAdModal = ({ onClose, object }) => {
               ?.map((f) => commentsToFields?.object[f])
               ?.filter((v) => v);
 
-            showAlert("error", `${message} ${fields?.join(",")}`);
+            showAlert(
+              "error",
+              `${message} ${fields?.length > 0 ? fields?.join(",") : ""}`
+            );
           },
           true
         );
@@ -146,10 +149,25 @@ export const ObjectAdModal = ({ onClose, object }) => {
     if (data?.flombu) {
       publishFlombu(object?.id).then((resp) => {
         setLoading(false);
-        handleResponse(resp, () => {
-          onClose();
-          showAlert("info", "Оголошення успішно опубліковано");
-        });
+        handleResponse(
+          resp,
+          () => {
+            onClose();
+            showAlert("info", "Оголошення успішно опубліковано");
+          },
+          () => {
+            const fields = resp?.data?.fields_validation
+              ? resp?.data?.fields_validation?.map(
+                  (f) => commentsToFields?.object[f]
+                )
+              : [];
+            showAlert(
+              "error",
+              `${resp?.data?.messege ?? ""} ${fields?.join(", \n\n")}`
+            );
+          },
+          true
+        );
       });
     }
   };

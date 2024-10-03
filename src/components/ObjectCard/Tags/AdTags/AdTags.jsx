@@ -21,6 +21,7 @@ export const AdTags = ({ data, onUpdateField }) => {
         status={data?.status}
         date={handleFormatDate(Number(data?.dt_publicate) * 1000, true)}
         idAd={data?.id_ad_in_source}
+        idObj={data?.id_obj}
         idUserOlx={data?.id_user_olx}
         onUpdateField={onUpdateField}
         idUserRealestate={data?.id_realestate_account}

@@ -588,6 +588,45 @@ export const auth = createApi({
         }),
       }),
     }),
+    removeFlombuAdHistory: build.query({
+      query: (id_obj) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "remove_adds",
+          resource: "flombu",
+          id_obj,
+        }),
+      }),
+    }),
+    removeFlombuAd: build.query({
+      query: (id_obj) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "close_adds",
+          resource: "flombu",
+          id_obj,
+        }),
+      }),
+    }),
+    getStatusFlombuAd: build.query({
+      query: (id_obj) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "getStatusAdd",
+          resource: "flombu",
+          id_obj,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -632,4 +671,7 @@ export const {
   useLazyUpdateRealestateStatusAddQuery,
   useLazyRemoveRealestateAdHistoryQuery,
   useLazySyncOtherDataRealestateAdQuery,
+  useLazyRemoveFlombuAdHistoryQuery,
+  useLazyRemoveFlombuAdQuery,
+  useLazyGetStatusFlombuAdQuery
 } = auth;

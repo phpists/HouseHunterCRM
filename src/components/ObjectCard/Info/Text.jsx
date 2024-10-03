@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ReactComponent as EditIcon } from "../../../assets/images/edit.svg";
 import { useEffect, useRef } from "react";
 
-export const Text = ({ data, editable, onEdit }) => {
+export const Text = ({ data, editable, onEdit, ad }) => {
   const textRef = useRef();
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export const Text = ({ data, editable, onEdit }) => {
   }, [data]);
 
   return (
-    <StyledText className="hide-scroll clickable">
+    <StyledText className={`hide-scroll clickable ${ad && "ad-text"}`}>
       <div className="title clickable">
         {data?.title?.length > 0
           ? data?.title?.replaceAll("&amp;#039;", "'")
@@ -46,6 +46,9 @@ const StyledText = styled.div`
   overflow: auto;
   margin-bottom: 15px;
   position: relative;
+  &.ad-text {
+    max-height: 170px !important;
+  }
   .edit-icon {
     position: absolute;
     top: 0px;
