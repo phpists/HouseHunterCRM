@@ -9,9 +9,15 @@ const ICONS = {
   4: realestateIcon,
 };
 
-export const Resource = ({ data, resource }) => (
+export const Resource = ({ dataOlx, realestateEmail, userName, resource }) => (
   <StyledResource icon={ICONS?.[resource]} className="flex items-center">
-    <div></div> {data?.name ?? data?.phone ?? data?.email ?? data?.id}
+    <div></div>{" "}
+    {dataOlx?.name ??
+      dataOlx?.phone ??
+      dataOlx?.email ??
+      dataOlx?.id ??
+      realestateEmail ??
+      userName}
   </StyledResource>
 );
 

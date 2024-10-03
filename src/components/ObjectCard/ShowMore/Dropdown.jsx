@@ -17,6 +17,8 @@ import { ReactComponent as RestoreIcon } from "../../../assets/images/refresh-ic
 import { ReactComponent as DeleteInfoIcon } from "../../../assets/images/delete-info.svg";
 import { ReactComponent as MarketIcon } from "../../../assets/images/market.svg";
 import { ReactComponent as RoketIcon } from "../../../assets/images/BiRocket.svg";
+import { ReactComponent as DeleteIcon } from "../../../assets/images/delete-info.svg";
+
 import {
   useLazyAddStreetBaseObjectQuery,
   useLazyDownloadObjectQuery,
@@ -166,8 +168,8 @@ export const Dropdown = ({
               className="flex items-center justify-between"
               onClick={onDeleteAd}
             >
-              <span>Видалити на ресурсі</span>{" "}
-              <RemoveIcon className="selection-icon" />
+              <span>Деактивувати об'єкт на ресурсі</span>{" "}
+              <DeleteIcon className="selection-icon" />
             </div>
           )}
           {isEdit && (
@@ -401,7 +403,7 @@ const StyledDropdown = styled.div`
   font-weight: var(--font-weight-light);
   line-height: 118%; /* 14.16px */
   letter-spacing: 0.24px;
-  width: 210px;
+  width: 220px;
   overflow: hidden;
   top: 0;
   right: -5px;
@@ -433,7 +435,7 @@ const StyledDropdown = styled.div`
   svg {
     flex-shrink: 0;
     width: 14px;
-    height: 14px;
+    height: 15px;
   }
   g {
     opacity: 1;

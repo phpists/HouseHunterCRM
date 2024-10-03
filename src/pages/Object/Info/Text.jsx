@@ -58,9 +58,11 @@ export const Text = ({ data, onChangeField, errors, objectData }) => {
       <ProfileField
         value={data?.title}
         placeholder="Введіть заголовок"
-        onChange={(val) =>
-          val.length > 70 ? null : onChangeField("title", val)
-        }
+        onChange={(val) => {
+          return val.length > 70 && val?.length > data?.title.length
+            ? null
+            : onChangeField("title", val);
+        }}
         big
         className="title"
         error={!!errors.find((e) => e === "title")}
@@ -72,7 +74,9 @@ export const Text = ({ data, onChangeField, errors, objectData }) => {
         value={data?.description}
         placeholder="Введіть опис"
         onChange={(val) =>
-          val.length > 9000 ? null : onChangeField("description", val)
+          val.length > 9000 && val?.length > data?.description.length
+            ? null
+            : onChangeField("description", val)
         }
         textarea
         className="title desciption"

@@ -61,4 +61,5 @@ export const XHOUSE_COMPANY_ID = [
   "ae191c45f814262d747cf24d7f3799fd",
   "102c09bb1882c9bd2ca0ce0f0eb1a9f3",
   "b43e91fce0a37a44734dcde3d08b7296",
+  "c863b698f1502555b98034dc6f81f8bb",
 ];

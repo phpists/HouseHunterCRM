@@ -93,17 +93,17 @@ export const List = ({
         }).then((resp) => {
           handleResponse(resp, () => {
             showAlert("success", `Оголошення успішно видалено!`);
-            onDeleteSuccess(deleteId);
+            onDeleteSuccess([deleteId]);
           });
           setDeleting(false);
         });
       } else if (deleteType === "flombu") {
-        deleteFlombuAdHistory(
-          data?.find((o) => o.id_ad_in_source === deleteId)?.id_obj
-        ).then((resp) => {
+        deleteFlombuAdHistory(deleteId).then((resp) => {
           handleResponse(resp, () => {
             showAlert("success", `Оголошення успішно видалено!`);
-            onDeleteSuccess(deleteId);
+            onDeleteSuccess([
+              data?.find((o) => o.id_obj === deleteId)?.id_ad_in_source,
+            ]);
           });
           setDeleting(false);
         });
@@ -115,7 +115,7 @@ export const List = ({
         }).then((resp) => {
           handleResponse(resp, () => {
             showAlert("success", `Оголошення успішно видалено!`);
-            onDeleteSuccess(deleteId);
+            onDeleteSuccess([deleteId]);
           });
           setDeleting(false);
         });
@@ -130,8 +130,8 @@ export const List = ({
           handleResponse(
             resp,
             () => {
-              showAlert("success", `Оголошення успішно видалено!`);
-              onDeleteSuccess(deleteId);
+              showAlert("success", `Оголошення деактивовано!`);
+              onDeleteSuccess([deleteId]);
             },
             (err) => {
               if (resp?.data?.error === 151) {
@@ -149,8 +149,10 @@ export const List = ({
           handleResponse(
             resp,
             () => {
-              showAlert("success", `Оголошення успішно видалено!`);
-              onDeleteSuccess(deleteId);
+              showAlert("success", `Оголошення деактивовано!`);
+              onDeleteSuccess([
+                data?.find((o) => o.id_ad_in_source === deleteId)?.id_obj,
+              ]);
             },
             () => {
               const fields = resp?.data?.fields_validation
@@ -274,7 +276,9 @@ export const List = ({
       {deleteModal && (
         <Confirm
           title={
-            "Оголошення видалиться з історії публікацій. Видалити оголошення?"
+            deleteModal === "history"
+              ? "Оголошення видалиться з історії публікацій. Видалити оголошення?"
+              : "Оголошення на ресурсі буде деактивоване. Деактивувати оголошення?"
           }
           onClose={() => setDeleteModal(false)}
           onSubmit={() => handleDelete(deleteModal === "history")}
@@ -301,120 +305,110 @@ export const List = ({
           <Empty loading={loading || actionLoading || deleting} />
         ) : (
           <>
-            {data
-
-              .map((d) => ({
-                ...d,
-                id_ad_in_source:
-                  d?.id_resource === "3" ? d?.id_obj : d?.id_resource,
-              }))
-              .map((d, i) => (
-                <ObjectCard
-                  key={i}
-                  selected={!!selected.find((j) => j === d?.id_ad_in_source)}
-                  onSelect={() => onSelect(d?.id_ad_in_source)}
-                  data={{ ...d, id: d?.id_ad_in_source }}
-                  onToggleFavoriteStatus={() =>
-                    toggleFavoriteStatus(d?.id_ad_in_source)
-                  }
-                  onFindSimilar={() => onFindSimilar(d)}
-                  isEdit={handleCheckAccess(accessData, "objects", "edit")}
-                  onAddToSelection={() => setOpenAddModal(d?.id_ad_in_source)}
-                  onOpenTagsHistory={() =>
-                    setOpenHistoryModal({
-                      id: d?.id,
-                      isStreetBase: d?.obj_street_base === "1",
-                    })
-                  }
-                  onOpenCommetHistory={() =>
-                    setOpenCommentHistoryModal({ id: d?.id })
-                  }
-                  onOpenPriceHistory={() =>
-                    setOpenHistoryPriceModal(d?.price_history_json)
-                  }
-                  onDelete={() => handleOpenDelete(d?.id_ad_in_source)}
-                  // onDeleteFinally={() =>
-                  //   handleOpenDelete(d?.id_ad_in_source, true)
-                  // }
-                  onChangeComment={() =>
-                    setEditComment({
-                      id: d?.id,
-                      comment: d?.comment,
-                      isEdit:
-                        d?.acsses_change || d?.type_object === "street_base",
-                    })
-                  }
-                  searchTag="?objects"
-                  currency={currency}
-                  onChangeCurrency={onChangeCurrency}
-                  type={type}
-                  onChangeType={onChangeType}
-                  onMarkPhone={
-                    d?.type_object === "street_base"
-                      ? () => setMarkPhoneModal(d)
-                      : null
-                  }
-                  isDeleted={d?.deleted === "1"}
-                  showContactId={showContactId}
-                  onShowContact={() => setShowContactId(d?.id)}
-                  onChangeTags={(fieldName, val) =>
-                    onChangeTags(d?.id, fieldName, val)
-                  }
-                  onOpenPhonesModal={() => setClientModal(d?.id)}
-                  showClientObjectsCount
-                  onOpenDeleteReason={
-                    d?.reasone_remove?.length > 0
-                      ? () => setDeleteInfo(d?.reasone_remove)
-                      : null
-                  }
-                  onFastSelection={
-                    user?.show_fast_folder
-                      ? () => handleCopyFastFolderLink(d?.id)
-                      : null
-                  }
-                  onAdvertise={
-                    XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash)
-                      ? () => setAdvertaseObject(d)
-                      : null
-                  }
-                  onAdvertiseTelegram={
-                    XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) &&
-                    d?.type_object !== "street_base" &&
-                    d?.type_object !== "mls"
-                      ? () => handleTelegramPublish(d?.id)
-                      : null
-                  }
-                  onUpdateField={(field, value, isObject) =>
-                    onUpdateObject(d?.id_ad_in_source, field, value, isObject)
-                  }
-                  onDeleteAd={
-                    d?.id_resource === "1" || d?.id_resource === "3"
-                      ? () =>
-                          handleOpenDelete(
-                            d?.id_obj,
-                            false,
-                            d?.id_resource === "1"
-                              ? "olx"
-                              : d?.id_resource === "3"
-                              ? "flombu"
-                              : "realestate"
-                          )
-                      : null
-                  }
-                  onDeleteHistory={() =>
-                    handleOpenDelete(
-                      d?.id_ad_in_source,
-                      true,
-                      d?.id_resource === "1"
-                        ? "olx"
-                        : d?.id_resource === "3"
-                        ? "flombu"
-                        : "realestate"
-                    )
-                  }
-                  ad
-                />
-              ))}
+            {data.map((d, i) => (
+              <ObjectCard
+                key={i}
+                selected={!!selected.find((j) => j === d?.id_ad_in_source)}
+                onSelect={() => onSelect(d?.id_ad_in_source)}
+                data={{ ...d, id: d?.id_ad_in_source }}
+                onToggleFavoriteStatus={() =>
+                  toggleFavoriteStatus(d?.id_ad_in_source)
+                }
+                onFindSimilar={() => onFindSimilar(d)}
+                isEdit={handleCheckAccess(accessData, "objects", "edit")}
+                onAddToSelection={() => setOpenAddModal(d?.id_ad_in_source)}
+                onOpenTagsHistory={() =>
+                  setOpenHistoryModal({
+                    id: d?.id,
+                    isStreetBase: d?.obj_street_base === "1",
+                  })
+                }
+                onOpenCommetHistory={() =>
+                  setOpenCommentHistoryModal({ id: d?.id })
+                }
+                onOpenPriceHistory={() =>
+                  setOpenHistoryPriceModal(d?.price_history_json)
+                }
+                onDelete={() => handleOpenDelete(d?.id_ad_in_source)}
+                onChangeComment={() =>
+                  setEditComment({
+                    id: d?.id,
+                    comment: d?.comment,
+                    isEdit:
+                      d?.acsses_change || d?.type_object === "street_base",
+                  })
+                }
+                searchTag="?objects"
+                currency={currency}
+                onChangeCurrency={onChangeCurrency}
+                type={type}
+                onChangeType={onChangeType}
+                onMarkPhone={
+                  d?.type_object === "street_base"
+                    ? () => setMarkPhoneModal(d)
+                    : null
+                }
+                isDeleted={d?.deleted === "1"}
+                showContactId={showContactId}
+                onShowContact={() => setShowContactId(d?.id)}
+                onChangeTags={(fieldName, val) =>
+                  onChangeTags(d?.id, fieldName, val)
+                }
+                onOpenPhonesModal={() => setClientModal(d?.id)}
+                showClientObjectsCount
+                onOpenDeleteReason={
+                  d?.reasone_remove?.length > 0
+                    ? () => setDeleteInfo(d?.reasone_remove)
+                    : null
+                }
+                onFastSelection={
+                  user?.show_fast_folder
+                    ? () => handleCopyFastFolderLink(d?.id)
+                    : null
+                }
+                onAdvertise={
+                  XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash)
+                    ? () => setAdvertaseObject(d)
+                    : null
+                }
+                onAdvertiseTelegram={
+                  XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) &&
+                  d?.type_object !== "street_base" &&
+                  d?.type_object !== "mls"
+                    ? () => handleTelegramPublish(d?.id)
+                    : null
+                }
+                onUpdateField={(field, value, isObject) =>
+                  onUpdateObject(d?.id_ad_in_source, field, value, isObject)
+                }
+                onDeleteAd={
+                  d?.id_resource === "1" || d?.id_resource === "3"
+                    ? () =>
+                        handleOpenDelete(
+                          d?.id_obj,
+                          false,
+                          d?.id_resource === "1"
+                            ? "olx"
+                            : d?.id_resource === "3"
+                            ? "flombu"
+                            : "realestate"
+                        )
+                    : null
+                }
+                onDeleteHistory={() =>
+                  handleOpenDelete(
+                    d?.id_resource === "3" ? d?.id_obj : d?.id_ad_in_source,
+                    true,
+                    d?.id_resource === "1"
+                      ? "olx"
+                      : d?.id_resource === "3"
+                      ? "flombu"
+                      : "realestate"
+                  )
+                }
+                ad
+              />
+            ))}
           </>
         )}
         <div className="loader relative">

@@ -107,9 +107,11 @@ export const ObjectAdModal = ({ onClose, object }) => {
           },
           () => {
             const message = resp?.data?.messege;
-            const fields = resp?.data?.err_data
-              ?.map((f) => commentsToFields?.object[f])
-              ?.filter((v) => v);
+            const fields = resp?.data?.fields_validation
+              ? resp?.data?.fields_validation?.map(
+                  (f) => commentsToFields?.object[f]
+                )
+              : [];
 
             showAlert(
               "error",

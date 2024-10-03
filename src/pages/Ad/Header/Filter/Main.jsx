@@ -17,12 +17,6 @@ export const Main = ({ filters, onChangeFilter }) => {
   const { data: accounts } = useGetStatusAccountQuery();
   const { data: realestateAccounts } = useGetRealestateStatusQuery();
 
-  console.log(
-    adverstionResources?.resource?.map((v) => ({
-      title: v?.name,
-      value: v?.id,
-    }))
-  );
   return (
     <StyledMain className="section filterFieldsWrapper">
       <SelectTags

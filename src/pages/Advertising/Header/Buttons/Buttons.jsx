@@ -46,7 +46,7 @@ export const Buttons = ({
 
   return (
     <StyledButtons className="flex items-center">
-      <NavLink to="/advertising-setting">
+      <NavLink to="/ad-setting">
         <IconButton
           Icon={SettingIcon}
           className="icon-btn"

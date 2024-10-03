@@ -21,7 +21,7 @@ export const Text = ({ data, editable, onEdit, ad }) => {
   }, [data]);
 
   return (
-    <StyledText className={`hide-scroll clickable ${ad && "ad-text"}`}>
+    <StyledText className={`hide-scroll clickable ${ad && "only-text"}`}>
       <div className="title clickable">
         {data?.title?.length > 0
           ? data?.title?.replaceAll("&amp;#039;", "'")
@@ -46,8 +46,9 @@ const StyledText = styled.div`
   overflow: auto;
   margin-bottom: 15px;
   position: relative;
-  &.ad-text {
-    max-height: 170px !important;
+  &.only-text {
+    max-height: 190px !important;
+    margin-bottom: 0;
   }
   .edit-icon {
     position: absolute;

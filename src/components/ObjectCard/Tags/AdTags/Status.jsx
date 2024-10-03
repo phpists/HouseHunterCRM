@@ -5,8 +5,6 @@ import {
   useLazyGetStatusAddQuery,
   useLazyGetStatusFlombuAdQuery,
   useLazySyncOtherDataRealestateAdQuery,
-  useLazySyncRealestateAddsQuery,
-  useLazyUpdateRealestateStatusAddQuery,
 } from "../../../../store/auth/auth.api";
 import { ReactComponent as RefreshIcon } from "../../../../assets/images/refresh-icon.svg";
 import { useState } from "react";
@@ -17,6 +15,11 @@ const STATUSES = {
     color: "#F93A3A",
     bg: "#F93A3A26",
     title: "Помилка",
+  },
+  closed: {
+    color: "#F93A3A",
+    bg: "#F93A3A26",
+    title: "Закритий",
   },
   err: {
     color: "#F93A3A",
@@ -78,6 +81,11 @@ const STATUSES = {
     bg: "#FF9F2E26",
     title: "Не оплачено",
   },
+  succeeded: {
+    color: "var(--green-tag)",
+    bg: "var(--green-tag-bg)",
+    title: "Рекламується",
+  },
   active: {
     color: "var(--green-tag)",
     bg: "var(--green-tag-bg)",
@@ -120,9 +128,9 @@ export const Status = ({
         getStatusFlombuAd(idObj).then((resp) => {
           setTimeout(() => {
             setLoading(false);
+            handleResponse(resp);
             if (resp?.data?.status) {
-              console.log(resp?.data);
-              //   onUpdateField("status", resp?.data?.data,);
+              onUpdateField("status", resp?.data?.status);
             }
           }, 1000);
         });
@@ -133,9 +141,8 @@ export const Status = ({
         }).then((resp) => {
           setTimeout(() => {
             setLoading(false);
-
+            handleResponse(resp);
             if (resp?.data?.data) {
-              console.log(resp?.data);
               onUpdateField("status", resp?.data?.data, true);
             }
           }, 1000);
@@ -151,7 +158,7 @@ export const Status = ({
           title={
             resource === "1"
               ? data?.data?.[status] ?? STATUSES[status]?.title
-              : STATUSES[status]?.title
+              : STATUSES[status]?.title ?? status
           }
           color="green"
           style={{

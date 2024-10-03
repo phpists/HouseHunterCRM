@@ -76,87 +76,10 @@ export const Filter = ({
     }
   };
 
-  //   const handleGetTotal = () => {
-  //     let data = {
-  //       only_favorite: isFavorite ?? undefined,
-  //       current_page: 1,
-  //       item_on_page: 50,
-  //     };
-
-  //     const { company_object, street_base_object, mls_object, ...otherFilters } =
-  //       Object.fromEntries(Object.entries(filters)?.filter((f) => f[1] !== "0"));
-
-  //     let dt_end_agreement_to = company_object?.dt_end_agreement_to
-  //       ? new Date(handleFromInputDate(company_object?.dt_end_agreement_to))
-  //       : undefined;
-
-  //     if (dt_end_agreement_to) {
-  //       dt_end_agreement_to.setHours(23);
-  //       dt_end_agreement_to.setMinutes(59);
-  //       dt_end_agreement_to.setSeconds(59);
-  //     }
-
-  //     data = {
-  //       ...data,
-  //       company_object: {
-  //         ...company_object,
-  //         dt_end_agreement_to: dt_end_agreement_to?.getTime() / 1000,
-  //       },
-  //       street_base_object,
-  //       mls_object,
-  //       filters: {
-  //         ...otherFilters,
-  //         search_phone_code:
-  //           removePhoneMask(filters?.search_phone)?.length > 0
-  //             ? phoneCode
-  //             : undefined,
-  //         findPhone:
-  //           removePhoneMask(filters?.findPhone)?.length > 0
-  //             ? removePhoneMask(filters?.findPhone)
-  //             : undefined,
-  //         search_phone:
-  //           removePhoneMask(filters?.search_phone)?.length > 0
-  //             ? removePhoneMask(filters?.search_phone)
-  //             : undefined,
-  //       },
-  //     };
-
-  //     if (
-  //       !company_object &&
-  //       !street_base_object &&
-  //       !mls_object &&
-  //       Object.entries(filters)?.filter((f) => f?.[1])?.length > 0
-  //     ) {
-  //       data = {
-  //         ...data,
-  //         company_object: {
-  //           show_only: "company",
-  //           actual: "1",
-  //           given_objects: "1",
-  //           not_actual: "1",
-  //           overdue: "1",
-  //           show_street_base_company: "1",
-  //         },
-  //         street_base_object: {
-  //           sorting_id: "16",
-  //         },
-  //         mls_object: {},
-  //       };
-  //     }
-
-  //     setLoading(true);
-  //     getAllObjects({ ...data, only_count_item: "1" }).then((resp) => {
-  //       setTotal(resp?.data?.count_item ?? 0);
-  //       setLoading(false);
-  //     });
-  //   };
-
   useEffect(() => {
     if (isFirstRender.current) {
       setTotal(objectsCount ?? 0);
       isFirstRender.current = false;
-    } else if (!applying.current && !notRefresh.current) {
-      //   !isInputFocused && handleGetTotal();
     } else {
       applying.current = false;
     }
@@ -195,10 +118,7 @@ export const Filter = ({
             onOpenMap={onOpenMap}
           />
         </div>
-        <div className="total">
-          {/* Знайдено -{" "}
-          {loading ? <Loader white className="totalLoader" /> : total} */}
-        </div>
+        <div className="total"></div>
         <Footer
           onCancel={() => handleApplyFilters(false)}
           onSubmit={handleApply}

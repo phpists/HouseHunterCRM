@@ -88,8 +88,15 @@ const Ad = () => {
   }, [isFavorite]);
 
   const handleGetData = () => {
+    setSelected([]);
     getListAdds(filterActive.current ? filters : {}).then((resp) =>
-      setData(resp?.data?.data)
+      setData(
+        resp?.data?.data?.map((d, i) => ({
+          ...d,
+          id_ad_in_source:
+            d?.id_resource === "3" ? `${d?.id_obj}-${i}` : d?.id_ad_in_source,
+        })) ?? []
+      )
     );
   };
 
@@ -179,42 +186,15 @@ const Ad = () => {
   useEffect(() => {
     if (updateData) {
       setUpdateData(false);
-      //   handleGetObjects(true);
     }
     // eslint-disable-next-line
   }, [updateData]);
 
-  const handleScroll = () => {
-    // if (
-    //   listRef.current.offsetHeight + listRef.current.scrollTop <=
-    //     listRef.current.scrollHeight - 200 ||
-    //   isLoading.current
-    // ) {
-    //   return;
-    // }
-    // currentPage.current += 1;
-    // handleGetObjects();
-  };
-
-  useEffect(() => {
-    if (listRef.current) {
-      listRef.current.addEventListener("scroll", handleScroll);
-      return () =>
-        listRef.current &&
-        // eslint-disable-next-line
-        listRef.current.removeEventListener("scroll", handleScroll);
-    }
-    // eslint-disable-next-line
-  }, [listRef, isLoading.current, isAllPages, objects]);
-
-  useEffect(() => {
-    saveObjectsCount(0);
-    // eslint-disable-next-line
-  }, []);
-
-  const handleDeleteObjectSuccess = () => {
+  const handleDeleteObjectSuccess = (ids) => {
+    const updatedData = data.filter((a) => !ids?.includes(a?.id_ad_in_source));
+    setData(updatedData);
+    setAllCount(updatedData?.length);
     setSelected([]);
-    handleGetData();
   };
 
   const handleUpdateObjectValue = (id, field, value, isObject) =>

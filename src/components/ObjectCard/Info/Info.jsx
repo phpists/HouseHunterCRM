@@ -15,7 +15,7 @@ export const Info = ({
     <StyledInfo
       className={`flex flex-col justify-between hide clickable hide-scroll ${className}`}
     >
-      <Header data={data} ad={ad} onOpenAdList={onOpenAdList} />
+      {ad ? null : <Header data={data} ad={ad} onOpenAdList={onOpenAdList} />}
       <Text data={data} editable={editable} onEdit={onEdit} ad={ad} />
       {ad ? null : (
         <Footer
@@ -35,6 +35,7 @@ const StyledInfo = styled.div`
   margin-right: 10px;
   height: max-content;
   overflow: auto;
+  align-self: flex-start;
   @media (min-width: 1400px) {
     width: 180px;
   }

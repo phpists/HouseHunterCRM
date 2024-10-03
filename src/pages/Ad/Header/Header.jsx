@@ -63,7 +63,7 @@ export const Header = ({
     }
   };
 
-  const handleSortAdByUser = () => {
+  const handleGetOlx = () => {
     const requests = [];
     const selectedAds = data?.filter((a) =>
       selected.includes(a.id_ad_in_source)
@@ -80,7 +80,14 @@ export const Header = ({
       }
     });
 
-    return requests;
+    return requests?.map((id) =>
+      deleteAdHistory(id).then((resp) => {
+        handleResponse(resp, () => {
+          showAlert("success", "Оголошення успішно видалено!");
+        });
+        return resp;
+      })
+    );
   };
 
   const handleGetRealstate = () => {
@@ -104,8 +111,9 @@ export const Header = ({
 
   const handleGetFlombu = () => {
     const selectedAds = data
-      ?.filter((a) => selected.includes(a.id_obj))
-      ?.filter((a) => a?.id_resource === "3");
+      ?.filter((a) => selected.includes(a.id_ad_in_source))
+      ?.filter((a) => a?.id_resource === "3")
+      ?.filter((a) => a.id_obj);
 
     return selectedAds?.map(({ id_obj }) =>
       deleteFlombuAdHistory(id_obj).then((resp) => {
@@ -118,21 +126,21 @@ export const Header = ({
     );
   };
 
+  const handleGetDeleteRequests = () => {
+    const activeResource = filters?.resource;
+
+    return activeResource === "3"
+      ? handleGetFlombu()
+      : activeResource === "4"
+      ? handleGetRealstate()
+      : handleGetOlx();
+  };
+
   const handleDeleteHistory = () => {
-    Promise.all([
-      ...handleSortAdByUser().map((d) =>
-        deleteAdHistory(d).then((resp) => {
-          handleResponse(resp, () => {
-            showAlert("success", "Оголошення успішно видалено!");
-          });
-          return resp;
-        })
-      ),
-      ...handleGetRealstate(),
-      ...handleGetFlombu(),
-    ]).then((resp) => {
+    Promise.all(handleGetDeleteRequests()).then((resp) => {
       if (resp?.filter((r) => r?.data?.error !== 0)?.length === 0) {
-        onDeleteSuccess();
+        console.log(resp);
+        onDeleteSuccess(selected);
       }
     });
   };
@@ -150,15 +158,15 @@ export const Header = ({
             />
           </div>
           <div className="flex items-center bts">
-            <NavLink to="/ad-setting">
-              <IconButton Icon={SettingsIcon} className="icon-btn" />
-            </NavLink>
             <IconButton
               Icon={SettingIcon}
               className={`icon-btn ${isPrevFilter && "alert-btn"}`}
               active={filterOpen}
               onClick={() => setFilterOpen(true)}
             />
+            <NavLink to="/ad-setting">
+              <IconButton Icon={SettingsIcon} className="icon-btn" />
+            </NavLink>
 
             <div className="select-wrapper flex items-center justify-end">
               <SelectItems

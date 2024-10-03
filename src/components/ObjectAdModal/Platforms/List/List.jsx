@@ -90,14 +90,13 @@ export const List = ({
     );
   };
 
-  console.log(activeAds);
   return (
     <StyledList>
       {(accounts?.accounts?.length === 0 || !accounts?.accounts) &&
       realestateAccounts?.data?.length === 0 ? (
         <div className="empty">
           <span>Потрібно</span>
-          <Link to="/advertising-setting">авторизуватись</Link>
+          <Link to="/ad-setting">авторизуватись</Link>
         </div>
       ) : null}
       {openAuthConfirm && (
@@ -113,7 +112,7 @@ export const List = ({
           } потрібна авторизація, перейти на сторінку авторизації?`}
           onClose={() => setOpenAuthConfirm(null)}
           onSubmit={() => {
-            navigate(`/advertising-setting?type=${openAuthConfirm}`);
+            navigate(`/ad-setting?type=${openAuthConfirm}`);
           }}
         />
       )}
