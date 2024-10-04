@@ -49,7 +49,7 @@ const StyledButton = styled.button`
   letter-spacing: 0.3px;
   transition: all 0.3s;
   opacity: ${({ disabled }) => (disabled ? "0.5" : 1)};
-  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "cursor")};
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
 
   .icon {
     width: 0;

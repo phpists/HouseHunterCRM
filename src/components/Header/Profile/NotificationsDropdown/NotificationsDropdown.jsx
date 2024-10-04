@@ -25,7 +25,9 @@ export const NotificationsDropdown = ({
           messages={[data?.calls, data?.telegramMessege, data?.xCorpNotify]}
           onClose={() => onClose("calls")}
           links={[
-            "/calls?view=true",
+            search === "?view=true"
+              ? "/calls?view=refresh"
+              : "/calls?view=true",
             "/calls?telegram=true",
             "/calls?site=true",
           ]}

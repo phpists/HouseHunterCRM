@@ -3,7 +3,7 @@ import { Header } from "./Header/Header";
 import { SectionTitle } from "./SectionTitle";
 import { Footer } from "./Footer";
 import { motion, useAnimationControls } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Status } from "./Status";
 import { Search } from "./Search/Search";
 import { Period } from "./Period/Period";
@@ -24,6 +24,7 @@ export const Filter = ({
   telegramTypes,
 }) => {
   const controls = useAnimationControls();
+  const [errors, setErrors] = useState([]);
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
@@ -39,6 +40,19 @@ export const Filter = ({
     onApplyFilter(isApply);
     handleClose();
   };
+
+  const handleCheckSearchKey = () => {
+    const value = filters?.search_key;
+
+    if (value?.length > 0 && value?.length < 4) {
+      setErrors(["search_key"]);
+    } else if (errors?.length > 0) {
+      setErrors([]);
+    }
+  };
+  useEffect(() => {
+    handleCheckSearchKey();
+  }, [filters]);
 
   return (
     <>
@@ -61,10 +75,11 @@ export const Filter = ({
               onChangeActiveType={onChangeActiveType}
               ordersTypes={ordersTypes}
               telegramTypes={telegramTypes}
+              errors={errors}
             />
           </div>
         </div>
-        <Footer onApplyFilter={handleApply} />
+        <Footer onApplyFilter={handleApply} disabled={errors?.length > 0} />
       </StyledFilter>
       <div className="modal-overlay" onClick={handleClose}></div>
     </>

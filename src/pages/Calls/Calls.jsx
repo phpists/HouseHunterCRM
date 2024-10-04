@@ -311,6 +311,9 @@ const Calls = ({ companyId }) => {
             setAllCount(updatedCount);
           },
           () => {
+            if (resp?.data?.error !== 0 && resp?.error !== 32) {
+              showAlert("error", resp?.data?.messege ?? "Помилка");
+            }
             setIsAllPages(true);
             if (isReset) {
               setData([]);
@@ -476,12 +479,12 @@ const Calls = ({ companyId }) => {
 
   useEffect(() => {
     const filterApply = location?.search?.split("=")[0];
+    setIsDefaultFilterSet(false);
+    isFirstLoad.current = true;
     if (filterApply === "?view") {
       setActiveType("phone");
       setEditActiveType("phone");
       setFilters({
-        type_call: [],
-        call_my_struct: undefined,
         status: "0",
         date_from: Math.floor(getFirstDay(true, true, 7).getTime() / 1000),
         date_to: Math.floor(new Date().getTime() / 1000),

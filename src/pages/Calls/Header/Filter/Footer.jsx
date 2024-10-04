@@ -1,12 +1,13 @@
 import { styled } from "styled-components";
 import { Button } from "../../../../components/Button";
 
-export const Footer = ({ onApplyFilter }) => (
+export const Footer = ({ onApplyFilter, disabled }) => (
   <StyledFooter className="flex items-center justify-between">
     <Button
       title="Застосувати"
       onClick={() => onApplyFilter(true)}
       className="btn enter-btn"
+      disabled={disabled}
     />
     <Button
       title="Скасувати"

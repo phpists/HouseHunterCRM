@@ -30,6 +30,7 @@ export const Field = ({
   onBlur,
   onClick,
   formatNumber,
+  errorMessage,
 }) => {
   const [edit, setEdit] = useState(false);
 
@@ -168,6 +169,9 @@ export const Field = ({
           </div>
         )}
         <div className="label labelItem">{label}</div>
+        {error && errorMessage && (
+          <div className="label labelItem error">{errorMessage}</div>
+        )}
       </div>
       {viewOnly ? null : (
         <div
@@ -237,6 +241,11 @@ const StyleField = styled.div`
     font-weight: var(--font-weight-light);
     line-height: normal;
     letter-spacing: 0.22px;
+    &.error {
+      color: red;
+      opacity: 0.8;
+      font-size: 12px;
+    }
   }
   .edit-btn {
     opacity: 0.4;

@@ -29,6 +29,7 @@ export const Search = ({
   onChangeActiveType,
   ordersTypes,
   telegramTypes,
+  errors,
 }) => {
   const { data: callsType } = useGetCallsTypeQuery();
   const { data: phonesCodes } = useGetPhonesCodesQuery();
@@ -196,6 +197,8 @@ export const Search = ({
         placeholder="Почніть писати"
         value={filters?.search_key}
         onChange={(val) => onChangeFilter("search_key", val)}
+        error={errors?.includes("search_key")}
+        errorMessage="Мінімум 4 символи"
       />
       <Divider />
       <ProfileField
