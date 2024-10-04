@@ -118,11 +118,58 @@ const Calls = ({ companyId }) => {
   };
 
   const handleGetgetTelegramOrders = () => {
-    if (XHOUSE_COMPANY_ID.includes(companyId)) {
+    const sendData = {
+      filters: isFilter.current
+        ? {
+            ...filters,
+            ...(removePhoneMask(filters?.search_phone)?.length > 0
+              ? [{ search_phone: removePhoneMask(filters?.search_phone) }]
+              : []),
+            date_from: filters?.date_from
+              ? handleFormatFilterDate(filters?.date_from, true)
+              : undefined,
+            date_to: filters?.date_to
+              ? handleFormatFilterDate(filters?.date_to)
+              : undefined,
+          }
+        : {
+            date_from: Math.floor(getFirstDay(true).getTime() / 1000),
+            date_to: Math.floor(new Date().getTime() / 1000),
+          },
+    };
+    getTelegramOrders(sendData).then((resp) => {
+      const orders = resp?.data?.data ?? [];
+      saveCallsCount(resp?.data?.all_item ?? 0);
+
+      setTelegramTypes(
+        resp?.data?.type
+          ? Object.entries(resp?.data?.type)?.map((v) => ({
+              value: v[0],
+              title: v[1],
+            }))
+          : []
+      );
+      setTelegramData(Array.isArray(orders) ? orders : [orders]);
+    });
+  };
+
+  const handleGetOrders = (isReset) => {
+    if ((!isLoading.current && !isAllPages) || isReset) {
+      if (isReset) {
+        listRef.current.scroll({ top: 0 });
+        setSelected([]);
+        currentPage.current = 0;
+        setIsAllPages(false);
+      }
+      isLoading.current = true;
+      setLoading(true);
+
       const sendData = {
         filters: isFilter.current
           ? {
-              ...filters,
+              ...Object.fromEntries(
+                Object.entries(filters)?.filter((v) => v[1])
+              ),
               ...(removePhoneMask(filters?.search_phone)?.length > 0
                 ? [{ search_phone: removePhoneMask(filters?.search_phone) }]
                 : []),
@@ -137,103 +184,52 @@ const Calls = ({ companyId }) => {
               date_from: Math.floor(getFirstDay(true).getTime() / 1000),
               date_to: Math.floor(new Date().getTime() / 1000),
             },
+        current_page: currentPage.current,
       };
-      getTelegramOrders(sendData).then((resp) => {
-        const orders = resp?.data?.data ?? [];
-        saveCallsCount(resp?.data?.all_item ?? 0);
 
-        setTelegramTypes(
-          resp?.data?.type
-            ? Object.entries(resp?.data?.type)?.map((v) => ({
-                value: v[0],
-                title: v[1],
-              }))
-            : []
-        );
-        setTelegramData(Array.isArray(orders) ? orders : [orders]);
-      });
-    }
-  };
-
-  const handleGetOrders = (isReset) => {
-    if (XHOUSE_COMPANY_ID.includes(companyId)) {
-      if ((!isLoading.current && !isAllPages) || isReset) {
-        if (isReset) {
-          listRef.current.scroll({ top: 0 });
-          setSelected([]);
-          currentPage.current = 0;
-          setIsAllPages(false);
-        }
-        isLoading.current = true;
-        setLoading(true);
-
-        const sendData = {
-          filters: isFilter.current
-            ? {
-                ...Object.fromEntries(
-                  Object.entries(filters)?.filter((v) => v[1])
-                ),
-                ...(removePhoneMask(filters?.search_phone)?.length > 0
-                  ? [{ search_phone: removePhoneMask(filters?.search_phone) }]
-                  : []),
-                date_from: filters?.date_from
-                  ? handleFormatFilterDate(filters?.date_from, true)
-                  : undefined,
-                date_to: filters?.date_to
-                  ? handleFormatFilterDate(filters?.date_to)
-                  : undefined,
-              }
-            : {
-                date_from: Math.floor(getFirstDay(true).getTime() / 1000),
-                date_to: Math.floor(new Date().getTime() / 1000),
-              },
-          current_page: currentPage.current,
-        };
-
-        if (currentPage.current === 0 || isReset) {
-          setOrders([]);
-        }
-
-        getOrders(sendData).then((resp) => {
-          isLoading.current = false;
-          setLoading(false);
-          const ordersResp = resp?.data?.data ?? [];
-          const types = resp?.data?.type;
-          const formatedOrdersResp = ordersResp?.map((o) => ({
-            ...o,
-            type: o?.type === "1" ? "Запит на пошук" : types[o?.type],
-          }));
-
-          setOrdersTypes(types);
-          setIsAllPages(ordersResp?.length === 0);
-          handleResponse(
-            resp,
-            () => {
-              setOrders(
-                isReset
-                  ? formatedOrdersResp
-                  : [...checkIsArray(orders), ...formatedOrdersResp]
-              );
-              saveCallsCount(resp?.data?.all_item ?? 0);
-              const respItemsCount = resp?.data?.data?.length;
-              const updatedCount = isReset
-                ? respItemsCount
-                : allCountRef.current + respItemsCount;
-              allCountRef.current = updatedCount;
-              setAllCount(updatedCount);
-            },
-            () => {
-              setIsAllPages(true);
-              if (isReset) {
-                setOrders([]);
-                //   saveCallsCount(0);
-                allCountRef.current = 0;
-                setAllCount(0);
-              }
-            }
-          );
-        });
+      if (currentPage.current === 0 || isReset) {
+        setOrders([]);
       }
+
+      getOrders(sendData).then((resp) => {
+        isLoading.current = false;
+        setLoading(false);
+        const ordersResp = resp?.data?.data ?? [];
+        const types = resp?.data?.type;
+        const formatedOrdersResp = ordersResp?.map((o) => ({
+          ...o,
+          type: o?.type === "1" ? "Запит на пошук" : types[o?.type],
+        }));
+
+        setOrdersTypes(types);
+        setIsAllPages(ordersResp?.length === 0);
+        handleResponse(
+          resp,
+          () => {
+            setOrders(
+              isReset
+                ? formatedOrdersResp
+                : [...checkIsArray(orders), ...formatedOrdersResp]
+            );
+            saveCallsCount(resp?.data?.all_item ?? 0);
+            const respItemsCount = resp?.data?.data?.length;
+            const updatedCount = isReset
+              ? respItemsCount
+              : allCountRef.current + respItemsCount;
+            allCountRef.current = updatedCount;
+            setAllCount(updatedCount);
+          },
+          () => {
+            setIsAllPages(true);
+            if (isReset) {
+              setOrders([]);
+              //   saveCallsCount(0);
+              allCountRef.current = 0;
+              setAllCount(0);
+            }
+          }
+        );
+      });
     }
   };
 
@@ -266,6 +262,8 @@ const Calls = ({ companyId }) => {
         filters: isFilter.current
           ? {
               ...filters,
+              type_call:
+                filters?.type_call?.length > 0 ? filters?.type_call : undefined,
               search_phone:
                 removePhoneMask(filters?.search_phone)?.length > 0
                   ? removePhoneMask(filters?.search_phone)
