@@ -15,7 +15,6 @@ import { Privacy } from "./pages/Privacy";
 import { Terms } from "./pages/Terms";
 import { License } from "./pages/License";
 import { CookiePolicy } from "./pages/CookiePolicy";
-import { XHOUSE_COMPANY_ID } from "./constants";
 import Ad from "./pages/Ad/Ad";
 
 const Company = lazy(() => import("./pages/Company/Company"));
@@ -291,32 +290,23 @@ export const App = () => {
                             path="/selections/:id"
                             element={<Selections />}
                           />
-                          {XHOUSE_COMPANY_ID.includes(
-                            companyInfo?.data?.id_hash
-                          ) || XHOUSE_COMPANY_ID.includes(user?.id) ? (
-                            <>
-                              <Route
-                                path="/advertising"
-                                element={<Advertising />}
-                              />
-                              <Route path="/ad" element={<Ad />} />
-                              {handleCheckAccess(data, "objects", "view") && (
-                                <Route
-                                  path="/edit-ad/:clientId/:id"
-                                  element={<ObjectPage />}
-                                />
-                              )}
+                          <Route
+                            path="/advertising"
+                            element={<Advertising />}
+                          />
+                          <Route path="/ad" element={<Ad />} />
+                          {handleCheckAccess(data, "objects", "view") && (
+                            <Route
+                              path="/edit-ad/:clientId/:id"
+                              element={<ObjectPage />}
+                            />
+                          )}
 
-                              <Route
-                                path="/ad-setting"
-                                element={<AdSettings />}
-                              />
-                              <Route
-                                path="/advertising-login-success"
-                                element={<AdSettings />}
-                              />
-                            </>
-                          ) : null}
+                          <Route path="/ad-setting" element={<AdSettings />} />
+                          <Route
+                            path="/advertising-login-success"
+                            element={<AdSettings />}
+                          />
                           <Route path="*" element={<Dashboard />} />
                         </Routes>
                       </Suspense>

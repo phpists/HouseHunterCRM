@@ -348,36 +348,6 @@ export const List = ({
                     ? () => setMarkPhoneModal(d)
                     : null
                 }
-                isDeleted={d?.deleted === "1"}
-                showContactId={showContactId}
-                onShowContact={() => setShowContactId(d?.id)}
-                onChangeTags={(fieldName, val) =>
-                  onChangeTags(d?.id, fieldName, val)
-                }
-                onOpenPhonesModal={() => setClientModal(d?.id)}
-                showClientObjectsCount
-                onOpenDeleteReason={
-                  d?.reasone_remove?.length > 0
-                    ? () => setDeleteInfo(d?.reasone_remove)
-                    : null
-                }
-                onFastSelection={
-                  user?.show_fast_folder
-                    ? () => handleCopyFastFolderLink(d?.id)
-                    : null
-                }
-                onAdvertise={
-                  XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash)
-                    ? () => setAdvertaseObject(d)
-                    : null
-                }
-                onAdvertiseTelegram={
-                  XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) &&
-                  d?.type_object !== "street_base" &&
-                  d?.type_object !== "mls"
-                    ? () => handleTelegramPublish(d?.id)
-                    : null
-                }
                 onUpdateField={(field, value, isObject) =>
                   onUpdateObject(d?.id_ad_in_source, field, value, isObject)
                 }

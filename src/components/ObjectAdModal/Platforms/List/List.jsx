@@ -20,6 +20,7 @@ import { handleResponse, showAlert } from "../../../../utilits";
 import { Confirm } from "../../../Confirm/Confirm";
 import { useState } from "react";
 import cogoToast from "cogo-toast";
+import { useAppSelect } from "../../../../hooks/redux";
 
 export const List = ({
   data,
@@ -33,9 +34,13 @@ export const List = ({
   const { data: realestateAccounts } = useGetRealestateStatusQuery();
   const { data: companyInfo } = useGetCompanyInfoQuery();
   const { data: flombuAccounts } = useFlombuConnectStatusQuery();
+  const { user } = useAppSelect((state) => state.auth);
   const [publishObject] = useLazyPublishObjectQuery();
   const [changeMls] = useLazyChangeMlsObjectQuery();
   const [openAuthConfirm, setOpenAuthConfirm] = useState(null);
+  const iS_AD_ACCESS =
+    XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) ||
+    XHOUSE_COMPANY_ID.includes(user?.id);
 
   const handleTelegramPublish = (id) => {
     const { hide } = cogoToast.loading("Опублікування реклами в телеграмі", {
@@ -167,7 +172,7 @@ export const List = ({
             />
           ))
         : null}
-      {flombuAccounts?.error === 0 ? (
+      {flombuAccounts?.error === 0 && iS_AD_ACCESS ? (
         <Card
           icon={flombuIcon}
           title={"Авторизовано"}
@@ -195,18 +200,19 @@ export const List = ({
           noAuth
         />
       )}
-      {flombuAccounts?.error === 0 ? null : (
-        <Card
-          icon={flombuIcon}
-          title={"Потрібна авторизація"}
-          onChangeActiveTab={() => setOpenAuthConfirm("3")}
-          noAuth
-        />
-      )}
+      {flombuAccounts?.error === 0
+        ? null
+        : iS_AD_ACCESS && (
+            <Card
+              icon={flombuIcon}
+              title={"Потрібна авторизація"}
+              onChangeActiveTab={() => setOpenAuthConfirm("3")}
+              noAuth
+            />
+          )}
 
       <Button title="MLS" active={data?.mls} onClick={handleChangeMls} />
-
-      {XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) &&
+      {companyInfo?.data?.id_hash === "0022b718e5a80c0e3992686fd10ff1dc" &&
         data?.type_object !== "street_base" &&
         data?.type_object !== "mls" && (
           <Button

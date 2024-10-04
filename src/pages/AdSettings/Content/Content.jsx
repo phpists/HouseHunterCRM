@@ -9,6 +9,9 @@ import {
   useFlombuConnectStatusQuery,
   useGetRealestateStatusQuery,
 } from "../../../store/auth/auth.api";
+import { XHOUSE_COMPANY_ID } from "../../../constants";
+import { useGetCompanyInfoQuery } from "../../../store/billing/billing.api";
+import { useAppSelect } from "../../../hooks/redux";
 
 export const Content = ({
   resources,
@@ -23,6 +26,11 @@ export const Content = ({
     useGetRealestateStatusQuery();
   const { data: flombuStatus, refetch: resetchFflombuStatus } =
     useFlombuConnectStatusQuery();
+  const { data: companyInfo } = useGetCompanyInfoQuery();
+  const { user } = useAppSelect((state) => state.auth);
+  const iS_AD_ACCESS =
+    XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) ||
+    XHOUSE_COMPANY_ID.includes(user?.id);
 
   useEffect(() => {
     status && refetch();
@@ -34,7 +42,9 @@ export const Content = ({
       <div>
         <Title title="Створені та Шаблони" />
         <TemplatesList
-          resources={resources}
+          resources={resources?.filter((r) =>
+            iS_AD_ACCESS ? true : r?.id !== "3"
+          )}
           selectedResources={selectedResources}
           onSelect={onSelect}
           olxAuth={!!status?.accounts?.[0]?.data?.id}

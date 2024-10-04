@@ -3,21 +3,13 @@ import { ReactComponent as GridIcon } from "../../assets/images/grid.svg";
 import { ReactComponent as UsersIcon } from "../../assets/images/users.svg";
 import { ReactComponent as MegaphoneIcon } from "../../assets/images/megaphone.svg";
 import { ReactComponent as HomeIcon } from "../../assets/images/home-sidebar.svg";
-import { ReactComponent as MarketIcon } from "../../assets/images/market.svg";
-import { ReactComponent as CalendarIcon } from "../../assets/images/calendar.svg";
 import { ReactComponent as CopyIcon } from "../../assets/images/copy.svg";
 import { ReactComponent as PhoneIcon } from "../../assets/images/phone-menu.svg";
 import { ReactComponent as RocketIcon } from "../../assets/images/BiRocket.svg";
 import { NavBarItem } from "./NavBarItem";
 import { handleCheckAccess } from "../../utilits";
-import { useAppSelect } from "../../hooks/redux";
-import { useGetCompanyInfoQuery } from "../../store/billing/billing.api";
-import { XHOUSE_COMPANY_ID } from "../../constants";
 
 export const NavBar = ({ accessData }) => {
-  const { user } = useAppSelect((state) => state.auth);
-  const { data: companyInfo } = useGetCompanyInfoQuery();
-
   const LINKS = [
     { icon: GridIcon, link: "/", title: "Дашборд" },
     ...(handleCheckAccess(accessData, "clients", "view")
@@ -70,17 +62,12 @@ export const NavBar = ({ accessData }) => {
           },
         ]
       : []),
-
-    ...(XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash)
-      ? [
-          {
-            icon: RocketIcon,
-            link: "/ad",
-            title: "Реклама",
-            childrenLinks: ["edit-ad", "ad-setting"],
-          },
-        ]
-      : []),
+    {
+      icon: RocketIcon,
+      link: "/ad",
+      title: "Реклама",
+      childrenLinks: ["edit-ad", "ad-setting"],
+    },
   ];
 
   return (

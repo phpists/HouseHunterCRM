@@ -304,11 +304,7 @@ export const List = ({
                     ? () => handleCopyFastFolderLink(d?.id)
                     : null
                 }
-                onAdvertise={
-                  XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash)
-                    ? () => setAdvertaseObject(d)
-                    : null
-                }
+                onAdvertise={() => setAdvertaseObject(d)}
                 onAdvertiseTelegram={
                   companyInfo?.data?.id_hash ===
                     "0022b718e5a80c0e3992686fd10ff1dc" &&

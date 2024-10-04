@@ -10,23 +10,32 @@ import {
   useGetRealestateStatusQuery,
   useGetStatusesOlxQuery,
 } from "../../../../store/auth/auth.api";
+import { useGetCompanyInfoQuery } from "../../../../store/billing/billing.api";
+import { useAppSelect } from "../../../../hooks/redux";
+import { XHOUSE_COMPANY_ID } from "../../../../constants";
 
 export const Main = ({ filters, onChangeFilter }) => {
   const { data: statuses } = useGetStatusesOlxQuery();
   const { data: adverstionResources } = useGetAdverstionResourceQuery();
   const { data: accounts } = useGetStatusAccountQuery();
   const { data: realestateAccounts } = useGetRealestateStatusQuery();
-
+  const { data: companyInfo } = useGetCompanyInfoQuery();
+  const { user } = useAppSelect((state) => state.auth);
+  const iS_AD_ACCESS =
+    XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) ||
+    XHOUSE_COMPANY_ID.includes(user?.id);
   return (
     <StyledMain className="section filterFieldsWrapper">
       <SelectTags
         label="Ресурс"
         placeholder="Оберіть ресурс"
         options={
-          adverstionResources?.resource?.map((v) => ({
-            title: v?.name,
-            value: v?.id,
-          })) ?? []
+          adverstionResources?.resource
+            ?.map((v) => ({
+              title: v?.name,
+              value: v?.id,
+            }))
+            ?.filter((r) => (iS_AD_ACCESS ? true : r?.value !== "3")) ?? []
         }
         value={filters?.resource}
         onChange={(val) =>
