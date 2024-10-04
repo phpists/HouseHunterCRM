@@ -21,7 +21,7 @@ export const Calendar = ({
   const handleChangeYear = (year) => {
     setLoading(true);
     onChange(new Date(value.setYear(year)));
-    setTimeout(() => setLoading(false), 100);
+    setTimeout(() => setLoading(false), 50);
   };
 
   const handleChangeCalendar = (val) => {

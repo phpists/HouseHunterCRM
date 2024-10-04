@@ -222,7 +222,7 @@ export const Search = ({
         }
       />
       <Divider />
-      <Period filters={filters} onChangeFilter={onChangeFilter} />
+      <Period filters={filters} onChangeFilter={onChangeFilter} top />
       {Number(user?.struct_level) !== Number(level) ? (
         <>
           <Divider />

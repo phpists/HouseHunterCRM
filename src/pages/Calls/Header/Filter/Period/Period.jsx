@@ -4,7 +4,7 @@ import { Calendar } from "../../../../../components/Calendar/Calendar";
 import { useState } from "react";
 import { handleFormatDate } from "../../../../../utilits";
 
-export const Period = ({ filters, onChangeFilter }) => {
+export const Period = ({ filters, onChangeFilter, top }) => {
   const [changeDate, setChangeDate] = useState(false);
 
   const handleChangeValue = (val) => {
@@ -13,7 +13,7 @@ export const Period = ({ filters, onChangeFilter }) => {
   };
 
   return (
-    <StyledPeriod>
+    <StyledPeriod top={top}>
       <DateCard
         date={handleFormatDate(new Date(filters?.date_from * 1000), true)}
         label="Період з"
@@ -54,7 +54,8 @@ const StyledPeriod = styled.div`
   position: relative;
   .calendar-wrapper {
     position: absolute;
-    top: calc(100% + 10px);
+    ${({ top }) =>
+      top ? "bottom: calc(100% + 10px);" : "top: calc(100% + 10px);"}
     left: 0;
     z-index: 100;
     border: 1px solid var(--bg-20);

@@ -9,6 +9,7 @@ import {
   useLazyGetOrdersTelegrambotQuery,
   useLazySetOrderCommentQuery,
   useLazySetStatusCallQuery,
+  useLazySetStatusTelegramOrderQuery,
   useLazySetTelegramCommentOrderQuery,
 } from "../../store/calls/calls.api";
 import {
@@ -22,14 +23,11 @@ import {
 } from "../../utilits";
 import { useActions } from "../../hooks/actions";
 import { useLocation } from "react-router-dom";
-import { useGetPhonesCodesQuery } from "../../store/auth/auth.api";
 import { useAppSelect } from "../../hooks/redux";
-import { XHOUSE_COMPANY_ID } from "../../constants";
 
 const INIT_FILTERS = {
   search_key: "",
   //   id_worker_Search: "",
-  type_call: [],
   call_my_struct: undefined,
   status: "0",
   date_from: Math.floor(getFirstDay(true, false, 7).getTime() / 1000),
@@ -48,8 +46,6 @@ const Calls = ({ companyId }) => {
   const { saveCallsCount } = useActions();
   const [selected, setSelected] = useState([]);
   const [data, setData] = useState(null);
-  const [telegramData, setTelegramData] = useState([]);
-  const [orders, setOrders] = useState([]);
   const prevFilters = localStorage.getItem("callsFilter");
   const [filters, setFilters] = useState(
     !!prevFilters && !!checkIsJSON(prevFilters)
@@ -67,7 +63,6 @@ const Calls = ({ companyId }) => {
   const allCountRef = useRef(0);
   const [allCount, setAllCount] = useState(0);
   const [filterPhoneCode, setFilterPhoneCode] = useState("1");
-  const { data: phonesCodes } = useGetPhonesCodesQuery();
   const { callsCount } = useAppSelect((state) => state.calls);
   const [showTelegram, setShowTelegram] = useState(true);
   const [activeType, setActiveType] = useState(
@@ -84,6 +79,7 @@ const Calls = ({ companyId }) => {
     setEditActiveType(type);
     localStorage.setItem("callsActiveType", type);
   };
+  const [setTelegramOrderStatus] = useLazySetStatusTelegramOrderQuery();
 
   const handleChangeFilter = (fieldName, value, isUpdate) => {
     if (isUpdate) {
@@ -117,11 +113,18 @@ const Calls = ({ companyId }) => {
     return Math.floor(date?.getTime() / 1000);
   };
 
+  useEffect(() => {
+    console.log(data?.length);
+    setAllCount(data?.length);
+  }, [data]);
+
   const handleGetgetTelegramOrders = () => {
     const sendData = {
       filters: isFilter.current
         ? {
             ...filters,
+            type_call:
+              filters?.type_call?.length > 0 ? filters?.type_call : undefined,
             ...(removePhoneMask(filters?.search_phone)?.length > 0
               ? [{ search_phone: removePhoneMask(filters?.search_phone) }]
               : []),
@@ -138,7 +141,7 @@ const Calls = ({ companyId }) => {
           },
     };
     getTelegramOrders(sendData).then((resp) => {
-      const orders = resp?.data?.data ?? [];
+      const data = resp?.data?.data ?? [];
       saveCallsCount(resp?.data?.all_item ?? 0);
 
       setTelegramTypes(
@@ -149,7 +152,8 @@ const Calls = ({ companyId }) => {
             }))
           : []
       );
-      setTelegramData(Array.isArray(orders) ? orders : [orders]);
+      const telegramData = Array.isArray(data) ? data : [data];
+      setData(telegramData?.map((a) => ({ ...a, id: a?.id_order ?? a?.id })));
     });
   };
 
@@ -173,6 +177,8 @@ const Calls = ({ companyId }) => {
               ...(removePhoneMask(filters?.search_phone)?.length > 0
                 ? [{ search_phone: removePhoneMask(filters?.search_phone) }]
                 : []),
+              type_call:
+                filters?.type_call?.length > 0 ? filters?.type_call : undefined,
               date_from: filters?.date_from
                 ? handleFormatFilterDate(filters?.date_from, true)
                 : undefined,
@@ -188,7 +194,7 @@ const Calls = ({ companyId }) => {
       };
 
       if (currentPage.current === 0 || isReset) {
-        setOrders([]);
+        setData([]);
       }
 
       getOrders(sendData).then((resp) => {
@@ -206,10 +212,10 @@ const Calls = ({ companyId }) => {
         handleResponse(
           resp,
           () => {
-            setOrders(
+            setData(
               isReset
                 ? formatedOrdersResp
-                : [...checkIsArray(orders), ...formatedOrdersResp]
+                : [...checkIsArray(data), ...formatedOrdersResp]
             );
             saveCallsCount(resp?.data?.all_item ?? 0);
             const respItemsCount = resp?.data?.data?.length;
@@ -217,12 +223,11 @@ const Calls = ({ companyId }) => {
               ? respItemsCount
               : allCountRef.current + respItemsCount;
             allCountRef.current = updatedCount;
-            setAllCount(updatedCount);
           },
           () => {
             setIsAllPages(true);
             if (isReset) {
-              setOrders([]);
+              setData([]);
               //   saveCallsCount(0);
               allCountRef.current = 0;
               setAllCount(0);
@@ -302,13 +307,6 @@ const Calls = ({ companyId }) => {
                 ? resp?.data?.data
                 : [...checkIsArray(data), ...resp?.data?.data]
             );
-            // saveCallsCount(resp?.data?.all_item ?? 0);
-            const respItemsCount = resp?.data?.data?.length;
-            const updatedCount = isReset
-              ? respItemsCount
-              : allCountRef.current + respItemsCount;
-            allCountRef.current = updatedCount;
-            setAllCount(updatedCount);
           },
           () => {
             if (resp?.data?.error !== 0 && resp?.error !== 32) {
@@ -355,7 +353,7 @@ const Calls = ({ companyId }) => {
         listRef.current.removeEventListener("scroll", handleScroll);
     }
     // eslint-disable-next-line
-  }, [listRef, isLoading.current, isAllPages, data, activeType, orders]);
+  }, [listRef, isLoading.current, isAllPages, data, activeType]);
 
   const handleSetCallStatus = (id_call, status) => {
     setCallStatus({ id_call, status }).then((resp) =>
@@ -364,7 +362,6 @@ const Calls = ({ companyId }) => {
         const updatedCount = allCountRef.current - 1;
         saveCallsCount(callsCount - 1);
         allCountRef.current = updatedCount;
-        setAllCount(updatedCount);
         showAlert("success", "Статус успішно змінено!");
       })
     );
@@ -379,8 +376,8 @@ const Calls = ({ companyId }) => {
           });
 
           onSuccess && onSuccess();
-          setTelegramData(
-            telegramData?.map((call) =>
+          setData(
+            data?.map((call) =>
               call.id_order === id_call
                 ? {
                     ...call,
@@ -399,8 +396,8 @@ const Calls = ({ companyId }) => {
             showAlert("success", "Коментар успішно змінено!");
           });
           onSuccess && onSuccess();
-          setOrders(
-            orders?.map((call) =>
+          setData(
+            data?.map((call) =>
               call.id === id_call
                 ? {
                     ...call,
@@ -457,24 +454,40 @@ const Calls = ({ companyId }) => {
   };
 
   const handleSetCallsStatus = (status) => {
-    Promise.all(
-      selected?.map((id_call) =>
-        setCallStatus({
-          id_call,
-          status,
-        }).then((resp) => {
-          handleResponse(resp, () => {
-            showAlert("success", "Статус успішно змінено!");
-          });
-        })
-      )
-    ).then((resp) => {
-      setData(data?.filter((call) => !selected.find((s) => s === call?.id)));
-      const updatedCount = allCountRef.current - selected?.length;
-      saveCallsCount(callsCount - selected?.length);
-      allCountRef.current = updatedCount;
-      setAllCount(updatedCount);
-    });
+    if (editActiveType === "phone") {
+      Promise.all(
+        selected?.map((id_call) =>
+          setCallStatus({
+            id_call,
+            status,
+          }).then((resp) => {
+            handleResponse(resp, () => {
+              showAlert("success", "Статус успішно змінено!");
+            });
+          })
+        )
+      ).then((resp) => {
+        setData(data?.filter((call) => !selected.find((s) => s === call?.id)));
+        const updatedCount = allCountRef.current - selected?.length;
+        saveCallsCount(callsCount - selected?.length);
+        allCountRef.current = updatedCount;
+      });
+    } else if (editActiveType === "site") {
+    } else {
+      Promise.all(
+        selected?.map((id_call) =>
+          setTelegramOrderStatus({ id_order: id_call, status }).then((resp) => {
+            handleResponse(resp, () => {
+              showAlert("success", "Статус успішно змінено!");
+            });
+          })
+        )
+      ).then((resp) => {
+        setData(data?.filter((call) => !selected.find((s) => s === call?.id)));
+        saveCallsCount(callsCount - selected?.length);
+        setSelected([]);
+      });
+    }
   };
 
   useEffect(() => {
@@ -546,11 +559,11 @@ const Calls = ({ companyId }) => {
   };
 
   const handleToggleTelegramOrderStatus = (id) => {
-    setTelegramData(telegramData.filter((o) => o.id_order !== id));
+    setData(data.filter((o) => o.id_order !== id));
   };
 
   const handleToggleOrderStatus = (id) => {
-    setOrders(orders.filter((o) => o.id !== id));
+    setData(data.filter((o) => o.id !== id));
   };
 
   return (
@@ -562,9 +575,7 @@ const Calls = ({ companyId }) => {
         onApplyFilter={handleApplyFilter}
         onSetCallsStatus={handleSetCallsStatus}
         onSelectAll={handleSelectAll}
-        allCount={
-          allCount + (activeType === "telegram" ? telegramData?.length : 0)
-        }
+        allCount={allCount}
         clients={
           data
             ?.filter((c) => selected?.includes(c.id))
@@ -581,13 +592,12 @@ const Calls = ({ companyId }) => {
         }
         showTelegram={activeType === "telegram"}
         telegramCalls={
-          telegramData
+          data
             ?.filter((c) => selected?.includes(c.id_order))
             ?.map((c) => c?.id_order) ?? []
         }
         orders={
-          orders?.filter((c) => selected?.includes(c.id))?.map((c) => c?.id) ??
-          []
+          data?.filter((c) => selected?.includes(c.id))?.map((c) => c?.id) ?? []
         }
         refreshTelegramCalls={handleGetgetTelegramOrders}
         activeType={editActiveType}
@@ -605,12 +615,10 @@ const Calls = ({ companyId }) => {
         loading={loading}
         onSendSuccess={handleSendCliens}
         onAddClient={handleClientAdded}
-        telegramData={telegramData}
         showTelegram={showTelegram || filters?.type_call?.length === 0}
         refreshTelegramCalls={handleGetgetTelegramOrders}
         onToggleTelegramOrderStatus={handleToggleTelegramOrderStatus}
         onToggleOrderStatus={handleToggleOrderStatus}
-        orders={orders}
         refreshOrders={handleGetOrders}
         activeType={activeType}
       />

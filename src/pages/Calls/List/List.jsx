@@ -23,11 +23,8 @@ export const List = ({
   loading,
   onSendSuccess,
   onAddClient,
-  telegramData,
-  showTelegram,
   refreshTelegramCalls,
   onToggleTelegramOrderStatus,
-  orders,
   onToggleOrderStatus,
   refreshOrders,
   activeType,
@@ -121,17 +118,12 @@ export const List = ({
       )}
       {activeType === "empty" || !activeType ? (
         <Empty loading={loading} />
-      ) : activeType === "phone" && (data?.length === 0 || !data) ? (
-        <Empty loading={loading} />
-      ) : activeType === "telegram" &&
-        (telegramData?.length === 0 || !telegramData) ? (
-        <Empty loading={loading} />
-      ) : activeType === "site" && (orders?.length === 0 || !orders) ? (
+      ) : data?.length === 0 || !data ? (
         <Empty loading={loading} />
       ) : (
         <>
-          {orders?.length > 0 && activeType === "site"
-            ? orders?.map(
+          {data?.length > 0 && activeType === "site"
+            ? data?.map(
                 ({
                   comment,
                   dt_order,
@@ -187,7 +179,7 @@ export const List = ({
             : null}
           {activeType !== "telegram"
             ? null
-            : telegramData?.map(
+            : data?.map(
                 ({
                   user_name,
                   phone,
