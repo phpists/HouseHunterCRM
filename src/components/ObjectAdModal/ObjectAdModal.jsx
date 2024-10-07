@@ -112,11 +112,18 @@ export const ObjectAdModal = ({ onClose, object }) => {
                   (f) => commentsToFields?.object[f]
                 )
               : [];
-
+            const fieldsMore = resp?.data?.err_data
+              ? Object.entries(resp?.data?.fields_validation)?.map(
+                  (f) => `${commentsToFields?.object[f[0]]}: ${f[1]}`
+                )
+              : [];
             showAlert(
               "error",
-              `${message} ${fields?.length > 0 ? fields?.join(",") : ""}`
+              `${message} ${fields?.length > 0 ? [...fields]?.join(",") : ""}`
             );
+            if (fieldsMore?.length > 0) {
+              showAlert("error", fieldsMore?.join(","));
+            }
           },
           true
         );
@@ -165,7 +172,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
               : [];
             showAlert(
               "error",
-              `${resp?.data?.messege ?? ""} ${fields?.join(", \n\n")}`
+              `${resp?.data?.messege ?? "Помилка"} ${fields?.join(", \n\n")}`
             );
           },
           true

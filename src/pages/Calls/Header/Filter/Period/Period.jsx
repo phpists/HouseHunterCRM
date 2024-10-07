@@ -57,7 +57,7 @@ const StyledPeriod = styled.div`
     ${({ top }) =>
       top ? "bottom: calc(100% + 10px);" : "top: calc(100% + 10px);"}
     left: 0;
-    z-index: 100;
+    z-index: 1506;
     border: 1px solid var(--bg-20);
     background: var(--bg-10);
     backdrop-filter: blur(18.5px);
