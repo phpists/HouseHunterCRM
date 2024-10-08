@@ -61,7 +61,7 @@ export const Accounts = ({
         />
       )}
       <StyledAccounts>
-        {accounts?.map(({ TokenExpires, data, id, email, id_account }) => (
+        {accounts?.map(({ TokenExpires, data, id, email, id_user_olx }) => (
           <Card
             expireAt={
               TokenExpires
@@ -71,12 +71,16 @@ export const Accounts = ({
             email={data?.email ?? email}
             id={data?.id ?? id}
             name={data?.name?.length > 0 ? data?.name : null}
-            onDelete={() => handleOpenDeleteConfirm(data?.id ?? id)}
+            onDelete={() =>
+              handleOpenDeleteConfirm(data?.id ?? id ?? id_user_olx)
+            }
             oneAccount={oneAccount}
             onRefresh={
-              refresh ? () => handleRefresh(id ?? data?.id) : undefined
+              refresh
+                ? () => handleRefresh(id ?? data?.id ?? id_user_olx)
+                : undefined
             }
-            refreshing={refreshing === (id ?? data?.id)}
+            refreshing={refreshing === (id ?? data?.id ?? id_user_olx)}
           />
         ))}
       </StyledAccounts>

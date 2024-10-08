@@ -44,7 +44,7 @@ const AdSettings = () => {
     const { code, state } = handleGetSearchValues();
     if (code && state) {
       connectAccount({ code, state, resource: "olx" }).then((resp) => {
-        // navigate("/ad-setting");
+        navigate("/ad-setting");
         handleResponse(resp, () => {
           showAlert("success", "Успішно авторизовано через olx");
         });
