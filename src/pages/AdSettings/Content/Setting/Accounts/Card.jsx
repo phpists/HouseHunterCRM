@@ -12,18 +12,27 @@ export const Card = ({
   oneAccount,
   onRefresh,
   refreshing,
+  expired,
 }) => (
   <StyledCard className={`flex items-center`}>
     {expireAt ? (
       <div>
-        <div className="value">{expireAt}</div>
-        <div className="subtitle">Авторизація дійсна до</div>
+        <div className={`value ${expired && "expired"}`}>
+          {expired ? "Переувійдіть у свій акаунт та видаліть старий" : expireAt}
+        </div>
+        <div className="subtitle">
+          {expired
+            ? `Авторизація дійсна до ${expireAt}`
+            : "Авторизація дійсна до"}{" "}
+        </div>
       </div>
     ) : null}
-    <div>
-      <div className="value">{id}</div>
-      <div className="subtitle">{oneAccount ? "Авторизовано" : "Id"} </div>
-    </div>
+    {id?.length > 0 ? (
+      <div>
+        <div className="value">{id}</div>
+        <div className="subtitle">{oneAccount ? "Авторизовано" : "Id"} </div>
+      </div>
+    ) : null}
     {email?.length > 0 ? (
       <div title={email}>
         <div className="value email">{email}</div>
@@ -65,10 +74,12 @@ const StyledCard = styled.div`
     text-align: left;
     margin-bottom: 2px;
     min-width: 120px;
-    max-width: 120px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    &.expired {
+      max-width: fit-content;
+    }
   }
   .subtitle {
     font-size: 11px;
