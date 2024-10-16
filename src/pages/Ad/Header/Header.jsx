@@ -40,7 +40,7 @@ export const Header = ({
   const [defaultFiltersOpen, setDefalultFiltersOpen] = useState({
     company: true,
   });
-  const isPrevFilter = localStorage.getItem("objectsLastFilters");
+  const isPrevFilter = localStorage.getItem("adLastFilters");
   const [deleteAdHistory] = useLazyDeleteAdHistoryQuery();
   const { data: olxAccounts } = useGetStatusAccountQuery();
   const [deleteRealestateAdHistory] = useLazyRemoveRealestateAdHistoryQuery();

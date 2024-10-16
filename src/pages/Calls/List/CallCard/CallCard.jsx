@@ -122,7 +122,6 @@ export const CallCard = ({
     });
   };
 
-  console.log(callsData);
   return (
     <StyledCallCard
       className=" clickable"

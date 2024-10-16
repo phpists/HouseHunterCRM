@@ -136,6 +136,7 @@ export const List = ({
                   first_name,
                   last_name,
                   photo,
+                  client_id,
                 }) => (
                   <CallCard
                     key={id}
@@ -173,6 +174,7 @@ export const List = ({
                     level={Number(permision_level)}
                     name={`${first_name ?? ""} ${last_name}`}
                     photo={photo}
+                    clientId={client_id}
                   />
                 )
               )
@@ -196,6 +198,7 @@ export const List = ({
                   first_name,
                   last_name,
                   photo,
+                  client_id,
                 }) => (
                   <CallCard
                     key={id_order}
@@ -238,6 +241,7 @@ export const List = ({
                     level={Number(permision_level)}
                     name={`${first_name ?? ""} ${last_name}`}
                     photo={photo}
+                    clientId={client_id}
                   />
                 )
               )}

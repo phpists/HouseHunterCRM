@@ -114,7 +114,6 @@ const Calls = ({ companyId }) => {
   };
 
   useEffect(() => {
-    console.log(data?.length);
     setAllCount(data?.length);
   }, [data]);
 
@@ -123,8 +122,9 @@ const Calls = ({ companyId }) => {
       filters: isFilter.current
         ? {
             ...filters,
-            type_call:
-              filters?.type_call?.length > 0 ? filters?.type_call : undefined,
+            ...(filters?.type_call?.length > 0
+              ? [{ type_call: filters?.type_call }]
+              : []),
             ...(removePhoneMask(filters?.search_phone)?.length > 0
               ? [{ search_phone: removePhoneMask(filters?.search_phone) }]
               : []),
@@ -177,8 +177,9 @@ const Calls = ({ companyId }) => {
               ...(removePhoneMask(filters?.search_phone)?.length > 0
                 ? [{ search_phone: removePhoneMask(filters?.search_phone) }]
                 : []),
-              type_call:
-                filters?.type_call?.length > 0 ? filters?.type_call : undefined,
+              ...(filters?.type_call?.length > 0
+                ? [{ type_call: filters?.type_call }]
+                : []),
               date_from: filters?.date_from
                 ? handleFormatFilterDate(filters?.date_from, true)
                 : undefined,
@@ -232,7 +233,8 @@ const Calls = ({ companyId }) => {
               allCountRef.current = 0;
               setAllCount(0);
             }
-          }
+          },
+          true
         );
       });
     }
@@ -267,8 +269,9 @@ const Calls = ({ companyId }) => {
         filters: isFilter.current
           ? {
               ...filters,
-              type_call:
-                filters?.type_call?.length > 0 ? filters?.type_call : undefined,
+              ...(filters?.type_call?.length > 0
+                ? [{ type_call: filters?.type_call }]
+                : []),
               search_phone:
                 removePhoneMask(filters?.search_phone)?.length > 0
                   ? removePhoneMask(filters?.search_phone)
@@ -310,7 +313,7 @@ const Calls = ({ companyId }) => {
           },
           () => {
             if (resp?.data?.error !== 0 && resp?.error !== 32) {
-              showAlert("error", resp?.data?.messege ?? "Помилка");
+              //   showAlert("error", resp?.data?.messege ?? "Помилка");
             }
             setIsAllPages(true);
             if (isReset) {
@@ -319,7 +322,8 @@ const Calls = ({ companyId }) => {
               allCountRef.current = 0;
               setAllCount(0);
             }
-          }
+          },
+          true
         );
       });
     }
@@ -441,9 +445,9 @@ const Calls = ({ companyId }) => {
       setFilters(INIT_FILTERS);
       localStorage.removeItem("callsFilter");
       setShowTelegram(false);
-      setActiveType(undefined);
-      setEditActiveType(undefined);
-      localStorage.setItem("callsActiveType", "empty");
+      setActiveType("phone");
+      setEditActiveType("phone");
+      localStorage.setItem("callsActiveType", "phone");
     }
 
     editActiveType === "phone"

@@ -18,14 +18,14 @@ export const Phone = ({
   <div>
     <StyledPhone
       className="flex items-center phones-phone-wrapper"
-      open={open}
+      open={open && callsData?.length > 0}
       onClick={onToggleOpen}
     >
       <Avatar />
       <PhoneText phone={phone} clientName={clientName} />
       <LastDate date={date} />
     </StyledPhone>
-    {open && (
+    {open && callsData?.length > 0 && (
       <Dropdown
         callsData={callsData}
         changeStatus={changeStatus}

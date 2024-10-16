@@ -71,7 +71,7 @@ export const UserInfoCard = ({
     <>
       <StyledUserInfoCard
         initial={{ opacity: 0, translateX: "100%" }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.3 }}
         animate={controls}
         className="hide-scroll user-info-profile-card"
         ref={contentRef}

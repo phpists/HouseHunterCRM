@@ -39,6 +39,15 @@ export const Dropdown = ({
           >
             <span>Передати </span> <ToObjectIcon className="selection-icon" />
           </div>
+          {clientId?.length > 0 ? (
+            <div
+              className="flex items-center justify-between"
+              onClick={() => navigate(`/client/${clientId}`)}
+            >
+              <span>Редагувати клієнта</span>{" "}
+              <Selection className="selection-icon" />
+            </div>
+          ) : null}
         </>
       ) : telegram ? (
         <>
@@ -75,6 +84,15 @@ export const Dropdown = ({
               <span>Завантажити</span> <DownloadIcon className="star-icon" />
             </div>
           )}
+          {clientId?.length > 0 ? (
+            <div
+              className="flex items-center justify-between"
+              onClick={() => navigate(`/client/${clientId}`)}
+            >
+              <span>Редагувати клієнта</span>{" "}
+              <Selection className="selection-icon" />
+            </div>
+          ) : null}
         </>
       ) : (
         <>

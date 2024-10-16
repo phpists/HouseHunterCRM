@@ -18,7 +18,7 @@ export const Modal = ({ title, children, onClose }) => {
   return (
     <StyledModal
       initial={{ opacity: 0, translateX: "100%" }}
-      transition={{ duration: 0.4 }}
+      transition={{ duration: 0.3 }}
       animate={controls}
     >
       <Header title={title} onClose={handleClose} />

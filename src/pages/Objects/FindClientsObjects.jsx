@@ -44,6 +44,7 @@ export const FindClientsObjects = ({ onClose, id }) => {
                 <Phone
                   key={i}
                   phone={p?.phone}
+                  maskedPhone={p?.phone}
                   className="phone-card"
                   onClick={() =>
                     window.open(

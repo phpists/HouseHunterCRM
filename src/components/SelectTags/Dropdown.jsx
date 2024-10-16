@@ -12,7 +12,7 @@ export const Dropdown = ({
   tags = [],
 }) => (
   <StyledDropdown className="tagsSelectDropdown">
-    {options?.length ? (
+    {options?.length >= 0 ? (
       options.filter(({ title }) =>
         search?.length > 0
           ? title?.toLowerCase()?.includes(search.toLowerCase())

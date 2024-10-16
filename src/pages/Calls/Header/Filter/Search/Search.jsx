@@ -73,16 +73,16 @@ export const Search = ({
       {activeType === "phone" ? (
         <SelectTags
           label="Пошук по типу"
-          tags={[
-            ...filters?.type_call?.map((t) => ({
+          tags={
+            filters?.type_call?.map((t) => ({
               title: callsType
                 ? Object.entries(callsType)?.find(
                     (c) => c[1]?.id?.toString() === t
                   )?.[1].name
                 : "-",
               value: t?.toString(),
-            })),
-          ]}
+            })) ?? []
+          }
           placeholder="Оберіть"
           onChange={(val, title) => {
             onChangeFilter(

@@ -91,7 +91,7 @@ export const Filter = ({
     <>
       <StyledFilter
         initial={{ opacity: 0, translateX: "100%" }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.3 }}
         animate={controls}
       >
         <Header onClose={handleClose} />

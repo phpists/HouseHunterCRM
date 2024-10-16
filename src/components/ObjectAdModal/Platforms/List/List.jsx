@@ -121,8 +121,10 @@ export const List = ({
           }}
         />
       )}
-      {accounts?.accounts?.filter((a) => a?.error !== "invalid_token")?.length >
-      0
+      {accounts?.accounts
+        ?.filter((a) => a?.error !== "invalid_token")
+        ?.filter((a) => new Date().getTime() < Number(a?.TokenExpires) * 1000)
+        ?.length > 0
         ? accounts?.accounts?.map((account, i) => (
             <Card
               key={i}
@@ -183,8 +185,10 @@ export const List = ({
         />
       ) : null}
 
-      {accounts?.accounts?.filter((a) => a?.error !== "invalid_token")?.length >
-      0 ? null : (
+      {accounts?.accounts
+        ?.filter((a) => a?.error !== "invalid_token")
+        ?.filter((a) => new Date().getTime() < Number(a?.TokenExpires) * 1000)
+        ?.length > 0 ? null : (
         <Card
           icon={olxIcon}
           title={"Потрібна авторизація"}

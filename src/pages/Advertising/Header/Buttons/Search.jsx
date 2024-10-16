@@ -14,7 +14,7 @@ export const Search = ({
   favoritesFilter,
 }) => {
   const [open, setOpen] = useState(false);
-  const prevClientsFilters = localStorage.getItem("clientsFilters");
+  const prevClientsFilters = localStorage.getItem("advertisingFilters");
 
   return (
     <div>

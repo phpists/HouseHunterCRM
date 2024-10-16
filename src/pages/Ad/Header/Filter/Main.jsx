@@ -77,10 +77,15 @@ export const Main = ({ filters, onChangeFilter }) => {
             placeholder="Оберіть акаунт"
             options={
               accounts?.accounts
-                ? accounts?.accounts?.map((a) => ({
-                    title: a?.data?.name ?? a?.data?.email ?? a?.data?.id,
-                    value: a?.data?.id,
-                  }))
+                ? accounts?.accounts
+                    ?.filter(
+                      (a) =>
+                        new Date().getTime() < Number(a?.TokenExpires) * 1000
+                    )
+                    ?.map((a) => ({
+                      title: a?.data?.name ?? a?.data?.email ?? a?.data?.id,
+                      value: a?.data?.id,
+                    }))
                 : []
             }
             value={filters?.id_user_olx}

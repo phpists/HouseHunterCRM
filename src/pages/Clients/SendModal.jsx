@@ -31,6 +31,7 @@ export const SendModal = ({
           () => {
             onSendSuccess();
             showAlert("success", "Успішно передано");
+            onClose();
             onChangeLoading && onChangeLoading(false);
           },
           () => {
