@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
-export const PhoneText = ({ phone, clientName }) => (
+export const PhoneText = ({ phone, clientName, companyName }) => (
   <StyledPhoneText clientName={clientName}>
     <div className="phone">{phone}</div>
     <div className="subtitle" title={clientName ?? "Відсутній в базі"}>
       {clientName ?? "Відсутній в базі"}
     </div>
+    {companyName?.length > 0 ? (
+      <div className="subtitle">{companyName}</div>
+    ) : null}
   </StyledPhoneText>
 );
 

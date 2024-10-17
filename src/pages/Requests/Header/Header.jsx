@@ -196,16 +196,15 @@ export const Header = ({
         confirmText={filters?.show_deleted ? null : confirmText}
         onChangeConfirmText={(val) => setConfimText(val)}
       />
-      {filterOpen && (
-        <Filter
-          onClose={() => setFilterOpen(false)}
-          filters={filters}
-          onChangeFilter={onChangeFilter}
-          filtersFields={filtersFields}
-          onApplyFilter={onApplyFilter}
-          isFavorite={isFavorite}
-        />
-      )}
+      <Filter
+        open={filterOpen}
+        onClose={() => setFilterOpen(false)}
+        filters={filters}
+        onChangeFilter={onChangeFilter}
+        filtersFields={filtersFields}
+        onApplyFilter={onApplyFilter}
+        isFavorite={isFavorite}
+      />
       {addClientOpen && <AddClient onClose={() => setAddClientOpen(false)} />}
     </StyledHeader>
   );

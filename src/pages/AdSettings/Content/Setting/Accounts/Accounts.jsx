@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import { Confirm } from "../../../../../components/Confirm/Confirm";
 import {
+  useLazyRefreshFlombuAdsQuery,
   useLazyRefreshOlxAdsAccountQuery,
   useLazyRefreshRealestateAdsAccountQuery,
 } from "../../../../../store/auth/auth.api";
@@ -23,6 +24,7 @@ export const Accounts = ({
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [refreshOlxAdsAccount] = useLazyRefreshOlxAdsAccountQuery();
   const [refreshRealestateAds] = useLazyRefreshRealestateAdsAccountQuery();
+  const [refreshFlombuAds] = useLazyRefreshFlombuAdsQuery();
   const [refreshing, setRefreshing] = useState(false);
 
   const handleOpenDeleteConfirm = (id) => setDeleteConfirm(id);
@@ -43,6 +45,13 @@ export const Accounts = ({
       });
     } else if (type === "realstate") {
       refreshRealestateAds(id).then((resp) => {
+        setRefreshing(false);
+        handleResponse(resp, () => {
+          showAlert("success", "Історію всіх оголошень оновлено");
+        });
+      });
+    } else {
+      refreshFlombuAds().then((resp) => {
         setRefreshing(false);
         handleResponse(resp, () => {
           showAlert("success", "Історію всіх оголошень оновлено");

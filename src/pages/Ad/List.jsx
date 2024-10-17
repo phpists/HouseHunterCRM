@@ -150,9 +150,14 @@ export const List = ({
             resp,
             () => {
               showAlert("success", `Оголошення деактивовано!`);
-              onDeleteSuccess([
-                data?.find((o) => o.id_ad_in_source === deleteId)?.id_obj,
-              ]);
+              //   onDeleteSuccess([
+              //     data?.find((o) => o.id_ad_in_source === deleteId)?.id_obj,
+              //   ]);
+              onUpdateObject(
+                data?.find((o) => o.id_obj === deleteId)?.id_ad_in_source,
+                "status",
+                resp?.data?.status
+              );
             },
             () => {
               const fields = resp?.data?.fields_validation
@@ -310,7 +315,7 @@ export const List = ({
                 key={i}
                 selected={!!selected.find((j) => j === d?.id_ad_in_source)}
                 onSelect={() => onSelect(d?.id_ad_in_source)}
-                data={{ ...d, id: d?.id_ad_in_source }}
+                data={{ ...d, id: d?.id_ad_in_source, img: [{ name: d?.img }] }}
                 onToggleFavoriteStatus={() =>
                   toggleFavoriteStatus(d?.id_ad_in_source)
                 }

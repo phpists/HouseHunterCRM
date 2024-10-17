@@ -103,21 +103,20 @@ export const Header = ({
         }
         className="select-wrapper-mobile"
       />
-      {filterOpen && (
-        <Filter
-          onClose={() => setFilterOpen(false)}
-          filters={filters}
-          onChangeFilter={onChangeFilter}
-          onApplyFilter={onApplyFilter}
-          filterPhoneCode={filterPhoneCode}
-          onChangeFilterPhoneCode={onChangeFilterPhoneCode}
-          showTelegram={showTelegram}
-          activeType={activeType}
-          onChangeActiveType={onChangeActiveType}
-          ordersTypes={ordersTypes}
-          telegramTypes={telegramTypes}
-        />
-      )}
+      <Filter
+        open={filterOpen}
+        onClose={() => setFilterOpen(false)}
+        filters={filters}
+        onChangeFilter={onChangeFilter}
+        onApplyFilter={onApplyFilter}
+        filterPhoneCode={filterPhoneCode}
+        onChangeFilterPhoneCode={onChangeFilterPhoneCode}
+        showTelegram={showTelegram}
+        activeType={activeType}
+        onChangeActiveType={onChangeActiveType}
+        ordersTypes={ordersTypes}
+        telegramTypes={telegramTypes}
+      />
       {addClientOpen && <AddClient onClose={() => setAddClientOpen(false)} />}
     </StyledHeader>
   );

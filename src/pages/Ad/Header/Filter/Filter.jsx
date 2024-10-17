@@ -5,17 +5,14 @@ import { Footer } from "./Footer";
 import { motion, useAnimationControls } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Main } from "./Main";
-import { Topicality } from "./Topicality";
-import { Characteristics } from "./Characteristics";
 import { useLazyGetAllObjectsQuery } from "../../../../store/objects/objects.api";
-import { handleFromInputDate, removePhoneMask } from "../../../../utilits";
+import { removePhoneMask } from "../../../../utilits";
 import { useActions } from "../../../../hooks/actions";
 import { useAppSelect } from "../../../../hooks/redux";
-import { Spinner } from "../../../../components/Spinner";
-import { Loader } from "../../../../components/Loader";
 import { useGetPhonesCodesQuery } from "../../../../store/auth/auth.api";
 
 export const Filter = ({
+  open,
   onClose,
   filters,
   onChangeFilter,
@@ -48,8 +45,8 @@ export const Filter = ({
   };
 
   useEffect(() => {
-    controls.start({ opacity: 1, translateX: 0 });
-  }, []);
+    open && controls.start({ opacity: 1, translateX: 0 });
+  }, [open]);
 
   const handleApplyFilters = (isApply) => {
     onApplyFilter(isApply);
@@ -124,7 +121,7 @@ export const Filter = ({
           onSubmit={handleApply}
         />
       </StyledFilter>
-      <div className="modal-overlay" onClick={handleClose}></div>
+      {open && <div className="modal-overlay" onClick={handleClose}></div>}
     </>
   );
 };

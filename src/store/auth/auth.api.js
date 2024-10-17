@@ -627,6 +627,18 @@ export const auth = createApi({
         }),
       }),
     }),
+    refreshFlombuAds: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "syncAdds",
+          resource: "flombu",
+        }),
+      }),
+    }),
   }),
 });
 
@@ -673,5 +685,6 @@ export const {
   useLazySyncOtherDataRealestateAdQuery,
   useLazyRemoveFlombuAdHistoryQuery,
   useLazyRemoveFlombuAdQuery,
-  useLazyGetStatusFlombuAdQuery
+  useLazyGetStatusFlombuAdQuery,
+  useLazyRefreshFlombuAdsQuery
 } = auth;

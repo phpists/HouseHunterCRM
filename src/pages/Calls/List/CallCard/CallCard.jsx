@@ -47,6 +47,7 @@ export const CallCard = ({
   statusText,
   xcorp,
   onEditHistoryComment,
+  companyName,
 }) => {
   const [open, setOpen] = useState();
   const [commentEdit, setCommentEdit] = useState(comment);
@@ -191,6 +192,7 @@ export const CallCard = ({
             xcorp ? () => getOrderHistory(id) : () => getHistoryOrder(chatId)
           )
         }
+        companyName={companyName}
       />
       <MobileContent
         open={open}
@@ -254,6 +256,7 @@ export const CallCard = ({
             xcorp ? () => getOrderHistory(id) : () => getHistoryOrder(chatId)
           )
         }
+        companyName={companyName}
       />
     </StyledCallCard>
   );

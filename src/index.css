@@ -506,7 +506,9 @@ input[type="number"] {
 
 .error-wrapper svg {
   margin-bottom: 20px;
-  width: 80px;
+  width: 200px;
+  height: 200px;
+  opacity: 0.9;
 }
 
 .PhotoView__Photo {

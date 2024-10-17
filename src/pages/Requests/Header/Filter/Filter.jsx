@@ -13,6 +13,7 @@ import { useLazyGetRequestsQuery } from "../../../../store/requests/requests.api
 import { Loader } from "../../../../components/Loader";
 
 export const Filter = ({
+  open,
   onClose,
   filters,
   onChangeFilter,
@@ -58,8 +59,8 @@ export const Filter = ({
   };
 
   useEffect(() => {
-    controls.start({ opacity: 1, translateX: 0 });
-  }, []);
+    open && controls.start({ opacity: 1, translateX: 0 });
+  }, [open]);
 
   const handleApplyFilter = (isApply) => {
     onApplyFilter(isApply);
@@ -107,7 +108,7 @@ export const Filter = ({
           onCancel={() => handleApplyFilter(false)}
         />
       </StyledFilter>
-      <div className="modal-overlay" onClick={handleClose}></div>
+      {open && <div className="modal-overlay" onClick={handleClose}></div>}
     </>
   );
 };

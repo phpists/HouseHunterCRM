@@ -118,13 +118,12 @@ const Calls = ({ companyId }) => {
   }, [data]);
 
   const handleGetgetTelegramOrders = () => {
+    const { type_call, ...otherFilters } = filters;
     const sendData = {
       filters: isFilter.current
         ? {
-            ...filters,
-            ...(filters?.type_call?.length > 0
-              ? [{ type_call: filters?.type_call }]
-              : []),
+            ...otherFilters,
+            ...(type_call?.length > 0 ? [{ type_call }] : []),
             ...(removePhoneMask(filters?.search_phone)?.length > 0
               ? [{ search_phone: removePhoneMask(filters?.search_phone) }]
               : []),
@@ -167,19 +166,20 @@ const Calls = ({ companyId }) => {
       }
       isLoading.current = true;
       setLoading(true);
+      const { type_call, ...otherFilters } = filters;
 
       const sendData = {
         filters: isFilter.current
           ? {
               ...Object.fromEntries(
-                Object.entries(filters)?.filter((v) => v[1])
+                Object.entries(otherFilters)
+                  ?.filter((v) => v[1])
+                  ?.filter((v) => v[0] !== "type_call")
               ),
               ...(removePhoneMask(filters?.search_phone)?.length > 0
                 ? [{ search_phone: removePhoneMask(filters?.search_phone) }]
                 : []),
-              ...(filters?.type_call?.length > 0
-                ? [{ type_call: filters?.type_call }]
-                : []),
+              ...(type_call?.length > 0 ? [{ type_call }] : []),
               date_from: filters?.date_from
                 ? handleFormatFilterDate(filters?.date_from, true)
                 : undefined,
@@ -264,14 +264,13 @@ const Calls = ({ companyId }) => {
       }
       isLoading.current = true;
       setLoading(true);
+      const { type_call, ...otherFilters } = filters;
 
       const sendData = {
         filters: isFilter.current
           ? {
-              ...filters,
-              ...(filters?.type_call?.length > 0
-                ? [{ type_call: filters?.type_call }]
-                : []),
+              ...otherFilters,
+              ...(type_call?.length > 0 ? [{ type_call }] : []),
               search_phone:
                 removePhoneMask(filters?.search_phone)?.length > 0
                   ? removePhoneMask(filters?.search_phone)

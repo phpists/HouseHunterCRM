@@ -9,6 +9,7 @@ import {
   useLazyDeleteAccountOlxQuery,
   useLazyFlombuConnectAccountQuery,
   useLazyFlombuDeleteAccountQuery,
+  useLazyRefreshFlombuAdsQuery,
   useLazyRefreshRealestateAdsAccountQuery,
   useLazyRemoveAccountRealestateQuery,
 } from "../../../../store/auth/auth.api";
@@ -22,6 +23,7 @@ export const Setting = ({
   onRefetchRealestateStatus,
   realestateAccounts,
   onRefreshFlombuStatus,
+  onToggleFlombuAuth,
   flombuAuth,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
@@ -41,7 +43,7 @@ export const Setting = ({
     type === "olx"
       ? onRefreshAccountsData()
       : type === "flombu"
-      ? onRefreshFlombuStatus()
+      ? onToggleFlombuAuth(false)
       : onRefetchRealestateStatus();
   };
 
@@ -63,7 +65,7 @@ export const Setting = ({
 
   const handleFlombuConnect = () => {
     flombuConnectAccount().then((resp) =>
-      handleResponse(resp, () => onRefreshFlombuStatus())
+      handleResponse(resp, () => onToggleFlombuAuth(true))
     );
   };
 
@@ -127,6 +129,7 @@ export const Setting = ({
               onRefreshAccountsData={onRefreshFlombuStatus}
               onDelete={(id) => handleDeleteAccount(id, "flombu")}
               oneAccount
+              refresh
             />
           ) : (
             <Button title="Додати акаунт" onClick={handleFlombuConnect} />

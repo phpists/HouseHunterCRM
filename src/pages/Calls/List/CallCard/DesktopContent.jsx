@@ -41,6 +41,7 @@ export const DesktopContent = ({
   xcorp,
   orderHistory,
   onEditHistoryComment,
+  companyName,
 }) => (
   <StyledDesktopContent className="flex items-start clickable">
     <Type
@@ -62,6 +63,7 @@ export const DesktopContent = ({
       xcorp={xcorp}
       orderHistory={orderHistory}
       onEditHistoryComment={onEditHistoryComment}
+      companyName={companyName}
     />
     <Divider />
     <Status status={status} />

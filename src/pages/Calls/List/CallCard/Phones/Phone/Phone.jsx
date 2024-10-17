@@ -14,6 +14,7 @@ export const Phone = ({
   onChangeHistoryOrderStatus,
   onToggleOpen,
   onEditHistoryComment,
+  companyName,
 }) => (
   <div>
     <StyledPhone
@@ -22,7 +23,11 @@ export const Phone = ({
       onClick={onToggleOpen}
     >
       <Avatar />
-      <PhoneText phone={phone} clientName={clientName} />
+      <PhoneText
+        phone={phone}
+        clientName={clientName}
+        companyName={companyName}
+      />
       <LastDate date={date} />
     </StyledPhone>
     {open && callsData?.length > 0 && (

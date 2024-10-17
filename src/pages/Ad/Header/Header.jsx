@@ -194,21 +194,20 @@ export const Header = ({
             onDeleteHistory={handleDeleteHistory}
           />
         </div>
-        {filterOpen && (
-          <Filter
-            onClose={() => setFilterOpen(false)}
-            filters={filters}
-            onChangeFilter={onChangeFilter}
-            filtersFields={filtersFields}
-            onApplyFilter={handleApplyFilter}
-            filtersOpened={defaultFiltersOpen}
-            onChangeDefaultFiltersOpened={(val) => setDefalultFiltersOpen(val)}
-            isFavorite={isFavorite}
-            allCount={allCount}
-            phoneCode={phoneCode}
-            onChangePhoneCode={onChangePhoneCode}
-          />
-        )}
+        <Filter
+          open={filterOpen}
+          onClose={() => setFilterOpen(false)}
+          filters={filters}
+          onChangeFilter={onChangeFilter}
+          filtersFields={filtersFields}
+          onApplyFilter={handleApplyFilter}
+          filtersOpened={defaultFiltersOpen}
+          onChangeDefaultFiltersOpened={(val) => setDefalultFiltersOpen(val)}
+          isFavorite={isFavorite}
+          allCount={allCount}
+          phoneCode={phoneCode}
+          onChangePhoneCode={onChangePhoneCode}
+        />
       </StyledHeader>
     </>
   );

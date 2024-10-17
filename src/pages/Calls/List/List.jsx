@@ -137,11 +137,22 @@ export const List = ({
                   last_name,
                   photo,
                   client_id,
+                  client_first_name,
+                  client_last_name,
+                  accsec_edit_client,
+                  type_agent,
                 }) => (
                   <CallCard
                     key={id}
                     callType={"Сайт"}
-                    clientName={author ?? "-"}
+                    clientName={
+                      type_agent
+                        ? type_agent?.full_name_agent
+                        : client_id
+                        ? `${client_first_name ?? "-"} ${client_last_name}`
+                        : null
+                    }
+                    companyName={type_agent?.type_agent}
                     phone={phone ?? "-"}
                     date={handleFormatDate(Number(dt_order) * 1000)}
                     comment={comment}
@@ -174,7 +185,7 @@ export const List = ({
                     level={Number(permision_level)}
                     name={`${first_name ?? ""} ${last_name}`}
                     photo={photo}
-                    clientId={client_id}
+                    clientId={accsec_edit_client ? client_id : null}
                   />
                 )
               )
@@ -199,11 +210,22 @@ export const List = ({
                   last_name,
                   photo,
                   client_id,
+                  client_first_name,
+                  client_last_name,
+                  accsec_edit_client,
+                  type_agent,
                 }) => (
                   <CallCard
                     key={id_order}
                     callType="Телеграм"
-                    clientName={user_name}
+                    clientName={
+                      type_agent
+                        ? type_agent?.full_name_agent
+                        : client_id
+                        ? `${client_first_name ?? "-"} ${client_last_name}`
+                        : null
+                    }
+                    companyName={type_agent?.type_agent}
                     phone={phone}
                     date={handleFormatDate(Number(dt_order) * 1000)}
                     comment={comment}
@@ -241,7 +263,7 @@ export const List = ({
                     level={Number(permision_level)}
                     name={`${first_name ?? ""} ${last_name}`}
                     photo={photo}
-                    clientId={client_id}
+                    clientId={accsec_edit_client ? client_id : null}
                   />
                 )
               )}

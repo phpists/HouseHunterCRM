@@ -4,13 +4,10 @@ import { SectionTitle } from "./SectionTitle";
 import { Footer } from "./Footer";
 import { motion, useAnimationControls } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Status } from "./Status";
 import { Search } from "./Search/Search";
-import { Period } from "./Period/Period";
-import { SelectTags } from "../../../../components/SelectTags/SelectTags";
-import { Divider } from "./Divider";
 
 export const Filter = ({
+  open,
   onClose,
   filters,
   onChangeFilter,
@@ -32,9 +29,9 @@ export const Filter = ({
   };
 
   useEffect(() => {
-    controls.start({ opacity: 1, translateX: 0 });
+    open && controls.start({ opacity: 1, translateX: 0 });
     // eslint-disable-next-line
-  }, []);
+  }, [open]);
 
   const handleApply = (isApply) => {
     onApplyFilter(isApply);
@@ -81,7 +78,7 @@ export const Filter = ({
         </div>
         <Footer onApplyFilter={handleApply} disabled={errors?.length > 0} />
       </StyledFilter>
-      <div className="modal-overlay" onClick={handleClose}></div>
+      {open && <div className="modal-overlay" onClick={handleClose}></div>}
     </>
   );
 };

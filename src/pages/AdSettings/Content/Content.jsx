@@ -4,7 +4,7 @@ import { TemplatesList } from "./TemplatesList/TemplatesList";
 import { Setting } from "./Setting/Setting";
 import { useGetStatusAccountQuery } from "../../../store/objects/objects.api";
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   useFlombuConnectStatusQuery,
   useGetRealestateStatusQuery,
@@ -31,11 +31,18 @@ export const Content = ({
   const iS_AD_ACCESS =
     XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) ||
     XHOUSE_COMPANY_ID.includes(user?.id);
+  const [flomnuAuth, setFlombuAuth] = useState(false);
 
   useEffect(() => {
     status && refetch();
     realestateStatus && refetchRealestateStatus();
   }, [location]);
+
+  useEffect(() => {
+    setFlombuAuth(flombuStatus?.error === 0);
+  }, [flombuStatus]);
+
+  const handleToggleFlombuAuth = (val) => setFlombuAuth(val);
 
   return (
     <StyledContent selectedTemplate={selectedResources}>
@@ -49,7 +56,7 @@ export const Content = ({
           onSelect={onSelect}
           olxAuth={!!status?.accounts?.[0]?.data?.id}
           realestateStatus={realestateStatus?.data?.length > 0}
-          flombuAuth={flombuStatus?.error === 0}
+          flombuAuth={flomnuAuth}
         />
       </div>
       {selectedResources ? (
@@ -64,7 +71,8 @@ export const Content = ({
             onRefetchRealestateStatus={refetchRealestateStatus}
             realestateAccounts={realestateStatus?.data}
             onRefreshFlombuStatus={resetchFflombuStatus}
-            flombuAuth={flombuStatus?.error === 0}
+            onToggleFlombuAuth={handleToggleFlombuAuth}
+            flombuAuth={flomnuAuth}
           />
         </div>
       ) : null}

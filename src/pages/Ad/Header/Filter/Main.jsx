@@ -148,8 +148,10 @@ export const Main = ({ filters, onChangeFilter }) => {
             placeholder="Оберіть статус"
             options={[
               { title: "В процесі", value: "processing" },
-              { title: "Успішний", value: "succeeded" },
-              { title: "Не успішний", value: "failed" },
+              { title: "Успіх", value: "succeeded" },
+              { title: "Помилка", value: "failed" },
+              { title: "Не знайдено", value: "not_found" },
+              { title: "Закрито", value: "closed" },
             ]}
             value={filters?.status}
             onChange={(val) =>

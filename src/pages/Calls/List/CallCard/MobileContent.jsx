@@ -39,6 +39,7 @@ export const MobileContent = ({
   onChangeHistoryOrderStatus,
   xcorp,
   onEditHistoryComment,
+  companyName,
 }) => (
   <StyledMobileContent className="flex flex-col items-start clickable">
     <Type

@@ -299,22 +299,21 @@ export const Header = ({
             onFastCopy={onFastCopy}
           />
         </div>
-        {filterOpen && (
-          <Filter
-            onClose={() => setFilterOpen(false)}
-            filters={filters}
-            onChangeFilter={onChangeFilter}
-            filtersFields={filtersFields}
-            onApplyFilter={handleApplyFilter}
-            filtersOpened={defaultFiltersOpen}
-            onChangeDefaultFiltersOpened={(val) => setDefalultFiltersOpen(val)}
-            isFavorite={isFavorite}
-            allCount={allCount}
-            phoneCode={phoneCode}
-            onChangePhoneCode={onChangePhoneCode}
-            onOpenMap={() => setOpenMap(true)}
-          />
-        )}
+        <Filter
+          open={filterOpen}
+          onClose={() => setFilterOpen(false)}
+          filters={filters}
+          onChangeFilter={onChangeFilter}
+          filtersFields={filtersFields}
+          onApplyFilter={handleApplyFilter}
+          filtersOpened={defaultFiltersOpen}
+          onChangeDefaultFiltersOpened={(val) => setDefalultFiltersOpen(val)}
+          isFavorite={isFavorite}
+          allCount={allCount}
+          phoneCode={phoneCode}
+          onChangePhoneCode={onChangePhoneCode}
+          onOpenMap={() => setOpenMap(true)}
+        />
         {openMap && (
           <MapModal
             onClose={() => setOpenMap(false)}
