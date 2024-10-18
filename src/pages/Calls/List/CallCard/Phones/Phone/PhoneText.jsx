@@ -6,7 +6,7 @@ export const PhoneText = ({ phone, clientName, companyName }) => (
     <div className="subtitle" title={clientName ?? "Відсутній в базі"}>
       {clientName ?? "Відсутній в базі"}
     </div>
-    {companyName?.length > 0 ? (
+    {companyName?.length > 0 && clientName ? (
       <div className="subtitle">{companyName}</div>
     ) : null}
   </StyledPhoneText>

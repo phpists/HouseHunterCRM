@@ -147,10 +147,10 @@ export const List = ({
                     key={id}
                     callType={"Сайт"}
                     clientName={
-                      type_agent
-                        ? type_agent?.full_name_agent
-                        : client_id
-                        ? `${client_first_name ?? "-"} ${client_last_name}`
+                      client_first_name
+                        ? `${client_first_name ?? ""} ${
+                            client_last_name ?? "-"
+                          }`
                         : null
                     }
                     companyName={type_agent?.type_agent}
@@ -221,10 +221,10 @@ export const List = ({
                     key={id_order}
                     callType="Телеграм"
                     clientName={
-                      type_agent
-                        ? type_agent?.full_name_agent
-                        : client_id
-                        ? `${client_first_name ?? "-"} ${client_last_name}`
+                      client_first_name
+                        ? `${client_first_name ?? ""} ${
+                            client_last_name ?? "-"
+                          }`
                         : null
                     }
                     companyName={type_agent?.type_agent}
@@ -308,10 +308,10 @@ export const List = ({
                     comment={coment}
                     status={status}
                     clientName={
-                      type?.type_agent
-                        ? type?.type_agent
-                        : client_id
-                        ? `${client_first_name ?? "-"} ${client_last_name}`
+                      client_first_name
+                        ? `${client_first_name ?? ""} ${
+                            client_last_name ?? "-"
+                          }`
                         : null
                     }
                     onSetStatus={() =>
