@@ -141,6 +141,7 @@ export const List = ({
                   client_last_name,
                   accsec_edit_client,
                   type_agent,
+                  call_count,
                 }) => (
                   <CallCard
                     key={id}
@@ -166,7 +167,7 @@ export const List = ({
                         type: "site",
                       })
                     }
-                    callCount={1}
+                    callCount={call_count}
                     statusText={type}
                     id={id}
                     xcorp
@@ -214,6 +215,7 @@ export const List = ({
                   client_last_name,
                   accsec_edit_client,
                   type_agent,
+                  call_count,
                 }) => (
                   <CallCard
                     key={id_order}
@@ -242,7 +244,7 @@ export const List = ({
                       })
                     }
                     idObject={id_obj}
-                    callCount={1}
+                    callCount={call_count}
                     chatId={chat_id}
                     onSetStatus={() =>
                       handleChangeTelegramOrderStatus(

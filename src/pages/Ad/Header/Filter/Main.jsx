@@ -148,7 +148,7 @@ export const Main = ({ filters, onChangeFilter }) => {
             placeholder="Оберіть статус"
             options={[
               { title: "В процесі", value: "processing" },
-              { title: "Успіх", value: "succeeded" },
+              { title: "Успіх", value: "active" },
               { title: "Помилка", value: "failed" },
               { title: "Не знайдено", value: "not_found" },
               { title: "Закрито", value: "closed" },

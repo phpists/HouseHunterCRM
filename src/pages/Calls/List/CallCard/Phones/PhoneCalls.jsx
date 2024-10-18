@@ -7,7 +7,7 @@ export const PhoneCalls = ({ count = 0, telegram, onToggleOpen }) => (
     <div>
       <div className="flex items-center title">
         <Phone />
-        {telegram ? "Історія" : count}
+        {count}
       </div>
       <div className="subtitle">Викликів</div>
     </div>

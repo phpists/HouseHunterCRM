@@ -123,7 +123,7 @@ const Calls = ({ companyId }) => {
       filters: isFilter.current
         ? {
             ...otherFilters,
-            ...(type_call?.length > 0 ? [{ type_call }] : []),
+            ...(type_call?.length > 0 ? { type_call } : {}),
             ...(removePhoneMask(filters?.search_phone)?.length > 0
               ? [{ search_phone: removePhoneMask(filters?.search_phone) }]
               : []),
@@ -179,7 +179,7 @@ const Calls = ({ companyId }) => {
               ...(removePhoneMask(filters?.search_phone)?.length > 0
                 ? [{ search_phone: removePhoneMask(filters?.search_phone) }]
                 : []),
-              ...(type_call?.length > 0 ? [{ type_call }] : []),
+              ...(type_call?.length > 0 ? { type_call } : {}),
               date_from: filters?.date_from
                 ? handleFormatFilterDate(filters?.date_from, true)
                 : undefined,
@@ -270,7 +270,7 @@ const Calls = ({ companyId }) => {
         filters: isFilter.current
           ? {
               ...otherFilters,
-              ...(type_call?.length > 0 ? [{ type_call }] : []),
+              ...(type_call?.length > 0 ? { type_call } : {}),
               search_phone:
                 removePhoneMask(filters?.search_phone)?.length > 0
                   ? removePhoneMask(filters?.search_phone)
