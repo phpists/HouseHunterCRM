@@ -479,8 +479,7 @@ const Objects = () => {
     // eslint-disable-next-line
   }, [updateData]);
 
-  console.log(filters);
-  const handleApplyDefaultFilters = () => {
+ const handleApplyDefaultFilters = () => {
     filterActive.current = false;
     isFirstRender.current = false;
     setIsDeleted(false);

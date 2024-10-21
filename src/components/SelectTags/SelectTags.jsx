@@ -51,7 +51,6 @@ export const SelectTags = ({
     }
   }, [open]);
 
-  console.log(options);
   return (
     <StyledSelectTags
       className={`flex items-center justify-between  ${!value && "empty"} ${

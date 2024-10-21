@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { TitleDivider } from "./TitleDivider";
 import { CheckOption } from "../CheckOption";
 import {
+  useGetAdverstionResourceQuery,
   useGetCommentsToFieldsQuery,
   useGetSourcesQuery,
   useGetTagsListQuery,
@@ -22,7 +23,11 @@ import { useAppSelect } from "../../hooks/redux";
 import { useGetCompanyStructureLevelQuery } from "../../store/structure/structure.api";
 import { Ranger } from "../Ranger/Ranger";
 import { handleChangeRange } from "../../utilits";
-import { useGetWorkersMyCompanyQuery } from "../../store/billing/billing.api";
+import {
+  useGetCompanyInfoQuery,
+  useGetWorkersMyCompanyQuery,
+} from "../../store/billing/billing.api";
+import { XHOUSE_COMPANY_ID } from "../../constants";
 
 export const Base = ({
   data,
@@ -71,6 +76,11 @@ export const Base = ({
   const { data: sources } = useGetSourcesQuery();
   const { data: tagsList } = useGetTagsListQuery({ only_notepad: "0" });
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
+  const { data: companyInfo } = useGetCompanyInfoQuery();
+  const { data: adverstionResources } = useGetAdverstionResourceQuery();
+  const iS_AD_ACCESS =
+    XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) ||
+    XHOUSE_COMPANY_ID.includes(user?.id);
 
   useEffect(() => {
     setMlsBase(mlsBaseOpen);
@@ -176,6 +186,20 @@ export const Base = ({
       showTagsObj: prevValue?.find((t) => t === val?.toString())
         ? prevValue?.filter((t) => t?.toString() !== val?.toString())
         : [...prevValue, val?.toString()],
+    });
+  };
+
+  const handleChangeExcludeResourceAdd = (val) => {
+    const prevValue = Array.isArray(data?.company_object?.excludeResourceAdd)
+      ? data?.company_object?.excludeResourceAdd
+      : [];
+    const isExist = prevValue?.find((l) => l === val);
+
+    onChange("company_object", {
+      ...data?.company_object,
+      excludeResourceAdd: isExist
+        ? prevValue?.filter((l) => l !== val)
+        : [...prevValue, val],
     });
   };
 
@@ -461,20 +485,47 @@ export const Base = ({
             />
           ) : null}
           {hideAdvertsAdd ? (
-            <CheckOption
-              label="Виключити рекламовані об'єкти"
-              className="check-opt"
-              value={data?.company_object?.hideAdvertsAdd}
-              onChange={() =>
-                onChange("company_object", {
-                  ...data?.company_object,
-                  hideAdvertsAdd:
-                    data?.company_object?.hideAdvertsAdd === "1"
-                      ? undefined
-                      : "1",
-                })
-              }
-            />
+            <>
+              {" "}
+              <CheckOption
+                label="Виключити рекламовані об'єкти"
+                className="check-opt"
+                value={data?.company_object?.hideAdvertsAdd}
+                onChange={() =>
+                  onChange("company_object", {
+                    ...data?.company_object,
+                    hideAdvertsAdd:
+                      data?.company_object?.hideAdvertsAdd === "1"
+                        ? undefined
+                        : "1",
+                  })
+                }
+              />
+              <SelectTags
+                label="Приховувати рекламовані обєкти на ресурах"
+                placeholder="Оберіть ресурс"
+                tags={adverstionResources?.resource
+                  ?.map((v) => ({
+                    title: v?.name,
+                    value: v?.id,
+                  }))
+                  ?.filter((v) =>
+                    data?.company_object?.excludeResourceAdd?.includes(v.value)
+                  )}
+                options={
+                  adverstionResources?.resource
+                    ?.map((v) => ({
+                      title: v?.name,
+                      value: v?.id,
+                    }))
+                    ?.filter((r) => (iS_AD_ACCESS ? true : r?.value !== "3")) ??
+                  []
+                }
+                onChange={handleChangeExcludeResourceAdd}
+                isSearch
+                showTags
+              />
+            </>
           ) : null}
         </>
       ) : null}

@@ -5,7 +5,7 @@ import {
   useGetAdverstionResourceQuery,
   useGetStatusAccountQuery,
 } from "../../../../store/objects/objects.api";
-
+import { useGetWorkersMyCompanyQuery } from "../../../../store/billing/billing.api";
 import {
   useGetRealestateStatusQuery,
   useGetStatusesOlxQuery,
@@ -13,6 +13,7 @@ import {
 import { useGetCompanyInfoQuery } from "../../../../store/billing/billing.api";
 import { useAppSelect } from "../../../../hooks/redux";
 import { XHOUSE_COMPANY_ID } from "../../../../constants";
+import { CheckOption } from "../../../../components/CheckOption";
 
 export const Main = ({ filters, onChangeFilter }) => {
   const { data: statuses } = useGetStatusesOlxQuery();
@@ -20,10 +21,12 @@ export const Main = ({ filters, onChangeFilter }) => {
   const { data: accounts } = useGetStatusAccountQuery();
   const { data: realestateAccounts } = useGetRealestateStatusQuery();
   const { data: companyInfo } = useGetCompanyInfoQuery();
+  const { data: companyWorkers } = useGetWorkersMyCompanyQuery();
   const { user } = useAppSelect((state) => state.auth);
   const iS_AD_ACCESS =
     XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) ||
     XHOUSE_COMPANY_ID.includes(user?.id);
+
   return (
     <StyledMain className="section filterFieldsWrapper">
       <SelectTags
@@ -164,6 +167,58 @@ export const Main = ({ filters, onChangeFilter }) => {
             notMultiSelect
           />
         </>
+      ) : null}
+      <CheckOption
+        label="Оголошення моєї структури"
+        className="check-opt"
+        value={filters?.filters?.call_my_struct === "1" ? "1" : "0"}
+        onChange={() =>
+          onChangeFilter(
+            "call_my_struct",
+            {
+              ...filters,
+              filters: {
+                call_my_struct:
+                  filters?.filters?.call_my_struct === "1" ? undefined : "1",
+                id_worker_Search: undefined,
+              },
+            },
+            true
+          )
+        }
+      />
+      {filters?.filters?.call_my_struct === "1" ? (
+        <SelectTags
+          label="Пошук по працівнику"
+          placeholder="Оберіть працівника"
+          options={
+            companyWorkers?.data
+              ? companyWorkers?.data?.map(({ id, name }) => ({
+                  title: name ?? "-",
+                  value: id,
+                }))
+              : []
+          }
+          value={filters?.filters?.id_worker_Search}
+          onChange={(val) =>
+            onChangeFilter(
+              "call_my_struct",
+              {
+                ...filters,
+                filters: {
+                  ...filters?.filters,
+                  id_worker_Search:
+                    val === filters?.filters?.id_worker_Search
+                      ? undefined
+                      : val,
+                },
+              },
+              true
+            )
+          }
+          isSearch
+          notMultiSelect
+        />
       ) : null}
     </StyledMain>
   );

@@ -514,6 +514,7 @@ export const objects = createApi({
         status,
         id_user_olx,
         id_realestate_account,
+        ...filters
       }) => ({
         url: "",
         method: "POST",
@@ -525,6 +526,7 @@ export const objects = createApi({
           status,
           id_user_olx,
           id_realestate_account,
+          ...filters,
         }),
       }),
     }),

@@ -6,11 +6,11 @@ import { useLazyGetListAddsPublichQuery } from "../../store/objects/objects.api"
 import { useActions } from "../../hooks/actions";
 import { useRef } from "react";
 import { useAppSelect } from "../../hooks/redux";
+import { handleResponse } from "../../utilits";
 
 const Ad = () => {
   const [getListAdds] = useLazyGetListAddsPublichQuery();
   const [data, setData] = useState([]);
-  const { saveObjectsCount } = useActions();
   const [selected, setSelected] = useState([]);
   const [objects, setObjects] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -68,10 +68,6 @@ const Ad = () => {
     const updatedCount = isFavorite ? allCount - selected.length : allCount;
     allCountRef.current = updatedCount;
     setAllCount(updatedCount);
-    const updatedAllCount = isFavorite
-      ? (objectsCount || 0) - selected.length
-      : objectsCount;
-    saveObjectsCount(updatedAllCount);
     setSelected([]);
   };
 
@@ -87,17 +83,56 @@ const Ad = () => {
     // eslint-disable-next-line
   }, [isFavorite]);
 
-  const handleGetData = () => {
-    setSelected([]);
-    getListAdds(filterActive.current ? filters : {}).then((resp) =>
-      setData(
-        resp?.data?.data?.map((d, i) => ({
-          ...d,
-          id_ad_in_source:
-            d?.id_resource === "3" ? `${d?.id_obj}-${i}` : d?.id_ad_in_source,
-        })) ?? []
-      )
-    );
+  const handleGetData = (isFilter, isReset) => {
+    if ((!isLoading.current && !isAllPages) || isReset) {
+      const filtersData = filterActive.current ? filters : {};
+      if (isReset) {
+        listRef.current.scroll({ top: 0 });
+        setData([]);
+        setSelected([]);
+        setAllCount(0);
+        currentPage.current = 0;
+        dataRef.current = [];
+        allCountRef.current = 0;
+      }
+
+      isLoading.current = true;
+
+      getListAdds({ ...filtersData, current_page: currentPage.current }).then(
+        (resp) => {
+          isLoading.current = false;
+          handleResponse(
+            resp,
+            () => {
+              const resposponseData =
+                resp?.data?.data?.map((d, i) => ({
+                  ...d,
+                  id_ad_in_source:
+                    d?.id_resource === "3"
+                      ? `${d?.id_obj}-${i}`
+                      : d?.id_ad_in_source,
+                })) ?? [];
+              const updatedData = isReset
+                ? resposponseData
+                : [...dataRef.current, ...resposponseData];
+
+              dataRef.current = updatedData;
+              setData(updatedData);
+            },
+            () => {
+              setIsAllPages(true);
+              if (isReset) {
+                setData([]);
+                setAllCount(0);
+                dataRef.current = [];
+                allCountRef.current = 0;
+              }
+            },
+            true
+          );
+        }
+      );
+    }
   };
 
   useEffect(() => {
@@ -118,7 +153,7 @@ const Ad = () => {
     currentPage.current = 0;
     setIsAllPages(false);
     // handleGetObjects(true, isApply);
-    handleGetData(!isApply);
+    handleGetData(!isApply, true);
 
     setIsDeleted(
       isApply ? filters?.company_object?.show_deleted === "1" : false
@@ -207,6 +242,29 @@ const Ad = () => {
           : e
       )
     );
+
+  const handleScroll = () => {
+    if (
+      listRef.current.offsetHeight + listRef.current.scrollTop <=
+        listRef.current.scrollHeight - 200 ||
+      isLoading.current
+    ) {
+      return;
+    }
+    currentPage.current += 1;
+    handleGetData();
+  };
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.addEventListener("scroll", handleScroll);
+      return () =>
+        listRef.current &&
+        // eslint-disable-next-line
+        listRef.current.removeEventListener("scroll", handleScroll);
+    }
+    // eslint-disable-next-line
+  }, [listRef, isLoading.current, isAllPages, objects]);
 
   return (
     <StyledObjects>

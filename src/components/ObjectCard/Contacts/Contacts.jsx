@@ -51,6 +51,17 @@ export const Contacts = ({
           className="mb-4"
         />
       ) : null}
+      {data?.client_data?.owner?.name && data?.client_data?.owner?.phone ? (
+        <Contact
+          type="rieltor"
+          name={data?.client_data?.owner?.name}
+          phones={data?.client_data?.owner?.phone}
+          typeText="Агент"
+          error={error}
+          onShow={handleShowClient}
+          className="mb-4"
+        />
+      ) : null}
       {data?.clients_inf?.contact?.owner &&
       data?.clients_inf?.contact?.owner?.phone ? (
         <Contact
@@ -65,6 +76,30 @@ export const Contacts = ({
           error={error}
           onShow={handleShowClient}
           className="mb-4"
+        />
+      ) : null}
+      {data?.client_data?.name ? (
+        <Contact
+          type="owner"
+          name={data?.client_data?.name}
+          phones={data?.client_data?.phones}
+          typeText={
+            data?.clients_inf?.contact?.party_agency ?? data?.clients_inf?.type
+          }
+          subtitle={
+            !showClientObjectsCount
+              ? null
+              : Number(data?.Count_object) === 0
+              ? null
+              : data?.type_object === "street_base"
+              ? `${data?.Count_object ?? 0} об'єктів на ${handleFormatDate(
+                  Number(data?.count_object_date) * 1000
+                )}`
+              : null
+          }
+          onClickOnSubtitle={onOpenPhonesModal}
+          error={error}
+          onShow={handleShowClient}
         />
       ) : null}
       {data?.clients_inf ? (
