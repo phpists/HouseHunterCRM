@@ -35,6 +35,7 @@ export const Header = ({
   isDeleted,
   onDeleteSuccess,
   data,
+  isMyStructAds,
 }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [defaultFiltersOpen, setDefalultFiltersOpen] = useState({
@@ -177,7 +178,9 @@ export const Header = ({
                   "Оголошення видалиться з історії публікацій. Видалити оголошення?"
                 }
                 noFavorite
-                onDeleteHistory={handleDeleteHistory}
+                onDeleteHistory={
+                  isMyStructAds ? undefined : handleDeleteHistory
+                }
                 onSelectAll={onSelectAll}
               />
             </div>
@@ -191,7 +194,7 @@ export const Header = ({
             allCount={allCount}
             onSelectAll={onSelectAll}
             noFavorite
-            onDeleteHistory={handleDeleteHistory}
+            onDeleteHistory={isMyStructAds ? undefined : handleDeleteHistory}
           />
         </div>
         <Filter

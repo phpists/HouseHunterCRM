@@ -504,7 +504,6 @@ export const Base = ({
               {data?.company_object?.hideAdvertsAdd === "1" && (
                 <SelectTags
                   label="Приховувати рекламовані обєкти на ресурах"
-                  placeholder="Оберіть ресурс"
                   tags={adverstionResources?.resource
                     ?.map((v) => ({
                       title: v?.name,

@@ -292,6 +292,7 @@ const Ad = () => {
         onRefetch={() => null}
         onDeleteSuccess={handleDeleteObjectSuccess}
         data={data ?? []}
+        isMyStructAds={isMyStructAds}
       />
       <List
         selected={selected}
