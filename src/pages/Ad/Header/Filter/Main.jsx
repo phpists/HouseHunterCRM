@@ -171,15 +171,15 @@ export const Main = ({ filters, onChangeFilter }) => {
       <CheckOption
         label="Оголошення моєї структури"
         className="check-opt"
-        value={filters?.filters?.call_my_struct === "1" ? "1" : "0"}
+        value={filters?.filters?.adds_my_struct === "1" ? "1" : "0"}
         onChange={() =>
           onChangeFilter(
-            "call_my_struct",
+            "adds_my_struct",
             {
               ...filters,
               filters: {
-                call_my_struct:
-                  filters?.filters?.call_my_struct === "1" ? undefined : "1",
+                adds_my_struct:
+                  filters?.filters?.adds_my_struct === "1" ? undefined : "1",
                 id_worker_Search: undefined,
               },
             },
@@ -187,7 +187,7 @@ export const Main = ({ filters, onChangeFilter }) => {
           )
         }
       />
-      {filters?.filters?.call_my_struct === "1" ? (
+      {filters?.filters?.adds_my_struct === "1" ? (
         <SelectTags
           label="Пошук по працівнику"
           placeholder="Оберіть працівника"

@@ -48,6 +48,7 @@ export const DesktopContent = ({
   onDeleteHistory,
   onDeleteAd,
   onOpenAdList,
+  noEdit,
 }) => {
   return (
     <StyledDesktopContent className="flex items-center justify-between clickable">
@@ -81,6 +82,7 @@ export const DesktopContent = ({
         onChangeTags={onChangeTags}
         ad={ad}
         onUpdateField={onUpdateField}
+        noEdit={noEdit}
       />
       <Contacts
         className="desktop-item"
@@ -91,37 +93,39 @@ export const DesktopContent = ({
         showClientObjectsCount={showClientObjectsCount}
         ad={ad}
       />
-      <ShowMore
-        clientId={data?.id_client}
-        id={data?.id}
-        onToggleFavoriteStatus={onToggleFavoriteStatus}
-        isFavorite={data?.favorite}
-        onFindSimilar={onFindSimilar}
-        isEdit={isEdit}
-        onHide={onHide}
-        onAddToSelection={onAddToSelection}
-        onOpenTagsHistory={onOpenTagsHistory}
-        onOpenPriceHistory={onOpenPriceHistory}
-        isAccess={data?.acsses_change}
-        link={data?.link ?? data?.url_resource}
-        isHideObjects={isHideObjects}
-        onOpenCommetHistory={onOpenCommetHistory}
-        onDelete={onDelete}
-        isStreetBase={data?.obj_street_base === "1"}
-        searchTag={searchTag}
-        onMarkPhone={onMarkPhone}
-        isDeleted={isDeleted}
-        onRestore={onRestore}
-        onDeleteFinally={onDeleteFinally}
-        onOpenDeleteReason={onOpenDeleteReason}
-        onFastSelection={onFastSelection}
-        onAdvertise={onAdvertise}
-        onAdvertiseTelegram={onAdvertiseTelegram}
-        ad={ad}
-        onDeleteHistory={onDeleteHistory}
-        onDeleteAd={onDeleteAd}
-        idRubric={data?.id_rubric}
-      />
+      {noEdit ? null : (
+        <ShowMore
+          clientId={data?.id_client}
+          id={data?.id}
+          onToggleFavoriteStatus={onToggleFavoriteStatus}
+          isFavorite={data?.favorite}
+          onFindSimilar={onFindSimilar}
+          isEdit={isEdit}
+          onHide={onHide}
+          onAddToSelection={onAddToSelection}
+          onOpenTagsHistory={onOpenTagsHistory}
+          onOpenPriceHistory={onOpenPriceHistory}
+          isAccess={data?.acsses_change}
+          link={data?.link ?? data?.url_resource}
+          isHideObjects={isHideObjects}
+          onOpenCommetHistory={onOpenCommetHistory}
+          onDelete={onDelete}
+          isStreetBase={data?.obj_street_base === "1"}
+          searchTag={searchTag}
+          onMarkPhone={onMarkPhone}
+          isDeleted={isDeleted}
+          onRestore={onRestore}
+          onDeleteFinally={onDeleteFinally}
+          onOpenDeleteReason={onOpenDeleteReason}
+          onFastSelection={onFastSelection}
+          onAdvertise={onAdvertise}
+          onAdvertiseTelegram={onAdvertiseTelegram}
+          ad={ad}
+          onDeleteHistory={onDeleteHistory}
+          onDeleteAd={onDeleteAd}
+          idRubric={data?.id_rubric}
+        />
+      )}
       <div className="mobile-footer w-full">
         <Info
           data={data}

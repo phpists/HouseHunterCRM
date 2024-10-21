@@ -33,6 +33,9 @@ const Ad = () => {
   const [actionLoading, setActionLoading] = useState(false);
   const [phoneCode, setPhoneCode] = useState("1");
   const [isDeleted, setIsDeleted] = useState(false);
+  const [isMyStructAds, setIsMyStructAds] = useState(
+    DEFAULT_FILTERS?.filters?.adds_my_struct === "1"
+  );
 
   const handleChangePhoneCode = (val) => setPhoneCode(val);
 
@@ -154,9 +157,11 @@ const Ad = () => {
     setIsAllPages(false);
     // handleGetObjects(true, isApply);
     handleGetData(!isApply, true);
-
     setIsDeleted(
       isApply ? filters?.company_object?.show_deleted === "1" : false
+    );
+    setIsMyStructAds(
+      isApply ? filters?.filters?.adds_my_struct === "1" : false
     );
   };
 
@@ -307,6 +312,7 @@ const Ad = () => {
         onChangeTags={handleChangeTags}
         filters={filters}
         onUpdateObject={handleUpdateObjectValue}
+        isMyStructAds={isMyStructAds}
       />
     </StyledObjects>
   );

@@ -6,7 +6,7 @@ import { handleFormatDate } from "../../../../utilits";
 import { useGetRealestateStatusQuery } from "../../../../store/auth/auth.api";
 import { useAppSelect } from "../../../../hooks/redux";
 
-export const AdTags = ({ data, onUpdateField }) => {
+export const AdTags = ({ data, onUpdateField, noEdit }) => {
   const { data: accounts } = useGetStatusAccountQuery();
   const { data: realestateAccounts } = useGetRealestateStatusQuery();
   const { user } = useAppSelect((state) => state.auth);
@@ -36,6 +36,7 @@ export const AdTags = ({ data, onUpdateField }) => {
         onUpdateField={onUpdateField}
         idUserRealestate={data?.id_realestate_account}
         resource={data?.id_resource}
+        noEdit={noEdit}
       />
     </StyledAdTags>
   );

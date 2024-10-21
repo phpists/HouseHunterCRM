@@ -50,6 +50,7 @@ export const MobileContent = ({
   onDeleteHistory,
   onDeleteAd,
   onOpenAdList,
+  noEdit,
 }) => (
   <StyledMobileContent className="clickable">
     <Header data={data} ad={ad} onOpenAdList={onOpenAdList} />
@@ -87,6 +88,7 @@ export const MobileContent = ({
       onChangeTags={onChangeTags}
       ad={ad}
       onUpdateField={onUpdateField}
+      noEdit={noEdit}
     />
     <Contacts
       data={data}
@@ -96,37 +98,39 @@ export const MobileContent = ({
       showClientObjectsCount={showClientObjectsCount}
       ad={ad}
     />
-    <ShowMore
-      clientId={data?.id_client}
-      id={data?.id}
-      onToggleFavoriteStatus={onToggleFavoriteStatus}
-      isFavorite={data?.favorite}
-      onFindSimilar={onFindSimilar}
-      isEdit={isEdit}
-      onHide={onHide}
-      onAddToSelection={onAddToSelection}
-      onOpenTagsHistory={onOpenTagsHistory}
-      onOpenPriceHistory={onOpenPriceHistory}
-      isAccess={data?.acsses_change}
-      link={data?.link ?? data?.url_resource}
-      isHideObjects={isHideObjects}
-      onOpenCommetHistory={onOpenCommetHistory}
-      onDelete={onDelete}
-      isStreetBase={data?.obj_street_base === "1"}
-      searchTag={searchTag}
-      onMarkPhone={onMarkPhone}
-      isDeleted={isDeleted}
-      onRestore={onRestore}
-      onDeleteFinally={onDeleteFinally}
-      onOpenDeleteReason={onOpenDeleteReason}
-      onFastSelection={onFastSelection}
-      onAdvertise={onAdvertise}
-      onAdvertiseTelegram={onAdvertiseTelegram}
-      ad={ad}
-      onDeleteHistory={onDeleteHistory}
-      onDeleteAd={onDeleteAd}
-      idRubric={data?.id_rubric}
-    />
+    {noEdit ? null : (
+      <ShowMore
+        clientId={data?.id_client}
+        id={data?.id}
+        onToggleFavoriteStatus={onToggleFavoriteStatus}
+        isFavorite={data?.favorite}
+        onFindSimilar={onFindSimilar}
+        isEdit={isEdit}
+        onHide={onHide}
+        onAddToSelection={onAddToSelection}
+        onOpenTagsHistory={onOpenTagsHistory}
+        onOpenPriceHistory={onOpenPriceHistory}
+        isAccess={data?.acsses_change}
+        link={data?.link ?? data?.url_resource}
+        isHideObjects={isHideObjects}
+        onOpenCommetHistory={onOpenCommetHistory}
+        onDelete={onDelete}
+        isStreetBase={data?.obj_street_base === "1"}
+        searchTag={searchTag}
+        onMarkPhone={onMarkPhone}
+        isDeleted={isDeleted}
+        onRestore={onRestore}
+        onDeleteFinally={onDeleteFinally}
+        onOpenDeleteReason={onOpenDeleteReason}
+        onFastSelection={onFastSelection}
+        onAdvertise={onAdvertise}
+        onAdvertiseTelegram={onAdvertiseTelegram}
+        ad={ad}
+        onDeleteHistory={onDeleteHistory}
+        onDeleteAd={onDeleteAd}
+        idRubric={data?.id_rubric}
+      />
+    )}
   </StyledMobileContent>
 );
 

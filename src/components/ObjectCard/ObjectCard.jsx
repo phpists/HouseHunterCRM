@@ -48,6 +48,7 @@ export const ObjectCard = memo(
     onDeleteHistory,
     onDeleteAd,
     onOpenAdList,
+    noEdit,
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
     const { ref, inView } = useInView({ triggerOnce: window.innerWidth < 801 });
@@ -119,6 +120,7 @@ export const ObjectCard = memo(
             onDeleteHistory={onDeleteHistory}
             onDeleteAd={onDeleteAd}
             onOpenAdList={onOpenAdList}
+            noEdit={noEdit}
           />
         ) : (
           <MobileContent
@@ -161,6 +163,7 @@ export const ObjectCard = memo(
             onDeleteHistory={onDeleteHistory}
             onDeleteAd={onDeleteAd}
             onOpenAdList={onOpenAdList}
+            noEdit={noEdit}
           />
         )}
       </StyledObjectCard>

@@ -102,6 +102,7 @@ export const Status = ({
   idUserRealestate,
   resource,
   idObj,
+  noEdit,
 }) => {
   const { data } = useGetStatusesOlxQuery();
   const [getStatusAdd] = useLazyGetStatusAddQuery();
@@ -166,7 +167,9 @@ export const Status = ({
             background: STATUSES[status]?.bg,
           }}
         />
-        <RefreshIcon className={`refreshIcon  ${loading && "loading"}`} />
+        {noEdit ? null : (
+          <RefreshIcon className={`refreshIcon  ${loading && "loading"}`} />
+        )}
       </div>
     </StyledStatus>
   );

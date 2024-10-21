@@ -50,6 +50,8 @@ export const List = ({
   onChangeContancts,
   onChangeTags,
   onUpdateObject,
+  filters,
+  isMyStructAds,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { accessData } = useAppSelect((state) => state.auth);
@@ -382,6 +384,7 @@ export const List = ({
                   )
                 }
                 ad
+                noEdit={isMyStructAds}
               />
             ))}
           </>
