@@ -501,30 +501,35 @@ export const Base = ({
                   })
                 }
               />
-              <SelectTags
-                label="Приховувати рекламовані обєкти на ресурах"
-                placeholder="Оберіть ресурс"
-                tags={adverstionResources?.resource
-                  ?.map((v) => ({
-                    title: v?.name,
-                    value: v?.id,
-                  }))
-                  ?.filter((v) =>
-                    data?.company_object?.excludeResourceAdd?.includes(v.value)
-                  )}
-                options={
-                  adverstionResources?.resource
+              {data?.company_object?.hideAdvertsAdd === "1" && (
+                <SelectTags
+                  label="Приховувати рекламовані обєкти на ресурах"
+                  placeholder="Оберіть ресурс"
+                  tags={adverstionResources?.resource
                     ?.map((v) => ({
                       title: v?.name,
                       value: v?.id,
                     }))
-                    ?.filter((r) => (iS_AD_ACCESS ? true : r?.value !== "3")) ??
-                  []
-                }
-                onChange={handleChangeExcludeResourceAdd}
-                isSearch
-                showTags
-              />
+                    ?.filter((v) =>
+                      data?.company_object?.excludeResourceAdd?.includes(
+                        v.value
+                      )
+                    )}
+                  options={
+                    adverstionResources?.resource
+                      ?.map((v) => ({
+                        title: v?.name,
+                        value: v?.id,
+                      }))
+                      ?.filter((r) =>
+                        iS_AD_ACCESS ? true : r?.value !== "3"
+                      ) ?? []
+                  }
+                  onChange={handleChangeExcludeResourceAdd}
+                  isSearch
+                  showTags
+                />
+              )}
             </>
           ) : null}
         </>
