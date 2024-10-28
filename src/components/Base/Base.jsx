@@ -61,6 +61,8 @@ export const Base = ({
   notCommentAndTags,
   showTagsObjarray,
   hideAdvertsAdd,
+  hidePicaroon,
+  requestHidePicaroon,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -615,6 +617,35 @@ export const Base = ({
               })
             }
           />
+          {requestHidePicaroon ? (
+            <CheckOption
+              label="Приховати шахраїв"
+              className="check-opt"
+              value={data?.hide_picaroon}
+              onChange={() =>
+                onChange(
+                  "hide_picaroon",
+                  data?.hide_picaroon === "1" ? undefined : "1"
+                )
+              }
+            />
+          ) : null}
+          {hidePicaroon ? (
+            <CheckOption
+              label="Приховати шахраїв"
+              className="check-opt"
+              value={data?.street_base_object?.hide_picaroon}
+              onChange={() =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  hide_picaroon:
+                    data?.street_base_object?.hide_picaroon === "1"
+                      ? undefined
+                      : "1",
+                })
+              }
+            />
+          ) : null}
           {requestPage ? null : (
             <CheckOption
               label="Потенційні власники"

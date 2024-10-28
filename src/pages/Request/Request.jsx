@@ -48,6 +48,7 @@ export const REQUEST_INIT = {
     structure: "0",
     comment: "",
     name: "",
+    hide_picaroon: "0",
   },
 };
 
@@ -334,6 +335,7 @@ const Request = () => {
         street_base_object,
         mls_object,
         hide_title_client,
+        hide_picaroon,
       } = data?.general_group;
       editRequest({
         ...data,
@@ -345,6 +347,7 @@ const Request = () => {
           folder_empty,
           not_actual,
           hide_title_client,
+          hide_picaroon,
           company_object: company_object
             ? {
                 ...company_object,
@@ -455,6 +458,8 @@ const Request = () => {
                 resp?.data[id]?.General_field_group?.tags_student ?? "0",
               tags_foreigners:
                 resp?.data[id]?.General_field_group?.tags_foreigners ?? "0",
+              hide_picaroon:
+                resp?.data[id]?.General_field_group?.hide_picaroon ?? "0",
               company_object:
                 Object.entries(company_object)?.length === 0
                   ? undefined
@@ -620,6 +625,7 @@ const Request = () => {
             dateAgreement
             dateAgreementFieldName="company_given_objects_to"
             requestPage
+            requestHidePicaroon
           />
           <Contacts />
         </div>

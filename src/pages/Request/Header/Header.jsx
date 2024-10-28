@@ -186,6 +186,7 @@ export const Header = ({
                 })
               }
             />
+
             <Button
               title="Пуста підбірка"
               active={data?.general_group?.folder_empty === "1"}
@@ -280,6 +281,8 @@ export const Header = ({
 
 const StyledHeader = styled.div`
   margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
   .icon-margin {
     margin-right: 10px;
   }

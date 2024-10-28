@@ -427,6 +427,7 @@ export const Main = ({
         hideAdvertsAdd
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
+        hidePicaroon
       />
     </StyledMain>
   );
