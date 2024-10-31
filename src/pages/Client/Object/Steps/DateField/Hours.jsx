@@ -14,7 +14,6 @@ export const Hours = () => {
       setHours(hoursValue);
       setMinutes(minutesValue);
     } else {
-      console.log("not valid");
     }
 
     return isValid;

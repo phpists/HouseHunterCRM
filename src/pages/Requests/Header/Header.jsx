@@ -96,7 +96,6 @@ export const Header = ({
     );
   };
 
-  console.log(isAllActions);
 
   return (
     <StyledHeader>

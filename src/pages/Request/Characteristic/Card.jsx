@@ -118,7 +118,6 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
           ) {
             return <div></div>;
           } else {
-            console.log("else", field);
             return null;
           }
         })}

@@ -7,7 +7,10 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   useFlombuConnectStatusQuery,
+  useGetAccountRieltorListQuery,
   useGetRealestateStatusQuery,
+  useGetRieltorAccountStatusQuery,
+  useLazyGetAccountRieltorStatusQuery,
 } from "../../../store/auth/auth.api";
 import { XHOUSE_COMPANY_ID } from "../../../constants";
 import { useGetCompanyInfoQuery } from "../../../store/billing/billing.api";
@@ -21,17 +24,21 @@ export const Content = ({
   onSelect,
 }) => {
   const location = useLocation();
+  const { user } = useAppSelect((state) => state.auth);
   const { data: status, refetch } = useGetStatusAccountQuery();
   const { data: realestateStatus, refetch: refetchRealestateStatus } =
     useGetRealestateStatusQuery();
   const { data: flombuStatus, refetch: resetchFflombuStatus } =
     useFlombuConnectStatusQuery();
+  const { data: rieltorAccounts, refetch: refetchRieltorAccounts } =
+    useGetAccountRieltorListQuery();
+  const [getRieltorAccountStatus] = useLazyGetAccountRieltorStatusQuery();
   const { data: companyInfo } = useGetCompanyInfoQuery();
-  const { user } = useAppSelect((state) => state.auth);
   const iS_AD_ACCESS =
     XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) ||
     XHOUSE_COMPANY_ID.includes(user?.id);
   const [flomnuAuth, setFlombuAuth] = useState(false);
+  const [rieltorAccountsData, setRieltorAccountsData] = useState([]);
 
   useEffect(() => {
     status && refetch();
@@ -43,6 +50,22 @@ export const Content = ({
   }, [flombuStatus]);
 
   const handleToggleFlombuAuth = (val) => setFlombuAuth(val);
+
+  const handleGetRieltorAccountsData = () => {
+    Promise.all(
+      rieltorAccounts?.data?.map((rieltorId) =>
+        getRieltorAccountStatus(rieltorId)
+      )
+    ).then((resp) => {
+      setRieltorAccountsData(resp?.map((r) => r.data.data));
+    });
+  };
+
+  useEffect(() => {
+    rieltorAccounts?.data
+      ? handleGetRieltorAccountsData()
+      : setRieltorAccountsData([]);
+  }, [rieltorAccounts]);
 
   return (
     <StyledContent selectedTemplate={selectedResources}>
@@ -57,6 +80,7 @@ export const Content = ({
           olxAuth={!!status?.accounts?.[0]?.data?.id}
           realestateStatus={realestateStatus?.data?.length > 0}
           flombuAuth={flomnuAuth}
+          rieltorAuth={!!rieltorAccountsData?.find((a) => a.status === "OK")}
         />
       </div>
       {selectedResources ? (
@@ -73,6 +97,8 @@ export const Content = ({
             onRefreshFlombuStatus={resetchFflombuStatus}
             onToggleFlombuAuth={handleToggleFlombuAuth}
             flombuAuth={flomnuAuth}
+            rieltorAccounts={rieltorAccountsData}
+            onRefreshRieltorStatus={refetchRieltorAccounts}
           />
         </div>
       ) : null}

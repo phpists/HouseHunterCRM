@@ -13,6 +13,7 @@ import { handleResponse, showAlert } from "../../utilits";
 import {
   useLazyFlombuPublishQuery,
   useLazyPublishRealestateQuery,
+  useLazyPublishRieltorQuery,
 } from "../../store/auth/auth.api";
 import { useAppSelect } from "../../hooks/redux";
 
@@ -22,6 +23,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
     description: "",
     id_user_olx: [],
     id_realstate_users: [],
+    id_rieltor_users: [],
     obl: "1",
     region: "",
     city: "",
@@ -33,11 +35,17 @@ export const ObjectAdModal = ({ onClose, object }) => {
     flombu: false,
     author_name: "",
     author_phone: "",
+    regionId: "",
+    cityId: "",
+    districtId: "",
+    streetId: "",
+    houseNameUnfound: "",
   });
   const [loading, setLoading] = useState(false);
   const [publishObject] = useLazyPublishObjectQuery();
   const [publishRealestate] = useLazyPublishRealestateQuery();
   const [publishFlombu] = useLazyFlombuPublishQuery();
+  const [publishRieltor] = useLazyPublishRieltorQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [citiesCount, setCitiesCount] = useState(0);
   const [streetsCount, setStreetsCount] = useState(0);
@@ -56,6 +64,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
       description: object?.description?.replaceAll("<br />", "\n") ?? "",
       id_user_olx: [],
       id_realstate_users: [],
+      id_rieltor_users: [],
       obl: "1",
       region: "",
       city: "",
@@ -67,6 +76,11 @@ export const ObjectAdModal = ({ onClose, object }) => {
       flombu: false,
       author_name: `${user?.first_name ?? ""} ${user?.last_name ?? ""}`,
       author_phone: user?.phones?.[0]?.phone ?? "",
+      regionId: "",
+      cityId: "",
+      districtId: "",
+      streetId: "",
+      houseNameUnfound: "",
       ...object,
     });
   }, [object]);
@@ -87,21 +101,6 @@ export const ObjectAdModal = ({ onClose, object }) => {
         handleResponse(
           resp,
           () => {
-            const messages = {
-              new: "Нове оголошення, до активації та провірки",
-              active: "Опубліковано на olx",
-              limited:
-                "Вичерпаний ліміт безкоштовних оголошень у вибраній категорії",
-              removed_by_user: "Видалено користувачем",
-              outdated: "Оголошення досягло дати придатності",
-              unconfirmed: "Оголошення очікує на підтвердження ",
-              unpaid: "Очікується оплата",
-              moderated: "Відхилено модератором",
-              blocked: "Заблоковано модератором",
-              disabled:
-                "Вимкнено модерацією, пропозиція заблокована та очікує перевірки",
-              removed_by_moderator: "Видалено",
-            };
             onClose();
             showAlert("info", "Оголошення успішно опубліковано");
           },
@@ -179,6 +178,48 @@ export const ObjectAdModal = ({ onClose, object }) => {
         );
       });
     }
+
+    data?.id_rieltor_users?.forEach((id_account) => {
+      const {
+        cityId,
+        districtId,
+        regionId,
+        streetId,
+        houseNameUnfound,
+        description,
+        title,
+      } = data;
+      publishRieltor({
+        id_account,
+        id_object: object?.id,
+        cityId,
+        districtId,
+        regionId,
+        streetId,
+        houseNameUnfound,
+        description,
+        title,
+      }).then((resp) => {
+        setLoading(false);
+        handleResponse(
+          resp,
+          () => {
+            onClose();
+            showAlert("info", "Оголошення успішно опубліковано");
+          },
+          () => {
+            const message = resp?.data?.messege;
+            const fields = resp?.data?.fields_validation
+              ? Object.entries(resp?.data?.fields_validation)?.map(
+                  (f) => commentsToFields?.object[f[0]]
+                )
+              : [];
+            showAlert("error", `${message} ${fields?.join(", \n")}`);
+          },
+          true
+        );
+      });
+    });
   };
 
   return (
@@ -193,13 +234,22 @@ export const ObjectAdModal = ({ onClose, object }) => {
             disabled={
               (data?.id_user_olx?.length === 0 &&
                 data?.id_realstate_users?.length === 0 &&
-                !data?.flombu) ||
+                !data?.flombu &&
+                data?.id_rieltor_users?.length === 0) ||
               (data?.id_realstate_users?.length === 0
                 ? false
                 : data?.id_realstate_users?.length > 0
                 ? data?.region?.length === 0 ||
                   (data?.city?.length === 0 && citiesCount > 0) ||
                   (data?.street?.length === 0 && streetsCount > 0)
+                : true) ||
+              (data?.id_rieltor_users?.length === 0
+                ? false
+                : data?.id_rieltor_users?.length > 0
+                ? data?.regionId?.toString()?.length === 0 ||
+                  data?.cityId?.toString()?.length === 0 ||
+                  data?.streetId?.toString()?.length === 0 ||
+                  data?.houseNameUnfound?.toString()?.length === 0
                 : true)
             }
             onEdit={

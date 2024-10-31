@@ -14,6 +14,7 @@ import {
 } from "../../../store/objects/objects.api";
 import { handleResponse, showAlert } from "../../../utilits";
 import {
+  useLazyDeleteRielorAdHistoryQuery,
   useLazyRemoveFlombuAdHistoryQuery,
   useLazyRemoveRealestateAdHistoryQuery,
 } from "../../../store/auth/auth.api";
@@ -46,6 +47,7 @@ export const Header = ({
   const { data: olxAccounts } = useGetStatusAccountQuery();
   const [deleteRealestateAdHistory] = useLazyRemoveRealestateAdHistoryQuery();
   const [deleteFlombuAdHistory] = useLazyRemoveFlombuAdHistoryQuery();
+  const [deleteRieltorAdHistory] = useLazyDeleteRielorAdHistoryQuery();
 
   useEffect(() => {
     setDefalultFiltersOpen({
@@ -127,6 +129,26 @@ export const Header = ({
     );
   };
 
+  const handleGetRieltor = () => {
+    const selectedAds = data
+      ?.filter((a) => selected.includes(a.id_ad_in_source))
+      ?.filter((a) => a?.id_resource === "5");
+
+    console.log(selected, selectedAds);
+    return selectedAds?.map(({ id_rieltor_account, id_ad_in_source }) =>
+      deleteRieltorAdHistory({
+        id_account: id_rieltor_account,
+        id_obj_in_source: id_ad_in_source,
+      }).then((resp) => {
+        handleResponse(resp, () => {
+          showAlert("success", `Оголошення успішно видалено!`);
+        });
+
+        return resp;
+      })
+    );
+  };
+
   const handleGetDeleteRequests = () => {
     const activeResource = filters?.resource;
 
@@ -134,13 +156,14 @@ export const Header = ({
       ? handleGetFlombu()
       : activeResource === "4"
       ? handleGetRealstate()
+      : activeResource === "5"
+      ? handleGetRieltor()
       : handleGetOlx();
   };
 
   const handleDeleteHistory = () => {
     Promise.all(handleGetDeleteRequests()).then((resp) => {
       if (resp?.filter((r) => r?.data?.error !== 0)?.length === 0) {
-        console.log(resp);
         onDeleteSuccess(selected);
       }
     });

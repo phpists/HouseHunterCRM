@@ -35,6 +35,7 @@ export const AdTags = ({ data, onUpdateField, noEdit }) => {
         idUserOlx={data?.id_user_olx}
         onUpdateField={onUpdateField}
         idUserRealestate={data?.id_realestate_account}
+        idUserRielor={data?.id_rieltor_account}
         resource={data?.id_resource}
         noEdit={noEdit}
       />

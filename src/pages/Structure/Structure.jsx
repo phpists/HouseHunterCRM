@@ -164,7 +164,6 @@ const Structure = () => {
     }
   }, []);
 
-  console.log(parents);
   return (
     <StyledStructure className="hide-scroll">
       <Header

@@ -7,13 +7,16 @@ import {
 } from "../../../../store/objects/objects.api";
 import { useGetWorkersMyCompanyQuery } from "../../../../store/billing/billing.api";
 import {
+  useGetAccountRieltorListQuery,
   useGetRealestateStatusQuery,
   useGetStatusesOlxQuery,
+  useLazyGetAccountRieltorStatusQuery,
 } from "../../../../store/auth/auth.api";
 import { useGetCompanyInfoQuery } from "../../../../store/billing/billing.api";
 import { useAppSelect } from "../../../../hooks/redux";
 import { XHOUSE_COMPANY_ID } from "../../../../constants";
 import { CheckOption } from "../../../../components/CheckOption";
+import { useEffect, useState } from "react";
 
 export const Main = ({ filters, onChangeFilter }) => {
   const { data: statuses } = useGetStatusesOlxQuery();
@@ -22,10 +25,39 @@ export const Main = ({ filters, onChangeFilter }) => {
   const { data: realestateAccounts } = useGetRealestateStatusQuery();
   const { data: companyInfo } = useGetCompanyInfoQuery();
   const { data: companyWorkers } = useGetWorkersMyCompanyQuery();
+  const { data: rieltorAccounts, refetch: refetchRieltorAccounts } =
+    useGetAccountRieltorListQuery();
+  const [getRieltorAccountStatus] = useLazyGetAccountRieltorStatusQuery();
+  const [rieltorAccountsData, setRieltorAccountsData] = useState([]);
+
   const { user } = useAppSelect((state) => state.auth);
   const iS_AD_ACCESS =
     XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) ||
     XHOUSE_COMPANY_ID.includes(user?.id);
+
+  const handleGetRieltorAccountsData = () => {
+    Promise.all(
+      rieltorAccounts?.data?.map((rieltorId) =>
+        getRieltorAccountStatus(rieltorId)
+      )
+    ).then((resp) => {
+      setRieltorAccountsData(
+        resp
+          ?.map((r) => r.data.data)
+          ?.filter((r) => r.status === "OK")
+          ?.map(({ data: { email, userId } }) => ({
+            title: email ?? "",
+            value: userId,
+          }))
+      );
+    });
+  };
+
+  useEffect(() => {
+    rieltorAccounts?.data
+      ? handleGetRieltorAccountsData()
+      : setRieltorAccountsData([]);
+  }, [rieltorAccounts]);
 
   return (
     <StyledMain className="section filterFieldsWrapper">
@@ -161,6 +193,47 @@ export const Main = ({ filters, onChangeFilter }) => {
               onChangeFilter(
                 "status",
                 val === filters?.status ? undefined : val
+              )
+            }
+            isSearch
+            notMultiSelect
+          />
+        </>
+      ) : filters?.resource === "5" ? (
+        <>
+          <Divider />
+          <SelectTags
+            label="Пошук по статусу"
+            placeholder="Оберіть статус"
+            options={[
+              { title: "Чорновик", value: "-2" },
+              { title: "Закрита база", value: "-30" },
+              { title: "Опубліковані", value: "10" },
+              { title: "На модерації", value: "1" },
+              { title: "Видалені", value: "-10" },
+              { title: "Забанені", value: "-20" },
+              { title: "Не знайдено", value: "not_found" },
+            ]}
+            value={filters?.status}
+            onChange={(val) =>
+              onChangeFilter(
+                "status",
+                val === filters?.status ? undefined : val
+              )
+            }
+            isSearch
+            notMultiSelect
+          />
+          <Divider />
+          <SelectTags
+            label="Пошук по акаунту"
+            placeholder="Оберіть акаунт"
+            options={rieltorAccountsData}
+            value={filters?.id_rieltor_account}
+            onChange={(val) =>
+              onChangeFilter(
+                "id_rieltor_account",
+                val === filters?.id_rieltor_account ? undefined : val
               )
             }
             isSearch

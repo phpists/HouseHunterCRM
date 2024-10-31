@@ -11,6 +11,7 @@ import {
   useLazyRefreshFlombuAdsQuery,
   useLazyRefreshOlxAdsAccountQuery,
   useLazyRefreshRealestateAdsAccountQuery,
+  useLazyRefreshRieltorAdsQuery,
 } from "../../../../../store/auth/auth.api";
 
 export const Accounts = ({
@@ -25,6 +26,7 @@ export const Accounts = ({
   const [refreshOlxAdsAccount] = useLazyRefreshOlxAdsAccountQuery();
   const [refreshRealestateAds] = useLazyRefreshRealestateAdsAccountQuery();
   const [refreshFlombuAds] = useLazyRefreshFlombuAdsQuery();
+  const [refreshRieltorAds] = useLazyRefreshRieltorAdsQuery();
   const [refreshing, setRefreshing] = useState(false);
 
   const handleOpenDeleteConfirm = (id) => setDeleteConfirm(id);
@@ -45,6 +47,13 @@ export const Accounts = ({
       });
     } else if (type === "realstate") {
       refreshRealestateAds(id).then((resp) => {
+        setRefreshing(false);
+        handleResponse(resp, () => {
+          showAlert("success", "Історію всіх оголошень оновлено");
+        });
+      });
+    } else if (type === "rieltor") {
+      refreshRieltorAds(id).then((resp) => {
         setRefreshing(false);
         handleResponse(resp, () => {
           showAlert("success", "Історію всіх оголошень оновлено");

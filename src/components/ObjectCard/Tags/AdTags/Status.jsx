@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Tag } from "../../Info/Header/Tag";
 import {
   useGetStatusesOlxQuery,
+  useLazyGetRielorAdStatusQuery,
   useLazyGetStatusAddQuery,
   useLazyGetStatusFlombuAdQuery,
   useLazySyncOtherDataRealestateAdQuery,
@@ -91,6 +92,36 @@ const STATUSES = {
     bg: "var(--green-tag-bg)",
     title: "Рекламується",
   },
+  "-2": {
+    color: "#FF9F2EE5",
+    bg: "#FF9F2E26",
+    title: "Чорновик",
+  },
+  "-30": {
+    color: "#FF9F2EE5",
+    bg: "#FF9F2E26",
+    title: "Закрита база",
+  },
+  10: {
+    color: "var(--green-tag)",
+    bg: "var(--green-tag-bg)",
+    title: "Опубліковано",
+  },
+  1: {
+    color: "#FF9F2EE5",
+    bg: "#FF9F2E26",
+    title: "На модерації",
+  },
+  "-10": {
+    color: "#F93A3A",
+    bg: "#F93A3A26",
+    title: "Видалено",
+  },
+  "-20": {
+    color: "#F93A3A",
+    bg: "#F93A3A26",
+    title: "Забанено",
+  },
 };
 
 export const Status = ({
@@ -102,12 +133,14 @@ export const Status = ({
   idUserRealestate,
   resource,
   idObj,
+  idUserRielor,
   noEdit,
 }) => {
   const { data } = useGetStatusesOlxQuery();
   const [getStatusAdd] = useLazyGetStatusAddQuery();
   const [updateRealestateStatusAdd] = useLazySyncOtherDataRealestateAdQuery();
   const [getStatusFlombuAd] = useLazyGetStatusFlombuAdQuery();
+  const [getRieltorAdStatus] = useLazyGetRielorAdStatusQuery();
   const [loading, setLoading] = useState(false);
 
   const handleRefreshStatus = () => {
@@ -131,6 +164,18 @@ export const Status = ({
             setLoading(false);
             handleResponse(resp);
             if (resp?.data?.status) {
+              onUpdateField("status", resp?.data?.status);
+            }
+          }, 1000);
+        });
+      } else if (resource === "5") {
+        getRieltorAdStatus({
+          id_account: idUserRielor,
+          id_obj_in_source: idAd,
+        }).then((resp) => {
+          setTimeout(() => {
+            setLoading(false);
+            if (resp?.data?.status?.toString()?.length > 0) {
               onUpdateField("status", resp?.data?.status);
             }
           }, 1000);

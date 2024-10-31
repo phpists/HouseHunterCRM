@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { Card } from "./Card";
 import flombuIcon from "../../../../assets/images/flombu.png";
 import olxIcon from "../../../../assets/images/olx.png";
+import realstateIcon from "../../../../assets/images/realstate-icon.png";
+import rieltorIcon from "../../../../assets/images/rieltor-logo.webp";
 import { useGetStatusAccountQuery } from "../../../../store/objects/objects.api";
 
 export const List = ({ data }) => {
@@ -13,12 +15,21 @@ export const List = ({ data }) => {
   const handleGetOlxTitle = (data) =>
     data?.name ?? data?.phone ?? data?.email ?? data?.id;
 
+  console.log(data);
   return (
     <StyledList>
       {data?.arr_adverst_object?.map(
         ({ resource, id_user_olx, realestateEmail }, i) => (
           <Card
-            icon={resource === "olx" ? olxIcon : flombuIcon}
+            icon={
+              resource === "olx"
+                ? olxIcon
+                : realestateEmail?.length > 0
+                ? realstateIcon
+                : resource === "rieltor"
+                ? rieltorIcon
+                : flombuIcon
+            }
             title={
               resource === "olx"
                 ? handleGetOlxTitle(handleGetOlxAccount(id_user_olx))

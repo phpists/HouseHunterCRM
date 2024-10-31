@@ -23,6 +23,7 @@ export const Select = ({
   onOpen,
   editValue,
   required,
+  onSearch,
 }) => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
@@ -41,6 +42,7 @@ export const Select = ({
 
   const handleSearch = (val) => {
     setSearch(val);
+    onSearch && onSearch(val);
     editValue && onChange(val);
   };
 

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Select } from "../../Select/Select";
 import { useEffect, useState } from "react";
-import { handleGetRegion } from "../../../api/realeState";
+import { handleGetRegion } from "../../../api/rieltor";
 import {
   useGetRegionsQuery,
   useLazyGetCitiesQuery,

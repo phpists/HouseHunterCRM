@@ -8,6 +8,7 @@ export const Card = ({
   name,
   realestateStatus,
   flombuAuth,
+  rieltorAuth,
 }) => (
   <StyledCard
     className={`flex items-center justify-between ${selected && "active"}`}
@@ -32,6 +33,8 @@ export const Card = ({
               ? realestateStatus
               : name === "flombu"
               ? flombuAuth
+              : name === "rieltor"
+              ? rieltorAuth
               : false
           )
             ? "active"
@@ -48,6 +51,10 @@ export const Card = ({
             : "Не авторизовано"
           : name === "flombu"
           ? flombuAuth
+            ? "Авторизовано"
+            : "Не авторизовано"
+          : name === "rieltor"
+          ? rieltorAuth
             ? "Авторизовано"
             : "Не авторизовано"
           : "Не авторизовано"}

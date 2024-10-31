@@ -639,6 +639,121 @@ export const auth = createApi({
         }),
       }),
     }),
+    connectRieltorAccount: build.query({
+      query: ({ login, pass }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "connetctAccount",
+          resource: "rieltor",
+          login,
+          pass,
+        }),
+      }),
+    }),
+    getAccountRieltorList: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "getAccountList",
+          resource: "rieltor",
+        }),
+      }),
+    }),
+    getAccountRieltorStatus: build.query({
+      query: (id_account) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "getStatusAccount",
+          resource: "rieltor",
+          id_account,
+        }),
+      }),
+    }),
+    refreshRieltorAds: build.query({
+      query: (id_account) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "syncAccount",
+          resource: "rieltor",
+          id_account,
+        }),
+      }),
+    }),
+    removeRieltorAccount: build.query({
+      query: (id_account) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "removeAccount",
+          resource: "rieltor",
+          id_account,
+        }),
+      }),
+    }),
+    publishRieltor: build.query({
+      query: (data) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: (() => {
+          const formData = new FormData();
+          const dataToSend = {
+            mod: "publication",
+            action: "publish",
+            resource: "rieltor",
+            ...data,
+          };
+
+          Object.entries(dataToSend)?.forEach((e) => {
+            formData.append(e[0], e[1]);
+          });
+
+          return formData;
+        })(),
+      }),
+    }),
+    getRielorAdStatus: build.query({
+      query: ({ id_account, id_obj_in_source }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "updateStatusAdd",
+          resource: "rieltor",
+          id_account,
+          id_obj_in_source,
+        }),
+      }),
+    }),
+    deleteRielorAdHistory: build.query({
+      query: ({ id_account, id_obj_in_source }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "removeHistoryObj",
+          resource: "rieltor",
+          id_account,
+          id_obj_in_source,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -686,5 +801,13 @@ export const {
   useLazyRemoveFlombuAdHistoryQuery,
   useLazyRemoveFlombuAdQuery,
   useLazyGetStatusFlombuAdQuery,
-  useLazyRefreshFlombuAdsQuery
+  useLazyRefreshFlombuAdsQuery,
+  useLazyConnectRieltorAccountQuery,
+  useGetAccountRieltorListQuery,
+  useLazyGetAccountRieltorStatusQuery,
+  useLazyRefreshRieltorAdsQuery,
+  useLazyRemoveRieltorAccountQuery,
+  useLazyPublishRieltorQuery,
+  useLazyGetRielorAdStatusQuery,
+  useLazyDeleteRielorAdHistoryQuery,
 } = auth;

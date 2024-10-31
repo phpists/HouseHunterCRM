@@ -12,9 +12,11 @@ import {
   useLazyRefreshFlombuAdsQuery,
   useLazyRefreshRealestateAdsAccountQuery,
   useLazyRemoveAccountRealestateQuery,
+  useLazyRemoveRieltorAccountQuery,
 } from "../../../../store/auth/auth.api";
 import { handleResponse, showAlert } from "../../../../utilits";
 import { Confirm } from "../../../../components/Confirm/Confirm";
+import { AddRieltorAccount } from "../AddRieltorAccount";
 
 export const Setting = ({
   data,
@@ -25,17 +27,21 @@ export const Setting = ({
   onRefreshFlombuStatus,
   onToggleFlombuAuth,
   flombuAuth,
+  rieltorAccounts,
+  onRefreshRieltorStatus,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
-  const [addRealstateAccount, setAddRealstateAccount] = useState(false);
   const [removeRealstateAccount] = useLazyRemoveAccountRealestateQuery();
   const [removeOlxAccount] = useLazyDeleteAccountOlxQuery();
   const [removeFlombuAccount] = useLazyFlombuDeleteAccountQuery();
+  const [removeRieltorAccount] = useLazyRemoveRieltorAccountQuery();
   const [flombuConnectAccount] = useLazyFlombuConnectAccountQuery();
   const [realStateRefreshConfirm, setRealStateRefreshConfirm] = useState(false);
   const [realStateRefreshConfirmLoading, setRealStateRefreshConfirmLoading] =
     useState(false);
   const [refreshRealestateAds] = useLazyRefreshRealestateAdsAccountQuery();
+  const [addRealstateAccount, setAddRealstateAccount] = useState(false);
+  const [addRieltorAccount, setAddRieltorAccount] = useState(false);
 
   const handleDeleteSuccess = (type) => {
     showAlert("success", "Акаунт успішно видалено");
@@ -44,6 +50,8 @@ export const Setting = ({
       ? onRefreshAccountsData()
       : type === "flombu"
       ? onToggleFlombuAuth(false)
+      : type === "rieltor"
+      ? onRefreshRieltorStatus()
       : onRefetchRealestateStatus();
   };
 
@@ -54,6 +62,10 @@ export const Setting = ({
       );
     } else if (type === "flombu") {
       removeFlombuAccount().then((resp) =>
+        handleResponse(resp, () => handleDeleteSuccess(type))
+      );
+    } else if (type === "rieltor") {
+      removeRieltorAccount(id).then((resp) =>
         handleResponse(resp, () => handleDeleteSuccess(type))
       );
     } else {
@@ -87,12 +99,23 @@ export const Setting = ({
     });
   };
 
+  const handleSuccessRieltorAuth = () => {
+    onRefreshRieltorStatus();
+    setAddRieltorAccount(true);
+  };
+
   return (
     <StyledSetting className="content-card">
       {addRealstateAccount && (
         <AddRealstateAccount
           onClose={() => setAddRealstateAccount(false)}
           onSuccess={handleSuccessRealeStateAuth}
+        />
+      )}
+      {addRieltorAccount && (
+        <AddRieltorAccount
+          onClose={() => setAddRieltorAccount(false)}
+          onSuccess={handleSuccessRieltorAuth}
         />
       )}
       {realStateRefreshConfirm && (
@@ -150,6 +173,24 @@ export const Setting = ({
             onDelete={(id) => handleDeleteAccount(id, "realstate")}
             refresh
             type="realstate"
+          />
+        </div>
+      ) : data?.id === "5" ? (
+        <div className="fields">
+          {" "}
+          <Button
+            title="Додати акаунт"
+            onClick={() => setAddRieltorAccount(true)}
+          />
+          <Accounts
+            accounts={rieltorAccounts?.map((a) => ({
+              ...a,
+              id: a.data?.userId,
+            }))}
+            onRefreshAccountsData={onRefreshAccountsData}
+            onDelete={(id) => handleDeleteAccount(id, "rieltor")}
+            refresh
+            type="rieltor"
           />
         </div>
       ) : null}

@@ -3,6 +3,8 @@ import { Card } from "./Card";
 import olxIcon from "../../../../assets/images/olx.png";
 import realstateIcon from "../../../../assets/images/realstate-icon.png";
 import flombuIcon from "../../../../assets/images/flombu.png";
+import rieltorIcon from "../../../../assets/images/rieltor-logo.webp";
+
 import {
   useGetStatusAccountQuery,
   useLazyChangeMlsObjectQuery,
@@ -11,14 +13,16 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import {
   useFlombuConnectStatusQuery,
+  useGetAccountRieltorListQuery,
   useGetRealestateStatusQuery,
+  useLazyGetAccountRieltorStatusQuery,
 } from "../../../../store/auth/auth.api";
 import { Button } from "./Button";
 import { XHOUSE_COMPANY_ID } from "../../../../constants";
 import { useGetCompanyInfoQuery } from "../../../../store/billing/billing.api";
 import { handleResponse, showAlert } from "../../../../utilits";
 import { Confirm } from "../../../Confirm/Confirm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cogoToast from "cogo-toast";
 import { useAppSelect } from "../../../../hooks/redux";
 
@@ -34,6 +38,9 @@ export const List = ({
   const { data: realestateAccounts } = useGetRealestateStatusQuery();
   const { data: companyInfo } = useGetCompanyInfoQuery();
   const { data: flombuAccounts } = useFlombuConnectStatusQuery();
+  const { data: rieltorAccounts, refetch: refetchRieltorAccounts } =
+    useGetAccountRieltorListQuery();
+  const [getRieltorAccountStatus] = useLazyGetAccountRieltorStatusQuery();
   const { user } = useAppSelect((state) => state.auth);
   const [publishObject] = useLazyPublishObjectQuery();
   const [changeMls] = useLazyChangeMlsObjectQuery();
@@ -41,6 +48,7 @@ export const List = ({
   const iS_AD_ACCESS =
     XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) ||
     XHOUSE_COMPANY_ID.includes(user?.id);
+  const [rieltorAccountsData, setRieltorAccountsData] = useState([]);
 
   const handleTelegramPublish = (id) => {
     const { hide } = cogoToast.loading("Опублікування реклами в телеграмі", {
@@ -94,6 +102,24 @@ export const List = ({
       })
     );
   };
+
+  const handleGetRieltorAccountsData = () => {
+    Promise.all(
+      rieltorAccounts?.data?.map((rieltorId) =>
+        getRieltorAccountStatus(rieltorId)
+      )
+    ).then((resp) => {
+      setRieltorAccountsData(
+        resp?.map((r) => r.data.data)?.filter((r) => r.status === "OK")
+      );
+    });
+  };
+
+  useEffect(() => {
+    rieltorAccounts?.data
+      ? handleGetRieltorAccountsData()
+      : setRieltorAccountsData([]);
+  }, [rieltorAccounts]);
 
   return (
     <StyledList>
@@ -185,6 +211,29 @@ export const List = ({
         />
       ) : null}
 
+      {rieltorAccountsData?.length > 0
+        ? rieltorAccountsData.map((r, i) => (
+            <Card
+              key={i}
+              icon={rieltorIcon}
+              title={r?.data?.email}
+              onChangeActiveTab={() => onChangeActiveTab(3)}
+              selected={activeTab === 3}
+              onClick={() =>
+                onChange(
+                  "id_rieltor_users",
+                  data?.id_rieltor_users?.includes(r?.data?.userId)
+                    ? data?.id_rieltor_users.filter(
+                        (i) => i !== r?.data?.userId
+                      )
+                    : [...data?.id_rieltor_users, r?.data?.userId]
+                )
+              }
+              active={data?.id_rieltor_users?.includes(r?.data?.userId)}
+            />
+          ))
+        : null}
+
       {accounts?.accounts
         ?.filter((a) => a?.error !== "invalid_token")
         ?.filter((a) => new Date().getTime() < Number(a?.TokenExpires) * 1000)
@@ -214,7 +263,14 @@ export const List = ({
               noAuth
             />
           )}
-
+      {rieltorAccountsData?.length > 0 ? null : (
+        <Card
+          icon={rieltorIcon}
+          title={"Потрібна авторизація"}
+          onChangeActiveTab={() => setOpenAuthConfirm("4")}
+          noAuth
+        />
+      )}
       <Button title="MLS" active={data?.mls} onClick={handleChangeMls} />
       {companyInfo?.data?.id_hash === "0022b718e5a80c0e3992686fd10ff1dc" &&
         data?.type_object !== "street_base" &&

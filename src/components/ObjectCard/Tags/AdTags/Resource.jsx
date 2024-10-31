@@ -2,11 +2,13 @@ import styled from "styled-components";
 import olxIcon from "../../../../assets/images/olx.png";
 import flombuIcon from "../../../../assets/images/flombu.png";
 import realestateIcon from "../../../../assets/images/realstate-icon.png";
+import rieltorIcon from "../../../../assets/images/rieltor-logo.webp";
 
 const ICONS = {
   1: olxIcon,
   3: flombuIcon,
   4: realestateIcon,
+  5: rieltorIcon,
 };
 
 export const Resource = ({ dataOlx, realestateEmail, userName, resource }) => (

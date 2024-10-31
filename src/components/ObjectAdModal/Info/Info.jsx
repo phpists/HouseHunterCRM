@@ -3,6 +3,7 @@ import { Title } from "./Title";
 import { ProfileField } from "../../ProfileField";
 import { RealestateForm } from "./RealestateForm";
 import { useEffect, useRef } from "react";
+import { RieltorForm } from "./RieltorForm";
 
 export const Info = ({
   data,
@@ -67,6 +68,8 @@ export const Info = ({
             onChangeStreetsCount={onChangeStreetsCount}
           />
         </>
+      ) : activeTab === 3 ? (
+        <RieltorForm data={data} onChange={onChange} />
       ) : (
         <>
           {activeTab === 0 && (

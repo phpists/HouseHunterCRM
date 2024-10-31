@@ -383,9 +383,6 @@ const ObjectPage = () => {
     if (isEmptyFields?.length === 0 && handleCheckArea()) {
       setErrors([]);
       setLoading(true);
-      console.log(
-        handleFormatDatesToTimestamp(data, fields)?.household_appliances_json
-      );
       editObject({
         id_object: id,
         field: {

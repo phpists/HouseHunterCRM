@@ -31,6 +31,7 @@ import { useGetCompanyInfoQuery } from "../../store/billing/billing.api";
 import { XHOUSE_COMPANY_ID } from "../../constants";
 import cogoToast from "cogo-toast";
 import {
+  useLazyDeleteRielorAdHistoryQuery,
   useLazyRemoveFlombuAdHistoryQuery,
   useLazyRemoveFlombuAdQuery,
   useLazyRemoveRealestateAdHistoryQuery,
@@ -78,6 +79,7 @@ export const List = ({
   const [deleteRealestateAdHistory] = useLazyRemoveRealestateAdHistoryQuery();
   const [deleteFlombuAd] = useLazyRemoveFlombuAdQuery();
   const [deleteFlombuAdHistory] = useLazyRemoveFlombuAdHistoryQuery();
+  const [deleteRieltorAdHistory] = useLazyDeleteRielorAdHistoryQuery();
   const [deleteType, setDeleteType] = useState(null);
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
@@ -106,6 +108,18 @@ export const List = ({
             onDeleteSuccess([
               data?.find((o) => o.id_obj === deleteId)?.id_ad_in_source,
             ]);
+          });
+          setDeleting(false);
+        });
+      } else if (deleteType === "rieltor") {
+        deleteRieltorAdHistory({
+          id_account: data?.find((o) => o.id_ad_in_source === deleteId)
+            ?.id_rieltor_account,
+          id_obj_in_source: deleteId,
+        }).then((resp) => {
+          handleResponse(resp, () => {
+            showAlert("success", `Оголошення успішно видалено!`);
+            onDeleteSuccess([deleteId]);
           });
           setDeleting(false);
         });
@@ -380,6 +394,8 @@ export const List = ({
                       ? "olx"
                       : d?.id_resource === "3"
                       ? "flombu"
+                      : d?.id_resource === "5"
+                      ? "rieltor"
                       : "realestate"
                   )
                 }
