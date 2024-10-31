@@ -123,6 +123,7 @@ const StyledInfo = styled.div`
     height: 180px;
     .value {
       height: 130px !important;
+      white-space: normal;
     }
   }
   @media (max-width: 800px) {
