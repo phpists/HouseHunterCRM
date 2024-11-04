@@ -110,7 +110,9 @@ export const List = ({
       )
     ).then((resp) => {
       setRieltorAccountsData(
-        resp?.map((r) => r.data.data)?.filter((r) => r.status === "OK")
+        Array.isArray(resp)
+          ? resp?.map((r) => r?.data?.data)?.filter((r) => r?.status === "OK")
+          : []
       );
     });
   };

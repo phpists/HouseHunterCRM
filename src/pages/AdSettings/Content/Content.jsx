@@ -80,7 +80,11 @@ export const Content = ({
           olxAuth={!!status?.accounts?.[0]?.data?.id}
           realestateStatus={realestateStatus?.data?.length > 0}
           flombuAuth={flomnuAuth}
-          rieltorAuth={!!rieltorAccountsData?.find((a) => a.status === "OK")}
+          rieltorAuth={
+            Array.isArray(rieltorAccountsData)
+              ? !!rieltorAccountsData?.find((a) => a?.status === "OK")
+              : false
+          }
         />
       </div>
       {selectedResources ? (
