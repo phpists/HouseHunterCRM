@@ -49,6 +49,7 @@ export const DesktopContent = ({
   onDeleteAd,
   onOpenAdList,
   noEdit,
+  onOpenInfo,
 }) => {
   return (
     <StyledDesktopContent className="flex items-center justify-between clickable">
@@ -74,6 +75,7 @@ export const DesktopContent = ({
         onEdit={onEdit}
         ad={ad}
         onOpenAdList={onOpenAdList}
+        onOpenInfo={onOpenInfo}
       />
       <Tags
         data={data}

@@ -29,6 +29,7 @@ import { useGetCompanyInfoQuery } from "../../store/billing/billing.api";
 import { XHOUSE_COMPANY_ID } from "../../constants";
 import { AdListModal } from "../../components/AdListModal/AdListModal";
 import cogoToast from "cogo-toast";
+import { ObjectInfo } from "./ObjectInfo";
 
 export const List = ({
   selected,
@@ -70,6 +71,7 @@ export const List = ({
   const [fastSelection, setFastSelection] = useState(null);
   const [advertaseObject, setAdvertaseObject] = useState(null);
   const [adListModal, setAdListModal] = useState(null);
+  const [openObjectInfo, setOpenObjectInfo] = useState(null);
 
   const onChangeCurrency = (val) => setCurrency(val);
   const onChangeType = (val) => setType(val);
@@ -226,6 +228,12 @@ export const List = ({
         <AdListModal onClose={() => setAdListModal(null)} data={adListModal} />
       ) : null}
 
+      {openObjectInfo ? (
+        <ObjectInfo
+          onClose={() => setOpenObjectInfo(null)}
+          object={openObjectInfo}
+        />
+      ) : null}
       <StyledList ref={innerRef}>
         {data?.length === 0 || actionLoading ? (
           <Empty loading={loading || actionLoading || deleting} />
@@ -314,6 +322,7 @@ export const List = ({
                     : null
                 }
                 onOpenAdList={() => setAdListModal(d)}
+                onOpenInfo={() => setOpenObjectInfo(d)}
               />
             ))}
           </>

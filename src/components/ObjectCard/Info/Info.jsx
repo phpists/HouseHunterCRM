@@ -10,10 +10,17 @@ export const Info = ({
   onEdit,
   ad,
   onOpenAdList,
+  onOpenInfo,
 }) => {
   return (
     <StyledInfo
       className={`flex flex-col justify-between hide clickable hide-scroll ${className}`}
+      onClick={(e) => {
+        if (onOpenInfo) {
+          e.stopPropagation();
+          onOpenInfo();
+        }
+      }}
     >
       {ad ? null : <Header data={data} ad={ad} onOpenAdList={onOpenAdList} />}
       <Text data={data} editable={editable} onEdit={onEdit} ad={ad} />
