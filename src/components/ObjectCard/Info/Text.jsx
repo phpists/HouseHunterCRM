@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ReactComponent as EditIcon } from "../../../assets/images/edit.svg";
 import { useEffect, useRef } from "react";
 
-export const Text = ({ data, editable, onEdit, ad }) => {
+export const Text = ({ data, editable, onEdit, ad, onOpenInfo }) => {
   const textRef = useRef();
 
   useEffect(() => {
@@ -22,7 +22,15 @@ export const Text = ({ data, editable, onEdit, ad }) => {
 
   return (
     <StyledText className={`hide-scroll clickable ${ad && "only-text"}`}>
-      <div className="title clickable">
+      <div
+        className="title clickable"
+        onClick={(e) => {
+          if (onOpenInfo) {
+            e.stopPropagation();
+            onOpenInfo();
+          }
+        }}
+      >
         {data?.title?.length > 0
           ? data?.title?.replaceAll("&amp;#039;", "'")
           : "-"}
@@ -35,7 +43,16 @@ export const Text = ({ data, editable, onEdit, ad }) => {
           </div>
         ) : null}
       </div>
-      <div className="descr clickable" ref={textRef}></div>
+      <div
+        className="descr clickable"
+        ref={textRef}
+        onClick={(e) => {
+          if (onOpenInfo) {
+            e.stopPropagation();
+            onOpenInfo();
+          }
+        }}
+      ></div>
     </StyledText>
   );
 };
