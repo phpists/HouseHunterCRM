@@ -754,6 +754,21 @@ export const auth = createApi({
         }),
       }),
     }),
+    publishDomria: build.query({
+      query: ({ id_obj, object_type, street_type }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "publication",
+          action: "publish",
+          resource: "domria",
+          id_obj,
+          object_type,
+          street_type,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -810,4 +825,5 @@ export const {
   useLazyPublishRieltorQuery,
   useLazyGetRielorAdStatusQuery,
   useLazyDeleteRielorAdHistoryQuery,
+  useLazyPublishDomriaQuery
 } = auth;

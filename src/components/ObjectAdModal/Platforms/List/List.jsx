@@ -4,6 +4,7 @@ import olxIcon from "../../../../assets/images/olx.png";
 import realstateIcon from "../../../../assets/images/realstate-icon.png";
 import flombuIcon from "../../../../assets/images/flombu.png";
 import rieltorIcon from "../../../../assets/images/rieltor-logo.webp";
+import domriaIcon from "../../../../assets/images/domria.png";
 
 import {
   useGetStatusAccountQuery,
@@ -235,6 +236,18 @@ export const List = ({
             />
           ))
         : null}
+
+      {companyInfo?.data?.id_hash === "0022b718e5a80c0e3992686fd10ff1dc" ||
+      user?.id === "0022b718e5a80c0e3992686fd10ff1dc" ? (
+        <Card
+          icon={domriaIcon}
+          title={"DIM RIA"}
+          onClick={() => onChange("domria", !data?.domria)}
+          onChangeActiveTab={() => onChangeActiveTab(4)}
+          active={data?.domria}
+          selected={activeTab === 4}
+        />
+      ) : null}
 
       {accounts?.accounts
         ?.filter((a) => a?.error !== "invalid_token")

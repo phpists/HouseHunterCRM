@@ -4,6 +4,7 @@ import { ProfileField } from "../../ProfileField";
 import { RealestateForm } from "./RealestateForm";
 import { useEffect, useRef } from "react";
 import { RieltorForm } from "./RieltorForm";
+import { DomriaForm } from "./DomriaForm";
 
 export const Info = ({
   data,
@@ -70,6 +71,8 @@ export const Info = ({
         </>
       ) : activeTab === 3 ? (
         <RieltorForm data={data} onChange={onChange} />
+      ) : activeTab === 4 ? (
+        <DomriaForm data={data} onChange={onChange} />
       ) : (
         <>
           {activeTab === 0 && (

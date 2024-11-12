@@ -12,6 +12,7 @@ import {
 import { handleResponse, showAlert } from "../../utilits";
 import {
   useLazyFlombuPublishQuery,
+  useLazyPublishDomriaQuery,
   useLazyPublishRealestateQuery,
   useLazyPublishRieltorQuery,
 } from "../../store/auth/auth.api";
@@ -46,6 +47,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
   const [publishRealestate] = useLazyPublishRealestateQuery();
   const [publishFlombu] = useLazyFlombuPublishQuery();
   const [publishRieltor] = useLazyPublishRieltorQuery();
+  const [publishDomria] = useLazyPublishDomriaQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [citiesCount, setCitiesCount] = useState(0);
   const [streetsCount, setStreetsCount] = useState(0);
@@ -220,6 +222,35 @@ export const ObjectAdModal = ({ onClose, object }) => {
         );
       });
     });
+
+    if (data?.domria) {
+      const { object_type, street_type } = data;
+
+      publishDomria({
+        id_obj: object?.id,
+        object_type,
+        street_type,
+      }).then((resp) => {
+        setLoading(false);
+        handleResponse(
+          resp,
+          () => {
+            onClose();
+            showAlert("info", "Оголошення успішно опубліковано");
+          },
+          () => {
+            const message = resp?.data?.messege;
+            const fields = resp?.data?.fields_validation
+              ? Object.entries(resp?.data?.fields_validation)?.map(
+                  (f) => commentsToFields?.object[f[0]]
+                )
+              : [];
+            showAlert("error", `${message} ${fields?.join(", \n")}`);
+          },
+          true
+        );
+      });
+    }
   };
 
   return (
@@ -235,6 +266,7 @@ export const ObjectAdModal = ({ onClose, object }) => {
               (data?.id_user_olx?.length === 0 &&
                 data?.id_realstate_users?.length === 0 &&
                 !data?.flombu &&
+                !data?.domria &&
                 data?.id_rieltor_users?.length === 0) ||
               (data?.id_realstate_users?.length === 0
                 ? false

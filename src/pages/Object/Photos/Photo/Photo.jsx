@@ -47,6 +47,7 @@ const StyledPhoto = styled.div`
   .photo-content {
     opacity: 0;
     transition: all 0.3s;
+    z-index: 100;
   }
   svg {
     margin-top: 10px;
