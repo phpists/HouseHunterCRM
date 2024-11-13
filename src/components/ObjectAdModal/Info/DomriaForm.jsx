@@ -179,8 +179,8 @@ export const DomriaForm = ({ data, onChange }) => {
         <Select
           label="Тип об'єкта"
           options={OBJECT_TYPES_HOUSE?.map((v) => ({ title: v, value: v }))}
-          value={data?.object_type}
-          onChange={(v) => onChange("object_type", v)}
+          value={data?.wall_type}
+          onChange={(v) => onChange("wall_type", v)}
           isSearch
           required
         />

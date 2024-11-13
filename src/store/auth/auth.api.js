@@ -755,7 +755,7 @@ export const auth = createApi({
       }),
     }),
     publishDomria: build.query({
-      query: ({ id_obj, object_type, street_type }) => ({
+      query: ({ id_obj, object_type, street_type, wall_type }) => ({
         url: "",
         method: "POST",
         headers: headers(),
@@ -766,6 +766,7 @@ export const auth = createApi({
           id_obj,
           object_type,
           street_type,
+          wall_type,
         }),
       }),
     }),
@@ -825,5 +826,5 @@ export const {
   useLazyPublishRieltorQuery,
   useLazyGetRielorAdStatusQuery,
   useLazyDeleteRielorAdHistoryQuery,
-  useLazyPublishDomriaQuery
+  useLazyPublishDomriaQuery,
 } = auth;

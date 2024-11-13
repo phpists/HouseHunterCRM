@@ -224,12 +224,13 @@ export const ObjectAdModal = ({ onClose, object }) => {
     });
 
     if (data?.domria) {
-      const { object_type, street_type } = data;
+      const { object_type, street_type, wall_type } = data;
 
       publishDomria({
         id_obj: object?.id,
         object_type,
         street_type,
+        wall_type,
       }).then((resp) => {
         setLoading(false);
         handleResponse(
