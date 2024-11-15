@@ -16,21 +16,23 @@ export const TemplatesList = ({
   <StyledTemplatesList>
     {resources?.length > 0 ? (
       <div className="list-wrapper content-card">
-        {resources?.map((t, i) => (
-          <React.Fragment key={i}>
-            <Card
-              key={i}
-              onSelect={() => onSelect(t)}
-              selected={selectedResources?.id === t?.id}
-              last={i === resources?.length - 1}
-              olxAuth={olxAuth}
-              name={t?.name}
-              realestateStatus={realestateStatus}
-              flombuAuth={flombuAuth}
-              rieltorAuth={rieltorAuth}
-            />
-          </React.Fragment>
-        ))}
+        {resources
+          ?.filter((r) => r.id !== "2")
+          .map((t, i) => (
+            <React.Fragment key={i}>
+              <Card
+                key={i}
+                onSelect={() => onSelect(t)}
+                selected={selectedResources?.id === t?.id}
+                last={i === resources?.length - 1}
+                olxAuth={olxAuth}
+                name={t?.name}
+                realestateStatus={realestateStatus}
+                flombuAuth={flombuAuth}
+                rieltorAuth={rieltorAuth}
+              />
+            </React.Fragment>
+          ))}
       </div>
     ) : (
       <Empty />

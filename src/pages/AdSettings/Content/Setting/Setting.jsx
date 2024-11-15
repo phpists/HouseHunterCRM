@@ -185,7 +185,7 @@ export const Setting = ({
           <Accounts
             accounts={rieltorAccounts?.map((a) => ({
               ...a,
-              id: a.data?.userId,
+              id: a?.data?.userId,
             }))}
             onRefreshAccountsData={onRefreshAccountsData}
             onDelete={(id) => handleDeleteAccount(id, "rieltor")}
