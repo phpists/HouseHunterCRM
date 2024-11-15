@@ -240,7 +240,7 @@ const Calls = ({ companyId }) => {
     }
   };
 
-  useEffect(() => {
+  const handleGetData = () => {
     currentPage.current = 0;
     if (activeType === "site") {
       handleGetOrders(true);
@@ -248,6 +248,11 @@ const Calls = ({ companyId }) => {
       handleGetgetTelegramOrders();
     } else {
       handleGetCalls();
+    }
+  };
+  useEffect(() => {
+    if (!isFirstLoad.current || isDefaultFilterSet) {
+      handleGetData();
     }
   }, [activeType]);
 

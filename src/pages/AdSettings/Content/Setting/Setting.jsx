@@ -182,16 +182,18 @@ export const Setting = ({
             title="Додати акаунт"
             onClick={() => setAddRieltorAccount(true)}
           />
-          <Accounts
-            accounts={rieltorAccounts?.map((a) => ({
-              ...a,
-              id: a?.data?.userId,
-            }))}
-            onRefreshAccountsData={onRefreshAccountsData}
-            onDelete={(id) => handleDeleteAccount(id, "rieltor")}
-            refresh
-            type="rieltor"
-          />
+          {rieltorAccounts?.[0] ? (
+            <Accounts
+              accounts={rieltorAccounts?.map((a) => ({
+                ...a,
+                id: a?.data?.userId,
+              }))}
+              onRefreshAccountsData={onRefreshAccountsData}
+              onDelete={(id) => handleDeleteAccount(id, "rieltor")}
+              refresh
+              type="rieltor"
+            />
+          ) : null}
         </div>
       ) : null}
     </StyledSetting>
