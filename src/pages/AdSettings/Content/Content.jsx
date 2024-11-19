@@ -11,6 +11,7 @@ import {
   useGetRealestateStatusQuery,
   useGetRieltorAccountStatusQuery,
   useLazyGetAccountRieltorStatusQuery,
+  useLazyRemoveRieltorAccountQuery,
 } from "../../../store/auth/auth.api";
 import { XHOUSE_COMPANY_ID } from "../../../constants";
 import { useGetCompanyInfoQuery } from "../../../store/billing/billing.api";
@@ -39,6 +40,7 @@ export const Content = ({
     XHOUSE_COMPANY_ID.includes(user?.id);
   const [flomnuAuth, setFlombuAuth] = useState(false);
   const [rieltorAccountsData, setRieltorAccountsData] = useState([]);
+  const [removeRieltorAccount] = useLazyRemoveRieltorAccountQuery();
 
   useEffect(() => {
     status && refetch();
@@ -57,7 +59,15 @@ export const Content = ({
         getRieltorAccountStatus(rieltorId)
       )
     ).then((resp) => {
-      setRieltorAccountsData(resp?.map((r) => r.data.data));
+      setRieltorAccountsData(
+        resp?.map((r, i) => {
+          if (r?.data?.error === 1) {
+            removeRieltorAccount(rieltorAccounts?.data?.[i]);
+          }
+
+          return r.data.data;
+        })
+      );
     });
   };
 
