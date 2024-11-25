@@ -48,6 +48,7 @@ export const Info = ({
     "label_without_students",
     "mls",
     "dt_end_agreement",
+    "liquidity",
   ];
 
   const handleCheckIsCollapsed = (isSetCollapsedFields) => {

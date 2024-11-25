@@ -61,6 +61,7 @@ const notAllowedFields = [
   "type_obj_house",
   "type_obj_commerce",
   "type_obj_garage",
+  "liquidity",
 ];
 
 export const Main = ({
@@ -170,7 +171,7 @@ export const Main = ({
           className="w-full streetsWrapper"
           showTags
         />
-        <div className="streetsWrapper-btns">
+        {/* <div className="streetsWrapper-btns">
           <MapButton onOpenMap={onOpenMap} />
           {filters?.list_street?.length > 0 ? (
             <IconButton
@@ -178,7 +179,7 @@ export const Main = ({
               onClick={(val) => onChangeFilter("list_street", [])}
             />
           ) : null}
-        </div>
+        </div> */}
       </div>
       <Divider />
       <Price
@@ -428,6 +429,7 @@ export const Main = ({
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
         hidePicaroon
+        liquidity
       />
     </StyledMain>
   );

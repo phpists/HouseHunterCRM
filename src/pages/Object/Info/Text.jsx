@@ -59,9 +59,7 @@ export const Text = ({ data, onChangeField, errors, objectData }) => {
         value={data?.title}
         placeholder="Введіть заголовок"
         onChange={(val) => {
-          return val.length > 70 && val?.length > data?.title.length
-            ? null
-            : onChangeField("title", val);
+          onChangeField("title", val.substring(0, 70));
         }}
         big
         className="title"

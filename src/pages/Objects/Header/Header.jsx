@@ -314,12 +314,12 @@ export const Header = ({
           onChangePhoneCode={onChangePhoneCode}
           onOpenMap={() => setOpenMap(true)}
         />
-        {openMap && (
+        {/* {openMap && (
           <MapModal
             onClose={() => setOpenMap(false)}
             onSuccess={handleSearchStreets}
           />
-        )}
+        )} */}
         {addClient && <AddClient onClose={() => setAddClient(false)} />}
       </StyledHeader>
     </>

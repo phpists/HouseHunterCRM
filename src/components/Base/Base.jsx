@@ -63,6 +63,7 @@ export const Base = ({
   hideAdvertsAdd,
   hidePicaroon,
   requestHidePicaroon,
+  liquidity,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -356,6 +357,21 @@ export const Base = ({
             }
             error={!!errors.find((e) => e === "company_object_more")}
           />
+          {liquidity ? (
+            <CheckOption
+              label="Ліквідність"
+              className="check-opt"
+              value={data?.company_object?.liquidity}
+              onChange={() =>
+                onChange("company_object", {
+                  ...data?.company_object,
+                  liquidity:
+                    data?.company_object.liquidity === "1" ? undefined : "1",
+                })
+              }
+              error={!!errors.find((e) => e === "liquidity")}
+            />
+          ) : null}
           {dateAgreement && (
             <>
               {request ? (

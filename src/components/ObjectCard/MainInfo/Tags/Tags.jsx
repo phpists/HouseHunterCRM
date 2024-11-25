@@ -25,6 +25,8 @@ export const Tags = ({ data, ad }) => {
     ...(data?.rubric_name && data?.rubric_name?.length > 0
       ? [{ title: data?.rubric_name }]
       : []),
+    ...(data.liquidity === "1" ? [{ title: `Ліквідно` }] : []),
+
     ...(ad && rubricsList?.find((r) => r.id === data?.id_rubric)?.name
       ? [{ title: rubricsList?.find((r) => r.id === data?.id_rubric)?.name }]
       : []),

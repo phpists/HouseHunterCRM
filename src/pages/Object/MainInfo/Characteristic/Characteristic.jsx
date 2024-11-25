@@ -10,6 +10,7 @@ import {
   useGetLocationsQuery,
   useGetRubricsQuery,
 } from "../../../../store/requests/requests.api";
+import { CheckOption } from "../../../../components/CheckOption";
 
 export const Characteristic = ({ data, onChangeField, fields, errors }) => {
   const [open, setOpen] = useState(false);
@@ -74,6 +75,14 @@ export const Characteristic = ({ data, onChangeField, fields, errors }) => {
       <Header open={open} onToggleOpen={() => setOpen(!open)} />
       <div className="content-wrapper hide-scroll" ref={contentRef}>
         <div className="characteristic-content">
+          <CheckOption
+            label="Ліквідність"
+            value={data?.liquidity}
+            onChange={() =>
+              onChangeField("liquidity", data?.liquidity ? undefined : "1")
+            }
+            className="mb-2"
+          />
           <Select
             value={data?.id_rubric}
             onChange={(val) => onChangeField("id_rubric", val)}
