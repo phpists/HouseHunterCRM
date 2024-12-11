@@ -171,7 +171,7 @@ export const Main = ({
           className="w-full streetsWrapper"
           showTags
         />
-        {/* <div className="streetsWrapper-btns">
+        <div className="streetsWrapper-btns">
           <MapButton onOpenMap={onOpenMap} />
           {filters?.list_street?.length > 0 ? (
             <IconButton
@@ -179,7 +179,7 @@ export const Main = ({
               onClick={(val) => onChangeFilter("list_street", [])}
             />
           ) : null}
-        </div> */}
+        </div>
       </div>
       <Divider />
       <Price
