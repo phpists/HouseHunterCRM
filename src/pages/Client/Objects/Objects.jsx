@@ -30,8 +30,8 @@ export const Objects = ({
   isDeleted,
 }) => {
   const [openInfo, setOpenInfo] = useState(false);
-  const [requestsCount, setRequestCount] = useState(0);
-  const [objectsCount, setObjectsCount] = useState(0);
+  const [requestsCount, setRequestCount] = useState("0*");
+  const [objectsCount, setObjectsCount] = useState("0*");
   const [selectedItems, setSelectedItems] = useState([]);
   const [deleteObjects] = useLazyDeleteObjectQuery();
   const [deleteRequests] = useLazyDeleteRequestQuery();
@@ -216,9 +216,10 @@ export const Objects = ({
         onChangeConfirmText={(val) => setConfimText(val)}
       />
       <div className="objects-content hide-scroll">
-        {isDeleted ? null : <Actions accessData={accessData} />}
+        {/* {isDeleted ? null : <Actions accessData={accessData} />} */}
         <MobileHeader />
-        <SelectItems
+        {/* !test  */}
+        {/* <SelectItems
           title="обрано"
           className="mobile-select"
           selectedCount={selectedItems?.length}
@@ -243,8 +244,8 @@ export const Objects = ({
           }
           confirmText={confirmText}
           onChangeConfirmText={(val) => setConfimText(val)}
-        />
-        {handleCheckAccess(accessData, "objects", "view") && (
+        /> */}
+        {/* {handleCheckAccess(accessData, "objects", "view") && (
           <ObjectsList
             onSelect={onSelect}
             onOpenInfo={(val) => setOpenInfo(val)}
@@ -273,7 +274,7 @@ export const Objects = ({
             isDelete={handleCheckAccess(accessData, "requests", "delete")}
             onSelectAll={(val) => setAllRequestsIds(val)}
           />
-        )}
+        )} */}
       </div>
     </StyledObjects>
   );

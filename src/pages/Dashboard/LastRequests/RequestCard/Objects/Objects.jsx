@@ -29,10 +29,14 @@ export const Objects = ({
           <Tag count={data?.count_object} />
         </div>
         <div className="bts flex items-center">
-          <OpenButton onClick={() => navigate(`/selections/${id}`)} />
+          <OpenButton
+            // onClick={() => navigate(`/selections/${id}`)}
+            onClick={() => navigate(`/`)}
+          />
           <CopyLink
             className="copy-btn"
-            link={`https://selection.house-hunter.info/?id=${id}`}
+            // link={`https://selection.house-hunter.info/?id=${id}`}
+            link="/"
           />
           <Comments onOpenChat={onOpenChat} isNew={data?.new_messege === "1"} />
         </div>
@@ -40,7 +44,8 @@ export const Objects = ({
         <MoreButton
           onDelete={onDelete}
           onFavorite={onToggleFavorite}
-          editLink={`/edit-request/${data?.client_hash}/${id}`}
+          //   editLink={`/edit-request/${data?.client_hash}/${id}`}
+          editLink="/"
           className="more-btn"
           favorite={data?.favorite}
         />

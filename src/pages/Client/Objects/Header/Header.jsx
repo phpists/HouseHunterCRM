@@ -20,7 +20,9 @@ export const Header = ({
       <div className="flex items-center header-btns">
         {/* <Filter className="header-btn" /> */}
         {/* <Search open={isSearch} onOpen={() => setIsSearch(true)} /> */}
-        <SelectItems
+        {/* !test  */}
+
+        {/* <SelectItems
           selectedCount={selectedCount}
           onDelete={onDelete}
           onToggleFavorite={onToggleFavorite}
@@ -34,7 +36,7 @@ export const Header = ({
           onRestore={onRestore}
           confirmText={confirmText}
           onChangeConfirmText={onChangeConfirmText}
-        />
+        /> */}
       </div>
     </StyledHeader>
   );

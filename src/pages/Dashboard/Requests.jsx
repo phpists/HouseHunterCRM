@@ -7,13 +7,11 @@ import { InfoList } from "./InfoList/InfoList";
 export const Requests = ({ statisticData }) => {
   return (
     <StyledRequests>
-      <CardHeader title="До моїх запитів" link="/requests" />
+      {/* <CardHeader title="До моїх запитів" link="/requests" /> */}
+      <CardHeader title="До моїх запитів" link="/" />
+
       <div className="content">
-        <Card
-          IconImg={MegaphoneIcon}
-          title={statisticData?.count_request ?? "-"}
-          subtitle="Всього запитів "
-        />
+        <Card IconImg={MegaphoneIcon} title={`0*`} subtitle="Всього запитів " />
         <InfoList
           items={[
             {

@@ -1,1 +1,1 @@
-export const baseUrl = "https://house-hunter.info/API/";
+export const baseUrl = "https://cars.xcorp.com.ua/API/";

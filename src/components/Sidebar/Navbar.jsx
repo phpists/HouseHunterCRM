@@ -22,26 +22,26 @@ export const NavBar = ({ accessData }) => {
           },
         ]
       : []),
-    ...(handleCheckAccess(accessData, "objects", "view")
-      ? [
-          {
-            icon: HomeIcon,
-            link: "/objects",
-            title: "Об'єкти",
-            childrenLinks: ["create-object", "edit-object"],
-          },
-        ]
-      : []),
-    ...(handleCheckAccess(accessData, "requests", "view")
-      ? [
-          {
-            icon: MegaphoneIcon,
-            link: "/requests",
-            title: "Запити",
-            childrenLinks: ["create-request", "edit-request", "selections"],
-          },
-        ]
-      : []),
+    // ...(handleCheckAccess(accessData, "objects", "view")
+    //   ? [
+    //       {
+    //         icon: HomeIcon,
+    //         link: "/objects",
+    //         title: "Об'єкти",
+    //         childrenLinks: ["create-object", "edit-object"],
+    //       },
+    //     ]
+    //   : []),
+    // ...(handleCheckAccess(accessData, "requests", "view")
+    //   ? [
+    //       {
+    //         icon: MegaphoneIcon,
+    //         link: "/requests",
+    //         title: "Запити",
+    //         childrenLinks: ["create-request", "edit-request", "selections"],
+    //       },
+    //     ]
+    //   : []),
     ...(handleCheckAccess(accessData, "structure", "view")
       ? [
           {
@@ -52,22 +52,22 @@ export const NavBar = ({ accessData }) => {
           },
         ]
       : []),
-    ...(handleCheckAccess(accessData, "calls", "view")
-      ? [
-          {
-            icon: PhoneIcon,
-            link: "/calls",
-            title: "Ліди",
-            childrenLinks: [],
-          },
-        ]
-      : []),
-    {
-      icon: RocketIcon,
-      link: "/ad",
-      title: "Реклама",
-      childrenLinks: ["edit-ad", "ad-setting"],
-    },
+    // ...(handleCheckAccess(accessData, "calls", "view")
+    //   ? [
+    //       {
+    //         icon: PhoneIcon,
+    //         link: "/calls",
+    //         title: "Ліди",
+    //         childrenLinks: [],
+    //       },
+    //     ]
+    //   : []),
+    // {
+    //   icon: RocketIcon,
+    //   link: "/ad",
+    //   title: "Реклама",
+    //   childrenLinks: ["edit-ad", "ad-setting"],
+    // },
   ];
 
   return (
