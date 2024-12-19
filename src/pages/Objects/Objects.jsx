@@ -15,6 +15,7 @@ import {
   handleCopy,
   handleFromInputDate,
   handleGetRange,
+  handleReformatDate,
   handleResponse,
   removePhoneMask,
   showAlert,
@@ -200,7 +201,7 @@ const Objects = () => {
 
       if (filterActive.current) {
         let dt_end_agreement_to = company_object?.dt_end_agreement_to
-          ? new Date(handleFromInputDate(company_object?.dt_end_agreement_to))
+          ? new Date(handleReformatDate(company_object?.dt_end_agreement_to))
           : undefined;
 
         if (dt_end_agreement_to) {
@@ -479,7 +480,7 @@ const Objects = () => {
     // eslint-disable-next-line
   }, [updateData]);
 
- const handleApplyDefaultFilters = () => {
+  const handleApplyDefaultFilters = () => {
     filterActive.current = false;
     isFirstRender.current = false;
     setIsDeleted(false);

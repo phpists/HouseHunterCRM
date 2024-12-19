@@ -8,7 +8,11 @@ import { Main } from "./Main";
 import { Topicality } from "./Topicality";
 import { Characteristics } from "./Characteristics";
 import { useLazyGetAllObjectsQuery } from "../../../../store/objects/objects.api";
-import { handleFromInputDate, removePhoneMask } from "../../../../utilits";
+import {
+  handleFromInputDate,
+  handleReformatDate,
+  removePhoneMask,
+} from "../../../../utilits";
 import { useActions } from "../../../../hooks/actions";
 import { useAppSelect } from "../../../../hooks/redux";
 import { Spinner } from "../../../../components/Spinner";
@@ -88,7 +92,7 @@ export const Filter = ({
       Object.fromEntries(Object.entries(filters)?.filter((f) => f[1] !== "0"));
 
     let dt_end_agreement_to = company_object?.dt_end_agreement_to
-      ? new Date(handleFromInputDate(company_object?.dt_end_agreement_to))
+      ? new Date(handleReformatDate(company_object?.dt_end_agreement_to))
       : undefined;
 
     if (dt_end_agreement_to) {

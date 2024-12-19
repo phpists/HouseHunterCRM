@@ -186,7 +186,7 @@ export const handleFromInputDate = (d) => {
       const month = date[1];
       const year = date[0];
 
-      return `${day}.${month}.${year}`;
+      return `${year}-${month}-${day}`;
     } else {
       return false;
     }

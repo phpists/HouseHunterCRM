@@ -576,3 +576,7 @@ input[type="number"] {
   left: 0;
   cursor: pointer;
 }
+
+iframe {
+  display: none;
+}
