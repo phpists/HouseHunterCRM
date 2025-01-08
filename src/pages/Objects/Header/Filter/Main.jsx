@@ -16,6 +16,8 @@ import { ProfileField } from "../../../../components/ProfileField";
 import {
   useGetCommentsToFieldsQuery,
   useGetStreetsListQuery,
+  useLazyGetBrandsQuery,
+  useLazyGetModelsQuery,
 } from "../../../../store/objects/objects.api";
 import { Price } from "../../../Request/Main/Price/Price";
 import { IconButton } from "../../../../components/IconButton";
@@ -83,6 +85,19 @@ export const Main = ({
   const [formatedLocations, setFormatedLocations] = useState([]);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
   const { data: streets } = useGetStreetsListQuery();
+  const [getBrands, { data: brandsList }] = useLazyGetBrandsQuery();
+  const [getModels, { data: modelsList }] = useLazyGetModelsQuery();
+
+  useEffect(() => {
+    getBrands(filters.id_rubric);
+  }, [filters.id_rubric]);
+
+  useEffect(() => {
+    getModels({
+      id_category: filters.id_rubric,
+      id_brand: filters.id_brand,
+    });
+  }, [filters.id_brand]);
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -115,6 +130,9 @@ export const Main = ({
 
     onChangeFilter("list_street", updatedValue);
   };
+
+  //   "id_brand",
+  //   "id_model",
 
   return (
     <StyledMain className="section filterFieldsWrapper">
@@ -356,6 +374,32 @@ export const Main = ({
                         </>
                       ) : null}
                     </>
+                  );
+                } else if (["id_brand", "id_model"].includes(field[0])) {
+                  return (
+                    <Select
+                      value={filters[field[0]]}
+                      options={
+                        field[0] === "id_brand"
+                          ? brandsList?.data
+                            ? brandsList?.data?.map(({ name, id_brand }) => ({
+                                title: name,
+                                value: id_brand,
+                              }))
+                            : []
+                          : modelsList?.data
+                          ? modelsList?.data?.map(({ name, id_model }) => ({
+                              title: name,
+                              value: id_model,
+                            }))
+                          : []
+                      }
+                      onChange={(val) => onChangeFilter(field[0], val)}
+                      label={commentsToFields?.object[field[0]]}
+                      labelActive={commentsToFields?.object[field[0]]}
+                      hideArrowDefault
+                      search
+                    />
                   );
                 } else if (typeof field[1]?.field_option === "object") {
                   return (

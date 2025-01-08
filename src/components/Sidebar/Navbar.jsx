@@ -22,26 +22,26 @@ export const NavBar = ({ accessData }) => {
           },
         ]
       : []),
-    // ...(handleCheckAccess(accessData, "objects", "view")
-    //   ? [
-    //       {
-    //         icon: HomeIcon,
-    //         link: "/objects",
-    //         title: "Об'єкти",
-    //         childrenLinks: ["create-object", "edit-object"],
-    //       },
-    //     ]
-    //   : []),
-    // ...(handleCheckAccess(accessData, "requests", "view")
-    //   ? [
-    //       {
-    //         icon: MegaphoneIcon,
-    //         link: "/requests",
-    //         title: "Запити",
-    //         childrenLinks: ["create-request", "edit-request", "selections"],
-    //       },
-    //     ]
-    //   : []),
+    ...(handleCheckAccess(accessData, "objects", "view")
+      ? [
+          {
+            icon: HomeIcon,
+            link: "/objects",
+            title: "Об'єкти",
+            childrenLinks: ["create-object", "edit-object"],
+          },
+        ]
+      : []),
+    ...(handleCheckAccess(accessData, "requests", "view")
+      ? [
+          {
+            icon: MegaphoneIcon,
+            link: "/requests",
+            title: "Запити",
+            childrenLinks: ["create-request", "edit-request", "selections"],
+          },
+        ]
+      : []),
     ...(handleCheckAccess(accessData, "structure", "view")
       ? [
           {

@@ -22,7 +22,7 @@ export const Header = ({
         {/* <Search open={isSearch} onOpen={() => setIsSearch(true)} /> */}
         {/* !test  */}
 
-        {/* <SelectItems
+        <SelectItems
           selectedCount={selectedCount}
           onDelete={onDelete}
           onToggleFavorite={onToggleFavorite}
@@ -36,7 +36,7 @@ export const Header = ({
           onRestore={onRestore}
           confirmText={confirmText}
           onChangeConfirmText={onChangeConfirmText}
-        /> */}
+        />
       </div>
     </StyledHeader>
   );

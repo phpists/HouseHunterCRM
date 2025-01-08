@@ -78,7 +78,7 @@ export const Header = ({
             {/* <AddButton onRefresh={onRefresh} objectsIds={objectsIds} /> */}
             <CopyLink
               className="copy-btn"
-              link={`https://selection.house-hunter.info/?id=${id}`}
+              link={`http://selection.cars.xcorp.com.ua/?id=${id}`}
             />
             <ChatButton newMessege={newMessege} />
           </div>

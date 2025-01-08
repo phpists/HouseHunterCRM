@@ -10,7 +10,11 @@ export const Objects = ({ statisticData }) => {
       {/* <CardHeader title="До моїх машин" link="/objects?my_objects=true" /> */}
       <CardHeader title="До моїх автомобілей" link="/" />
       <div className="content">
-        <Card IconImg={HomeIcon} title={"0*"} subtitle="Всього автомобілей " />
+        <Card
+          IconImg={HomeIcon}
+          title={statisticData.count_objects}
+          subtitle="Всього автомобілей "
+        />
         <InfoList
           items={[
             {

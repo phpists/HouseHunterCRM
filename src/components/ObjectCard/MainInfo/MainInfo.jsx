@@ -18,11 +18,7 @@ export const MainInfo = ({
   return (
     <StyledMainInfo className={`${className} clickable`}>
       <Price
-        price={
-          ad
-            ? data?.price
-            : data?.[`price_per_${TYPES[type]}_${CURRENCIES[currency]}`]
-        }
+        price={ad ? data?.price : data?.[`price_${CURRENCIES[currency]}`]}
         currency={currency}
         onChangeCurrency={onChangeCurrency}
         priceFor={

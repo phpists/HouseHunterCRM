@@ -11,7 +11,11 @@ export const Requests = ({ statisticData }) => {
       <CardHeader title="До моїх запитів" link="/" />
 
       <div className="content">
-        <Card IconImg={MegaphoneIcon} title={`0*`} subtitle="Всього запитів " />
+        <Card
+          IconImg={MegaphoneIcon}
+          title={statisticData.count_request}
+          subtitle="Всього запитів "
+        />
         <InfoList
           items={[
             {

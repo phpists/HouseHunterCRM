@@ -38,9 +38,9 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
                 {i > 0 && <Divider />}
                 <SelectTags
                   label={
-                    commentsToFields?.request[field]
-                      ? commentsToFields?.request[field]
-                      : commentsToFields?.object[field] ?? ""
+                    commentsToFields?.request?.[field]
+                      ? commentsToFields?.request?.[field]
+                      : commentsToFields?.object?.[field] ?? ""
                   }
                   placeholder="Оберіть"
                   notMultiSelect

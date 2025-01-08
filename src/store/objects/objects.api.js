@@ -635,6 +635,31 @@ export const objects = createApi({
         }),
       }),
     }),
+    getModels: build.query({
+      query: ({ id_category, id_brand }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getModels",
+          mod: "objects",
+          id_category,
+          id_brand,
+        }),
+      }),
+    }),
+    getBrands: build.query({
+      query: (id_category) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getBrands",
+          mod: "objects",
+          id_category,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -685,4 +710,6 @@ export const {
   useLazyChangeMlsObjectQuery,
   useLazyDeleteAdHistoryQuery,
   useLazyRotateImageQuery,
+  useLazyGetBrandsQuery,
+  useLazyGetModelsQuery,
 } = objects;

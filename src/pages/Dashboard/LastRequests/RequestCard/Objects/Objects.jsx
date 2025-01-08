@@ -35,7 +35,7 @@ export const Objects = ({
           />
           <CopyLink
             className="copy-btn"
-            // link={`https://selection.house-hunter.info/?id=${id}`}
+            // link={`http://selection.cars.xcorp.com.ua/?id=${id}`}
             link="/"
           />
           <Comments onOpenChat={onOpenChat} isNew={data?.new_messege === "1"} />

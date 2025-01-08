@@ -4,6 +4,10 @@ import {
   useGetLocationsQuery,
   useGetRubricsQuery,
 } from "../../../../store/requests/requests.api";
+import {
+  useLazyGetBrandsQuery,
+  useLazyGetModelsQuery,
+} from "../../../../store/objects/objects.api";
 import { useState } from "react";
 import {
   handleChangeRange,
@@ -35,6 +39,19 @@ export const Tags = ({
   const { data: level } = useGetCompanyStructureLevelQuery();
   const { data: workers } = useGetWorkerMyStructureQuery();
   const { data: companyWorkers } = useGetWorkersMyCompanyQuery();
+  const [getBrands, { data: brandsList }] = useLazyGetBrandsQuery();
+  const [getModels, { data: modelsList }] = useLazyGetModelsQuery();
+
+  useEffect(() => {
+    getBrands(filters.id_rubric);
+  }, [filters.id_rubric]);
+
+  useEffect(() => {
+    getModels({
+      id_category: filters.id_rubric,
+      id_brand: filters.id_brand,
+    });
+  }, [filters.id_brand]);
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -245,6 +262,44 @@ export const Tags = ({
             />
           </>
         )}
+      {filtersFields && handleGetFieldsOptions(filtersFields, "id_brand") && (
+        <>
+          <SelectTags
+            label="Бренд авто"
+            placeholder="Оберіть бренд авто"
+            notMultiSelect
+            options={
+              brandsList?.data
+                ? brandsList?.data?.map(({ name, id_brand }) => ({
+                    title: name,
+                    value: id_brand,
+                  }))
+                : []
+            }
+            value={filters?.id_brand}
+            onChange={(val) => onChangeFilter("id_brand", val)}
+          />
+        </>
+      )}
+      {filtersFields && handleGetFieldsOptions(filtersFields, "id_model") && (
+        <>
+          <SelectTags
+            label="Модель авто"
+            placeholder="Оберіть модель авто"
+            notMultiSelect
+            options={
+              modelsList?.data
+                ? modelsList?.data?.map(({ name, id_model }) => ({
+                    title: name,
+                    value: id_model,
+                  }))
+                : []
+            }
+            value={filters?.id_model}
+            onChange={(val) => onChangeFilter("id_model", val)}
+          />
+        </>
+      )}
       {filtersFields &&
         handleGetFieldsOptions(filtersFields, "type_obj_commerce")?.length >
           0 && (
