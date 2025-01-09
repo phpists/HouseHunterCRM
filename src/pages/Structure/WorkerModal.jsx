@@ -22,6 +22,7 @@ import {
   emailValidation,
   handleFormatDate,
   handleFromInputDate,
+  handleReformatDate,
   handleRemovePhoneMask,
   handleResponse,
   showAlert,
@@ -111,7 +112,7 @@ export const WorkerModal = ({
     profileData?.password?.length === 0 && errorsData.push("password");
     profileData?.phones?.filter((p) => p?.phone?.length === 0)?.length > 0 &&
       errorsData.push("phones");
-    new Date(handleFromInputDate(profileData?.dt_birthday)).toString() ===
+    new Date(handleReformatDate(profileData?.dt_birthday)).toString() ===
       "Invalid Date" && errorsData.push("dt_birthday");
 
     if (
@@ -122,6 +123,7 @@ export const WorkerModal = ({
       errorsData.push("structure_parent");
     }
 
+    console.log(errorsData);
     if (errorsData?.length > 0) {
       setErrors(errorsData);
       showAlert("error", "Заповніть обов'язкові поля");
@@ -221,9 +223,8 @@ export const WorkerModal = ({
         dt_birthday: Math.floor(
           profileData?.dt_birthday === "0"
             ? null
-            : new Date(
-                handleFromInputDate(profileData?.dt_birthday)
-              )?.getTime() / 1000
+            : new Date(handleFormatDate(profileData?.dt_birthday))?.getTime() /
+                1000
         ),
         is_orenda,
         is_sell,
@@ -257,7 +258,7 @@ export const WorkerModal = ({
           profileData?.dt_birthday === "0"
             ? null
             : new Date(
-                handleFromInputDate(profileData?.dt_birthday)
+                handleReformatDate(profileData?.dt_birthday)
               )?.getTime() / 1000
         ),
         phones_json: JSON.stringify(
