@@ -12,7 +12,7 @@ export const Objects = ({ statisticData }) => {
       <div className="content">
         <Card
           IconImg={HomeIcon}
-          title={statisticData.count_objects}
+          title={statisticData?.count_objects ?? 0}
           subtitle="Всього автомобілей "
         />
         <InfoList

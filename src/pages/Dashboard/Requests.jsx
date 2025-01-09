@@ -13,7 +13,7 @@ export const Requests = ({ statisticData }) => {
       <div className="content">
         <Card
           IconImg={MegaphoneIcon}
-          title={statisticData.count_request}
+          title={statisticData?.count_request ?? 0}
           subtitle="Всього запитів "
         />
         <InfoList
