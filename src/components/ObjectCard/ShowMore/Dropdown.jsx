@@ -330,7 +330,7 @@ export const Dropdown = ({
               <span>Редагувати </span> <Edit />
             </NavLink>
           )}
-          {onAdvertise && (
+          {/* {onAdvertise && (
             <div
               className={`flex items-center justify-between ${
                 noAd && "disabled"
@@ -348,7 +348,7 @@ export const Dropdown = ({
               <span>Рекламувати в телеграм</span>{" "}
               <MarketIcon className="selection-icon" />
             </div>
-          )}
+          )} */}
           {onDelete && (
             <div
               className="flex items-center justify-between"

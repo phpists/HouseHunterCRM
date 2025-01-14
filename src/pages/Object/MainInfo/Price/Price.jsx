@@ -49,7 +49,7 @@ export const Price = ({
         value={Number(data?.price_currency)}
         onChange={(val) => onChangeField("price_currency", val)}
       />
-      <TypeSelect
+      {/* <TypeSelect
         value={data?.price_for}
         onChange={(val) => onChangeField("price_for", val)}
         error={errors?.find((e) => e === "price_for")}
@@ -80,7 +80,7 @@ export const Price = ({
                 },
               ]
         }
-      />
+      /> */}
     </StyledPrice>
   );
 };

@@ -15,11 +15,11 @@ export const Closed = ({
     <div className="closedPrice">
       <div className="price closedPrice">
         {`${price}`}{" "}
-        {priceFor && (
+        {/* {priceFor && (
           <span className="priceFore">
             <span>/</span> {priceFor}
           </span>
-        )}
+        )} */}
       </div>
       {subtitle && (
         <div className="subtitle closedPrice labelItem">{subtitle}</div>

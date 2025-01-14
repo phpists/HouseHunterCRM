@@ -1,8 +1,5 @@
 import { styled } from "styled-components";
 import { Card } from "./Card";
-import { Divider } from "../Divider";
-import { ProfileField } from "../../../components/ProfileField";
-import { handleFormatFields } from "../../../utilits";
 import { useGetRubricsQuery } from "../../../store/requests/requests.api";
 import { useEffect, useRef } from "react";
 import { Deadline } from "./Deadline";

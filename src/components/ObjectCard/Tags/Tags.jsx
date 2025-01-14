@@ -26,7 +26,9 @@ export const Tags = ({
   noEdit,
 }) => {
   const { id } = useParams();
-  const { data: tagsList } = useGetTagsListQuery({ only_notepad: "1" });
+  const { data: tagsList } = useGetTagsListQuery({
+    only_notepad: selections ? "1" : undefined,
+  });
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [addTag] = useLazyAddTagsToObjectsQuery();
   const [addNotepadTag] = useLazyAddNotepadTagQuery();
@@ -34,7 +36,11 @@ export const Tags = ({
   const [actualDate, setActualDate] = useState(null);
   const actualTags = ["label_is_actual", "label_not_actual"];
   const isFirstRender = useRef(true);
-
+  const ADDITIONAL_TAGS = {
+    label_top: "Топ",
+    label_recomendation: "Рекомендація",
+    label_showing: "Показується",
+  };
   const handleSelect = (val) => {
     const isExist = !!tags?.find((t) => t.value === val);
     const isSelectionTag = SELECTION_TAGS?.find((t) => t.value === val);
@@ -117,7 +123,7 @@ export const Tags = ({
     data?.tags?.forEach((tag) => {
       initTags.push({
         title:
-          `${commentsToFields?.object[tag]} ${
+          `${commentsToFields?.object[tag] ?? ADDITIONAL_TAGS[tag]} ${
             actualTags.includes(tag)
               ? data?.dt_add_tags_actuals
                 ? handleFormatDate(Number(data?.dt_add_tags_actuals) * 1000)
@@ -128,27 +134,27 @@ export const Tags = ({
       });
     });
 
-    if (data?.tags_folder) {
-      Object.entries(data?.tags_folder)
-        ?.filter((t) => t[1])
-        ?.map((t) => t[0])
-        ?.forEach((tag) => {
-          initTags.push({
-            title:
-              `${
-                SELECTION_TAGS.find((t) => t.value === tag)?.title ??
-                commentsToFields?.object[tag]
-              } ${
-                actualTags.includes(tag)
-                  ? data?.dt_add_tags_actuals
-                    ? handleFormatDate(Number(data?.dt_add_tags_actuals) * 1000)
-                    : ""
-                  : ""
-              }` ?? "-",
-            value: tag,
-          });
-        });
-    }
+    // if (data?.tags_folder) {
+    //   Object.entries(data?.tags_folder)
+    //     ?.filter((t) => t[1])
+    //     ?.map((t) => t[0])
+    //     ?.forEach((tag) => {
+    //       initTags.push({
+    //         title:
+    //           `${
+    //             SELECTION_TAGS.find((t) => t.value === tag)?.title ??
+    //             commentsToFields?.object[tag]
+    //           } ${
+    //             actualTags.includes(tag)
+    //               ? data?.dt_add_tags_actuals
+    //                 ? handleFormatDate(Number(data?.dt_add_tags_actuals) * 1000)
+    //                 : ""
+    //               : ""
+    //           }` ?? "-",
+    //         value: tag,
+    //       });
+    //     });
+    // }
 
     setTags(initTags);
   };
@@ -179,10 +185,13 @@ export const Tags = ({
             showTags
             tags={tags}
             options={[
-              ...TAGS?.map((value) => ({
-                title: commentsToFields?.object[value] ?? "-",
+              ...(tagsList?.data?.map((value) => ({
+                title:
+                  commentsToFields?.object[value] ??
+                  ADDITIONAL_TAGS[value] ??
+                  "-",
                 value,
-              })),
+              })) ?? []),
               ...(selections ? SELECTION_TAGS : []),
             ]}
             onChange={handleSelect}

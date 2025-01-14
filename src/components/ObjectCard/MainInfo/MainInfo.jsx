@@ -26,7 +26,7 @@ export const MainInfo = ({
             ?.title ?? undefined
         }
         rubricId={data?.id_rubric}
-        type={type}
+        // type={type}
         onChangeType={onChangeType}
         notChangeCurrency={ad}
       />

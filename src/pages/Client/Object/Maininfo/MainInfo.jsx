@@ -103,24 +103,11 @@ export const Maininfo = ({
         <Field
           value={
             isObject
-              ? Number(data?.price_USD ?? 0) === 0
+              ? Number(data?.price ?? 0) === 0
                 ? "Не вказана"
                 : `${fortmatNumber(
-                    Number(
-                      data?.[
-                        `price_per_${TYPES[data?.price_for]}_${
-                          data?.price_currency === "1"
-                            ? "uah"
-                            : data?.price_currency === "2"
-                            ? "usd"
-                            : "eur"
-                        }`
-                      ] ?? 0
-                    )
-                  )}${handleGetPriceCurrency(data?.price_currency)} / ${
-                    PRICES_FOR_TITLE?.find((p) => p.value === data?.price_for)
-                      ?.title ?? undefined
-                  }`
+                    Number(data?.[`price`] ?? 0)
+                  )}${handleGetPriceCurrency(data?.price_currency)}`
               : Number(data?.price_max ?? 0) === 0 &&
                 Number(data?.price_min ?? 0) === 0
               ? "Не вказана"

@@ -1,6 +1,11 @@
+import { useEffect } from "react";
 import { CheckOption } from "../../../../components/CheckOption";
 import { ProfileField } from "../../../../components/ProfileField";
 import { Select } from "../../../../components/Select/Select";
+import {
+  useLazyGetBrandsQuery,
+  useLazyGetModelsQuery,
+} from "../../../../store/objects/objects.api";
 
 export const Fields = ({
   fields,
@@ -12,6 +17,20 @@ export const Fields = ({
   collapsed,
   onOpenSelect,
 }) => {
+  const [getBrands, { data: brandsList }] = useLazyGetBrandsQuery();
+  const [getModels, { data: modelsList }] = useLazyGetModelsQuery();
+
+  useEffect(() => {
+    getBrands(data.id_rubric);
+  }, [data.id_rubric]);
+
+  useEffect(() => {
+    getModels({
+      id_category: data.id_rubric,
+      id_brand: data.id_brand,
+    });
+  }, [data.id_brand]);
+
   return (
     <div className="fields">
       {fields
@@ -24,7 +43,34 @@ export const Fields = ({
                 : field?.[1]?.collapsed === 0
             )
             .map((field) => {
-              if (typeof field[1]?.field_option === "object") {
+              if (["id_brand", "id_model"].includes(field[0])) {
+                return (
+                  <Select
+                    value={data[field[0]]}
+                    options={
+                      field[0] === "id_brand"
+                        ? brandsList?.data
+                          ? brandsList?.data?.map(({ name, id_brand }) => ({
+                              title: name,
+                              value: id_brand,
+                            }))
+                          : []
+                        : modelsList?.data
+                        ? modelsList?.data?.map(({ name, id_model }) => ({
+                            title: name,
+                            value: id_model,
+                          }))
+                        : []
+                    }
+                    onChange={(val) => onChangeField(field[0], val)}
+                    label={commentsToFields?.object[field[0]] ?? "-"}
+                    labelActive={commentsToFields?.object[field[0]] ?? "-"}
+                    hideArrowDefault
+                    error={!!errors.find((e) => e === field[0])}
+                    onOpen={onOpenSelect}
+                  />
+                );
+              } else if (typeof field[1]?.field_option === "object") {
                 return (
                   <Select
                     value={data[field[0]]}

@@ -25,7 +25,7 @@ export const Tags = ({ data, ad }) => {
     ...(data?.rubric_name && data?.rubric_name?.length > 0
       ? [{ title: data?.rubric_name }]
       : []),
-    ...(data.liquidity === "1" ? [{ title: `Ліквідно` }] : []),
+    // ...(data.liquidity === "1" ? [{ title: `Ліквідно` }] : []),
 
     ...(ad && rubricsList?.find((r) => r.id === data?.id_rubric)?.name
       ? [{ title: rubricsList?.find((r) => r.id === data?.id_rubric)?.name }]
@@ -55,48 +55,48 @@ export const Tags = ({ data, ad }) => {
         ]
       : []),
     ...(data?.street?.length > 0 ? [{ title: `вул. ${data?.street}` }] : []),
-    ...(data?.rooms > 0
-      ? [{ title: `${data?.rooms} кімнати`, Icon: <Door /> }]
-      : []),
-    ...(data?.area_total > 0
-      ? [{ title: `${data?.area_total} м²`, Icon: <Expand /> }]
-      : []),
-    ...(data?.storey_count !== "0" || data?.address_storey !== "0"
-      ? [
-          {
-            title: `${
-              data?.address_storey === "0" ? "-" : data?.address_storey
-            } / ${data?.storey_count === "0" ? "-" : data?.storey_count}`,
-            Icon: <Stairs />,
-            hoverTitle: `${data?.address_storey} поверх / ${data?.storey_count} поверховість`,
-          },
-        ]
-      : Number(data?.address_storey) && data?.address_storey?.length > 0
-      ? [
-          {
-            title: `${data?.address_storey}`,
-            Icon: <Stairs />,
-            hoverTitle: `${data?.address_storey} поверх`,
-          },
-        ]
-      : []),
-    ...(data.area_plot_sotka > 0
-      ? [{ title: `${data?.area_plot_sotka} соток`, Icon: <Box /> }]
-      : []),
-    ...(data.area_kitchen > 0
-      ? [{ title: `${data?.area_kitchen} м² кухні`, Icon: <Expand /> }]
-      : []),
-    ...(ad
-      ? [
-          {
-            title: `рекламується з ${handleFormatDate(
-              Number(data?.dt_publicate) * 1000,
-              true
-            )}`,
-            Icon: <Rocket />,
-          },
-        ]
-      : []),
+    // ...(data?.rooms > 0
+    //   ? [{ title: `${data?.rooms} кімнати`, Icon: <Door /> }]
+    //   : []),
+    // ...(data?.area_total > 0
+    //   ? [{ title: `${data?.area_total} м²`, Icon: <Expand /> }]
+    //   : []),
+    // ...(data?.storey_count !== "0" || data?.address_storey !== "0"
+    //   ? [
+    //       {
+    //         title: `${
+    //           data?.address_storey === "0" ? "-" : data?.address_storey
+    //         } / ${data?.storey_count === "0" ? "-" : data?.storey_count}`,
+    //         Icon: <Stairs />,
+    //         hoverTitle: `${data?.address_storey} поверх / ${data?.storey_count} поверховість`,
+    //       },
+    //     ]
+    //   : Number(data?.address_storey) && data?.address_storey?.length > 0
+    //   ? [
+    //       {
+    //         title: `${data?.address_storey}`,
+    //         Icon: <Stairs />,
+    //         hoverTitle: `${data?.address_storey} поверх`,
+    //       },
+    //     ]
+    //   : []),
+    // ...(data.area_plot_sotka > 0
+    //   ? [{ title: `${data?.area_plot_sotka} соток`, Icon: <Box /> }]
+    //   : []),
+    // ...(data.area_kitchen > 0
+    //   ? [{ title: `${data?.area_kitchen} м² кухні`, Icon: <Expand /> }]
+    //   : []),
+    // ...(ad
+    //   ? [
+    //       {
+    //         title: `рекламується з ${handleFormatDate(
+    //           Number(data?.dt_publicate) * 1000,
+    //           true
+    //         )}`,
+    //         Icon: <Rocket />,
+    //       },
+    //     ]
+    //   : []),
     // { title: "Купівля-продаж" },
     // { title: "Хрущьовка", icon: homeIcon },
     // { title: "Цегла", icon: brickIcon },

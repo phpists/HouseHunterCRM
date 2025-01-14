@@ -4,11 +4,30 @@ import { SelectTags } from "../../../components/SelectTags/SelectTags";
 import { handleChangeRange, handleGetFieldsOptions } from "../../../utilits";
 import { TitleDivider } from "./TitleDivider";
 import styled from "styled-components";
-import { useGetCommentsToFieldsQuery } from "../../../store/objects/objects.api";
+import {
+  useGetCommentsToFieldsQuery,
+  useLazyGetBrandsQuery,
+  useLazyGetModelsQuery,
+} from "../../../store/objects/objects.api";
 import { CheckOption } from "../../../components/CheckOption";
+import { ProfileField } from "../../../components/ProfileField";
+import { useEffect } from "react";
 
 export const Card = ({ title, fields, data, onChangeField, errors }) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
+  const [getBrands, { data: brandsList }] = useLazyGetBrandsQuery();
+  const [getModels, { data: modelsList }] = useLazyGetModelsQuery();
+
+  useEffect(() => {
+    getBrands(data.id_rubric);
+  }, [data.id_rubric]);
+
+  useEffect(() => {
+    getModels({
+      id_category: data.id_rubric,
+      id_brand: data.id_brand,
+    });
+  }, [data.id_brand]);
 
   const filteredFields = [
     "id_rubric",
@@ -25,6 +44,10 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
     "price_max",
     "price_for",
   ];
+
+  console.log(
+    fields?.filter((f) => !filteredFields?.find((ff) => ff === f?.field))
+  );
 
   return (
     <StyledCard>
@@ -112,11 +135,63 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
                 />
               </>
             );
+          } else if (["id_brand", "id_model"].includes(field)) {
+            return (
+              <div>
+                {i > 0 && <Divider />}
+                <SelectTags
+                  value={data?.[field]}
+                  placeholder="Оберіть"
+                  notMultiSelect
+                  options={
+                    field === "id_brand"
+                      ? brandsList?.data
+                        ? brandsList?.data?.map(({ name, id_brand }) => ({
+                            title: name,
+                            value: id_brand,
+                          }))
+                        : []
+                      : modelsList?.data
+                      ? modelsList?.data?.map(({ name, id_model }) => ({
+                          title: name,
+                          value: id_model,
+                        }))
+                      : []
+                  }
+                  onChange={(val) => onChangeField(field, val)}
+                  label={
+                    commentsToFields?.request?.[field]
+                      ? commentsToFields?.request?.[field]
+                      : commentsToFields?.object?.[field] ?? ""
+                  }
+                  hideArrowDefault
+                  search
+                />
+              </div>
+            );
           } else if (
             field?.includes("_max") &&
             !fields?.find((f) => f.field === field?.replace("_max", "_min"))
           ) {
             return <div></div>;
+          } else if (type === "int") {
+            return (
+              <div>
+                {" "}
+                {i > 0 && <Divider />}
+                <ProfileField
+                  label={
+                    commentsToFields?.request?.[field]
+                      ? commentsToFields?.request?.[field]
+                      : commentsToFields?.object?.[field] ?? ""
+                  }
+                  value={data[field]}
+                  onChange={(val) => onChangeField(field, val)}
+                  placeholder="Введіть значення"
+                  type="number"
+                />{" "}
+              </div>
+            );
           } else {
             return null;
           }

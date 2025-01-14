@@ -30,8 +30,8 @@ export const Objects = ({
   isDeleted,
 }) => {
   const [openInfo, setOpenInfo] = useState(false);
-  const [requestsCount, setRequestCount] = useState("0*");
-  const [objectsCount, setObjectsCount] = useState("0*");
+  const [requestsCount, setRequestCount] = useState("0");
+  const [objectsCount, setObjectsCount] = useState("0");
   const [selectedItems, setSelectedItems] = useState([]);
   const [deleteObjects] = useLazyDeleteObjectQuery();
   const [deleteRequests] = useLazyDeleteRequestQuery();

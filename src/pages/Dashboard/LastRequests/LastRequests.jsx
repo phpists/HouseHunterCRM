@@ -14,52 +14,7 @@ import { Confirm } from "../../../components/Confirm/Confirm";
 
 export const LastRequests = () => {
   const [getRequests] = useLazyGetLastRequestsQuery();
-  const [requests, setRequests] = useState({
-    "8560b429c68dadfaaea7b0651a920a05": {
-      General_field_group: {
-        show_street_base: "1",
-        mls: "0",
-        structure: "0",
-        not_actual: "0",
-        folder_empty: "0",
-        stop_showing: "0",
-        dt_deadline: "1730109978",
-        cl_fullname: "Новий клієнт ",
-        dt_add: "1730110967",
-        client_hash: "df71d048fef15bc51ac5367d2347a05f",
-        favorite: false,
-        count_object: "4218",
-        dt_view_client: "",
-        countLike: 0,
-        countDislike: 0,
-        new_messege: null,
-      },
-      e127dbc63b2277f87d3f913d2accbc56: {
-        id_request: "e127dbc63b2277f87d3f913d2accbc56",
-        id_group: "8560b429c68dadfaaea7b0651a920a05",
-        id_rubric: "57",
-        id_location: '["43"]',
-        id_location_street: "0",
-        type_obj_house: "0",
-        type_obj_apartment: "0",
-        type_obj_commerce: "0",
-        type_obj_garage: "0",
-        type_obj_hotel: "0",
-        type_obj_land: "0",
-        price_min: "0",
-        price_max: "0",
-        room_min: "0",
-        address_storey: "0",
-        storey_count: "0",
-        area_total_min: "0",
-        area_total_max: "0",
-        area_plot_sotka_min: "0",
-        area_plot_sotka_max: "0",
-        price_currency: "1",
-        price_for: "4",
-      },
-    },
-  });
+  const [requests, setRequests] = useState({});
   const { data: rubricsList } = useGetRubricsQuery();
   const [selectedChat, setSelectedChat] = useState(null);
   const [deleteRequest] = useLazyDeleteRequestQuery();
@@ -67,27 +22,27 @@ export const LastRequests = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(false);
 
-  //   const handleGetRequests = () => {
-  //     getRequests().then((resp) => {
-  //       handleResponse(
-  //         resp,
-  //         () => {
-  //           if (Object.entries(resp?.data?.data)?.length) {
-  //             setRequests(resp?.data?.data);
-  //           }
-  //         },
-  //         () => {
-  //           setRequests({});
-  //         },
-  //         true
-  //       );
-  //     });
-  //   };
+  const handleGetRequests = () => {
+    getRequests().then((resp) => {
+      handleResponse(
+        resp,
+        () => {
+          if (Object.entries(resp?.data?.data)?.length) {
+            setRequests(resp?.data?.data);
+          }
+        },
+        () => {
+          setRequests({});
+        },
+        true
+      );
+    });
+  };
 
-  //   useEffect(() => {
-  //     handleGetRequests();
-  //     // eslint-disable-next-line
-  //   }, []);
+  useEffect(() => {
+    handleGetRequests();
+    // eslint-disable-next-line
+  }, []);
 
   const handleToggleFavorites = (idGroup, id) => {
     addToFavorites(idGroup).then((resp) => {
