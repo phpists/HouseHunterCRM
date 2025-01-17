@@ -192,7 +192,7 @@ export const Tags = ({
                   "-",
                 value,
               })) ?? []),
-              ...(selections ? SELECTION_TAGS : []),
+              //   ...(selections ? SELECTION_TAGS : []),
             ]}
             onChange={handleSelect}
             hide

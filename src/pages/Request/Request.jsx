@@ -226,17 +226,6 @@ const Request = () => {
     ) {
       errorData.push({ id: "general", errors: ["show_only"] });
     } else if (
-      data?.general_group?.company_object &&
-      data?.general_group?.company_object?.show_only &&
-      !data?.general_group?.company_object?.given_objects &&
-      !data?.general_group?.company_object?.overdue &&
-      !data?.general_group?.company_object?.show_actual &&
-      !data?.general_group?.company_object?.my_structure &&
-      !data?.general_group?.company_object?.show_not_actual &&
-      !data?.general_group?.company_object?.company_street_base
-    ) {
-      errorData.push({ id: "general", errors: ["company_object_more"] });
-    } else if (
       !data?.general_group?.company_object &&
       !data?.general_group?.street_base_object &&
       typeof data?.general_group?.street_base_object !== "object" &&

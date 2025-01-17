@@ -114,11 +114,11 @@ export const Modal = ({ onClose, onRefetchStructureData }) => {
               onClose={handleClose}
             />
           )}
-          <CheckOption
+          {/* <CheckOption
             label="Дозволити швидкі підбірки"
             value={user?.show_fast_folder ? "1" : "0"}
             onChange={handleToggleFastSelections}
-          />
+          /> */}
           {/* <AddButton onRefetchData={refetch} /> */}
         </div>
       </StyledModal>

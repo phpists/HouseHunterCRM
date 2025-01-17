@@ -343,23 +343,6 @@ export const Base = ({
             />
           ) : null}
           <Divider />
-          {hideActual ? null : (
-            <CheckOption
-              label="Aктуальні"
-              className="check-opt"
-              value={data?.company_object?.[actualFieldName]}
-              onChange={() =>
-                onChange("company_object", {
-                  ...data?.company_object,
-                  [actualFieldName]:
-                    data?.company_object[actualFieldName] === "1"
-                      ? undefined
-                      : "1",
-                })
-              }
-              error={!!errors.find((e) => e === "company_object_more")}
-            />
-          )}
 
           <CheckOption
             label={
