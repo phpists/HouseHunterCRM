@@ -1,7 +1,7 @@
 {
   "name": "xhouse-crm",
   "version": "0.1.0",
-  "buildDate": 1737114603604,
+  "buildDate": 1737127278110,
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",

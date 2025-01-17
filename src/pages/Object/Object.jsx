@@ -458,11 +458,11 @@ const ObjectPage = () => {
         isData={!isLoadingData}
         reasonRemove={data?.reasone_remove}
       />
-      <Header
+      {/* <Header
         className="mobile-header"
         data={data}
         onChangeField={handleChangeField}
-      />
+      /> */}
       <Price
         className="mobile-price"
         data={data}
