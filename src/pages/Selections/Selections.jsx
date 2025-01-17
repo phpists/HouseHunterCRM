@@ -229,7 +229,7 @@ const Selections = () => {
   const handleHideObject = (id_object) => {
     hideObject({ id_request_group: id, id_objects: [id_object] }).then((resp) =>
       handleResponse(resp, () => {
-        showAlert("success", "Статус об'єкта успішно обновлено");
+        showAlert("success", "Статус автомобіля успішно обновлено");
         const updatedObjects = objects?.filter((o) => o?.id !== id_object);
         setObjects(updatedObjects);
         setAllCount(allCount - 1);

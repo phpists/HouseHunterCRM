@@ -197,8 +197,8 @@ export const List = ({
         <Confirm
           title={
             isDeleted || deleteModal === "finally"
-              ? "Видалити об'єкт остаточно?"
-              : "Видалити об'єкт?"
+              ? "Видалити автомобільостаточно?"
+              : "Видалити автомобіль?"
           }
           onClose={() => setDeleteModal(false)}
           onSubmit={handleDelete}

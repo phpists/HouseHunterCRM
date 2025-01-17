@@ -92,7 +92,7 @@ export const Contacts = ({
               : Number(data?.Count_object) === 0
               ? null
               : data?.type_object === "street_base"
-              ? `${data?.Count_object ?? 0} об'єктів на ${handleFormatDate(
+              ? `${data?.Count_object ?? 0} автомобілів на ${handleFormatDate(
                   Number(data?.count_object_date) * 1000
                 )}`
               : null
@@ -125,7 +125,7 @@ export const Contacts = ({
               : Number(data?.Count_object) === 0
               ? null
               : data?.type_object === "street_base"
-              ? `${data?.Count_object ?? 0} об'єктів на ${handleFormatDate(
+              ? `${data?.Count_object ?? 0} автомобілів на ${handleFormatDate(
                   Number(data?.count_object_date) * 1000
                 )}`
               : null

@@ -75,14 +75,14 @@ export const Characteristic = ({ data, onChangeField, fields, errors }) => {
       <Header open={open} onToggleOpen={() => setOpen(!open)} />
       <div className="content-wrapper hide-scroll" ref={contentRef}>
         <div className="characteristic-content">
-          <CheckOption
+          {/* <CheckOption
             label="Ліквідність"
             value={data?.liquidity}
             onChange={() =>
               onChangeField("liquidity", data?.liquidity ? undefined : "1")
             }
             className="mb-2"
-          />
+          /> */}
           <Select
             value={data?.id_rubric}
             onChange={(val) => onChangeField("id_rubric", val)}
@@ -147,7 +147,7 @@ const StyledCharacteristic = styled.div`
     }
   }
   .content-wrapper {
-    height: calc(100svh - 425px);
+    height: calc(100svh - 365px);
     overflow: auto;
   }
   .characteristic-content {

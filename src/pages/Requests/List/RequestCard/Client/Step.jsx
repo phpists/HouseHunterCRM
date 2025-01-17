@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Step = () => (
   <StyledStep className="flex items-center clickable">
     <div className="title clickable">02</div>
-    <div className="subtitle clickable">Пiдбiрка об'єкту fdfdfdfd</div>
+    <div className="subtitle clickable">Пiдбiрка автомобілю fdfdfdfd</div>
   </StyledStep>
 );
 

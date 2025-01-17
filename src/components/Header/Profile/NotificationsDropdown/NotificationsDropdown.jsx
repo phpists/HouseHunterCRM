@@ -64,7 +64,7 @@ export const NotificationsDropdown = ({
       {data?.needs_moderation_after_adding_from_street_base && (
         <Card
           type="objects"
-          messages={["Є об'єкти перенесені з StreetBase"]}
+          messages={["Є автомобілі перенесені з StreetBase"]}
           links={[
             search === "?moderationAfterStreetBase=true"
               ? "/objects?moderationAfterStreetBase=refresh"

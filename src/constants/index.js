@@ -1,6 +1,6 @@
 export const PRICES_FOR_TITLE = [
   {
-    title: "за об'єкт",
+    title: "за автомобіль",
     value: "4",
   },
   {
@@ -19,7 +19,7 @@ export const PRICES_FOR_TITLE = [
 
 export const PRICES_FOR_TITLE_FILTERS = [
   {
-    title: "об'єкт",
+    title: "автомобіль",
     value: "4",
   },
   {

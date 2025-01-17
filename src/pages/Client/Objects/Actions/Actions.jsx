@@ -30,7 +30,7 @@ export const Actions = ({ accessData }) => {
       {handleCheckAccess(accessData, "objects", "add") && (
         <Action
           icon={homeIcon}
-          title="Додати новий об’єкт"
+          title="Додати новий автомобіль"
           color="#9747FF"
           background="rgba(151, 71, 255, 0.10)"
           onChangeHover={handleChangeActive}

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Title = () => (
-  <StyledTitle>Запит на створення об'єкта оренди</StyledTitle>
+  <StyledTitle>Запит на створення автомобіля оренди</StyledTitle>
 );
 
 const StyledTitle = styled.div`

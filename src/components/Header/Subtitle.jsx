@@ -29,17 +29,17 @@ export const Subtitle = () => {
       case "/requests":
         return `${requestsCount} запит${handleGetEnding(requestsCount)}`;
       case "/objects":
-        return `${objectsCount ?? "0"} об'єктів`;
+        return `${objectsCount ?? "0"} автомобілів`;
       case "/note":
-        return "345 нових об'єктів із трьох темплейтів";
+        return "345 нових автомобілів із трьох темплейтів";
       case "/calendar":
-        return "Перегляд об'єкту через 40 хвилин";
+        return "Перегляд автомобілю через 40 хвилин";
       case "/structure":
         return `Всього ${workersCount ?? 0} агентів`;
       case "/company":
         return `${companyWorkers} працівників`;
       case "/request":
-        return "Запит об'єкта";
+        return "Запит автомобіля";
       case "/calls":
         return handleCheckAccess(accessData, "calls", "view")
           ? `Всього ${callsCount}`
@@ -54,13 +54,13 @@ export const Subtitle = () => {
           : pathname.split("/")[1] === "edit-request"
           ? `Редагування запиту`
           : pathname.split("/")[1] === "create-object"
-          ? "Створення об'єкта"
+          ? "Створення автомобіля"
           : pathname.split("/")[1] === "edit-object"
-          ? `Редагування об'єкта`
+          ? `Редагування автомобіля`
           : pathname.split("/")[1] === "edit-ad"
           ? "Редагування об’єкта"
           : pathname.split("/")[1] === "selections"
-          ? `Всього ${selectionsCount} об'єктів`
+          ? `Всього ${selectionsCount} автомобілів`
           : pathname.split("/")[1] === "objects"
           ? ""
           : "";

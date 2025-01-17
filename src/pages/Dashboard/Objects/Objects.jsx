@@ -22,7 +22,7 @@ export const Objects = ({ statisticData }) => {
               value: statisticData?.count_objects_overdue ?? "-",
             },
             {
-              title: "Об’єкти Street Base",
+              title: "Автомобілі Street Base",
               value: statisticData?.count_objects_street_base ?? "-",
             },
             {

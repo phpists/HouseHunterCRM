@@ -83,7 +83,7 @@ export const Statistic = ({ filters, allCount }) => {
       showAlert("error", "Оберіть категорію");
       return false;
     } else if (allCount === 0) {
-      showAlert("error", "Не знайдено об'єктів для обрахування статистики");
+      showAlert("error", "Не знайдено автомобілів для обрахування статистики");
     } else {
       return true;
     }

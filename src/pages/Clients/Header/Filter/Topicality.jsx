@@ -9,7 +9,7 @@ export const Topicality = () => {
       <Select
         label="Актуальність"
         labelActive="Оберіть aктуальність"
-        value="Об'єкти моєї структури"
+        value="Автомобілі моєї структури"
       />
       <Divider />
       <ToggleOption label="Зайняті" className="mb-1.5" />

@@ -44,11 +44,7 @@ export const Cards = ({ data, onEdit }) => (
     />
     <Card
       title={data?.all_obj_copmany ?? "-"}
-      subtitle={
-        <>
-          Кількість <br /> обєктів
-        </>
-      }
+      subtitle={<>Автомобілі</>}
       Icon={HomeIcon}
       hoverBackground={backgrondBlue}
     />

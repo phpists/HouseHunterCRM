@@ -167,7 +167,7 @@ export const DomriaForm = ({ data, onChange }) => {
     <StyledRealestateForm>
       {OBJECT_TYPE_ONE.includes(data?.id_rubric) ? (
         <Select
-          label="Тип об'єкта"
+          label="Тип автомобіля"
           options={OBJECT_TYPES?.map((v) => ({ title: v, value: v }))}
           value={data?.object_type}
           onChange={(v) => onChange("object_type", v)}
@@ -177,7 +177,7 @@ export const DomriaForm = ({ data, onChange }) => {
       ) : null}
       {OBJECT_TYPE_HOUSE.includes(data?.id_rubric) ? (
         <Select
-          label="Тип об'єкта"
+          label="Тип автомобіля"
           options={OBJECT_TYPES_HOUSE?.map((v) => ({ title: v, value: v }))}
           value={data?.wall_type}
           onChange={(v) => onChange("wall_type", v)}

@@ -27,7 +27,7 @@ export const NavBar = ({ accessData }) => {
           {
             icon: HomeIcon,
             link: "/objects",
-            title: "Об'єкти",
+            title: "Автомобілі",
             childrenLinks: ["create-object", "edit-object"],
           },
         ]

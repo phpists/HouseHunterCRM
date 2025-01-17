@@ -63,7 +63,7 @@ export const Dropdown = ({
               className="flex items-center justify-between"
               onClick={() => window.open(`/objects/${idObject}`)}
             >
-              <span>Переглянути об'єкт</span>{" "}
+              <span>Переглянути автомобіль</span>{" "}
               <Selection className="selection-icon" />
             </div>
           )}

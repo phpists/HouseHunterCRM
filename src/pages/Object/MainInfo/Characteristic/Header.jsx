@@ -8,7 +8,7 @@ export const Header = ({ open, onToggleOpen }) => {
       onClick={onToggleOpen}
       open={open}
     >
-      <span>Дані об’єкту</span>
+      <span>Дані автомобілю</span>
       <ArrowDown />
     </StyledHeader>
   );

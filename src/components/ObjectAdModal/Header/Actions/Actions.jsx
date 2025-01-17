@@ -9,7 +9,7 @@ export const Actions = ({ onSubmit, loading, disabled, onEdit }) => (
     <SubmitButton onClick={onSubmit} loading={loading} disabled={disabled} />
     {onEdit && (
       <OutlineButton
-        title="Редагувати об'єкт"
+        title="Редагувати автомобіль"
         disabled={loading}
         onClick={onEdit}
       />

@@ -194,7 +194,7 @@ export const Header = ({
 
             <div className="select-wrapper flex items-center justify-end">
               <SelectItems
-                title="об'єктів"
+                title="автомобілів"
                 selectedCount={selectedCount}
                 allCount={allCount}
                 deleteConfirmTitle={
@@ -211,7 +211,7 @@ export const Header = ({
         </div>
         <div className="select-wrapper-mobile">
           <SelectItems
-            title="об'єктів"
+            title="автомобілів"
             selectedCount={selectedCount}
             className="mobile-select"
             allCount={allCount}

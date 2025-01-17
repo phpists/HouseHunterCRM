@@ -129,8 +129,8 @@ export const ObjectsList = ({
         <Confirm
           title={
             deleteModal === "finally"
-              ? "Видалити об'єкт остаточно?"
-              : "Видалити об'єкт?"
+              ? "Видалити автомобільостаточно?"
+              : "Видалити автомобіль?"
           }
           onClose={handleCancelDeleteRequest}
           onSubmit={handleDeleteObject}

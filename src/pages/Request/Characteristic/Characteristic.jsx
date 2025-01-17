@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { Card } from "./Card";
 import { useGetRubricsQuery } from "../../../store/requests/requests.api";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Deadline } from "./Deadline";
 
 export const Characteristic = ({
@@ -13,6 +13,7 @@ export const Characteristic = ({
 }) => {
   const { data: rubricsList } = useGetRubricsQuery();
   const contentRef = useRef(null);
+  const [selectOpened, setSelectOpend] = useState(false);
 
   useEffect(() => {
     if (!!errors?.find((e) => e.id === "updated")) {
@@ -26,6 +27,20 @@ export const Characteristic = ({
       }
     }
   }, [errors]);
+
+  useEffect(() => {
+    if (selectOpened) {
+      setSelectOpend(false);
+      const firstErrorField = document.querySelectorAll(
+        ".request-characteristic-wrapper .selectOpened"
+      );
+      if (firstErrorField[0]) {
+        contentRef.current.scrollTo({
+          top: firstErrorField[0].offsetTop - contentRef.current.offsetTop - 10,
+        });
+      }
+    }
+  }, [selectOpened]);
 
   const handleChangeValue = (rubricId, fieldName, value) => {
     onChangeField(
@@ -65,6 +80,8 @@ export const Characteristic = ({
     );
   };
 
+  const handleOpenSelect = (val) => setSelectOpend(val);
+
   return (
     <StyledCharacteristic
       className="request-card  request-characteristic-wrapper"
@@ -89,6 +106,7 @@ export const Characteristic = ({
             handleChangeValue(field.id, fieldName, value)
           }
           errors={errors.find((e) => e.id_rubric === field?.id)?.errors ?? []}
+          onSelectOpen={handleOpenSelect}
         />
       ))}
     </StyledCharacteristic>

@@ -329,7 +329,7 @@ export const WorkerModal = ({
       {deleteModal && (
         <Confirm
           title={
-            "При видаленні агента видаляться всі його клієнти, об'єкти та запити впевнені?"
+            "При видаленні агента видаляться всі його клієнти, автомобілі та запити впевнені?"
           }
           onClose={() => setDeleteModal(false)}
           onSubmit={handleDeleteWorker}

@@ -24,9 +24,12 @@ export const Base = ({ data, onChangeField, className }) => {
       />
       {company ? (
         <>
-          <CheckOption label="Всі об'єкти" className="check-opt" />
-          <CheckOption label="Об'єкти моєї структури" className="check-opt" />
-          <CheckOption label="Тільки мої об'єкти" className="check-opt" />
+          <CheckOption label="Всі автомобілі" className="check-opt" />
+          <CheckOption
+            label="Автомобілі моєї структури"
+            className="check-opt"
+          />
+          <CheckOption label="Тільки мої автомобілі" className="check-opt" />
           <Divider />
           <CheckOption label="Aктуальні" className="check-opt" />
           <CheckOption label="Здані" className="check-opt" />
@@ -35,7 +38,7 @@ export const Base = ({ data, onChangeField, className }) => {
           <CheckOption
             label={
               <>
-                Об’єкти <span className="xbase-title">Street base</span>
+                Автомобілі <span className="xbase-title">Street base</span>
               </>
             }
             className="check-opt"

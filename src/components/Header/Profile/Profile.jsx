@@ -256,7 +256,7 @@ export const Profile = () => {
       {openEdit && (
         <UserInfoCard
           onClose={() => setOpenEdit(false)}
-          title="Особистий профіль"
+          title="Профіль"
           avatarBanner
           data={{
             ...profileData,

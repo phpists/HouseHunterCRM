@@ -4,7 +4,7 @@ export const Title = ({ requestsCount, objectsCount }) => (
   <StyledTitle className="flex items-center">
     <div className="number purple">{objectsCount}</div>
     <span>/</span>
-    Об’єкти
+    Автомобілі
     <span className="end">та</span>
     <div className="number green">{requestsCount}</div>
     <span>/</span>

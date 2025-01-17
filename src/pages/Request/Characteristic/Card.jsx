@@ -13,7 +13,14 @@ import { CheckOption } from "../../../components/CheckOption";
 import { ProfileField } from "../../../components/ProfileField";
 import { useEffect } from "react";
 
-export const Card = ({ title, fields, data, onChangeField, errors }) => {
+export const Card = ({
+  title,
+  fields,
+  data,
+  onChangeField,
+  errors,
+  onSelectOpen,
+}) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [getBrands, { data: brandsList }] = useLazyGetBrandsQuery();
   const [getModels, { data: modelsList }] = useLazyGetModelsQuery();
@@ -71,6 +78,7 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
                   value={data[field]}
                   onChange={(val) => onChangeField(field, val)}
                   error={!!errors?.find((e) => e === field)}
+                  onToggleOpen={onSelectOpen}
                 />
               </>
             );
@@ -166,6 +174,7 @@ export const Card = ({ title, fields, data, onChangeField, errors }) => {
                   }
                   hideArrowDefault
                   search
+                  onToggleOpen={onSelectOpen}
                 />
               </div>
             );

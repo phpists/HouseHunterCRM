@@ -89,7 +89,9 @@ export const Header = ({
     <>
       {deleteModal && (
         <Confirm
-          title={isDeleted ? "Видалити об'єкт остаточно?" : "Видалити об'єкт?"}
+          title={
+            isDeleted ? "Видалити автомобільостаточно?" : "Видалити автомобіль?"
+          }
           onClose={() => setDeleteModal(false)}
           onSubmit={handleDeleteRequest}
           passwordCheck={isDeleted}

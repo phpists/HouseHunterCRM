@@ -90,8 +90,8 @@ export const PersonalData = ({
         full
         hide
       />
-      <Divider />
-      <CheckOption
+      {/*  <Divider />
+       <CheckOption
         label="Cпільний доступ"
         value={data?.public_access === "1" ? "1" : "0"}
         onChange={() =>
@@ -116,7 +116,7 @@ export const PersonalData = ({
         onChange={() =>
           onChangeField("is_sell", data?.is_sell === "1" ? "0" : "1")
         }
-      />
+      /> */}
     </StyledPersonalData>
   );
 };

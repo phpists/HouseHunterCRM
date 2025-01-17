@@ -53,7 +53,7 @@ export const TotalInfo = ({ open, onToggleOpen, id }) => {
         />
         <Card
           open={open}
-          title="Об’єкти"
+          title="Автомобілі"
           icon={homeIcon}
           count={data?.data?.objects ?? "0"}
         />

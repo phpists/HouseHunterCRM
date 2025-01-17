@@ -223,7 +223,7 @@ export const Objects = ({
           title="обрано"
           className="mobile-select"
           selectedCount={selectedItems?.length}
-          deleteConfirmTitle="Видалити обрані заявку(ки)/ об'єкт(и)?"
+          deleteConfirmTitle="Видалити обрані заявку(ки)/ автомобіль(и)?"
           onDelete={
             handleGetDeletedSelectedItems()
               ? user?.struct_level === 1

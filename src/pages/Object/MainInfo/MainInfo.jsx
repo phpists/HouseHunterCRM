@@ -7,11 +7,11 @@ import { handleCheckIsField } from "../../../utilits";
 export const MainInfo = ({ data, onChangeField, fields, errors }) => {
   return (
     <StyledMainInfo className="object-maininfo-wrapper">
-      <Header
+      {/* <Header
         className="desktop-maininfo-header"
         data={data}
         onChangeField={onChangeField}
-      />
+      /> */}
 
       <Characteristic
         data={data}

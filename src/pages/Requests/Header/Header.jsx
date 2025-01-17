@@ -96,7 +96,6 @@ export const Header = ({
     );
   };
 
-
   return (
     <StyledHeader>
       <div className="flex items-center justify-between">
@@ -165,7 +164,7 @@ export const Header = ({
         </div>
       </div>
       <SelectItems
-        title="об'єктів"
+        title="автомобілів"
         selectedCount={selectedCount}
         className="select-wrapper-mobile"
         deleteConfirmTitle={"Видалити запит(и)?"}

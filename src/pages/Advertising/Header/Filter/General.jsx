@@ -149,7 +149,7 @@ export const General = ({
         </>
       ) : null}
       <ToggleOption
-        label="Клієнти без об'єктів та запитів"
+        label="Клієнти без автомобілів та запитів"
         value={filter?.filters?.clientNotItem === "1"}
         onChange={() =>
           onChangeFilter("filters", {
@@ -163,7 +163,7 @@ export const General = ({
       />
       <Divider />
       <ToggleOption
-        label="Клієнти з об'єктами"
+        label="Клієнти з автомобілями"
         value={filter?.filters?.clietnHasObject === "1"}
         onChange={() =>
           onChangeFilter("filters", {

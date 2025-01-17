@@ -54,7 +54,7 @@ export const SelectTags = ({
   return (
     <StyledSelectTags
       className={`flex items-center justify-between  ${!value && "empty"} ${
-        open && "open"
+        open && "open selectOpened"
       } ${isActive && "active"} ${error && "error-field"} ${className}`}
       showtags={showTags?.toString()}
       error={error?.toString()}

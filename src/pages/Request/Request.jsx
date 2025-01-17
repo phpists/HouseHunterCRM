@@ -626,6 +626,7 @@ const Request = () => {
             dateAgreementFieldName="company_given_objects_to"
             requestPage
             requestHidePicaroon
+            hideActual
           />
           <Contacts />
         </div>

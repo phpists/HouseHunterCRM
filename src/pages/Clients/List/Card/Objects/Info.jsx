@@ -3,10 +3,10 @@ import { styled } from "styled-components";
 export const Info = ({ requestsCount, objectsCount }) => (
   <StyledInfo>
     <div className="flex items-center">
-      <span className="green">{requestsCount}</span> Автомобілей
+      <span className="green">{requestsCount}</span> Запитів
     </div>
     <div className="flex items-center">
-      <span className="purple">{objectsCount}</span> Об'єкта
+      <span className="purple">{objectsCount}</span> Автомобілів
     </div>
   </StyledInfo>
 );

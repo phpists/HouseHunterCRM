@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Title = ({ count = 0 }) => (
   <StyledTitle className="clickable">
-    {Number(count) > 1000 ? "+1000" : count} об'єктів
+    {Number(count) > 1000 ? "+1000" : count} автомобілів
   </StyledTitle>
 );
 

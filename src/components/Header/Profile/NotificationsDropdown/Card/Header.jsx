@@ -19,7 +19,7 @@ const TYPES = {
     icon: requestsIcon,
   },
   objects: {
-    title: "Об'єкти",
+    title: "Автомобілі",
     icon: objectsIcon,
   },
 };

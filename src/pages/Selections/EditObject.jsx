@@ -48,7 +48,7 @@ export const EditObject = ({ onClose, data, onSuccess }) => {
 
   return (
     <StyledEditObject>
-      <Modal onClose={onClose} title="Редагування об'єкту">
+      <Modal onClose={onClose} title="Редагування автомобілю">
         <div className="editObject-content">
           <div>
             <div className="oldTitle">

@@ -24,37 +24,37 @@ export const Price = ({
     >
       <Ranger
         label="Ціновий діапазон"
-        mainTypes={
-          !isType
-            ? undefined
-            : !rubricId
-            ? PRICES_FOR_TITLE_FILTERS
-            : rubricId === "65" || rubricId === "66"
-            ? [
-                {
-                  title: "Об'єкт",
-                  value: "4",
-                },
-                {
-                  title: "Сотка",
-                  value: "2",
-                },
-                // {
-                //   title: "Гектар",
-                //   value: "3",
-                // },
-              ]
-            : [
-                {
-                  title: "Об'єкт",
-                  value: "4",
-                },
-                {
-                  title: "м²",
-                  value: "1",
-                },
-              ]
-        }
+        // mainTypes={
+        //   !isType
+        //     ? undefined
+        //     : !rubricId
+        //     ? PRICES_FOR_TITLE_FILTERS
+        //     : rubricId === "65" || rubricId === "66"
+        //     ? [
+        //         {
+        //           title: "Об'єкт",
+        //           value: "4",
+        //         },
+        //         {
+        //           title: "Сотка",
+        //           value: "2",
+        //         },
+        //         // {
+        //         //   title: "Гектар",
+        //         //   value: "3",
+        //         // },
+        //       ]
+        //     : [
+        //         {
+        //           title: "Об'єкт",
+        //           value: "4",
+        //         },
+        //         {
+        //           title: "м²",
+        //           value: "1",
+        //         },
+        //       ]
+        // }
         typeValue={typeValue}
         onChangeType={onChangeType}
         currency

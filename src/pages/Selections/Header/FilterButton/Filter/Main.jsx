@@ -242,7 +242,7 @@ export const Main = ({
       <Divider />
 
       <CheckOption
-        label="Мої об'єкти"
+        label="Мої автомобілі"
         className="check-opt"
         value={filters?.my_object ? "1" : "0"}
         onChange={(val) =>
@@ -260,7 +260,7 @@ export const Main = ({
         }
       />
       <CheckOption
-        label="Об'єкти компанії"
+        label="Автомобілі компанії"
         className="check-opt"
         value={filters?.company_object ? "1" : "0"}
         onChange={(val) =>
@@ -278,7 +278,7 @@ export const Main = ({
         }
       />
       <CheckOption
-        label="Об'єкти street base"
+        label="Автомобілі street base"
         className="check-opt"
         value={filters?.street_base_object ? "1" : "0"}
         onChange={(val) =>
@@ -297,7 +297,7 @@ export const Main = ({
         }
       />
       <CheckOption
-        label="Об'єкти MLS"
+        label="Автомобілі MLS"
         className="check-opt"
         value={filters?.mls_object ? "1" : "0"}
         onChange={(val) =>

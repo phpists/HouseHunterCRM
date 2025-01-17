@@ -32,7 +32,7 @@ export const FindClientsObjects = ({ onClose, id }) => {
 
   return (
     <StyledFindClientsObjects>
-      <Modal title="Знайти всі об'єкти у даного клієнта" onClose={onClose}>
+      <Modal title="Знайти всі автомобілі у даного клієнта" onClose={onClose}>
         <div>
           {loading ? (
             <Loader white className="loader" />

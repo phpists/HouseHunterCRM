@@ -41,7 +41,7 @@ export const AddToSelections = ({ onClose, idObject, onSuccess }) => {
         // open={true}
         onClose={onClose}
         onSubmit={() => null}
-        title="Додати об’єкт в підбірку"
+        title="Додати автомобільв підбірку"
       >
         <div className="select-label">Назва підбірки</div>
         <SelectionsSelect

@@ -45,7 +45,7 @@ export const Select = ({
     <>
       {deleteModal && (
         <Confirm
-          title="Видалити обрані заявку(ки)/ об'єкт(и)?"
+          title="Видалити обрані заявку(ки)/ автомобіль(и)?"
           onClose={() => setDeleteModal(false)}
           onSubmit={onDelete}
         />

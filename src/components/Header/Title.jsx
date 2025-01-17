@@ -36,7 +36,7 @@ export const Title = () => {
       case "/requests":
         return "Запити";
       case "/objects":
-        return "Об'єкти";
+        return "Автомобілі";
       case "/note":
         return "Нотатник";
       case "/calendar":
@@ -69,7 +69,7 @@ export const Title = () => {
           : pathname.split("/")[1] === "selections"
           ? selectionName ?? "Підбірки"
           : pathname.split("/")[1] === "objects"
-          ? "Об'єкти"
+          ? "Автомобілі"
           : "";
     }
   };

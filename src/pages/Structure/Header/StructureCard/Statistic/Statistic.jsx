@@ -106,7 +106,7 @@ export const Statistic = ({ onClick, statisticData, id }) => {
       <Divider />
       <StatisticCard
         title={statisticData?.count_objects ?? "0"}
-        subtitle="Всього об'єктів "
+        subtitle="Всього автомобілів "
         icon={homeIcon}
         iconBg="gba(145, 111, 245, 0.10)"
         infoData={[
@@ -129,7 +129,7 @@ export const Statistic = ({ onClick, statisticData, id }) => {
             }),
           },
           {
-            title: "Об’єкти Street Base",
+            title: "Автомобілі Street Base",
             value: statisticData?.count_objects_street_base ?? "0",
             link: handleRenderLink("objects?findWorker", {
               show_only: "my_structure",

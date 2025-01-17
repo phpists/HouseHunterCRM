@@ -168,7 +168,7 @@ export const Dropdown = ({
               className="flex items-center justify-between"
               onClick={onDeleteAd}
             >
-              <span>Деактивувати об'єкт на ресурсі</span>{" "}
+              <span>Деактивувати автомобільна ресурсі</span>{" "}
               <DeleteIcon className="selection-icon" />
             </div>
           )}
@@ -371,7 +371,7 @@ export const Dropdown = ({
                 onClose();
               }}
             >
-              <span>Мітка номерів об'єкту</span>{" "}
+              <span>Мітка номерів автомобілю</span>{" "}
               <PhoneIcon className="selection-icon" />
             </div>
           )}

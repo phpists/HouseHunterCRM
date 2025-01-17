@@ -64,6 +64,7 @@ export const Base = ({
   hidePicaroon,
   requestHidePicaroon,
   liquidity,
+  hideActual,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -221,7 +222,7 @@ export const Base = ({
       {company ? (
         <>
           <CheckOption
-            label="Всі об'єкти"
+            label="Всі автомобілі"
             className="check-opt"
             value={data?.company_object?.show_only === "company" ? "1" : "0"}
             onChange={() =>
@@ -263,7 +264,7 @@ export const Base = ({
             <>
               {" "}
               <CheckOption
-                label="Об'єкти моєї структури"
+                label="Автомобілі моєї структури"
                 className="check-opt"
                 value={
                   data?.company_object?.show_only === "my_structure" ? "1" : "0"
@@ -311,7 +312,7 @@ export const Base = ({
             </>
           ) : null}
           <CheckOption
-            label="Тільки мої об'єкти"
+            label="Тільки мої автомобілі"
             className="check-opt"
             value={data?.company_object?.show_only === "only_my" ? "1" : "0"}
             onChange={() =>
@@ -342,119 +343,28 @@ export const Base = ({
             />
           ) : null}
           <Divider />
-          <CheckOption
-            label="Aктуальні"
-            className="check-opt"
-            value={data?.company_object?.[actualFieldName]}
-            onChange={() =>
-              onChange("company_object", {
-                ...data?.company_object,
-                [actualFieldName]:
-                  data?.company_object[actualFieldName] === "1"
-                    ? undefined
-                    : "1",
-              })
-            }
-            error={!!errors.find((e) => e === "company_object_more")}
-          />
-          {liquidity ? (
+          {hideActual ? null : (
             <CheckOption
-              label="Ліквідність"
+              label="Aктуальні"
               className="check-opt"
-              value={data?.company_object?.liquidity}
+              value={data?.company_object?.[actualFieldName]}
               onChange={() =>
                 onChange("company_object", {
                   ...data?.company_object,
-                  liquidity:
-                    data?.company_object.liquidity === "1" ? undefined : "1",
+                  [actualFieldName]:
+                    data?.company_object[actualFieldName] === "1"
+                      ? undefined
+                      : "1",
                 })
               }
-              error={!!errors.find((e) => e === "liquidity")}
+              error={!!errors.find((e) => e === "company_object_more")}
             />
-          ) : null}
-          {dateAgreement && (
-            <>
-              {request ? (
-                <ProfileField
-                  placeholder="Звільняється до"
-                  label="Звільняється до"
-                  value={data?.company_object?.[dateAgreementFieldName]}
-                  onChange={(val) =>
-                    onChange("company_object", {
-                      ...data?.company_object,
-                      [dateAgreementFieldName]: val,
-                    })
-                  }
-                  type="date"
-                  error={!!errors?.find((e) => e === dateAgreementFieldName)}
-                  onlyCalendar
-                  reset
-                />
-              ) : (
-                <Field
-                  placeholder="Звільняється до"
-                  value={data?.company_object?.[dateAgreementFieldName]}
-                  onChange={(val) =>
-                    onChange("company_object", {
-                      ...data?.company_object,
-                      [dateAgreementFieldName]: val,
-                    })
-                  }
-                  label="Звільняється до"
-                  className="field-wrapper"
-                  error={!!errors?.find((e) => e === dateAgreementFieldName)}
-                  type="date"
-                  onFocus={onFocus}
-                  onBlur={onBlur}
-                />
-              )}
-            </>
           )}
-          <CheckOption
-            label="Здані"
-            className="check-opt"
-            value={data?.company_object?.given_objects}
-            onChange={() =>
-              onChange("company_object", {
-                ...data?.company_object,
-                given_objects:
-                  data?.company_object?.given_objects === "1" ? undefined : "1",
-              })
-            }
-            error={!!errors.find((e) => e === "company_object_more")}
-          />
-          <CheckOption
-            label="Неактуальні"
-            className="check-opt"
-            value={data?.company_object?.[notActualFieldName]}
-            onChange={() =>
-              onChange("company_object", {
-                ...data?.company_object,
-                [notActualFieldName]:
-                  data?.company_object[notActualFieldName] === "1"
-                    ? undefined
-                    : "1",
-              })
-            }
-            error={!!errors.find((e) => e === "company_object_more")}
-          />
-          <CheckOption
-            label="Протерміновані"
-            className="check-opt"
-            value={data?.company_object?.overdue}
-            onChange={() =>
-              onChange("company_object", {
-                ...data?.company_object,
-                overdue:
-                  data?.company_object?.overdue === "1" ? undefined : "1",
-              })
-            }
-            error={!!errors.find((e) => e === "company_object_more")}
-          />
+
           <CheckOption
             label={
               <>
-                Об’єкти <span className="xbase-title">Street base</span>
+                Автомобілі <span className="xbase-title">Street base</span>
               </>
             }
             className="check-opt"
@@ -487,7 +397,7 @@ export const Base = ({
           ) : null}
           {showDeleted ? (
             <CheckOption
-              label="Об'єкти до видалення"
+              label="Автомобілі до видалення"
               className="check-opt"
               value={data?.company_object?.show_deleted}
               onChange={() =>
@@ -501,53 +411,6 @@ export const Base = ({
               }
               error={!!errors.find((e) => e === "company_object_more")}
             />
-          ) : null}
-          {hideAdvertsAdd ? (
-            <>
-              {" "}
-              <CheckOption
-                label="Виключити рекламовані об'єкти"
-                className="check-opt"
-                value={data?.company_object?.hideAdvertsAdd}
-                onChange={() =>
-                  onChange("company_object", {
-                    ...data?.company_object,
-                    hideAdvertsAdd:
-                      data?.company_object?.hideAdvertsAdd === "1"
-                        ? undefined
-                        : "1",
-                  })
-                }
-              />
-              {data?.company_object?.hideAdvertsAdd === "1" && (
-                <SelectTags
-                  label="Приховувати рекламовані обєкти на ресурах"
-                  tags={adverstionResources?.resource
-                    ?.map((v) => ({
-                      title: v?.name,
-                      value: v?.id,
-                    }))
-                    ?.filter((v) =>
-                      data?.company_object?.excludeResourceAdd?.includes(
-                        v.value
-                      )
-                    )}
-                  options={
-                    adverstionResources?.resource
-                      ?.map((v) => ({
-                        title: v?.name,
-                        value: v?.id,
-                      }))
-                      ?.filter((r) =>
-                        iS_AD_ACCESS ? true : r?.value !== "3"
-                      ) ?? []
-                  }
-                  onChange={handleChangeExcludeResourceAdd}
-                  isSearch
-                  showTags
-                />
-              )}
-            </>
           ) : null}
         </>
       ) : null}
@@ -696,7 +559,7 @@ export const Base = ({
           ) : null}
           {notCommentAndTags ? (
             <CheckOption
-              label="Об'єкти без коментарів та тегів"
+              label="Автомобілі без коментарів та тегів"
               className="check-opt"
               value={data?.street_base_object?.notCommentAndTags}
               onChange={() =>
@@ -736,7 +599,7 @@ export const Base = ({
           ) : null}
           {countObjectOwner ? (
             <Ranger
-              label="Кількість об'єктів за номером"
+              label="Кількість автомобілів за номером"
               max={1000}
               values={[
                 data?.street_base_object?.count_object_owner_from ?? 0,

@@ -205,7 +205,7 @@ export const Header = ({
             />
             <div className="select-wrapper flex items-center justify-end">
               <SelectItems
-                title="об'єктів"
+                title="автомобілів"
                 selectedCount={selectedCount}
                 onToggleFavorite={
                   filters?.company_object?.show_deleted === "1"
@@ -213,8 +213,8 @@ export const Header = ({
                     : handleToggleFavorites
                 }
                 noFavorite={filters?.company_object?.show_deleted === "1"}
-                deleteConfirmTitle={"Видалити об'єкт(и)?"}
-                finalDeleteConfirmTitle="Видалити об'єкт(и) остаточно?"
+                deleteConfirmTitle={"Видалити автомобіль(и)?"}
+                finalDeleteConfirmTitle="Видалити автомобіль(и) остаточно?"
                 onDeleteFinally={
                   !isAllActions
                     ? null
@@ -250,7 +250,7 @@ export const Header = ({
         </div>
         <div className="select-wrapper-mobile">
           <SelectItems
-            title="об'єктів"
+            title="автомобілів"
             selectedCount={selectedCount}
             className="mobile-select"
             onToggleFavorite={
@@ -261,8 +261,8 @@ export const Header = ({
             noFavorite={filters?.company_object?.show_deleted === "1"}
             deleteConfirmTitle={
               filters?.company_object?.show_deleted === "1"
-                ? "Видалити об'єкт(и) остаточно?"
-                : "Видалити об'єкт(и)?"
+                ? "Видалити автомобіль(и) остаточно?"
+                : "Видалити автомобіль(и)?"
             }
             onDelete={
               !isAllActions
