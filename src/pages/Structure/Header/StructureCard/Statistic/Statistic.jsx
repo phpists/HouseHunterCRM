@@ -84,7 +84,6 @@ export const Statistic = ({ onClick, statisticData, id }) => {
               not_actual: "1",
             }),
           },
-          { title: "", value: "", link: window.location.href },
           {
             title: "Протерміновані",
             value: statisticData?.count_request_overdue ?? "0",
@@ -111,24 +110,6 @@ export const Statistic = ({ onClick, statisticData, id }) => {
         iconBg="gba(145, 111, 245, 0.10)"
         infoData={[
           {
-            title: "Актуальні",
-            value: statisticData?.count_objects_actual ?? "0",
-            link: handleRenderLink("objects?findWorker", {
-              show_only: "my_structure",
-              id_worker_Search: id,
-              actual: "1",
-            }),
-          },
-          {
-            title: "Здані",
-            value: statisticData?.count_objects_surrendered ?? "0",
-            link: handleRenderLink("objects?findWorker", {
-              show_only: "my_structure",
-              id_worker_Search: id,
-              given_objects: "1",
-            }),
-          },
-          {
             title: "Автомобілі Street Base",
             value: statisticData?.count_objects_street_base ?? "0",
             link: handleRenderLink("objects?findWorker", {
@@ -137,24 +118,7 @@ export const Statistic = ({ onClick, statisticData, id }) => {
               show_street_base_company: "1",
             }),
           },
-          {
-            title: "Протерміновані",
-            value: statisticData?.count_objects_overdue ?? "0",
-            link: handleRenderLink("objects?findWorker", {
-              show_only: "my_structure",
-              id_worker_Search: id,
-              overdue: "1",
-            }),
-          },
-          {
-            title: "Не актуальні",
-            value: statisticData?.count_objects_not_actual ?? "0",
-            link: handleRenderLink("objects?findWorker", {
-              show_only: "my_structure",
-              id_worker_Search: id,
-              not_actual: "1",
-            }),
-          },
+
           {
             title: "Видалені",
             value: statisticData?.count_objects_deleted ?? "0",
