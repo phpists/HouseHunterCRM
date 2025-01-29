@@ -25,11 +25,17 @@ export const Fields = ({
   }, [data.id_rubric]);
 
   useEffect(() => {
-    getModels({
-      id_category: data.id_rubric,
-      id_brand: data.id_brand,
-    });
-  }, [data.id_brand]);
+    const idBrand = brandsList?.data?.find(
+      (b) => b.id === data.id_brand
+    )?.id_brand;
+    console.log(idBrand);
+    if (idBrand) {
+      getModels({
+        id_category: data.id_rubric,
+        id_brand: idBrand,
+      });
+    }
+  }, [data.id_brand, brandsList]);
 
   return (
     <div className="fields">
@@ -50,15 +56,15 @@ export const Fields = ({
                     options={
                       field[0] === "id_brand"
                         ? brandsList?.data
-                          ? brandsList?.data?.map(({ name, id_brand }) => ({
+                          ? brandsList?.data?.map(({ name, id }) => ({
                               title: name,
-                              value: id_brand,
+                              value: id,
                             }))
                           : []
                         : modelsList?.data
-                        ? modelsList?.data?.map(({ name, id_model }) => ({
+                        ? modelsList?.data?.map(({ name, id }) => ({
                             title: name,
-                            value: id_model,
+                            value: id,
                           }))
                         : []
                     }
@@ -68,6 +74,7 @@ export const Fields = ({
                     hideArrowDefault
                     error={!!errors.find((e) => e === field[0])}
                     onOpen={onOpenSelect}
+                    isSearch
                   />
                 );
               } else if (typeof field[1]?.field_option === "object") {

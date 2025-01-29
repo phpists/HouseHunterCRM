@@ -30,11 +30,17 @@ export const Card = ({
   }, [data.id_rubric]);
 
   useEffect(() => {
-    getModels({
-      id_category: data.id_rubric,
-      id_brand: data.id_brand,
-    });
-  }, [data.id_brand]);
+    const idBrand = brandsList?.data?.find(
+      (b) => b.id === data.id_brand
+    )?.id_brand;
+    console.log(idBrand);
+    if (idBrand) {
+      getModels({
+        id_category: data.id_rubric,
+        id_brand: idBrand,
+      });
+    }
+  }, [data.id_brand, brandsList]);
 
   const filteredFields = [
     "id_rubric",
@@ -51,10 +57,6 @@ export const Card = ({
     "price_max",
     "price_for",
   ];
-
-  console.log(
-    fields?.filter((f) => !filteredFields?.find((ff) => ff === f?.field))
-  );
 
   return (
     <StyledCard>
@@ -154,15 +156,15 @@ export const Card = ({
                   options={
                     field === "id_brand"
                       ? brandsList?.data
-                        ? brandsList?.data?.map(({ name, id_brand }) => ({
+                        ? brandsList?.data?.map(({ name, id }) => ({
                             title: name,
-                            value: id_brand,
+                            value: id,
                           }))
                         : []
                       : modelsList?.data
-                      ? modelsList?.data?.map(({ name, id_model }) => ({
+                      ? modelsList?.data?.map(({ name, id }) => ({
                           title: name,
-                          value: id_model,
+                          value: id,
                         }))
                       : []
                   }

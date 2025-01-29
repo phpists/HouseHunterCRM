@@ -15,6 +15,7 @@ export const TagsFilter = ({
   onChange,
   error,
   showAll,
+  noEditAlert,
 }) => {
   const [isActive, setIsActive] = useState(false);
   const [value, setValue] = useState("");
@@ -26,7 +27,7 @@ export const TagsFilter = ({
         showAlert("error", "Значення вже додано");
       } else if (tags?.length > 40) {
         showAlert("error", "Максимальне кількість тегів - 40");
-      } else if (value?.length > 0) {
+      } else if (value?.length >= 4) {
         onChange([...tags, value]);
         setValue("");
       }
@@ -34,8 +35,12 @@ export const TagsFilter = ({
   };
 
   const handleOnEnter = (e) => {
-    if (e.keyCode === 13) {
-      handleAddTag();
+    if (e.target.value.length >= 4) {
+      if (e.keyCode === 13 || e.keyCode === 32) {
+        handleAddTag();
+      }
+    } else {
+      setValue(e.target.value.replace(/\s/g, ""));
     }
   };
 
@@ -69,6 +74,7 @@ export const TagsFilter = ({
       }`}
       search={search}
       noEdit={noEdit}
+      onClick={() => (noEdit ? showAlert("error", noEditAlert) : null)}
     >
       <div className="flex items-center justify-between">
         <div className="tags-wrapper flex flex-wrap">
@@ -97,20 +103,21 @@ export const TagsFilter = ({
                 count={tags?.slice(handleCalculateTagsFirstLine()).length}
               />
             )}
-          {!noEdit && (
-            <motion.input
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              type="text"
-              placeholder={
-                search && tags?.length === 0 ? label : "Почніть писати"
-              }
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              onKeyDown={handleOnEnter}
-              onBlur={handleAddTag}
-            />
-          )}
+          <motion.input
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            type="text"
+            placeholder={
+              search && tags?.length === 0 ? label : "Почніть писати"
+            }
+            value={value}
+            onChange={(e) =>
+              noEdit ? null : setValue(e.target.value.replace(/\s/g, ""))
+            }
+            onKeyDown={handleOnEnter}
+            onBlur={handleAddTag}
+            onClick={() => (noEdit ? showAlert("error", noEditAlert) : null)}
+          />
         </div>
         {search && tags?.length === 0 && <SearchIcon className="search-icon" />}
       </div>

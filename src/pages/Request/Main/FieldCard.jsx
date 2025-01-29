@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { Divider } from "../Divider";
 import { SelectTags } from "../../../components/SelectTags/SelectTags";
-import { checkIsArray, handleChangeRange } from "../../../utilits";
+import { checkIsArray, handleChangeRange, showAlert } from "../../../utilits";
 import { Price } from "./Price/Price";
 import { TitleDivider } from "./TitleDivider";
 import { TagsFilter } from "../../../components/TagsFilter/TagsFilter";
+import { useEffect } from "react";
 
 export const FieldCard = ({
   title,
@@ -15,6 +16,17 @@ export const FieldCard = ({
   fields,
   rubricId,
 }) => {
+  useEffect(() => {
+    if (
+      (Array.isArray(data?.search_key_like_json)
+        ? data?.search_key_like_json
+        : []
+      )?.length === 0
+    ) {
+      onChangeField("search_key_notlike_json", []);
+    }
+  }, [data?.search_key_like_json]);
+
   return (
     <StyledFieldCard>
       <TitleDivider title={title} />
@@ -24,19 +36,28 @@ export const FieldCard = ({
           (l) => !!checkIsArray(data?.id_location)?.find((v) => v === l.value)
         )}
         onChange={(val) =>
-          onChangeField(
-            "id_location",
-            checkIsArray(data?.id_location)?.find((l) => l === val)
-              ? checkIsArray(data?.id_location)?.filter((l) => l !== val)
-              : [
-                  ...(checkIsArray(data?.id_location)
-                    ? checkIsArray(data?.id_location)
-                    : []),
-                  val,
-                ]
-          )
+          checkIsArray(data?.id_location)?.length >= 10 &&
+          !checkIsArray(data?.id_location)?.find((l) => l === val)
+            ? showAlert("error", "Можна обрати максимум 10 локацій")
+            : onChangeField(
+                "id_location",
+                checkIsArray(data?.id_location)?.find((l) => l === val)
+                  ? checkIsArray(data?.id_location)?.filter((l) => l !== val)
+                  : [
+                      ...(checkIsArray(data?.id_location)
+                        ? checkIsArray(data?.id_location)
+                        : []),
+                      val,
+                    ]
+              )
         }
-        options={formatedLocations}
+        options={formatedLocations?.filter((l) =>
+          !!checkIsArray(data?.id_location)?.find((v) => Number(v) <= 25)
+            ? Number(l.value) > 25 &&
+              l.value !==
+                checkIsArray(data?.id_location)?.find((v) => Number(v) <= 25)
+            : true
+        )}
         error={!!errors?.find((e) => e === "id_location")}
         showTags
       />
@@ -66,7 +87,7 @@ export const FieldCard = ({
       />
       <Divider />
       <TagsFilter
-        label="Пошук 1"
+        label="Пошук"
         search
         tags={
           Array.isArray(data?.search_key_like_json)
@@ -76,7 +97,7 @@ export const FieldCard = ({
         onChange={(val) => onChangeField("search_key_like_json", val)}
         error={!!errors?.find((e) => e === "search_key_like_json")}
       />
-      <Divider />
+      {/* <Divider />
       <TagsFilter
         label="Пошук 2"
         search
@@ -87,7 +108,7 @@ export const FieldCard = ({
         }
         onChange={(val) => onChangeField("search_key_like2_json", val)}
         error={!!errors?.find((e) => e === "search_key_like2_json")}
-      />
+      /> */}
       <Divider />
       <TagsFilter
         label="Пошук виключення"
@@ -99,6 +120,13 @@ export const FieldCard = ({
         }
         onChange={(val) => onChangeField("search_key_notlike_json", val)}
         error={!!errors?.find((e) => e === "search_key_notlike_json")}
+        noEdit={
+          (Array.isArray(data?.search_key_like_json)
+            ? data?.search_key_like_json
+            : []
+          )?.length === 0
+        }
+        noEditAlert="Пошук виключення доступний лише після заповнення поля 'Пошук'"
       />
     </StyledFieldCard>
   );

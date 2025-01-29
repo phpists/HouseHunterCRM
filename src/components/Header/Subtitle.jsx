@@ -27,9 +27,13 @@ export const Subtitle = () => {
       case "/clients":
         return `Всього ${clientsCount} клієнт${handleGetEnding(clientsCount)}`;
       case "/requests":
-        return `${requestsCount} запит${handleGetEnding(requestsCount)}`;
+        return `${
+          requestsCount === 100 ? "більше 100" : requestsCount
+        } запит${handleGetEnding(requestsCount)}`;
       case "/objects":
-        return `${objectsCount ?? "0"} автомобілів`;
+        return `${
+          objectsCount === 100 ? "більше 100" : objectsCount ?? "0"
+        } автомобілів`;
       case "/note":
         return "345 нових автомобілів із трьох темплейтів";
       case "/calendar":
@@ -60,7 +64,9 @@ export const Subtitle = () => {
           : pathname.split("/")[1] === "edit-ad"
           ? "Редагування об’єкта"
           : pathname.split("/")[1] === "selections"
-          ? `Всього ${selectionsCount} автомобілів`
+          ? `Всього ${
+              selectionsCount === 100 ? "більше 100" : selectionsCount
+            } автомобілів`
           : pathname.split("/")[1] === "objects"
           ? ""
           : "";

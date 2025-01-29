@@ -98,7 +98,7 @@ export const MarkObjectPhones = ({ onClose, object, onSuccess }) => {
 
   return (
     <StyledMarkObjectPhones>
-      <Modal onClose={onClose} title="Мітка номерів автомобілю">
+      <Modal onClose={onClose} title="Мітка номерів автомобіля">
         <div className="markPhonesContent">
           <CheckOption
             label="Не визначено"

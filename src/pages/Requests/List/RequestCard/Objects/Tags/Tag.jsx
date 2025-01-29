@@ -27,7 +27,7 @@ export const Tag = ({
         className={type === "green" ? "like" : type === "red" ? "dislike" : ""}
       />
     )}
-    {Number(count) > 1000 ? "+1000" : count} {title}
+    {Number(count) > 1000 ? "+1000" : count === 100 ? "100+" : count} {title}
     {onClick ? (
       <Loader className={`refreshIcon ${loading && "active"}`} />
     ) : null}

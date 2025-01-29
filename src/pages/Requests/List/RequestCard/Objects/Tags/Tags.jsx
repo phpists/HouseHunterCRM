@@ -30,7 +30,7 @@ export const Tags = ({ data, onChangeNewCount }) => {
       />
       <Tag count={dislikes} type={dislikes > 0 ? "red" : undefined} />
       <Tag
-        count={data?.General_field_group?.count_objects ?? 0}
+        count={Number(data?.General_field_group?.count_objects) ?? 0}
         title="нових"
         className="newTag"
         type="blue"

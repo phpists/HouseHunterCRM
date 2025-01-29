@@ -66,7 +66,21 @@ export const Filter = ({
       removePhoneMask(
         phonesCodes?.find((p) => p.id === phoneCode)?.format
       )?.replace(/\s/g, "")?.length ?? 0;
+
     if (
+      (filters?.id_rubric?.length === 0 ||
+        filters?.id_location?.length === 0 ||
+        !filters?.id_rubric) &&
+      filters?.street_base_object !== undefined
+    ) {
+      setErrors({
+        id_rubric:
+          filters?.id_rubric?.toString()?.length === 0 || !filters?.id_rubric,
+        id_location:
+          filters?.id_location?.length === 0 || !filters?.id_location,
+      });
+      console.log(filters?.street_base_object);
+    } else if (
       removePhoneMask(filters?.search_phone)?.length > 0 &&
       removePhoneMask(filters?.search_phone)?.length < phoneLength
     ) {
@@ -163,6 +177,16 @@ export const Filter = ({
     }
   }, [filters, isInputFocused]);
 
+  useEffect(() => {
+    if (filters?.street_base_object === undefined) {
+      setErrors({
+        ...errors,
+        id_rubric: false,
+        id_location: false,
+      });
+    }
+  }, [filters?.street_base_object]);
+
   const handleChangeFilter = (field, value, isDataUpdate) => {
     onChangeFilter(field, value, isDataUpdate);
     if (field === "sorting") {
@@ -198,7 +222,13 @@ export const Filter = ({
         </div>
         <div className="total">
           Знайдено -{" "}
-          {loading ? <Loader white className="totalLoader" /> : total}
+          {loading ? (
+            <Loader white className="totalLoader" />
+          ) : total === 100 ? (
+            "100+"
+          ) : (
+            total
+          )}
         </div>
         <Footer
           onCancel={() => handleApplyFilters(false)}

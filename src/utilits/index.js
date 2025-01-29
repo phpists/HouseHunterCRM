@@ -338,6 +338,7 @@ export const handleResponse = (
       resp?.error !== 77
     ) {
       !notShowErrorMessage &&
+        resp?.messege !== "Рубрика і Локація обов`язкові до заповнення" &&
         showAlert(
           "error",
           resp?.data?.messege ? resp?.data?.messege : resp?.messege ?? "Помилка"

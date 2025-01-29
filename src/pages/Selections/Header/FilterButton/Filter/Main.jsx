@@ -65,7 +65,7 @@ export const Main = ({
   const { data: rubricsList } = useGetRubricsQuery();
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
-  const { data: tagsList } = useGetTagsListQuery();
+  const { data: tagsList } = useGetTagsListQuery({ only_notepad: "0" });
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -216,27 +216,25 @@ export const Main = ({
         label="Теги"
         showTags
         tags={
-          TAGS
+          tagsList?.data
             ? [
-                ...TAGS?.filter(
-                  (t) => !!filters?.labels?.find((l) => l === t)
-                )?.map((t) => ({
-                  title: commentsToFields?.object[t] ?? "-",
-                  value: t,
-                })),
-                ...SELECTION_TAGS?.filter(
-                  (t) => !!filters?.folder_tags?.find((l) => l === t.value)
-                ),
+                ...tagsList?.data
+                  ?.filter((t) => !!filters?.labels?.find((l) => l === t))
+                  ?.map((t) => ({
+                    title: commentsToFields?.object[t] ?? "-",
+                    value: t,
+                  })),
               ]
             : []
         }
-        options={[
-          ...TAGS?.map((value) => ({
-            title: commentsToFields?.object[value] ?? "-",
-            value,
-          })),
-          ...SELECTION_TAGS,
-        ]}
+        options={
+          tagsList?.data
+            ? tagsList?.data?.map((value) => ({
+                title: commentsToFields?.object[value] ?? "-",
+                value,
+              }))
+            : []
+        }
         onChange={(val) => handleSelectTag(val, "labels")}
       />
       <Divider />

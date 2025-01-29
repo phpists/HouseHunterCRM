@@ -8,7 +8,7 @@ export const Search = ({ title, data, onChangeField, errors }) => {
     <StyledSearch>
       <TitleDivider title={title} />
       <TagsFilter
-        label="Пошук 1"
+        label="Пошук"
         search
         tags={
           Array.isArray(data?.search_key_like_json)

@@ -169,7 +169,7 @@ const Selections = () => {
     console.log(obj);
     const objData = {
       id_rubric,
-      //   id_location,
+      id_location,
       price_min: handleGetRange(Number(price_uah), true)?.start.toFixed(0),
       price_max: handleGetRange(Number(price_uah), true)?.end.toFixed(0),
       id_brand,

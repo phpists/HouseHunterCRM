@@ -371,7 +371,7 @@ export const Dropdown = ({
                 onClose();
               }}
             >
-              <span>Мітка номерів автомобілю</span>{" "}
+              <span>Мітка номерів автомобіля</span>{" "}
               <PhoneIcon className="selection-icon" />
             </div>
           )}

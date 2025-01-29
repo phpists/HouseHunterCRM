@@ -107,7 +107,13 @@ export const Filter = ({
         </div>
         <div className="total">
           Знайдено -{" "}
-          {loading ? <Loader white className="totalLoader" /> : total}
+          {loading ? (
+            <Loader white className="totalLoader" />
+          ) : total === 100 ? (
+            "100+"
+          ) : (
+            total
+          )}
         </div>
         <Footer
           onCancel={() => handleApplyFilters(false)}

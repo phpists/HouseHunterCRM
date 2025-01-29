@@ -10,6 +10,7 @@ import { useState } from "react";
 import {
   handleChangeRange,
   handleGetLocationAllPath,
+  showAlert,
 } from "../../../../utilits";
 import { useEffect } from "react";
 import { ProfileField } from "../../../../components/ProfileField";
@@ -93,11 +94,16 @@ export const Main = ({
   }, [filters.id_rubric]);
 
   useEffect(() => {
-    getModels({
-      id_category: filters.id_rubric,
-      id_brand: filters.id_brand,
-    });
-  }, [filters.id_brand]);
+    const idBrand = brandsList?.data?.find(
+      (b) => b.id === filters.id_brand
+    )?.id_brand;
+    if (idBrand) {
+      getModels({
+        id_category: filters.id_rubric,
+        id_brand: idBrand,
+      });
+    }
+  }, [filters.id_brand, brandsList]);
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -131,8 +137,14 @@ export const Main = ({
     onChangeFilter("list_street", updatedValue);
   };
 
-  //   "id_brand",
-  //   "id_model",
+  useEffect(() => {
+    if (
+      (Array.isArray(filters?.search_like) ? filters?.search_like : [])
+        ?.length === 0
+    ) {
+      onChangeFilter("search_not_like", []);
+    }
+  }, [filters?.search_like]);
 
   return (
     <StyledMain className="section filterFieldsWrapper">
@@ -148,6 +160,7 @@ export const Main = ({
             ? rubricsList?.map(({ id, name }) => ({ title: name, value: id }))
             : []
         }
+        error={errors?.["id_rubric"]}
       />
       <Divider />
       <SelectTags
@@ -156,18 +169,27 @@ export const Main = ({
           (l) => !!filters?.id_location?.find((v) => v === l.value)
         )}
         onChange={(val) => {
-          onChangeFilter(
-            "id_location",
-            filters?.id_location?.find((l) => l === val)
-              ? filters?.id_location?.filter((l) => l !== val)
-              : [...(filters?.id_location ? filters?.id_location : []), val]
-          );
+          filters?.id_location?.length >= 10 &&
+          !filters?.id_location?.find((l) => l === val)
+            ? showAlert("error", "Можна обрати максимум 10 локацій")
+            : onChangeFilter(
+                "id_location",
+                filters?.id_location?.find((l) => l === val)
+                  ? filters?.id_location?.filter((l) => l !== val)
+                  : [...(filters?.id_location ? filters?.id_location : []), val]
+              );
         }}
-        options={formatedLocations}
+        options={formatedLocations?.filter((l) =>
+          !!filters?.id_location?.find((v) => Number(v) <= 25)
+            ? Number(l.value) > 25 &&
+              l.value !== filters?.id_location?.find((v) => Number(v) <= 25)
+            : true
+        )}
         showTags
+        error={errors?.["id_location"]}
       />
       <Divider />
-      <div className="flex items-start">
+      {/* <div className="flex items-start">
         <SelectTags
           label="Пошук по вулиці"
           tags={
@@ -199,7 +221,7 @@ export const Main = ({
           ) : null}
         </div>
       </div>
-      <Divider />
+      <Divider /> */}
       <Price
         values={[filters?.price_min ?? "0", filters?.price_max ?? "0"]}
         onChange={(values) =>
@@ -222,18 +244,18 @@ export const Main = ({
       />
       <Divider />
       <TagsFilter
-        label="Пошук 1"
+        label="Пошук"
         search
         tags={Array.isArray(filters?.search_like) ? filters?.search_like : []}
         onChange={(val) => onChangeFilter("search_like", val)}
       />
-      <Divider />
+      {/* <Divider />
       <TagsFilter
         label="Пошук 2"
         search
         tags={Array.isArray(filters?.search_like2) ? filters?.search_like2 : []}
         onChange={(val) => onChangeFilter("search_like2", val)}
-      />
+      /> */}
       <Divider />
       <TagsFilter
         label="Пошук виключення"
@@ -244,6 +266,11 @@ export const Main = ({
             : []
         }
         onChange={(val) => onChangeFilter("search_not_like", val)}
+        noEdit={
+          (Array.isArray(filters?.search_like) ? filters?.search_like : [])
+            ?.length === 0
+        }
+        noEditAlert="Пошук виключення доступний лише після заповнення поля 'Пошук'"
       />
 
       <Divider />
@@ -271,7 +298,7 @@ export const Main = ({
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
       />
-      <Divider />
+      {/* <Divider />
       <ProfileField
         label="Пошук по номеру часткове співпадіння"
         placeholder="Введіть значення..."
@@ -280,7 +307,7 @@ export const Main = ({
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
         type="number"
-      />
+      /> */}
 
       <div className="fields-wrapper">
         {filtersFields?.main_field
@@ -378,19 +405,19 @@ export const Main = ({
                 } else if (["id_brand", "id_model"].includes(field[0])) {
                   return (
                     <Select
-                      value={filters[field[0]]}
+                      value={filters[field[0]]?.toString()}
                       options={
                         field[0] === "id_brand"
                           ? brandsList?.data
-                            ? brandsList?.data?.map(({ name, id_brand }) => ({
+                            ? brandsList?.data?.map(({ name, id }) => ({
                                 title: name,
-                                value: id_brand,
+                                value: id,
                               }))
                             : []
                           : modelsList?.data
-                          ? modelsList?.data?.map(({ name, id_model }) => ({
+                          ? modelsList?.data?.map(({ name, id }) => ({
                               title: name,
-                              value: id_model,
+                              value: id,
                             }))
                           : []
                       }

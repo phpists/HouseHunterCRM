@@ -47,11 +47,16 @@ export const Tags = ({
   }, [filters.id_rubric]);
 
   useEffect(() => {
-    getModels({
-      id_category: filters.id_rubric,
-      id_brand: filters.id_brand,
-    });
-  }, [filters.id_brand]);
+    const idBrand = brandsList?.data?.find(
+      (b) => b.id === filters.id_brand
+    )?.id_brand;
+    if (idBrand) {
+      getModels({
+        id_category: filters.id_rubric,
+        id_brand: idBrand,
+      });
+    }
+  }, [filters.id_brand, brandsList]);
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);

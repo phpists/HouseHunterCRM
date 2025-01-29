@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 
 export const Tags = ({ className, data, isAccess, onToggleOpen }) => {
   const { id } = useParams();
-  const { data: tagsList } = useGetTagsListQuery();
+  const { data: tagsList } = useGetTagsListQuery({ only_notepad: undefined });
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [addTag] = useLazyAddTagsToObjectsQuery();
   const [tags, setTags] = useState([]);
@@ -76,12 +76,22 @@ export const Tags = ({ className, data, isAccess, onToggleOpen }) => {
 
   const handleGetInitTags = () => {
     let initTags = [];
-    const tagsValue = data
-      ? Object?.entries(data)
-          ?.filter((f) => TAGS.includes(f[0]))
-          ?.filter((f) => f[1] === "1")
-          ?.map((f) => f[0])
-      : [];
+    let tagsValue = [];
+    if (data?.kpp === "1") {
+      tagsValue.push("kpp");
+    }
+    if (data?.label_dtp === "1") {
+      tagsValue.push("label_dtp");
+    }
+    if (data?.label_exchangePossible === "1") {
+      tagsValue.push("label_exchangePossible");
+    }
+    if (data?.label_faster === "1") {
+      tagsValue.push("label_faster");
+    }
+    if (data?.label_nativePaint === "1") {
+      tagsValue.push("label_nativePaint");
+    }
 
     tagsValue?.forEach((tag) => {
       initTags.push({
@@ -122,10 +132,14 @@ export const Tags = ({ className, data, isAccess, onToggleOpen }) => {
         label="Теги"
         showTags
         tags={tags}
-        options={TAGS?.map((value) => ({
-          title: commentsToFields?.object[value] ?? "-",
-          value,
-        }))}
+        options={
+          tagsList?.data
+            ? tagsList?.data?.map((value) => ({
+                title: commentsToFields?.object[value] ?? "-",
+                value,
+              }))
+            : []
+        }
         onChange={handleSelect}
         onToggleOpen={onToggleOpen}
         hide
