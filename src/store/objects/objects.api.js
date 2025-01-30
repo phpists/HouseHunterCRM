@@ -660,6 +660,18 @@ export const objects = createApi({
         }),
       }),
     }),
+    getCarBody: build.query({
+      query: (id_category) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getCarBody",
+          mod: "objects",
+          id_category,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -712,4 +724,5 @@ export const {
   useLazyRotateImageQuery,
   useLazyGetBrandsQuery,
   useLazyGetModelsQuery,
+  useLazyGetCarBodyQuery
 } = objects;

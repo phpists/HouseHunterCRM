@@ -196,7 +196,7 @@ const Selections = () => {
       //   address_storey_max: handleGetRange(Number(address_storey))?.end.toFixed(
       //     0
       //   ),
-      price_currency: "2",
+      price_currency: "1",
     };
 
     const objUrl = `/objects?findSelectionSimilar=true${Object.entries(objData)

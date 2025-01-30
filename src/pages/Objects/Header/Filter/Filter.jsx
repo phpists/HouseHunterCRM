@@ -42,6 +42,7 @@ export const Filter = ({
   const [loading, setLoading] = useState(false);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
   const notRefresh = useRef(false);
+  const contentRef = useRef(null);
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
@@ -120,7 +121,11 @@ export const Filter = ({
       street_base_object,
       mls_object,
       filters: {
-        ...otherFilters,
+        ...Object.fromEntries(
+          Object.entries(otherFilters)?.filter((f) =>
+            Array.isArray(f[1]) ? f[1].length > 0 : true
+          )
+        ),
         search_phone_code:
           removePhoneMask(filters?.search_phone)?.length > 0
             ? phoneCode
@@ -196,6 +201,12 @@ export const Filter = ({
     }
   };
 
+  useEffect(() => {
+    if (errors?.["id_rubric"] || errors?.["id_location"]) {
+      contentRef.current.scrollTop = 0;
+    }
+  }, [errors]);
+
   return (
     <>
       <StyledFilter
@@ -204,7 +215,7 @@ export const Filter = ({
         animate={controls}
       >
         <Header onClose={handleClose} />
-        <div className="content">
+        <div className="content" ref={contentRef}>
           <SectionTitle title="Головне" />
           <Main
             filters={filters}

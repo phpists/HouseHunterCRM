@@ -6,7 +6,7 @@ import {
   useGetLocationsQuery,
   useGetRubricsQuery,
 } from "../../../../store/requests/requests.api";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   handleChangeRange,
   handleGetLocationAllPath,
@@ -137,15 +137,6 @@ export const Main = ({
     onChangeFilter("list_street", updatedValue);
   };
 
-  useEffect(() => {
-    if (
-      (Array.isArray(filters?.search_like) ? filters?.search_like : [])
-        ?.length === 0
-    ) {
-      onChangeFilter("search_not_like", []);
-    }
-  }, [filters?.search_like]);
-
   return (
     <StyledMain className="section filterFieldsWrapper">
       <SelectTags
@@ -265,7 +256,9 @@ export const Main = ({
             ? filters?.search_not_like
             : []
         }
-        onChange={(val) => onChangeFilter("search_not_like", val)}
+        onChange={(val) => {
+          onChangeFilter("search_not_like", val);
+        }}
         noEdit={
           (Array.isArray(filters?.search_like) ? filters?.search_like : [])
             ?.length === 0
@@ -425,7 +418,7 @@ export const Main = ({
                       label={commentsToFields?.object[field[0]]}
                       labelActive={commentsToFields?.object[field[0]]}
                       hideArrowDefault
-                      search
+                      isSearch
                     />
                   );
                 } else if (typeof field[1]?.field_option === "object") {
