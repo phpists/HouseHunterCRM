@@ -42,6 +42,8 @@ export const ObjectCard = ({ className, selectedObject }) => {
 
           setData(
             infoFields?.map((field) => ({
+              ...field,
+              generalInfo: generalInfo?.[1],
               id_client: field?.id_client,
               id_rubric: field?.id_rubric,
               id_location: checkIsArray(checkIsJSON(field?.id_location)),

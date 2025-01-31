@@ -13,6 +13,7 @@ import { TagDivider } from "./Tag/TagDivider";
 import {
   useGetLocationsQuery,
   useGetRubricsQuery,
+  useLazyGetRubricsFieldsQuery,
 } from "../../../../store/requests/requests.api";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -20,11 +21,32 @@ import { SelectTags } from "../../../../components/SelectTags/SelectTags";
 import {
   checkIsArray,
   fortmatNumber,
+  handleGetFieldsOptions,
   handleGetLocationAllPath,
 } from "../../../../utilits";
 import { PRICES_FOR_TITLE } from "../../../../constants";
 import { Status } from "./Status";
 import { Id } from "../Id";
+import { useGetCommentsToFieldsQuery } from "../../../../store/objects/objects.api";
+import { ProfileField } from "../../../../components/ProfileField";
+import { Ranger } from "../../../../components/Ranger/Ranger";
+import { CheckOption } from "../../../../components/CheckOption";
+
+const filteredFields = [
+  "id_rubric",
+  "id_location",
+  "comment",
+  "price_currency",
+  "price_min_USD",
+  "price_max_USD",
+  "price_min_EUR",
+  "price_max_EUR",
+  "price_min_UAH",
+  "price_max_UAH",
+  "price_min",
+  "price_max",
+  "price_for",
+];
 
 export const Maininfo = ({
   data,
@@ -37,6 +59,9 @@ export const Maininfo = ({
   const { data: rubricsList } = useGetRubricsQuery();
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
+  const [getRubricField, { data: fields }] = useLazyGetRubricsFieldsQuery();
+  const { data: commentsToFields } = useGetCommentsToFieldsQuery();
+
   const TYPES = ["", "metr", "sotka", "hektar", "object"];
 
   const handleFormatLocations = () => {
@@ -62,6 +87,13 @@ export const Maininfo = ({
   const handleGetPriceCurrency = (price_currency) =>
     price_currency === "1" ? "₴" : price_currency === "2" ? "$" : "€";
 
+  console.log(data);
+
+  useEffect(() => {
+    getRubricField(data.id_rubric);
+  }, [data.id_rubric]);
+
+  console.log(fields);
   return (
     <StyledMaininfo>
       {isObject && (
@@ -127,8 +159,123 @@ export const Maininfo = ({
         <CreatedDate date={data?.dt_add} deadline={data?.dt_deadline} />
       </div>
       <Divider />
+      {isObject ? null : (
+        <div>
+          {" "}
+          {data.generalInfo?.name?.length > 0 ? (
+            <Field
+              value={data.generalInfo?.comment}
+              onChange={(val) => null}
+              label="Коментар"
+              viewOnly
+            />
+          ) : null}
+          {data.generalInfo?.name?.length > 0 ? (
+            <Field
+              value={data.generalInfo?.name}
+              onChange={(val) => null}
+              label="Назва підбірки"
+              viewOnly
+            />
+          ) : null}
+          {fields
+            ?.filter((f) => !filteredFields?.find((ff) => ff === f?.field))
+            ?.map(({ field, field_option, type }, i) => {
+              if (data[field] === "0" || data[field]?.length === 0) {
+                return null;
+              } else if (Object.entries(field_option)?.length > 0) {
+                return (
+                  <>
+                    {i > 0 && <Divider />}
+                    <SelectTags
+                      label={
+                        commentsToFields?.request?.[field]
+                          ? commentsToFields?.request?.[field]
+                          : commentsToFields?.object?.[field] ?? ""
+                      }
+                      placeholder="Оберіть"
+                      notMultiSelect
+                      options={handleGetFieldsOptions(fields, field)}
+                      value={data[field]}
+                      onChange={(val) => null}
+                      viewOnly
+                    />
+                  </>
+                );
+              } else if (
+                field?.includes("_min") &&
+                fields?.find((f) => f.field === field?.replace("_min", "_max"))
+              ) {
+                return null;
+              } else if (
+                field?.includes("_from") &&
+                fields?.find((f) => f.field === field?.replace("_from", "_to"))
+              ) {
+                return null;
+              } else if (
+                ["not_first_storey", "not_last_storey"]?.includes(field)
+              ) {
+                const labels = {
+                  not_first_storey: "Не перший поверх",
+                  not_last_storey: "Не останній поверх",
+                };
+                return (
+                  <>
+                    {" "}
+                    {i > 0 && <Divider />}
+                    <CheckOption
+                      label={labels[field] ?? ""}
+                      value={data[field]}
+                      onChange={(val) => onChangeField(field, val)}
+                    />
+                  </>
+                );
+              } else if (["id_brand", "id_model"].includes(field)) {
+                return null;
+              } else if (
+                field?.includes("_max") &&
+                !fields?.find((f) => f.field === field?.replace("_max", "_min"))
+              ) {
+                return <div></div>;
+              } else if (field?.includes("_to")) {
+                return <div></div>;
+              } else if (type === "int") {
+                return (
+                  <div>
+                    {i > 0 && <Divider />}
+                    <ProfileField
+                      label={
+                        commentsToFields?.request?.[field]
+                          ? commentsToFields?.request?.[field]
+                          : commentsToFields?.object?.[field] ?? ""
+                      }
+                      value={data[field]}
+                      onChange={(val) => onChangeField(field, val)}
+                      placeholder="Введіть значення"
+                      type="number"
+                    />{" "}
+                  </div>
+                );
+              } else {
+                return null;
+              }
+            })}
+        </div>
+      )}
       <div className="flex flex-wrap items-center tags">
-        {(isObject
+        {isObject ? null : (
+          <>
+            <Tag
+              Icon={null}
+              text={
+                <>
+                  100 м<sup>2</sup>
+                </>
+              }
+            />
+          </>
+        )}
+        {/* {(isObject
           ? objectFields?.main_field?.rooms?.required === 1
           : true) && (
           <>
@@ -142,8 +289,8 @@ export const Maininfo = ({
             />
             <TagDivider />
           </>
-        )}
-        {(isObject
+        )} */}
+        {/* {(isObject
           ? objectFields?.main_field?.area_total?.required === 1 ||
             objectFields?.main_field?.area_plot_sotka?.required === 1
           : true) && (
@@ -171,7 +318,7 @@ export const Maininfo = ({
               )
             }
           />
-        )}
+        )} */}
         {/* <TagDivider />
         <Tag
           Icon={BoxSelectIcon}

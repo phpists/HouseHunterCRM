@@ -6,7 +6,7 @@ export const Tag = ({ Icon, text, className, onHover }) => (
     onMouseEnter={() => (onHover ? onHover(true) : null)}
     onMouseLeave={() => (onHover ? onHover(false) : null)}
   >
-    <Icon />
+    {Icon ? <Icon /> : null}
     <span>{text}</span>
   </StyledTag>
 );

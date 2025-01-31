@@ -129,6 +129,38 @@ export const Card = ({
                 />
               </>
             );
+          } else if (
+            field?.includes("_from") &&
+            fields?.find((f) => f.field === field?.replace("_from", "_to"))
+          ) {
+            const minFieldName = field;
+            const maxFieldName = field?.replace("_from", "_to");
+
+            return (
+              <>
+                {i > 0 && <Divider />}
+                <Ranger
+                  label={(commentsToFields?.request?.[field]
+                    ? commentsToFields?.request?.[field]
+                    : commentsToFields?.object?.[field]
+                  )?.replace("від", "")}
+                  max={100}
+                  values={[data[minFieldName] ?? 0, data[maxFieldName] ?? 0]}
+                  onChange={(values) =>
+                    handleChangeRange(
+                      values,
+                      [data[minFieldName] ?? 0, data[maxFieldName] ?? 0],
+                      [minFieldName, maxFieldName],
+                      onChangeField
+                    )
+                  }
+                  error={
+                    !!errors?.find((e) => e === minFieldName) ||
+                    !!errors?.find((e) => e === maxFieldName)
+                  }
+                />
+              </>
+            );
           } else if (["not_first_storey", "not_last_storey"]?.includes(field)) {
             const labels = {
               not_first_storey: "Не перший поверх",
@@ -185,10 +217,11 @@ export const Card = ({
             !fields?.find((f) => f.field === field?.replace("_max", "_min"))
           ) {
             return <div></div>;
+          } else if (field?.includes("_to")) {
+            return <div></div>;
           } else if (type === "int") {
             return (
               <div>
-                {" "}
                 {i > 0 && <Divider />}
                 <ProfileField
                   label={

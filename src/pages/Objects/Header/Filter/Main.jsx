@@ -67,6 +67,16 @@ const notAllowedFields = [
   "liquidity",
 ];
 
+const notAllowedFieldsForRubricFive = [
+  "volume_engine",
+  "id_ecological_standard",
+  "сar_mileage",
+  "kpp",
+  "drive_type",
+  "id_type_fuel",
+  "id_type_body",
+];
+
 export const Main = ({
   filters,
   onChangeFilter,
@@ -306,6 +316,12 @@ export const Main = ({
         {filtersFields?.main_field
           ? Object.entries(filtersFields?.main_field)
               .filter((field) => !notAllowedFields?.find((f) => f === field[0]))
+              .filter((field) =>
+                filters.id_rubric === "5"
+                  ? !notAllowedFieldsForRubricFive?.find((f) => f === field[0])
+                  : true
+              )
+
               ?.filter(
                 (field) => commentsToFields?.object[field[0]]?.length > 0
               )
@@ -322,6 +338,9 @@ export const Main = ({
                   "address_storey",
                   "storey_count",
                   "area_plot_sotka",
+                  "year",
+                  "сar_mileage",
+                  "volume_engine",
                 ];
 
                 const labels = {
@@ -443,11 +462,15 @@ export const Main = ({
                   }
                   return (
                     <>
-                      {/* <Divider /> */}
                       <ProfileField
                         placeholder="Введіть значення"
                         value={filters[field[0]]}
-                        onChange={(val) => onChangeFilter(field[0], val)}
+                        onChange={(val) =>
+                          onChangeFilter(
+                            field[0],
+                            field[1]?.type === "int" ? Math.ceil(val) : val
+                          )
+                        }
                         label={commentsToFields?.object[field[0]]}
                         className="field"
                         grey
