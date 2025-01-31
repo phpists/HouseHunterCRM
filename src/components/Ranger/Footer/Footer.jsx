@@ -54,6 +54,7 @@ export const Footer = ({
         }
         onBlur={() => handleBlur("from")}
         onFocus={() => handleFocus("from")}
+        ceil={!noCeil}
       />
       <PositionCard
         title="До"
@@ -68,6 +69,7 @@ export const Footer = ({
         }
         onBlur={() => handleBlur("to")}
         onFocus={() => handleFocus("to")}
+        ceil={!noCeil}
       />
       {currency && (
         <SymbolSelect

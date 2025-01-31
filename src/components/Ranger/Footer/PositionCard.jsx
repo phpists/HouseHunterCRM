@@ -9,6 +9,7 @@ export const PositionCard = ({
   onChange,
   onBlur,
   onFocus,
+  ceil,
 }) => {
   const inputRef = useRef(null);
 
@@ -32,13 +33,15 @@ export const PositionCard = ({
               ? ""
               : Number(value).toString() ?? undefined
           }
-          type="number"
           placeholder=""
-          onChange={(e) =>
-            Number(e.target.value) >= 0
-              ? onChange(Number(e.target.value))
-              : null
-          }
+          type={ceil ? "text" : "number"}
+          onChange={(e) => {
+            console.log(e.target.value?.length);
+
+            if (Number(e.target.value) >= 0) {
+              onChange(Number(e.target.value));
+            }
+          }}
           onBlur={onBlur}
           onFocus={onFocus}
           ref={inputRef}
