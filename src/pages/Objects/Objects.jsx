@@ -245,6 +245,38 @@ const Objects = () => {
         };
 
         if (
+          Number(data?.filters?.volume_engine_from) > 0 ||
+          Number(data?.filters?.volume_engine_to) > 0
+        ) {
+          data = {
+            ...data,
+            filters: {
+              ...data.filters,
+              volume_engine_from:
+                (Number(data?.filters?.volume_engine_from) ?? 0) * 1000,
+              volume_engine_to:
+                (Number(data?.filters?.volume_engine_to) ?? 0) * 1000,
+            },
+          };
+        }
+
+        if (
+          Number(data?.filters?.сar_mileage_from) > 0 ||
+          Number(data?.filters?.сar_mileage_to) > 0
+        ) {
+          data = {
+            ...data,
+            filters: {
+              ...data.filters,
+              сar_mileage_from:
+                (Number(data?.filters?.сar_mileage_from) ?? 0) * 1000,
+              сar_mileage_to:
+                (Number(data?.filters?.сar_mileage_to) ?? 0) * 1000,
+            },
+          };
+        }
+
+        if (
           !company_object &&
           !street_base_object &&
           !mls_object &&

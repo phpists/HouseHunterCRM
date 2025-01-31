@@ -35,6 +35,12 @@ export const Tags = ({ data, ad }) => {
     ...(data?.сar_mileage && data?.сar_mileage?.length > 0
       ? [{ title: `Пробіг ${data?.сar_mileage} тис. км.` }]
       : []),
+    ...(data?.year && data?.year?.length > 0
+      ? [{ title: `Рік випуску ${data?.year}р` }]
+      : []),
+    ...(data?.volume_engine && data?.volume_engine?.length > 0
+      ? [{ title: `Об'єм ${data?.year} л.` }]
+      : []),
     // ...(data.liquidity === "1" ? [{ title: `Ліквідно` }] : []),
 
     ...(ad && rubricsList?.find((r) => r.id === data?.id_rubric)?.name
