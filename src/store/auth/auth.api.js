@@ -770,6 +770,35 @@ export const auth = createApi({
         }),
       }),
     }),
+    addLocation: build.query({
+      query: ({ id_parent, name, search_key_json }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "system_info",
+          action: "setLocation",
+          id_parent,
+          name,
+          search_key_json,
+        }),
+      }),
+    }),
+    editLocation: build.query({
+      query: ({ id, id_parent, name, search_key_json }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "system_info",
+          action: "editLocation",
+          id,
+          id_parent,
+          name,
+          search_key_json,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -827,4 +856,6 @@ export const {
   useLazyGetRielorAdStatusQuery,
   useLazyDeleteRielorAdHistoryQuery,
   useLazyPublishDomriaQuery,
+  useLazyAddLocationQuery,
+  useLazyEditLocationQuery,
 } = auth;

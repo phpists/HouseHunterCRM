@@ -16,6 +16,7 @@ import { Terms } from "./pages/Terms";
 import { License } from "./pages/License";
 import { CookiePolicy } from "./pages/CookiePolicy";
 import Ad from "./pages/Ad/Ad";
+import Settings from "./pages/Settings/Settings";
 
 const Company = lazy(() => import("./pages/Company/Company"));
 const Auth = lazy(() => import("./pages/Auth/Auth"));
@@ -326,6 +327,7 @@ export const App = () => {
                             element={<AdSettings />}
                           />
                           <Route path="*" element={<Dashboard />} />
+                          <Route path="/settings" element={<Settings />} />
                         </Routes>
                       </Suspense>
                     </div>

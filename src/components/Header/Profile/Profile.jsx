@@ -25,6 +25,7 @@ import {
 } from "../../../utilits";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Confirm } from "../../Confirm/Confirm";
+import { SettingButton } from "./SettingButton";
 
 export const Profile = () => {
   const { pathname } = useLocation();
@@ -279,6 +280,9 @@ export const Profile = () => {
         />
       )}
       <div className="relative flex items-center">
+        {user?.id === "0022b718e5a80c0e3992686fd10ff1dc" ? (
+          <SettingButton />
+        ) : null}
         <Notification
           active={openNotifications}
           onToggle={handleOpenNotifications}

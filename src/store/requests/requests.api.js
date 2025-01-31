@@ -413,6 +413,7 @@ export const {
   useGetRubricsQuery,
   useLazyGetRubricsFieldsQuery,
   useGetLocationsQuery,
+  useLazyGetLocationsQuery,
   useLazyGetRequestsCountQuery,
   useLazyDeleteRequestQuery,
   useLazyGetRequestsQuery,

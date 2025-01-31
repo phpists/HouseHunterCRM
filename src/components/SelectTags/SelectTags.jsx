@@ -25,9 +25,10 @@ export const SelectTags = ({
   hideArrow,
   hide,
   onToggleOpen,
+  showAll,
 }) => {
   const [open, setOpen] = useState(false);
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(showAll);
   const [search, setSearch] = useState("");
   const selectRef = useRef(null);
   const isClicked = useRef(false);
@@ -61,7 +62,7 @@ export const SelectTags = ({
       onClick={(e) => {
         if (!e.target.classList.contains("notClickable") && !viewOnly) {
           setOpen(!open);
-          setIsActive(!open);
+          !showAll && setIsActive(!open);
         }
       }}
       hideArrow={hideArrow}

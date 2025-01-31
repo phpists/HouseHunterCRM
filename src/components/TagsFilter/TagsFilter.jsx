@@ -15,8 +15,9 @@ export const TagsFilter = ({
   onChange,
   error,
   showAll,
+  minLength,
 }) => {
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(showAll);
   const [value, setValue] = useState("");
 
   const handleAddTag = () => {
@@ -26,7 +27,10 @@ export const TagsFilter = ({
         showAlert("error", "Значення вже додано");
       } else if (tags?.length > 40) {
         showAlert("error", "Максимальне кількість тегів - 40");
-      } else if (value?.length > 0) {
+      } else if (
+        value?.length > 0 &&
+        (minLength ? value?.replaceAll(/ /g, "")?.length >= minLength : true)
+      ) {
         onChange([...tags, value]);
         setValue("");
       }
@@ -62,8 +66,8 @@ export const TagsFilter = ({
   return (
     <StyledTagsFilter
       empty={tags?.length === 0}
-      onMouseEnter={() => setIsActive(true)}
-      onMouseLeave={() => setIsActive(false)}
+      onMouseEnter={() => (showAll ? null : setIsActive(true))}
+      onMouseLeave={() => (showAll ? null : setIsActive(false))}
       className={`${isActive && "active"} ${className} ${
         error && "error-field"
       }`}
