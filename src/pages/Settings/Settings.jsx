@@ -66,8 +66,9 @@ const Settings = () => {
       setFilter({ search_key: "" });
       setDraftFilter({ search_key: "" });
       localStorage.removeItem("settingsFilters");
+    } else {
+      setFilter(draftFilter);
     }
-    setFilter(draftFilter);
     handleGetLocations(true, isApply);
   };
 
@@ -109,8 +110,6 @@ const Settings = () => {
   useEffect(() => {
     setDraftFilter(filter);
   }, [filter]);
-
-  console.log(filter);
 
   return (
     <StyledClients>

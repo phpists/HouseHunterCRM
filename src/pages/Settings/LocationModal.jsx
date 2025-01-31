@@ -117,7 +117,16 @@ export const LocationModal = ({ locations, onClose, onSuccess, editData }) => {
           <Select
             label="батьківська локація"
             placeholder="Оберіть батьківську локацію"
-            options={formatedLocations ?? []}
+            options={
+              formatedLocations
+                ? [
+                    { title: "Україна", value: "0" },
+                    ...formatedLocations?.sort(
+                      (a, b) => a.title?.length - b.title?.length
+                    ),
+                  ]
+                : []
+            }
             value={idParent}
             onChange={(val) => setIdParent(val)}
             isSearch
@@ -138,7 +147,7 @@ export const LocationModal = ({ locations, onClose, onSuccess, editData }) => {
           />
           <TagsFilter
             placeholder="Почніть писати"
-            label={`Відміни`}
+            label={`Відмінки`}
             tags={keys}
             onChange={(val) => {
               setKeys(val);
@@ -183,6 +192,9 @@ const StyledLocationModal = styled.div`
     }
     input {
       color: var(--main-color);
+      &::placeholder {
+        color: var(--main-color);
+      }
     }
   }
 `;

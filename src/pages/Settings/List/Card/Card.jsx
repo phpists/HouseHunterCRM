@@ -32,7 +32,7 @@ export const Card = ({ name, keys, onSelect, onEdit }) => {
         {" "}
         <SelectTags
           placeholder="Почніть писати"
-          label={`Відміни`}
+          label={`Відмінки`}
           tags={handleGetKeys()}
           options={handleGetKeys()}
           viewOnly
