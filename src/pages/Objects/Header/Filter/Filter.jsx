@@ -80,7 +80,6 @@ export const Filter = ({
         id_location:
           filters?.id_location?.length === 0 || !filters?.id_location,
       });
-      console.log(filters?.street_base_object);
     } else if (
       removePhoneMask(filters?.search_phone)?.length > 0 &&
       removePhoneMask(filters?.search_phone)?.length < phoneLength
@@ -126,6 +125,7 @@ export const Filter = ({
             Array.isArray(f[1]) ? f[1].length > 0 : true
           )
         ),
+
         search_phone_code:
           removePhoneMask(filters?.search_phone)?.length > 0
             ? phoneCode
@@ -140,6 +140,37 @@ export const Filter = ({
             : undefined,
       },
     };
+
+    if (
+      Number(data?.filters?.volume_engine_from) > 0 ||
+      Number(data?.filters?.volume_engine_to) > 0
+    ) {
+      data = {
+        ...data,
+        filters: {
+          ...data.filters,
+          volume_engine_from:
+            (Number(data?.filters?.volume_engine_from) ?? 0) * 1000,
+          volume_engine_to:
+            (Number(data?.filters?.volume_engine_to) ?? 0) * 1000,
+        },
+      };
+    }
+
+    if (
+      Number(data?.filters?.сar_mileage_from) > 0 ||
+      Number(data?.filters?.сar_mileage_to) > 0
+    ) {
+      data = {
+        ...data,
+        filters: {
+          ...data.filters,
+          сar_mileage_from:
+            (Number(data?.filters?.сar_mileage_from) ?? 0) * 1000,
+          сar_mileage_to: (Number(data?.filters?.сar_mileage_to) ?? 0) * 1000,
+        },
+      };
+    }
 
     if (
       !company_object &&

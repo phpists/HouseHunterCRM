@@ -87,13 +87,10 @@ export const Maininfo = ({
   const handleGetPriceCurrency = (price_currency) =>
     price_currency === "1" ? "₴" : price_currency === "2" ? "$" : "€";
 
-  console.log(data);
-
   useEffect(() => {
     getRubricField(data.id_rubric);
   }, [data.id_rubric]);
 
-  console.log(fields);
   return (
     <StyledMaininfo>
       {isObject && (
@@ -263,18 +260,6 @@ export const Maininfo = ({
         </div>
       )}
       <div className="flex flex-wrap items-center tags">
-        {isObject ? null : (
-          <>
-            <Tag
-              Icon={null}
-              text={
-                <>
-                  100 м<sup>2</sup>
-                </>
-              }
-            />
-          </>
-        )}
         {/* {(isObject
           ? objectFields?.main_field?.rooms?.required === 1
           : true) && (
@@ -343,12 +328,14 @@ export const Maininfo = ({
           )}
       </div>
       <Divider />
-      <Status
-        status={data?.isActual}
-        date={
-          data?.dateEndAggrement !== "0" ? data?.dateEndAggrement : undefined
-        }
-      />
+      {isObject ? null : (
+        <Status
+          status={data?.isActual}
+          date={
+            data?.dateEndAggrement !== "0" ? data?.dateEndAggrement : undefined
+          }
+        />
+      )}
 
       {data?.comment?.length > 0 && data?.comment ? (
         <>

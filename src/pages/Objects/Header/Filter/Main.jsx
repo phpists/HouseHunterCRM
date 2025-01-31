@@ -18,6 +18,7 @@ import {
   useGetCommentsToFieldsQuery,
   useGetStreetsListQuery,
   useLazyGetBrandsQuery,
+  useLazyGetCarBodyQuery,
   useLazyGetModelsQuery,
 } from "../../../../store/objects/objects.api";
 import { Price } from "../../../Request/Main/Price/Price";
@@ -98,9 +99,11 @@ export const Main = ({
   const { data: streets } = useGetStreetsListQuery();
   const [getBrands, { data: brandsList }] = useLazyGetBrandsQuery();
   const [getModels, { data: modelsList }] = useLazyGetModelsQuery();
+  const [getCarBody, { data: carBodyList }] = useLazyGetCarBodyQuery();
 
   useEffect(() => {
     getBrands(filters.id_rubric);
+    getCarBody(filters.id_rubric);
   }, [filters.id_rubric]);
 
   useEffect(() => {
@@ -321,7 +324,11 @@ export const Main = ({
                   ? !notAllowedFieldsForRubricFive?.find((f) => f === field[0])
                   : true
               )
-
+              .filter((field) =>
+                filters.id_rubric === "5"
+                  ? true
+                  : !["id_technical_condition"]?.find((f) => f === field[0])
+              )
               ?.filter(
                 (field) => commentsToFields?.object[field[0]]?.length > 0
               )
@@ -366,18 +373,18 @@ export const Main = ({
                         }
                         max={100}
                         values={[
-                          filters[`${fieldName}_min`] ?? 0,
-                          filters[`${fieldName}_max`] ?? 0,
+                          filters[`${fieldName}_from`] ?? 0,
+                          filters[`${fieldName}_to`] ?? 0,
                         ]}
                         className="filter-range-wrapper"
                         onChange={(values) =>
                           handleChangeRange(
                             values,
                             [
-                              filters[`${fieldName}_min`] ?? 0,
-                              filters[`${fieldName}_max`] ?? 0,
+                              filters[`${fieldName}_from`] ?? 0,
+                              filters[`${fieldName}_to`] ?? 0,
                             ],
-                            [`${fieldName}_min`, `${fieldName}_max`],
+                            [`${fieldName}_from`, `${fieldName}_to`],
                             onChangeFilter
                           )
                         }
@@ -385,6 +392,7 @@ export const Main = ({
                           !isInputFocused && onChangeInputFocus(true)
                         }
                         onBlur={() => onChangeInputFocus(false)}
+                        noCeil={fieldName === "volume_engine"}
                       />
                       {fieldName === "storey_count" ? (
                         <>
@@ -454,7 +462,43 @@ export const Main = ({
                         labelActive={commentsToFields?.object[field[0]]}
                         hideArrowDefault
                       />
+                      {field[0] === "id_ecological_standard" ? (
+                        <Select
+                          value={filters["id_technical_condition"]}
+                          options={Object.entries(field[1]?.field_option)?.map(
+                            (opt) => ({ value: opt[0], title: opt[1] })
+                          )}
+                          onChange={(val) =>
+                            onChangeFilter("id_technical_condition", val)
+                          }
+                          label={
+                            commentsToFields?.object["id_technical_condition"]
+                          }
+                          labelActive={
+                            commentsToFields?.object["id_technical_condition"]
+                          }
+                          hideArrowDefault
+                        />
+                      ) : null}
                     </>
+                  );
+                } else if (field[0] === "id_type_body") {
+                  return (
+                    <Select
+                      value={filters[field[0]]}
+                      options={
+                        carBodyList?.data
+                          ? carBodyList?.data?.map(({ name, id }) => ({
+                              title: name,
+                              value: id,
+                            }))
+                          : []
+                      }
+                      onChange={(val) => onChangeFilter(field[0], val)}
+                      label={commentsToFields?.object[field[0]] ?? "-"}
+                      labelActive={commentsToFields?.object[field[0]] ?? "-"}
+                      hideArrowDefault
+                    />
                   );
                 } else {
                   if (field[1]?.type === "date") {

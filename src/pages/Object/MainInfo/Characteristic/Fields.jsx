@@ -40,7 +40,6 @@ export const Fields = ({
     }
   }, [data.id_brand, brandsList]);
 
-  console.log(carBodyList);
   return (
     <div className="fields">
       {fields
@@ -130,7 +129,7 @@ export const Fields = ({
                     placeholder="Введіть значення"
                     value={data[field[0]]}
                     onChange={(val) => onChangeField(field[0], val)}
-                    label={field[0]}
+                    label={commentsToFields?.object[field[0]] ?? "-"}
                     className="field"
                     grey
                     type={field[1]?.type === "int" ? "number" : field[1]?.type}

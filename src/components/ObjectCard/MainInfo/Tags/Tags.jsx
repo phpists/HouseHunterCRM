@@ -21,6 +21,7 @@ export const Tags = ({ data, ad }) => {
   const { data: locationsList } = useGetLocationsQuery();
   const { data: rubricsList } = useGetRubricsQuery();
 
+  console.log(data);
   const TAGS = [
     ...(data?.rubric_name && data?.rubric_name?.length > 0
       ? [{ title: data?.rubric_name }]
@@ -30,6 +31,9 @@ export const Tags = ({ data, ad }) => {
       : []),
     ...(data?.model_name && data?.model_name?.length > 0
       ? [{ title: data?.model_name }]
+      : []),
+    ...(data?.сar_mileage && data?.сar_mileage?.length > 0
+      ? [{ title: `Пробіг ${data?.сar_mileage} тис. км.` }]
       : []),
     // ...(data.liquidity === "1" ? [{ title: `Ліквідно` }] : []),
 

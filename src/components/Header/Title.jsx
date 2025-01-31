@@ -63,9 +63,9 @@ export const Title = () => {
           ? "Картка запиту"
           : pathname.split("/")[1] === "create-object" ||
             pathname.split("/")[1] === "edit-object"
-          ? "Картка автомобіля"
+          ? "Автомобіль"
           : pathname.split("/")[1] === "edit-ad"
-          ? "Картка автомобіля"
+          ? "Автомобіль"
           : pathname.split("/")[1] === "selections"
           ? selectionName ?? "Підбірки"
           : pathname.split("/")[1] === "objects"

@@ -12,6 +12,7 @@ export const Footer = ({
   onChangeCurrency,
   onBlur,
   onFocus,
+  noCeil,
 }) => {
   const currencies = ["₴", "$", "€"];
   const [isChanged, setIsChanged] = useState(false);
@@ -43,7 +44,7 @@ export const Footer = ({
       <PositionCard
         title="Від"
         onChange={(val) => {
-          onChange([val, values[1]]);
+          onChange([noCeil ? val : Math.ceil(val), values[1]]);
           setIsChanged(true);
         }}
         value={values[0]}
@@ -57,7 +58,7 @@ export const Footer = ({
       <PositionCard
         title="До"
         onChange={(val) => {
-          onChange([values[0], val]);
+          onChange([values[0], noCeil ? val : Math.ceil(val)]);
           setIsChanged(true);
         }}
         value={values[1]}
