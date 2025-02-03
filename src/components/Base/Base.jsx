@@ -2,7 +2,6 @@ import { styled } from "styled-components";
 import { TitleDivider } from "./TitleDivider";
 import { CheckOption } from "../CheckOption";
 import {
-  useGetAdverstionResourceQuery,
   useGetCommentsToFieldsQuery,
   useGetSourcesQuery,
   useGetTagsListQuery,
@@ -81,7 +80,6 @@ export const Base = ({
   const { data: tagsList } = useGetTagsListQuery({ only_notepad: "0" });
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: companyInfo } = useGetCompanyInfoQuery();
-  const { data: adverstionResources } = useGetAdverstionResourceQuery();
   const iS_AD_ACCESS =
     XHOUSE_COMPANY_ID.includes(companyInfo?.data?.id_hash) ||
     XHOUSE_COMPANY_ID.includes(user?.id);

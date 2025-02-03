@@ -32,14 +32,18 @@ export const Tags = ({ data, ad }) => {
     ...(data?.model_name && data?.model_name?.length > 0
       ? [{ title: data?.model_name }]
       : []),
-    ...(data?.сar_mileage && data?.сar_mileage?.length > 0
-      ? [{ title: `Пробіг ${data?.сar_mileage} тис. км.` }]
+    ...(data?.сar_mileage &&
+    data?.сar_mileage?.length > 0 &&
+    Number(data?.сar_mileage) / 1000 > 0
+      ? [{ title: `Пробіг ${Number(data?.сar_mileage) / 1000} тис. км.` }]
       : []),
-    ...(data?.year && data?.year?.length > 0
+    ...(data?.year && data?.year?.length > 0 && Number(data?.year) > 0
       ? [{ title: `Рік випуску ${data?.year}р` }]
       : []),
-    ...(data?.volume_engine && data?.volume_engine?.length > 0
-      ? [{ title: `Об'єм ${data?.year} л.` }]
+    ...(data?.volume_engine &&
+    data?.volume_engine?.length > 0 &&
+    Number(data?.volume_engine) / 1000 > 0
+      ? [{ title: `Об'єм ${Number(data?.volume_engine) / 1000} л.` }]
       : []),
     // ...(data.liquidity === "1" ? [{ title: `Ліквідно` }] : []),
 

@@ -262,7 +262,7 @@ const ObjectPage = () => {
   const handleCreate = () => {
     if (fields?.main_field) {
     }
-    const isEmptyFields = handleCheckFields({
+    let isEmptyFields = handleCheckFields({
       data: { ...data, id_client: clientId },
       requiredFields: [
         ...(fields?.main_field
@@ -301,6 +301,13 @@ const ObjectPage = () => {
       },
     });
 
+    if (
+      data?.year &&
+      data?.year?.toString()?.length > 0 &&
+      Number(data?.year) < 1885
+    ) {
+      isEmptyFields.push("year");
+    }
     if (isEmptyFields?.length === 0 && handleCheckArea()) {
       setErrors([]);
       setLoading(true);
@@ -380,6 +387,15 @@ const ObjectPage = () => {
       },
     });
 
+    if (
+      data?.year &&
+      data?.year?.toString()?.length > 0 &&
+      Number(data?.year) < 1885
+    ) {
+      isEmptyFields.push("year");
+    }
+
+    
     if (isEmptyFields?.length === 0 && handleCheckArea()) {
       setErrors([]);
       setLoading(true);

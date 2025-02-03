@@ -96,14 +96,15 @@ export const Main = ({
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
-  const { data: streets } = useGetStreetsListQuery();
   const [getBrands, { data: brandsList }] = useLazyGetBrandsQuery();
   const [getModels, { data: modelsList }] = useLazyGetModelsQuery();
   const [getCarBody, { data: carBodyList }] = useLazyGetCarBodyQuery();
 
   useEffect(() => {
-    getBrands(filters.id_rubric);
-    getCarBody(filters.id_rubric);
+    if (filters?.id_rubric) {
+      getBrands(filters.id_rubric);
+      getCarBody(filters.id_rubric);
+    }
   }, [filters.id_rubric]);
 
   useEffect(() => {
