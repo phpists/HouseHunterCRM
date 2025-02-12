@@ -24,7 +24,7 @@ export const AddPhoto = ({ small, onAdd }) => {
       <input
         type="file"
         name=""
-        id=""
+        id="objectFileInput"
         accept="image/png, image/jpg, image/jpeg, image/jpeg, image/png,image/webp,image/heic, image/heif"
         value=""
         onChange={(e) => handleAddPhotos(e.target.files)}

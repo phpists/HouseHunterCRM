@@ -119,7 +119,8 @@ export const Card = ({
                       values,
                       [data[minFieldName] ?? 0, data[maxFieldName] ?? 0],
                       [minFieldName, maxFieldName],
-                      onChangeField
+                      (values) =>
+                        onChangeField("update", { ...data, ...values }, true)
                     )
                   }
                   error={
@@ -151,9 +152,11 @@ export const Card = ({
                       values,
                       [data[minFieldName] ?? 0, data[maxFieldName] ?? 0],
                       [minFieldName, maxFieldName],
-                      onChangeField
+                      (values) =>
+                        onChangeField("update", { ...data, ...values }, true)
                     )
                   }
+                  noCeil={minFieldName === "volume_engine_from"}
                   error={
                     !!errors?.find((e) => e === minFieldName) ||
                     !!errors?.find((e) => e === maxFieldName)

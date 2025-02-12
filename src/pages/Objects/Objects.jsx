@@ -95,44 +95,6 @@ const Objects = () => {
           price_currency: updatedFilters?.price_currency ?? "1",
           price_for: updatedFilters?.price_for ?? "4",
         };
-      } else if (field?.includes("_min") || field?.includes("_max")) {
-        const fieldMinName = field?.includes("_min")
-          ? field
-          : field?.replace("_max", "_min");
-        const fieldMaxName = field?.includes("_max")
-          ? field
-          : field?.replace("_min", "_max");
-
-        const valMin = field?.includes("_min")
-          ? value
-          : updatedFilters[fieldMinName] ?? 0;
-        const valMax = field?.includes("_max")
-          ? value
-          : updatedFilters[fieldMaxName] ?? 0;
-
-        if (
-          valMin > valMax &&
-          field?.includes("_min") &&
-          valMin !== 0 &&
-          valMax
-        ) {
-          updatedFilters = {
-            ...updatedFilters,
-            [fieldMinName]: valMin,
-            [fieldMaxName]: valMin,
-          };
-        } else if (
-          valMax < valMin &&
-          field?.includes("_max") &&
-          valMax !== 0 &&
-          valMin
-        ) {
-          updatedFilters = {
-            ...updatedFilters,
-            [fieldMinName]: valMax,
-            [fieldMaxName]: valMax,
-          };
-        }
       }
 
       if (field === "street_base_object") {

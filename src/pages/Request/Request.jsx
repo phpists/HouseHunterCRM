@@ -173,8 +173,8 @@ const Request = () => {
     );
   };
 
-  const handleChangeField = (fieldName, value) => {
-    let newData = { ...data, [fieldName]: value };
+  const handleChangeField = (fieldName, value, isUpdate) => {
+    let newData = isUpdate ? value : { ...data, [fieldName]: value };
 
     if (fieldName === "id_rubric") {
       handleGetRubricsFields(value);
@@ -262,9 +262,15 @@ const Request = () => {
           filledFilleds.push([[f.field], "0"]);
         });
 
+      filledFilleds = Object.fromEntries(filledFilleds);
+
       return {
-        ...Object.fromEntries(filledFilleds),
+        ...filledFilleds,
         ...field,
+        volume_engine_from: (Number(field?.volume_engine_from) ?? 0) * 1000,
+        volume_engine_to: (Number(field?.volume_engine_to) ?? 0) * 1000,
+        сar_mileage_from: (Number(field?.сar_mileage_from) ?? 0) * 1000,
+        сar_mileage_to: (Number(field?.сar_mileage_to) ?? 0) * 1000,
       };
     });
   };
@@ -505,6 +511,7 @@ const Request = () => {
               .filter((f) => f[0] !== "General_field_group")
               .map((f) => ({
                 ...f[1],
+
                 id_location: checkIsJSON(f[1]?.id_location),
                 search_key_like_json: checkIsJSON(
                   f[1]?.search_key_like_json
@@ -515,6 +522,11 @@ const Request = () => {
                 search_key_notlike_json: checkIsJSON(
                   f[1]?.search_key_notlike_json
                 )?.filter((v) => v.length > 0),
+                volume_engine_from:
+                  (Number(f[1]?.volume_engine_from) ?? 0) / 1000,
+                volume_engine_to: (Number(f[1]?.volume_engine_to) ?? 0) / 1000,
+                сar_mileage_from: (Number(f[1]?.сar_mileage_from) ?? 0) / 1000,
+                сar_mileage: (Number(f[1]?.сar_mileage_to) ?? 0) / 1000,
               })),
           });
         });

@@ -57,7 +57,7 @@ export const Price = ({
           data?.id_rubric === "65" || data?.id_rubric === "66"
             ? [
                 {
-                  title: "Об'єкт",
+                  title: "Автомобіль",
                   value: "4",
                 },
                 {

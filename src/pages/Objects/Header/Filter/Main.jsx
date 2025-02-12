@@ -194,39 +194,6 @@ export const Main = ({
         error={errors?.["id_location"]}
       />
       <Divider />
-      {/* <div className="flex items-start">
-        <SelectTags
-          label="Пошук по вулиці"
-          tags={
-            Array.isArray(filters?.list_street)
-              ? filters?.list_street?.map((v) => ({ title: v, value: v }))
-              : []
-          }
-          onChange={handleChangeStreetsField}
-          options={
-            streets
-              ? Object.entries(streets)
-                  ?.filter((s) => s?.[0] !== "error")
-                  ?.map((s) => ({
-                    title: s?.[1]?.name,
-                    value: s?.[1]?.name,
-                  }))
-              : []
-          }
-          className="w-full streetsWrapper"
-          showTags
-        />
-        <div className="streetsWrapper-btns">
-          <MapButton onOpenMap={onOpenMap} />
-          {filters?.list_street?.length > 0 ? (
-            <IconButton
-              Icon={RemoveIcon}
-              onClick={(val) => onChangeFilter("list_street", [])}
-            />
-          ) : null}
-        </div>
-      </div>
-      <Divider /> */}
       <Price
         values={[filters?.price_min ?? "0", filters?.price_max ?? "0"]}
         onChange={(values) =>
@@ -234,7 +201,8 @@ export const Main = ({
             values,
             [filters?.price_min ?? "0", filters?.price_max ?? "0"],
             ["price_min", "price_max"],
-            onChangeFilter
+            (values) =>
+              onChangeFilter("update", { ...filters, ...values }, true)
           )
         }
         currency={Number(filters?.price_currency)}
@@ -254,13 +222,6 @@ export const Main = ({
         tags={Array.isArray(filters?.search_like) ? filters?.search_like : []}
         onChange={(val) => onChangeFilter("search_like", val)}
       />
-      {/* <Divider />
-      <TagsFilter
-        label="Пошук 2"
-        search
-        tags={Array.isArray(filters?.search_like2) ? filters?.search_like2 : []}
-        onChange={(val) => onChangeFilter("search_like2", val)}
-      /> */}
       <Divider />
       <TagsFilter
         label="Пошук виключення"
@@ -305,16 +266,6 @@ export const Main = ({
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
       />
-      {/* <Divider />
-      <ProfileField
-        label="Пошук по номеру часткове співпадіння"
-        placeholder="Введіть значення..."
-        value={filters?.findPhone}
-        onChange={(val) => onChangeFilter("findPhone", val)}
-        onFocus={() => onChangeInputFocus(true)}
-        onBlur={() => onChangeInputFocus(false)}
-        type="number"
-      /> */}
 
       <div className="fields-wrapper">
         {filtersFields?.main_field
@@ -386,7 +337,12 @@ export const Main = ({
                               filters[`${fieldName}_to`] ?? 0,
                             ],
                             [`${fieldName}_from`, `${fieldName}_to`],
-                            onChangeFilter
+                            (values) =>
+                              onChangeFilter(
+                                "update",
+                                { ...filters, ...values },
+                                true
+                              )
                           )
                         }
                         onFocus={() =>
@@ -394,6 +350,10 @@ export const Main = ({
                         }
                         onBlur={() => onChangeInputFocus(false)}
                         noCeil={fieldName === "volume_engine"}
+                        error={
+                          !!errors?.[`${fieldName}_from`] ||
+                          !!errors?.[`${fieldName}_to`]
+                        }
                       />
                       {fieldName === "storey_count" ? (
                         <>
@@ -453,6 +413,7 @@ export const Main = ({
                   return (
                     <>
                       {/* <Divider /> */}
+
                       <Select
                         value={filters[field[0]]}
                         options={Object.entries(field[1]?.field_option)?.map(
@@ -466,9 +427,10 @@ export const Main = ({
                       {field[0] === "id_ecological_standard" ? (
                         <Select
                           value={filters["id_technical_condition"]}
-                          options={Object.entries(field[1]?.field_option)?.map(
-                            (opt) => ({ value: opt[0], title: opt[1] })
-                          )}
+                          options={Object.entries(
+                            filtersFields?.main_field?.id_technical_condition
+                              ?.field_option
+                          )?.map((opt) => ({ value: opt[0], title: opt[1] }))}
                           onChange={(val) =>
                             onChangeFilter("id_technical_condition", val)
                           }

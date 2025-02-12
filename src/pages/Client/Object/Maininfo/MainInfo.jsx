@@ -155,7 +155,6 @@ export const Maininfo = ({
         />
         <CreatedDate date={data?.dt_add} deadline={data?.dt_deadline} />
       </div>
-      <Divider />
       {isObject ? null : (
         <div>
           {" "}
@@ -183,7 +182,7 @@ export const Maininfo = ({
               } else if (Object.entries(field_option)?.length > 0) {
                 return (
                   <>
-                    {i > 0 && <Divider />}
+                    {i > 1 && <Divider />}
                     <SelectTags
                       label={
                         commentsToFields?.request?.[field]
@@ -339,7 +338,6 @@ export const Maininfo = ({
 
       {data?.comment?.length > 0 && data?.comment ? (
         <>
-          <Divider />
           <Field
             value={data?.comment}
             onChange={(val) => onChangeField("comment", val)}

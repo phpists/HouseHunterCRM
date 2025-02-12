@@ -88,6 +88,11 @@ export const Photos = ({ photos, onChange }) => {
     setCurrentSlide(index);
   };
 
+  const handleDownloadFile = () => {
+    const input = document.querySelector("#objectFileInput");
+    input && input.click();
+  };
+
   return (
     <>
       {openView && (
@@ -122,6 +127,7 @@ export const Photos = ({ photos, onChange }) => {
               ? null
               : (rotate) => handleRotate(photos[0]?.id, rotate)
           }
+          onAddNewFile={handleDownloadFile}
         />
         {photos.length > 1 && (
           <>

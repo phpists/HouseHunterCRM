@@ -39,7 +39,7 @@ export const ReferalModal = ({ onClose }) => {
           onClick={handleCopyLink}
         >
           <span>
-            https://house-hunter.info/auth?id={user?.id_hash_director}
+            {window.location.origin}/auth?id={user?.id_hash_director}
           </span>
           <Copy />
         </div>

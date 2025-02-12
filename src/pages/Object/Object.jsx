@@ -186,6 +186,12 @@ const ObjectPage = () => {
       getObject(id).then((resp) => {
         const objectData = {
           ...handleFormatDatesToTimestamp(resp?.data, true),
+          volume_engine: (
+            (Number(resp?.data?.volume_engine) ?? 0) / 1000
+          )?.toString(),
+          сar_mileage: (
+            (Number(resp?.data?.сar_mileage) ?? 0) / 1000
+          )?.toString(),
           obj_is_actual_dt:
             !resp?.data?.obj_is_actual_dt ||
             Number(resp?.data?.obj_is_actual_dt) === 0
@@ -304,7 +310,8 @@ const ObjectPage = () => {
     if (
       data?.year &&
       data?.year?.toString()?.length > 0 &&
-      Number(data?.year) < 1885
+      (Number(data?.year) < 1885 ||
+        Number(data?.year) > new Date().getFullYear())
     ) {
       isEmptyFields.push("year");
     }
@@ -314,6 +321,8 @@ const ObjectPage = () => {
       createObject({
         field: {
           ...handleFormatDatesToTimestamp(data, fields),
+          volume_engine: (Number(data?.volume_engine) ?? 0) * 1000,
+          сar_mileage: (Number(data?.сar_mileage) ?? 0) * 1000,
           id_client: clientId,
           price: data?.price?.replaceAll(" ", ""),
           obj_is_actual_dt: !data?.obj_is_actual_dt
@@ -337,7 +346,7 @@ const ObjectPage = () => {
       }).then((resp) => {
         setLoading(false);
         handleResponse(resp, () => {
-          showAlert("success", "Об'єкт успішно створено");
+          showAlert("success", "Автомобіль успішно створено");
           navigate(`/client/${clientId}`);
         });
       });
@@ -390,12 +399,12 @@ const ObjectPage = () => {
     if (
       data?.year &&
       data?.year?.toString()?.length > 0 &&
-      Number(data?.year) < 1885
+      (Number(data?.year) < 1885 ||
+        Number(data?.year) > new Date().getFullYear())
     ) {
       isEmptyFields.push("year");
     }
 
-    
     if (isEmptyFields?.length === 0 && handleCheckArea()) {
       setErrors([]);
       setLoading(true);
@@ -403,6 +412,8 @@ const ObjectPage = () => {
         id_object: id,
         field: {
           ...handleFormatDatesToTimestamp(data, fields),
+          volume_engine: (Number(data?.volume_engine) ?? 0) * 1000,
+          сar_mileage: (Number(data?.сar_mileage) ?? 0) * 1000,
           price: data?.price?.replaceAll(" ", ""),
           id_client: clientId,
           obj_is_actual_dt: !data?.obj_is_actual_dt
@@ -473,6 +484,10 @@ const ObjectPage = () => {
         onChangeRestoreObject={(deleted) => setData({ ...data, deleted })}
         isData={!isLoadingData}
         reasonRemove={data?.reasone_remove}
+        mls={data?.mls}
+        onToggleMls={() =>
+          setData({ ...data, mls: data?.mls === "1" ? "0" : "1" })
+        }
       />
       {/* <Header
         className="mobile-header"

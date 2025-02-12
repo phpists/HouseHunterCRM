@@ -50,11 +50,15 @@ export const Content = ({
       return { title, value: id };
     });
 
-  const handleChangeValue = (rubricId, fieldName, value) => {
+  const handleChangeValue = (rubricId, fieldName, value, isUpdate) => {
     onChangeField(
       "fields",
       data?.fields.map((f) =>
-        f.id_rubric === rubricId ? { ...f, [fieldName]: value } : f
+        f.id_rubric === rubricId
+          ? isUpdate
+            ? value
+            : { ...f, [fieldName]: value }
+          : f
       )
     );
     onChangeErrors(
@@ -91,8 +95,8 @@ export const Content = ({
           key={i}
           title={rubricsList?.find((r) => r.id === field?.id)?.name}
           data={data?.fields.find((f) => f.id_rubric === field.id)}
-          onChangeField={(fieldName, value) =>
-            handleChangeValue(field.id, fieldName, value)
+          onChangeField={(fieldName, value, isUpdate) =>
+            handleChangeValue(field.id, fieldName, value, isUpdate)
           }
           formatedLocations={formatedLocations}
           fields={field?.fields}

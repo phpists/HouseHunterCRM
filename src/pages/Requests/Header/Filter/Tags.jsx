@@ -121,7 +121,8 @@ export const Tags = ({
             values,
             [filters?.price_min ?? 0, filters?.price_max ?? 0],
             ["price_min", "price_max"],
-            onChangeFilter
+            (values) =>
+              onChangeFilter("update", { ...filters, ...values }, true)
           )
         }
         currency={Number(filters?.price_currency)}
@@ -135,138 +136,6 @@ export const Tags = ({
         onBlur={() => onChangeInputFocus(false)}
       />
       <Divider />
-      {filtersFields && handleGetFieldsOptions(filtersFields, "room_min") && (
-        <Ranger
-          label="Кількість кімнат/Приміщень"
-          max={100}
-          values={[filters?.room_min ?? 0, filters?.room_max ?? 0]}
-          onChange={(values) =>
-            handleChangeRange(
-              values,
-              [filters?.room_min ?? 0, filters?.room_max ?? 0],
-              ["room_min", "room_max"],
-              onChangeFilter
-            )
-          }
-          onFocus={() => !isInputFocused && onChangeInputFocus(true)}
-          onBlur={() => onChangeInputFocus(false)}
-        />
-      )}
-      {filtersFields &&
-        handleGetFieldsOptions(filtersFields, "area_total_min") && (
-          <>
-            {handleGetFieldsOptions(filtersFields, "room_min") && <Divider />}
-            <Ranger
-              label="Загальна площа"
-              max={10000}
-              defaultStart={20}
-              defaultEnd={40}
-              mainType={
-                <>
-                  m<sup>2</sup>
-                </>
-              }
-              values={[
-                filters?.area_total_min ?? 0,
-                filters?.area_total_max ?? 0,
-              ]}
-              onChange={(values) =>
-                handleChangeRange(
-                  values,
-                  [filters?.area_total_min ?? 0, filters?.area_total_max ?? 0],
-                  ["area_total_min", "area_total_max"],
-                  onChangeFilter
-                )
-              }
-              onFocus={() => !isInputFocused && onChangeInputFocus(true)}
-              onBlur={() => onChangeInputFocus(false)}
-            />
-          </>
-        )}
-      {filtersFields &&
-        handleGetFieldsOptions(filtersFields, "address_storey") && (
-          <>
-            <Divider />
-            <Ranger
-              label="Поверх/Поверховість"
-              max={100}
-              values={[
-                filters?.address_storey ?? 0,
-                filters?.storey_count ?? 0,
-              ]}
-              onChange={(values) =>
-                handleChangeRange(
-                  values,
-                  [filters?.address_storey ?? 0, filters?.storey_count ?? 0],
-                  ["address_storey", "storey_count"],
-                  onChangeFilter
-                )
-              }
-              onFocus={() => !isInputFocused && onChangeInputFocus(true)}
-              onBlur={() => onChangeInputFocus(false)}
-            />
-          </>
-        )}
-      {filtersFields &&
-        handleGetFieldsOptions(filtersFields, "area_plot_sotka_min") && (
-          <>
-            <Divider />
-            <Ranger
-              label="Площа ділянки "
-              max={100}
-              values={[
-                filters?.area_plot_sotka_min ?? 0,
-                filters?.area_plot_sotka_max ?? 0,
-              ]}
-              onChange={(values) =>
-                handleChangeRange(
-                  values,
-                  [
-                    filters?.area_plot_sotka_min ?? 0,
-                    filters?.area_plot_sotka_max ?? 0,
-                  ],
-                  ["area_plot_sotka_min", "area_plot_sotka_max"],
-                  onChangeFilter
-                )
-              }
-              onFocus={() => !isInputFocused && onChangeInputFocus(true)}
-              onBlur={() => onChangeInputFocus(false)}
-            />
-          </>
-        )}
-      {filtersFields &&
-        handleGetFieldsOptions(filtersFields, "type_obj_garage")?.length >
-          0 && (
-          <>
-            <Divider />
-            <SelectTags
-              label="Тип гаража"
-              placeholder="Оберіть тип гаража"
-              notMultiSelect
-              options={handleGetFieldsOptions(filtersFields, "type_obj_garage")}
-              value={filters?.type_obj_garage}
-              onChange={(val) => onChangeFilter("type_obj_garage", val)}
-            />
-          </>
-        )}
-      {filtersFields &&
-        handleGetFieldsOptions(filtersFields, "type_obj_apartment")?.length >
-          0 && (
-          <>
-            <Divider />
-            <SelectTags
-              label="Тип багатоповерхівки"
-              placeholder="Оберіть тип багатоповерхівки"
-              notMultiSelect
-              options={handleGetFieldsOptions(
-                filtersFields,
-                "type_obj_apartment"
-              )}
-              value={filters?.type_obj_apartment}
-              onChange={(val) => onChangeFilter("type_obj_apartment", val)}
-            />
-          </>
-        )}
       {filtersFields && handleGetFieldsOptions(filtersFields, "id_brand") && (
         <>
           <SelectTags

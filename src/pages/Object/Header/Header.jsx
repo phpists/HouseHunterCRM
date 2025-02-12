@@ -20,6 +20,7 @@ import { useAppSelect } from "../../../hooks/redux";
 import { DownloadButton } from "./DownloadButton";
 import { Id } from "../../../components/Id";
 import { DeleteInfo } from "../../../components/DeleteInfo/DeleteInfo";
+import { MlsButton } from "./MlsButton";
 
 export const Header = ({
   onSave,
@@ -30,6 +31,8 @@ export const Header = ({
   onChangeRestoreObject,
   isData,
   reasonRemove,
+  mls,
+  onToggleMls,
 }) => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -50,7 +53,7 @@ export const Header = ({
     }).then((resp) =>
       handleResponse(resp, () => {
         setDeleteReason(confirmText);
-        showAlert("success", "Об'єкт успішно видалено!");
+        showAlert("success", "Автомобіль успішно видалено!");
         if (isDeleted) {
           navigate("/objects");
         } else {
@@ -65,7 +68,7 @@ export const Header = ({
       addToFavorites([id]).then((resp) => {
         handleResponse(resp, () => {
           onToggleFavorite();
-          showAlert("success", "Об'єкт успішно видалено!");
+          showAlert("success", "Автомобіль успішно видалено!");
         });
       });
     }
@@ -130,6 +133,7 @@ export const Header = ({
             </>
           ) : (
             <>
+              <MlsButton onClick={onToggleMls} active={mls === "1"} />
               <SaveButton onClick={onSave} loading={loading} />
               {/* <SendClientButton /> */}
               <ToClientButton />

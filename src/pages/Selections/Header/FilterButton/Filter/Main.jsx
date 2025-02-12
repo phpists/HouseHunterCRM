@@ -144,7 +144,8 @@ export const Main = ({
             values,
             [filters?.price_min ?? 0, filters?.price_max ?? 0],
             ["price_min", "price_max"],
-            onChangeFilter
+            (values) =>
+              onChangeFilter("update", { ...filters, ...values }, true)
           )
         }
         currency={Number(filters?.price_currency)}

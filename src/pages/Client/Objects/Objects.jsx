@@ -83,7 +83,7 @@ export const Objects = ({
       handleResponse(resp, () => {
         showAlert(
           "success",
-          `Обєкт${objects?.length === 1 ? "" : "и"} успішно видалено!`
+          ` Автомобіль${objects?.length === 1 ? "" : "и"} успішно видалено!`
         );
         handleRefreshObjects(true);
         handleClearSelectedItemsByType("object");
@@ -159,7 +159,7 @@ export const Objects = ({
       handleResponse(resp, () => {
         showAlert(
           "success",
-          `Обєкт${objects?.length === 1 ? "" : "и"} успішно відновлено!`
+          ` Автомобіль${objects?.length === 1 ? "" : "и"} успішно відновлено!`
         );
         handleRefreshObjects(true);
         handleClearSelectedItemsByType("object");

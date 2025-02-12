@@ -69,7 +69,7 @@ export const FieldCard = ({
             values,
             [data?.price_min ?? 0, data?.price_max ?? 0],
             ["price_min", "price_max"],
-            onChangeField
+            (values) => onChangeField("update", { ...data, ...values }, true)
           )
         }
         currency={Number(data?.price_currency)}

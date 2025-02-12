@@ -76,7 +76,7 @@ export const Dropdown = ({
   const handleAddStreetBaseObject = () => {
     addStreetBaseObject(id).then((resp) =>
       handleResponse(resp, () => {
-        showAlert("success", "Об'єкт успішно додано");
+        showAlert("success", "Автомобіль успішно додано");
         setAdded(true);
       })
     );
@@ -293,7 +293,7 @@ export const Dropdown = ({
               className="flex items-center justify-between"
               onClick={handleAddStreetBaseObject}
             >
-              <span>Додати обєкт до себе</span>{" "}
+              <span>Додати автомобіль до себе</span>{" "}
               <ToObjectIcon className="selection-icon" />
             </div>
           )}

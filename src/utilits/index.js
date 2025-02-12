@@ -213,47 +213,41 @@ export const handleChangeRange = (
   onChangeField,
   isChangeAllFields
 ) => {
-  if (isChangeAllFields) {
-    const fieldMinName = fields[0];
-    const fieldMaxName = fields[1];
-    const valMin = values[0] ?? 0;
-    const valMax = values[1] ?? 0;
+  const fieldMinName = fields[0];
+  const fieldMaxName = fields[1];
+  const valMin = values[0] ?? 0;
+  const valMax = values[1] ?? 0;
 
-    if (
-      valMin > valMax &&
-      valMin !== 0 &&
-      valMax !== 0 &&
-      values[0] !== prevValues[0]
-    ) {
-      onChangeField({
-        [fieldMinName]: valMin,
-        [fieldMaxName]: valMin,
-      });
-    } else if (
-      valMax < valMin &&
-      valMin !== 0 &&
-      valMax !== 0 &&
-      values[1] !== prevValues[1]
-    ) {
-      onChangeField({
-        [fieldMinName]: valMax,
-        [fieldMaxName]: valMax,
-      });
-    } else if (values[0] !== prevValues[0]) {
-      onChangeField({
-        [fieldMinName]: valMin,
-        [fieldMaxName]: valMax,
-      });
-    } else {
-      onChangeField({
-        [fieldMinName]: valMin,
-        [fieldMaxName]: valMax,
-      });
-    }
+  if (
+    valMin > valMax &&
+    valMin !== 0 &&
+    valMax !== 0 &&
+    values[0] !== prevValues[0]
+  ) {
+    onChangeField({
+      [fieldMinName]: valMin,
+      [fieldMaxName]: valMin,
+    });
+  } else if (
+    valMax < valMin &&
+    valMin !== 0 &&
+    valMax !== 0 &&
+    values[1] !== prevValues[1]
+  ) {
+    onChangeField({
+      [fieldMinName]: valMax,
+      [fieldMaxName]: valMax,
+    });
   } else if (values[0] !== prevValues[0]) {
-    onChangeField(fields[0], values[0] ?? 0);
+    onChangeField({
+      [fieldMinName]: valMin,
+      [fieldMaxName]: valMax,
+    });
   } else {
-    onChangeField(fields[1], values[1] ?? 0);
+    onChangeField({
+      [fieldMinName]: valMin,
+      [fieldMaxName]: valMax,
+    });
   }
 };
 

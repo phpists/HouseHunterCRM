@@ -1,13 +1,23 @@
 import { styled } from "styled-components";
 import { Option } from "./Option";
 
-export const Dropdown = ({ open, onChange, options, editValue }) => (
+export const Dropdown = ({
+  open,
+  onChange,
+  options,
+  editValue,
+  activeValue,
+}) => (
   <StyledDropdown className="hide-scroll select-none selectDropdown">
     {options?.length === 0 && editValue ? null : options?.length === 0 ? (
       <div className="empty-select">Пусто</div>
     ) : (
       options?.map(({ title, value }, i) => (
-        <Option key={i} title={title} onSelect={() => onChange(value)} />
+        <Option
+          key={i}
+          title={title}
+          onSelect={() => onChange(activeValue === value ? undefined : value)}
+        />
       ))
     )}
   </StyledDropdown>
@@ -23,7 +33,7 @@ const StyledDropdown = styled.div`
   max-height: 230px;
   overflow: auto;
   border-top: 1px solid rgba(0, 0, 0, 0.2);
-  z-index: 100;
+  z-index: 120;
   scroll-behavior: smooth;
   visibility: hidden;
   opacity: 0;

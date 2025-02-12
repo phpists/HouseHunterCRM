@@ -32,7 +32,7 @@ export const Price = ({
         //     : rubricId === "65" || rubricId === "66"
         //     ? [
         //         {
-        //           title: "Об'єкт",
+        //           title: "Автомобіль",
         //           value: "4",
         //         },
         //         {
@@ -46,7 +46,7 @@ export const Price = ({
         //       ]
         //     : [
         //         {
-        //           title: "Об'єкт",
+        //           title: "Автомобіль",
         //           value: "4",
         //         },
         //         {

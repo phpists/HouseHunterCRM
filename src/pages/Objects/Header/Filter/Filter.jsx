@@ -8,7 +8,11 @@ import { Main } from "./Main";
 import { Topicality } from "./Topicality";
 import { Characteristics } from "./Characteristics";
 import { useLazyGetAllObjectsQuery } from "../../../../store/objects/objects.api";
-import { handleFromInputDate, removePhoneMask } from "../../../../utilits";
+import {
+  handleFromInputDate,
+  removePhoneMask,
+  showAlert,
+} from "../../../../utilits";
 import { useActions } from "../../../../hooks/actions";
 import { useAppSelect } from "../../../../hooks/redux";
 import { Spinner } from "../../../../components/Spinner";
@@ -68,6 +72,8 @@ export const Filter = ({
         phonesCodes?.find((p) => p.id === phoneCode)?.format
       )?.replace(/\s/g, "")?.length ?? 0;
 
+    const yearFromError = Number(filters?.year_from) < 1885;
+    const yearToError = Number(filters?.year_to) > new Date().getFullYear();
     if (
       (filters?.id_rubric?.length === 0 ||
         filters?.id_location?.length === 0 ||
@@ -85,6 +91,15 @@ export const Filter = ({
       removePhoneMask(filters?.search_phone)?.length < phoneLength
     ) {
       setErrors({ search_phone: true });
+    } else if (
+      ((filters?.year_from && filters?.year_from?.toString()?.length > 0) ||
+        (filters?.year_to && filters?.year_to?.toString()?.length > 0)) &&
+      (yearFromError || yearToError)
+    ) {
+      setErrors({
+        year_from: yearFromError,
+        year_to: yearToError,
+      });
     } else {
       handleApplyFilters(true);
       setErrors({ search_phone: false });
@@ -156,6 +171,7 @@ export const Filter = ({
         },
       };
     }
+
 
     if (
       Number(data?.filters?.сar_mileage_from) > 0 ||
@@ -235,6 +251,15 @@ export const Filter = ({
   useEffect(() => {
     if (errors?.["id_rubric"] || errors?.["id_location"]) {
       contentRef.current.scrollTop = 0;
+    } else {
+      const firstErrorField = document.querySelectorAll(
+        ".objects-filters-main-wrapper .error-field"
+      );
+      if (firstErrorField[0]) {
+        contentRef.current.scrollTo({
+          top: firstErrorField[0].offsetTop - contentRef.current.offsetTop - 10,
+        });
+      }
     }
   }, [errors]);
 
@@ -246,7 +271,7 @@ export const Filter = ({
         animate={controls}
       >
         <Header onClose={handleClose} />
-        <div className="content" ref={contentRef}>
+        <div className="content objects-filters-main-wrapper" ref={contentRef}>
           <SectionTitle title="Головне" />
           <Main
             filters={filters}

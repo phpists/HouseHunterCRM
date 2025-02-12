@@ -101,7 +101,7 @@ export const ObjectsList = ({
       reasone_remove: confirmText,
     }).then((resp) =>
       handleResponse(resp, () => {
-        showAlert("success", "Об'єкт успішно видалено!");
+        showAlert("success", "Автомобіль успішно видалено!");
         handleGetObjectById(selectedCard)?.deleted === "1"
           ? handleDeleteObjectSuccess(selectedCard)
           : handleToggleDeletedStatus(selectedCard, "1");
@@ -117,7 +117,7 @@ export const ObjectsList = ({
   const handleRestoreObject = (id) => {
     restoreObjects([id]).then((resp) =>
       handleResponse(resp, () => {
-        showAlert("success", "Об'єкт успішно видалено!");
+        showAlert("success", "Автомобіль успішно видалено!");
         handleToggleDeletedStatus(id, "0");
       })
     );

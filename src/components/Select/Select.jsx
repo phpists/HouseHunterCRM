@@ -130,6 +130,7 @@ export const Select = ({
             onChange={handleChange}
             options={handleGetFilteredOptions()}
             editValue={editValue}
+            activeValue={value}
           />
           {open && (
             <div

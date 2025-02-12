@@ -16,6 +16,7 @@ export const MainPhoto = memo(
     onMakeMain,
     onOpen,
     onRotate,
+    onAddNewFile,
   }) => {
     const handleOpen = (e) => {
       if (e.target.classList?.contains("openInfo")) {
@@ -27,7 +28,7 @@ export const MainPhoto = memo(
       <StyledMainPhoto
         photo={photo?.url?.length > 0 ? photo?.url : noPhoto}
         photosCount={photosCount}
-        onClick={handleOpen}
+        onClick={isPhoto ? handleOpen : onAddNewFile}
         className="openInfo"
       >
         {photosCount > 1 && <Counter photosCount={photosCount} />}

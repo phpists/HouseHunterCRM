@@ -79,7 +79,7 @@ export const Info = ({
 
   return (
     <StyledCategories>
-      <Divider title="Характеристики" className="first-divider" />
+      {/* <Divider title="Характеристики" className="first-divider" /> */}
       <Fields
         fields={fields?.main_field}
         data={data}

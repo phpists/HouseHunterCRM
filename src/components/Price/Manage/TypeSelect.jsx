@@ -6,7 +6,7 @@ export const TypeSelect = ({ type, onChangeType, rubricId, allTypes }) => {
   const TYPES = allTypes
     ? [
         {
-          title: "Об'єкт",
+          title: "Автомобіль",
           value: "4",
         },
         {
@@ -21,7 +21,7 @@ export const TypeSelect = ({ type, onChangeType, rubricId, allTypes }) => {
     : rubricId === "65" || rubricId === "66"
     ? [
         {
-          title: "Об'єкт",
+          title: "Автомобіль",
           value: "4",
         },
         {
@@ -35,7 +35,7 @@ export const TypeSelect = ({ type, onChangeType, rubricId, allTypes }) => {
       ]
     : [
         {
-          title: "Об'єкт",
+          title: "Автомобіль",
           value: "4",
         },
         {

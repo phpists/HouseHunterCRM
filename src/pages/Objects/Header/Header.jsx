@@ -91,7 +91,7 @@ export const Header = ({
         handleResponse(resp, () => {
           showAlert(
             "success",
-            `Обєкт${selectedCount === 1 ? "" : "и"} успішно видалено!`
+            `Автомобіль${selectedCount === 1 ? "" : "и"} успішно видалено!`
           );
           filters?.company_object?.show_deleted !== "1" && onDelete();
         });

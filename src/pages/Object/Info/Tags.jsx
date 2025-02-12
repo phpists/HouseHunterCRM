@@ -77,9 +77,7 @@ export const Tags = ({ className, data, isAccess, onToggleOpen }) => {
   const handleGetInitTags = () => {
     let initTags = [];
     let tagsValue = [];
-    if (data?.kpp === "1") {
-      tagsValue.push("kpp");
-    }
+
     if (data?.label_dtp === "1") {
       tagsValue.push("label_dtp");
     }

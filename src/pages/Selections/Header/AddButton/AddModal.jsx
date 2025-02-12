@@ -23,7 +23,7 @@ export const AddModal = ({ onClose, onRefresh, objectsIds }) => {
       id_objects: [selectedObj],
     }).then((resp) =>
       handleResponse(resp, () => {
-        showAlert("success", "Об'єкт успішно додано");
+        showAlert("success", "Автомобіль успішно додано");
         onRefresh();
         onClose();
       })
