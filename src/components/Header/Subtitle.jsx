@@ -62,7 +62,7 @@ export const Subtitle = () => {
           : pathname.split("/")[1] === "edit-object"
           ? `Редагування автомобіля`
           : pathname.split("/")[1] === "edit-ad"
-          ? "Редагування об’єкта"
+          ? "Редагування автомобіля"
           : pathname.split("/")[1] === "selections"
           ? `Всього ${
               selectionsCount === 100 ? "більше 100" : selectionsCount

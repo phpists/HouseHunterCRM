@@ -28,7 +28,7 @@ export const Statistic = ({ onClick, statisticData, id }) => {
             }),
           },
           {
-            title: "З об’єктами",
+            title: "З автомобілями",
             value: statisticData?.count_client_object ?? "0",
             link: handleRenderLink("clients?findWorker", {
               id_worker_Search: id,
@@ -36,7 +36,7 @@ export const Statistic = ({ onClick, statisticData, id }) => {
             }),
           },
           {
-            title: "З запитами і об’єктами",
+            title: "З запитами і автомобілями",
             value: statisticData?.count_client_object_and_request ?? "0",
             link: handleRenderLink("clients?findWorker", {
               id_worker_Search: id,
@@ -45,7 +45,7 @@ export const Statistic = ({ onClick, statisticData, id }) => {
             }),
           },
           {
-            title: "Без запитів і об’єктів",
+            title: "Без запитів і Автомобілів",
             value: statisticData?.count_not_object_and_request ?? "0",
             link: handleRenderLink("clients?findWorker", {
               id_worker_Search: id,

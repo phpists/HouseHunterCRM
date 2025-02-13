@@ -77,7 +77,7 @@ export const Header = ({
   const handleRestoreObject = () => {
     restoreObjects([id]).then((resp) =>
       handleResponse(resp, () => {
-        showAlert("success", "Oб'єкт успішно відновлено");
+        showAlert("success", "Автомобіль успішно відновлено");
         onChangeRestoreObject("0");
         setDeleteReason(null);
       })

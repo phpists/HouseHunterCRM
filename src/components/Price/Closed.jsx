@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../../assets/images/arrow-right.svg";
+import priceUp from "../../assets/images/price-up.svg";
+import priceDown from "../../assets/images/price-down.svg";
 
 export const Closed = ({
   onOpen,
@@ -7,19 +9,18 @@ export const Closed = ({
   subtitle,
   notChangeCurrency,
   priceFor,
+  changeUp,
 }) => (
   <StyledClosed
     className="flex items-start justify-between closed-wrappe closedPrice "
     onClick={notChangeCurrency ? () => null : onOpen}
   >
     <div className="closedPrice">
-      <div className="price closedPrice">
+      <div className="flex items-center gap-[6px] price closedPrice">
         {`${price}`}{" "}
-        {/* {priceFor && (
-          <span className="priceFore">
-            <span>/</span> {priceFor}
-          </span>
-        )} */}
+        {["1", "2"].includes(changeUp) ? (
+          <img src={changeUp === "1" ? priceUp : priceDown} alt="" />
+        ) : null}
       </div>
       {subtitle && (
         <div className="subtitle closedPrice labelItem">{subtitle}</div>
@@ -49,6 +50,11 @@ const StyledClosed = styled.div`
       span {
         margin: 0 4px;
       }
+    }
+    img {
+      height: 10px;
+      width: 10px;
+      margin-bottom: 2px;
     }
   }
   .subtitle {

@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const Tag = () => <StyledTag>Об'єкт</StyledTag>;
+export const Tag = () => <StyledTag>Автомобіль</StyledTag>;
 
 const StyledTag = styled.div`
   position: absolute;

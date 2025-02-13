@@ -213,7 +213,7 @@ export const Dropdown = ({
               className="flex items-center justify-between"
               onClick={onFindSimilar}
             >
-              <span>Знайти оригінальний обєкт</span> <Search />
+              <span>Знайти оригінальний автомобіль</span> <Search />
             </div>
           ) : null}
         </>

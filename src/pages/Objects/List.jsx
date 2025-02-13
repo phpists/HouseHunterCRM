@@ -84,7 +84,7 @@ export const List = ({
       reasone_remove: confirmText,
     }).then((resp) => {
       handleResponse(resp, () => {
-        showAlert("success", "Обєкт успішно видалено!");
+        showAlert("success", "Автомобіль успішно видалено!");
         onDeleteSuccess(deleteId);
       });
       setDeleting(false);

@@ -524,6 +524,9 @@ export const Main = ({
         onBlur={() => onChangeInputFocus(false)}
         hidePicaroon
         liquidity
+        overbuyingIndex
+        countViews
+        countLikes
       />
     </StyledMain>
   );

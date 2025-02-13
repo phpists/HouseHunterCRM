@@ -695,7 +695,7 @@ const Objects = () => {
         handleResponse(resp, () => {
           showAlert(
             "success",
-            `Oб'єкт${ids?.length === 1 ? "" : "и"} успішно відновлено`
+            `Автомобіл${ids?.length === 1 ? "ь" : "і"} успішно відновлено`
           );
           handleDeleteObjectsFilterByIds(ids, isSelected);
         })

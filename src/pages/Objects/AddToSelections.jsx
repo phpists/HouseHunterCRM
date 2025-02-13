@@ -21,7 +21,7 @@ export const AddToSelections = ({ onClose, idObject, onSuccess }) => {
       handleResponse(resp, () => {
         showAlert(
           "success",
-          `Об'єкт ${
+          `Автомобіль ${
             checkIsArray(idObject)?.length > 0 ? "и" : ""
           } успішно додано`
         );

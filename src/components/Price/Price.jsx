@@ -19,6 +19,7 @@ export const Price = ({
   noSelectCurrency,
   allTypes,
   noPriceTitle,
+  changeUp,
 }) => {
   const [open, setOpen] = useState(false);
   const options = ["₴", "$", "€"];
@@ -67,6 +68,7 @@ export const Price = ({
           subtitle={subtitle}
           notChangeCurrency={notChangeCurrency}
           priceFor={priceFor}
+          changeUp={changeUp}
         />
       )}
     </StyledPrice>

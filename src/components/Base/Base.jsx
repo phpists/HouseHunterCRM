@@ -64,6 +64,9 @@ export const Base = ({
   requestHidePicaroon,
   liquidity,
   hideActual,
+  overbuyingIndex,
+  countViews,
+  countLikes,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -363,7 +366,7 @@ export const Base = ({
           />
           {objMls ? (
             <CheckOption
-              label="Обєкти MLS"
+              label="Автомобілі MLS"
               className="check-opt"
               value={data?.company_object?.obj_mls}
               onChange={() =>
@@ -581,6 +584,7 @@ export const Base = ({
           {countObjectOwner ? (
             <Ranger
               label="Кількість автомобілів за номером"
+              className="mb-2"
               max={1000}
               values={[
                 data?.street_base_object?.count_object_owner_from ?? 0,
@@ -594,6 +598,84 @@ export const Base = ({
                     data?.street_base_object?.count_object_owner_to ?? 0,
                   ],
                   ["count_object_owner_from", "count_object_owner_to"],
+                  (values) =>
+                    onChange("street_base_object", {
+                      ...data?.street_base_object,
+                      ...values,
+                    }),
+                  true
+                )
+              }
+              onFocus={onFocus}
+              onBlur={onBlur}
+            />
+          ) : null}
+
+          {overbuyingIndex ? (
+            <Field
+              placeholder="Введіть значення..."
+              value={data?.street_base_object?.index_overbuying}
+              onChange={(val) =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  index_overbuying: val,
+                })
+              }
+              label="Індекс перекупа"
+              className="field-wrapper mb-2"
+              onFocus={onFocus}
+              onBlur={onBlur}
+              type="number"
+            />
+          ) : null}
+
+          {countViews ? (
+            <Ranger
+              label="Кількість переглядів"
+              className="mb-2"
+              max={1000}
+              values={[
+                data?.street_base_object?.count_views_from ?? 0,
+                data?.street_base_object?.count_views_to ?? 0,
+              ]}
+              onChange={(values) =>
+                handleChangeRange(
+                  values,
+                  [
+                    data?.street_base_object?.count_views_from ?? 0,
+                    data?.street_base_object?.count_views_to ?? 0,
+                  ],
+                  ["count_views_from", "count_views_to"],
+                  (values) =>
+                    onChange("street_base_object", {
+                      ...data?.street_base_object,
+                      ...values,
+                    }),
+                  true
+                )
+              }
+              onFocus={onFocus}
+              onBlur={onBlur}
+            />
+          ) : null}
+
+          {countLikes ? (
+            <Ranger
+              label="Кількість лайків"
+              className="mb-2"
+              max={1000}
+              values={[
+                data?.street_base_object?.count_likes_from ?? 0,
+                data?.street_base_object?.count_likes_to ?? 0,
+              ]}
+              onChange={(values) =>
+                handleChangeRange(
+                  values,
+                  [
+                    data?.street_base_object?.count_likes_from ?? 0,
+                    data?.street_base_object?.count_likes_to ?? 0,
+                  ],
+                  ["count_likes_from", "count_likes_to"],
                   (values) =>
                     onChange("street_base_object", {
                       ...data?.street_base_object,

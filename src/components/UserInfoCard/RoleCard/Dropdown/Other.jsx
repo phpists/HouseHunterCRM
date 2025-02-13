@@ -8,7 +8,7 @@ export const Other = () => {
     <StyledOther>
       <ToggleOption
         title="Остаточне видалення всього"
-        subtitle="Клієнти, запити, об’єкти, дзвінки, агенти"
+        subtitle="Клієнти, запити, автомобілі, дзвінки, агенти"
       />
     </StyledOther>
   );

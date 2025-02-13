@@ -29,6 +29,7 @@ export const MainInfo = ({
         // type={type}
         onChangeType={onChangeType}
         notChangeCurrency={ad}
+        changeUp={data?.price_change_up}
       />
       <Tags data={data} ad={ad} />
     </StyledMainInfo>

@@ -75,51 +75,37 @@ export const Tags = ({ data, ad }) => {
         ]
       : []),
     ...(data?.street?.length > 0 ? [{ title: `вул. ${data?.street}` }] : []),
-    // ...(data?.rooms > 0
-    //   ? [{ title: `${data?.rooms} кімнати`, Icon: <Door /> }]
-    //   : []),
-    // ...(data?.area_total > 0
-    //   ? [{ title: `${data?.area_total} м²`, Icon: <Expand /> }]
-    //   : []),
-    // ...(data?.storey_count !== "0" || data?.address_storey !== "0"
-    //   ? [
-    //       {
-    //         title: `${
-    //           data?.address_storey === "0" ? "-" : data?.address_storey
-    //         } / ${data?.storey_count === "0" ? "-" : data?.storey_count}`,
-    //         Icon: <Stairs />,
-    //         hoverTitle: `${data?.address_storey} поверх / ${data?.storey_count} поверховість`,
-    //       },
-    //     ]
-    //   : Number(data?.address_storey) && data?.address_storey?.length > 0
-    //   ? [
-    //       {
-    //         title: `${data?.address_storey}`,
-    //         Icon: <Stairs />,
-    //         hoverTitle: `${data?.address_storey} поверх`,
-    //       },
-    //     ]
-    //   : []),
-    // ...(data.area_plot_sotka > 0
-    //   ? [{ title: `${data?.area_plot_sotka} соток`, Icon: <Box /> }]
-    //   : []),
-    // ...(data.area_kitchen > 0
-    //   ? [{ title: `${data?.area_kitchen} м² кухні`, Icon: <Expand /> }]
-    //   : []),
-    // ...(ad
-    //   ? [
-    //       {
-    //         title: `рекламується з ${handleFormatDate(
-    //           Number(data?.dt_publicate) * 1000,
-    //           true
-    //         )}`,
-    //         Icon: <Rocket />,
-    //       },
-    //     ]
-    //   : []),
-    // { title: "Купівля-продаж" },
-    // { title: "Хрущьовка", icon: homeIcon },
-    // { title: "Цегла", icon: brickIcon },
+    ...(data?.price_change_for_last &&
+    data?.price_change_for_last?.length > 0 &&
+    Number(data?.price_change_for_last) > 0
+      ? [
+          {
+            title: `Різниця ціни до попередньої ${data?.price_change_for_last}$`,
+          },
+        ]
+      : []),
+    ...(data?.price_change_for_first &&
+    data?.price_change_for_first?.length > 0 &&
+    Number(data?.price_change_for_first) > 0
+      ? [{ title: `Різниця ціни до першої ${data?.price_change_for_first}$` }]
+      : []),
+    ...(data?.index_overbuying &&
+    data?.index_overbuying?.length > 0 &&
+    Number(data?.index_overbuying) > 0
+      ? [{ title: `Індекс перекупа ${data?.index_overbuying}` }]
+      : []),
+
+    ...(data?.count_likes &&
+    data?.count_likes?.length > 0 &&
+    Number(data?.count_likes) > 0
+      ? [{ title: `К-сть лайків ${data?.count_likes}` }]
+      : []),
+
+    ...(data?.count_views &&
+    data?.count_views?.length > 0 &&
+    Number(data?.count_views) > 0
+      ? [{ title: `К-сть переглядів ${data?.count_views}` }]
+      : []),
   ];
 
   return (
@@ -136,4 +122,7 @@ const StyledTags = styled.div`
   width: 200px;
   max-height: 140px;
   overflow: auto;
+  .title {
+    max-width: 200px;
+  }
 `;
