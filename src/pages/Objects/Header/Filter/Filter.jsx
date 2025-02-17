@@ -75,6 +75,7 @@ export const Filter = ({
     const yearFromError = Number(filters?.year_from) < 1885;
     const yearToError = Number(filters?.year_to) > new Date().getFullYear();
     if (
+      filters?.search_phone?.length === 0 &&
       (filters?.id_rubric?.length === 0 ||
         filters?.id_location?.length === 0 ||
         !filters?.id_rubric) &&
@@ -171,7 +172,6 @@ export const Filter = ({
         },
       };
     }
-
 
     if (
       Number(data?.filters?.сar_mileage_from) > 0 ||

@@ -555,3 +555,10 @@ export const handleSetTheme = (theme) => {
 
 export const handleAddPhoneMask = (phone) =>
   `${phone?.substring(0, 3)}-${phone?.substring(3, 6)}-${phone?.substring(6)}`;
+
+export const handleGetParentLocationId = (locationId, locations) => {
+  const name = locations?.find((l) => l.value === locationId)?.title;
+  const names = name?.split(" => ");
+  const parentName = names?.[names?.length - 1];
+  return locations.find(({ title }) => title === parentName)?.value;
+};

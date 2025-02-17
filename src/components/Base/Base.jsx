@@ -67,6 +67,7 @@ export const Base = ({
   overbuyingIndex,
   countViews,
   countLikes,
+  idStatusAdd,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -610,7 +611,34 @@ export const Base = ({
               onBlur={onBlur}
             />
           ) : null}
-
+          {idStatusAdd ? (
+            <SelectTags
+              className=" mb-2"
+              label="Пошук по статусу оголошення"
+              placeholder="Оберіть статус оголошення"
+              options={[
+                { title: "Видалено власником", value: "1" },
+                { title: "Видалено із сайту власником(повністю)", value: "-1" },
+                { title: "Активне", value: "0" },
+                { title: "Не опубліковано(не оплачено)", value: "13" },
+                { title: "На модерації", value: "8" },
+                { title: "Видалене модератором", value: "5" },
+                {
+                  title: "Видалено автоматично(термін публікації закінчився)",
+                  value: "14",
+                },
+              ]}
+              value={data?.street_base_object?.id_status_add}
+              onChange={(val) =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  id_status_add: val,
+                })
+              }
+              isSearch
+              notMultiSelect
+            />
+          ) : null}
           {overbuyingIndex ? (
             <Field
               placeholder="Введіть значення..."

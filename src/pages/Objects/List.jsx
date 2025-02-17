@@ -4,10 +4,12 @@ import { Empty } from "../../components/Empty/Empty";
 import {
   handleCheckAccess,
   handleCopy,
+  handleGetLocationAllPath,
+  handleGetParentLocationId,
   handleResponse,
   showAlert,
 } from "../../utilits";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddToSelections } from "./AddToSelections";
 import { Loader } from "../../components/Loader";
 import { ObjectPriceHistory } from "../../components/ObjectPriceHistory";
@@ -30,6 +32,7 @@ import { XHOUSE_COMPANY_ID } from "../../constants";
 import { AdListModal } from "../../components/AdListModal/AdListModal";
 import cogoToast from "cogo-toast";
 import { ObjectInfo } from "./ObjectInfo";
+import { useGetLocationsQuery } from "../../store/requests/requests.api";
 
 export const List = ({
   selected,
@@ -72,6 +75,28 @@ export const List = ({
   const [advertaseObject, setAdvertaseObject] = useState(null);
   const [adListModal, setAdListModal] = useState(null);
   const [openObjectInfo, setOpenObjectInfo] = useState(null);
+  const { data: locationsList } = useGetLocationsQuery();
+  const [formatedLocations, setFormatedLocations] = useState([]);
+
+  const handleFormatLocations = () => {
+    const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
+    const locations = Object.entries(locationsList)
+      .sort((a, b) => Number(b[1].id_parent) - Number(a[1].id_parent))
+      ?.map((loc) => loc[1])
+      //   .filter((loc) => Number(loc?.id_parent) !== 0)
+      .map(({ id, id_parent, name }) => {
+        return handleGetLocationAllPath(locList, id, id_parent, name);
+      });
+
+    setFormatedLocations(locations);
+  };
+
+  useEffect(() => {
+    if (locationsList) {
+      handleFormatLocations();
+    }
+    // eslint-disable-next-line
+  }, [locationsList]);
 
   const onChangeCurrency = (val) => setCurrency(val);
   const onChangeType = (val) => setType(val);
@@ -145,6 +170,13 @@ export const List = ({
         );
       }, 1000);
     });
+  };
+
+  const handleFindSimilar = (obj) => {
+    const id_location =
+      handleGetParentLocationId(obj.id_location, formatedLocations) ??
+      obj.id_location;
+    onFindSimilar({ ...obj, id_location });
   };
 
   return (
@@ -246,7 +278,7 @@ export const List = ({
                 onSelect={() => onSelect(d?.id)}
                 data={d}
                 onToggleFavoriteStatus={() => toggleFavoriteStatus(d?.id)}
-                onFindSimilar={() => onFindSimilar(d)}
+                onFindSimilar={() => handleFindSimilar(d)}
                 isEdit={handleCheckAccess(accessData, "objects", "edit")}
                 onAddToSelection={() => setOpenAddModal(d?.id)}
                 onOpenTagsHistory={() =>

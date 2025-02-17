@@ -166,7 +166,6 @@ const Selections = () => {
   const handleFindSimilarTo = (obj) => {
     const { id_location, id_rubric, price_uah, id_brand, id_model } = obj;
 
-    console.log(obj);
     const objData = {
       id_rubric,
       id_location,

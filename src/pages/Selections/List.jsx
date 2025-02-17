@@ -1,9 +1,14 @@
 import styled from "styled-components";
 import { ObjectCard } from "../../components/ObjectCard/ObjectCard";
-import { handleCheckAccess, handleCopy } from "../../utilits";
+import {
+  handleCheckAccess,
+  handleCopy,
+  handleGetLocationAllPath,
+  handleGetParentLocationId,
+} from "../../utilits";
 import { Empty } from "../../components/Empty/Empty";
 import { ObjectHistory } from "../../components/ObjectHistory/ObjectHistory";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader } from "../../components/Loader";
 import { ObjectCommentHistory } from "../../components/ObjectCommentHistory/ObjectCommentHistory";
 import { AddToSelections } from "../Objects/AddToSelections";
@@ -12,6 +17,7 @@ import { useAppSelect } from "../../hooks/redux";
 import { EditObjectComment } from "../../components/EditObjectComment";
 import { MarkObjectPhones } from "../../components/MarkObjectPhones/MarkObjectPhones";
 import { EditObject } from "./EditObject";
+import { useGetLocationsQuery } from "../../store/requests/requests.api";
 
 export const List = ({
   data,
@@ -43,6 +49,28 @@ export const List = ({
   const [markPhoneModal, setMarkPhoneModal] = useState(false);
   const [showContactId, setShowContactId] = useState(null);
   const [editObject, setEditObject] = useState(false);
+  const { data: locationsList } = useGetLocationsQuery();
+  const [formatedLocations, setFormatedLocations] = useState([]);
+
+  const handleFormatLocations = () => {
+    const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
+    const locations = Object.entries(locationsList)
+      .sort((a, b) => Number(b[1].id_parent) - Number(a[1].id_parent))
+      ?.map((loc) => loc[1])
+      //   .filter((loc) => Number(loc?.id_parent) !== 0)
+      .map(({ id, id_parent, name }) => {
+        return handleGetLocationAllPath(locList, id, id_parent, name);
+      });
+
+    setFormatedLocations(locations);
+  };
+
+  useEffect(() => {
+    if (locationsList) {
+      handleFormatLocations();
+    }
+    // eslint-disable-next-line
+  }, [locationsList]);
 
   const onChangeCurrency = (val) => setCurrency(val);
   const onChangeType = (val) => setType(val);
@@ -55,6 +83,13 @@ export const List = ({
     }&id=${btoa(`["${id}"]`)}`;
 
     handleCopy(LINK);
+  };
+
+  const handleFindSimilar = (obj) => {
+    const id_location =
+      handleGetParentLocationId(obj.id_location, formatedLocations) ??
+      obj.id_location;
+    onFindSimilar({ ...obj, id_location });
   };
 
   return (
@@ -122,7 +157,7 @@ export const List = ({
               onToggleFavoriteStatus={
                 onFavorite ? () => onFavorite(d?.id) : null
               }
-              onFindSimilar={() => onFindSimilar(d)}
+              onFindSimilar={() => handleFindSimilar(d)}
               isEdit={handleCheckAccess(accessData, "objects", "edit")}
               onHide={() => onHide(d?.id)}
               isHideObjects={isHideObjects}

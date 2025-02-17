@@ -73,7 +73,6 @@ export const Maininfo = ({
       .map(({ id, id_parent, name }) => {
         return handleGetLocationAllPath(locList, id, id_parent, name);
       });
-
     setFormatedLocations(locations);
   };
 

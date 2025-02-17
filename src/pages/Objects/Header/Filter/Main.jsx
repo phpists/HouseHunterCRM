@@ -527,6 +527,7 @@ export const Main = ({
         overbuyingIndex
         countViews
         countLikes
+        idStatusAdd
       />
     </StyledMain>
   );
