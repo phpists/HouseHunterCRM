@@ -8,9 +8,6 @@ export const Counter = ({ current, total }) => (
 );
 
 const StyledCounter = styled.div`
-  position: absolute;
-  top: 5px;
-  right: 5px;
   z-index: 7;
   border-radius: 5.465px;
   border: 1.093px solid var(--bg-15);

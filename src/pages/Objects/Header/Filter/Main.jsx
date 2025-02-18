@@ -323,7 +323,10 @@ export const Main = ({
                           labels?.[field[0]] ??
                           commentsToFields?.object[field[0]]
                         }
-                        max={100}
+                        min={fieldName === "year" ? 1885 : 0}
+                        max={
+                          fieldName === "year" ? new Date().getFullYear() : 100
+                        }
                         values={[
                           filters[`${fieldName}_from`] ?? 0,
                           filters[`${fieldName}_to`] ?? 0,
@@ -528,6 +531,12 @@ export const Main = ({
         countViews
         countLikes
         idStatusAdd
+        priceChange
+        priceChangePeriod
+        priceChangeUp
+        errors={Object.entries(errors)
+          ?.filter((e) => e?.[1])
+          ?.map((e) => e?.[0])}
       />
     </StyledMain>
   );

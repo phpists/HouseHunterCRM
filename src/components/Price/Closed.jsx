@@ -3,6 +3,7 @@ import { ReactComponent as Arrow } from "../../assets/images/arrow-right.svg";
 import priceUp from "../../assets/images/price-up.svg";
 import priceDown from "../../assets/images/price-down.svg";
 
+
 export const Closed = ({
   onOpen,
   price = 0,

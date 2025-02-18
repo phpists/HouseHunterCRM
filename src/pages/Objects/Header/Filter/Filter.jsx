@@ -101,6 +101,22 @@ export const Filter = ({
         year_from: yearFromError,
         year_to: yearToError,
       });
+    } else if (
+      (filters?.street_base_object?.price_change?.length > 0 ||
+        filters?.street_base_object?.price_change_period?.length > 0 ||
+        filters?.street_base_object?.price_change_up?.length > 0) &&
+      (!filters?.street_base_object?.price_change ||
+        filters?.street_base_object?.price_change?.length === 0 ||
+        !filters?.street_base_object?.price_change_period ||
+        filters?.street_base_object?.price_change_period?.length === 0 ||
+        !filters?.street_base_object?.price_change_up ||
+        filters?.street_base_object?.price_change_up?.length === 0)
+    ) {
+      setErrors({
+        price_change: !filters?.street_base_object?.price_change,
+        price_change_period: !filters?.street_base_object?.price_change_period,
+        price_change_up: !filters?.street_base_object?.price_change_up,
+      });
     } else {
       handleApplyFilters(true);
       setErrors({ search_phone: false });

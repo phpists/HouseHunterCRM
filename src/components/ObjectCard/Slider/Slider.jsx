@@ -14,6 +14,7 @@ import prevIcon from "../../../assets/images/prev-arrow.svg";
 import nextIcon from "../../../assets/images/next-arrow.svg";
 import { Counter } from "../../../pages/Client/Object/Maininfo/Slider/Counter";
 import { Status } from "./Status";
+import { NewTag } from "../../../pages/Client/Object/Maininfo/Slider/NewTag";
 
 const settings = {
   dots: false,
@@ -58,6 +59,18 @@ export const Slider = ({ photos, data, showLike }) => {
     setSortPhotos(null);
   };
 
+  const handleCheckIsNew = () => {
+    const { dt_edit_in_source, price_change_date } = data;
+    const editInSourceDate = Number(dt_edit_in_source) * 1000;
+    const priceChangeDate = Number(price_change_date) * 1000;
+    let today = new Date();
+    today.setDate(today.getDate() - 1);
+    today.setHours(0, 0, 0, 0);
+    today = today.getTime();
+
+    return editInSourceDate > today || priceChangeDate > today;
+  };
+
   return (
     <>
       {openView && sortPhotos && (
@@ -82,9 +95,12 @@ export const Slider = ({ photos, data, showLike }) => {
       >
         <div className="relative slider">
           {showLike && <Status data={data} />}
-          {photos?.length > 1 ? (
-            <Counter current={currentSlide} total={photos.length} />
-          ) : null}
+          <div className="absolute top-[10px] right-[5px] flex items-center gap-1">
+            {handleCheckIsNew() ? <NewTag /> : null}
+            {photos?.length > 1 ? (
+              <Counter current={currentSlide} total={photos.length} />
+            ) : null}
+          </div>
           <Tags data={data} />
           {photos?.length === 0 ? (
             <Slide photo={noPhoto} active empty onOpen={() => null} />

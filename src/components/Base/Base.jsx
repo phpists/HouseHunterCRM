@@ -68,6 +68,9 @@ export const Base = ({
   countViews,
   countLikes,
   idStatusAdd,
+  priceChange,
+  priceChangePeriod,
+  priceChangeUp,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -122,7 +125,10 @@ export const Base = ({
   const handleToggleStreetBase = () => {
     onChange(
       "reset",
-      { ...data, street_base_object: streetBase ? undefined : {} },
+      {
+        ...data,
+        street_base_object: streetBase ? undefined : { sorting_id: "6" },
+      },
       true
     );
 
@@ -450,7 +456,6 @@ export const Base = ({
               notMultiSelect
             />
           ) : null}
-
           {idAdInSource ? (
             <Field
               placeholder="Введіть значення..."
@@ -621,7 +626,7 @@ export const Base = ({
                 { title: "Видалено із сайту власником(повністю)", value: "-1" },
                 { title: "Активне", value: "0" },
                 { title: "Не опубліковано(не оплачено)", value: "13" },
-                { title: "На модерації", value: "8" },
+                { title: "Не опубліковано", value: "8" },
                 { title: "Видалене модератором", value: "5" },
                 {
                   title: "Видалено автоматично(термін публікації закінчився)",
@@ -656,7 +661,67 @@ export const Base = ({
               type="number"
             />
           ) : null}
-
+          {priceChange ? (
+            <Field
+              placeholder="Введіть значення..."
+              value={data?.street_base_object?.price_change}
+              onChange={(val) =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  price_change: val,
+                })
+              }
+              label="Ціна змінилась більше"
+              className="field-wrapper mb-2"
+              onFocus={onFocus}
+              onBlur={onBlur}
+              type="number"
+              error={errors?.includes("price_change")}
+            />
+          ) : null}
+          {priceChangePeriod ? (
+            <SelectTags
+              className=" mb-2"
+              label="Ціна змінилась за період"
+              placeholder="Оберіть період"
+              options={[
+                { title: "Годину", value: "1" },
+                { title: "Добу", value: "2" },
+                { title: "Дві доби", value: "3" },
+              ]}
+              value={data?.street_base_object?.price_change_period}
+              onChange={(val) =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  price_change_period: val,
+                })
+              }
+              isSearch
+              notMultiSelect
+              error={errors?.includes("price_change_period")}
+            />
+          ) : null}{" "}
+          {priceChangeUp ? (
+            <SelectTags
+              className=" mb-2"
+              label="Ціна пішла"
+              placeholder="Оберіть"
+              options={[
+                { title: "Вгору", value: "1" },
+                { title: "Вниз", value: "2" },
+              ]}
+              value={data?.street_base_object?.price_change_up}
+              onChange={(val) =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  price_change_up: val,
+                })
+              }
+              isSearch
+              notMultiSelect
+              error={errors?.includes("price_change_up")}
+            />
+          ) : null}
           {countViews ? (
             <Ranger
               label="Кількість переглядів"
@@ -686,7 +751,6 @@ export const Base = ({
               onBlur={onBlur}
             />
           ) : null}
-
           {countLikes ? (
             <Ranger
               label="Кількість лайків"

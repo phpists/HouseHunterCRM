@@ -21,7 +21,6 @@ export const Tags = ({ data, ad }) => {
   const { data: locationsList } = useGetLocationsQuery();
   const { data: rubricsList } = useGetRubricsQuery();
 
-  console.log(data);
   const TAGS = [
     ...(data?.rubric_name && data?.rubric_name?.length > 0
       ? [{ title: data?.rubric_name }]

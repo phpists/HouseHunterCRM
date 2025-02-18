@@ -15,7 +15,6 @@ export const List = ({ data }) => {
   const handleGetOlxTitle = (data) =>
     data?.name ?? data?.phone ?? data?.email ?? data?.id;
 
-  console.log(data);
   return (
     <StyledList>
       {data?.arr_adverst_object?.map(
