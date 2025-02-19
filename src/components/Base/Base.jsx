@@ -617,11 +617,8 @@ export const Base = ({
             />
           ) : null}
           {idStatusAdd ? (
-            <SelectTags
-              className=" mb-2"
-              label="Пошук по статусу оголошення"
-              placeholder="Оберіть статус оголошення"
-              options={[
+            <>
+              {[
                 { title: "Видалено власником", value: "1" },
                 { title: "Видалено із сайту власником(повністю)", value: "-1" },
                 { title: "Активне", value: "0" },
@@ -632,17 +629,46 @@ export const Base = ({
                   title: "Видалено автоматично(термін публікації закінчився)",
                   value: "14",
                 },
-              ]}
-              value={data?.street_base_object?.id_status_add}
-              onChange={(val) =>
-                onChange("street_base_object", {
-                  ...data?.street_base_object,
-                  id_status_add: val,
-                })
-              }
-              isSearch
-              notMultiSelect
-            />
+              ]?.map(({ title, value }) => (
+                <CheckOption
+                  label={title}
+                  className="check-opt"
+                  value={
+                    (Array.isArray(data?.street_base_object?.id_status_add)
+                      ? data?.street_base_object?.id_status_add
+                      : []
+                    ).find((v) => v === value)
+                      ? "1"
+                      : "0"
+                  }
+                  onChange={() => {
+                    const prevValue = Array.isArray(
+                      data?.street_base_object?.id_status_add
+                    )
+                      ? data?.street_base_object?.id_status_add
+                      : [];
+                    const updatedValue = !!prevValue?.find((v) => v === value)
+                      ? prevValue?.filter((v) => v !== value)
+                      : [...prevValue, value];
+
+                    let updatedData = {
+                      ...data?.street_base_object,
+                      id_status_add: updatedValue,
+                    };
+
+                    if (updatedValue?.length === 0) {
+                      updatedData = Object.fromEntries(
+                        Object.entries(updatedData)?.filter(
+                          (v) => v[0] !== "id_status_add"
+                        )
+                      );
+                    }
+
+                    onChange("street_base_object", updatedData);
+                  }}
+                />
+              ))}
+            </>
           ) : null}
           {overbuyingIndex ? (
             <Field
