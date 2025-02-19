@@ -105,6 +105,24 @@ export const Tags = ({ data, ad }) => {
     Number(data?.count_views) > 0
       ? [{ title: `К-сть переглядів ${data?.count_views}` }]
       : []),
+    ...(data?.tag_faster && data?.tag_faster === "1"
+      ? [{ title: "Терміново" }]
+      : []),
+    ...(data?.tag_nativePaint && data?.tag_nativePaint === "1"
+      ? [{ title: "Рідна фарба" }]
+      : []),
+    ...(data?.tag_exchangePossible && data?.tag_exchangePossible === "1"
+      ? [{ title: "Можливий обмін" }]
+      : []),
+    ...(data?.tag_freshlyDriven && data?.tag_freshlyDriven === "1"
+      ? [{ title: "Свіжопригнана" }]
+      : []),
+    ...(data?.tag_afterDTP && data?.tag_afterDTP === "1"
+      ? [{ title: "Після дтп" }]
+      : []),
+    ...(data?.tag_market_bottom && data?.tag_market_bottom === "1"
+      ? [{ title: "По низу ринку" }]
+      : []),
   ];
 
   return (

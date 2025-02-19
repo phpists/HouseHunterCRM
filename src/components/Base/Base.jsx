@@ -668,6 +668,91 @@ export const Base = ({
                   }}
                 />
               ))}
+              <CheckOption
+                label="Терміново"
+                className="check-opt"
+                value={data?.street_base_object?.tag_faster}
+                onChange={() =>
+                  onChange("street_base_object", {
+                    ...data?.street_base_object,
+                    tag_faster:
+                      data?.street_base_object?.tag_faster === "1"
+                        ? undefined
+                        : "1",
+                  })
+                }
+              />
+              <CheckOption
+                label="Рідна фарба"
+                className="check-opt"
+                value={data?.street_base_object?.tag_nativePaint}
+                onChange={() =>
+                  onChange("street_base_object", {
+                    ...data?.street_base_object,
+                    tag_nativePaint:
+                      data?.street_base_object?.tag_nativePaint === "1"
+                        ? undefined
+                        : "1",
+                  })
+                }
+              />
+              <CheckOption
+                label="Можливий обмін"
+                className="check-opt"
+                value={data?.street_base_object?.tag_exchangePossible}
+                onChange={() =>
+                  onChange("street_base_object", {
+                    ...data?.street_base_object,
+                    tag_exchangePossible:
+                      data?.street_base_object?.tag_exchangePossible === "1"
+                        ? undefined
+                        : "1",
+                  })
+                }
+              />
+              <CheckOption
+                label="Свіжопригнана"
+                className="check-opt"
+                value={data?.street_base_object?.tag_freshlyDriven}
+                onChange={() =>
+                  onChange("street_base_object", {
+                    ...data?.street_base_object,
+                    tag_freshlyDriven:
+                      data?.street_base_object?.tag_freshlyDriven === "1"
+                        ? undefined
+                        : "1",
+                  })
+                }
+              />
+              <CheckOption
+                label="Після дтп"
+                className="check-opt"
+                value={data?.street_base_object?.tag_afterDTP}
+                onChange={() =>
+                  onChange("street_base_object", {
+                    ...data?.street_base_object,
+                    tag_afterDTP:
+                      data?.street_base_object?.tag_afterDTP === "1"
+                        ? undefined
+                        : "1",
+                  })
+                }
+              />
+
+              <CheckOption
+                label="По низу ринку"
+                className="check-opt"
+                value={data?.street_base_object?.tag_market_bottom}
+                onChange={() =>
+                  onChange("street_base_object", {
+                    ...data?.street_base_object,
+                    tag_market_bottom:
+                      data?.street_base_object?.tag_market_bottom === "1"
+                        ? undefined
+                        : "1",
+                  })
+                }
+              />
             </>
           ) : null}
           {overbuyingIndex ? (
