@@ -534,6 +534,8 @@ export const Main = ({
         priceChange
         priceChangePeriod
         priceChangeUp
+        showTop
+        priceChangeUpProcent
         errors={Object.entries(errors)
           ?.filter((e) => e?.[1])
           ?.map((e) => e?.[0])}

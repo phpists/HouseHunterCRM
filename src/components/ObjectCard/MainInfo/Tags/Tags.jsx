@@ -1,21 +1,10 @@
 import styled from "styled-components";
 import { ReactComponent as Home } from "../../../../assets/images/tag-home.svg";
-import { ReactComponent as Door } from "../../../../assets/images/tag-door.svg";
-import { ReactComponent as Expand } from "../../../../assets/images/tag-expanded.svg";
-import { ReactComponent as Stairs } from "../../../../assets/images/tag-stairs.svg";
-import { ReactComponent as Box } from "../../../../assets/images/tag-box-select.svg";
-import { ReactComponent as Rocket } from "../../../../assets/images/BiRocket.svg";
-import brickIcon from "../../../../assets/images/tag-brick.svg";
 import { Tag } from "./Tag";
-import {
-  handleFormatDate,
-  handleGetLocationAllPath,
-} from "../../../../utilits";
 import {
   useGetLocationsQuery,
   useGetRubricsQuery,
 } from "../../../../store/requests/requests.api";
-import { useEffect, useState } from "react";
 
 export const Tags = ({ data, ad }) => {
   const { data: locationsList } = useGetLocationsQuery();
@@ -122,6 +111,11 @@ export const Tags = ({ data, ad }) => {
       : []),
     ...(data?.tag_market_bottom && data?.tag_market_bottom === "1"
       ? [{ title: "По низу ринку" }]
+      : []),
+    ...(data?.tag_market_bottom &&
+    data?.tag_price_dump !== "0" &&
+    new Date(Number(data?.tag_price_dump) * 1000) >= new Date().getTime()
+      ? [{ title: "Ціна сиплеться" }]
       : []),
   ];
 

@@ -71,6 +71,8 @@ export const Base = ({
   priceChange,
   priceChangePeriod,
   priceChangeUp,
+  showTop,
+  priceChangeUpProcent,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -889,6 +891,39 @@ export const Base = ({
               }
               onFocus={onFocus}
               onBlur={onBlur}
+            />
+          ) : null}
+          {showTop ? (
+            <CheckOption
+              label="Топ авторіа"
+              className="check-opt"
+              value={data?.street_base_object?.show_top}
+              onChange={() =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  show_top:
+                    data?.street_base_object?.show_top === "1"
+                      ? undefined
+                      : "1",
+                })
+              }
+            />
+          ) : null}
+          {priceChangeUpProcent ? (
+            <Field
+              placeholder="Введіть значення..."
+              value={data?.street_base_object?.price_change_up_procent}
+              onChange={(val) =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  price_change_up_procent: val,
+                })
+              }
+              label="Ціна змінилась від остатньої в %"
+              className="field-wrapper mb-2"
+              onFocus={onFocus}
+              onBlur={onBlur}
+              type="number"
             />
           ) : null}
         </>
