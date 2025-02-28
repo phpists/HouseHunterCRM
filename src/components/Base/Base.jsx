@@ -684,20 +684,32 @@ export const Base = ({
             </>
           ) : null}
           {overbuyingIndex ? (
-            <Field
-              placeholder="Введіть значення..."
-              value={data?.street_base_object?.index_overbuying}
-              onChange={(val) =>
-                onChange("street_base_object", {
-                  ...data?.street_base_object,
-                  index_overbuying: val,
-                })
-              }
+            <Ranger
               label="Індекс перекупа"
-              className="field-wrapper mb-2"
+              className="mb-2"
+              max={1000}
+              values={[
+                data?.street_base_object?.index_overbuying_from ?? 0,
+                data?.street_base_object?.index_overbuying_to ?? 0,
+              ]}
+              onChange={(values) =>
+                handleChangeRange(
+                  values,
+                  [
+                    data?.street_base_object?.index_overbuying_from ?? 0,
+                    data?.street_base_object?.index_overbuying_to ?? 0,
+                  ],
+                  ["index_overbuying_from", "index_overbuying_to"],
+                  (values) =>
+                    onChange("street_base_object", {
+                      ...data?.street_base_object,
+                      ...values,
+                    }),
+                  true
+                )
+              }
               onFocus={onFocus}
               onBlur={onBlur}
-              type="number"
             />
           ) : null}
           <Divider />
