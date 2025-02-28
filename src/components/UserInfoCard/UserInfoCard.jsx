@@ -104,6 +104,7 @@ export const UserInfoCard = ({
             onChangeField={onChangeField}
             errors={errors}
             noResetValueOnCodeChange={noResetValueOnCodeChange}
+            userProfile={userProfile}
           />
           {showPayHistory && <PersonalBills workerId={workerId} />}
 

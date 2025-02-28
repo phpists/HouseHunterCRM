@@ -8,15 +8,18 @@ import {
   useGetPhonesCodesQuery,
   useLazyRegisterQuery,
 } from "../../store/auth/auth.api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   emailValidation,
+  handleGetLocationAllPath,
   handleRemovePhoneMask,
   handleResponse,
 } from "../../utilits";
 import { InfoText } from "./InfoText";
 import { Links } from "./Links";
 import { AgreeCheckbox } from "./AgreeCheckbox";
+import { useGetLocationsQuery } from "../../store/requests/requests.api";
+import { Select } from "../../components/Select/Select";
 
 export const Registration = ({ onSuccess, onLogin }) => {
   const [registrate] = useLazyRegisterQuery();
@@ -26,8 +29,30 @@ export const Registration = ({ onSuccess, onLogin }) => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [phoneCode, setPhoneCode] = useState("1");
+  const [location, setLocation] = useState("");
   const [agree, setAgree] = useState(false);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
+  const { data: locationsList } = useGetLocationsQuery();
+  const [formatedLocations, setFormatedLocations] = useState([]);
+
+  const handleFormatLocations = () => {
+    const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
+    const locations = Object.entries(locationsList)
+      .sort((a, b) => Number(b[1].id_parent) - Number(a[1].id_parent))
+      ?.map((loc) => loc[1])
+      .filter((loc) => Number(loc?.id_parent) === 0)
+      .map(({ id, id_parent, name }) => {
+        return handleGetLocationAllPath(locList, id, id_parent, name);
+      });
+
+    setFormatedLocations(locations);
+  };
+
+  useEffect(() => {
+    if (locationsList) {
+      handleFormatLocations();
+    }
+  }, [locationsList]);
 
   const handleChangeEmail = (val) => {
     setEmail(val);
@@ -50,6 +75,7 @@ export const Registration = ({ onSuccess, onLogin }) => {
       action: "create",
       email,
       ref_id: referalId ?? undefined,
+      id_location: location,
     };
 
     registrate(data).then((resp) => {
@@ -93,6 +119,14 @@ export const Registration = ({ onSuccess, onLogin }) => {
         onChange={handleChangeEmail}
         error={errors.email}
       />
+      <Select
+        className="input password-input input-select"
+        placeholder="Оберіть локацію"
+        options={formatedLocations}
+        value={location}
+        onChange={(val) => setLocation(val)}
+        error={errors.location}
+      />
       <Input
         placeholder="Пароль"
         className="input password-input"
@@ -112,6 +146,7 @@ export const Registration = ({ onSuccess, onLogin }) => {
           email.length === 0 ||
           password.length === 0 ||
           errors.email ||
+          location?.length === 0 ||
           !agree
         }
       />
@@ -133,5 +168,8 @@ const StyledRegistration = styled.div`
   }
   .password-input {
     margin-bottom: 27px;
+  }
+  .input-select {
+    border: 1px solid var(--bg-20);
   }
 `;

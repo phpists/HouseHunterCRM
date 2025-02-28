@@ -17,6 +17,7 @@ export const auth = createApi({
         mod,
         action,
         ref_id,
+        id_location,
       }) => ({
         url: "",
         method: "POST",
@@ -29,6 +30,7 @@ export const auth = createApi({
           mod,
           action,
           ref_id,
+          id_location,
         }),
       }),
     }),
@@ -770,6 +772,42 @@ export const auth = createApi({
         }),
       }),
     }),
+    addUserFilter: build.query({
+      query: ({ name, data }) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "system_info",
+          action: "addUserFilter",
+          name,
+          data,
+        }),
+      }),
+    }),
+    removeUserFilter: build.query({
+      query: (id_filter) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "system_info",
+          action: "removeUserFilter",
+          id_filter,
+        }),
+      }),
+    }),
+    getUserFilters: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "system_info",
+          action: "getUserFilters",
+        }),
+      }),
+    }),
   }),
 });
 
@@ -827,4 +865,7 @@ export const {
   useLazyGetRielorAdStatusQuery,
   useLazyDeleteRielorAdHistoryQuery,
   useLazyPublishDomriaQuery,
+  useLazyAddUserFilterQuery,
+  useLazyRemoveUserFilterQuery,
+  useGetUserFiltersQuery,
 } = auth;

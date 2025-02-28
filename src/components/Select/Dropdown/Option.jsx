@@ -1,15 +1,31 @@
 import { styled } from "styled-components";
-
-export const Option = ({ title, onSelect }) => (
+import deleteIcon from "../../../assets/images/delete-history.svg";
+export const Option = ({ title, onSelect, onDelete }) => (
   <StyledOption
     className="flex items-center justify-between"
     onClick={onSelect}
   >
-    {title} <span>→</span>
+    <div className="flex items-center gap-2">
+      {onDelete ? (
+        <img
+          src={deleteIcon}
+          alt=""
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
+        />
+      ) : null}{" "}
+      {title}
+    </div>
+    <span>→</span>
   </StyledOption>
 );
 
 const StyledOption = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 8px 19px 6px 11px;
   transition: all 0.3s;
   color: #2c2c2c;

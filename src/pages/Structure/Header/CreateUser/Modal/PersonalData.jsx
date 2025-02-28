@@ -1,12 +1,34 @@
 import styled from "styled-components";
 import { Field } from "../../../../../components/Field";
 import { Divider } from "./Divider";
-import { useGetPhonesCodesQuery } from "../../../../../store/auth/auth.api";
 import { Phones } from "../../../../../components/UserInfoCard/Phones/Phones";
-import { CheckOption } from "../../../../../components/CheckOption";
+import { useGetLocationsQuery } from "../../../../../store/requests/requests.api";
+import { useEffect, useState } from "react";
+import { handleGetLocationAllPath } from "../../../../../utilits";
+import { Select } from "../../../../../components/Select/Select";
 
 export const PersonalData = ({ data, onChangeField, errors }) => {
-  const { data: phonesCodes } = useGetPhonesCodesQuery();
+  const { data: locationsList } = useGetLocationsQuery();
+  const [formatedLocations, setFormatedLocations] = useState([]);
+
+  const handleFormatLocations = () => {
+    const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
+    const locations = Object.entries(locationsList)
+      .sort((a, b) => Number(b[1].id_parent) - Number(a[1].id_parent))
+      ?.map((loc) => loc[1])
+      .filter((loc) => Number(loc?.id_parent) === 0)
+      .map(({ id, id_parent, name }) => {
+        return handleGetLocationAllPath(locList, id, id_parent, name);
+      });
+
+    setFormatedLocations(locations);
+  };
+
+  useEffect(() => {
+    if (locationsList) {
+      handleFormatLocations();
+    }
+  }, [locationsList]);
 
   return (
     <StyledPersonalData>
@@ -28,6 +50,14 @@ export const PersonalData = ({ data, onChangeField, errors }) => {
           error={!!errors?.find((e) => e === "last_name")}
         />
       </div>
+      <Divider />
+      <Select
+        label="Локація"
+        options={formatedLocations}
+        value={data?.id_location}
+        onChange={(val) => onChangeField("id_location", val)}
+        error={!!errors?.find((e) => e === "id_location")}
+      />
       <Divider />
       <Field
         placeholder="Дата народження"

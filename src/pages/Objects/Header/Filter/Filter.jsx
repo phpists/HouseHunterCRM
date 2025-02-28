@@ -10,6 +10,7 @@ import { Characteristics } from "./Characteristics";
 import { useLazyGetAllObjectsQuery } from "../../../../store/objects/objects.api";
 import {
   handleFromInputDate,
+  handleResponse,
   removePhoneMask,
   showAlert,
 } from "../../../../utilits";
@@ -17,7 +18,15 @@ import { useActions } from "../../../../hooks/actions";
 import { useAppSelect } from "../../../../hooks/redux";
 import { Spinner } from "../../../../components/Spinner";
 import { Loader } from "../../../../components/Loader";
-import { useGetPhonesCodesQuery } from "../../../../store/auth/auth.api";
+import {
+  useGetPhonesCodesQuery,
+  useGetUserFiltersQuery,
+  useLazyRemoveUserFilterQuery,
+} from "../../../../store/auth/auth.api";
+import { Button } from "../../../../components/Button";
+import { Select } from "../../../../components/Select/Select";
+import { SaveFilterModal } from "../../../../components/SaveFilterModal";
+import { Confirm } from "../../../../components/Confirm/Confirm";
 
 export const Filter = ({
   open,
@@ -47,6 +56,11 @@ export const Filter = ({
   const { data: phonesCodes } = useGetPhonesCodesQuery();
   const notRefresh = useRef(false);
   const contentRef = useRef(null);
+  const [selectedSavedFilter, setSelectedSavedFilter] = useState();
+  const [savingFilter, setSavingFilter] = useState(false);
+  const { data: savedFilters, refetch } = useGetUserFiltersQuery();
+  const [deleteSavedFilter] = useLazyRemoveUserFilterQuery();
+  const [deletingSavedFilter, setDeletingSavedFilter] = useState(null);
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
@@ -103,10 +117,14 @@ export const Filter = ({
       });
     } else if (
       (filters?.street_base_object?.price_change?.length > 0 ||
+        filters?.street_base_object?.price_change_up_procent?.length > 0 ||
         filters?.street_base_object?.price_change_period?.length > 0 ||
         filters?.street_base_object?.price_change_up?.length > 0) &&
-      (!filters?.street_base_object?.price_change ||
-        filters?.street_base_object?.price_change?.length === 0 ||
+      (((!filters?.street_base_object?.price_change ||
+        filters?.street_base_object?.price_change?.length === 0) &&
+        (!filters?.street_base_object?.price_change_up_procent ||
+          filters?.street_base_object?.price_change_up_procent?.length ===
+            0)) ||
         !filters?.street_base_object?.price_change_period ||
         filters?.street_base_object?.price_change_period?.length === 0 ||
         !filters?.street_base_object?.price_change_up ||
@@ -116,6 +134,8 @@ export const Filter = ({
         price_change: !filters?.street_base_object?.price_change,
         price_change_period: !filters?.street_base_object?.price_change_period,
         price_change_up: !filters?.street_base_object?.price_change_up,
+        price_change_up_procent:
+          !filters?.street_base_object?.price_change_up_procent,
       });
     } else {
       handleApplyFilters(true);
@@ -279,14 +299,65 @@ export const Filter = ({
     }
   }, [errors]);
 
+  const handleChangeSelectedSavedFilter = (val) => {
+    try {
+      const filter = savedFilters?.data?.find((v) => v.id === val);
+      const data = JSON.parse(filter?.data);
+      setSelectedSavedFilter(val);
+      if (data) {
+        handleChangeFilter("update", JSON.parse(filter?.data), true);
+      }
+    } catch {}
+  };
+
+  const handleDeleteSavedFilter = () => {
+    deleteSavedFilter(deletingSavedFilter).then((resp) => {
+      setDeletingSavedFilter(null);
+      handleResponse(resp, () => {
+        showAlert("success", "Успішно видалено");
+        refetch();
+      });
+    });
+  };
+
   return (
     <>
+      {savingFilter ? (
+        <SaveFilterModal
+          onClose={() => setSavingFilter(false)}
+          filters={filters}
+          onSuccess={() => refetch()}
+        />
+      ) : null}
+      {deletingSavedFilter && (
+        <Confirm
+          onClose={() => setDeletingSavedFilter(null)}
+          title="Видалити збережений пошук?"
+          onSubmit={handleDeleteSavedFilter}
+          notClose
+        />
+      )}
       <StyledFilter
         initial={{ opacity: 0, translateX: "100%" }}
         transition={{ duration: 0.3 }}
         animate={controls}
+        noSavedFilters={savedFilters?.data?.length === 0}
       >
         <Header onClose={handleClose} />
+        {savedFilters?.data?.length > 0 ? (
+          <Select
+            label="Збережені пошуки"
+            options={savedFilters?.data?.map(({ name, id }) => ({
+              title: name,
+              value: id,
+            }))}
+            value={selectedSavedFilter}
+            onChange={handleChangeSelectedSavedFilter}
+            className="saved-filters-select"
+            onDelete={(id) => setDeletingSavedFilter(id)}
+          />
+        ) : null}
+
         <div className="content objects-filters-main-wrapper" ref={contentRef}>
           <SectionTitle title="Головне" />
           <Main
@@ -304,14 +375,21 @@ export const Filter = ({
           />
         </div>
         <div className="total">
-          Знайдено -{" "}
-          {loading ? (
-            <Loader white className="totalLoader" />
-          ) : total === 100 ? (
-            "100+"
-          ) : (
-            total
-          )}
+          <div>
+            Знайдено -
+            {loading ? (
+              <Loader white className="totalLoader" />
+            ) : total === 100 ? (
+              "100+"
+            ) : (
+              total
+            )}
+          </div>
+          <Button
+            title="Зберегти пошук"
+            onClick={() => setSavingFilter(true)}
+            className="btn enter-btn"
+          />
         </div>
         <Footer
           onCancel={() => handleApplyFilters(false)}
@@ -338,13 +416,16 @@ const StyledFilter = styled(motion.div)`
   }
   .content {
     padding: 0 20px 0px;
-    height: calc(100svh - 187px);
+    height: calc(
+      100svh - ${({ noSavedFilters }) => (noSavedFilters ? 190 : 250)}px
+    );
     overflow: auto;
     border-radius: 9px;
   }
   .total {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 20px 20px 0;
     margin-bottom: 6px;
     color: var(--main-color);
@@ -355,6 +436,10 @@ const StyledFilter = styled(motion.div)`
     line-height: 118%;
     letter-spacing: 0.28px;
     text-transform: uppercase;
+    .btn {
+      padding: 5px;
+      font-size: 13px;
+    }
   }
   .totalLoader {
     width: 16px;
@@ -366,6 +451,11 @@ const StyledFilter = styled(motion.div)`
     background: var(--bg-10);
     margin-bottom: 25px;
     padding: 8px;
+  }
+  .saved-filters-select {
+    margin: 0 20px 5px;
+    width: calc(100% - 40px);
+    min-height: 60px;
   }
   @media (max-width: 800px) {
     width: 100%;

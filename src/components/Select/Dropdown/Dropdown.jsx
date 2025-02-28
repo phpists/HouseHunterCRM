@@ -7,6 +7,7 @@ export const Dropdown = ({
   options,
   editValue,
   activeValue,
+  onDelete,
 }) => (
   <StyledDropdown className="hide-scroll select-none selectDropdown">
     {options?.length === 0 && editValue ? null : options?.length === 0 ? (
@@ -17,6 +18,7 @@ export const Dropdown = ({
           key={i}
           title={title}
           onSelect={() => onChange(activeValue === value ? undefined : value)}
+          onDelete={onDelete ? () => onDelete(value) : null}
         />
       ))
     )}

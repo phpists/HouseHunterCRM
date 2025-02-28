@@ -24,6 +24,7 @@ export const Select = ({
   editValue,
   required,
   onSearch,
+  onDelete,
 }) => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
@@ -131,6 +132,14 @@ export const Select = ({
             options={handleGetFilteredOptions()}
             editValue={editValue}
             activeValue={value}
+            onDelete={
+              onDelete
+                ? (id) => {
+                    onDelete(id);
+                    setOpen(false);
+                  }
+                : null
+            }
           />
           {open && (
             <div

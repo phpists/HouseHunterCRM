@@ -10,6 +10,5 @@ export const Header = ({ onClose }) => (
 );
 
 const StyledHeader = styled.div`
-  margin-bottom: 20px;
   padding: 18px 20px 20px;
 `;

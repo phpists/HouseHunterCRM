@@ -21,6 +21,7 @@ export const structure = createApi({
         public_access,
         is_orenda,
         is_sell,
+        id_location,
       }) => ({
         url: "",
         method: "POST",
@@ -40,6 +41,7 @@ export const structure = createApi({
             public_access,
             is_orenda,
             is_sell,
+            id_location,
           },
           photo ? { photo } : null
         ),

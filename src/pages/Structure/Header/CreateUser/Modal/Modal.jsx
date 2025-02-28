@@ -81,6 +81,8 @@ export const Modal = ({ onClose, onCreatedUser }) => {
     data?.first_name?.length === 0 && errorsData.push("first_name");
     data?.last_name?.length === 0 && errorsData.push("last_name");
     data?.password?.length === 0 && errorsData.push("password");
+    (data?.id_location?.length === 0 || !data?.id_location) &&
+      errorsData.push("id_location");
     data?.phones?.filter((p) => p?.phone?.length === 0)?.length > 0 &&
       errorsData.push("phones");
 

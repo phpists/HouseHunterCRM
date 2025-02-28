@@ -251,6 +251,60 @@ export const ObjectPriceHistory = ({ onClose, data }) => {
     });
   }, [data]);
 
+  const handleGetPriceTableData = () => {
+    if (isJsonString(data)) {
+      let prices = JSON.parse(data);
+      if (Array.isArray(prices)) {
+        prices = prices.reduce((acc, item) => {
+          const key = Object.keys(item)[0]; // дістаємо ключ-таймстамп
+          acc[key] = {
+            price: parseFloat(item[key].price), // важливо привести price до числа
+            price_currency: item[key].price_currency,
+          };
+          return acc;
+        }, {});
+      }
+      const timestamps = Object.keys(prices).sort((a, b) => a - b);
+
+      // Початкова ціна (перша з відсортованого масиву)
+      const startPrice = prices[timestamps[0]].price;
+
+      const formattedData = timestamps.map((timestamp, index) => {
+        const date = new Date(parseInt(timestamp) * 1000);
+
+        const formattedDate = date.toLocaleDateString("uk-UA", {
+          day: "2-digit",
+          month: "short",
+        });
+
+        const currentPrice = prices[timestamp].price;
+
+        const previousPrice =
+          index === 0 ? currentPrice : prices[timestamps[index - 1]].price;
+
+        const step = currentPrice - previousPrice;
+        const stepPercent = ((step / previousPrice) * 100).toFixed(1) + "%";
+
+        const fromStart = currentPrice - startPrice;
+        const fromStartPercent =
+          ((fromStart / startPrice) * 100).toFixed(1) + "%";
+
+        return {
+          date: formattedDate,
+          price: currentPrice,
+          step: step,
+          step_percent: stepPercent,
+          from_start: fromStart,
+          from_start_percent: fromStartPercent,
+        };
+      });
+      return formattedData;
+    } else {
+      return [];
+    }
+  };
+
+  console.log(handleGetPriceTableData());
   return (
     <StyledObjectPriceHistory>
       <Modal onClose={onClose} title="Графік змін цін">
@@ -259,6 +313,35 @@ export const ObjectPriceHistory = ({ onClose, data }) => {
             <div className="empty">Пусто</div>
           ) : (
             <div className="object-history-cards">
+              <table>
+                <tr>
+                  <th>Дата</th>
+                  <th>Ціна</th>
+                  <th>Покроково</th>
+                  <th>Від початкової</th>
+                </tr>
+                {handleGetPriceTableData()?.map(
+                  ({
+                    date,
+                    price,
+                    step,
+                    step_percent,
+                    from_start,
+                    from_start_percent,
+                  }) => (
+                    <tr>
+                      <td>{date}</td>
+                      <td>{price}</td>
+                      <td>
+                        {step} <span>{step_percent}</span>
+                      </td>
+                      <td>
+                        {from_start} <span>{from_start_percent}</span>
+                      </td>
+                    </tr>
+                  )
+                )}
+              </table>
               <ReactApexChart
                 options={chartData.options}
                 series={chartData.series}
@@ -291,6 +374,41 @@ const StyledObjectPriceHistory = styled.div`
   }
   .modal {
     max-width: 540px;
+  }
+  table {
+    width: 100%;
+    text-align: center;
+    font-weight: 300;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    td,
+    th {
+      border: 1px solid var(--second-color);
+      padding: 5px;
+      span {
+        font-size: 12px;
+      }
+    }
+    th {
+      font-weight: 400;
+      &:nth-child(1) {
+        border-radius: 5px 0 0 0;
+      }
+
+      &:last-child {
+        border-radius: 0 5px 0 0;
+      }
+    }
+
+    tr:last-child {
+      td:first-child {
+        border-radius: 0 0 0 5px;
+      }
+      td:last-child {
+        border-radius: 0 0 5px 0;
+      }
+    }
   }
   text {
     color: var(--bg-60) !important;

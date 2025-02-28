@@ -28,6 +28,31 @@ import {
 } from "../../store/billing/billing.api";
 import { XHOUSE_COMPANY_ID } from "../../constants";
 
+const CARS_STATUSES = [
+  { title: "Видалено власником", value: "1" },
+  {
+    title: "Видалено із сайту власником(повністю)",
+    value: "-1",
+  },
+  { title: "Активне", value: "0" },
+  { title: "Не опубліковано(не оплачено)", value: "13" },
+  { title: "Не опубліковано", value: "8" },
+  { title: "Видалене модератором", value: "5" },
+  {
+    title: "Видалено автоматично(термін публікації закінчився)",
+    value: "14",
+  },
+];
+
+const CARS_TAGS = [
+  { title: "Терміново", value: "tag_faster" },
+  { title: "Рідна фарба", value: "tag_nativePaint" },
+  { title: "Можливий обмін", value: "tag_exchangePossible" },
+  { title: "Свіжопригнана", value: "tag_freshlyDriven" },
+  { title: "Після дтп", value: "tag_afterDTP" },
+  { title: "По низу ринку", value: "tag_market_bottom" },
+];
+
 export const Base = ({
   data,
   onChange,
@@ -203,17 +228,23 @@ export const Base = ({
     });
   };
 
-  const handleChangeExcludeResourceAdd = (val) => {
-    const prevValue = Array.isArray(data?.company_object?.excludeResourceAdd)
-      ? data?.company_object?.excludeResourceAdd
+  const handleChangeStatusesTagsObjarray = (val) => {
+    const prevValue = Array.isArray(data?.street_base_object?.id_status_add)
+      ? data?.street_base_object?.id_status_add
       : [];
-    const isExist = prevValue?.find((l) => l === val);
 
-    onChange("company_object", {
-      ...data?.company_object,
-      excludeResourceAdd: isExist
-        ? prevValue?.filter((l) => l !== val)
-        : [...prevValue, val],
+    onChange("street_base_object", {
+      ...data?.street_base_object,
+      id_status_add: prevValue?.find((t) => t === val?.toString())
+        ? prevValue?.filter((t) => t?.toString() !== val?.toString())
+        : [...prevValue, val?.toString()],
+    });
+  };
+
+  const handleChangeCarTags = (field) => {
+    onChange("street_base_object", {
+      ...data?.street_base_object,
+      [field]: data?.street_base_object?.[field] === "1" ? undefined : "1",
     });
   };
 
@@ -620,140 +651,35 @@ export const Base = ({
           ) : null}
           {idStatusAdd ? (
             <>
-              {[
-                { title: "Видалено власником", value: "1" },
-                { title: "Видалено із сайту власником(повністю)", value: "-1" },
-                { title: "Активне", value: "0" },
-                { title: "Не опубліковано(не оплачено)", value: "13" },
-                { title: "Не опубліковано", value: "8" },
-                { title: "Видалене модератором", value: "5" },
-                {
-                  title: "Видалено автоматично(термін публікації закінчився)",
-                  value: "14",
-                },
-              ]?.map(({ title, value }) => (
-                <CheckOption
-                  label={title}
-                  className="check-opt"
-                  value={
-                    (Array.isArray(data?.street_base_object?.id_status_add)
-                      ? data?.street_base_object?.id_status_add
-                      : []
-                    ).find((v) => v === value)
-                      ? "1"
-                      : "0"
-                  }
-                  onChange={() => {
-                    const prevValue = Array.isArray(
-                      data?.street_base_object?.id_status_add
-                    )
-                      ? data?.street_base_object?.id_status_add
-                      : [];
-                    const updatedValue = !!prevValue?.find((v) => v === value)
-                      ? prevValue?.filter((v) => v !== value)
-                      : [...prevValue, value];
-
-                    let updatedData = {
-                      ...data?.street_base_object,
-                      id_status_add: updatedValue,
-                    };
-
-                    if (updatedValue?.length === 0) {
-                      updatedData = Object.fromEntries(
-                        Object.entries(updatedData)?.filter(
-                          (v) => v[0] !== "id_status_add"
-                        )
-                      );
-                    }
-
-                    onChange("street_base_object", updatedData);
-                  }}
-                />
-              ))}
-              <CheckOption
-                label="Терміново"
-                className="check-opt"
-                value={data?.street_base_object?.tag_faster}
-                onChange={() =>
-                  onChange("street_base_object", {
-                    ...data?.street_base_object,
-                    tag_faster:
-                      data?.street_base_object?.tag_faster === "1"
-                        ? undefined
-                        : "1",
-                  })
+              <SelectTags
+                label="Статус оголошення"
+                className="mb-2"
+                placeholder="Оберіть"
+                options={CARS_STATUSES}
+                tags={
+                  Array.isArray(data?.street_base_object?.id_status_add)
+                    ? data?.street_base_object?.id_status_add?.map((t) => ({
+                        title:
+                          CARS_STATUSES?.find((v) => v.value === t)?.title ??
+                          "-",
+                        value: t?.toString(),
+                      }))
+                    : []
                 }
-              />
-              <CheckOption
-                label="Рідна фарба"
-                className="check-opt"
-                value={data?.street_base_object?.tag_nativePaint}
-                onChange={() =>
-                  onChange("street_base_object", {
-                    ...data?.street_base_object,
-                    tag_nativePaint:
-                      data?.street_base_object?.tag_nativePaint === "1"
-                        ? undefined
-                        : "1",
-                  })
-                }
-              />
-              <CheckOption
-                label="Можливий обмін"
-                className="check-opt"
-                value={data?.street_base_object?.tag_exchangePossible}
-                onChange={() =>
-                  onChange("street_base_object", {
-                    ...data?.street_base_object,
-                    tag_exchangePossible:
-                      data?.street_base_object?.tag_exchangePossible === "1"
-                        ? undefined
-                        : "1",
-                  })
-                }
-              />
-              <CheckOption
-                label="Свіжопригнана"
-                className="check-opt"
-                value={data?.street_base_object?.tag_freshlyDriven}
-                onChange={() =>
-                  onChange("street_base_object", {
-                    ...data?.street_base_object,
-                    tag_freshlyDriven:
-                      data?.street_base_object?.tag_freshlyDriven === "1"
-                        ? undefined
-                        : "1",
-                  })
-                }
-              />
-              <CheckOption
-                label="Після дтп"
-                className="check-opt"
-                value={data?.street_base_object?.tag_afterDTP}
-                onChange={() =>
-                  onChange("street_base_object", {
-                    ...data?.street_base_object,
-                    tag_afterDTP:
-                      data?.street_base_object?.tag_afterDTP === "1"
-                        ? undefined
-                        : "1",
-                  })
-                }
+                onChange={handleChangeStatusesTagsObjarray}
+                showTags
               />
 
-              <CheckOption
-                label="По низу ринку"
-                className="check-opt"
-                value={data?.street_base_object?.tag_market_bottom}
-                onChange={() =>
-                  onChange("street_base_object", {
-                    ...data?.street_base_object,
-                    tag_market_bottom:
-                      data?.street_base_object?.tag_market_bottom === "1"
-                        ? undefined
-                        : "1",
-                  })
-                }
+              <SelectTags
+                label="Теги"
+                className="mb-2"
+                placeholder="Оберіть"
+                options={CARS_TAGS}
+                tags={CARS_TAGS?.filter(
+                  (t) => data?.street_base_object?.[t.value] === "1"
+                )}
+                onChange={handleChangeCarTags}
+                showTags
               />
             </>
           ) : null}
@@ -774,6 +700,7 @@ export const Base = ({
               type="number"
             />
           ) : null}
+          <Divider />
           {priceChange ? (
             <Field
               placeholder="Введіть значення..."
@@ -834,6 +761,28 @@ export const Base = ({
               notMultiSelect
               error={errors?.includes("price_change_up")}
             />
+          ) : null}
+          {priceChangeUpProcent ? (
+            <>
+              {" "}
+              <Field
+                placeholder="Введіть значення..."
+                value={data?.street_base_object?.price_change_up_procent}
+                onChange={(val) =>
+                  onChange("street_base_object", {
+                    ...data?.street_base_object,
+                    price_change_up_procent: val,
+                  })
+                }
+                label="Ціна змінилась від остатньої в %"
+                className="field-wrapper mb-2"
+                onFocus={onFocus}
+                onBlur={onBlur}
+                type="number"
+                error={errors?.includes("price_change_up_procent")}
+              />
+              <Divider />
+            </>
           ) : null}
           {countViews ? (
             <Ranger
@@ -907,23 +856,6 @@ export const Base = ({
                       : "1",
                 })
               }
-            />
-          ) : null}
-          {priceChangeUpProcent ? (
-            <Field
-              placeholder="Введіть значення..."
-              value={data?.street_base_object?.price_change_up_procent}
-              onChange={(val) =>
-                onChange("street_base_object", {
-                  ...data?.street_base_object,
-                  price_change_up_procent: val,
-                })
-              }
-              label="Ціна змінилась від остатньої в %"
-              className="field-wrapper mb-2"
-              onFocus={onFocus}
-              onBlur={onBlur}
-              type="number"
             />
           ) : null}
         </>
