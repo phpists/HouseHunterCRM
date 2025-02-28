@@ -82,10 +82,13 @@ const Objects = () => {
 
   const handleChangePhoneCode = (val) => setPhoneCode(val);
 
-  const handleChangeFilter = (field, value, isDataUpdate) => {
+  const handleChangeFilter = (field, value, isDataUpdate, isRefetchRubrics) => {
     if (isDataUpdate) {
       setFilters(value);
       localStorage.setItem("objectsLastFilters", JSON.stringify(value));
+      if (value?.id_rubric && isRefetchRubrics) {
+        handleGetRubricsFields(value?.id_rubric);
+      }
     } else {
       let updatedFilters = { ...filters, [field]: value };
 

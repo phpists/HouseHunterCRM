@@ -299,13 +299,14 @@ export const Filter = ({
     }
   }, [errors]);
 
-  const handleChangeSelectedSavedFilter = (val) => {
+  const handleChangeSelectedSavedFilter = (v) => {
+    const val = v ?? selectedSavedFilter;
     try {
       const filter = savedFilters?.data?.find((v) => v.id === val);
       const data = JSON.parse(filter?.data);
       setSelectedSavedFilter(val);
       if (data) {
-        handleChangeFilter("update", JSON.parse(filter?.data), true);
+        onChangeFilter("update", JSON.parse(filter?.data), true, true);
       }
     } catch {}
   };
@@ -436,10 +437,6 @@ const StyledFilter = styled(motion.div)`
     line-height: 118%;
     letter-spacing: 0.28px;
     text-transform: uppercase;
-    .btn {
-      padding: 5px;
-      font-size: 13px;
-    }
   }
   .totalLoader {
     width: 16px;

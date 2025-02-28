@@ -304,7 +304,6 @@ export const ObjectPriceHistory = ({ onClose, data }) => {
     }
   };
 
-  console.log(handleGetPriceTableData());
   return (
     <StyledObjectPriceHistory>
       <Modal onClose={onClose} title="Графік змін цін">
@@ -358,8 +357,8 @@ export const ObjectPriceHistory = ({ onClose, data }) => {
 
 const StyledObjectPriceHistory = styled.div`
   .object-history-wrapper {
-    max-height: 60vh;
-    overflow: hidden;
+    max-height: 50vh;
+    overflow: auto;
   }
   .empty {
     color: var(--dark-90);
@@ -373,7 +372,7 @@ const StyledObjectPriceHistory = styled.div`
     text-align: center;
   }
   .modal {
-    max-width: 540px;
+    max-width: 550px;
   }
   table {
     width: 100%;

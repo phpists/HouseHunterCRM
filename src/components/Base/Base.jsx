@@ -716,7 +716,11 @@ export const Base = ({
               onFocus={onFocus}
               onBlur={onBlur}
               type="number"
-              error={errors?.includes("price_change")}
+              error={
+                errors?.includes("price_change") &&
+                !data?.street_base_object?.price_change_up_procent &&
+                !data?.street_base_object?.price_change
+              }
             />
           ) : null}
           {priceChangePeriod ? (
@@ -728,6 +732,7 @@ export const Base = ({
                 { title: "Годину", value: "1" },
                 { title: "Добу", value: "2" },
                 { title: "Дві доби", value: "3" },
+                { title: "За тиждень", value: "4" },
               ]}
               value={data?.street_base_object?.price_change_period}
               onChange={(val) =>
@@ -779,7 +784,11 @@ export const Base = ({
                 onFocus={onFocus}
                 onBlur={onBlur}
                 type="number"
-                error={errors?.includes("price_change_up_procent")}
+                error={
+                  errors?.includes("price_change_up_procent") &&
+                  !data?.street_base_object?.price_change &&
+                  !data?.street_base_object?.price_change_up_procent
+                }
               />
               <Divider />
             </>
