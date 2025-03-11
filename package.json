@@ -1,7 +1,7 @@
 {
   "name": "xhouse-crm",
   "version": "0.1.0",
-  "buildDate": 1740753901305,
+  "buildDate": 1741685126014,
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
@@ -20,6 +20,7 @@
     "react-dom": "^18.2.0",
     "react-draggable-lists": "^1.0.1",
     "react-error-boundary": "^4.0.12",
+    "react-image-magnify": "^2.7.4",
     "react-imask": "^7.6.0",
     "react-input-mask": "^2.0.4",
     "react-intersection-observer": "^9.8.1",

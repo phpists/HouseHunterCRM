@@ -1,0 +1,143 @@
+import styled from "styled-components";
+import priceUp from "../../../assets/images/price-up.svg";
+import priceDown from "../../../assets/images/price-down.svg";
+import { handleFormatDate } from "../../../utilits";
+
+export const Price = ({ data }) => {
+  const isJsonString = (str) => {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  };
+
+  const handleGetPrices = (data) => {
+    if (isJsonString(data)) {
+      const dates = JSON.parse(data);
+      if (Object.entries(dates)?.length > 1) {
+        try {
+          return Object.entries(dates)?.map((date) => {
+            return Object.entries(date?.[1])?.[0]?.[1]?.price
+              ? Number(Object.entries(date[1])?.[0]?.[1]?.price)
+              : Number(date?.[1]?.price) ?? 0;
+          });
+        } catch {
+          return [];
+        }
+      } else if (typeof dates === "object") {
+        try {
+          return [Number(Object.entries(dates)[0][1]?.price) ?? 0];
+        } catch {
+          return [];
+        }
+      } else {
+        return [];
+      }
+    } else {
+      return [];
+    }
+  };
+
+  return (
+    <StyledPrice>
+      <div className="flex items-center gap-[3px] price closedPrice">
+        {data?.tag_market_bottom &&
+          data?.tag_price_dump !== "0" &&
+          new Date(Number(data?.tag_price_dump) * 1000) >=
+            new Date().getTime() && <div className="alert"></div>}
+        {`${data?.price_usd ?? data?.price} $`}{" "}
+        {["1", "2"].includes(data?.price_change_up) ? (
+          <img
+            src={data?.price_change_up === "1" ? priceUp : priceDown}
+            alt=""
+          />
+        ) : null}
+        <sub className={`${data?.price_change_up === "1" && "red"}`}>
+          {data?.price_change_for_last === "0"
+            ? ""
+            : data?.price_change_for_last}
+        </sub>
+      </div>
+      <div className="last-prices">
+        {handleGetPrices(data?.price_history_json)?.length < 2
+          ? null
+          : handleGetPrices(data?.price_history_json)
+              ?.reverse()
+              .slice(0, 3)
+              ?.map((p, i) => (
+                <>
+                  {i !== 0 && <span>.</span>}
+                  <div key={i}>{p}$</div>
+                </>
+              ))}
+      </div>
+    </StyledPrice>
+  );
+};
+
+const StyledPrice = styled.div`
+  .price {
+    color: var(--green);
+    leading-trim: both;
+    text-edge: cap;
+    font-family: Overpass;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: var(--font-weight-light);
+    line-height: 1.7; /* 16.52px */
+    letter-spacing: 0.28px;
+    width: max-content;
+    .priceFore {
+      font-size: 11px;
+      font-weight: var(--font-weight-200);
+      line-height: 1.8;
+      span {
+        margin: 0 4px;
+      }
+    }
+    img {
+      height: 10px;
+      width: 10px;
+      margin-bottom: 2px;
+    }
+    .red {
+      color: #f94343;
+    }
+  }
+  .last-prices {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 10px;
+    color: var(--white-color);
+    font-weight: 300;
+    margin-top: -2px;
+    span {
+      font-size: 10px;
+      margin-top: -5px;
+    }
+  }
+  .alert {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background: #f94343;
+    margin-top: -3px;
+    transition: all 0.2s;
+    animation: alertRed 0.5s infinite;
+
+    @keyframes alertRed {
+      0% {
+        background: #f94343;
+      }
+      50% {
+        background: #f9434352;
+      }
+      100% {
+        background: #f94343;
+      }
+    }
+  }
+`;

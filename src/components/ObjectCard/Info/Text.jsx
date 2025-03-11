@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { ReactComponent as EditIcon } from "../../../assets/images/edit.svg";
 import { useEffect, useRef } from "react";
+import { Price } from "./Price";
+import { Tags } from "../MainInfo/Tags/Tags";
 
 export const Text = ({ data, editable, onEdit, ad, onOpenInfo }) => {
   const textRef = useRef();
@@ -22,26 +24,31 @@ export const Text = ({ data, editable, onEdit, ad, onOpenInfo }) => {
 
   return (
     <StyledText className={`hide-scroll clickable ${ad && "only-text"}`}>
-      <div
-        className="title clickable"
-        onClick={(e) => {
-          if (onOpenInfo) {
-            e.stopPropagation();
-            onOpenInfo();
-          }
-        }}
-      >
-        {data?.title?.length > 0
-          ? data?.title?.replaceAll("&amp;#039;", "'")
-          : "-"}
-        {editable ? (
+      <div className="text-header">
+        <div>
           <div
-            className="edit-icon flex items-center justify-center"
-            onClick={onEdit}
+            className="main-title clickable"
+            onClick={(e) => {
+              if (onOpenInfo) {
+                e.stopPropagation();
+                onOpenInfo();
+              }
+            }}
           >
-            <EditIcon />
+            {`${data?.brand_name} ${data?.model_name} ${data?.year}`}
+            {editable ? (
+              <div
+                className="edit-icon flex items-center justify-center"
+                onClick={onEdit}
+              >
+                <EditIcon />
+              </div>
+            ) : null}
           </div>
-        ) : null}
+          <Tags data={data} />
+        </div>
+        <Price data={data} />
+        <div></div>
       </div>
       <div
         className="descr clickable"
@@ -58,11 +65,10 @@ export const Text = ({ data, editable, onEdit, ad, onOpenInfo }) => {
 };
 
 const StyledText = styled.div`
-  width: 400px;
-  max-height: 97px;
   overflow: auto;
   margin-bottom: 15px;
   position: relative;
+  max-height: 200px;
   &.only-text {
     max-height: 190px !important;
     margin-bottom: 0;
@@ -91,7 +97,7 @@ const StyledText = styled.div`
       opacity: 0.4;
     }
   }
-  .title {
+  .main-title {
     color: var(--main-color);
     /* H3 */
     font-family: Overpass;
@@ -100,10 +106,8 @@ const StyledText = styled.div`
     font-weight: var(--font-weight-200);
     line-height: 118%; /* 23.6px */
     letter-spacing: 0.4px;
-    margin-bottom: 10px;
   }
   .descr {
-    overflow: hidden;
     color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
@@ -112,24 +116,23 @@ const StyledText = styled.div`
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     opacity: var(--opacity-ligh);
-    word-break: break-word;
+    @media (min-width: 700px) {
+      width: calc(100svw - 250px);
+      white-space: nowrap;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    @media (min-width: 1400px) {
+      width: calc(100svw - 1029px);
+    }
+  }
+  .text-header {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    gap: 10px;
   }
   @media (max-width: 1399.9px) {
     width: 100%;
-  }
-  @media (min-width: 1400px) {
-    width: 180px;
-  }
-  @media (min-width: 1500px) {
-    width: 280px;
-  }
-  @media (min-width: 1550px) {
-    width: 330px;
-  }
-  @media (min-width: 1660px) {
-    width: 330px;
-  }
-  @media (min-width: 1760px) {
-    width: 420px;
   }
 `;

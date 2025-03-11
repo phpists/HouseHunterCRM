@@ -98,6 +98,8 @@ export const Base = ({
   priceChangeUp,
   showTop,
   priceChangeUpProcent,
+  showTagPriceDump,
+  showCommentAutoria,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
@@ -647,6 +649,7 @@ export const Base = ({
               }
               onFocus={onFocus}
               onBlur={onBlur}
+              error={errors?.includes("count_object_owner")}
             />
           ) : null}
           {idStatusAdd ? (
@@ -685,7 +688,7 @@ export const Base = ({
           ) : null}
           {overbuyingIndex ? (
             <Ranger
-              label="Індекс перекупа"
+              label={commentsToFields?.object?.index_overbuying ?? "-"}
               className="mb-2"
               max={1000}
               values={[
@@ -873,6 +876,38 @@ export const Base = ({
                   ...data?.street_base_object,
                   show_top:
                     data?.street_base_object?.show_top === "1"
+                      ? undefined
+                      : "1",
+                })
+              }
+            />
+          ) : null}
+          {showTagPriceDump ? (
+            <CheckOption
+              label="Ціна сипеться"
+              className="check-opt"
+              value={data?.street_base_object?.show_tag_price_dump}
+              onChange={() =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  show_tag_price_dump:
+                    data?.street_base_object?.show_tag_price_dump === "1"
+                      ? undefined
+                      : "1",
+                })
+              }
+            />
+          ) : null}
+          {showCommentAutoria ? (
+            <CheckOption
+              label="Можливий торг (чат авторіа)"
+              className="check-opt"
+              value={data?.street_base_object?.show_comment_autoria}
+              onChange={() =>
+                onChange("street_base_object", {
+                  ...data?.street_base_object,
+                  show_comment_autoria:
+                    data?.street_base_object?.show_comment_autoria === "1"
                       ? undefined
                       : "1",
                 })

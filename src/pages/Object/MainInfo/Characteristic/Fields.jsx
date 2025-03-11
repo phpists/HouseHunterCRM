@@ -31,7 +31,6 @@ export const Fields = ({
     const idBrand = brandsList?.data?.find(
       (b) => b.id === data.id_brand
     )?.id_brand;
-    console.log(idBrand);
     if (idBrand) {
       getModels({
         id_category: data.id_rubric,

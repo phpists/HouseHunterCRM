@@ -13,6 +13,7 @@ import { Comment } from "./Comment";
 import { TAGS, SELECTION_TAGS } from "../../../constants";
 import { useParams } from "react-router-dom";
 import { AdTags } from "./AdTags/AdTags";
+import { AutoriaComment } from "./AutoriaComment";
 
 export const Tags = ({
   className,
@@ -210,6 +211,7 @@ export const Tags = ({
               onChangeComment={onChangeComment}
             />
           ) : null}
+          <AutoriaComment comment={data?.comment_autoria} />
         </>
       )}
     </StyledTags>
@@ -220,20 +222,21 @@ const StyledTags = styled.div`
   padding: 8px;
   border-radius: 9px;
   background: var(--bg-80);
-  width: 230px;
+  width: 100%;
   margin-right: 10px;
   height: 200px;
+  overflow: auto;
   @media (min-width: 1400px) {
     width: 230px;
   }
   @media (min-width: 1600px) {
     width: 230px;
   }
-  @media (min-width: 1700px) {
+  @media (min-width: 1800px) {
     width: 18svw;
   }
   @media (max-width: 1399.9px) {
-    width: calc((100% - 210px - 40px) / 2);
+    width: 100%;
     height: 250px;
     margin-right: 18px;
   }

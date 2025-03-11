@@ -536,6 +536,8 @@ export const Main = ({
         priceChangeUp
         showTop
         priceChangeUpProcent
+        showTagPriceDump
+        showCommentAutoria
         errors={Object.entries(errors)
           ?.filter((e) => e?.[1])
           ?.map((e) => e?.[0])}

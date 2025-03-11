@@ -27,7 +27,7 @@ const StyledTag = styled.div`
   .title {
     white-space: nowrap;
     text-overflow: ellipsis;
-    max-width: 170px;
+    max-width: 150px;
     overflow: hidden;
   }
   svg {

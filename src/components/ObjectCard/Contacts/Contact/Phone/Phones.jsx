@@ -10,28 +10,26 @@ export const Phone = ({ commentOpen, phones, error, onShow }) => {
   return (
     <StyledPhone className="clickable">
       {phones && !error ? (
-        <Phones
-          className={`${commentOpen ? "" : "phones"} ${
-            phones?.length > 1
-              ? "phones-object-wrapper-many"
-              : "phones-object-wrapper"
-          }`}
-          classNameContent={
-            phones?.length > 1 ? "phones-wrap-many" : "phones-wrap"
-          }
-          phones={phones?.map(
-            ({ id_phone_code, phone, code, telegram, viber }) => ({
-              phone: `${
-                code ?? data?.find(({ id }) => id === id_phone_code)?.code ?? ""
-              }${phone}`,
-              maskedPhone: handleAddPhoneMask(phone),
-              telegram,
-              viber,
-            })
-          )}
-          hideIcon
-          small
-        />
+        phones.map((phone) => (
+          <Phones
+            className={`${commentOpen ? "" : "phones"} phones-object-wrapper `}
+            classNameContent={"phones-wrap"}
+            phones={[
+              {
+                phone: `${
+                  phone?.code ??
+                  data?.find(({ id }) => id === phone?.id_phone_code)?.code ??
+                  ""
+                }${phone.phone}`,
+                maskedPhone: handleAddPhoneMask(phone?.phone),
+                telegram: phone?.telegram,
+                viber: phone?.viber,
+              },
+            ]}
+            hideIcon
+            small
+          />
+        ))
       ) : (
         <ShowButton
           onClick={onShow}
@@ -45,6 +43,9 @@ export const Phone = ({ commentOpen, phones, error, onShow }) => {
 };
 
 const StyledPhone = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
   .phones-wrap {
     width: 153px;
   }

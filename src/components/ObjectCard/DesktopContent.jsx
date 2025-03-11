@@ -60,16 +60,15 @@ export const DesktopContent = ({
         data={data}
         showLike={showLike}
       />
-      <MainInfo
+      {/* <MainInfo
         data={data}
         currency={currency}
         onChangeCurrency={onChangeCurrency}
         type={type}
         onChangeType={onChangeType}
         ad={ad}
-      />
+      /> */}
       <Info
-        className="desktop-item"
         data={data}
         editable={editable}
         onEdit={onEdit}
@@ -161,6 +160,7 @@ const StyledDesktopContent = styled.div`
   @media (max-width: 1399.9px) {
     display: flex;
     flex-wrap: wrap;
+    gap: 10px;
     .desktop-item {
       display: none;
     }

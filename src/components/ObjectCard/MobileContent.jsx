@@ -9,6 +9,7 @@ import { Tags } from "./Tags/Tags";
 import { Contacts } from "./Contacts/Contacts";
 import { ShowMore } from "./ShowMore/ShowMore";
 import { checkIsArray } from "../../utilits";
+import { Info } from "./Info/Info";
 
 export const MobileContent = ({
   data,
@@ -53,14 +54,13 @@ export const MobileContent = ({
   noEdit,
 }) => (
   <StyledMobileContent className="clickable">
-    <Header data={data} ad={ad} onOpenAdList={onOpenAdList} />
-    <CardTitle title={data?.title} editable={editable} onEdit={onEdit} />
+    {/* <CardTitle title={data?.title} editable={editable} onEdit={onEdit} /> */}
     <Slider
       photos={[...checkIsArray(data?.img)]?.sort((a, b) => b?.cover - a?.cover)}
       data={data}
       showLike={showLike}
     />
-    <CardDescription text={data?.description} />
+    <Info data={data} className="my-2" />
     {ad ? null : (
       <Footer
         createDate={data?.dt_add}
@@ -71,7 +71,7 @@ export const MobileContent = ({
         typeObject={data?.type_object}
       />
     )}
-    <MainInfo
+    {/* <MainInfo
       className="mobile-main-info"
       data={data}
       currency={currency}
@@ -79,9 +79,9 @@ export const MobileContent = ({
       type={type}
       onChangeType={onChangeType}
       ad={ad}
-    />
+    /> */}
     <Tags
-      className="mobile-tags"
+      className="mobile-tags mt-2"
       data={data}
       onChangeComment={onChangeComment}
       selections={selections}

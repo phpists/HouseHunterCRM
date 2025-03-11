@@ -15,10 +15,22 @@ export const Info = ({
   return (
     <StyledInfo
       className={`flex flex-col justify-between hide clickable hide-scroll ${className}`}
-
     >
       {ad ? null : <Header data={data} ad={ad} onOpenAdList={onOpenAdList} />}
-      <Text data={data} editable={editable} onEdit={onEdit} ad={ad} onOpenInfo={onOpenInfo}/>
+      <Text
+        data={data}
+        editable={editable}
+        onEdit={onEdit}
+        ad={ad}
+        onOpenInfo={onOpenInfo}
+      />
+      {/* <Text
+        data={data}
+        editable={editable}
+        onEdit={onEdit}
+        ad={ad}
+        onOpenInfo={onOpenInfo}
+      />
       {ad ? null : (
         <Footer
           createDate={data?.dt_add}
@@ -28,7 +40,7 @@ export const Info = ({
           nameSource={data?.id_source}
           typeObject={data?.type_object}
         />
-      )}
+      )} */}
     </StyledInfo>
   );
 };
@@ -38,10 +50,18 @@ const StyledInfo = styled.div`
   height: max-content;
   overflow: auto;
   align-self: flex-start;
+  width: calc(100% - 250px);
   @media (min-width: 1400px) {
-    width: 180px;
+    width: calc(100svw - 1029px);
+    max-width: 700px;
   }
-  @media (min-width: 1500px) {
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+  @media (min-width: 1400px) {
+    width: calc(100svw - 1029px);
+  }
+  /* @media (min-width: 1500px) {
     width: 280px;
   }
   @media (min-width: 1550px) {
@@ -52,5 +72,5 @@ const StyledInfo = styled.div`
   }
   @media (min-width: 1760px) {
     width: 420px;
-  }
+  } */
 `;

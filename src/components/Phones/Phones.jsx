@@ -22,6 +22,8 @@ export const Phones = ({
     setActivePhone(index);
   };
 
+  console.log(phones?.[activePhone]?.phone, phones);
+
   return (
     <div className="flex items-center shrink-0">
       <StyledPhones open={open} className={`${className}`}>

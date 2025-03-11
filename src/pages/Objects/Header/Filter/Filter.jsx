@@ -137,6 +137,15 @@ export const Filter = ({
         price_change_up_procent:
           !filters?.street_base_object?.price_change_up_procent,
       });
+    } else if (
+      (filters?.street_base_object?.count_object_owner_from ||
+        filters?.street_base_object?.count_object_owner_to) &&
+      (!filters?.street_base_object?.count_object_owner_from ||
+        !filters?.street_base_object?.count_object_owner_to)
+    ) {
+      setErrors({
+        count_object_owner: true,
+      });
     } else {
       handleApplyFilters(true);
       setErrors({ search_phone: false });
@@ -347,12 +356,13 @@ export const Filter = ({
         <Header onClose={handleClose} />
         {savedFilters?.data?.length > 0 ? (
           <Select
-            label="Збережені пошуки"
+            // label="Збережені пошуки"
+            placeholder="ЗБЕРЕЖЕНІ ПОШУКИ"
             options={savedFilters?.data?.map(({ name, id }) => ({
               title: name,
               value: id,
             }))}
-            value={selectedSavedFilter}
+            // value={selectedSavedFilter}
             onChange={handleChangeSelectedSavedFilter}
             className="saved-filters-select"
             onDelete={(id) => setDeletingSavedFilter(id)}
@@ -452,7 +462,7 @@ const StyledFilter = styled(motion.div)`
   .saved-filters-select {
     margin: 0 20px 5px;
     width: calc(100% - 40px);
-    min-height: 60px;
+    min-height: 50px;
   }
   @media (max-width: 800px) {
     width: 100%;

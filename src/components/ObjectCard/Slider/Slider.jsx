@@ -15,6 +15,8 @@ import nextIcon from "../../../assets/images/next-arrow.svg";
 import { Counter } from "../../../pages/Client/Object/Maininfo/Slider/Counter";
 import { Status } from "./Status";
 import { NewTag } from "../../../pages/Client/Object/Maininfo/Slider/NewTag";
+import ReactImageMagnify from "react-image-magnify";
+import { Statistics } from "./Statistics";
 
 const settings = {
   dots: false,
@@ -88,6 +90,7 @@ export const Slider = ({ photos, data, showLike }) => {
           }
         />
       )}
+
       <StyledSlider
         className="flex items-center"
         ref={sliderRef}
@@ -101,6 +104,7 @@ export const Slider = ({ photos, data, showLike }) => {
               <Counter current={currentSlide} total={photos.length} />
             ) : null}
           </div>
+          <Statistics data={data} />
           <Tags data={data} />
           {photos?.length === 0 ? (
             <Slide photo={noPhoto} active empty onOpen={() => null} />
