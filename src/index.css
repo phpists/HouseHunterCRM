@@ -9,7 +9,7 @@
 
 html[data-theme="dark"] {
   --main-bg: #2c2c2c;
-  --element-bg: rgba(107, 107, 107, 0.3);
+  --element-bg: rgba(59, 59, 59, 0.5);
   --second-bg: #474747;
   --card-bg: #3d3d3d;
   --modals-bg: rgba(44, 44, 44, 0.8);

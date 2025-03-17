@@ -3,6 +3,10 @@ import { DesktopContent } from "./DesktopContent";
 import { MobileContent } from "./MobileContent";
 import { memo, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import { Photo } from "./Photo";
+import { CarMainInfo } from "./CarMainInfo";
+import { ShowMore } from "./ShowMore/ShowMore";
+import { CarInfo } from "./CarInfo";
 
 export const ObjectCard = memo(
   ({
@@ -50,6 +54,7 @@ export const ObjectCard = memo(
     onOpenAdList,
     noEdit,
     onOpenInfo,
+    onOpenCommentAutoria,
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
     const { ref, inView } = useInView({ triggerOnce: window.innerWidth < 801 });
@@ -80,94 +85,48 @@ export const ObjectCard = memo(
         onClick={handleClick}
         ref={ref}
       >
-        {!inView ? null : !isMobile ? (
-          <DesktopContent
-            data={data}
-            onToggleFavoriteStatus={onToggleFavoriteStatus}
-            onFindSimilar={onFindSimilar}
-            isEdit={isEdit}
-            onHide={onHide}
-            onAddToSelection={onAddToSelection}
-            onOpenTagsHistory={onOpenTagsHistory}
-            onOpenPriceHistory={onOpenPriceHistory}
-            currency={currency}
-            onChangeCurrency={onChangeCurrency}
-            type={type}
-            onChangeType={onChangeType}
-            isHideObjects={isHideObjects}
-            onOpenCommetHistory={onOpenCommetHistory}
-            onDelete={onDelete}
-            searchTag={searchTag}
-            showLike={showLike}
-            onChangeComment={onChangeComment}
-            selections={selections}
-            onMarkPhone={onMarkPhone}
-            isDeleted={isDeleted}
-            onRestore={onRestore}
-            onDeleteFinally={onDeleteFinally}
-            showContactId={showContactId}
-            onShowContact={onShowContact}
-            onChangeTags={onChangeTags}
-            editable={editable}
-            onEdit={onEdit}
-            onOpenPhonesModal={onOpenPhonesModal}
-            showClientObjectsCount={showClientObjectsCount}
-            onOpenDeleteReason={onOpenDeleteReason}
-            onFastSelection={onFastSelection}
-            onAdvertise={onAdvertise}
-            onAdvertiseTelegram={onAdvertiseTelegram}
-            ad={ad}
-            onUpdateField={onUpdateField}
-            onDeleteHistory={onDeleteHistory}
-            onDeleteAd={onDeleteAd}
-            onOpenAdList={onOpenAdList}
-            noEdit={noEdit}
-            onOpenInfo={onOpenInfo}
-          />
-        ) : (
-          <MobileContent
-            data={data}
-            onToggleFavoriteStatus={onToggleFavoriteStatus}
-            onFindSimilar={onFindSimilar}
-            isEdit={isEdit}
-            onHide={onHide}
-            onAddToSelection={onAddToSelection}
-            onOpenTagsHistory={onOpenTagsHistory}
-            onOpenPriceHistory={onOpenPriceHistory}
-            currency={currency}
-            onChangeCurrency={onChangeCurrency}
-            type={type}
-            onChangeType={onChangeType}
-            isHideObjects={isHideObjects}
-            onOpenCommetHistory={onOpenCommetHistory}
-            onDelete={onDelete}
-            searchTag={searchTag}
-            showLike={showLike}
-            onChangeComment={onChangeComment}
-            selections={selections}
-            onMarkPhone={onMarkPhone}
-            isDeleted={isDeleted}
-            onRestore={onRestore}
-            onDeleteFinally={onDeleteFinally}
-            showContactId={showContactId}
-            onShowContact={onShowContact}
-            onChangeTags={onChangeTags}
-            editable={editable}
-            onEdit={onEdit}
-            onOpenPhonesModal={onOpenPhonesModal}
-            showClientObjectsCount={showClientObjectsCount}
-            onOpenDeleteReason={onOpenDeleteReason}
-            onFastSelection={onFastSelection}
-            onAdvertise={onAdvertise}
-            onAdvertiseTelegram={onAdvertiseTelegram}
-            ad={ad}
-            onUpdateField={onUpdateField}
-            onDeleteHistory={onDeleteHistory}
-            onDeleteAd={onDeleteAd}
-            onOpenAdList={onOpenAdList}
-            noEdit={noEdit}
-          />
-        )}
+        <Photo photos={data?.img.map((p) => p.name)} />
+        <CarMainInfo data={data} onOpenPriceHistory={onOpenPriceHistory} />
+        <CarInfo
+          data={data}
+          onOpenInfo={onOpenInfo}
+          onUpdateField={onUpdateField}
+          noEdit={noEdit}
+          onChangeTags={onChangeTags}
+        />
+        <ShowMore
+          clientId={data?.id_client}
+          id={data?.id}
+          onToggleFavoriteStatus={onToggleFavoriteStatus}
+          isFavorite={data?.favorite}
+          onFindSimilar={onFindSimilar}
+          isEdit={isEdit}
+          onHide={onHide}
+          onAddToSelection={onAddToSelection}
+          onOpenTagsHistory={onOpenTagsHistory}
+          onOpenPriceHistory={onOpenPriceHistory}
+          isAccess={data?.acsses_change}
+          link={data?.link ?? data?.url_resource}
+          isHideObjects={isHideObjects}
+          onOpenCommetHistory={onOpenCommetHistory}
+          onDelete={onDelete}
+          isStreetBase={data?.obj_street_base === "1"}
+          searchTag={searchTag}
+          onMarkPhone={onMarkPhone}
+          isDeleted={isDeleted}
+          onRestore={onRestore}
+          onDeleteFinally={onDeleteFinally}
+          onOpenDeleteReason={onOpenDeleteReason}
+          onFastSelection={onFastSelection}
+          onAdvertise={onAdvertise}
+          onAdvertiseTelegram={onAdvertiseTelegram}
+          ad={ad}
+          onDeleteHistory={onDeleteHistory}
+          onDeleteAd={onDeleteAd}
+          idRubric={data?.id_rubric}
+          onOpenCommentAutoria={onOpenCommentAutoria}
+          onOpenPhonesModal={onOpenPhonesModal}
+        />
       </StyledObjectCard>
     );
   }
@@ -180,29 +139,13 @@ const StyledObjectCard = styled.div`
   position: relative;
   border: 1px solid transparent;
   cursor: pointer;
-  min-height: 200px;
-  &.selected {
-    border: 1px solid #fff;
+  display: grid;
+  grid-template-columns: max-content minmax(300px, 400px) 1fr max-content;
+  gap: 20px;
+  width: 100%;
+  @media (max-width: 1110px) {
+    grid-template-columns: 170px 1fr;
+    padding-right: 50px;
   }
-  &.notInView {
-    min-height: 600px !important;
-  }
-  @media (min-width: 800px) {
-    min-height: 360px;
-  }
-  @media (min-width: 1000px) {
-    &.notInView {
-      min-height: 280px !important;
-    }
-  }
-  @media (min-width: 1400px) {
-    padding: 20px;
-    min-height: 255px;
-    &.notInView {
-      min-height: 255px !important;
-    }
-  }
-  .tagsSelectDropdown {
-    max-height: 150px;
-  }
+  /* min-height: 160px; */
 `;

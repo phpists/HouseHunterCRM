@@ -1,0 +1,28 @@
+import styled from "styled-components";
+import { Modal } from "../../components/Modal/Modal";
+
+export const CommentModal = ({ onClose, comment }) => {
+  return (
+    <StyledCommentModal>
+      <Modal onClose={onClose} title="Коментар">
+        <div className="text">{comment}</div>
+      </Modal>
+    </StyledCommentModal>
+  );
+};
+
+const StyledCommentModal = styled.div`
+  .modal {
+    max-width: 700px;
+  }
+  .text {
+    color: var(--main-color);
+    font-family: Overpass;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: var(--font-weight-100);
+    line-height: 118%;
+    letter-spacing: 0.3px;
+    opacity: var(--opacity-ligh);
+  }
+`;

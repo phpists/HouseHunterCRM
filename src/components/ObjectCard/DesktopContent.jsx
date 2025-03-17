@@ -93,6 +93,8 @@ export const DesktopContent = ({
         onOpenPhonesModal={onOpenPhonesModal}
         showClientObjectsCount={showClientObjectsCount}
         ad={ad}
+        onToggleFavoriteStatus={onToggleFavoriteStatus}
+        isFavorite={data?.favorite}
       />
       {noEdit ? null : (
         <ShowMore
@@ -128,18 +130,13 @@ export const DesktopContent = ({
         />
       )}
       <div className="mobile-footer w-full">
-        <Info
-          data={data}
-          editable={editable}
-          onEdit={onEdit}
-          ad={ad}
-          onOpenAdList={onOpenAdList}
-        />
         <Contacts
           data={data}
           showContactId={showContactId}
           onShowContact={onShowContact}
           onOpenPhonesModal={onOpenPhonesModal}
+          onToggleFavoriteStatus={onToggleFavoriteStatus}
+          isFavorite={data?.favorite}
         />
       </div>
     </StyledDesktopContent>

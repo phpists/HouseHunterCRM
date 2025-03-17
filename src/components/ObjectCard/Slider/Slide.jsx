@@ -47,9 +47,9 @@ const StyledSlide = styled.div`
     width: 250px;
   }
   @media (max-width: 1399.9px) {
-    height: 250px;
+    height: 200px;
   }
   @media (min-width: 1400px) {
-    width: 250px;
+    width: 200px;
   }
 `;

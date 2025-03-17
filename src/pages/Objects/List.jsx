@@ -33,6 +33,8 @@ import { AdListModal } from "../../components/AdListModal/AdListModal";
 import cogoToast from "cogo-toast";
 import { ObjectInfo } from "./ObjectInfo";
 import { useGetLocationsQuery } from "../../store/requests/requests.api";
+import { CommentModal } from "./CommentModal";
+import { PhonesModal } from "./PhonesModal";
 
 export const List = ({
   selected,
@@ -77,6 +79,8 @@ export const List = ({
   const [openObjectInfo, setOpenObjectInfo] = useState(null);
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
+  const [phonesModal, setPhonesModal] = useState(null);
+  const [commentModal, setCommentModal] = useState(null);
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -266,6 +270,13 @@ export const List = ({
           object={openObjectInfo}
         />
       ) : null}
+      {commentModal ? (
+        <CommentModal
+          onClose={() => setCommentModal(null)}
+          comment={commentModal}
+        />
+      ) : null}
+
       <StyledList ref={innerRef}>
         {data?.length === 0 || actionLoading ? (
           <Empty loading={loading || actionLoading || deleting} />
@@ -355,6 +366,12 @@ export const List = ({
                 }
                 onOpenAdList={() => setAdListModal(d)}
                 onOpenInfo={() => setOpenObjectInfo(d)}
+                onOpenCommentAutoria={
+                  data?.comment_autoria
+                    ? () => setCommentModal(data?.comment_autoria)
+                    : null
+                }
+                // onOpenPhonesModal={() => setPhonesModal(d)}
               />
             ))}
           </>

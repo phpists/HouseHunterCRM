@@ -5,6 +5,7 @@ import { useLazyGetPhoneObjectQuery } from "../../../store/objects/objects.api";
 import { useEffect, useState } from "react";
 import { ShowButton } from "./Contact/Phone/ShowButton";
 import { handleFormatDate, handleResponse } from "../../../utilits";
+import { Footer } from "../Info/Footer/Footer";
 
 export const Contacts = ({
   className,
@@ -14,6 +15,8 @@ export const Contacts = ({
   onOpenPhonesModal,
   showClientObjectsCount,
   ad,
+  onToggleFavoriteStatus,
+  isFavorite,
 }) => {
   const [getClient] = useLazyGetPhoneObjectQuery();
   const [error, setError] = useState(false);
@@ -40,106 +43,124 @@ export const Contacts = ({
 
   return (
     <StyledContacts className={`hide-scroll clickable ${className}`}>
-      {ad && data?.author_phone?.length > 0 ? (
-        <Contact
-          type="rieltor"
-          name={data?.author_name ?? "-"}
-          phones={[{ phone: data?.author_phone }]}
-          typeText="Реклама"
-          error={error}
-          onShow={handleShowClient}
-          className="mb-4"
-        />
-      ) : null}
-      {data?.client_data?.owner?.name && data?.client_data?.owner?.phone ? (
-        <Contact
-          type="rieltor"
-          name={data?.client_data?.owner?.name}
-          phones={data?.client_data?.owner?.phone}
-          typeText="Агент"
-          error={error}
-          onShow={handleShowClient}
-          className="mb-4"
-        />
-      ) : null}
-      {data?.clients_inf?.contact?.owner &&
-      data?.clients_inf?.contact?.owner?.phone ? (
-        <Contact
-          type="rieltor"
-          name={data?.clients_inf?.contact?.owner?.name}
-          phones={
-            data?.clients_inf?.contact?.owner?.phone
-              ? data?.clients_inf?.contact?.owner?.phone
-              : data?.clients_inf?.contact?.owner?.phones
-          }
-          typeText="Агент"
-          error={error}
-          onShow={handleShowClient}
-          className="mb-4"
-        />
-      ) : null}
-      {data?.client_data?.name ? (
-        <Contact
-          type="owner"
-          name={data?.client_data?.name}
-          phones={data?.client_data?.phones}
-          typeText={
-            data?.clients_inf?.contact?.party_agency ?? data?.clients_inf?.type
-          }
-          subtitle={
-            !showClientObjectsCount
-              ? null
-              : Number(data?.Count_object) === 0
-              ? null
-              : data?.type_object === "street_base"
-              ? `${data?.Count_object ?? 0} автомобілів на ${handleFormatDate(
-                  Number(data?.count_object_date) * 1000
-                )}`
-              : null
-          }
-          onClickOnSubtitle={onOpenPhonesModal}
-          error={error}
-          onShow={handleShowClient}
-        />
-      ) : null}
-      {data?.clients_inf ? (
-        <Contact
-          type="owner"
-          name={
-            data?.clients_inf?.contact?.name ??
-            data?.clients_inf?.contact?.name_client
-          }
-          phones={
-            data?.clients_inf?.contact?.phones
-              ? data?.clients_inf?.contact?.phones
-              : clientData?.contact?.phone
-              ? clientData?.contact?.phone
-              : clientData?.contact?.phones
-          }
-          typeText={
-            data?.clients_inf?.contact?.party_agency ?? data?.clients_inf?.type
-          }
-          subtitle={
-            !showClientObjectsCount
-              ? null
-              : Number(data?.Count_object) === 0
-              ? null
-              : data?.type_object === "street_base"
-              ? `${data?.Count_object ?? 0} автомобілів на ${handleFormatDate(
-                  Number(data?.count_object_date) * 1000
-                )}`
-              : null
-          }
-          onClickOnSubtitle={onOpenPhonesModal}
-          error={error}
-          onShow={handleShowClient}
-        />
-      ) : null}
+      <div>
+        {ad && data?.author_phone?.length > 0 ? (
+          <Contact
+            type="rieltor"
+            name={data?.author_name ?? "-"}
+            phones={[{ phone: data?.author_phone }]}
+            typeText="Реклама"
+            error={error}
+            onShow={handleShowClient}
+            className="mb-4"
+          />
+        ) : null}
+        {data?.client_data?.owner?.name && data?.client_data?.owner?.phone ? (
+          <Contact
+            type="rieltor"
+            name={data?.client_data?.owner?.name}
+            phones={data?.client_data?.owner?.phone}
+            typeText="Агент"
+            error={error}
+            onShow={handleShowClient}
+            className="mb-4"
+          />
+        ) : null}
+        {data?.clients_inf?.contact?.owner &&
+        data?.clients_inf?.contact?.owner?.phone ? (
+          <Contact
+            type="rieltor"
+            name={data?.clients_inf?.contact?.owner?.name}
+            phones={
+              data?.clients_inf?.contact?.owner?.phone
+                ? data?.clients_inf?.contact?.owner?.phone
+                : data?.clients_inf?.contact?.owner?.phones
+            }
+            typeText="Агент"
+            error={error}
+            onShow={handleShowClient}
+            className="mb-4"
+          />
+        ) : null}
+        {data?.client_data?.name ? (
+          <Contact
+            type="owner"
+            name={data?.client_data?.name}
+            phones={data?.client_data?.phones}
+            typeText={
+              data?.clients_inf?.contact?.party_agency ??
+              data?.clients_inf?.type
+            }
+            subtitle={
+              !showClientObjectsCount
+                ? null
+                : Number(data?.Count_object) === 0
+                ? null
+                : data?.type_object === "street_base"
+                ? `${data?.Count_object ?? 0} автомобілів на ${handleFormatDate(
+                    Number(data?.count_object_date) * 1000
+                  )}`
+                : null
+            }
+            onClickOnSubtitle={onOpenPhonesModal}
+            error={error}
+            onShow={handleShowClient}
+          />
+        ) : null}
+        {data?.clients_inf ? (
+          <Contact
+            type="owner"
+            name={
+              data?.clients_inf?.contact?.name ??
+              data?.clients_inf?.contact?.name_client
+            }
+            phones={
+              data?.clients_inf?.contact?.phones
+                ? data?.clients_inf?.contact?.phones
+                : clientData?.contact?.phone
+                ? clientData?.contact?.phone
+                : clientData?.contact?.phones
+            }
+            typeText={
+              data?.clients_inf?.contact?.party_agency ??
+              data?.clients_inf?.type
+            }
+            subtitle={
+              !showClientObjectsCount
+                ? null
+                : Number(data?.Count_object) === 0
+                ? null
+                : data?.type_object === "street_base"
+                ? `${data?.Count_object ?? 0} автомобілів на ${handleFormatDate(
+                    Number(data?.count_object_date) * 1000
+                  )}`
+                : null
+            }
+            onClickOnSubtitle={onOpenPhonesModal}
+            error={error}
+            onShow={handleShowClient}
+          />
+        ) : null}
+      </div>
+      <Footer
+        createDate={data?.dt_add}
+        dateEdit={data?.dt_edit}
+        id={data?.id}
+        idSource={data?.id_ad_in_source}
+        nameSource={data?.id_source}
+        typeObject={data?.type_object}
+        className="desktop-footer"
+        onToggleFavoriteStatus={onToggleFavoriteStatus}
+        isFavorite={isFavorite}
+      />
     </StyledContacts>
   );
 };
 
 const StyledContacts = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   height: max-content;
   width: 230px;
   overflow: auto;
@@ -167,6 +188,9 @@ const StyledContacts = styled.div`
     }
     .show-client {
       width: max-content;
+    }
+    .desktop-footer {
+      display: none;
     }
   }
   @media (max-width: 500px) {

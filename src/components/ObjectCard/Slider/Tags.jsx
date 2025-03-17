@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Tags = ({ data }) => (
   <StyledTags>
+    {data?.data_level !== "0" ? <div>Топ {data?.data_level}</div> : null}
     {data?.type_object?.length > 0 ? <div>{data?.type_object}</div> : null}
   </StyledTags>
 );

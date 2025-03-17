@@ -3,9 +3,11 @@ import { ReactComponent as EditIcon } from "../../../assets/images/edit.svg";
 import { useEffect, useRef } from "react";
 import { Price } from "./Price";
 import { Tags } from "../MainInfo/Tags/Tags";
+import { useNavigate } from "react-router-dom";
 
 export const Text = ({ data, editable, onEdit, ad, onOpenInfo }) => {
   const textRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const textDividedByBr =
@@ -22,44 +24,80 @@ export const Text = ({ data, editable, onEdit, ad, onOpenInfo }) => {
     textRef.current.innerHTML = textDividedByBr;
   }, [data]);
 
+  const handleGetTags = () => {
+    let tags = [];
+
+    if (data?.tag_faster && data?.tag_faster === "1") {
+      tags.push("Терміново");
+    }
+    if (data?.tag_nativePaint && data?.tag_nativePaint === "1") {
+      tags.push("Рідна фарба");
+    }
+    if (data?.tag_exchangePossible && data?.tag_exchangePossible === "1") {
+      tags.push("Можливий обмін");
+    }
+    if (data?.tag_freshlyDriven && data?.tag_freshlyDriven === "1") {
+      tags.push("Свіжопригнана");
+    }
+    if (data?.tag_afterDTP && data?.tag_afterDTP === "1") {
+      tags.push("Після дтп");
+    }
+
+    return tags;
+  };
+
   return (
     <StyledText className={`hide-scroll clickable ${ad && "only-text"}`}>
       <div className="text-header">
         <div>
+          <div>
+            <div className="index-overbuy">{data?.index_overbuying}/10</div>
+            <div
+              className="main-title clickable mb-2"
+              onClick={(e) => {
+                if (onOpenInfo) {
+                  e.stopPropagation();
+                  if (data?.link) {
+                    window.open(data?.link, "_blank");
+                  }
+                }
+              }}
+            >
+              {`${data?.brand_name} ${data?.model_name} ${data?.year}`}
+              {editable ? (
+                <div
+                  className="edit-icon flex items-center justify-center"
+                  onClick={onEdit}
+                >
+                  <EditIcon />
+                </div>
+              ) : null}
+            </div>
+          </div>
+          <div className="text-content">
+            <Tags data={data} />
+            <Price data={data} />
+          </div>
+        </div>
+        <div>
+          {" "}
           <div
-            className="main-title clickable"
+            className="descr clickable"
+            ref={textRef}
             onClick={(e) => {
               if (onOpenInfo) {
                 e.stopPropagation();
                 onOpenInfo();
               }
             }}
-          >
-            {`${data?.brand_name} ${data?.model_name} ${data?.year}`}
-            {editable ? (
-              <div
-                className="edit-icon flex items-center justify-center"
-                onClick={onEdit}
-              >
-                <EditIcon />
-              </div>
-            ) : null}
-          </div>
-          <Tags data={data} />
+          ></div>
+          {handleGetTags()?.length > 0 ? (
+            <div className="tags-text">
+              Теги: {handleGetTags()?.slice(0, 3)?.join(", ")}
+            </div>
+          ) : null}
         </div>
-        <Price data={data} />
-        <div></div>
       </div>
-      <div
-        className="descr clickable"
-        ref={textRef}
-        onClick={(e) => {
-          if (onOpenInfo) {
-            e.stopPropagation();
-            onOpenInfo();
-          }
-        }}
-      ></div>
     </StyledText>
   );
 };
@@ -99,7 +137,6 @@ const StyledText = styled.div`
   }
   .main-title {
     color: var(--main-color);
-    /* H3 */
     font-family: Overpass;
     font-size: 20px;
     font-style: normal;
@@ -107,7 +144,15 @@ const StyledText = styled.div`
     line-height: 118%; /* 23.6px */
     letter-spacing: 0.4px;
   }
+  .index-overbuy {
+    color: var(--main-color);
+    font-family: Overpass;
+    font-size: 10px;
+    font-weight: 200;
+    /* text-align: right; */
+  }
   .descr {
+    margin: 20px 0 10px;
     color: var(--main-color);
     font-family: Overpass;
     font-size: 15px;
@@ -116,23 +161,51 @@ const StyledText = styled.div`
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     opacity: var(--opacity-ligh);
+    width: 100%;
     @media (min-width: 700px) {
-      width: calc(100svw - 250px);
-      white-space: nowrap;
+      max-height: 130px;
+      overflow: auto;
+      /* white-space: nowrap;
       max-width: 100%;
       overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    @media (min-width: 1400px) {
-      width: calc(100svw - 1029px);
+      text-overflow: ellipsis; */
     }
   }
+  .tags-text {
+    margin-top: 5px;
+    color: var(--main-color);
+    font-family: Overpass;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: var(--font-weight-200);
+    line-height: 118%; /* 17.7px */
+    letter-spacing: 0.3px;
+    opacity: var(--opacity-ligh);
+  }
   .text-header {
+    display: grid;
+    grid-template-columns: 1fr 190px;
+    gap: 10px;
+  }
+  .text-content {
     display: grid;
     grid-template-columns: 1fr max-content;
     gap: 10px;
   }
   @media (max-width: 1399.9px) {
     width: 100%;
+    .text-content {
+      display: grid;
+      grid-template-columns: 280px max-content;
+      width: max-content;
+    }
+    .text-header {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 800px) {
+    .text-header {
+      grid-template-columns: 1fr;
+    }
   }
 `;

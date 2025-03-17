@@ -1,7 +1,7 @@
 {
   "name": "xhouse-crm",
   "version": "0.1.0",
-  "buildDate": 1741685126014,
+  "buildDate": 1741779047701,
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
@@ -10,7 +10,9 @@
     "@testing-library/user-event": "^13.2.1",
     "apexcharts": "^3.46.0",
     "axios": "^1.6.8",
+    "bootstrap-icons": "^1.11.3",
     "cogo-toast": "^4.2.3",
+    "font-awesome": "^4.7.0",
     "framer-motion": "^10.16.1",
     "leaflet": "^1.9.4",
     "leaflet-draw": "^1.0.4",
@@ -35,7 +37,8 @@
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.0.7",
-    "web-vitals": "^2.1.0"
+    "web-vitals": "^2.1.0",
+    "zoomist": "^1.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

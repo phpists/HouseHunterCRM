@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Tag } from "./Tag";
 import { handleFormatDate } from "../../../../utilits";
 import { useGetSourcesQuery } from "../../../../store/objects/objects.api";
+import { ReactComponent as LikeIcon } from "../../../../assets/images/heart.svg";
 
 export const Footer = ({
   createDate,
@@ -11,11 +12,16 @@ export const Footer = ({
   nameSource,
   typeObject,
   dateDelete,
+  className,
+  onToggleFavoriteStatus,
+  isFavorite,
 }) => {
   const { data } = useGetSourcesQuery();
 
   return (
-    <StyledFooter className="flex flex-wrap items-center clickable">
+    <StyledFooter
+      className={`flex flex-wrap items-end clickable ${className}`}
+    >
       {id ? (
         <Tag
           title={`ID ${typeObject === "street_base" ? "Системи" : ""}`}
@@ -31,14 +37,10 @@ export const Footer = ({
           ) : null}
         </>
       ) : null}
-      <Tag
-        title={`Додано/Оновлено  ${handleFormatDate(
-          Number(createDate) * 1000
-        )}${
-          dateEdit === "0"
-            ? ""
-            : ` / ${handleFormatDate(Number(dateEdit) * 1000)}`
-        }`}
+
+      <LikeIcon
+        className={isFavorite && "active"}
+        onClick={onToggleFavoriteStatus}
       />
     </StyledFooter>
   );
@@ -46,4 +48,14 @@ export const Footer = ({
 
 const StyledFooter = styled.div`
   gap: 3px;
+  margin-top: 10px;
+  svg {
+    height: 20px;
+    width: 20px;
+    margin-left: auto;
+    opacity: 0.1;
+    &.active {
+      opacity: 1;
+    }
+  }
 `;

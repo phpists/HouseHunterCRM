@@ -16,7 +16,7 @@ export const Info = ({
     <StyledInfo
       className={`flex flex-col justify-between hide clickable hide-scroll ${className}`}
     >
-      {ad ? null : <Header data={data} ad={ad} onOpenAdList={onOpenAdList} />}
+      {/* {ad ? null : <Header data={data} ad={ad} onOpenAdList={onOpenAdList} />} */}
       <Text
         data={data}
         editable={editable}
@@ -51,15 +51,13 @@ const StyledInfo = styled.div`
   overflow: auto;
   align-self: flex-start;
   width: calc(100% - 250px);
-  @media (min-width: 1400px) {
-    width: calc(100svw - 1029px);
-    max-width: 700px;
-  }
+
   @media (max-width: 800px) {
     width: 100%;
   }
   @media (min-width: 1400px) {
-    width: calc(100svw - 1029px);
+    width: calc(100svw - 1000px);
+    max-width: 750px;
   }
   /* @media (min-width: 1500px) {
     width: 280px;

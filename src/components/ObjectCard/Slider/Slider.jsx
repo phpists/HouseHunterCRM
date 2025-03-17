@@ -247,7 +247,7 @@ const StyledSlider = styled.div`
 
   @media (min-width: 1400px) {
     .slider {
-      width: 252px;
+      width: 200px;
     }
   }
 `;

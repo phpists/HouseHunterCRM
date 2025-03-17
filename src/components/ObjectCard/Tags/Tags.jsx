@@ -14,6 +14,9 @@ import { TAGS, SELECTION_TAGS } from "../../../constants";
 import { useParams } from "react-router-dom";
 import { AdTags } from "./AdTags/AdTags";
 import { AutoriaComment } from "./AutoriaComment";
+import { Price } from "../Info/Price";
+import { Tag } from "../MainInfo/Tags/Tag";
+import { Dropdown } from "../../Select/Dropdown/Dropdown";
 
 export const Tags = ({
   className,
@@ -37,6 +40,8 @@ export const Tags = ({
   const [actualDate, setActualDate] = useState(null);
   const actualTags = ["label_is_actual", "label_not_actual"];
   const isFirstRender = useRef(true);
+  const buttonRef = useRef();
+
   const ADDITIONAL_TAGS = {
     label_top: "Топ",
     label_recomendation: "Рекомендація",
@@ -46,6 +51,9 @@ export const Tags = ({
     const isExist = !!tags?.find((t) => t.value === val);
     const isSelectionTag = SELECTION_TAGS?.find((t) => t.value === val);
 
+    if (buttonRef.current) {
+      buttonRef.current.blur();
+    }
     if (isSelectionTag) {
       addNotepadTag({
         // actions: isExist ? "0" : "1",
@@ -135,28 +143,6 @@ export const Tags = ({
       });
     });
 
-    // if (data?.tags_folder) {
-    //   Object.entries(data?.tags_folder)
-    //     ?.filter((t) => t[1])
-    //     ?.map((t) => t[0])
-    //     ?.forEach((tag) => {
-    //       initTags.push({
-    //         title:
-    //           `${
-    //             SELECTION_TAGS.find((t) => t.value === tag)?.title ??
-    //             commentsToFields?.object[tag]
-    //           } ${
-    //             actualTags.includes(tag)
-    //               ? data?.dt_add_tags_actuals
-    //                 ? handleFormatDate(Number(data?.dt_add_tags_actuals) * 1000)
-    //                 : ""
-    //               : ""
-    //           }` ?? "-",
-    //         value: tag,
-    //       });
-    //     });
-    // }
-
     setTags(initTags);
   };
 
@@ -175,13 +161,38 @@ export const Tags = ({
     }
   }, [data, tagsList, commentsToFields]);
 
+  console.log(tags);
   return (
-    <StyledTags className={`flex flex-col hide-scroll clickable ${className}`}>
-      {ad ? (
-        <AdTags data={data} onUpdateField={onUpdateField} noEdit={noEdit} />
-      ) : (
+    <>
+      {ad ? null : (
         <>
-          <SelectTags
+          {tags?.map(({ title, value }) => (
+            <Tag
+              title={title}
+              onRemove={() => handleSelect(value)}
+              className="green"
+            />
+          ))}
+          <StyledTags
+            className="relative"
+            onClick={(e) => e.stopPropagation()}
+            ref={buttonRef}
+          >
+            <Tag title="+" />
+            <Dropdown
+              options={[
+                ...(tagsList?.data?.map((value) => ({
+                  title:
+                    commentsToFields?.object[value] ??
+                    ADDITIONAL_TAGS[value] ??
+                    "-",
+                  value,
+                })) ?? []),
+              ]}
+              onChange={handleSelect}
+            />
+          </StyledTags>
+          {/* <SelectTags
             label="Теги"
             showTags
             tags={tags}
@@ -197,47 +208,21 @@ export const Tags = ({
             ]}
             onChange={handleSelect}
             hide
-          />
-          {data?.acsses_change || data?.type_object === "street_base" ? (
-            <Comment
-              id={data?.id}
-              comment={data?.comment}
-              onChangeComment={onChangeComment}
-            />
-          ) : data?.comment?.length > 0 ? (
-            <Comment
-              id={data?.id}
-              comment={data?.comment}
-              onChangeComment={onChangeComment}
-            />
-          ) : null}
-          <AutoriaComment comment={data?.comment_autoria} />
+          /> */}
         </>
       )}
-    </StyledTags>
+    </>
   );
 };
 
-const StyledTags = styled.div`
-  padding: 8px;
-  border-radius: 9px;
-  background: var(--bg-80);
-  width: 100%;
-  margin-right: 10px;
-  height: 200px;
-  overflow: auto;
-  @media (min-width: 1400px) {
-    width: 230px;
-  }
-  @media (min-width: 1600px) {
-    width: 230px;
-  }
-  @media (min-width: 1800px) {
-    width: 18svw;
-  }
-  @media (max-width: 1399.9px) {
-    width: 100%;
-    height: 250px;
-    margin-right: 18px;
+const StyledTags = styled.button`
+  &:focus {
+    .selectDropdown {
+      visibility: visible;
+      opacity: 1;
+      width: 250px;
+      border-radius: 10px;
+      text-align: left;
+    }
   }
 `;

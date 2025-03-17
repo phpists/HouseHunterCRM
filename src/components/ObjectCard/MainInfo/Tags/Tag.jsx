@@ -1,16 +1,42 @@
 import styled from "styled-components";
+import { ReactComponent as CloseIcon } from "../../../../assets/images/close.svg";
 
-export const Tag = ({ Icon, title, hoverTitle }) => (
+export const Tag = ({
+  Icon,
+  title,
+  titleHtml,
+  subtitle,
+  hoverTitle,
+  className,
+  iIcom,
+  onRemove,
+}) => (
   <StyledTag
-    className="flex items-center clickable select-none"
+    className={`flex items-center clickable select-none ${className}`}
     title={hoverTitle ?? title}
   >
     {Icon ? Icon : null}
-    <div className="title clickable">{title}</div>
+    {iIcom ? <i className={iIcom} /> : null}
+    <div className="title clickable">
+      {title}
+      {titleHtml}
+      {subtitle}
+    </div>
+    {onRemove ? (
+      <button
+        className="flex items-center justify-center notClickable !m-0"
+        onClick={onRemove}
+      >
+        <CloseIcon className="notClickable  !m-0" />
+      </button>
+    ) : null}
   </StyledTag>
 );
 
 const StyledTag = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
   padding: 4px 6px;
   border-radius: 5px;
   background: var(--tag-bg-2);
@@ -24,15 +50,13 @@ const StyledTag = styled.div`
   line-height: 1;
   letter-spacing: 0.22px;
   height: max-content;
-  .title {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 150px;
-    overflow: hidden;
-  }
+
   svg {
     margin-right: 4px;
     height: 12px;
     width: 12px;
+  }
+  &.green {
+    background: var(--green-tag-bg);
   }
 `;

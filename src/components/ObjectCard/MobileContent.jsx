@@ -69,6 +69,8 @@ export const MobileContent = ({
         idSource={data?.id_ad_in_source}
         nameSource={data?.id_source}
         typeObject={data?.type_object}
+        onToggleFavoriteStatus={onToggleFavoriteStatus}
+        isFavorite={data?.favorite}
       />
     )}
     {/* <MainInfo

@@ -9,12 +9,32 @@ import {
   useGetRubricsQuery,
   useLazyGetRubricsFieldsQuery,
 } from "../../../../store/requests/requests.api";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { handleGetLocationAllPath } from "../../../../utilits";
 
 export const Tags = ({ data, ad }) => {
   const { data: locationsList } = useGetLocationsQuery();
   const { data: rubricsList } = useGetRubricsQuery();
   const [getRubricField, { data: fields }] = useLazyGetRubricsFieldsQuery();
+  const [formatedLocations, setFormatedLocations] = useState([]);
+
+  const handleFormatLocations = () => {
+    const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
+    const locations = Object.entries(locationsList)
+      .sort((a, b) => Number(b[1].id_parent) - Number(a[1].id_parent))
+      ?.map((loc) => loc[1])
+      .map(({ id, id_parent, name }) => {
+        return handleGetLocationAllPath(locList, id, id_parent, name, "-");
+      });
+
+    setFormatedLocations(locations);
+  };
+
+  useEffect(() => {
+    if (locationsList) {
+      handleFormatLocations();
+    }
+  }, [locationsList]);
 
   useEffect(() => {
     getRubricField(1);
@@ -33,19 +53,31 @@ export const Tags = ({ data, ad }) => {
     ...(data?.сar_mileage &&
     data?.сar_mileage?.length > 0 &&
     Number(data?.сar_mileage) / 1000 > 0
+      ? [{ title: `${Number(data?.сar_mileage) / 1000} тис`, Icon: <Car /> }]
+      : []),
+    ...(formatedLocations?.find((l) => l?.value === data?.id_location)
       ? [
           {
-            title: `${Number(data?.сar_mileage) / 1000} тис. км.`,
-            Icon: <Car />,
+            title: `${formatedLocations
+              ?.find((l) => l?.value === data?.id_location)
+              ?.title?.split("=>")
+              ?.reverse()
+              ?.join(" - ")}`,
+            Icon: <Home />,
           },
         ]
       : []),
-    ...(data?.id_type_fuel &&
-    data?.id_type_fuel?.length > 0 &&
-    data?.id_type_fuel !== "0"
+    ...((data?.id_type_fuel &&
+      data?.id_type_fuel?.length > 0 &&
+      data?.id_type_fuel !== "0") ||
+    (data?.volume_engine &&
+      data?.volume_engine?.length > 0 &&
+      Number(data?.volume_engine) / 1000 > 0)
       ? [
           {
-            title: `${handleGetTagValue("id_type_fuel", data?.id_type_fuel)}`,
+            title: `${Number(data?.volume_engine) / 1000} ${
+              handleGetTagValue("id_type_fuel", data?.id_type_fuel) ?? ""
+            }`,
             Icon: <Fuel />,
           },
         ]
@@ -54,50 +86,48 @@ export const Tags = ({ data, ad }) => {
       ? [
           {
             title: `${handleGetTagValue("kpp", data?.kpp)}`,
+            Icon: <Car />,
           },
         ]
       : []),
-    ...(data?.year && data?.year?.length > 0 && Number(data?.year) > 0
-      ? [{ title: `Рік випуску ${data?.year}р` }]
+    ...(data?.drive_type &&
+    data?.drive_type?.length > 0 &&
+    data?.drive_type !== "0"
+      ? [
+          {
+            title: `${handleGetTagValue("drive_type", data?.drive_type)}`,
+            Icon: <Fuel />,
+          },
+        ]
       : []),
-    ...(data?.volume_engine &&
-    data?.volume_engine?.length > 0 &&
-    Number(data?.volume_engine) / 1000 > 0
-      ? [{ title: `Об'єм ${Number(data?.volume_engine) / 1000} л.` }]
-      : []),
-    // ...(data.liquidity === "1" ? [{ title: `Ліквідно` }] : []),
 
-    ...(ad && rubricsList?.find((r) => r.id === data?.id_rubric)?.name
-      ? [{ title: rubricsList?.find((r) => r.id === data?.id_rubric)?.name }]
-      : []),
-    ...(data?.location_name && data?.location_name?.length > 0
-      ? [
-          {
-            title: `${data?.location_name}`,
-            Icon: <Home />,
-          },
-        ]
-      : []),
-    ...(data?.rubric_name && data?.rubric_name?.length > 0
-      ? [{ title: data?.rubric_name }]
-      : []),
-    ...(locationsList &&
-    Object.entries(locationsList)?.find(
-      (l) => l?.[1]?.id === data?.id_location
-    )?.[1]?.name &&
-    ad
-      ? [
-          {
-            title: `${
-              Object.entries(locationsList)?.find(
-                (l) => l?.[1]?.id === data?.id_location
-              )?.[1]?.name
-            }`,
-            Icon: <Home />,
-          },
-        ]
-      : []),
-    ...(data?.street?.length > 0 ? [{ title: `вул. ${data?.street}` }] : []),
+    // ...(ad && rubricsList?.find((r) => r.id === data?.id_rubric)?.name
+    //   ? [{ title: rubricsList?.find((r) => r.id === data?.id_rubric)?.name }]
+    //   : []),
+    // ...(data?.location_name && data?.location_name?.length > 0
+    //   ? [
+    //       {
+    //         title: `${data?.location_name}`,
+    //         Icon: <Home />,
+    //       },
+    //     ]
+    //   : []),
+    // ...(data?.rubric_name && data?.rubric_name?.length > 0
+    //   ? [{ title: data?.rubric_name }]
+    //   : []),
+    // ...(formatedLocations?.find((l) => l?.value === data?.id_location)
+    //   ? [
+    //       {
+    //         title: `${formatedLocations
+    //           ?.find((l) => l?.value === data?.id_location)
+    //           ?.title?.split("=>")
+    //           ?.reverse()
+    //           ?.join(" - ")}`,
+    //         Icon: <Home />,
+    //       },
+    //     ]
+    //   : []),
+    // ...(data?.street?.length > 0 ? [{ title: `вул. ${data?.street}` }] : []),
     // ...(data?.price_change_for_last &&
     // data?.price_change_for_last?.length > 0 &&
     // Number(data?.price_change_for_last) > 0
@@ -112,11 +142,11 @@ export const Tags = ({ data, ad }) => {
     // Number(data?.price_change_for_first) > 0
     //   ? [{ title: `Різниця ціни до першої ${data?.price_change_for_first}$` }]
     //   : []),
-    ...(data?.index_overbuying &&
-    data?.index_overbuying?.length > 0 &&
-    Number(data?.index_overbuying) > 0
-      ? [{ title: `${data?.index_overbuying}/10` }]
-      : []),
+    // ...(data?.index_overbuying &&
+    // data?.index_overbuying?.length > 0 &&
+    // Number(data?.index_overbuying) > 0
+    //   ? [{ title: `${data?.index_overbuying}/10` }]
+    //   : []),
 
     // ...(data?.count_likes &&
     // data?.count_likes?.length > 0 &&
@@ -129,35 +159,34 @@ export const Tags = ({ data, ad }) => {
     // Number(data?.count_views) > 0
     //   ? [{ title: `К-сть переглядів ${data?.count_views}` }]
     //   : []),
-    ...(data?.tag_faster && data?.tag_faster === "1"
-      ? [{ title: "Терміново" }]
-      : []),
-    ...(data?.tag_nativePaint && data?.tag_nativePaint === "1"
-      ? [{ title: "Рідна фарба" }]
-      : []),
-    ...(data?.tag_exchangePossible && data?.tag_exchangePossible === "1"
-      ? [{ title: "Можливий обмін" }]
-      : []),
-    ...(data?.tag_freshlyDriven && data?.tag_freshlyDriven === "1"
-      ? [{ title: "Свіжопригнана" }]
-      : []),
-    ...(data?.tag_afterDTP && data?.tag_afterDTP === "1"
-      ? [{ title: "Після дтп" }]
-      : []),
-    ...(data?.tag_market_bottom && data?.tag_market_bottom === "1"
-      ? [{ title: "По низу ринку" }]
-      : []),
+    // ...(data?.tag_faster && data?.tag_faster === "1"
+    //   ? [{ title: "Терміново" }]
+    //   : []),
+    // ...(data?.tag_nativePaint && data?.tag_nativePaint === "1"
+    //   ? [{ title: "Рідна фарба" }]
+    //   : []),
+    // ...(data?.tag_exchangePossible && data?.tag_exchangePossible === "1"
+    //   ? [{ title: "Можливий обмін" }]
+    //   : []),
+    // ...(data?.tag_freshlyDriven && data?.tag_freshlyDriven === "1"
+    //   ? [{ title: "Свіжопригнана" }]
+    //   : []),
+    // ...(data?.tag_afterDTP && data?.tag_afterDTP === "1"
+    //   ? [{ title: "Після дтп" }]
+    //   : []),
+    // ...(data?.tag_market_bottom && data?.tag_market_bottom === "1"
+    //   ? [{ title: "По низу ринку" }]
+    //   : []),
     // ...(data?.tag_market_bottom &&
     // data?.tag_price_dump !== "0" &&
     // new Date(Number(data?.tag_price_dump) * 1000) >= new Date().getTime()
     //   ? [{ title: "Ціна сиплеться" }]
     //   : []),
-    ...(data?.exchangePossible && data?.exchangePossible === "1"
-      ? [{ title: "Можливий обмін" }]
-      : []),
+    // ...(data?.exchangePossible && data?.exchangePossible === "1"
+    //   ? [{ title: "Можливий обмін" }]
+    //   : []),
   ];
 
-  console.log(data?.kpp);
   return (
     <StyledTags className="flex flex-wrap hide-scroll clickable">
       {TAGS.map(({ title, Icon, hoverTitle }, i) => (
@@ -169,13 +198,16 @@ export const Tags = ({ data, ad }) => {
 
 const StyledTags = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 4px;
-  @media (min-width: 1400px) and (max-width: 1500px) {
-    width: 250px;
-    grid-template-columns: repeat(2, 1fr);
+  width: 250px;
+  .title {
+    max-width: 100px;
+  }
+  @media (min-width: 1400px) {
+    width: 100%;
     .title {
-      max-width: 120px;
+      max-width: 110px;
     }
   }
 `;

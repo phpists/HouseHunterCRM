@@ -2,6 +2,10 @@ import styled from "styled-components";
 import { Button } from "./Button";
 import { Dropdown } from "./Dropdown";
 import { useRef, useState } from "react";
+import { ReactComponent as StarIcon } from "../../../assets/images/card-star.svg";
+import { ReactComponent as PhoneIcon } from "../../../assets/images/phone-menu.svg";
+import { ReactComponent as ChatIcon } from "../../../assets/images/chat-grey.svg";
+import { ActionButton } from "./ActionButton";
 
 export const ShowMore = ({
   clientId,
@@ -33,6 +37,8 @@ export const ShowMore = ({
   onDeleteHistory,
   onDeleteAd,
   idRubric,
+  onOpenCommentAutoria,
+  onOpenPhonesModal,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -57,7 +63,22 @@ export const ShowMore = ({
 
   return (
     <StyledShowMore isfocusedbtn={isFocusedBtn?.toString()} ref={moreRef}>
-      <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />
+      <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />{" "}
+      {!isDeleted && (
+        <ActionButton
+          Icon={StarIcon}
+          onClick={onToggleFavoriteStatus}
+          active={isFavorite}
+        />
+      )}{" "}
+      <ActionButton Icon={PhoneIcon} onClick={onOpenPhonesModal} />{" "}
+      {onOpenCommentAutoria && (
+        <ActionButton
+          Icon={ChatIcon}
+          onClick={onOpenCommentAutoria}
+          className={`${onOpenCommentAutoria && "chat-active"}`}
+        />
+      )}
       <Dropdown
         clientId={clientId}
         id={id}
@@ -95,9 +116,10 @@ export const ShowMore = ({
 };
 
 const StyledShowMore = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 10px;
   ${({ isfocusedbtn }) =>
     isfocusedbtn === "true" &&
     `
@@ -109,5 +131,27 @@ const StyledShowMore = styled.button`
   &:focus  .dropdown {
     opacity: 1;
     visibility: visible;
+  }
+  .chat-active {
+    position: relative;
+    &::before {
+      content: "";
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 100%;
+      background: red;
+      flex-shrink: 0;
+      position: absolute;
+      right: 7px;
+      top: 6px;
+      border: 1px solid #474747;
+      box-sizing: content-box;
+    }
+  }
+  @media (max-width: 1110px) {
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
 `;

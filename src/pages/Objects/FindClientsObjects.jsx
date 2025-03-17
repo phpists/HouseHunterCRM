@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Modal } from "../../components/Modal/Modal";
 import { useLazyGetPhoneObjectQuery } from "../../store/objects/objects.api";
 import { useEffect, useState } from "react";
-import { handleResponse } from "../../utilits";
+import { handleCopy, handleResponse } from "../../utilits";
 import { Loader } from "../../components/Loader";
 import { Phones } from "../../components/Phones/Phones";
 import { Phone } from "../../components/Phones/Phone";
@@ -32,7 +32,7 @@ export const FindClientsObjects = ({ onClose, id }) => {
 
   return (
     <StyledFindClientsObjects>
-      <Modal title="Знайти всі автомобілі у даного клієнта" onClose={onClose}>
+      <Modal title="Телефони" onClose={onClose}>
         <div>
           {loading ? (
             <Loader white className="loader" />
@@ -46,15 +46,7 @@ export const FindClientsObjects = ({ onClose, id }) => {
                   phone={p?.phone}
                   maskedPhone={p?.phone}
                   className="phone-card"
-                  onClick={() =>
-                    window.open(
-                      `/objects?findClientsObjects=${p?.phone?.replace(
-                        "38",
-                        ""
-                      )}`,
-                      "_blank"
-                    )
-                  }
+                  onClick={() => handleCopy(p?.phone)}
                 />
               ))}
             </div>
