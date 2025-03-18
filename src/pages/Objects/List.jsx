@@ -270,7 +270,7 @@ export const List = ({
           object={openObjectInfo}
         />
       ) : null}
-      {commentModal ? (
+      {typeof commentModal === "string" ? (
         <CommentModal
           onClose={() => setCommentModal(null)}
           comment={commentModal}
@@ -366,10 +366,8 @@ export const List = ({
                 }
                 onOpenAdList={() => setAdListModal(d)}
                 onOpenInfo={() => setOpenObjectInfo(d)}
-                onOpenCommentAutoria={
-                  data?.comment_autoria
-                    ? () => setCommentModal(data?.comment_autoria)
-                    : null
+                onOpenCommentAutoria={() =>
+                  setCommentModal(data?.comment_autoria ?? "")
                 }
                 // onOpenPhonesModal={() => setPhonesModal(d)}
               />

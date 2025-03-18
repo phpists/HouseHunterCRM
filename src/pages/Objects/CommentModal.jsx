@@ -5,7 +5,9 @@ export const CommentModal = ({ onClose, comment }) => {
   return (
     <StyledCommentModal>
       <Modal onClose={onClose} title="Коментар">
-        <div className="text">{comment}</div>
+        <div className="text">
+          {comment?.length > 0 ? comment : "Коментар відсутній"}
+        </div>
       </Modal>
     </StyledCommentModal>
   );
@@ -13,7 +15,7 @@ export const CommentModal = ({ onClose, comment }) => {
 
 const StyledCommentModal = styled.div`
   .modal {
-    max-width: 700px;
+    max-width: 500px;
   }
   .text {
     color: var(--main-color);

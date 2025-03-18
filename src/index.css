@@ -534,7 +534,17 @@ input[type="number"] {
   }
 }
 
-
+@keyframes alertRed {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 .socmediaCardSmallPhone {
   width: 32px !important;

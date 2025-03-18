@@ -55,16 +55,20 @@ const StyledPhoto = styled(ReactImageMagnify)`
     min-height: 130px !important;
     width: 170px !important;
     border-radius: 5px !important;
-    height: 100% !important;
+    height: 170px !important;
     object-fit: cover;
   }
   img {
     max-width: unset !important;
   }
   .previewContainer {
-    width: 500px !important;
-    height: 500px !important;
+    width: 170px !important;
+    height: 170px !important;
     border-radius: 5px !important;
     z-index: 1000 !important;
+    background: var(--main-bg);
+    img {
+      object-fit: cover;
+    }
   }
 `;

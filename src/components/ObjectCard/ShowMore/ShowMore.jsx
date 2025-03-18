@@ -39,6 +39,7 @@ export const ShowMore = ({
   idRubric,
   onOpenCommentAutoria,
   onOpenPhonesModal,
+  commentAutoria,
 }) => {
   const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const moreRef = useRef(null);
@@ -76,7 +77,7 @@ export const ShowMore = ({
         <ActionButton
           Icon={ChatIcon}
           onClick={onOpenCommentAutoria}
-          className={`${onOpenCommentAutoria && "chat-active"}`}
+          className={`${commentAutoria && "chat-active pulse"}`}
         />
       )}
       <Dropdown
@@ -147,6 +148,7 @@ const StyledShowMore = styled.button`
       top: 6px;
       border: 1px solid #474747;
       box-sizing: content-box;
+      animation: alertRed 2s infinite;
     }
   }
   @media (max-width: 1110px) {

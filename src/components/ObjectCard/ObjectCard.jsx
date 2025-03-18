@@ -126,6 +126,7 @@ export const ObjectCard = memo(
           idRubric={data?.id_rubric}
           onOpenCommentAutoria={onOpenCommentAutoria}
           onOpenPhonesModal={onOpenPhonesModal}
+          commentAutoria={data?.comment_autoria}
         />
       </StyledObjectCard>
     );

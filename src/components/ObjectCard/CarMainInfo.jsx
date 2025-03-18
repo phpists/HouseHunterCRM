@@ -108,14 +108,14 @@ export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
         titleHtml={
           <>
             На модерації {handleCheckIsNew() ? "• NEW" : ""} •
-            <span className={`mx-[1px] ${data?.Count_object >= 5 && "red"}`}>
-              {data?.Count_object >= 10
-                ? "Перекуп"
-                : data?.Count_object >= 5
-                ? "Перекуп ?"
+            <span className={`mx-[1px] ${data?.Count_object > 5 && "red"}`}>
+              {data?.Count_object > 10
+                ? "Перекуп "
+                : data?.Count_object > 5
+                ? "Перекуп ? "
                 : data?.Count_object >= 2
-                ? "Перекуп"
-                : "Продавець"}
+                ? "Перекуп ? "
+                : "Продавець "}
               ({data?.Count_object})
             </span>
           </>

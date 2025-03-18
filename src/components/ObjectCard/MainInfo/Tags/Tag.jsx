@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { ReactComponent as CloseIcon } from "../../../../assets/images/close.svg";
+import { handleCopy } from "../../../../utilits";
 
 export const Tag = ({
   Icon,
@@ -10,10 +11,20 @@ export const Tag = ({
   className,
   iIcom,
   onRemove,
+  copy,
+  сopyValue,
 }) => (
   <StyledTag
     className={`flex items-center clickable select-none ${className}`}
     title={hoverTitle ?? title}
+    onClick={(e) =>
+      copy
+        ? (() => {
+            e.stopPropagation();
+            handleCopy(сopyValue ?? title);
+          })()
+        : null
+    }
   >
     {Icon ? Icon : null}
     {iIcom ? <i className={iIcom} /> : null}

@@ -31,6 +31,7 @@ export const CarInfo = ({
     textRef.current.innerHTML = textDividedByBr;
   }, [data]);
 
+  console.log(data);
   return (
     <StyledCarInfo>
       {" "}
@@ -46,10 +47,36 @@ export const CarInfo = ({
         style={{ maxHeight: 150 - (tagsRef?.current?.offsetHeight ?? 0) }}
       ></div>
       <div className="tags" ref={tagsRef}>
-        {data.VIN && <Tag title={`VIN ${data.VIN}`} />}
-        {data?.state_number && <Tag title={data?.state_number} />}
-        {data.id_source && <Tag title={sources[data.id_source]} />}
-        {data?.id_ad_in_source && <Tag title={`ID ${data?.id_ad_in_source}`} />}
+        {data.VIN && <Tag title={`VIN ${data.VIN}`} copy />}
+        {data?.state_number && <Tag title={data?.state_number} copy />}
+        {data.id_source && (
+          <Tag
+            title={sources[data.id_source]}
+            сopyValue={data?.id_ad_in_source}
+            copy
+          />
+        )}
+        {data?.tag_faster && data?.tag_faster === "1" && (
+          <Tag title={"Терміново"} />
+        )}
+        {data?.tag_nativePaint && data?.tag_nativePaint === "1" && (
+          <Tag title={"Рідна фарба"} />
+        )}
+        {data?.tag_freshlyDriven &&
+          (data?.tag_freshlyDriven === "1") === "1" && (
+            <Tag title={"Свіжопригнана"} />
+          )}
+        {data?.tag_afterDTP && data?.tag_afterDTP === "1" && (
+          <Tag title={"Після дтп"} />
+        )}
+        {data?.tag_market_bottom &&
+          (data?.tag_market_bottom === "1") === "1" && (
+            <Tag title={"По низу ринку"} />
+          )}
+        {data?.exchangePossible && data?.exchangePossible === "1" && (
+          <Tag title={"Можливий обмін"} />
+        )}
+
         <Tag title={data?.count_views} iIcom="bi bi-eye" />
         <Tag title={data?.count_likes} iIcom="bi bi-heart" />
         <Tags
