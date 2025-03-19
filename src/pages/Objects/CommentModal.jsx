@@ -2,12 +2,16 @@ import styled from "styled-components";
 import { Modal } from "../../components/Modal/Modal";
 
 export const CommentModal = ({ onClose, comment }) => {
+  console.log(comment);
   return (
     <StyledCommentModal>
       <Modal onClose={onClose} title="Коментар">
-        <div className="text">
-          {comment?.length > 0 ? comment : "Коментар відсутній"}
-        </div>
+        <div
+          className="text"
+          dangerouslySetInnerHTML={{
+            __html: comment?.length > 0 ? comment : "Коментар відсутній",
+          }}
+        ></div>
       </Modal>
     </StyledCommentModal>
   );

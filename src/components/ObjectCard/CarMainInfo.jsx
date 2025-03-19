@@ -113,7 +113,7 @@ export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
                 ? "Перекуп "
                 : data?.Count_object > 5
                 ? "Перекуп ? "
-                : data?.Count_object >= 2
+                : data?.Count_object > 2
                 ? "Перекуп ? "
                 : "Продавець "}
               ({data?.Count_object})

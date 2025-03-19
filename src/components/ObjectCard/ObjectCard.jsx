@@ -7,6 +7,7 @@ import { Photo } from "./Photo";
 import { CarMainInfo } from "./CarMainInfo";
 import { ShowMore } from "./ShowMore/ShowMore";
 import { CarInfo } from "./CarInfo";
+import { checkIsArray, checkIsJSON } from "../../utilits";
 
 export const ObjectCard = memo(
   ({
@@ -85,7 +86,13 @@ export const ObjectCard = memo(
         onClick={handleClick}
         ref={ref}
       >
-        <Photo photos={data?.img.map((p) => p.name)} />
+        <Photo
+          photos={
+            checkIsArray(checkIsJSON(data?.photo_links_json))?.length > 0
+              ? checkIsArray(checkIsJSON(data?.photo_links_json))
+              : checkIsArray(checkIsJSON(data?.photos_json))
+          }
+        />
         <CarMainInfo data={data} onOpenPriceHistory={onOpenPriceHistory} />
         <CarInfo
           data={data}
@@ -145,7 +152,7 @@ const StyledObjectCard = styled.div`
   gap: 20px;
   width: 100%;
   @media (max-width: 1110px) {
-    grid-template-columns: 170px 1fr;
+    grid-template-columns: 230px 1fr;
     padding-right: 50px;
   }
   /* min-height: 160px; */

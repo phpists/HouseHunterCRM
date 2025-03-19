@@ -40,25 +40,22 @@ export const Price = ({ data }) => {
     }
   };
 
+  console.log(handleGetPrices(data?.price_history_json));
+
   return (
     <StyledPrice>
       <div className="flex items-center gap-[3px] price closedPrice">
-        <div
-          className={`${
-            data?.tag_market_bottom &&
-            data?.tag_price_dump !== "0" &&
-            new Date(Number(data?.tag_price_dump) * 1000) >=
-              new Date().getTime() &&
-            "danger-price animate-pulse"
-          }`}
-        >
+        <div className="flex items-center gap-1">
           {" "}
           {`$${data?.price_usd ?? data?.price}`}
           {data?.tag_market_bottom &&
           data?.tag_price_dump !== "0" &&
-          new Date(Number(data?.tag_price_dump) * 1000) >= new Date().getTime()
-            ? "!!!"
-            : ""}
+          new Date(Number(data?.tag_price_dump) * 1000) >=
+            new Date().getTime() ? (
+            <div className="danger-price animate-pulse">!!!</div>
+          ) : (
+            ""
+          )}
         </div>
 
         {/* {["1", "2"].includes(data?.price_change_up) ? (
@@ -74,10 +71,9 @@ export const Price = ({ data }) => {
         </span>
       </div>
       <div className="last-prices">
-        {handleGetPrices(data?.price_history_json)?.length < 1
+        {handleGetPrices(data?.price_history_json)?.length < 3
           ? null
           : handleGetPrices(data?.price_history_json)
-              ?.reverse()
               .slice(0, 2)
               ?.map((p, i) => (
                 <>

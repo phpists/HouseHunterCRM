@@ -31,7 +31,6 @@ export const CarInfo = ({
     textRef.current.innerHTML = textDividedByBr;
   }, [data]);
 
-  console.log(data);
   return (
     <StyledCarInfo>
       {" "}
@@ -76,6 +75,7 @@ export const CarInfo = ({
         {data?.exchangePossible && data?.exchangePossible === "1" && (
           <Tag title={"Можливий обмін"} />
         )}
+        {data?.id && <Tag title={"ID"} copy сopyValue={data?.id} />}
 
         <Tag title={data?.count_views} iIcom="bi bi-eye" />
         <Tag title={data?.count_likes} iIcom="bi bi-heart" />

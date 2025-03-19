@@ -161,7 +161,6 @@ export const Tags = ({
     }
   }, [data, tagsList, commentsToFields]);
 
-  console.log(tags);
   return (
     <>
       {ad ? null : (

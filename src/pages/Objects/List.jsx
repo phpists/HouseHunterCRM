@@ -367,7 +367,7 @@ export const List = ({
                 onOpenAdList={() => setAdListModal(d)}
                 onOpenInfo={() => setOpenObjectInfo(d)}
                 onOpenCommentAutoria={() =>
-                  setCommentModal(data?.comment_autoria ?? "")
+                  setCommentModal(d?.comment_autoria ?? "")
                 }
                 // onOpenPhonesModal={() => setPhonesModal(d)}
               />

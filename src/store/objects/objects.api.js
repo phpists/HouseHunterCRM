@@ -672,6 +672,18 @@ export const objects = createApi({
         }),
       }),
     }),
+    addViewLink: build.query({
+      query: (id_hash) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "addViewLink",
+          mod: "objects",
+          id_hash,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -724,5 +736,6 @@ export const {
   useLazyRotateImageQuery,
   useLazyGetBrandsQuery,
   useLazyGetModelsQuery,
-  useLazyGetCarBodyQuery
+  useLazyGetCarBodyQuery,
+  useLazyAddViewLinkQuery
 } = objects;

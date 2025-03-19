@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { PhotoSlider } from "react-photo-view";
 import styled from "styled-components";
 import ReactImageMagnify from "react-image-magnify";
+import noPhoto from "../../assets/images/no-photo.webp";
 
 export const Photo = ({ photos }) => {
   const [openView, setOpenView] = useState(false);
@@ -12,19 +13,18 @@ export const Photo = ({ photos }) => {
       <StyledPhoto
         {...{
           smallImage: {
-            alt: "Wristwatch by Ted Baker London",
             isFluidWidth: true,
-            src: photos?.[0],
+            src: photos?.[0] ?? noPhoto,
           },
           largeImage: {
-            src: photos?.[0],
-            width: 1400,
+            src: photos?.[0] ?? noPhoto,
+            width: 1200,
             height: 1800,
           },
         }}
-        onClick={() => setOpenView(true)}
+        // onClick={() => setOpenView(true)}
         enlargedImageContainerClassName="previewContainer"
-        imageClassName="previewImage"
+        imageClassName={`previewImage ${!photos?.[0] && "empty"}`}
       />
       {/* <StyledPhoto
         style={{ background: `url(${photos?.[0]}) center/cover no-repeat` }}
@@ -52,11 +52,14 @@ export const Photo = ({ photos }) => {
 
 const StyledPhoto = styled(ReactImageMagnify)`
   .previewImage {
-    min-height: 130px !important;
-    width: 170px !important;
+    width: 230px !important;
     border-radius: 5px !important;
     height: 170px !important;
-    object-fit: cover;
+    object-fit: contain;
+    background: var(--main-bg);
+    &.empty {
+      object-fit: cover;
+    }
   }
   img {
     max-width: unset !important;
@@ -68,7 +71,7 @@ const StyledPhoto = styled(ReactImageMagnify)`
     z-index: 1000 !important;
     background: var(--main-bg);
     img {
-      object-fit: cover;
+      /* object-fit: cover; */
     }
   }
 `;

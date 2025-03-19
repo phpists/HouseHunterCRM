@@ -21,6 +21,7 @@ import { ReactComponent as DeleteIcon } from "../../../assets/images/delete-info
 
 import {
   useLazyAddStreetBaseObjectQuery,
+  useLazyAddViewLinkQuery,
   useLazyDownloadObjectQuery,
 } from "../../../store/objects/objects.api";
 import {
@@ -68,6 +69,7 @@ export const Dropdown = ({
   const [added, setAdded] = useState(false);
   const navigate = useNavigate();
   const [downloadObject] = useLazyDownloadObjectQuery();
+  const [addViewLink] = useLazyAddViewLinkQuery();
 
   useEffect(() => {
     setAdded(false);
@@ -93,6 +95,11 @@ export const Dropdown = ({
 
   const handleAdDisabled = () => {
     showAlert("error", "Дана рубрика для реклами не підримується");
+  };
+
+  const handleOpenSource = () => {
+    addViewLink(id);
+    window.open(link, "_blank");
   };
 
   return (
@@ -202,7 +209,7 @@ export const Dropdown = ({
           {link?.length > 0 && (
             <div
               className="flex items-center justify-between"
-              onClick={() => window.open(link, "_blank")}
+              onClick={handleOpenSource}
             >
               Перейти на першоджерело
               <Link className="selection-icon" />
@@ -223,7 +230,7 @@ export const Dropdown = ({
           {link?.length > 0 && (
             <div
               className="flex items-center justify-between"
-              onClick={() => window.open(link, "_blank")}
+              onClick={handleOpenSource}
             >
               Перейти на першоджерело
               <Link className="selection-icon" />
