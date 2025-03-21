@@ -225,11 +225,7 @@ export const Profile = () => {
   };
 
   const handleOpenNotifications = () => {
-    if (data?.count_notify > 0) {
-      setOpenNotifications(!openNotifications);
-    } else {
-      showAlert("error", "Немає сповіщень");
-    }
+    setOpenNotifications(!openNotifications);
   };
 
   const handleLogout = () => {

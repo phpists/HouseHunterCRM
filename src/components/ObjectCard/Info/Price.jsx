@@ -40,8 +40,6 @@ export const Price = ({ data }) => {
     }
   };
 
-  console.log(handleGetPrices(data?.price_history_json));
-
   return (
     <StyledPrice>
       <div className="flex items-center gap-[3px] price closedPrice">

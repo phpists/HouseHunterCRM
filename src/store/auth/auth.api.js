@@ -808,6 +808,29 @@ export const auth = createApi({
         }),
       }),
     }),
+    getNofiticationMobileApp: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "profile",
+          action: "getNofiticationMobileApp",
+        }),
+      }),
+    }),
+    changeNotificationMobileApp: build.query({
+      query: (data) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          mod: "profile",
+          action: "changeNotificationMobileApp",
+          ...data,
+        }),
+      }),
+    }),
   }),
 });
 
@@ -868,4 +891,6 @@ export const {
   useLazyAddUserFilterQuery,
   useLazyRemoveUserFilterQuery,
   useGetUserFiltersQuery,
+  useGetNofiticationMobileAppQuery,
+  useLazyChangeNotificationMobileAppQuery,
 } = auth;

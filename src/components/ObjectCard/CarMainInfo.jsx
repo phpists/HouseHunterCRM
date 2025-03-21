@@ -74,7 +74,11 @@ export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
       </div>
       <div className="top-tags">
         <Tag
-          title={`${Number(data?.сar_mileage) / 1000} тис. км.`}
+          title={`${
+            Number(data?.сar_mileage) / 1000 === 0
+              ? "-"
+              : Number(data?.сar_mileage) / 1000
+          } тис. км.`}
           iIcom="bi bi-speedometer2"
         />
         <Tag
@@ -85,9 +89,11 @@ export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
           iIcom="bi bi-geo-alt"
         />
         <Tag
-          title={`${Number(data?.volume_engine) / 1000} • ${
-            handleGetTagValue("id_type_fuel", data?.id_type_fuel) ?? ""
-          }`}
+          title={`${
+            Number(data?.volume_engine) / 1000 === 0
+              ? "-"
+              : Number(data?.volume_engine) / 1000
+          } • ${handleGetTagValue("id_type_fuel", data?.id_type_fuel) ?? ""}`}
           iIcom="bi bi-fuel-pump"
         />
         <Tag
@@ -96,18 +102,17 @@ export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
         />
       </div>{" "}
       <Tag
-        title={`${handleGetTagValue(
-          "drive_type",
-          data?.drive_type
-        )} • Універсал •  ${data.index_overbuying}/10 • TOP ${
-          data?.data_level
-        }`}
+        title={`${
+          data?.drive_type === "0"
+            ? "-"
+            : handleGetTagValue("drive_type", data?.drive_type)
+        } • Універсал •  ${data.index_overbuying}/10 • TOP ${data?.data_level}`}
         className="mb-2.5"
       />
       <Tag
         titleHtml={
           <>
-            На модерації {handleCheckIsNew() ? "• NEW" : ""} •
+            {handleCheckIsNew() ? "• NEW" : ""} •
             <span className={`mx-[1px] ${data?.Count_object > 5 && "red"}`}>
               {data?.Count_object > 10
                 ? "Перекуп "

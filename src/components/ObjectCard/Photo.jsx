@@ -10,22 +10,24 @@ export const Photo = ({ photos }) => {
 
   return (
     <>
-      <StyledPhoto
-        {...{
-          smallImage: {
-            isFluidWidth: true,
-            src: photos?.[0] ?? noPhoto,
-          },
-          largeImage: {
-            src: photos?.[0] ?? noPhoto,
-            width: 1200,
-            height: 1800,
-          },
-        }}
-        // onClick={() => setOpenView(true)}
-        enlargedImageContainerClassName="previewContainer"
-        imageClassName={`previewImage ${!photos?.[0] && "empty"}`}
-      />
+      <div onClick={() => setOpenView(true)}>
+        <StyledPhoto
+          {...{
+            smallImage: {
+              isFluidWidth: true,
+              src: photos?.[0] ?? noPhoto,
+            },
+            largeImage: {
+              src: photos?.[0] ?? noPhoto,
+              width: 1200,
+              height: 1800,
+            },
+          }}
+          enlargedImageContainerClassName="previewContainer"
+          imageClassName={`previewImage ${!photos?.[0] && "empty"}`}
+        />
+      </div>
+
       {/* <StyledPhoto
         style={{ background: `url(${photos?.[0]}) center/cover no-repeat` }}
         onClick={() => setOpenView(true)}
