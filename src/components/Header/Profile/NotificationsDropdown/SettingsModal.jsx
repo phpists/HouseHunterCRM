@@ -170,7 +170,7 @@ export const SettingsModal = ({ onClose }) => {
                 max={1000}
                 values={[
                   data?.filter_2_price_from ?? 0,
-                  data?.filter_2_price_from ?? 0,
+                  data?.filter_2_price_to ?? 0,
                 ]}
                 onChange={(values) =>
                   handleChangeRange(

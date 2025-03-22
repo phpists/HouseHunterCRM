@@ -8,12 +8,14 @@ import {
   useGetRubricsQuery,
   useLazyGetRubricsFieldsQuery,
 } from "../../store/requests/requests.api";
+import { useLazyAddViewLinkQuery } from "../../store/objects/objects.api";
 
 export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
   const { data: locationsList } = useGetLocationsQuery();
   const { data: rubricsList } = useGetRubricsQuery();
   const [getRubricField, { data: fields }] = useLazyGetRubricsFieldsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
+  const [addViewLink] = useLazyAddViewLinkQuery();
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -60,6 +62,7 @@ export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
           className="main-title clickable mb-2"
           onClick={(e) => {
             e.stopPropagation();
+            addViewLink(data.id);
             if (data?.link) {
               window.open(data?.link, "_blank");
             }
@@ -90,14 +93,17 @@ export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
         />
         <Tag
           title={`${
-            Number(data?.volume_engine) / 1000 === 0
+            Number(data?.volume_engine) / 1000 === 0 ||
+            data?.volume_engine === "0"
               ? "-"
               : Number(data?.volume_engine) / 1000
           } • ${handleGetTagValue("id_type_fuel", data?.id_type_fuel) ?? ""}`}
           iIcom="bi bi-fuel-pump"
         />
         <Tag
-          title={`${handleGetTagValue("kpp", data?.kpp)}`}
+          title={`${
+            data?.kpp === "0" ? "-" : handleGetTagValue("kpp", data?.kpp)
+          }`}
           iIcom="bi bi-gear"
         />
       </div>{" "}
@@ -112,15 +118,15 @@ export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
       <Tag
         titleHtml={
           <>
-            {handleCheckIsNew() ? "• NEW" : ""} •
+            {handleCheckIsNew() ? "NEW" : ""} •
             <span className={`mx-[1px] ${data?.Count_object > 5 && "red"}`}>
               {data?.Count_object > 10
-                ? "Перекуп "
+                ? " Перекуп "
                 : data?.Count_object > 5
-                ? "Перекуп ? "
+                ? " Перекуп ? "
                 : data?.Count_object > 2
-                ? "Перекуп ? "
-                : "Продавець "}
+                ? " Перекуп ? "
+                : " Продавець "}
               ({data?.Count_object})
             </span>
           </>
