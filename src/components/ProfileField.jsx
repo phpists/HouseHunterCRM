@@ -431,7 +431,6 @@ const StyledProfileField = styled.button`
       display: block;
     }
     .value {
-      filter: blur(0px);
     }
     .edit-btn {
       opacity: 0.4;
@@ -490,7 +489,7 @@ const StyledProfileField = styled.button`
         ? `
         .value, .label {
             color: #2C2C2C;
-            filter: blur(0px);
+            
         }
     `
         : `

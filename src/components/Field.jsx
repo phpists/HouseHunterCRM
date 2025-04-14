@@ -274,7 +274,6 @@ const StyleField = styled.div`
   &:hover {
     background: var(--card-bg-2);
     .value {
-      filter: blur(0px);
       white-space: normal;
       width: 100%;
     }
@@ -293,7 +292,7 @@ const StyleField = styled.div`
         border: 1px solid rgba(255, 255, 255, 0.20);
         background:  var(--card-bg-2);
         .value {
-            filter: blur(0px);
+            
         }
   `}
   .calendar_wrapper {
