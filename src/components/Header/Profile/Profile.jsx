@@ -25,15 +25,19 @@ import {
 } from "../../../utilits";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Confirm } from "../../Confirm/Confirm";
+import axios from "axios";
+import { baseUrlWebsoket } from "../../../api/baseUrl";
+import { io } from "socket.io-client";
+import { useLazyGetRubricsFieldsQuery } from "../../../store/requests/requests.api";
 
 export const Profile = () => {
   const { pathname } = useLocation();
   const [openEdit, setOpenEdit] = useState(false);
   const [openNotifications, setOpenNotifications] = useState(false);
   const [openLogout, setOpenLogout] = useState(false);
-  const { user } = useAppSelect((state) => state.auth);
+  const { user, notifications } = useAppSelect((state) => state.auth);
   const [profileData, setProfileData] = useState(null);
-  const { loginUser } = useActions();
+  const { loginUser, addNotification } = useActions();
   const [getProfile] = useLazyGetUserQuery();
   const [editProfile] = useLazyEditProfileQuery();
   const [deleteAvatar] = useLazyDeleteAvatarQuery();
@@ -43,6 +47,7 @@ export const Profile = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [closed, setClosed] = useState([]);
+  const [getRubricField, { data: fields }] = useLazyGetRubricsFieldsQuery();
 
   const handleCheckIsRefresh = () => {
     const now = new Date()?.getTime() / 1000;
@@ -240,6 +245,68 @@ export const Profile = () => {
     window.location.reload(true);
   };
 
+  const handleGetTagValue = (field, value) =>
+    fields?.find((f) => f.field === field)?.field_option?.[value] ?? value;
+
+  useEffect(() => {
+    getRubricField(1);
+    let socket;
+    let interval;
+    if (fields) {
+      socket = new WebSocket(
+        `wss://socket.cars.xcorp.com.ua/socket/?token=${localStorage.getItem(
+          "token"
+        )}`
+      );
+
+      function sendMessage() {
+        socket.send("Get");
+      }
+      interval = setInterval(sendMessage, 900000);
+
+      socket.onopen = () => {};
+
+      socket.onmessage = (event) => {
+        try {
+          const message = JSON.parse(event.data);
+          if (message?.error === 0) {
+            const data = JSON.parse(message?.data);
+            const image =
+              data?.photo_links_json?.length > 0
+                ? JSON.parse(data?.photo_links_json)?.[0]
+                : null;
+
+            addNotification({
+              ...data,
+              date: new Date().getTime(),
+              id_filter: message?.id_filter,
+              image,
+              volume_engine: handleGetTagValue(
+                "volume_engine",
+                data?.volume_engine
+              ),
+              id_type_fuel: handleGetTagValue(
+                "id_type_fuel",
+                data?.id_type_fuel
+              ),
+              id_type_body: handleGetTagValue(
+                "id_type_body",
+                data?.id_type_body
+              ),
+            });
+          }
+        } catch (error) {
+          console.error("Error parsing WebSocket message:", error);
+        }
+      };
+    }
+
+    return () => {
+      socket?.close();
+      clearInterval(interval);
+    };
+  }, [fields]);
+
   return (
     <>
       {openLogout && (
@@ -278,7 +345,7 @@ export const Profile = () => {
         <Notification
           active={openNotifications}
           onToggle={handleOpenNotifications}
-          count={data?.count_notify}
+          count={data?.count_notify + notifications?.length}
         />
         <NotificationsDropdown
           data={data}
@@ -286,6 +353,7 @@ export const Profile = () => {
           onToggleOpen={(val) => setOpenNotifications(val)}
           closed={closed}
           onClose={handleCloseNotification}
+          notifications={notifications}
         />
         {openNotifications && (
           <div

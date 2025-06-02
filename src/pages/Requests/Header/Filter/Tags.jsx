@@ -10,6 +10,7 @@ import {
 } from "../../../../store/objects/objects.api";
 import { useState } from "react";
 import {
+  checkIsArray,
   handleChangeRange,
   handleGetFieldsOptions,
   handleGetLocationAllPath,
@@ -24,6 +25,7 @@ import { useGetCompanyStructureLevelQuery } from "../../../../store/structure/st
 import { useAppSelect } from "../../../../hooks/redux";
 import { useGetWorkerMyStructureQuery } from "../../../../store/calls/calls.api";
 import { useGetWorkersMyCompanyQuery } from "../../../../store/billing/billing.api";
+import { LocationSearch } from "../../../../components/LocationSearch/LocationSearch";
 
 export const Tags = ({
   filters,
@@ -93,25 +95,10 @@ export const Tags = ({
         }
       />
       <Divider />
-      <SelectTags
+      <LocationSearch
         label="Локація"
-        tags={formatedLocations?.filter((l) =>
-          Array.isArray(filters?.id_location)
-            ? !!filters?.id_location?.find((v) => v === l.value)
-            : false
-        )}
-        onChange={(val) =>
-          onChangeFilter(
-            "id_location",
-            !Array.isArray(filters?.id_location)
-              ? [val]
-              : filters?.id_location?.find((l) => l === val)
-              ? filters?.id_location?.filter((l) => l !== val)
-              : [...(filters?.id_location ? filters?.id_location : []), val]
-          )
-        }
-        options={formatedLocations}
-        showTags
+        value={checkIsArray(filters?.id_location) ?? []}
+        onChange={(val) => onChangeFilter("id_location", val)}
       />
       <Divider />
       <Price

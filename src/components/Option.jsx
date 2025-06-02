@@ -16,7 +16,10 @@ export const Option = ({
       className={`flex items-center justify-between hover-effect-to-right ${className} ${
         error && "error-field"
       }`}
-      onClick={onSelect}
+      onClick={(e) => {
+        e.stopPropagation();
+        onSelect && onSelect();
+      }}
       active={active?.toString()}
     >
       <span className="flex items-center">

@@ -18,6 +18,7 @@ export const Footer = ({
   const [isChanged, setIsChanged] = useState(false);
   const [fromInputFocused, setFromInputFocused] = useState(false);
   const [toInputFocused, setToInputFocused] = useState(false);
+  const isFirstValueLarger = values[0] > values[1];
 
   const handleBlur = (type) => {
     setTimeout(() => {
@@ -55,6 +56,7 @@ export const Footer = ({
         onBlur={() => handleBlur("from")}
         onFocus={() => handleFocus("from")}
         ceil={!noCeil}
+        error={isFirstValueLarger && values[1]}
       />
       <PositionCard
         title="До"

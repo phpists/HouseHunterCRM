@@ -26,8 +26,8 @@ export const Card = ({
   const [getModels, { data: modelsList }] = useLazyGetModelsQuery();
 
   useEffect(() => {
-    getBrands(data.id_rubric);
-  }, [data.id_rubric]);
+    data.id_rubric && getBrands(data.id_rubric);
+  }, [data?.id_rubric]);
 
   useEffect(() => {
     const idBrand = brandsList?.data?.find(

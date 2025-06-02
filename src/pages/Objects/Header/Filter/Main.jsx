@@ -31,6 +31,7 @@ import { MapButton } from "./MapButton";
 import { ReactComponent as RemoveIcon } from "../../../../assets/images/remove.svg";
 import { CheckOption } from "../../../../components/CheckOption";
 import { ToggleOption } from "../../../../components/ToggleOption";
+import { LocationSearch } from "../../../../components/LocationSearch/LocationSearch";
 
 const notAllowedFields = [
   "comment",
@@ -168,29 +169,10 @@ export const Main = ({
         error={errors?.["id_rubric"]}
       />
       <Divider />
-      <SelectTags
+      <LocationSearch
         label="Локація"
-        tags={formatedLocations?.filter(
-          (l) => !!filters?.id_location?.find((v) => v === l.value)
-        )}
-        onChange={(val) => {
-          filters?.id_location?.length >= 10 &&
-          !filters?.id_location?.find((l) => l === val)
-            ? showAlert("error", "Можна обрати максимум 10 локацій")
-            : onChangeFilter(
-                "id_location",
-                filters?.id_location?.find((l) => l === val)
-                  ? filters?.id_location?.filter((l) => l !== val)
-                  : [...(filters?.id_location ? filters?.id_location : []), val]
-              );
-        }}
-        options={formatedLocations?.filter((l) =>
-          !!filters?.id_location?.find((v) => Number(v) <= 25)
-            ? Number(l.value) > 25 &&
-              l.value !== filters?.id_location?.find((v) => Number(v) <= 25)
-            : true
-        )}
-        showTags
+        value={filters?.id_location}
+        onChange={(val) => onChangeFilter("id_location", val)}
         error={errors?.["id_location"]}
       />
       <Divider />
@@ -202,7 +184,7 @@ export const Main = ({
             [filters?.price_min ?? "0", filters?.price_max ?? "0"],
             ["price_min", "price_max"],
             (values) =>
-              onChangeFilter("update", { ...filters, ...values }, true)
+              onChangeFilter("update", { ...filters, ...values }, true), true
           )
         }
         currency={Number(filters?.price_currency)}
@@ -214,6 +196,7 @@ export const Main = ({
         rubricId={filters?.id_rubric}
         typeValue={filters?.price_for}
         onChangeType={(val) => onChangeFilter("price_for", val)}
+        hideCurrency
       />
       <Divider />
       <TagsFilter

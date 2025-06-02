@@ -3,7 +3,10 @@ import deleteIcon from "../../../assets/images/delete-history.svg";
 export const Option = ({ title, onSelect, onDelete }) => (
   <StyledOption
     className="flex items-center justify-between"
-    onClick={onSelect}
+    onClick={(e) => {
+      e.stopPropagation();
+      onSelect();
+    }}
   >
     <div className="flex items-center gap-2">
       {onDelete ? (

@@ -16,6 +16,7 @@ import { Terms } from "./pages/Terms";
 import { License } from "./pages/License";
 import { CookiePolicy } from "./pages/CookiePolicy";
 import Ad from "./pages/Ad/Ad";
+import { Notifications } from "./pages/Notifications/Notifications";
 
 const Company = lazy(() => import("./pages/Company/Company"));
 const Auth = lazy(() => import("./pages/Auth/Auth"));
@@ -324,6 +325,10 @@ export const App = () => {
                           <Route
                             path="/advertising-login-success"
                             element={<AdSettings />}
+                          />
+                          <Route
+                            path="/notifications"
+                            element={<Notifications />}
                           />
                           <Route path="*" element={<Dashboard />} />
                         </Routes>

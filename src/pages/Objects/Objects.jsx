@@ -37,7 +37,7 @@ const Objects = () => {
   const INIT_FILTERS = {
     id_rubric: "",
     id_location: [],
-    price_currency: "1",
+    price_currency: "2",
     price: "",
     price_max: "",
     price_min: "",
@@ -47,6 +47,7 @@ const Objects = () => {
   };
 
   const DEFAULT_FILTERS = {
+    price_currency: "2",
     // price_for: "4",
     // price_currency: "1",
     // sorting: "0",

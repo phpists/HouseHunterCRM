@@ -25,12 +25,16 @@ export const Select = ({
   required,
   onSearch,
   onDelete,
+  closeOnBlur,
+  closeOnSelect,
+  alwaysOpen,
+  noOverlay,
 }) => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
 
   const handleChange = (val) => {
-    onChange(val);
+    val && onChange(val);
     setOpen(false);
   };
 
@@ -44,7 +48,6 @@ export const Select = ({
   const handleSearch = (val) => {
     setSearch(val);
     onSearch && onSearch(val);
-    editValue && onChange(val);
   };
 
   useEffect(() => {
@@ -104,6 +107,9 @@ export const Select = ({
                     onChange={(e) => handleSearch(e.target.value)}
                     autoFocus
                     onKeyDown={handlePressEnter}
+                    onBlur={() => {
+                      closeOnBlur && setOpen(false);
+                    }}
                   />
                 ) : (
                   <Value
@@ -141,7 +147,7 @@ export const Select = ({
                 : null
             }
           />
-          {open && (
+          {open && !noOverlay && (
             <div
               className="modal-overlay"
               onClick={() => setOpen(false)}

@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { Card } from "./Card/Card";
 import { useEffect, useState } from "react";
 import { useAppSelect } from "../../../../hooks/redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../../../Button";
 import { SettingsModal } from "./SettingsModal";
+import { Notification } from "./Notification";
 
 export const NotificationsDropdown = ({
   data,
@@ -12,10 +13,12 @@ export const NotificationsDropdown = ({
   closed,
   onClose,
   onToggleOpen,
+  notifications,
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { search } = useLocation();
   const [settingsModal, setSettingsModal] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -98,6 +101,17 @@ export const NotificationsDropdown = ({
             onClose={() => onClose("birthday")}
           />
         )}
+
+        {[...notifications]
+          ?.sort((a, b) => b?.date - a?.date)
+          ?.map((data) => (
+            <Notification key={data?.id_hash} data={data} />
+          ))}
+        <Button
+          title="Переглянути всі сповіщення"
+          className="mt-2"
+          onClick={() => navigate("/notifications")}
+        />
         <Button
           title="Налаштування"
           className="mt-2"

@@ -39,6 +39,7 @@ export const Ranger = ({
   onBlur,
   onFocus,
   noCeil,
+  noRange,
 }) => {
   const { getTrackProps, handles, segments } = useRanger({
     values,
@@ -74,38 +75,41 @@ export const Ranger = ({
           }
         />
       )}
-      <div
-        {...getTrackProps({
-          style: {
-            height: "3px",
-            background: "#808080",
-            borderRadius: "9px",
-            marginBottom: big ? 21 : 16,
-            zIndex: 100,
-          },
-        })}
-      >
-        {handles.map(({ getHandleProps }) => (
-          <div
-            {...getHandleProps({
-              style: {
-                width: "15px",
-                height: "15px",
-                borderRadius: "16px",
-                background: "rgba(255, 255, 255, 0.30)",
-                border: "2px solid #FFF",
-                cursor: "grab",
-                boxShadow: "0px 4px 8px 0px rgba(0, 0, 0, 0.15)",
-                backdropFilter: "blur(5.5px)",
-                zIndex: 3,
-              },
-            })}
-          />
-        ))}
-        {segments.map(({ getSegmentProps }, i) => (
-          <Segment {...getSegmentProps()} index={i} />
-        ))}
-      </div>
+      {noRange ? null : (
+        <div
+          {...getTrackProps({
+            style: {
+              height: "3px",
+              background: "#808080",
+              borderRadius: "9px",
+              marginBottom: big ? 21 : 16,
+              zIndex: 100,
+            },
+          })}
+        >
+          {handles.map(({ getHandleProps }) => (
+            <div
+              {...getHandleProps({
+                style: {
+                  width: "15px",
+                  height: "15px",
+                  borderRadius: "16px",
+                  background: "rgba(255, 255, 255, 0.30)",
+                  border: "2px solid #FFF",
+                  cursor: "grab",
+                  boxShadow: "0px 4px 8px 0px rgba(0, 0, 0, 0.15)",
+                  backdropFilter: "blur(5.5px)",
+                  zIndex: 3,
+                },
+              })}
+            />
+          ))}
+          {segments.map(({ getSegmentProps }, i) => (
+            <Segment {...getSegmentProps()} index={i} />
+          ))}
+        </div>
+      )}
+
       <Footer
         currency={currency}
         values={values}

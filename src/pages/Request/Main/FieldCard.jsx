@@ -6,6 +6,7 @@ import { Price } from "./Price/Price";
 import { TitleDivider } from "./TitleDivider";
 import { TagsFilter } from "../../../components/TagsFilter/TagsFilter";
 import { useEffect } from "react";
+import { LocationSearch } from "../../../components/LocationSearch/LocationSearch";
 
 export const FieldCard = ({
   title,
@@ -30,37 +31,18 @@ export const FieldCard = ({
   return (
     <StyledFieldCard>
       <TitleDivider title={title} />
-      <SelectTags
+      <LocationSearch
         label="Локація"
-        tags={formatedLocations?.filter(
-          (l) => !!checkIsArray(data?.id_location)?.find((v) => v === l.value)
-        )}
+        value={data?.id_location}
         onChange={(val) =>
-          checkIsArray(data?.id_location)?.length >= 10 &&
-          !checkIsArray(data?.id_location)?.find((l) => l === val)
+          checkIsArray(data?.id_location)?.length >= 10
             ? showAlert("error", "Можна обрати максимум 10 локацій")
-            : onChangeField(
-                "id_location",
-                checkIsArray(data?.id_location)?.find((l) => l === val)
-                  ? checkIsArray(data?.id_location)?.filter((l) => l !== val)
-                  : [
-                      ...(checkIsArray(data?.id_location)
-                        ? checkIsArray(data?.id_location)
-                        : []),
-                      val,
-                    ]
-              )
+            : onChangeField("id_location", val)
         }
-        options={formatedLocations?.filter((l) =>
-          !!checkIsArray(data?.id_location)?.find((v) => Number(v) <= 25)
-            ? Number(l.value) > 25 &&
-              l.value !==
-                checkIsArray(data?.id_location)?.find((v) => Number(v) <= 25)
-            : true
-        )}
         error={!!errors?.find((e) => e === "id_location")}
-        showTags
+        placeholder="Оберіть локацію"
       />
+
       <Divider />
       <Price
         values={[data?.price_min ?? 0, data?.price_max ?? 0]}

@@ -16,6 +16,7 @@ export const Price = ({
   typeError,
   onBlur,
   onFocus,
+  hideCurrency,
 }) => {
   return (
     <StyledPrice
@@ -24,41 +25,8 @@ export const Price = ({
     >
       <Ranger
         label="Ціновий діапазон"
-        // mainTypes={
-        //   !isType
-        //     ? undefined
-        //     : !rubricId
-        //     ? PRICES_FOR_TITLE_FILTERS
-        //     : rubricId === "65" || rubricId === "66"
-        //     ? [
-        //         {
-        //           title: "Автомобіль",
-        //           value: "4",
-        //         },
-        //         {
-        //           title: "Сотка",
-        //           value: "2",
-        //         },
-        //         // {
-        //         //   title: "Гектар",
-        //         //   value: "3",
-        //         // },
-        //       ]
-        //     : [
-        //         {
-        //           title: "Автомобіль",
-        //           value: "4",
-        //         },
-        //         {
-        //           title: "м²",
-        //           value: "1",
-        //         },
-        //       ]
-        // }
         typeValue={typeValue}
         onChangeType={onChangeType}
-        currency
-        big
         max={1000000}
         values={values}
         onChange={onChange}
@@ -67,6 +35,7 @@ export const Price = ({
         typeError={typeError}
         onFocus={onFocus}
         onBlur={onBlur}
+        noRange
       />
     </StyledPrice>
   );

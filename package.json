@@ -1,7 +1,7 @@
 {
   "name": "xhouse-crm",
   "version": "0.1.0",
-  "buildDate": 1743413852675,
+  "buildDate": 1748874090378,
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
@@ -36,6 +36,7 @@
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
+    "socket.io-client": "^4.8.1",
     "styled-components": "^6.0.7",
     "web-vitals": "^2.1.0",
     "zoomist": "^1.1.1"

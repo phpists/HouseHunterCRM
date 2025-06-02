@@ -10,6 +10,7 @@ export const PositionCard = ({
   onBlur,
   onFocus,
   ceil,
+  error,
 }) => {
   const inputRef = useRef(null);
 
@@ -22,7 +23,9 @@ export const PositionCard = ({
 
   return (
     <StyledPositionCard
-      className={` flex items-baseline justify-between select-none ${className}`}
+      className={` flex items-baseline justify-between select-none ${className} ${
+        error && "error-field"
+      }`}
       onClick={() => inputRef.current.focus()}
     >
       <div className="title">{title}</div>
@@ -109,5 +112,8 @@ const StyledPositionCard = styled.div`
   }
   @media (max-width: 800px) {
     padding: 4px;
+  }
+  &.error-field {
+    border: 1px red solid;
   }
 `;
