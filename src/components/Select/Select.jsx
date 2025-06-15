@@ -108,7 +108,9 @@ export const Select = ({
                     autoFocus
                     onKeyDown={handlePressEnter}
                     onBlur={() => {
-                      closeOnBlur && setOpen(false);
+                      setTimeout(() => {
+                        closeOnBlur && setOpen(false);
+                      }, 200);
                     }}
                   />
                 ) : (

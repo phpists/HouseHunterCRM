@@ -4,8 +4,8 @@ export const Option = ({ title, onSelect, onDelete }) => (
   <StyledOption
     className="flex items-center justify-between"
     onClick={(e) => {
-      e.stopPropagation();
       onSelect();
+      e.stopPropagation();
     }}
   >
     <div className="flex items-center gap-2">

@@ -61,7 +61,6 @@ export const Modal = ({ value = [], onClose, onChange, locations }) => {
 
   const handleSelectLocation = (selectedLocation) => {};
 
-  console.log(value);
   return (
     <StyledModal>
       <div className="card">
