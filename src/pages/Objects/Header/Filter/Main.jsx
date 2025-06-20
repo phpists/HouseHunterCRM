@@ -399,6 +399,36 @@ export const Main = ({
                     />
                   );
                 } else if (typeof field[1]?.field_option === "object") {
+                  if (field[0] === "kpp") {
+                    const kppOptions = Object.entries(field[1].field_option).map(([value, title]) => ({ value, title }));
+                    const autoTitles = ["Автомат", "Типтронік", "Робот", "Варіатор"];
+                    const autoIds = kppOptions.filter(opt => autoTitles.includes(opt.title)).map(opt => opt.value);
+                    const current = Array.isArray(filters.kpp) ? filters.kpp : filters.kpp ? [filters.kpp] : [];
+                    const isAutoSelected = autoIds.every(id => current.includes(id));
+                    return (
+                      <SelectTags
+                        label={commentsToFields?.object[field[0]]}
+                        options={kppOptions}
+                        tags={kppOptions.filter(opt => current.includes(opt.value))}
+                        onChange={val => {
+                          if (val === autoIds[0]) {
+                            if (!isAutoSelected) {
+                              onChangeFilter("kpp", Array.from(new Set([...current, ...autoIds])));
+                            } else {
+                              onChangeFilter("kpp", current.filter(id => !autoIds.includes(id)));
+                            }
+                          } else {
+                            if (current.includes(val)) {
+                              onChangeFilter("kpp", current.filter(id => id !== val));
+                            } else {
+                              onChangeFilter("kpp", [...current, val]);
+                            }
+                          }
+                        }}
+                        showTags
+                      />
+                    );
+                  }
                   return (
                     <>
                       {/* <Divider /> */}
