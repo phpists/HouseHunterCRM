@@ -42,7 +42,7 @@
     "zoomist": "^1.1.1"
   },
   "scripts": {
-    "start": "cls  &&  react-scripts start",
+    "start": "clear  &&  react-scripts start",
     "build-sw": "sw-precache --config=sw-precache-config.js",
     "build": "cls && node ./update-build.js && react-scripts build && npm run build-sw  &&  cls",
     "test": "react-scripts test",

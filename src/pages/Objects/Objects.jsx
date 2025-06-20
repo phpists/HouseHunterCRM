@@ -264,6 +264,16 @@ const Objects = () => {
             mls_object: {},
           };
         }
+
+        if (otherFilters.kpp && !Array.isArray(otherFilters.kpp)) {
+          otherFilters.kpp = [otherFilters.kpp];
+        }
+        if (Array.isArray(otherFilters.kpp) && otherFilters.kpp.length === 0) {
+          delete otherFilters.kpp;
+        }
+        if (!otherFilters.id_color) {
+          delete otherFilters.id_color;
+        }
       } else {
         const { company_object, ...filters } = DEFAULT_FILTERS;
         data = {

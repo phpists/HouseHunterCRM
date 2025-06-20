@@ -20,6 +20,7 @@ import {
   useLazyGetBrandsQuery,
   useLazyGetCarBodyQuery,
   useLazyGetModelsQuery,
+  useGetCarColorsQuery,
 } from "../../../../store/objects/objects.api";
 import { Price } from "../../../Request/Main/Price/Price";
 import { IconButton } from "../../../../components/IconButton";
@@ -32,6 +33,7 @@ import { ReactComponent as RemoveIcon } from "../../../../assets/images/remove.s
 import { CheckOption } from "../../../../components/CheckOption";
 import { ToggleOption } from "../../../../components/ToggleOption";
 import { LocationSearch } from "../../../../components/LocationSearch/LocationSearch";
+import { ColorSelect } from '../../../../components/ColorSelect';
 
 const notAllowedFields = [
   "comment",
@@ -100,6 +102,7 @@ export const Main = ({
   const [getBrands, { data: brandsList }] = useLazyGetBrandsQuery();
   const [getModels, { data: modelsList }] = useLazyGetModelsQuery();
   const [getCarBody, { data: carBodyList }] = useLazyGetCarBodyQuery();
+  const { data: carColors = [] } = useGetCarColorsQuery();
 
   useEffect(() => {
     if (filters?.id_rubric) {
@@ -524,6 +527,12 @@ export const Main = ({
         errors={Object.entries(errors)
           ?.filter((e) => e?.[1])
           ?.map((e) => e?.[0])}
+      />
+      <Divider />
+      <ColorSelect
+        colors={carColors}
+        value={filters.id_color}
+        onChange={(val) => onChangeFilter('id_color', val)}
       />
     </StyledMain>
   );

@@ -684,6 +684,26 @@ export const objects = createApi({
         }),
       }),
     }),
+    getCarColors: build.query({
+      query: () => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "getColorCars",
+          mod: "system_info",
+        }),
+      }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response.data,
+          () => [],
+          false,
+          true
+        );
+      },
+    }),
   }),
 });
 
@@ -737,5 +757,7 @@ export const {
   useLazyGetBrandsQuery,
   useLazyGetModelsQuery,
   useLazyGetCarBodyQuery,
-  useLazyAddViewLinkQuery
+  useLazyAddViewLinkQuery,
+  useGetCarColorsQuery,
+  useLazyGetCarColorsQuery
 } = objects;
