@@ -33,7 +33,6 @@ export const CheckOption = ({
 
 const StyledCheckOption = styled.div`
   transition: all 0.3s;
-  color: var(--main-color);
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
@@ -49,6 +48,7 @@ const StyledCheckOption = styled.div`
   `}
   .label {
     text-transform: capitalize;
+    color: var(--main-color);
   }
   button {
     width: ${({ small }) => (small ? 14 : 19)}px !important;

@@ -42,6 +42,7 @@ const CARS_STATUSES = [
     title: "Видалено автоматично(термін публікації закінчився)",
     value: "14",
   },
+  { title: "По низу ринку", value: "tag_market_bottom" },
 ];
 
 const CARS_TAGS = [
@@ -50,7 +51,6 @@ const CARS_TAGS = [
   { title: "Можливий обмін", value: "tag_exchangePossible" },
   { title: "Свіжопригнана", value: "tag_freshlyDriven" },
   { title: "Після дтп", value: "tag_afterDTP" },
-  { title: "По низу ринку", value: "tag_market_bottom" },
 ];
 
 export const Base = ({
@@ -124,6 +124,32 @@ export const Base = ({
     setMlsBase(mlsBaseOpen);
     setStreetBase(streetBaseOpen);
     setCompany(companyOpen);
+    if (streetBaseOpen && data?.street_base_object) {
+      let changed = false;
+      const defaults = {};
+      if (!data.street_base_object.price_change) {
+        defaults.price_change = 50;
+        changed = true;
+      }
+      if (!data.street_base_object.price_change_up_procent) {
+        defaults.price_change_up_procent = 2;
+        changed = true;
+      }
+      if (!data.street_base_object.price_change_up) {
+        defaults.price_change_up = "2";
+        changed = true;
+      }
+      if (!data.street_base_object.price_change_period) {
+        defaults.price_change_period = "4";
+        changed = true;
+      }
+      if (changed) {
+        onChange("street_base_object", {
+          ...data.street_base_object,
+          ...defaults,
+        });
+      }
+    }
   }, [streetBaseOpen, mlsBaseOpen, companyOpen]);
 
   useEffect(() => {
@@ -465,6 +491,12 @@ export const Base = ({
                 : []
             }
           />
+          <CheckOption
+            label="Обмін"
+            className="check-opt"
+            value={data?.street_base_object?.tag_exchangePossible}
+            onChange={() => handleChangeCarTags("tag_exchangePossible")}
+          />
           {idSource ? (
             <SelectTags
               label="Пошук по ресурсу"
@@ -624,12 +656,12 @@ export const Base = ({
           ) : null}
           {countObjectOwner ? (
             <Ranger
-              label="Кількість автомобілів за номером"
+              label="к-ть оголошень автора"
               className="mb-2"
-              max={1000}
+              max={10000}
               values={[
-                data?.street_base_object?.count_object_owner_from ?? 0,
-                data?.street_base_object?.count_object_owner_to ?? 0,
+                data?.street_base_object?.count_object_owner_from ?? 1,
+                data?.street_base_object?.count_object_owner_to ?? 10000,
               ]}
               onChange={(values) =>
                 handleChangeRange(
@@ -677,9 +709,13 @@ export const Base = ({
                 label="Теги"
                 className="mb-2"
                 placeholder="Оберіть"
-                options={CARS_TAGS}
-                tags={CARS_TAGS?.filter(
-                  (t) => data?.street_base_object?.[t.value] === "1"
+                options={CARS_TAGS.filter(
+                  (t) => t.value !== "tag_exchangePossible"
+                )}
+                tags={CARS_TAGS.filter(
+                  (t) =>
+                    t.value !== "tag_exchangePossible" &&
+                    data?.street_base_object?.[t.value] === "1"
                 )}
                 onChange={handleChangeCarTags}
                 showTags
@@ -720,17 +756,19 @@ export const Base = ({
             <Field
               placeholder="Введіть значення..."
               value={data?.street_base_object?.price_change}
-              onChange={(val) =>
+              onChange={(val) => {
                 onChange("street_base_object", {
                   ...data?.street_base_object,
                   price_change: val,
-                })
-              }
+                  price_change_up_procent: undefined,
+                });
+              }}
               label="Ціна змінилась більше"
               className="field-wrapper mb-2"
               onFocus={onFocus}
               onBlur={onBlur}
               type="number"
+              min={50}
               error={
                 errors?.includes("price_change") &&
                 !data?.street_base_object?.price_change_up_procent &&
@@ -788,17 +826,19 @@ export const Base = ({
               <Field
                 placeholder="Введіть значення..."
                 value={data?.street_base_object?.price_change_up_procent}
-                onChange={(val) =>
+                onChange={(val) => {
                   onChange("street_base_object", {
                     ...data?.street_base_object,
                     price_change_up_procent: val,
-                  })
-                }
+                    price_change: undefined,
+                  });
+                }}
                 label="Ціна змінилась від остатньої в %"
                 className="field-wrapper mb-2"
                 onFocus={onFocus}
                 onBlur={onBlur}
                 type="number"
+                min={2}
                 error={
                   errors?.includes("price_change_up_procent") &&
                   !data?.street_base_object?.price_change &&
@@ -867,19 +907,19 @@ export const Base = ({
             />
           ) : null}
           {showTop ? (
-            <CheckOption
-              label="Топ авторіа"
-              className="check-opt"
-              value={data?.street_base_object?.show_top}
-              onChange={() =>
+            <ProfileField
+              label="Топ авторіа від"
+              value={data?.street_base_object?.top_autoria_order_from}
+              onChange={(val) =>
                 onChange("street_base_object", {
                   ...data?.street_base_object,
-                  show_top:
-                    data?.street_base_object?.show_top === "1"
-                      ? undefined
-                      : "1",
+                  top_autoria_order_from: val,
                 })
               }
+              type="number"
+              onFocus={onFocus}
+              onBlur={onBlur}
+              placeholder="0"
             />
           ) : null}
           {showTagPriceDump ? (

@@ -3,6 +3,8 @@ import { CheckOption } from "../CheckOption";
 import { ReactComponent as Close } from "../../assets/images/close.svg";
 import { Select } from "../Select/Select";
 import { Tag } from "../SelectTags/Tag";
+import { useState } from "react";
+import { Button } from "../Button";
 
 const regionsIds = [
   "1",
@@ -32,16 +34,18 @@ const regionsIds = [
 ];
 
 export const Modal = ({ value = [], onClose, onChange, locations }) => {
+  const [selected, setSelected] = useState(value);
+
   const handleToggleRegion = (regionId) => {
-    onChange(
-      value?.find((l) => l === regionId)
-        ? value?.filter((l) => l !== regionId)
-        : [...(value ? value : []), regionId]
+    setSelected(
+      selected?.find((l) => l === regionId)
+        ? selected?.filter((l) => l !== regionId)
+        : [...(selected ? selected : []), regionId]
     );
   };
 
   const handleSelectGroup = (groupIds) => {
-    let updatedValue = [...value];
+    let updatedValue = [...selected];
 
     if (
       updatedValue.filter((id) => groupIds.includes(id))?.length ===
@@ -56,10 +60,13 @@ export const Modal = ({ value = [], onClose, onChange, locations }) => {
       });
     }
 
-    onChange(updatedValue);
+    setSelected(updatedValue);
   };
 
-  const handleSelectLocation = (selectedLocation) => {};
+  const handleSave = () => {
+    onChange(selected);
+    onClose();
+  };
 
   return (
     <StyledModal>
@@ -67,7 +74,7 @@ export const Modal = ({ value = [], onClose, onChange, locations }) => {
         <Close className="close-btn" onClick={onClose} />
         <div className="card-search my-3 max-w-[300px]">
           <Select
-            options={locations?.filter((l) => !value.includes(l.value))}
+            options={locations?.filter((l) => !selected.includes(l.value))}
             onChange={handleToggleRegion}
             placeholder="Я шукаю місто..."
             isSearch
@@ -79,12 +86,12 @@ export const Modal = ({ value = [], onClose, onChange, locations }) => {
         </div>
         <div
           className={`flex flex-wrap gap-2 ${
-            !value?.filter((v) => !regionsIds.includes(v))?.length === 0
+            !selected?.filter((v) => !regionsIds.includes(v))?.length === 0
               ? "hidden"
               : "mb-4"
           }`}
         >
-          {value
+          {selected
             ?.filter((v) => !regionsIds.includes(v))
             ?.map((l) => (
               <Tag
@@ -105,35 +112,35 @@ export const Modal = ({ value = [], onClose, onChange, locations }) => {
             <div className="flex flex-col gap-3 mb-3">
               <CheckOption
                 label="Київська"
-                value={value?.includes("10") ? "1" : "0"}
+                value={selected?.includes("10") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("10");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Житомирська"
-                value={value?.includes("2") ? "1" : "0"}
+                value={selected?.includes("2") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("2");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Сумська"
-                value={value?.includes("8") ? "1" : "0"}
+                value={selected?.includes("8") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("8");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Чернігівська"
-                value={value?.includes("6") ? "1" : "0"}
+                value={selected?.includes("6") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("6");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
             </div>
             <div
@@ -145,35 +152,35 @@ export const Modal = ({ value = [], onClose, onChange, locations }) => {
             <div className="flex flex-col gap-3">
               <CheckOption
                 label="Вінницька"
-                value={value?.includes("1") ? "1" : "0"}
+                value={selected?.includes("1") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("1");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Кіровоградська"
-                value={value?.includes("16") ? "1" : "0"}
+                value={selected?.includes("16") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("16");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Полтавська"
-                value={value?.includes("20") ? "1" : "0"}
+                value={selected?.includes("20") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("20");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Черкаська"
-                value={value?.includes("24") ? "1" : "0"}
+                value={selected?.includes("24") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("24");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
             </div>
           </div>
@@ -189,67 +196,67 @@ export const Modal = ({ value = [], onClose, onChange, locations }) => {
             <div className="flex flex-col gap-3">
               <CheckOption
                 label="Львівська"
-                value={value?.includes("5") ? "1" : "0"}
+                value={selected?.includes("5") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("5");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Волинська"
-                value={value?.includes("18") ? "1" : "0"}
+                value={selected?.includes("18") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("18");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Закарпатська"
-                value={value?.includes("22") ? "1" : "0"}
+                value={selected?.includes("22") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("22");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Івано-Франківська"
-                value={value?.includes("15") ? "1" : "0"}
+                value={selected?.includes("15") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("15");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />{" "}
               <CheckOption
                 label="Хмельницька"
-                value={value?.includes("4") ? "1" : "0"}
+                value={selected?.includes("4") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("4");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Рівненська"
-                value={value?.includes("9") ? "1" : "0"}
+                value={selected?.includes("9") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("9");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Тернопільська"
-                value={value?.includes("3") ? "1" : "0"}
+                value={selected?.includes("3") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("3");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Чернівецька"
-                value={value?.includes("25") ? "1" : "0"}
+                value={selected?.includes("25") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("25");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
             </div>
           </div>
@@ -264,43 +271,43 @@ export const Modal = ({ value = [], onClose, onChange, locations }) => {
             <div className="flex flex-col gap-3 mb-3">
               <CheckOption
                 label="Дніпропетровська"
-                value={value?.includes("11") ? "1" : "0"}
+                value={selected?.includes("11") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("11");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Харківська"
-                value={value?.includes("7") ? "1" : "0"}
+                value={selected?.includes("7") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("7");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Донецька"
-                value={value?.includes("13") ? "1" : "0"}
+                value={selected?.includes("13") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("13");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Запорізька"
-                value={value?.includes("14") ? "1" : "0"}
+                value={selected?.includes("14") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("14");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />{" "}
               <CheckOption
                 label="Луганська"
-                value={value?.includes("17") ? "1" : "0"}
+                value={selected?.includes("17") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("17");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
             </div>
             <div
@@ -312,30 +319,33 @@ export const Modal = ({ value = [], onClose, onChange, locations }) => {
             <div className="flex flex-col gap-3">
               <CheckOption
                 label="Херсонська"
-                value={value?.includes("23") ? "1" : "0"}
+                value={selected?.includes("23") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("23");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Миколаївська"
-                value={value?.includes("19") ? "1" : "0"}
+                value={selected?.includes("19") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("19");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
               <CheckOption
                 label="Одеська"
-                value={value?.includes("12") ? "1" : "0"}
+                value={selected?.includes("12") ? "1" : "0"}
                 onChange={() => {
                   handleToggleRegion("12");
                 }}
-                className="flex-row-reverse !justify-end gap-2"
+                className="gap-2"
               />
             </div>
           </div>
+        </div>
+        <div className="ok-btn-wrapper">
+          <Button onClick={handleSave} title="Ок" />
         </div>
       </div>
     </StyledModal>
@@ -383,5 +393,10 @@ const StyledModal = styled.div`
         opacity: 1;
       }
     }
+  }
+  .ok-btn-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
   }
 `;

@@ -392,10 +392,11 @@ export const Main = ({
                           : []
                       }
                       onChange={(val) => onChangeFilter(field[0], val)}
-                      label={commentsToFields?.object[field[0]]}
-                      labelActive={commentsToFields?.object[field[0]]}
+                      label="почніть писати"
+                      labelActive="почніть писати"
                       hideArrowDefault
                       isSearch
+                      placeholder={commentsToFields?.object[field[0]]}
                     />
                   );
                 } else if (typeof field[1]?.field_option === "object") {
