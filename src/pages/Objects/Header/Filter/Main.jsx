@@ -34,7 +34,8 @@ import { CheckOption } from "../../../../components/CheckOption";
 import { ToggleOption } from "../../../../components/ToggleOption";
 import { LocationSearch } from "../../../../components/LocationSearch/LocationSearch";
 import { ColorSelect } from "../../../../components/ColorSelect";
-import Accordion from "../../../../components/Accordion/Accordion";
+import Accordion from "../../../../components/Accordions/Accordion";
+import LocationsObjectsAccordion from "../../../../components/Accordions/LocationsObjectsAccordion";
 
 const notAllowedFields = [
   "comment",
@@ -170,11 +171,13 @@ export const Main = ({
         }}
       />
       <Divider />
-      <LocationSearch
-        label="Локація"
-        value={filters?.id_location}
+      <LocationsObjectsAccordion
+        options={
+          rubricsList
+            ? rubricsList?.map(({ id, name }) => ({ title: name, value: id }))
+            : []
+        }
         onChange={(val) => onChangeFilter("id_location", val)}
-        error={errors?.["id_location"]}
       />
       <Divider />
       <Price

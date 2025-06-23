@@ -64,3 +64,55 @@ export const XHOUSE_COMPANY_ID = [
   "c863b698f1502555b98034dc6f81f8bb",
   "0022b718e5a80c0e3992686fd10ff1dc",
 ];
+
+export const locationsObjectsFilter = [
+  {
+    region: "Північ",
+    locations: [
+      { value: "10", title: "Київська" },
+      { value: "2", title: "Житомирська" },
+      { value: "8", title: "Сумська" },
+      { value: "6", title: "Чернігівська" },
+    ],
+  },
+  {
+    region: "Центр",
+    locations: [
+      { value: "1", title: "Вінницька" },
+      { value: "16", title: "Кіровоградська" },
+      { value: "20", title: "Полтавська" },
+      { value: "24", title: "Черкаська" },
+    ],
+  },
+  {
+    region: "Захід",
+    locations: [
+      { value: "5", title: "Львівська" },
+      { value: "18", title: "Волинська" },
+      { value: "22", title: "Закарпатська" },
+      { value: "15", title: "Івано-Франківська" },
+      { value: "4", title: "Хмельницька" },
+      { value: "9", title: "Рівненська" },
+      { value: "3", title: "Тернопільська" },
+      { value: "25", title: "Чернівецька" },
+    ],
+  },
+  {
+    region: "Схід",
+    locations: [
+      { value: "11", title: "Дніпропетровська" },
+      { value: "7", title: "Харківська" },
+      { value: "13", title: "Донецька" },
+      { value: "14", title: "Запорізька" },
+      { value: "17", title: "Луганська" },
+    ],
+  },
+  {
+    region: "Південь",
+    locations: [
+      { value: "23", title: "Херсонська" },
+      { value: "19", title: "Миколаївська" },
+      { value: "12", title: "Одеська" },
+    ],
+  },
+];
