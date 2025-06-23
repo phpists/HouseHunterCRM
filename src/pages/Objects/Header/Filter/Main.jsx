@@ -33,7 +33,8 @@ import { ReactComponent as RemoveIcon } from "../../../../assets/images/remove.s
 import { CheckOption } from "../../../../components/CheckOption";
 import { ToggleOption } from "../../../../components/ToggleOption";
 import { LocationSearch } from "../../../../components/LocationSearch/LocationSearch";
-import { ColorSelect } from '../../../../components/ColorSelect';
+import { ColorSelect } from "../../../../components/ColorSelect";
+import Accordion from "../../../../components/Accordion/Accordion";
 
 const notAllowedFields = [
   "comment",
@@ -157,19 +158,16 @@ export const Main = ({
 
   return (
     <StyledMain className="section filterFieldsWrapper">
-      <SelectTags
-        label="Категорія"
-        notMultiSelect
-        value={filters?.id_rubric}
-        onChange={(val) =>
-          onChangeFilter("id_rubric", val === filters?.id_rubric ? null : val)
-        }
+      <Accordion
+        label={"Категорія"}
         options={
           rubricsList
             ? rubricsList?.map(({ id, name }) => ({ title: name, value: id }))
             : []
         }
-        error={errors?.["id_rubric"]}
+        onChange={(val) => {
+          onChangeFilter("id_rubric", val === filters?.id_rubric ? null : val);
+        }}
       />
       <Divider />
       <LocationSearch
@@ -187,7 +185,8 @@ export const Main = ({
             [filters?.price_min ?? "0", filters?.price_max ?? "0"],
             ["price_min", "price_max"],
             (values) =>
-              onChangeFilter("update", { ...filters, ...values }, true), true
+              onChangeFilter("update", { ...filters, ...values }, true),
+            true
           )
         }
         currency={Number(filters?.price_currency)}
@@ -401,26 +400,52 @@ export const Main = ({
                   );
                 } else if (typeof field[1]?.field_option === "object") {
                   if (field[0] === "kpp") {
-                    const kppOptions = Object.entries(field[1].field_option).map(([value, title]) => ({ value, title }));
-                    const autoTitles = ["Автомат", "Типтронік", "Робот", "Варіатор"];
-                    const autoIds = kppOptions.filter(opt => autoTitles.includes(opt.title)).map(opt => opt.value);
-                    const current = Array.isArray(filters.kpp) ? filters.kpp : filters.kpp ? [filters.kpp] : [];
-                    const isAutoSelected = autoIds.every(id => current.includes(id));
+                    const kppOptions = Object.entries(
+                      field[1].field_option
+                    ).map(([value, title]) => ({ value, title }));
+                    const autoTitles = [
+                      "Автомат",
+                      "Типтронік",
+                      "Робот",
+                      "Варіатор",
+                    ];
+                    const autoIds = kppOptions
+                      .filter((opt) => autoTitles.includes(opt.title))
+                      .map((opt) => opt.value);
+                    const current = Array.isArray(filters.kpp)
+                      ? filters.kpp
+                      : filters.kpp
+                      ? [filters.kpp]
+                      : [];
+                    const isAutoSelected = autoIds.every((id) =>
+                      current.includes(id)
+                    );
                     return (
                       <SelectTags
                         label={commentsToFields?.object[field[0]]}
                         options={kppOptions}
-                        tags={kppOptions.filter(opt => current.includes(opt.value))}
-                        onChange={val => {
+                        tags={kppOptions.filter((opt) =>
+                          current.includes(opt.value)
+                        )}
+                        onChange={(val) => {
                           if (val === autoIds[0]) {
                             if (!isAutoSelected) {
-                              onChangeFilter("kpp", Array.from(new Set([...current, ...autoIds])));
+                              onChangeFilter(
+                                "kpp",
+                                Array.from(new Set([...current, ...autoIds]))
+                              );
                             } else {
-                              onChangeFilter("kpp", current.filter(id => !autoIds.includes(id)));
+                              onChangeFilter(
+                                "kpp",
+                                current.filter((id) => !autoIds.includes(id))
+                              );
                             }
                           } else {
                             if (current.includes(val)) {
-                              onChangeFilter("kpp", current.filter(id => id !== val));
+                              onChangeFilter(
+                                "kpp",
+                                current.filter((id) => id !== val)
+                              );
                             } else {
                               onChangeFilter("kpp", [...current, val]);
                             }
@@ -563,7 +588,7 @@ export const Main = ({
       <ColorSelect
         colors={carColors}
         value={filters.id_color}
-        onChange={(val) => onChangeFilter('id_color', val)}
+        onChange={(val) => onChangeFilter("id_color", val)}
       />
     </StyledMain>
   );
