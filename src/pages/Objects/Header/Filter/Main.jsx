@@ -6,7 +6,7 @@ import {
   useGetLocationsQuery,
   useGetRubricsQuery,
 } from "../../../../store/requests/requests.api";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   handleChangeRange,
   handleGetLocationAllPath,
@@ -236,10 +236,10 @@ export const Main = ({
         }}
       />
       <Divider />
-      {selects?.map(
-        (select) =>
-          select[0] === "id_type_fuel" && (
-            <>
+      {selects?.map((select) => {
+        if (select[0] === "id_type_fuel") {
+          return (
+            <React.Fragment key={select[0]}>
               <Accordion
                 label={"Тип палива"}
                 options={Object.entries(select[1].field_option).map(
@@ -256,9 +256,29 @@ export const Main = ({
                 }}
               />
               <Divider />
-            </>
-          )
-      )}
+            </React.Fragment>
+          );
+        } else if (select[0] === "kpp") {
+          return (
+            <React.Fragment key={select[0]}>
+              <Accordion
+                label={"Коробка передач"}
+                options={Object.entries(select[1].field_option).map(
+                  ([value, title]) => ({
+                    title,
+                    value,
+                  })
+                )}
+                onChange={(val) => {
+                  onChangeFilter("kpp", val === filters?.kpp ? null : val);
+                }}
+              />
+              <Divider />
+            </React.Fragment>
+          );
+        }
+        return null;
+      })}
       <TagsFilter
         label="Пошук"
         search
