@@ -26,7 +26,7 @@ const StyledHeader = styled.div`
   .label {
     color: var(--main-color);
     font-family: Open Sans;
-    font-size: 11px;
+    font-size: 14px;
     font-style: normal;
     font-weight: var(--font-weight-light);
     line-height: normal;

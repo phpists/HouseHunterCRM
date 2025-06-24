@@ -24,7 +24,7 @@ export const Price = ({
       className={`${error && "error-field"}`}
     >
       <Ranger
-        label="Ціновий діапазон"
+        label="Ціна"
         typeValue={typeValue}
         onChangeType={onChangeType}
         max={1000000}

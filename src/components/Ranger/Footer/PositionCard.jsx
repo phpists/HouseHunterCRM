@@ -57,7 +57,7 @@ export const PositionCard = ({
 };
 
 const StyledPositionCard = styled.div`
-  padding: 3px 10px 1px 7px;
+  padding: 8px 10px 5px 7px;
   border-radius: 7px;
   background: var(--range-input-bg);
   min-width: 113px;
@@ -87,7 +87,6 @@ const StyledPositionCard = styled.div`
     opacity: 0.4;
     transition: all 0.3s;
     input {
-      width: 60px;
       margin-right: 0px;
       &::-webkit-outer-spin-button,
       &::-webkit-inner-spin-button {

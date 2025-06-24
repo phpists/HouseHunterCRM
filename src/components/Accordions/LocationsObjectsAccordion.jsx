@@ -21,9 +21,10 @@ const AccordionItem = styled.div`
 
 const AccordionTitle = styled.button`
   padding: 6px 10px;
+  font-family: Open Sans;
+  opacity: 0.4;
   color: var(--main-color, #fff);
   font-size: 14px;
-  font-weight: 100;
   line-height: 118%;
   letter-spacing: 0.3px;
   text-align: left;
