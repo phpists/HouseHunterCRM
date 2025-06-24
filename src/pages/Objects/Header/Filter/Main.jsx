@@ -158,6 +158,23 @@ export const Main = ({
     onChangeFilter("list_street", updatedValue);
   };
 
+  const selects = filtersFields?.main_field
+    ? Object.entries(filtersFields?.main_field)
+        .filter((field) => !notAllowedFields?.find((f) => f === field[0]))
+        .filter((field) =>
+          filters.id_rubric === "5"
+            ? !notAllowedFieldsForRubricFive?.find((f) => f === field[0])
+            : true
+        )
+        .filter((field) =>
+          filters.id_rubric === "5"
+            ? true
+            : !["id_technical_condition"]?.find((f) => f === field[0])
+        )
+        ?.filter((field) => commentsToFields?.object[field[0]]?.length > 0)
+        ?.sort((a, b) => a[1]?.sort - b[1]?.sort)
+    : null;
+
   return (
     <StyledMain className="section filterFieldsWrapper">
       <Accordion
@@ -219,6 +236,29 @@ export const Main = ({
         }}
       />
       <Divider />
+      {selects?.map(
+        (select) =>
+          select[0] === "id_type_fuel" && (
+            <>
+              <Accordion
+                label={"Тип палива"}
+                options={Object.entries(select[1].field_option).map(
+                  ([value, title]) => ({
+                    title,
+                    value,
+                  })
+                )}
+                onChange={(val) => {
+                  onChangeFilter(
+                    "id_type_fuel",
+                    val === filters?.id_type_fuel ? null : val
+                  );
+                }}
+              />
+              <Divider />
+            </>
+          )
+      )}
       <TagsFilter
         label="Пошук"
         search

@@ -2,13 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { Arrow } from "../SelectTags/Arrow";
 
-// Container for the accordion
 const AccordionWrapper = styled.div`
   max-width: 600px;
   font-family: Arial, sans-serif;
 `;
 
-// Individual accordion item
 const AccordionItem = styled.div`
   border-radius: 9px;
   position: relative;
@@ -16,14 +14,13 @@ const AccordionItem = styled.div`
   ${({ error }) => error === "true" && "border: 1px solid red;"}
 `;
 
-// Accordion title (header)
 const AccordionTitle = styled.button`
   padding: 6px 10px;
   color: var(--main-color, #fff);
   font-family: Open Sans;
   opacity: 0.4;
   font-size: 14px;
-  line-height: 118%; /* 17.7px */
+  line-height: 118%;
   letter-spacing: 0.3px;
   text-align: left;
   background: transparent;
@@ -34,33 +31,29 @@ const AccordionTitle = styled.button`
   align-items: center;
   width: 100%;
   border-radius: 9px;
-  transition: all 0.1s; /* Matches SelectTags transition */
+  transition: all 0.1s;
 
   &:hover {
     background: var(--card-bg-2, #2c2c2e);
     opacity: 1;
     .main-arrow {
-      opacity: 1; /* Show arrow on hover */
+      opacity: 1;
     }
   }
 
   &.open {
     border-radius: 9px 9px 0 0 !important;
-    border-bottom: var(
-      --second-color-border,
-      1px solid #3a3a3c
-    ); /* Matches open state */
+    border-bottom: var(--second-color-border, 1px solid #3a3a3c);
     .main-arrow {
-      opacity: 1; /* Show arrow when open */
+      opacity: 1;
     }
   }
 
   .main-arrow {
-    opacity: 0; /* Hide arrow by default */
+    opacity: 0;
   }
 `;
 
-// Accordion content
 const AccordionContent = styled.div`
   display: ${(props) => (props.active ? "block" : "none")};
   padding: ${(props) => (props.active ? "15px 10px" : "0 10px")};
@@ -68,7 +61,6 @@ const AccordionContent = styled.div`
   border-radius: 0 0 9px 9px;
 `;
 
-// Search input
 const SearchInput = styled.input`
   width: 100%;
   padding: 8px 10px;
@@ -99,7 +91,6 @@ const SearchInput = styled.input`
   }
 `;
 
-// List item for selectable options
 const ListItem = styled.div`
   padding: 8px 10px;
   color: var(--main-color, #fff);
@@ -115,33 +106,26 @@ const ListItem = styled.div`
   color: ${(props) => (props.selected ? "#58afff" : "var(--main-color, #fff)")};
 
   &:hover {
-    background: rgba(200, 200, 200, 0.2); /* Gray hover effect */
+    background: rgba(200, 200, 200, 0.2);
     color: var(--main-color, #fff);
   }
 `;
 
-const Accordion = ({ label, options, onChange, active }) => {
+const Accordion = ({ label, options = [], onChange, active }) => {
   const [isActive, setIsActive] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [search, setSearch] = useState("");
   const arrowRef = useRef(null);
 
-  // Initialize selectedOption based on active prop or default to "1"
+  // Синхронизация с внешним active
   useEffect(() => {
-    if (active) {
-      const activeOption = options.find((option) => option.value === active);
-      if (activeOption) {
-        setSelectedOption(activeOption);
-      }
+    if (active === undefined || active === null) {
+      setSelectedOption(null);
     } else {
-      const defaultOption = options.find((option) => option.value === "1");
-      if (defaultOption) {
-        setSelectedOption(defaultOption);
-        // Optionally call onChange with default value if needed
-        if (onChange) onChange("1");
-      }
+      const foundOption = options.find((opt) => opt.value === active);
+      setSelectedOption(foundOption || null);
     }
-  }, [active, options, onChange]);
+  }, [active, options]);
 
   const filteredOptions = options.filter((option) =>
     option.title.toLowerCase().includes(search.toLowerCase())
@@ -153,20 +137,12 @@ const Accordion = ({ label, options, onChange, active }) => {
   };
 
   const handleSelectOption = (option) => {
-    if (selectedOption?.value === option.value) {
-      setSelectedOption(null);
-      setSearch("");
-      if (onChange) {
-        onChange(null);
-      }
-    } else {
-      setSelectedOption(option);
-      setIsActive(false);
-      setSearch("");
-      if (onChange) {
-        onChange(option.value);
-      }
-    }
+    const newValue =
+      selectedOption?.value === option.value ? null : option.value;
+    setSelectedOption(newValue ? option : null);
+    setIsActive(false);
+    setSearch("");
+    onChange?.(newValue);
   };
 
   return (
@@ -197,7 +173,7 @@ const Accordion = ({ label, options, onChange, active }) => {
             </ListItem>
           ))}
           {filteredOptions.length === 0 && (
-            <ListItem>No options found</ListItem>
+            <ListItem>Нічого не знайдено</ListItem>
           )}
         </AccordionContent>
       </AccordionItem>
