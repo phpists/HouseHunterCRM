@@ -36,6 +36,7 @@ import { LocationSearch } from "../../../../components/LocationSearch/LocationSe
 import { ColorSelect } from "../../../../components/ColorSelect";
 import Accordion from "../../../../components/Accordions/Accordion";
 import LocationsObjectsAccordion from "../../../../components/Accordions/LocationsObjectsAccordion";
+import ObjectsFilterYear from "../../../../components/ObjectsFilterYear/ObjectsFilterYear";
 
 const notAllowedFields = [
   "comment",
@@ -204,6 +205,19 @@ export const Main = ({
         hideCurrency
       />
       <Divider />
+      <ObjectsFilterYear
+        initial={[filters?.year_from ?? 0, filters?.year_to ?? 0]}
+        onSubmit={(values) => {
+          handleChangeRange(
+            values,
+            [filters[`year_from`] ?? 0, filters[`year_to`] ?? 0],
+            [`year_from`, `year_to`],
+            (values) =>
+              onChangeFilter("update", { ...filters, ...values }, true)
+          );
+        }}
+      />
+      <Divider />
       <TagsFilter
         label="Пошук"
         search
@@ -228,7 +242,6 @@ export const Main = ({
         }
         noEditAlert="Пошук виключення доступний лише після заповнення поля 'Пошук'"
       />
-
       <Divider />
       <ProfileField
         placeholder="Введіть значення"
@@ -254,7 +267,6 @@ export const Main = ({
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
       />
-
       <div className="fields-wrapper">
         {filtersFields?.main_field
           ? Object.entries(filtersFields?.main_field)
@@ -302,50 +314,9 @@ export const Main = ({
                 };
 
                 const fieldName = field[0] === "rooms" ? "room" : field[0];
-
                 if (rangeFields.includes(field[0])) {
                   return (
                     <>
-                      <Ranger
-                        label={
-                          labels?.[field[0]] ??
-                          commentsToFields?.object[field[0]]
-                        }
-                        min={fieldName === "year" ? 1885 : 0}
-                        max={
-                          fieldName === "year" ? new Date().getFullYear() : 100
-                        }
-                        values={[
-                          filters[`${fieldName}_from`] ?? 0,
-                          filters[`${fieldName}_to`] ?? 0,
-                        ]}
-                        className="filter-range-wrapper"
-                        onChange={(values) =>
-                          handleChangeRange(
-                            values,
-                            [
-                              filters[`${fieldName}_from`] ?? 0,
-                              filters[`${fieldName}_to`] ?? 0,
-                            ],
-                            [`${fieldName}_from`, `${fieldName}_to`],
-                            (values) =>
-                              onChangeFilter(
-                                "update",
-                                { ...filters, ...values },
-                                true
-                              )
-                          )
-                        }
-                        onFocus={() =>
-                          !isInputFocused && onChangeInputFocus(true)
-                        }
-                        onBlur={() => onChangeInputFocus(false)}
-                        noCeil={fieldName === "volume_engine"}
-                        error={
-                          !!errors?.[`${fieldName}_from`] ||
-                          !!errors?.[`${fieldName}_to`]
-                        }
-                      />
                       {fieldName === "storey_count" ? (
                         <>
                           <ToggleOption
