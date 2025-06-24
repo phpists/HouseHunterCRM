@@ -161,6 +161,7 @@ export const Main = ({
   return (
     <StyledMain className="section filterFieldsWrapper">
       <Accordion
+        active={filters?.id_rubric}
         label={"Категорія"}
         options={
           rubricsList

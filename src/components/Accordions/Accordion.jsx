@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { Arrow } from "../SelectTags/Arrow";
 
@@ -120,11 +120,28 @@ const ListItem = styled.div`
   }
 `;
 
-const Accordion = ({ label, options, onChange }) => {
+const Accordion = ({ label, options, onChange, active }) => {
   const [isActive, setIsActive] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [search, setSearch] = useState("");
   const arrowRef = useRef(null);
+
+  // Initialize selectedOption based on active prop or default to "1"
+  useEffect(() => {
+    if (active) {
+      const activeOption = options.find((option) => option.value === active);
+      if (activeOption) {
+        setSelectedOption(activeOption);
+      }
+    } else {
+      const defaultOption = options.find((option) => option.value === "1");
+      if (defaultOption) {
+        setSelectedOption(defaultOption);
+        // Optionally call onChange with default value if needed
+        if (onChange) onChange("1");
+      }
+    }
+  }, [active, options, onChange]);
 
   const filteredOptions = options.filter((option) =>
     option.title.toLowerCase().includes(search.toLowerCase())
@@ -137,17 +154,17 @@ const Accordion = ({ label, options, onChange }) => {
 
   const handleSelectOption = (option) => {
     if (selectedOption?.value === option.value) {
-      setSelectedOption(null); // Deselect if clicking the same option
-      setSearch(""); // Clear search on deselection
+      setSelectedOption(null);
+      setSearch("");
       if (onChange) {
-        onChange(null); // Trigger onChange with null when deselecting
+        onChange(null);
       }
     } else {
-      setSelectedOption(option); // Select new option
-      setIsActive(false); // Close accordion on new selection
-      setSearch(""); // Clear search on selection
+      setSelectedOption(option);
+      setIsActive(false);
+      setSearch("");
       if (onChange) {
-        onChange(option.value); // Trigger onChange with the value of the new item
+        onChange(option.value);
       }
     }
   };
