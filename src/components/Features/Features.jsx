@@ -195,7 +195,6 @@ const Features = ({ data, onChangeFilter, filtersFields }) => {
         onChange={(val) => onChangeFilter("id_color", val)}
       />
       <Divider />
-
       <CheckOption
         label="Обмін"
         className="check-opt"
@@ -212,15 +211,26 @@ const Features = ({ data, onChangeFilter, filtersFields }) => {
       />
       <Divider />
 
-      <Accordion
-        active={data?.id_ecological_standard}
-        label={"Екологічний стандарт"}
-        options={Object.entries(
-          filtersFields?.main_field?.id_ecological_standard?.field_option
-        )?.map((opt) => ({ value: opt[0], title: opt[1] }))}
-        onChange={(val) => onChangeFilter("id_ecological_standard", val)}
-      />
-      <Divider />
+      {selects?.map((select) => {
+        if (select[0] === "id_ecological_standard") {
+          return (
+            <React.Fragment key={select[0]}>
+              <Accordion
+                active={data?.id_ecological_standard}
+                label={"Екологічний стандарт"}
+                options={Object.entries(
+                  filtersFields?.main_field?.id_ecological_standard
+                    ?.field_option
+                )?.map((opt) => ({ value: opt[0], title: opt[1] }))}
+                onChange={(val) =>
+                  onChangeFilter("id_ecological_standard", val)
+                }
+              />
+              <Divider />
+            </React.Fragment>
+          );
+        }
+      })}
     </>
   );
 };
