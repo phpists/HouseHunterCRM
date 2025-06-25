@@ -242,6 +242,7 @@ export const Main = ({
           return (
             <React.Fragment key={select[0]}>
               <Accordion
+                active={filters?.id_type_fuel}
                 label={"Тип палива"}
                 options={Object.entries(select[1].field_option).map(
                   ([value, title]) => ({
@@ -293,6 +294,7 @@ export const Main = ({
           return (
             <React.Fragment key={select[0]}>
               <Accordion
+                active={filters?.kpp}
                 label={"Коробка передач"}
                 options={Object.entries(select[1].field_option).map(
                   ([value, title]) => ({
@@ -302,6 +304,31 @@ export const Main = ({
                 )}
                 onChange={(val) => {
                   onChangeFilter("kpp", val === filters?.kpp ? null : val);
+                }}
+              />
+              <Divider />
+            </React.Fragment>
+          );
+        }
+      })}
+      {selects?.map((select) => {
+        if (select[0] === "drive_type") {
+          return (
+            <React.Fragment key={select[0]}>
+              <Accordion
+                active={filters?.drive_type}
+                label={"Привід"}
+                options={Object.entries(select[1].field_option).map(
+                  ([value, title]) => ({
+                    title,
+                    value,
+                  })
+                )}
+                onChange={(val) => {
+                  onChangeFilter(
+                    "drive_type",
+                    val === filters?.drive_type ? null : val
+                  );
                 }}
               />
               <Divider />
