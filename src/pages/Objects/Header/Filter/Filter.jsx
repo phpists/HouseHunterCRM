@@ -27,6 +27,7 @@ import { Button } from "../../../../components/Button";
 import { Select } from "../../../../components/Select/Select";
 import { SaveFilterModal } from "../../../../components/SaveFilterModal";
 import { Confirm } from "../../../../components/Confirm/Confirm";
+import Placement from "../../../../components/Placement/Placement";
 
 export const Filter = ({
   open,
@@ -384,6 +385,9 @@ export const Filter = ({
             onChangePhoneCode={onChangePhoneCode}
             onOpenMap={onOpenMap}
           />
+
+          <SectionTitle title="Розмішення" />
+          <Placement data={filters} onChange={handleChangeFilter} />
         </div>
         <div className="total">
           <div>
