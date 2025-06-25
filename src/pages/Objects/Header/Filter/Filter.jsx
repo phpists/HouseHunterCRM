@@ -30,6 +30,8 @@ import { Confirm } from "../../../../components/Confirm/Confirm";
 import Placement from "../../../../components/Placement/Placement";
 import Features from "../../../../components/Features/Features";
 import PriceChange from "../../../../components/PriceChange/PriceChange";
+import AutoRia from "../../../../components/AutoRia/AutoRia";
+import { ReactComponent as AutoRiaImg } from "../../../../assets/images/autoria.svg";
 
 export const Filter = ({
   open,
@@ -400,6 +402,16 @@ export const Filter = ({
 
           <SectionTitle title="Зміна ціни" />
           <PriceChange
+            data={filters}
+            onChangeFilter={handleChangeFilter}
+            filtersFields={filtersFields}
+          />
+
+          <div className="flex gap-2">
+            <SectionTitle title="пошук по AutoRia" />
+            <AutoRiaImg />
+          </div>
+          <AutoRia
             data={filters}
             onChangeFilter={handleChangeFilter}
             filtersFields={filtersFields}
