@@ -29,6 +29,7 @@ import { SaveFilterModal } from "../../../../components/SaveFilterModal";
 import { Confirm } from "../../../../components/Confirm/Confirm";
 import Placement from "../../../../components/Placement/Placement";
 import Features from "../../../../components/Features/Features";
+import PriceChange from "../../../../components/PriceChange/PriceChange";
 
 export const Filter = ({
   open,
@@ -392,6 +393,13 @@ export const Filter = ({
 
           <SectionTitle title="Характеристики" />
           <Features
+            data={filters}
+            onChangeFilter={handleChangeFilter}
+            filtersFields={filtersFields}
+          />
+
+          <SectionTitle title="Зміна ціни" />
+          <PriceChange
             data={filters}
             onChangeFilter={handleChangeFilter}
             filtersFields={filtersFields}
