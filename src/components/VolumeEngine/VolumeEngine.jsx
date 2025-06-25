@@ -1,15 +1,15 @@
 import { styled } from "styled-components";
 import { Ranger } from "../Ranger/Ranger";
 
-export const VolumeEngine = ({ values, onChange, error }) => {
+export const VolumeEngine = ({ values, onChange, error, label, max = 100 }) => {
   return (
     <StyledPrice
       error={error?.toString()}
       className={`${error && "error-field"}`}
     >
       <Ranger
-        label="Об'єм"
-        max={100}
+        label={label}
+        max={max}
         values={values}
         onChange={onChange}
         noRange

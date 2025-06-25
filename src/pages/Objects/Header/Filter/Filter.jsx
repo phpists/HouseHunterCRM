@@ -28,6 +28,7 @@ import { Select } from "../../../../components/Select/Select";
 import { SaveFilterModal } from "../../../../components/SaveFilterModal";
 import { Confirm } from "../../../../components/Confirm/Confirm";
 import Placement from "../../../../components/Placement/Placement";
+import Features from "../../../../components/Features/Features";
 
 export const Filter = ({
   open,
@@ -388,6 +389,13 @@ export const Filter = ({
 
           <SectionTitle title="Розмішення" />
           <Placement data={filters} onChange={handleChangeFilter} />
+
+          <SectionTitle title="Характеристики" />
+          <Features
+            data={filters}
+            onChangeFilter={handleChangeFilter}
+            filtersFields={filtersFields}
+          />
         </div>
         <div className="total">
           <div>

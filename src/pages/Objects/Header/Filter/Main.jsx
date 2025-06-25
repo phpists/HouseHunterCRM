@@ -39,7 +39,7 @@ import LocationsObjectsAccordion from "../../../../components/Accordions/Locatio
 import ObjectsFilterYear from "../../../../components/ObjectsFilterYear/ObjectsFilterYear";
 import { VolumeEngine } from "../../../../components/VolumeEngine/VolumeEngine";
 
-const notAllowedFields = [
+export const notAllowedFields = [
   "comment",
   "description",
   "id_client",
@@ -75,7 +75,7 @@ const notAllowedFields = [
   "liquidity",
 ];
 
-const notAllowedFieldsForRubricFive = [
+export const notAllowedFieldsForRubricFive = [
   "volume_engine",
   "id_ecological_standard",
   "сar_mileage",
@@ -267,6 +267,8 @@ export const Main = ({
           return (
             <React.Fragment key={select[0]}>
               <VolumeEngine
+                label={"Об'єм"}
+                max={100}
                 values={[
                   filters?.volume_engine_from ?? "0",
                   filters?.volume_engine_to ?? "0",
@@ -436,6 +438,46 @@ export const Main = ({
                 if (rangeFields.includes(field[0])) {
                   return (
                     <>
+                      <Ranger
+                        label={
+                          labels?.[field[0]] ??
+                          commentsToFields?.object[field[0]]
+                        }
+                        min={fieldName === "year" ? 1885 : 0}
+                        max={
+                          fieldName === "year" ? new Date().getFullYear() : 100
+                        }
+                        values={[
+                          filters[`${fieldName}_from`] ?? 0,
+                          filters[`${fieldName}_to`] ?? 0,
+                        ]}
+                        className="filter-range-wrapper"
+                        onChange={(values) =>
+                          handleChangeRange(
+                            values,
+                            [
+                              filters[`${fieldName}_from`] ?? 0,
+                              filters[`${fieldName}_to`] ?? 0,
+                            ],
+                            [`${fieldName}_from`, `${fieldName}_to`],
+                            (values) =>
+                              onChangeFilter(
+                                "update",
+                                { ...filters, ...values },
+                                true
+                              )
+                          )
+                        }
+                        onFocus={() =>
+                          !isInputFocused && onChangeInputFocus(true)
+                        }
+                        onBlur={() => onChangeInputFocus(false)}
+                        noCeil={fieldName === "volume_engine"}
+                        error={
+                          !!errors?.[`${fieldName}_from`] ||
+                          !!errors?.[`${fieldName}_to`]
+                        }
+                      />
                       {fieldName === "storey_count" ? (
                         <>
                           <ToggleOption
