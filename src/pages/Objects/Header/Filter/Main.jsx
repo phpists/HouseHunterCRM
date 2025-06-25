@@ -37,6 +37,7 @@ import { ColorSelect } from "../../../../components/ColorSelect";
 import Accordion from "../../../../components/Accordions/Accordion";
 import LocationsObjectsAccordion from "../../../../components/Accordions/LocationsObjectsAccordion";
 import ObjectsFilterYear from "../../../../components/ObjectsFilterYear/ObjectsFilterYear";
+import { VolumeEngine } from "../../../../components/VolumeEngine/VolumeEngine";
 
 const notAllowedFields = [
   "comment",
@@ -258,7 +259,37 @@ export const Main = ({
               <Divider />
             </React.Fragment>
           );
-        } else if (select[0] === "kpp") {
+        }
+      })}
+      {selects?.map((select) => {
+        if (select[0] === "volume_engine") {
+          return (
+            <React.Fragment key={select[0]}>
+              <VolumeEngine
+                values={[
+                  filters?.volume_engine_from ?? "0",
+                  filters?.volume_engine_to ?? "0",
+                ]}
+                onChange={(values) => {
+                  handleChangeRange(
+                    values,
+                    [
+                      filters[`volume_engine_from`] ?? 0,
+                      filters[`volume_engine_to`] ?? 0,
+                    ],
+                    [`volume_engine_from`, `volume_engine_to`],
+                    (values) =>
+                      onChangeFilter("update", { ...filters, ...values }, true)
+                  );
+                }}
+              />
+              <Divider />
+            </React.Fragment>
+          );
+        }
+      })}
+      {selects?.map((select) => {
+        if (select[0] === "kpp") {
           return (
             <React.Fragment key={select[0]}>
               <Accordion
@@ -277,8 +308,8 @@ export const Main = ({
             </React.Fragment>
           );
         }
-        return null;
       })}
+
       <TagsFilter
         label="Пошук"
         search
