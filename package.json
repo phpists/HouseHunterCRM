@@ -1,7 +1,7 @@
 {
   "name": "xhouse-crm",
   "version": "0.1.0",
-  "buildDate": 1748875866484,
+  "buildDate": 1750864380512,
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
@@ -46,6 +46,7 @@
     "start": "clear  &&  react-scripts start",
     "build-sw": "sw-precache --config=sw-precache-config.js",
     "build": "cls && node ./update-build.js && react-scripts build && npm run build-sw  &&  cls",
+    "build-macos": "clear && node ./update-build.js && react-scripts build && npm run build-sw && clear",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

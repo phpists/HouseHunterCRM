@@ -32,6 +32,7 @@ import Features from "../../../../components/Features/Features";
 import PriceChange from "../../../../components/PriceChange/PriceChange";
 import AutoRia from "../../../../components/AutoRia/AutoRia";
 import { ReactComponent as AutoRiaImg } from "../../../../assets/images/autoria.svg";
+import Search from "../../../../components/SearchFilter/Search";
 
 export const Filter = ({
   open,
@@ -415,6 +416,17 @@ export const Filter = ({
             data={filters}
             onChangeFilter={handleChangeFilter}
             filtersFields={filtersFields}
+          />
+
+          <SectionTitle title="Пошук" />
+          <Search
+            data={filters}
+            onChangeFilter={handleChangeFilter}
+            filtersFields={filtersFields}
+            onChangeInputFocus={(val) => setIsInputFocused(val)}
+            phoneCode={phoneCode}
+            onChangePhoneCode={onChangePhoneCode}
+            errors={errors}
           />
         </div>
         <div className="total">

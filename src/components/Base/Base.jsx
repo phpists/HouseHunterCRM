@@ -45,7 +45,7 @@ const CARS_STATUSES = [
   { title: "По низу ринку", value: "tag_market_bottom" },
 ];
 
-const CARS_TAGS = [
+export const CARS_TAGS = [
   { title: "Терміново", value: "tag_faster" },
   { title: "Рідна фарба", value: "tag_nativePaint" },
   { title: "Можливий обмін", value: "tag_exchangePossible" },
@@ -704,7 +704,6 @@ export const Base = ({
                 onChange={handleChangeStatusesTagsObjarray}
                 showTags
               />
-
               <SelectTags
                 label="Теги"
                 className="mb-2"
