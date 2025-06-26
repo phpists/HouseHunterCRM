@@ -107,9 +107,7 @@ export const Base = ({
   const { data: sortingPeriods } = useGetSortingObjectQuery();
   const { data: companyWorkers } = useGetWorkersMyCompanyQuery();
   const [company, setCompany] = useState(!!data?.company_object);
-  const [streetBase, setStreetBase] = useState(
-    !!data.street_base_object || streetBaseOpen
-  );
+  const [streetBase, setStreetBase] = useState(false);
   const [mlsBase, setMlsBase] = useState(!!data.mls_object || mlsBaseOpen);
   const { data: workers } = useGetWorkerMyStructureQuery();
   const { data: sources } = useGetSourcesQuery();
@@ -121,8 +119,36 @@ export const Base = ({
     XHOUSE_COMPANY_ID.includes(user?.id);
 
   useEffect(() => {
+    if (!streetBase) {
+      isOpenStreetBase();
+    }
+  }, [data.street_base_object]);
+
+  function isOpenStreetBase() {
+    const requiredFields = [
+      "disable_cooperation",
+      "hide_picaroon",
+      "notCommentAndTags",
+      "onlyNotClientsCompany",
+      "potential_owner",
+    ];
+
+    const result =
+      data?.street_base_object &&
+      requiredFields.some(
+        (field) =>
+          Object.prototype.hasOwnProperty.call(
+            data.street_base_object,
+            field
+          ) && data.street_base_object[field] !== undefined
+      );
+
+    setStreetBase(result);
+  }
+
+  useEffect(() => {
     setMlsBase(mlsBaseOpen);
-    setStreetBase(streetBaseOpen);
+    // setStreetBase(streetBaseOpen);
     setCompany(companyOpen);
     if (streetBaseOpen && data?.street_base_object) {
       let changed = false;
@@ -275,6 +301,8 @@ export const Base = ({
       [field]: data?.street_base_object?.[field] === "1" ? undefined : "1",
     });
   };
+
+  console.log(streetBase);
 
   return (
     <StyledBase
@@ -474,7 +502,7 @@ export const Base = ({
       />
       {streetBase ? (
         <>
-          <Period
+          {/* <Period
             value={data?.street_base_object?.sorting_id}
             onChange={(val) =>
               onChange("street_base_object", {
@@ -490,14 +518,14 @@ export const Base = ({
                   }))
                 : []
             }
-          />
-          <CheckOption
+          /> */}
+          {/* <CheckOption
             label="Обмін"
             className="check-opt"
             value={data?.street_base_object?.tag_exchangePossible}
             onChange={() => handleChangeCarTags("tag_exchangePossible")}
-          />
-          {idSource ? (
+          /> */}
+          {/* {idSource ? (
             <SelectTags
               label="Пошук по ресурсу"
               placeholder="Оберіть ресурс"
@@ -538,7 +566,7 @@ export const Base = ({
               onFocus={onFocus}
               onBlur={onBlur}
             />
-          ) : null}
+          ) : null} */}
           <CheckOption
             label="Вимкнути «Без співпраці»"
             className="check-opt"
@@ -630,7 +658,7 @@ export const Base = ({
               }
             />
           ) : null}
-          {showTagsObjarray ? (
+          {/* {showTagsObjarray ? (
             <SelectTags
               label="Пошук по тегам"
               className="mb-2"
@@ -952,7 +980,7 @@ export const Base = ({
                 })
               }
             />
-          ) : null}
+          ) : null} */}
         </>
       ) : null}
       <TitleDivider title="mls base" />

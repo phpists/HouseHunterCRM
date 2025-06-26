@@ -738,8 +738,6 @@ const Objects = () => {
     setSelected([]);
   };
 
-  console.log(filters);
-
   return (
     <StyledObjects>
       <Header
