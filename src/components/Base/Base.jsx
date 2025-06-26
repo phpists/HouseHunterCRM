@@ -302,8 +302,6 @@ export const Base = ({
     });
   };
 
-  console.log(streetBase);
-
   return (
     <StyledBase
       className={`request-card ${className} ${
