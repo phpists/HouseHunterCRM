@@ -420,7 +420,11 @@ export const Filter = ({
           />
 
           <SectionTitle title="Результати пошуку" />
-          <SearchResults data={filters} onChangeFilter={handleChangeFilter} />
+          <SearchResults
+            data={filters}
+            onChangeFilter={handleChangeFilter}
+            filtersFields={filtersFields}
+          />
 
           <SectionTitle title="Пошук" />
           <Search

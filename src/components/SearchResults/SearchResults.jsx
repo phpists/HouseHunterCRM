@@ -4,9 +4,13 @@ import { CARS_STATUSES } from "../Base/Base";
 import { Divider } from "../Base/Divider";
 import { Period } from "../Base/Period/Period";
 import { SelectTags } from "../SelectTags/SelectTags";
+import Accordion from "../Accordions/Accordion";
+import { useGetSortObjectViewQuery } from "../../store/objects/objects.api";
 
 const SearchResults = ({ data, onChangeFilter, filtersFields }) => {
   const { data: sortingPeriods } = useGetSortingObjectQuery();
+  const { data: sortData } = useGetSortObjectViewQuery();
+
   const handleChangeStatusesTagsObjarray = (val) => {
     const prevValue = Array.isArray(data?.street_base_object?.id_status_add)
       ? data?.street_base_object?.id_status_add
@@ -65,6 +69,14 @@ const SearchResults = ({ data, onChangeFilter, filtersFields }) => {
               }))
             : []
         }
+      />
+      <Divider />
+
+      <Accordion
+        active={+data?.sorting}
+        label={"Cортування"}
+        options={sortData?.map(({ id, name }) => ({ value: id, title: name }))}
+        onChange={(val) => onChangeFilter("sorting", val)}
       />
       <Divider />
     </>
