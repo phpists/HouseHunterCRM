@@ -112,6 +112,8 @@ export const Main = ({
     if (filters?.id_rubric) {
       getBrands(filters.id_rubric);
       getCarBody(filters.id_rubric);
+    } else {
+      onChangeFilter("id_rubric", "1");
     }
   }, [filters.id_rubric]);
 
