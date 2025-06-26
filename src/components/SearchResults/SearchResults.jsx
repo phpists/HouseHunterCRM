@@ -34,7 +34,7 @@ const SearchResults = ({ data, onChangeFilter, filtersFields }) => {
   }, []);
 
   return (
-    <>
+    <div className="section filterFieldsWrapper">
       <SelectTags
         label="статус оголошення"
         className="mb-2"
@@ -78,8 +78,7 @@ const SearchResults = ({ data, onChangeFilter, filtersFields }) => {
         options={sortData?.map(({ id, name }) => ({ value: id, title: name }))}
         onChange={(val) => onChangeFilter("sorting", val)}
       />
-      <Divider />
-    </>
+    </div>
   );
 };
 

@@ -5,7 +5,7 @@ import Price from "./Price";
 
 const PriceChange = ({ data, onChangeFilter, filtersFields }) => {
   return (
-    <>
+    <div className="section filterFieldsWrapper">
       <Price onChangeFilter={onChangeFilter} data={data} />
       <Divider />
 
@@ -57,8 +57,7 @@ const PriceChange = ({ data, onChangeFilter, filtersFields }) => {
           })
         }
       />
-      <Divider />
-    </>
+    </div>
   );
 };
 

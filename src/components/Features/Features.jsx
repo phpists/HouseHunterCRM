@@ -60,7 +60,7 @@ const Features = ({ data, onChangeFilter, filtersFields }) => {
     : null;
 
   return (
-    <>
+    <div className="section filterFieldsWrapper">
       <VolumeEngine
         label={"Пробіг тис. км."}
         max={1000}
@@ -245,12 +245,11 @@ const Features = ({ data, onChangeFilter, filtersFields }) => {
                   onChangeFilter("id_technical_condition", val)
                 }
               />
-              <Divider />
             </React.Fragment>
           );
         }
       })}
-    </>
+    </div>
   );
 };
 

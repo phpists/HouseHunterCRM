@@ -8,7 +8,7 @@ import Views from "./Views";
 
 const AutoRia = ({ data, onChangeFilter, filtersFields }) => {
   return (
-    <>
+    <div className="section filterFieldsWrapper">
       <Index data={data} onChange={onChangeFilter} />
       <Divider />
 
@@ -40,7 +40,7 @@ const AutoRia = ({ data, onChangeFilter, filtersFields }) => {
         * Якщо ви обрали ці поля, то пошук <br />
         здійснюватиметься тільки по джерелу AutoRia
       </Text>
-    </>
+    </div>
   );
 };
 

@@ -66,7 +66,7 @@ const Search = ({
     : null;
 
   return (
-    <>
+    <div className="section filterFieldsWrapper">
       <MultipleAccordion
         active={active}
         label={"Теги"}
@@ -167,12 +167,11 @@ const Search = ({
                 onFocus={() => onChangeInputFocus(true)}
                 onBlur={() => onChangeInputFocus(false)}
               />
-              <Divider />
             </React.Fragment>
           );
         }
       })}
-    </>
+    </div>
   );
 };
 

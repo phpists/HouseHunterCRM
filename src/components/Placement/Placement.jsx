@@ -12,7 +12,7 @@ const Placement = ({ data, onChange }) => {
       : [];
 
   return (
-    <>
+    <div className="section filterFieldsWrapper">
       {options.map(({ value, title }) => {
         return (
           <CheckOption
@@ -38,7 +38,7 @@ const Placement = ({ data, onChange }) => {
           />
         );
       })}
-    </>
+    </div>
   );
 };
 
