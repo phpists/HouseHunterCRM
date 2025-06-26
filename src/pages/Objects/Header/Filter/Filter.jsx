@@ -34,6 +34,7 @@ import AutoRia from "../../../../components/AutoRia/AutoRia";
 import { ReactComponent as AutoRiaImg } from "../../../../assets/images/autoria.svg";
 import Search from "../../../../components/SearchFilter/Search";
 import SearchResults from "../../../../components/SearchResults/SearchResults";
+import { Base } from "../../../../components/Base/Base";
 
 export const Filter = ({
   open,
@@ -435,6 +436,53 @@ export const Filter = ({
             phoneCode={phoneCode}
             onChangePhoneCode={onChangePhoneCode}
             errors={errors}
+          />
+
+          <Base
+            className="base-wrapper"
+            data={filters}
+            onChange={onChangeFilter}
+            streetBaseOpen={filtersOpened?.street_base_object}
+            mlsBaseOpen={filtersOpened?.mls_object}
+            companyOpen={filtersOpened?.company}
+            onChangeDefaultFiltersOpened={(fieldName, value) =>
+              onChangeDefaultFiltersOpened({
+                ...filtersOpened,
+                [fieldName]: value,
+              })
+            }
+            dateAgreement
+            idAdInSource
+            showDeleted
+            workersSearch
+            potentialOwner
+            idSource
+            objMls
+            countObjectOwner
+            allObjectsWorker
+            publicAccess
+            onlyNotmyClient
+            notCommentAndTags
+            showTagsObjarray
+            hideAdvertsAdd
+            onFocus={() => (val) => setIsInputFocused(true)}
+            onBlur={() => (val) => setIsInputFocused(false)}
+            hidePicaroon
+            liquidity
+            overbuyingIndex
+            countViews
+            countLikes
+            idStatusAdd
+            priceChange
+            priceChangePeriod
+            priceChangeUp
+            showTop
+            priceChangeUpProcent
+            showTagPriceDump
+            showCommentAutoria
+            errors={Object.entries(errors)
+              ?.filter((e) => e?.[1])
+              ?.map((e) => e?.[0])}
           />
         </div>
         <div className="total">

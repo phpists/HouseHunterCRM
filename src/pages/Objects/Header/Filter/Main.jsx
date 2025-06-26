@@ -333,13 +333,12 @@ export const Main = ({
                   );
                 }}
               />
-              <Divider />
             </React.Fragment>
           );
         }
       })}
 
-      <TagsFilter
+      {/* <TagsFilter
         label="Пошук"
         search
         tags={Array.isArray(filters?.search_like) ? filters?.search_like : []}
@@ -387,8 +386,9 @@ export const Main = ({
         error={errors?.search_phone}
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
-      />
-      <div className="fields-wrapper">
+      /> */}
+
+      {/* <div className="fields-wrapper">
         {filtersFields?.main_field
           ? Object.entries(filtersFields?.main_field)
               .filter((field) => !notAllowedFields?.find((f) => f === field[0]))
@@ -592,8 +592,6 @@ export const Main = ({
                   }
                   return (
                     <>
-                      {/* <Divider /> */}
-
                       <Select
                         value={filters[field[0]]}
                         options={Object.entries(field[1]?.field_option)?.map(
@@ -672,59 +670,14 @@ export const Main = ({
                 }
               })
           : null}
-      </div>
-      <Base
-        className="base-wrapper"
-        data={filters}
-        onChange={onChangeFilter}
-        streetBaseOpen={filtersOpened?.street_base_object}
-        mlsBaseOpen={filtersOpened?.mls_object}
-        companyOpen={filtersOpened?.company}
-        onChangeDefaultFiltersOpened={(fieldName, value) =>
-          onChangeDefaultFiltersOpened({
-            ...filtersOpened,
-            [fieldName]: value,
-          })
-        }
-        dateAgreement
-        idAdInSource
-        showDeleted
-        workersSearch
-        potentialOwner
-        idSource
-        objMls
-        countObjectOwner
-        allObjectsWorker
-        publicAccess
-        onlyNotmyClient
-        notCommentAndTags
-        showTagsObjarray
-        hideAdvertsAdd
-        onFocus={() => onChangeInputFocus(true)}
-        onBlur={() => onChangeInputFocus(false)}
-        hidePicaroon
-        liquidity
-        overbuyingIndex
-        countViews
-        countLikes
-        idStatusAdd
-        priceChange
-        priceChangePeriod
-        priceChangeUp
-        showTop
-        priceChangeUpProcent
-        showTagPriceDump
-        showCommentAutoria
-        errors={Object.entries(errors)
-          ?.filter((e) => e?.[1])
-          ?.map((e) => e?.[0])}
-      />
-      <Divider />
+      </div> */}
+
+      {/* <Divider />
       <ColorSelect
         colors={carColors}
         value={filters.id_color}
         onChange={(val) => onChangeFilter("id_color", val)}
-      />
+      /> */}
     </StyledMain>
   );
 };
