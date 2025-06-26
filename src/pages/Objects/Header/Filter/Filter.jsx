@@ -33,6 +33,7 @@ import PriceChange from "../../../../components/PriceChange/PriceChange";
 import AutoRia from "../../../../components/AutoRia/AutoRia";
 import { ReactComponent as AutoRiaImg } from "../../../../assets/images/autoria.svg";
 import Search from "../../../../components/SearchFilter/Search";
+import SearchResults from "../../../../components/SearchResults/SearchResults";
 
 export const Filter = ({
   open,
@@ -417,6 +418,9 @@ export const Filter = ({
             onChangeFilter={handleChangeFilter}
             filtersFields={filtersFields}
           />
+
+          <SectionTitle title="Результати пошуку" />
+          <SearchResults data={filters} onChangeFilter={handleChangeFilter} />
 
           <SectionTitle title="Пошук" />
           <Search

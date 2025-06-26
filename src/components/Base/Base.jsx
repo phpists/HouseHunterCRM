@@ -28,7 +28,7 @@ import {
 } from "../../store/billing/billing.api";
 import { XHOUSE_COMPANY_ID } from "../../constants";
 
-const CARS_STATUSES = [
+export const CARS_STATUSES = [
   { title: "Видалено власником", value: "1" },
   {
     title: "Видалено із сайту власником(повністю)",
