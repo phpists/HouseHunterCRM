@@ -86,6 +86,7 @@ export const notAllowedFieldsForRubricFive = [
 ];
 
 export const Main = ({
+  close,
   filters,
   onChangeFilter,
   filtersFields,
@@ -183,6 +184,7 @@ export const Main = ({
   return (
     <StyledMain className="section filterFieldsWrapper">
       <Accordion
+        close={close}
         active={filters?.id_rubric}
         label={"Категорія"}
         options={
@@ -196,6 +198,7 @@ export const Main = ({
       />
       <Divider />
       <LocationsObjectsAccordion
+        close={close}
         options={
           rubricsList
             ? rubricsList?.map(({ id, name }) => ({ title: name, value: id }))

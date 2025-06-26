@@ -69,10 +69,12 @@ export const Filter = ({
   const { data: savedFilters, refetch } = useGetUserFiltersQuery();
   const [deleteSavedFilter] = useLazyRemoveUserFilterQuery();
   const [deletingSavedFilter, setDeletingSavedFilter] = useState(null);
+  const [close, setClose] = useState(false);
 
   const handleClose = () => {
     controls.start({ opacity: 0, translateX: "100%" });
     setTimeout(onClose, 500);
+    setClose((prev) => !prev);
   };
 
   useEffect(() => {
@@ -380,6 +382,7 @@ export const Filter = ({
         <div className="content objects-filters-main-wrapper" ref={contentRef}>
           <SectionTitle title="Головне" />
           <Main
+            close={close}
             filters={filters}
             onChangeFilter={handleChangeFilter}
             filtersFields={filtersFields}

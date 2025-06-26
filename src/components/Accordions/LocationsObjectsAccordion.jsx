@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Arrow } from "../SelectTags/Arrow";
 import { CheckOption } from "../CheckOption";
@@ -118,7 +118,7 @@ const BadgesContainer = styled.div`
   margin-bottom: 10px;
 `;
 
-const LocationsObjectsAccordion = ({ onChange, initialValue = [] }) => {
+const LocationsObjectsAccordion = ({ onChange, initialValue = [], close }) => {
   const { data: locationsList } = useGetLocationsQuery();
 
   // Format locations to include parent region in the title
@@ -138,6 +138,10 @@ const LocationsObjectsAccordion = ({ onChange, initialValue = [] }) => {
 
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState(initialValue);
+
+  useEffect(() => {
+    setIsActive(false);
+  }, [close]);
 
   const toggleAccordion = () => setIsActive(!isActive);
 
