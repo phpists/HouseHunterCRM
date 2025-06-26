@@ -160,10 +160,9 @@ const Features = ({ data, onChangeFilter, filtersFields }) => {
       })}
       <VolumeEngine
         label={"к-ть оголошень автора (відключіть перекупа)"}
-        max={10000}
         values={[
-          data?.street_base_object?.count_object_owner_from ?? 1,
-          data?.street_base_object?.count_object_owner_to ?? 10000,
+          data?.street_base_object?.count_object_owner_from,
+          data?.street_base_object?.count_object_owner_to,
         ]}
         onChange={(values) => {
           handleChangeRange(

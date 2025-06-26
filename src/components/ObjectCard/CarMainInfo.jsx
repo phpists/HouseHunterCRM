@@ -8,7 +8,10 @@ import {
   useGetRubricsQuery,
   useLazyGetRubricsFieldsQuery,
 } from "../../store/requests/requests.api";
-import { useLazyAddViewLinkQuery } from "../../store/objects/objects.api";
+import {
+  useLazyAddViewLinkQuery,
+  useLazyGetCarBodyQuery,
+} from "../../store/objects/objects.api";
 
 export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
   const { data: locationsList } = useGetLocationsQuery();
@@ -16,6 +19,13 @@ export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
   const [getRubricField, { data: fields }] = useLazyGetRubricsFieldsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
   const [addViewLink] = useLazyAddViewLinkQuery();
+  const [getCarBody, { data: carBodyList }] = useLazyGetCarBodyQuery();
+
+  useEffect(() => {
+    if (data?.id_rubric) {
+      getCarBody(data.id_rubric);
+    }
+  }, [data.id_rubric]);
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -39,8 +49,14 @@ export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
     getRubricField(1);
   }, []);
 
-  const handleGetTagValue = (field, value) =>
-    fields?.find((f) => f.field === field)?.field_option?.[value] ?? value;
+  const handleGetTagValue = (field, value) => {
+    if (field === "id_type_body") {
+      return carBodyList?.data?.find((f) => f.id === value)?.name;
+    }
+    return (
+      fields?.find((f) => f.field === field)?.field_option?.[value] ?? value
+    );
+  };
 
   const handleCheckIsNew = () => {
     const { dt_edit_in_source, price_change_date } = data;
@@ -112,7 +128,9 @@ export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
           data?.drive_type === "0"
             ? "-"
             : handleGetTagValue("drive_type", data?.drive_type)
-        } • Універсал •  ${data.index_overbuying}/10 • TOP ${data?.data_level}`}
+        } • ${handleGetTagValue("id_type_body", data?.id_type_body)} • ${
+          data.index_overbuying
+        }/10 • TOP ${data?.data_level}`}
         className="mb-2.5"
       />
       <Tag

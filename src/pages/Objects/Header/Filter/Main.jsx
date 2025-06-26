@@ -115,9 +115,9 @@ export const Main = ({
       getCarBody(filters.id_rubric);
     }
 
-    // if (!filters?.id_rubric) {
-    //   onChangeFilter("id_rubric", "1");
-    // }
+    if (!filters?.id_rubric) {
+      onChangeFilter("id_rubric", "1");
+    }
   }, [filters.id_rubric]);
 
   useEffect(() => {
