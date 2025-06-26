@@ -48,14 +48,26 @@ const Objects = () => {
 
   const DEFAULT_FILTERS = {
     price_currency: "2",
+    id_rubric: "1",
+    sorting: "0",
+    street_base_object: {
+      sorting_id: "12",
+      price_change_up: "2",
+      price_change_period: "4",
+    },
     // price_for: "4",
-    // price_currency: "1",
-    // sorting: "0",
     // company_object: {
     //   show_only: "only_my",
     //   actual: "1",
     // },
   };
+
+  // id_rubric: "1",
+  //   street_base_object: {
+  //   sorting_id: "12",
+  //   price_change_up: "2",
+  //   price_change_period: "4",
+  // },
   const { objectsCount } = useAppSelect((state) => state.objects);
   const [filters, setFilters] = useState(INIT_FILTERS);
   const [filtersFields, setFilterFields] = useState([]);
@@ -725,6 +737,8 @@ const Objects = () => {
     handleCopy(LINK);
     setSelected([]);
   };
+
+  console.log(filters);
 
   return (
     <StyledObjects>

@@ -24,15 +24,6 @@ const SearchResults = ({ data, onChangeFilter, filtersFields }) => {
     });
   };
 
-  useEffect(() => {
-    if (!data?.street_base_object?.sorting_id) {
-      onChangeFilter("street_base_object", {
-        ...data?.street_base_object,
-        sorting_id: "12",
-      });
-    }
-  }, []);
-
   return (
     <div className="section filterFieldsWrapper">
       <SelectTags
