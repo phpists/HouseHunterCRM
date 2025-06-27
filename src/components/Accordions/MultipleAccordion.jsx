@@ -115,6 +115,31 @@ const ListItem = styled.div`
   }
 `;
 
+const ClearButton = styled.button`
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--main-color, #fff);
+  border: none;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 100;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-bottom: 15px;
+
+  &:hover:enabled {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+`;
+
 const MultipleAccordion = ({ label, options = [], onChange, active, kpp }) => {
   const [isActive, setIsActive] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -182,6 +207,16 @@ const MultipleAccordion = ({ label, options = [], onChange, active, kpp }) => {
     return `${selectedOptions.length} items selected`;
   };
 
+  const handleClose = () => {
+    if (selectedOptions.length) {
+      onChange?.([]);
+      setSelectedOptions([]);
+      setIsActive(false);
+    } else {
+      setIsActive(false);
+    }
+  };
+
   return (
     <AccordionWrapper>
       <AccordionItem>
@@ -200,6 +235,7 @@ const MultipleAccordion = ({ label, options = [], onChange, active, kpp }) => {
             placeholder="Пошук"
             autoFocus
           />
+          <ClearButton onClick={handleClose}>Очистити всі</ClearButton>
           {filteredOptions.map((option) => (
             <ListItem
               key={option.value}

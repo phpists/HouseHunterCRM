@@ -115,7 +115,32 @@ const ListItem = styled.div`
   }
 `;
 
-const Accordion = ({ label, options = [], onChange, active }) => {
+const ClearButton = styled.button`
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--main-color, #fff);
+  border: none;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 100;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-bottom: 15px;
+
+  &:hover:enabled {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+`;
+
+const Accordion = ({ label, options = [], onChange, active, hideClearBtn }) => {
   const [isActive, setIsActive] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [search, setSearch] = useState("");
@@ -156,6 +181,16 @@ const Accordion = ({ label, options = [], onChange, active }) => {
     }
   };
 
+  const handleClose = () => {
+    if (selectedOption) {
+      onChange?.(null);
+      setSelectedOption(null);
+      setIsActive(false);
+    } else {
+      setIsActive(false);
+    }
+  };
+
   return (
     <AccordionWrapper>
       <AccordionItem>
@@ -174,6 +209,9 @@ const Accordion = ({ label, options = [], onChange, active }) => {
             placeholder="Пошук"
             autoFocus
           />
+          {!hideClearBtn && (
+            <ClearButton onClick={handleClose}>Очистити всі</ClearButton>
+          )}
           {filteredOptions.map((option) => (
             <>
               <ListItem
