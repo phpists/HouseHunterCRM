@@ -16,7 +16,13 @@ import { Divider } from "../Base/Divider";
 import { VolumeEngine } from "../VolumeEngine/VolumeEngine";
 import { CheckOption } from "../CheckOption";
 
-const Features = ({ data, onChangeFilter, filtersFields }) => {
+const Features = ({
+  data,
+  onChangeFilter,
+  filtersFields,
+  onChangeInputFocus,
+  isInputFocused,
+}) => {
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [getBrands, { data: brandsList }] = useLazyGetBrandsQuery();
   const [getModels, { data: modelsList }] = useLazyGetModelsQuery();
@@ -62,6 +68,8 @@ const Features = ({ data, onChangeFilter, filtersFields }) => {
   return (
     <div className="section filterFieldsWrapper">
       <VolumeEngine
+        onFocus={() => !isInputFocused && onChangeInputFocus(true)}
+        onBlur={() => onChangeInputFocus(false)}
         label={"Пробіг тис. км."}
         max={1000}
         values={[data?.сar_mileage_from ?? "0", data?.сar_mileage_to ?? "0"]}
@@ -159,6 +167,8 @@ const Features = ({ data, onChangeFilter, filtersFields }) => {
         }
       })}
       <VolumeEngine
+        onFocus={() => !isInputFocused && onChangeInputFocus(true)}
+        onBlur={() => onChangeInputFocus(false)}
         label={"к-ть оголошень автора (відключіть перекупа)"}
         values={[
           data?.street_base_object?.count_object_owner_from,
