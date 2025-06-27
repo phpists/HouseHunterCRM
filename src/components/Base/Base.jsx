@@ -106,9 +106,13 @@ export const Base = ({
   const { data: companies } = useGetCompaniesQuery();
   const { data: sortingPeriods } = useGetSortingObjectQuery();
   const { data: companyWorkers } = useGetWorkersMyCompanyQuery();
-  const [company, setCompany] = useState(!!data?.company_object);
+  const [company, setCompany] = useState(
+    !!Object.keys(data.company_object || {}).length
+  );
   const [streetBase, setStreetBase] = useState(false);
-  const [mlsBase, setMlsBase] = useState(!!data.mls_object || mlsBaseOpen);
+  const [mlsBase, setMlsBase] = useState(
+    !!Object.keys(data?.mls_object || {}).length
+  );
   const { data: workers } = useGetWorkerMyStructureQuery();
   const { data: sources } = useGetSourcesQuery();
   const { data: tagsList } = useGetTagsListQuery({ only_notepad: "0" });
@@ -147,9 +151,9 @@ export const Base = ({
   }
 
   useEffect(() => {
-    setMlsBase(mlsBaseOpen);
+    setMlsBase(!!Object.keys(data?.mls_object || {}).length);
     // setStreetBase(streetBaseOpen);
-    setCompany(companyOpen);
+    setCompany(!!Object.keys(data.company_object || {}).length);
     if (streetBaseOpen && data?.street_base_object) {
       let changed = false;
       const defaults = {};
@@ -191,11 +195,11 @@ export const Base = ({
       : [];
 
   const handleToggleCompany = () => {
-    onChange(
-      "reset",
-      { ...data, company_object: company ? undefined : {} },
-      true
-    );
+    // onChange(
+    //   "reset",
+    //   { ...data, company_object: company ? undefined : {} },
+    //   true
+    // );
 
     setCompany(!company);
     if (onChangeDefaultFiltersOpened) {
@@ -204,14 +208,14 @@ export const Base = ({
   };
 
   const handleToggleStreetBase = () => {
-    onChange(
-      "reset",
-      {
-        ...data,
-        street_base_object: streetBase ? undefined : { sorting_id: "6" },
-      },
-      true
-    );
+    // onChange(
+    //   "reset",
+    //   {
+    //     ...data,
+    //     street_base_object: streetBase ? undefined : { sorting_id: "6" },
+    //   },
+    //   true
+    // );
 
     setStreetBase(!streetBase);
     if (onChangeDefaultFiltersOpened) {
@@ -220,7 +224,7 @@ export const Base = ({
   };
 
   const handleToggleMlsBase = () => {
-    onChange("reset", { ...data, mls_object: mlsBase ? undefined : {} }, true);
+    // onChange("reset", { ...data, mls_object: mlsBase ? undefined : {} }, true);
 
     setMlsBase(!mlsBase);
     if (onChangeDefaultFiltersOpened) {
@@ -314,19 +318,26 @@ export const Base = ({
         value={company}
         onChange={handleToggleCompany}
       />
+
       {company ? (
         <>
           <CheckOption
             label="Всі автомобілі"
             className="check-opt"
             value={data?.company_object?.show_only === "company" ? "1" : "0"}
-            onChange={() =>
-              onChange("company_object", {
-                ...data?.company_object,
-                show_only: "company",
-                id_worker_Search: undefined,
-              })
-            }
+            onChange={() => {
+              if (data?.company_object?.show_only === "company") {
+                const { id_worker_Search, show_only, ...newObject } =
+                  data?.company_object;
+                onChange("company_object", newObject);
+              } else {
+                onChange("company_object", {
+                  ...data?.company_object,
+                  show_only: "company",
+                  id_worker_Search: undefined,
+                });
+              }
+            }}
             error={!!errors.find((e) => e === "show_only")}
           />
           {allObjectsWorker && data?.company_object?.show_only === "company" ? (
@@ -410,13 +421,19 @@ export const Base = ({
             label="Тільки мої автомобілі"
             className="check-opt"
             value={data?.company_object?.show_only === "only_my" ? "1" : "0"}
-            onChange={() =>
-              onChange("company_object", {
-                ...data?.company_object,
-                show_only: "only_my",
-                id_worker_Search: undefined,
-              })
-            }
+            onChange={() => {
+              if (data?.company_object?.show_only === "only_my") {
+                const { id_worker_Search, show_only, ...newObject } =
+                  data?.company_object;
+                onChange("company_object", newObject);
+              } else {
+                onChange("company_object", {
+                  ...data?.company_object,
+                  show_only: "only_my",
+                  id_worker_Search: undefined,
+                });
+              }
+            }}
             error={!!errors.find((e) => e === "show_only")}
           />
 
@@ -427,13 +444,19 @@ export const Base = ({
               value={
                 data?.company_object?.show_only === "public_access" ? "1" : "0"
               }
-              onChange={() =>
-                onChange("company_object", {
-                  ...data?.company_object,
-                  show_only: "public_access",
-                  id_worker_Search: undefined,
-                })
-              }
+              onChange={() => {
+                if (data?.company_object?.show_only === "public_access") {
+                  const { id_worker_Search, show_only, ...newObject } =
+                    data?.company_object;
+                  onChange("company_object", newObject);
+                } else {
+                  onChange("company_object", {
+                    ...data?.company_object,
+                    show_only: "public_access",
+                    id_worker_Search: undefined,
+                  });
+                }
+              }}
               error={!!errors.find((e) => e === "show_only")}
             />
           ) : null}
@@ -447,15 +470,18 @@ export const Base = ({
             }
             className="check-opt"
             value={data?.company_object?.[streetBaseFieldName]}
-            onChange={() =>
-              onChange("company_object", {
-                ...data?.company_object,
-                [streetBaseFieldName]:
-                  data?.company_object[streetBaseFieldName] === "1"
-                    ? undefined
-                    : "1",
-              })
-            }
+            onChange={() => {
+              if (data?.company_object[streetBaseFieldName] === "1") {
+                const { [streetBaseFieldName]: _, ...newObject } =
+                  data?.company_object;
+                onChange("company_object", newObject);
+              } else {
+                onChange("company_object", {
+                  ...data?.company_object,
+                  [streetBaseFieldName]: "1",
+                });
+              }
+            }}
             error={!!errors.find((e) => e === "company_object_more")}
           />
           {objMls ? (
@@ -463,13 +489,18 @@ export const Base = ({
               label="Автомобілі MLS"
               className="check-opt"
               value={data?.company_object?.obj_mls}
-              onChange={() =>
-                onChange("company_object", {
-                  ...data?.company_object,
-                  obj_mls:
-                    data?.company_object?.obj_mls === "1" ? undefined : "1",
-                })
-              }
+              onChange={() => {
+                if (data?.company_object.obj_mls === "1") {
+                  const { obj_mls, _, ...newObject } = data?.company_object;
+                  onChange("company_object", newObject);
+                } else {
+                  onChange("company_object", {
+                    ...data?.company_object,
+                    obj_mls:
+                      data?.company_object?.obj_mls === "1" ? undefined : "1",
+                  });
+                }
+              }}
               error={!!errors.find((e) => e === "company_object_more")}
             />
           ) : null}
@@ -478,15 +509,21 @@ export const Base = ({
               label="Автомобілі до видалення"
               className="check-opt"
               value={data?.company_object?.show_deleted}
-              onChange={() =>
-                onChange("company_object", {
-                  ...data?.company_object,
-                  show_deleted:
-                    data?.company_object?.show_deleted === "1"
-                      ? undefined
-                      : "1",
-                })
-              }
+              onChange={() => {
+                if (data?.company_object.show_deleted === "1") {
+                  const { show_deleted, _, ...newObject } =
+                    data?.company_object;
+                  onChange("company_object", newObject);
+                } else {
+                  onChange("company_object", {
+                    ...data?.company_object,
+                    show_deleted:
+                      data?.company_object?.show_deleted === "1"
+                        ? undefined
+                        : "1",
+                  });
+                }
+              }}
               error={!!errors.find((e) => e === "company_object_more")}
             />
           ) : null}
