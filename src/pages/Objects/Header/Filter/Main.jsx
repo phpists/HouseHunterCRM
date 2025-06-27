@@ -121,10 +121,6 @@ export const Main = ({
       getBrands(filters.id_rubric);
       getCarBody(filters.id_rubric);
     }
-
-    if (!filters?.id_rubric) {
-      onChangeFilter("id_rubric", "1");
-    }
   }, [filters.id_rubric]);
 
   useEffect(() => {
@@ -217,7 +213,7 @@ export const Main = ({
             : []
         }
         onChange={(val) => {
-          onChangeFilter("id_rubric", val === filters?.id_rubric ? null : val);
+          onChangeFilter("id_rubric", val);
         }}
       />
       <Divider />

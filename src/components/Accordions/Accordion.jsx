@@ -138,11 +138,15 @@ const Accordion = ({ label, options = [], onChange, active }) => {
 
   const handleSelectOption = (option) => {
     const newValue =
-      selectedOption?.value === option.value ? null : option.value;
-    setSelectedOption(newValue ? option : null);
-    setIsActive(false);
-    setSearch("");
-    onChange?.(newValue);
+      selectedOption?.value === option.value ? "1" : option.value;
+    if (!(selectedOption?.value === "1" && option.value === "1")) {
+      setSelectedOption(newValue ? option : "1");
+      setIsActive(false);
+      setSearch("");
+      onChange?.(newValue);
+    } else {
+      setIsActive(false);
+    }
   };
 
   return (

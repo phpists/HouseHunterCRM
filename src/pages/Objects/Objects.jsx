@@ -35,7 +35,7 @@ const Objects = () => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const INIT_FILTERS = {
-    id_rubric: "",
+    id_rubric: "1",
     id_location: [],
     price_currency: "2",
     price: "",
