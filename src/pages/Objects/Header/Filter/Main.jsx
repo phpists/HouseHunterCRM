@@ -300,6 +300,8 @@ export const Main = ({
                   filters?.volume_engine_from ?? "0",
                   filters?.volume_engine_to ?? "0",
                 ]}
+                onFocus={() => !isInputFocused && onChangeInputFocus(true)}
+                onBlur={() => onChangeInputFocus(false)}
                 onChange={(values) => {
                   handleChangeRange(
                     values,

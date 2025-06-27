@@ -1,7 +1,15 @@
 import { styled } from "styled-components";
 import { Ranger } from "../Ranger/Ranger";
 
-export const VolumeEngine = ({ values, onChange, error, label, max = 100 }) => {
+export const VolumeEngine = ({
+  values,
+  onChange,
+  error,
+  label,
+  max = 100,
+  onBlur,
+  onFocus,
+}) => {
   return (
     <StyledPrice
       error={error?.toString()}
@@ -12,6 +20,8 @@ export const VolumeEngine = ({ values, onChange, error, label, max = 100 }) => {
         max={max}
         values={values}
         onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
         noRange
       />
     </StyledPrice>
