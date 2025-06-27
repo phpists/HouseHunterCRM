@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { Arrow } from "../SelectTags/Arrow";
+import checkIcon from "../../assets/images/circle-green-check.svg";
 
 const AccordionWrapper = styled.div`
   max-width: 600px;
@@ -92,6 +93,8 @@ const SearchInput = styled.input`
 `;
 
 const ListItem = styled.div`
+  display: flex;
+  justify-content: space-between;
   padding: 8px 10px;
   color: var(--main-color, #fff);
   font-family: Overpass, sans-serif;
@@ -102,8 +105,9 @@ const ListItem = styled.div`
   cursor: pointer;
   border-radius: 5px;
   background: ${(props) =>
-    props.selected ? "rgba(88, 175, 255, 0.3)" : "transparent"};
-  color: ${(props) => (props.selected ? "#58afff" : "var(--main-color, #fff)")};
+    props.selected ? "rgba(280, 248, 53, 0.1)" : "transparent"};
+  color: ${(props) =>
+    props.selected ? "var(--green-light-2)" : "var(--main-color, #fff)"};
 
   &:hover {
     background: rgba(200, 200, 200, 0.2);
@@ -205,6 +209,9 @@ const MultipleAccordion = ({ label, options = [], onChange, active, kpp }) => {
               onClick={() => handleSelectOption(option)}
             >
               {option.title}
+              {selectedOptions.some((opt) => opt.value === option.value) && (
+                <img src={checkIcon} alt="" />
+              )}
             </ListItem>
           ))}
           {filteredOptions.length === 0 && (
