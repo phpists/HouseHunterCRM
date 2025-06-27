@@ -339,7 +339,6 @@ export const Main = ({
                 label={"Коробка передач"}
                 options={options}
                 onChange={(val) => {
-                  // console.log(val);
                   onChangeFilter("kpp", val);
                 }}
               />
