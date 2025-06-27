@@ -123,7 +123,7 @@ const StyledFilter = styled(motion.div)`
   position: fixed;
   top: 0px;
   right: 0px;
-  width: 439px;
+  min-width: 439px;
   bottom: 0;
   flex-shrink: 0;
   background: var(--modals-bg);
