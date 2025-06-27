@@ -111,11 +111,12 @@ const ListItem = styled.div`
   }
 `;
 
-const MultipleAccordion = ({ label, options = [], onChange, active }) => {
+const MultipleAccordion = ({ label, options = [], onChange, active, kpp }) => {
   const [isActive, setIsActive] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [search, setSearch] = useState("");
   const arrowRef = useRef(null);
+  const autoKpp = ["2", "3", "4", "5"];
 
   // Sync with external active prop
   useEffect(() => {
@@ -151,6 +152,19 @@ const MultipleAccordion = ({ label, options = [], onChange, active }) => {
     } else {
       // Add to selection
       newSelectedOptions = [...selectedOptions, option];
+    }
+
+    if (kpp) {
+      if (option.value === "2") {
+        if (!selectedOptions.filter((f) => f.value === option.value).length) {
+          const result = options.filter((f) => autoKpp.includes(f.value));
+          newSelectedOptions = [...selectedOptions, ...result];
+        } else {
+          newSelectedOptions = selectedOptions.filter(
+            (f) => !autoKpp.includes(f.value)
+          );
+        }
+      }
     }
 
     setSelectedOptions(newSelectedOptions);

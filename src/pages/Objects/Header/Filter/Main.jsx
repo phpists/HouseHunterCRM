@@ -38,6 +38,7 @@ import Accordion from "../../../../components/Accordions/Accordion";
 import LocationsObjectsAccordion from "../../../../components/Accordions/LocationsObjectsAccordion";
 import ObjectsFilterYear from "../../../../components/ObjectsFilterYear/ObjectsFilterYear";
 import { VolumeEngine } from "../../../../components/VolumeEngine/VolumeEngine";
+import MultipleAccordion from "../../../../components/Accordions/MultipleAccordion";
 
 export const notAllowedFields = [
   "comment",
@@ -108,6 +109,12 @@ export const Main = ({
   const [getModels, { data: modelsList }] = useLazyGetModelsQuery();
   const [getCarBody, { data: carBodyList }] = useLazyGetCarBodyQuery();
   const { data: carColors = [] } = useGetCarColorsQuery();
+
+  const kppOptions = (options) =>
+    Object.entries(options).map(([value, title]) => ({
+      title,
+      value,
+    }));
 
   useEffect(() => {
     if (filters?.id_rubric) {
@@ -180,6 +187,23 @@ export const Main = ({
         ?.filter((field) => commentsToFields?.object[field[0]]?.length > 0)
         ?.sort((a, b) => a[1]?.sort - b[1]?.sort)
     : null;
+
+  const handleKppChange = (selectedValues) => {
+    let current = Array.isArray(filters?.kpp) ? filters.kpp : [];
+    let result = [...current];
+
+    selectedValues.forEach((val) => {
+      if (result.includes(val)) {
+        result = result.filter((f) => f !== val);
+      } else {
+        result.push(val);
+      }
+    });
+
+    console.log(result);
+
+    onChangeFilter("kpp", result);
+  };
 
   return (
     <StyledMain className="section filterFieldsWrapper">
@@ -298,21 +322,25 @@ export const Main = ({
           );
         }
       })}
+
       {selects?.map((select) => {
         if (select[0] === "kpp") {
+          const options = kppOptions(select[1].field_option);
+
           return (
             <React.Fragment key={select[0]}>
-              <Accordion
-                active={filters?.kpp}
-                label={"Коробка передач"}
-                options={Object.entries(select[1].field_option).map(
-                  ([value, title]) => ({
-                    title,
-                    value,
-                  })
+              <MultipleAccordion
+                kpp
+                active={options.filter((opt) =>
+                  Array.isArray(filters?.kpp)
+                    ? filters.kpp.includes(opt.value)
+                    : filters?.kpp === opt.value
                 )}
+                label={"Коробка передач"}
+                options={options}
                 onChange={(val) => {
-                  onChangeFilter("kpp", val === filters?.kpp ? null : val);
+                  // console.log(val);
+                  onChangeFilter("kpp", val);
                 }}
               />
               <Divider />
@@ -320,6 +348,7 @@ export const Main = ({
           );
         }
       })}
+
       {selects?.map((select) => {
         if (select[0] === "drive_type") {
           return (
