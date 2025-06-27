@@ -137,8 +137,11 @@ const Accordion = ({ label, options = [], onChange, active }) => {
   };
 
   const handleSelectOption = (option) => {
-    const newValue =
-      selectedOption?.value === option.value ? "1" : option.value;
+    let newValue = selectedOption?.value === option.value ? "1" : option.value;
+    if (label === "Cортування") {
+      newValue = selectedOption?.value === option.value ? "0" : option.value;
+    }
+
     if (!(selectedOption?.value === "1" && option.value === "1")) {
       setSelectedOption(newValue ? option : "1");
       setIsActive(false);
