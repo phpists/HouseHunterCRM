@@ -1,49 +1,24 @@
 import styled from "styled-components";
 import { ReactComponent as Close } from "../../assets/images/close.svg";
 import DateRangePicker from "./DateRangePicker";
-import { useCallback, useRef, useEffect } from "react";
+import { useRef } from "react";
 
 const Modal = ({ onClose, onSubmit, initial }) => {
-  const timeoutRef = useRef(null);
   const latestValueRef = useRef(initial);
 
-  // Clean up timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
+  const handleDateChange = (newYear) => {
+    latestValueRef.current = newYear;
+  };
 
-  const handleDateChange = useCallback(
-    (newYear) => {
-      latestValueRef.current = newYear;
-
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-
-      timeoutRef.current = setTimeout(() => {
-        onSubmit(latestValueRef.current);
-      }, 400); // 400ms throttle
-    },
-    [onSubmit]
-  );
-
-  const handleClose = useCallback(() => {
-    // Submit any pending changes before closing
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      onSubmit(latestValueRef.current);
-    }
+  const handleClose = () => {
+    onSubmit(latestValueRef.current);
     onClose();
-  }, [onClose, onSubmit]);
+  };
 
   return (
     <StyledModal>
       <div className="card">
-        <Close className="close-btn" onClick={handleClose} />
+        <Close className="close-btn" onClick={onClose} />
         <DateRangePicker
           initial={initial}
           onClose={handleClose}
