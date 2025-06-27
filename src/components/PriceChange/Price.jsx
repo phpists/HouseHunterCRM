@@ -2,12 +2,14 @@ import styled from "styled-components";
 import { PositionCard } from "../Ranger/Footer/PositionCard";
 import { Header } from "../Ranger/Header/Header";
 
-const Price = ({ onChangeFilter, data }) => {
+const Price = ({ onChangeFilter, data, onFocus, onBlur }) => {
   return (
     <>
       <Header label={"Ціна"} />
       <Wrapper>
         <PositionCard
+          onFocus={onFocus}
+          onBlur={onBlur}
           title="Від"
           value={data?.street_base_object?.price_change}
           className="from-card"
@@ -25,6 +27,8 @@ const Price = ({ onChangeFilter, data }) => {
         </span>
         <PositionCard
           title="Від"
+          onFocus={onFocus}
+          onBlur={onBlur}
           onChange={(val) =>
             onChangeFilter("street_base_object", {
               ...data?.street_base_object,

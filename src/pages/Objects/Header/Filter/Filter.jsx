@@ -413,6 +413,8 @@ export const Filter = ({
             data={filters}
             onChangeFilter={handleChangeFilter}
             filtersFields={filtersFields}
+            onChangeInputFocus={(val) => setIsInputFocused(val)}
+            isInputFocused={isInputFocused}
           />
 
           <div className="flex gap-2">

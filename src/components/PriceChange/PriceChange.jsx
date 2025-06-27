@@ -3,10 +3,21 @@ import { Divider } from "../Base/Divider";
 import { CheckOption } from "../CheckOption";
 import Price from "./Price";
 
-const PriceChange = ({ data, onChangeFilter, filtersFields }) => {
+const PriceChange = ({
+  data,
+  onChangeFilter,
+  filtersFields,
+  onChangeInputFocus,
+  isInputFocused,
+}) => {
   return (
     <div className="section filterFieldsWrapper">
-      <Price onChangeFilter={onChangeFilter} data={data} />
+      <Price
+        onFocus={() => !isInputFocused && onChangeInputFocus(true)}
+        onBlur={() => onChangeInputFocus(false)}
+        onChangeFilter={onChangeFilter}
+        data={data}
+      />
       <Divider />
 
       <Accordion
