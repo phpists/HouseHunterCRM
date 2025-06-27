@@ -425,6 +425,8 @@ export const Filter = ({
             data={filters}
             onChangeFilter={handleChangeFilter}
             filtersFields={filtersFields}
+            onChangeInputFocus={(val) => setIsInputFocused(val)}
+            isInputFocused={isInputFocused}
           />
 
           <SectionTitle title="Результати пошуку" />

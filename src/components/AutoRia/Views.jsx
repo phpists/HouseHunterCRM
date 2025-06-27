@@ -47,7 +47,7 @@ const Title = styled.div`
   }
 `;
 
-const Views = ({ data, onChangeFilter }) => {
+const Views = ({ data, onChangeFilter, onFocus, onBlur }) => {
   return (
     <RatingContainer>
       <Title>
@@ -55,6 +55,8 @@ const Views = ({ data, onChangeFilter }) => {
       </Title>
       <PositionCard
         title="Від"
+        onFocus={onFocus}
+        onBlur={onBlur}
         value={data?.street_base_object?.count_views_from}
         className=""
         onChange={(val) => {
@@ -66,6 +68,8 @@ const Views = ({ data, onChangeFilter }) => {
       />
       <PositionCard
         title="До"
+        onFocus={onFocus}
+        onBlur={onBlur}
         value={data?.street_base_object?.count_views_to}
         className="w-auto"
         onChange={(val) => {

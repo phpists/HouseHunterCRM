@@ -6,19 +6,42 @@ import Index from "./Index";
 import Likes from "./Likes";
 import Views from "./Views";
 
-const AutoRia = ({ data, onChangeFilter, filtersFields }) => {
+const AutoRia = ({
+  data,
+  onChangeFilter,
+  filtersFields,
+  onChangeInputFocus,
+  isInputFocused,
+}) => {
+  const onFocus = () => !isInputFocused && onChangeInputFocus(true);
+  const onBlur = () => onChangeInputFocus(false);
   return (
     <div className="section filterFieldsWrapper">
       <Index data={data} onChange={onChangeFilter} />
       <Divider />
 
-      <Likes data={data} onChangeFilter={onChangeFilter} />
+      <Likes
+        onFocus={onFocus}
+        onBlur={onBlur}
+        data={data}
+        onChangeFilter={onChangeFilter}
+      />
       <Divider />
 
-      <Views data={data} onChangeFilter={onChangeFilter} />
+      <Views
+        onFocus={onFocus}
+        onBlur={onBlur}
+        data={data}
+        onChangeFilter={onChangeFilter}
+      />
       <Divider />
 
-      <Authors data={data} onChangeFilter={onChangeFilter} />
+      <Authors
+        onFocus={onFocus}
+        onBlur={onBlur}
+        data={data}
+        onChangeFilter={onChangeFilter}
+      />
       <Divider />
 
       <CheckOption

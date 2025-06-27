@@ -48,7 +48,7 @@ const Title = styled.div`
   }
 `;
 
-const Authors = ({ data, onChangeFilter }) => {
+const Authors = ({ data, onChangeFilter, onFocus, onBlur }) => {
   return (
     <RatingContainer>
       <Title>
@@ -56,6 +56,8 @@ const Authors = ({ data, onChangeFilter }) => {
       </Title>
       <PositionCard
         title="Від"
+        onFocus={onFocus}
+        onBlur={onBlur}
         value={data?.street_base_object?.top_autoria_order_from}
         className="w-full !justify-start"
         onChange={(val) => {

@@ -48,7 +48,7 @@ const Title = styled.div`
   }
 `;
 
-const Likes = ({ data, onChangeFilter }) => {
+const Likes = ({ data, onChangeFilter, onFocus, onBlur }) => {
   return (
     <RatingContainer>
       <Title>
@@ -56,6 +56,8 @@ const Likes = ({ data, onChangeFilter }) => {
       </Title>
       <PositionCard
         title="Від"
+        onFocus={onFocus}
+        onBlur={onBlur}
         value={data?.street_base_object?.count_likes_to}
         className="w-full !justify-start"
         onChange={(val) => {
