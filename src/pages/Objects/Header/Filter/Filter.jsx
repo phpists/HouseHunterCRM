@@ -575,5 +575,9 @@ const StyledFilter = styled(motion.div)`
   }
   @media (max-width: 800px) {
     width: 100%;
+
+    .content {
+      padding: 0 10px 0px;
+    }
   }
 `;

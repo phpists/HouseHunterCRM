@@ -6,7 +6,6 @@ import { handleChangeRange } from "../../utilits";
 
 // Styled container for the star rating component
 const RatingContainer = styled.div`
-  max-width: 600px;
   font-family: Arial, sans-serif;
   border-radius: 9px;
   padding: 10px;
@@ -17,6 +16,16 @@ const RatingContainer = styled.div`
 
   &:hover {
     background: var(--card-bg-2, #969696);
+  }
+
+  @media (max-width: 800px) {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    .input {
+      width: 100%;
+    }
   }
 `;
 
@@ -58,7 +67,7 @@ const Views = ({ data, onChangeFilter, onFocus, onBlur }) => {
         onFocus={onFocus}
         onBlur={onBlur}
         value={data?.street_base_object?.count_views_from}
-        className=""
+        className="input"
         onChange={(val) => {
           onChangeFilter("street_base_object", {
             ...data?.street_base_object,
@@ -71,7 +80,7 @@ const Views = ({ data, onChangeFilter, onFocus, onBlur }) => {
         onFocus={onFocus}
         onBlur={onBlur}
         value={data?.street_base_object?.count_views_to}
-        className="w-auto"
+        className="input w-auto"
         onChange={(val) => {
           onChangeFilter("street_base_object", {
             ...data?.street_base_object,

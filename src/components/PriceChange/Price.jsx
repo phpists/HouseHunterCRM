@@ -21,10 +21,6 @@ const Price = ({ onChangeFilter, data, onFocus, onBlur }) => {
             });
           }}
         />
-        <span>
-          <span>і</span>
-          <span>(текст)</span>
-        </span>
         <PositionCard
           title="Від"
           onFocus={onFocus}
@@ -61,5 +57,18 @@ const Wrapper = styled.div`
     display: flex;
     gap: 6px;
     align-items: center;
+  }
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    .from-card {
+      width: 100%;
+    }
+    .value {
+      width: 100%;
+    }
+    input {
+      width: 100%;
+    }
   }
 `;
