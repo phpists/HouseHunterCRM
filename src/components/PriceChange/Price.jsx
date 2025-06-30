@@ -13,6 +13,8 @@ const Price = ({ onChangeFilter, data, onFocus, onBlur }) => {
           title="Від"
           value={data?.street_base_object?.price_change}
           className="from-card"
+          placeholder="min 50"
+          mainType={"$"}
           onChange={(val) => {
             onChangeFilter("street_base_object", {
               ...data?.street_base_object,
@@ -20,11 +22,17 @@ const Price = ({ onChangeFilter, data, onFocus, onBlur }) => {
               price_change_up_procent: undefined,
             });
           }}
+          error={
+            data?.street_base_object?.price_change < 50 &&
+            data?.street_base_object?.price_change !== 0
+          }
         />
         <PositionCard
           title="Від"
+          mainType={"％"}
           onFocus={onFocus}
           onBlur={onBlur}
+          placeholder="min 2"
           onChange={(val) =>
             onChangeFilter("street_base_object", {
               ...data?.street_base_object,
@@ -33,6 +41,10 @@ const Price = ({ onChangeFilter, data, onFocus, onBlur }) => {
           }
           value={data?.street_base_object?.price_change_period}
           className="from-card"
+          error={
+            data?.street_base_object?.price_change_period < 2 &&
+            data?.street_base_object?.price_change_period !== 0
+          }
         />
       </Wrapper>
     </>
@@ -65,9 +77,6 @@ const Wrapper = styled.div`
       width: 100%;
     }
     .value {
-      width: 100%;
-    }
-    input {
       width: 100%;
     }
   }
