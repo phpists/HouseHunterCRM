@@ -28,12 +28,12 @@ const StarWrapper = styled.div`
 const StyledStar = styled(Star)`
   width: 100%;
   height: 100%;
-  fill: ${(props) => (props.filled ? "#969696" : "none")};
+  fill: ${(props) => props.filled && "#969696"};
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 
   &:hover,
-  & ~ &:hover {
+  &:hover ~ & {
     opacity: 1;
     fill: #969696;
   }
@@ -73,7 +73,7 @@ const Index = ({ data, onChange }) => {
   const [hoverRating, setHoverRating] = useState(0);
 
   const handleStarClick = (index) => {
-    const newRating = rating !== 10 - index ? 10 - index : undefined;
+    const newRating = rating !== index + 1 ? index + 1 : undefined;
     onChange("street_base_object", {
       ...data?.street_base_object,
       index_overbuying_from: newRating,
@@ -82,7 +82,7 @@ const Index = ({ data, onChange }) => {
   };
 
   const handleStarHover = (index) => {
-    setHoverRating(10 - index);
+    setHoverRating(index + 1);
   };
 
   const handleMouseLeave = () => {
@@ -93,13 +93,13 @@ const Index = ({ data, onChange }) => {
     <RatingContainer>
       <Title>
         <p className="label">Індекс зац.</p>
-        <span>* від 0 з 10</span>
+        <span>* від {rating || 0} з 10</span>
       </Title>
       <StarWrapper onMouseLeave={handleMouseLeave}>
         {[...Array(10)].map((_, index) => (
           <StyledStar
             key={index}
-            filled={(hoverRating || rating) > 9 - index}
+            filled={(hoverRating || rating) > index}
             onClick={() => handleStarClick(index)}
             onMouseEnter={() => handleStarHover(index)}
           />
