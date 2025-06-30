@@ -217,6 +217,7 @@ export const Main = ({
       />
       <Divider />
       <LocationsObjectsAccordion
+        active={filters?.id_location || []}
         close={close}
         options={
           rubricsList

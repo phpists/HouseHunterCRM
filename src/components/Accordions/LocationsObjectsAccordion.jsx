@@ -118,7 +118,12 @@ const BadgesContainer = styled.div`
   margin-bottom: 10px;
 `;
 
-const LocationsObjectsAccordion = ({ onChange, initialValue = [], close }) => {
+const LocationsObjectsAccordion = ({
+  onChange,
+  initialValue = [],
+  close,
+  active,
+}) => {
   const { data: locationsList } = useGetLocationsQuery();
 
   // Format locations to include parent region in the title
@@ -137,7 +142,6 @@ const LocationsObjectsAccordion = ({ onChange, initialValue = [], close }) => {
   const formattedLocations = locationsList ? formatLocations() : [];
 
   const [isActive, setIsActive] = useState(false);
-  const [selected, setSelected] = useState(initialValue);
 
   useEffect(() => {
     setIsActive(false);
@@ -146,36 +150,33 @@ const LocationsObjectsAccordion = ({ onChange, initialValue = [], close }) => {
   const toggleAccordion = () => setIsActive(!isActive);
 
   const handleToggleRegion = (id) => {
-    const updated = selected.includes(id)
-      ? selected.filter((v) => v !== id)
-      : [...selected, id];
-    setSelected(updated);
+    const updated = active.includes(id)
+      ? active.filter((v) => v !== id)
+      : [...active, id];
     if (onChange) onChange(updated);
   };
 
   const handleSelectGroup = (ids) => {
-    const hasAll = ids.every((id) => selected.includes(id));
+    const hasAll = ids.every((id) => active.includes(id));
     const updated = hasAll
-      ? selected.filter((id) => !ids.includes(id))
-      : [...new Set([...selected, ...ids])];
-    setSelected(updated);
+      ? active.filter((id) => !ids.includes(id))
+      : [...new Set([...active, ...ids])];
     if (onChange) onChange(updated);
   };
 
   const handleClear = () => {
-    setSelected([]);
     if (onChange) onChange([]);
   };
 
   const selectOptions = formattedLocations
-    .filter((loc) => !selected.includes(loc.value))
+    .filter((loc) => !active.includes(loc.value))
     .map((loc) => ({
       value: loc.value,
       title: loc.title, // This will now be in "City => Region" format
     }));
 
   const selectedTitles = formattedLocations
-    .filter((loc) => selected.includes(loc.value))
+    .filter((loc) => active.includes(loc.value))
     .map((loc) => loc.title);
 
   const displayTitle =
@@ -211,7 +212,7 @@ const LocationsObjectsAccordion = ({ onChange, initialValue = [], close }) => {
 
           <BadgesContainer>
             {formattedLocations
-              .filter((loc) => selected.includes(loc.value))
+              .filter((loc) => active.includes(loc.value))
               .map((loc) => (
                 <Tag
                   key={loc.value}
@@ -221,7 +222,7 @@ const LocationsObjectsAccordion = ({ onChange, initialValue = [], close }) => {
               ))}
           </BadgesContainer>
 
-          <ClearButton onClick={handleClear} disabled={selected.length === 0}>
+          <ClearButton onClick={handleClear} disabled={active.length === 0}>
             Очистити всі
           </ClearButton>
 
@@ -244,7 +245,7 @@ const LocationsObjectsAccordion = ({ onChange, initialValue = [], close }) => {
                     <CheckOption
                       key={loc.value}
                       label={formattedLoc ? formattedLoc.title : loc.title}
-                      value={selected.includes(loc.value) ? "1" : "0"}
+                      value={active.includes(loc.value) ? "1" : "0"}
                       onChange={() => handleToggleRegion(loc.value)}
                       className="gap-2"
                     />
