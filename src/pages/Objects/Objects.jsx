@@ -35,7 +35,7 @@ const Objects = () => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const INIT_FILTERS = {
-    id_rubric: "1",
+    // id_rubric: "1",
     id_location: [],
     price_currency: "2",
     price: "",
@@ -51,7 +51,7 @@ const Objects = () => {
 
   const DEFAULT_FILTERS = {
     price_currency: "2",
-    id_rubric: "1",
+    // id_rubric: "1",
     sorting: "0",
     street_base_object: {
       sorting_id: "12",

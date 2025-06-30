@@ -203,7 +203,7 @@ export const Main = ({
     <StyledMain className="section filterFieldsWrapper">
       <Accordion
         close={close}
-        hideClearBtn
+        // hideClearBtn
         active={filters?.id_rubric}
         label={"Категорія"}
         options={
