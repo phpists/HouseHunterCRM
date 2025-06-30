@@ -47,12 +47,19 @@ const AccordionTitle = styled.button`
 const ObjectsFilterYear = ({ onSubmit, initial }) => {
   const [showModal, setShowModal] = useState(false);
 
+  const isShowYear = initial[0] !== 0;
+  const isShowToYear = initial[1] !== 0;
+
   return (
     <>
       <AccordionWrapper>
         <AccordionItem>
           <AccordionTitle onClick={() => setShowModal(true)}>
-            <span>Рік випуску</span>
+            <span>
+              Рік випуску {isShowYear && initial[0]}
+              {isShowToYear && " - "}
+              {isShowToYear && initial[1]}
+            </span>
           </AccordionTitle>
         </AccordionItem>
       </AccordionWrapper>

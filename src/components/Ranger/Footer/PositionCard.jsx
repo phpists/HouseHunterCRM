@@ -39,8 +39,6 @@ export const PositionCard = ({
           placeholder=""
           type={ceil ? "text" : "number"}
           onChange={(e) => {
-            console.log(e.target.value?.length);
-
             if (Number(e.target.value) >= 0) {
               onChange(Number(e.target.value));
             }

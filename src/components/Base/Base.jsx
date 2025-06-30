@@ -152,6 +152,9 @@ export const Base = ({
 
   useEffect(() => {
     setMlsBase(!!Object.keys(data?.mls_object || {}).length);
+  }, [data?.mls_object]);
+
+  useEffect(() => {
     // setStreetBase(streetBaseOpen);
     setCompany(!!Object.keys(data.company_object || {}).length);
     if (streetBaseOpen && data?.street_base_object) {

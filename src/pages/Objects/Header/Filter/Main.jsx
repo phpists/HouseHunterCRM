@@ -196,8 +196,6 @@ export const Main = ({
       }
     });
 
-    console.log(result);
-
     onChangeFilter("kpp", result);
   };
 

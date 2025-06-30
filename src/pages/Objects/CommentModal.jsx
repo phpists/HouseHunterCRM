@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Modal } from "../../components/Modal/Modal";
 
 export const CommentModal = ({ onClose, comment }) => {
-  console.log(comment);
   return (
     <StyledCommentModal>
       <Modal onClose={onClose} title="Коментар">

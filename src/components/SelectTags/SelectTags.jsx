@@ -33,7 +33,6 @@ export const SelectTags = ({
   const isClicked = useRef(false);
 
   const handleChangeValue = (val, title) => {
-    console.log(val, title);
     val && onChange(val, title);
     setSearch("");
     if (notMultiSelect) {

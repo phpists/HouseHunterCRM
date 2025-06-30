@@ -10,22 +10,24 @@ export const Photo = ({ photos }) => {
 
   return (
     <>
-      <div onClick={() => setOpenView(true)}>
-        <StyledPhoto
-          {...{
-            smallImage: {
-              isFluidWidth: true,
-              src: photos?.[0] ?? noPhoto,
-            },
-            largeImage: {
-              src: photos?.[0] ?? noPhoto,
-              width: 1200,
-              height: 1800,
-            },
-          }}
-          enlargedImageContainerClassName="previewContainer"
-          imageClassName={`previewImage ${!photos?.[0] && "empty"}`}
-        />
+      <div className="w-[230px] flex justify-center">
+        <div onClick={() => setOpenView(true)}>
+          <StyledPhoto
+            {...{
+              smallImage: {
+                isFluidWidth: true,
+                src: photos?.[0] ?? noPhoto,
+              },
+              largeImage: {
+                src: photos?.[0] ?? noPhoto,
+                width: 1200,
+                height: 1800,
+              },
+            }}
+            enlargedImageContainerClassName="previewContainer"
+            imageClassName={`previewImage ${!photos?.[0] && "empty"}`}
+          />
+        </div>
       </div>
 
       {/* <StyledPhoto
@@ -54,7 +56,6 @@ export const Photo = ({ photos }) => {
 
 const StyledPhoto = styled(ReactImageMagnify)`
   .previewImage {
-    width: 230px !important;
     border-radius: 5px !important;
     height: 170px !important;
     object-fit: contain;
@@ -67,13 +68,13 @@ const StyledPhoto = styled(ReactImageMagnify)`
     max-width: unset !important;
   }
   .previewContainer {
-    width: 170px !important;
-    height: 170px !important;
+    // width: auto !important;
+    // height: auto !important;
     border-radius: 5px !important;
     z-index: 1000 !important;
     background: var(--main-bg);
     img {
-      /* object-fit: cover; */
+      // object-fit: scale-down;
     }
   }
 `;

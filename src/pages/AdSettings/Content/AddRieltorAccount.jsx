@@ -39,8 +39,6 @@ export const AddRieltorAccount = ({ onClose, onSuccess }) => {
     });
   };
 
-  console.log(data?.login);
-
   return (
     <Modal onClose={onClose} title={"Додати акаунт"}>
       <StyledAddRieltorAccount>

@@ -134,7 +134,6 @@ export const Header = ({
       ?.filter((a) => selected.includes(a.id_ad_in_source))
       ?.filter((a) => a?.id_resource === "5");
 
-    console.log(selected, selectedAds);
     return selectedAds?.map(({ id_rieltor_account, id_ad_in_source }) =>
       deleteRieltorAdHistory({
         id_account: id_rieltor_account,
