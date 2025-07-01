@@ -104,9 +104,10 @@ export const NotificationsDropdown = ({
 
         {[...notifications]
           ?.sort((a, b) => b?.date - a?.date)
-          ?.map((data) => (
-            <Notification key={data?.id_hash} data={data} />
-          ))}
+          ?.map(
+            (data, i) =>
+              i < 9 && <Notification key={data?.id_hash} data={data} />
+          )}
         <Button
           title="Переглянути всі сповіщення"
           className="mt-2"
