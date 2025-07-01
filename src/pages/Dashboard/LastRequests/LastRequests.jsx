@@ -11,11 +11,11 @@ import {
 import { handleResponse, showAlert } from "../../../utilits";
 import { Chat } from "../../../components/Chat/Chat";
 import { Confirm } from "../../../components/Confirm/Confirm";
+import { car_body_type } from "../../../constants";
 
 export const LastRequests = () => {
   const [getRequests] = useLazyGetLastRequestsQuery();
   const [requests, setRequests] = useState({});
-  const { data: rubricsList } = useGetRubricsQuery();
   const [selectedChat, setSelectedChat] = useState(null);
   const [deleteRequest] = useLazyDeleteRequestQuery();
   const [addToFavorites] = useLazyAddToFavoriteQuery();
@@ -151,7 +151,7 @@ export const LastRequests = () => {
                         ...requestData,
                         ...generalFields,
                         rubric_name:
-                          rubricsList?.find(
+                          car_body_type[0].data?.find(
                             (r) => r.id === requestData?.id_rubric
                           )?.name ?? "-",
                       }}
