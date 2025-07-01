@@ -28,7 +28,7 @@ import { Confirm } from "../../Confirm/Confirm";
 import axios from "axios";
 import { baseUrlWebsoket } from "../../../api/baseUrl";
 import { io } from "socket.io-client";
-import { useLazyGetRubricsFieldsQuery } from "../../../store/requests/requests.api";
+import { CarMainInfoFileds } from "../../../constants";
 
 export const Profile = () => {
   const { pathname } = useLocation();
@@ -47,7 +47,7 @@ export const Profile = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [closed, setClosed] = useState([]);
-  const [getRubricField, { data: fields }] = useLazyGetRubricsFieldsQuery();
+  // const [getRubricField, { data: fields }] = useLazyGetRubricsFieldsQuery();
 
   const handleCheckIsRefresh = () => {
     const now = new Date()?.getTime() / 1000;
@@ -246,13 +246,14 @@ export const Profile = () => {
   };
 
   const handleGetTagValue = (field, value) =>
-    fields?.find((f) => f.field === field)?.field_option?.[value] ?? value;
+    CarMainInfoFileds?.find((f) => f.field === field)?.field_option?.[value] ??
+    value;
 
   useEffect(() => {
-    getRubricField(1);
+    // getRubricField(1);
     let socket;
     let interval;
-    if (fields) {
+    if (CarMainInfoFileds) {
       socket = new WebSocket(
         `wss://socket.cars.xcorp.com.ua/socket/?token=${localStorage.getItem(
           "token"
@@ -305,7 +306,7 @@ export const Profile = () => {
       socket?.close();
       clearInterval(interval);
     };
-  }, [fields]);
+  }, []);
 
   return (
     <>
