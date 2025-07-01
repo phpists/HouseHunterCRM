@@ -51,11 +51,11 @@ const Objects = () => {
     price_currency: "2",
     // id_rubric: "1",
     sorting: "0",
-    street_base_object: {
-      sorting_id: "12",
-      // price_change_up: "2",
-      // price_change_period: "4",
-    },
+    // street_base_object: {
+    //   // sorting_id: "12",
+    //   // price_change_up: "2",
+    //   // price_change_period: "4",
+    // },
     // price_for: "4",
     // company_object: {
     //   show_only: "only_my",
