@@ -12,12 +12,10 @@ import {
   useLazyAddViewLinkQuery,
   useLazyGetCarBodyQuery,
 } from "../../store/objects/objects.api";
-import { car_body_type } from "../../constants";
+import { car_body_type, CarMainInfoFileds } from "../../constants";
 
 export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
   const { data: locationsList } = useGetLocationsQuery();
-  const { data: rubricsList } = useGetRubricsQuery();
-  const [getRubricField, { data: fields }] = useLazyGetRubricsFieldsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
   const [addViewLink] = useLazyAddViewLinkQuery();
 
@@ -39,10 +37,6 @@ export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
     }
   }, [locationsList]);
 
-  useEffect(() => {
-    getRubricField(1);
-  }, []);
-
   const handleGetTagValue = (field, value) => {
     if (field === "id_type_body") {
       return car_body_type
@@ -50,7 +44,9 @@ export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
         .data?.find((f) => f.id === value)?.name;
     }
     return (
-      fields?.find((f) => f.field === field)?.field_option?.[value] ?? value
+      CarMainInfoFileds?.find((f) => f.field === field)?.field_option?.[
+        value
+      ] ?? value
     );
   };
 
