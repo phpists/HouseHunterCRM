@@ -25,100 +25,102 @@ export const NotificationsDropdown = ({
       {settingsModal && (
         <SettingsModal onClose={() => setSettingsModal(false)} />
       )}
-      <StyledNotificationsDropdown
-        open={open}
-        onClick={() => onToggleOpen(false)}
-      >
-        {(data?.calls || data?.telegramMessege || data?.xCorpNotify) && (
-          <Card
-            type="calls"
-            messages={[data?.calls, data?.telegramMessege, data?.xCorpNotify]}
-            onClose={() => onClose("calls")}
-            links={[
-              search === "?view=true"
-                ? "/calls?view=refresh"
-                : "/calls?view=true",
-              "/calls?telegram=true",
-              "/calls?site=true",
-            ]}
-          />
-        )}
-        {data?.chatMessege && (
-          <Card
-            type="requests"
-            messages={[data?.chatMessege]}
-            onClose={() => onClose("chatMessege")}
-            links={["/requests?showUnreadMessege=true"]}
-          />
-        )}
-        {data?.requestDtDeadline && (
-          <Card
-            type="requests"
-            messages={[data?.requestDtDeadline]}
-            links={[
-              search === "?showDeadline=true"
-                ? "/requests?showDeadline=refresh"
-                : "/requests?showDeadline=true",
-            ]}
-            onClose={() => onClose("requestDtDeadline")}
-          />
-        )}
-        {data?.objectDeadline && (
-          <Card
-            type="objects"
-            messages={[data?.objectDeadline]}
-            links={["/objects?showDeadline=true"]}
-            onClose={() => onClose("objectDeadline")}
-          />
-        )}
-        {data?.needs_moderation_after_adding_from_street_base && (
-          <Card
-            type="objects"
-            messages={["Є автомобілі перенесені з StreetBase"]}
-            links={[
-              search === "?moderationAfterStreetBase=true"
-                ? "/objects?moderationAfterStreetBase=refresh"
-                : "/objects?moderationAfterStreetBase=true",
-            ]}
-            onClose={() =>
-              onClose("needs_moderation_after_adding_from_street_base")
-            }
-          />
-        )}
-        {data?.objectLiquidity && (
-          <Card
-            type="objects"
-            messages={[data?.objectLiquidity]}
-            links={["/objects?showLiquidity=true"]}
-            onClose={() => onClose("objectLiquidity")}
-          />
-        )}
-        {data?.birthday?.length > 0 && (
-          <Card
-            type="clients"
-            messages={data?.birthday}
-            info
-            onClose={() => onClose("birthday")}
-          />
-        )}
-
-        {[...notifications]
-          ?.sort((a, b) => b?.date - a?.date)
-          ?.map(
-            (data, i) =>
-              i < 9 && <Notification key={data?.id_hash} data={data} />
+      {open && (
+        <StyledNotificationsDropdown
+          open={open}
+          onClick={() => onToggleOpen(false)}
+        >
+          {(data?.calls || data?.telegramMessege || data?.xCorpNotify) && (
+            <Card
+              type="calls"
+              messages={[data?.calls, data?.telegramMessege, data?.xCorpNotify]}
+              onClose={() => onClose("calls")}
+              links={[
+                search === "?view=true"
+                  ? "/calls?view=refresh"
+                  : "/calls?view=true",
+                "/calls?telegram=true",
+                "/calls?site=true",
+              ]}
+            />
           )}
-        <Button
-          title="Переглянути всі сповіщення"
-          className="mt-2"
-          onClick={() => navigate("/notifications")}
-        />
-        <Button
-          title="Налаштування"
-          className="mt-2"
-          onClick={() => setSettingsModal(true)}
-        />
-      </StyledNotificationsDropdown>
+          {data?.chatMessege && (
+            <Card
+              type="requests"
+              messages={[data?.chatMessege]}
+              onClose={() => onClose("chatMessege")}
+              links={["/requests?showUnreadMessege=true"]}
+            />
+          )}
+          {data?.requestDtDeadline && (
+            <Card
+              type="requests"
+              messages={[data?.requestDtDeadline]}
+              links={[
+                search === "?showDeadline=true"
+                  ? "/requests?showDeadline=refresh"
+                  : "/requests?showDeadline=true",
+              ]}
+              onClose={() => onClose("requestDtDeadline")}
+            />
+          )}
+          {data?.objectDeadline && (
+            <Card
+              type="objects"
+              messages={[data?.objectDeadline]}
+              links={["/objects?showDeadline=true"]}
+              onClose={() => onClose("objectDeadline")}
+            />
+          )}
+          {data?.needs_moderation_after_adding_from_street_base && (
+            <Card
+              type="objects"
+              messages={["Є автомобілі перенесені з StreetBase"]}
+              links={[
+                search === "?moderationAfterStreetBase=true"
+                  ? "/objects?moderationAfterStreetBase=refresh"
+                  : "/objects?moderationAfterStreetBase=true",
+              ]}
+              onClose={() =>
+                onClose("needs_moderation_after_adding_from_street_base")
+              }
+            />
+          )}
+          {data?.objectLiquidity && (
+            <Card
+              type="objects"
+              messages={[data?.objectLiquidity]}
+              links={["/objects?showLiquidity=true"]}
+              onClose={() => onClose("objectLiquidity")}
+            />
+          )}
+          {data?.birthday?.length > 0 && (
+            <Card
+              type="clients"
+              messages={data?.birthday}
+              info
+              onClose={() => onClose("birthday")}
+            />
+          )}
+
+          {[...notifications]
+            ?.sort((a, b) => b?.date - a?.date)
+            ?.map(
+              (data, i) =>
+                i < 9 && <Notification key={data?.id_hash} data={data} />
+            )}
+          <Button
+            title="Переглянути всі сповіщення"
+            className="mt-2"
+            onClick={() => navigate("/notifications")}
+          />
+          <Button
+            title="Налаштування"
+            className="mt-2"
+            onClick={() => setSettingsModal(true)}
+          />
+        </StyledNotificationsDropdown>
+      )}
     </>
   );
 };

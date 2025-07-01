@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import noPhoto from "../../../../assets/images/no-photo.webp";
 import { useNavigate } from "react-router-dom";
 
@@ -28,13 +30,17 @@ export const Notification = ({ data }) => {
   return (
     <StyledNotification
       className="flex items-center gap-2"
-      photo={data?.image ?? noPhoto}
       onClick={handleOpen}
     >
-      <div
+      <LazyLoadImage
         className="photo"
+        src={data?.image ?? noPhoto}
+        alt={`${data?.brand_name} ${data?.model_name}`}
+        effect="blur"
+        placeholderSrc={noPhoto}
         style={{ backgroundSize: data?.image ? "150%" : "300%" }}
-      ></div>
+        loading="lazy"
+      />
       <div>
         <div className="title">{`${TYPES?.[data?.id_filter]}`}</div>
         <div className="subtitle">{`${data?.brand_name} ${data?.model_name} ${
@@ -56,9 +62,9 @@ const StyledNotification = styled.div`
   .photo {
     height: 40px;
     width: 60px;
-    background: url(${({ photo }) => photo}) center/cover no-repeat;
     background-size: 300%;
     border-radius: 2px;
+    object-fit: cover;
   }
   .title {
     color: var(--main-color);
