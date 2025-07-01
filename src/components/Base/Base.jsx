@@ -161,19 +161,19 @@ export const Base = ({
       let changed = false;
       const defaults = {};
       if (!data.street_base_object.price_change) {
-        defaults.price_change = 50;
+        // defaults.price_change = 50;
         changed = true;
       }
       if (!data.street_base_object.price_change_up_procent) {
-        defaults.price_change_up_procent = 2;
+        // defaults.price_change_up_procent = 2;
         changed = true;
       }
       if (!data.street_base_object.price_change_up) {
-        defaults.price_change_up = "2";
+        // defaults.price_change_up = "2";
         changed = true;
       }
       if (!data.street_base_object.price_change_period) {
-        defaults.price_change_period = "4";
+        // defaults.price_change_period = "4";
         changed = true;
       }
       if (changed) {

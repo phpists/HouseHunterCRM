@@ -11,6 +11,7 @@ export const PositionCard = ({
   onFocus,
   ceil,
   error,
+  placeholder,
 }) => {
   const inputRef = useRef(null);
 
@@ -36,7 +37,7 @@ export const PositionCard = ({
               ? ""
               : Number(value).toString() ?? undefined
           }
-          placeholder=""
+          placeholder={placeholder}
           type={ceil ? "text" : "number"}
           onChange={(e) => {
             if (Number(e.target.value) >= 0) {
@@ -74,6 +75,7 @@ const StyledPositionCard = styled.div`
     margin-right: 5px;
   }
   .value {
+    display: flex;
     color: var(--main-color);
     text-align: right;
     font-family: Overpass;
@@ -85,6 +87,7 @@ const StyledPositionCard = styled.div`
     opacity: 0.4;
     transition: all 0.3s;
     input {
+      width: 100%;
       margin-right: 0px;
       &::-webkit-outer-spin-button,
       &::-webkit-inner-spin-button {

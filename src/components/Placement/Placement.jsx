@@ -81,7 +81,6 @@ const Placement = ({ data, onChange }) => {
                 : "0"
             }
             onChange={(val) => {
-              console.log(value);
               onChange("street_base_object", {
                 ...data?.street_base_object,
                 id_source:

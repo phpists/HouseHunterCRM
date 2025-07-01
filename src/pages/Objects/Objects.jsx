@@ -44,9 +44,7 @@ const Objects = () => {
     id_hash: id ?? "",
     price_for: "4",
     sorting: "0",
-    street_base_object: {
-      id_source: ["1", "2", "3"],
-    },
+    street_base_object: {},
   };
 
   const DEFAULT_FILTERS = {
@@ -55,9 +53,8 @@ const Objects = () => {
     sorting: "0",
     street_base_object: {
       sorting_id: "12",
-      price_change_up: "2",
-      price_change_period: "4",
-      id_source: ["1", "2", "3"],
+      // price_change_up: "2",
+      // price_change_period: "4",
     },
     // price_for: "4",
     // company_object: {
