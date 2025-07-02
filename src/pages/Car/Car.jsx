@@ -1,8 +1,13 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useLazyGetOpenObjectQuery } from "../../store/objects/objects.api";
+import {
+  useLazyGetCarBodyQuery,
+  useLazyGetOpenObjectQuery,
+} from "../../store/objects/objects.api";
 import { Slider } from "../../components/ObjectCard/Slider/Slider";
+import { car_body_type, CarMainInfoFileds, type_fuel } from "../../constants";
+import { Tag } from "../../components/ObjectCard/MainInfo/Tags/Tag";
 
 const Car = () => {
   const { id } = useParams();
@@ -29,6 +34,15 @@ const Car = () => {
     photos = parsedPhotos.map((p) => ({ name: p }));
   } catch {}
 
+  const getFromCarMainInfoFiledsOptions = (fieldName, index) => {
+    return CarMainInfoFileds.filter(({ field }) => field === fieldName)[0]
+      .field_option[+index];
+  };
+
+  const price_history = Object.keys(JSON.parse(carData.price_history_json)).map(
+    (i) => JSON.parse(carData.price_history_json)[i].price
+  );
+
   return (
     <StyledCar>
       <div className="slider-block">
@@ -41,7 +55,26 @@ const Car = () => {
           </button>
         </div>
         <h1>{carData.title}</h1>
-        <div className="price">{carData.price_usd}$</div>
+        <div className="price">
+          {carData.price_usd}$
+          {carData?.tag_market_bottom &&
+          carData?.tag_price_dump !== "0" &&
+          new Date(Number(carData?.tag_price_dump) * 1000) >=
+            new Date().getTime() ? (
+            <div className="danger-price animate-pulse">!!!</div>
+          ) : (
+            ""
+          )}
+          <span className="text-red-500 text-lg ml-2">
+            {carData.price_change_for_last !== "0" &&
+              `- ${carData.price_change_for_last}`}
+          </span>
+        </div>
+        <div className="flex flex-col">
+          {price_history.map((price) => (
+            <span>{price}</span>
+          ))}
+        </div>
         <div className="params">
           <span>{carData.year} рік</span>
           <span>
@@ -56,10 +89,59 @@ const Car = () => {
           </span>
           <span>{carData.kpp && carData.kpp !== "0" ? carData.kpp : "-"}</span>
         </div>
+
+        <span>зацікавленість {carData.index_overbuying}/10</span>
+
         <p>{carData.description}</p>
+        {carData?.tag_faster && carData?.tag_faster === "1" && (
+          <Tag title={"Терміново"} />
+        )}
+        {carData?.tag_nativePaint && carData?.tag_nativePaint === "1" && (
+          <Tag title={"Рідна фарба"} />
+        )}
+        {carData?.tag_freshlyDriven &&
+          (carData?.tag_freshlyDriven === "1") === "1" && (
+            <Tag title={"Свіжопригнана"} />
+          )}
+        {carData?.tag_afterDTP && carData?.tag_afterDTP === "1" && (
+          <Tag title={"Після дтп"} />
+        )}
+        {carData?.tag_market_bottom &&
+          (carData?.tag_market_bottom === "1") === "1" && (
+            <Tag title={"По низу ринку"} />
+          )}
         <a href={carData.link} target="_blank" rel="noopener noreferrer">
           Відкрити на платформі
         </a>
+
+        <span></span>
+
+        <div className="flex flex-col">
+          <span>
+            {getFromCarMainInfoFiledsOptions(
+              "id_type_fuel",
+              carData.id_type_fuel
+            )}
+          </span>
+          <span>{getFromCarMainInfoFiledsOptions("kpp", carData.kpp)}</span>
+          <span>{carData.location_name}</span>
+          <span>
+            {getFromCarMainInfoFiledsOptions("drive_type", carData.drive_type)}
+          </span>
+          {carData.VIN && <Tag title={`VIN ${carData.VIN}`} copy />}
+          <span className={carData.exchangePossible === "0" && "line-through"}>
+            можливий обмін
+          </span>
+        </div>
+
+        <div className="flex flex-col">
+          <h1>обране</h1>
+
+          <span>
+            к-ть переглядів | к-ть лайків - {carData.count_views} |{" "}
+            {carData.count_likes}
+          </span>
+        </div>
       </div>
     </StyledCar>
   );
@@ -89,6 +171,8 @@ const StyledCar = styled.div`
       }
     }
     .price {
+      display: flex;
+
       font-size: 2rem;
       color: #6f0;
       margin-bottom: 12px;
