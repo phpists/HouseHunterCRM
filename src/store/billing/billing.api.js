@@ -183,4 +183,5 @@ export const {
   useLazyToggleActiveWorkerStatusQuery,
   useLazyDeleteCompanyImgQuery,
   useGetWorkersMyCompanyQuery,
+  useLazyGetWorkersMyCompanyQuery,
 } = billing;

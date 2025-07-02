@@ -25,6 +25,7 @@ import { handleChangeRange } from "../../utilits";
 import {
   useGetCompanyInfoQuery,
   useGetWorkersMyCompanyQuery,
+  useLazyGetWorkersMyCompanyQuery,
 } from "../../store/billing/billing.api";
 import { XHOUSE_COMPANY_ID } from "../../constants";
 
@@ -105,7 +106,9 @@ export const Base = ({
   const { data: level } = useGetCompanyStructureLevelQuery();
   const { data: companies } = useGetCompaniesQuery();
   const { data: sortingPeriods } = useGetSortingObjectQuery();
-  const { data: companyWorkers } = useGetWorkersMyCompanyQuery();
+  // const { data: companyWorkers } = useGetWorkersMyCompanyQuery();
+  const [companyWorkers, setCompanyWorkers] = useState();
+  const [getCompanyWorkers] = useLazyGetWorkersMyCompanyQuery();
   const [company, setCompany] = useState(
     !!Object.keys(data.company_object || {}).length
   );
@@ -188,6 +191,15 @@ export const Base = ({
   useEffect(() => {
     !companyOpen && setCompany(!!data?.company_object?.show_only);
   }, [data?.company_object?.show_only]);
+
+  useEffect(() => {
+    if (company) {
+      getCompanyWorkers().then(({ data }) => {
+        console.log(data);
+        setCompanyWorkers(data);
+      });
+    }
+  }, [company]);
 
   const handleGetFormatCompanies = () =>
     companies?.data
