@@ -46,15 +46,17 @@ export const CarInfo = ({
         style={{ maxHeight: 150 - (tagsRef?.current?.offsetHeight ?? 0) }}
       ></div>
       <div className="tags" ref={tagsRef}>
-        {data.VIN && <Tag title={`VIN ${data.VIN}`} copy />}
-        {data?.state_number && <Tag title={data?.state_number} copy />}
         {data.id_source && (
           <Tag
             title={sources[data.id_source]}
-            сopyValue={data?.id_ad_in_source}
-            copy
+            // сopyValue={data?.id_ad_in_source}
+            // copy
+            className={"!text-xs"}
+            onClick={() => data?.link && window.open(data?.link, "_blank")}
           />
         )}
+        {data.VIN && <Tag title={`VIN ${data.VIN}`} copy />}
+        {data?.state_number && <Tag title={data?.state_number} copy />}
         {data?.tag_faster && data?.tag_faster === "1" && (
           <Tag title={"Терміново"} />
         )}

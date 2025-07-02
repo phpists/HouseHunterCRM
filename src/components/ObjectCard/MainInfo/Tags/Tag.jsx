@@ -13,18 +13,20 @@ export const Tag = ({
   onRemove,
   copy,
   сopyValue,
+  onClick,
 }) => (
   <StyledTag
     className={`flex items-center clickable select-none ${className}`}
     title={hoverTitle ?? title}
-    onClick={(e) =>
-      copy
+    onClick={(e) => {
+      onClick && onClick();
+      return copy
         ? (() => {
             e.stopPropagation();
             handleCopy(сopyValue ?? title);
           })()
-        : null
-    }
+        : null;
+    }}
   >
     {Icon ? Icon : null}
     {iIcom ? <i className={iIcom} /> : null}

@@ -74,6 +74,9 @@ export const ObjectCard = memo(
       }
     };
 
+    // const handleClick = (e) =>
+    //   e.target.classList.contains("clickable") && onSelect();
+
     const handleResize = () => {
       const currentWidth = window.innerWidth;
 
@@ -93,7 +96,6 @@ export const ObjectCard = memo(
         className={` clickable list-card-wrapper ${selected && "selected"} ${
           !inView && "notInView"
         }`}
-        onClick={handleClick}
         ref={ref}
       >
         <Photo
@@ -103,7 +105,11 @@ export const ObjectCard = memo(
               : checkIsArray(checkIsJSON(data?.photos_json))
           }
         />
-        <CarMainInfo data={data} onOpenPriceHistory={onOpenPriceHistory} />
+        <CarMainInfo
+          onClick={handleClick}
+          data={data}
+          onOpenPriceHistory={onOpenPriceHistory}
+        />
         <CarInfo
           data={data}
           onOpenInfo={onOpenInfo}

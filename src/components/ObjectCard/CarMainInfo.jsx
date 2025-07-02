@@ -14,7 +14,7 @@ import {
 } from "../../store/objects/objects.api";
 import { car_body_type, CarMainInfoFileds } from "../../constants";
 
-export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
+export const CarMainInfo = ({ data, onOpenPriceHistory, onClick }) => {
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
   const [addViewLink] = useLazyAddViewLinkQuery();
@@ -71,9 +71,10 @@ export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
           onClick={(e) => {
             e.stopPropagation();
             addViewLink(data.id);
-            if (data?.link) {
-              window.open(data?.link, "_blank");
-            }
+            onClick(e);
+            // if (data?.link) {
+            //   window.open(data?.link, "_blank");
+            // }
           }}
         >
           {`${data?.brand_name} ${data?.model_name} ${data?.year}`}
@@ -83,65 +84,67 @@ export const CarMainInfo = ({ data, onOpenPriceHistory }) => {
           <Price data={data} />
         </div>
       </div>
-      <div className="top-tags">
+      <div onClick={(e) => onClick(e)}>
+        <div className="top-tags">
+          <Tag
+            title={`${
+              Number(data?.сar_mileage) / 1000 === 0
+                ? "-"
+                : Number(data?.сar_mileage) / 1000
+            } тис. км.`}
+            iIcom="bi bi-speedometer2"
+          />
+          <Tag
+            title={`${formatedLocations
+              ?.find((l) => l?.value === data?.id_location)
+              ?.title?.split("=>")
+              ?.join(" • ")}`}
+            iIcom="bi bi-geo-alt"
+          />
+          <Tag
+            title={`${
+              Number(data?.volume_engine) / 1000 === 0 ||
+              data?.volume_engine === "0"
+                ? "-"
+                : Number(data?.volume_engine) / 1000
+            } • ${handleGetTagValue("id_type_fuel", data?.id_type_fuel) ?? ""}`}
+            iIcom="bi bi-fuel-pump"
+          />
+          <Tag
+            title={`${
+              data?.kpp === "0" ? "-" : handleGetTagValue("kpp", data?.kpp)
+            }`}
+            iIcom="bi bi-gear"
+          />
+        </div>{" "}
         <Tag
           title={`${
-            Number(data?.сar_mileage) / 1000 === 0
+            data?.drive_type === "0"
               ? "-"
-              : Number(data?.сar_mileage) / 1000
-          } тис. км.`}
-          iIcom="bi bi-speedometer2"
+              : handleGetTagValue("drive_type", data?.drive_type)
+          } • ${handleGetTagValue("id_type_body", data?.id_type_body)} • ${
+            data.index_overbuying
+          }/10 • TOP ${data?.data_level}`}
+          className="mb-2.5"
         />
         <Tag
-          title={`${formatedLocations
-            ?.find((l) => l?.value === data?.id_location)
-            ?.title?.split("=>")
-            ?.join(" • ")}`}
-          iIcom="bi bi-geo-alt"
+          titleHtml={
+            <>
+              {handleCheckIsNew() ? "NEW" : ""} •
+              <span className={`mx-[1px] ${data?.Count_object > 5 && "red"}`}>
+                {data?.Count_object > 10
+                  ? " Перекуп "
+                  : data?.Count_object > 5
+                  ? " Перекуп ? "
+                  : data?.Count_object > 2
+                  ? " Перекуп ? "
+                  : " Продавець "}
+                ({data?.Count_object})
+              </span>
+            </>
+          }
         />
-        <Tag
-          title={`${
-            Number(data?.volume_engine) / 1000 === 0 ||
-            data?.volume_engine === "0"
-              ? "-"
-              : Number(data?.volume_engine) / 1000
-          } • ${handleGetTagValue("id_type_fuel", data?.id_type_fuel) ?? ""}`}
-          iIcom="bi bi-fuel-pump"
-        />
-        <Tag
-          title={`${
-            data?.kpp === "0" ? "-" : handleGetTagValue("kpp", data?.kpp)
-          }`}
-          iIcom="bi bi-gear"
-        />
-      </div>{" "}
-      <Tag
-        title={`${
-          data?.drive_type === "0"
-            ? "-"
-            : handleGetTagValue("drive_type", data?.drive_type)
-        } • ${handleGetTagValue("id_type_body", data?.id_type_body)} • ${
-          data.index_overbuying
-        }/10 • TOP ${data?.data_level}`}
-        className="mb-2.5"
-      />
-      <Tag
-        titleHtml={
-          <>
-            {handleCheckIsNew() ? "NEW" : ""} •
-            <span className={`mx-[1px] ${data?.Count_object > 5 && "red"}`}>
-              {data?.Count_object > 10
-                ? " Перекуп "
-                : data?.Count_object > 5
-                ? " Перекуп ? "
-                : data?.Count_object > 2
-                ? " Перекуп ? "
-                : " Продавець "}
-              ({data?.Count_object})
-            </span>
-          </>
-        }
-      />
+      </div>
     </StyledCarMainInfo>
   );
 };
@@ -161,6 +164,10 @@ const StyledCarMainInfo = styled.div`
     font-weight: var(--font-weight-200);
     line-height: 118%; /* 23.6px */
     letter-spacing: 0.4px;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
   .top-tags {
     display: grid;
