@@ -314,12 +314,12 @@ const Objects = () => {
             dataRef.current = updatedObjects;
             setObjects(updatedObjects);
 
-            if (isFirstRequest.current) {
-              isFirstRequest.current = false;
-              getAllObjects({ ...data, only_count_item: "1" }).then((resp) =>
-                saveObjectsCount(resp?.data?.count_item ?? 0)
-              );
-            }
+            // if (isFirstRequest.current) {
+            //   isFirstRequest.current = false;
+            //   getAllObjects({ ...data, only_count_item: "1" }).then((resp) =>
+            //     saveObjectsCount(resp?.data?.count_item ?? 0)
+            //   );
+            // }
           },
           () => {
             setIsAllPages(true);

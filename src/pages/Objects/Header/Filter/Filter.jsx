@@ -267,7 +267,9 @@ export const Filter = ({
     }
 
     setLoading(true);
+
     getAllObjects({ ...data, only_count_item: "1" }).then((resp) => {
+      saveObjectsCount(resp?.data?.count_item ?? 0);
       setTotal(resp?.data?.count_item ?? 0);
       setLoading(false);
     });
