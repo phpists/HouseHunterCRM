@@ -7,7 +7,7 @@ import { SelectTags } from "../SelectTags/SelectTags";
 import Accordion from "../Accordions/Accordion";
 import { useGetSortObjectViewQuery } from "../../store/objects/objects.api";
 
-const SearchResults = ({ data, onChangeFilter, filtersFields }) => {
+const SearchResults = ({ data, onChangeFilter }) => {
   const { data: sortingPeriods } = useGetSortingObjectQuery();
   const { data: sortData } = useGetSortObjectViewQuery();
 

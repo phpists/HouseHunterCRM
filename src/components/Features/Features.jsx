@@ -15,14 +15,15 @@ import Accordion from "../Accordions/Accordion";
 import { Divider } from "../Base/Divider";
 import { VolumeEngine } from "../VolumeEngine/VolumeEngine";
 import { CheckOption } from "../CheckOption";
+import { useAppSelect } from "../../hooks/redux";
 
 const Features = ({
   data,
   onChangeFilter,
-  filtersFields,
   onChangeInputFocus,
   isInputFocused,
 }) => {
+  const { filtersFields } = useAppSelect((state) => state.objects);
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const [getBrands, { data: brandsList }] = useLazyGetBrandsQuery();
   const [getModels, { data: modelsList }] = useLazyGetModelsQuery();

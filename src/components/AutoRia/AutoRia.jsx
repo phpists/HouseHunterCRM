@@ -9,7 +9,6 @@ import Views from "./Views";
 const AutoRia = ({
   data,
   onChangeFilter,
-  filtersFields,
   onChangeInputFocus,
   isInputFocused,
 }) => {

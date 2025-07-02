@@ -39,6 +39,7 @@ import LocationsObjectsAccordion from "../../../../components/Accordions/Locatio
 import ObjectsFilterYear from "../../../../components/ObjectsFilterYear/ObjectsFilterYear";
 import { VolumeEngine } from "../../../../components/VolumeEngine/VolumeEngine";
 import MultipleAccordion from "../../../../components/Accordions/MultipleAccordion";
+import { useAppSelect } from "../../../../hooks/redux";
 
 export const notAllowedFields = [
   "comment",
@@ -90,7 +91,6 @@ export const Main = ({
   close,
   filters,
   onChangeFilter,
-  filtersFields,
   onChangeDefaultFiltersOpened,
   filtersOpened,
   errors,
@@ -100,6 +100,7 @@ export const Main = ({
   onChangePhoneCode,
   onOpenMap,
 }) => {
+  const { filtersFields } = useAppSelect((state) => state.objects);
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: rubricsList } = useGetRubricsQuery();
   const { data: locationsList } = useGetLocationsQuery();

@@ -11,16 +11,17 @@ import { CARS_TAGS } from "../Base/Base";
 import { Field } from "../Field";
 import { ProfileField } from "../ProfileField";
 import { TagsFilter } from "../TagsFilter/TagsFilter";
+import { useAppSelect } from "../../hooks/redux";
 
 const Search = ({
   data,
   onChangeFilter,
-  filtersFields,
   onChangeInputFocus,
   phoneCode,
   onChangePhoneCode,
   errors,
 }) => {
+  const { filtersFields } = useAppSelect((state) => state.objects);
   const { data: phonesCodes } = useGetPhonesCodesQuery();
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 

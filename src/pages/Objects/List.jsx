@@ -37,22 +37,21 @@ import { CommentModal } from "./CommentModal";
 import { PhonesModal } from "./PhonesModal";
 
 export const List = ({
-  selected,
   onSelect,
   data,
   toggleFavoriteStatus,
   onFindSimilar,
   innerRef,
-  loading,
-  actionLoading,
   onDeleteSuccess,
   onChangeComment,
   onChangeContancts,
   onRestore,
   isDeleted,
   onChangeTags,
-  filters,
 }) => {
+  const { selected, loading, actionLoading } = useAppSelect(
+    (state) => state.objects
+  );
   const { user } = useAppSelect((state) => state.auth);
   const { accessData } = useAppSelect((state) => state.auth);
   const { data: companyInfo } = useGetCompanyInfoQuery();

@@ -6,7 +6,6 @@ import Price from "./Price";
 const PriceChange = ({
   data,
   onChangeFilter,
-  filtersFields,
   onChangeInputFocus,
   isInputFocused,
 }) => {

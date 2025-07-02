@@ -22,26 +22,23 @@ import { MapModal } from "./MapModal/MapModal";
 
 export const Header = ({
   selectedCount,
-  selected,
   onFavorite,
-  isFavorite,
   onIsFavotite,
   onDelete,
   filters,
   onChangeFilter,
-  filtersFields,
   onApplyFilter,
-  allCount,
   onSelectAll,
   onChangeActionLoading,
-  phoneCode,
   onChangePhoneCode,
   onRestore,
   selectedClients,
-  isDeleted,
   onRefetch,
   onFastCopy,
 }) => {
+  const { selected, isFavorite, allCount, isDeleted } = useAppSelect(
+    (state) => state.objects
+  );
   const { user } = useAppSelect((state) => state.auth);
   const [filterOpen, setFilterOpen] = useState(false);
   const [addClient, setAddClient] = useState(false);
@@ -229,7 +226,6 @@ export const Header = ({
                     ? handleDelete
                     : null
                 }
-                allCount={allCount}
                 onSelectAll={onSelectAll}
                 onAddToSelection={
                   filters?.company_object?.show_deleted === "1"
@@ -304,13 +300,10 @@ export const Header = ({
           onClose={() => setFilterOpen(false)}
           filters={filters}
           onChangeFilter={onChangeFilter}
-          filtersFields={filtersFields}
           onApplyFilter={handleApplyFilter}
           filtersOpened={defaultFiltersOpen}
           onChangeDefaultFiltersOpened={(val) => setDefalultFiltersOpen(val)}
           isFavorite={isFavorite}
-          allCount={allCount}
-          phoneCode={phoneCode}
           onChangePhoneCode={onChangePhoneCode}
           onOpenMap={() => setOpenMap(true)}
         />

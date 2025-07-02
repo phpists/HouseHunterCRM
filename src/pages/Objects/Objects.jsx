@@ -24,15 +24,37 @@ import { useAppSelect } from "../../hooks/redux";
 
 const Objects = () => {
   const { user } = useAppSelect((state) => state.auth);
+  const {
+    objectsCount,
+    objects,
+    selected,
+    isFavorite,
+    isAllPages,
+    allCount,
+    updateData,
+    phoneCode,
+  } = useAppSelect((state) => state.objects);
+  const {
+    saveObjectsCount,
+    setObjects,
+    setSelected,
+    setIsFavorite,
+    setFilterFields,
+    setIsAllPages,
+    setLoading,
+    setAllCount,
+    setUpdateData,
+    setActionLoading,
+    setPhoneCode,
+    setIsDeleted,
+  } = useActions();
+
   const { id } = useParams();
   const location = useLocation();
   const [getAllObjects] = useLazyGetAllObjectsQuery();
   const [getRubricField] = useLazyGetRubricFieldsQuery();
   const [addObjectToFavorites] = useLazyAddToFavoritesQuery();
-  const { saveObjectsCount } = useActions();
-  const [selected, setSelected] = useState([]);
-  const [objects, setObjects] = useState([]);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [restoreObjects] = useLazyRestoreObjectsQuery();
 
   const INIT_FILTERS = {
     // id_rubric: "1",
@@ -63,30 +85,20 @@ const Objects = () => {
     // },
   };
 
-  const { objectsCount } = useAppSelect((state) => state.objects);
   const [filters, setFilters] = useState(INIT_FILTERS);
-  const [filtersFields, setFilterFields] = useState([]);
   const filterActive = useRef(!!id);
-  const [allCount, setAllCount] = useState(0);
+  const currentPage = useRef(0);
+  const isLoading = useRef(false);
+  const listRef = useRef();
+  const isFirstRender = useRef(true);
+  const dataRef = useRef([]);
+  const allCountRef = useRef(0);
+
   const handleGetRubricsFields = (id) => {
     getRubricField(id).then((resp) => {
       setFilterFields(resp?.data);
     });
   };
-  const currentPage = useRef(0);
-  const isLoading = useRef(false);
-  const listRef = useRef();
-  const [isAllPages, setIsAllPages] = useState(false);
-  const isFirstRender = useRef(true);
-  const isFirstRequest = useRef(true);
-  const [loading, setLoading] = useState(false);
-  const dataRef = useRef([]);
-  const allCountRef = useRef(0);
-  const [updateData, setUpdateData] = useState(false);
-  const [actionLoading, setActionLoading] = useState(false);
-  const [phoneCode, setPhoneCode] = useState("1");
-  const [restoreObjects] = useLazyRestoreObjectsQuery();
-  const [isDeleted, setIsDeleted] = useState(false);
 
   const handleChangePhoneCode = (val) => setPhoneCode(val);
 
@@ -737,19 +749,14 @@ const Objects = () => {
     <StyledObjects>
       <Header
         selectedCount={selected.length}
-        selected={selected}
         onFavorite={handleToggleFavoritesStatus}
-        isFavorite={isFavorite}
         onIsFavotite={() => setIsFavorite(!isFavorite)}
         onDelete={() => handleDeleteObjectsFilterByIds(selected, true)}
         filters={filters}
         onChangeFilter={handleChangeFilter}
-        filtersFields={filtersFields}
         onApplyFilter={handleApplyFilter}
-        allCount={allCount}
         onSelectAll={handleSelectAll}
         onChangeActionLoading={(val) => setActionLoading(val)}
-        phoneCode={phoneCode}
         onChangePhoneCode={handleChangePhoneCode}
         onRestore={() => handleRestoreObjects(selected, true)}
         selectedClients={[
@@ -760,19 +767,15 @@ const Objects = () => {
               ?.filter((clientId) => !!clientId)
           ),
         ]}
-        isDeleted={isDeleted}
         onRefetch={() => handleGetObjects(true, true)}
         onFastCopy={user?.show_fast_folder ? handleCopyFastFolderLink : null}
       />
       <List
-        selected={selected}
         onSelect={handleSelect}
         data={objects ?? []}
         toggleFavoriteStatus={handleToggleFavoriteStatus}
         onFindSimilar={handleFindSimilarTo}
         innerRef={listRef}
-        loading={loading}
-        actionLoading={actionLoading}
         onDeleteSuccess={handleDeleteObjectSuccess}
         onChangeComment={handleChangeComment}
         currency={Number(filters?.price_currency - 1)}

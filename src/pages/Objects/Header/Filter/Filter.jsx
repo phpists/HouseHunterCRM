@@ -41,16 +41,14 @@ export const Filter = ({
   onClose,
   filters,
   onChangeFilter,
-  filtersFields,
   onApplyFilter,
   onChangeDefaultFiltersOpened,
   filtersOpened,
   isFavorite,
-  allCount,
-  phoneCode,
   onChangePhoneCode,
   onOpenMap,
 }) => {
+  const { phoneCode } = useAppSelect((state) => state.objects);
   const controls = useAnimationControls();
   const [errors, setErrors] = useState({});
   const [getAllObjects, { data }] = useLazyGetAllObjectsQuery();
@@ -387,7 +385,6 @@ export const Filter = ({
             close={close}
             filters={filters}
             onChangeFilter={handleChangeFilter}
-            filtersFields={filtersFields}
             filtersOpened={filtersOpened}
             onChangeDefaultFiltersOpened={onChangeDefaultFiltersOpened}
             errors={errors}
@@ -405,7 +402,6 @@ export const Filter = ({
           <Features
             data={filters}
             onChangeFilter={handleChangeFilter}
-            filtersFields={filtersFields}
             onChangeInputFocus={(val) => setIsInputFocused(val)}
             isInputFocused={isInputFocused}
           />
@@ -414,7 +410,6 @@ export const Filter = ({
           <PriceChange
             data={filters}
             onChangeFilter={handleChangeFilter}
-            filtersFields={filtersFields}
             onChangeInputFocus={(val) => setIsInputFocused(val)}
             isInputFocused={isInputFocused}
           />
@@ -426,23 +421,17 @@ export const Filter = ({
           <AutoRia
             data={filters}
             onChangeFilter={handleChangeFilter}
-            filtersFields={filtersFields}
             onChangeInputFocus={(val) => setIsInputFocused(val)}
             isInputFocused={isInputFocused}
           />
 
           <SectionTitle title="Результати пошуку" />
-          <SearchResults
-            data={filters}
-            onChangeFilter={handleChangeFilter}
-            filtersFields={filtersFields}
-          />
+          <SearchResults data={filters} onChangeFilter={handleChangeFilter} />
 
           <SectionTitle title="Пошук" />
           <Search
             data={filters}
             onChangeFilter={handleChangeFilter}
-            filtersFields={filtersFields}
             onChangeInputFocus={(val) => setIsInputFocused(val)}
             phoneCode={phoneCode}
             onChangePhoneCode={onChangePhoneCode}
