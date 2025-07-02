@@ -15,7 +15,6 @@ import nextIcon from "../../../assets/images/next-arrow.svg";
 import { Counter } from "../../../pages/Client/Object/Maininfo/Slider/Counter";
 import { Status } from "./Status";
 import { NewTag } from "../../../pages/Client/Object/Maininfo/Slider/NewTag";
-import ReactImageMagnify from "react-image-magnify";
 import { Statistics } from "./Statistics";
 
 const settings = {
