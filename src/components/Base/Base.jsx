@@ -193,7 +193,7 @@ export const Base = ({
   }, [data?.company_object?.show_only]);
 
   useEffect(() => {
-    if (company) {
+    if (company && !companyWorkers) {
       getCompanyWorkers().then(({ data }) => {
         console.log(data);
         setCompanyWorkers(data);
