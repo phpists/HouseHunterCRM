@@ -257,18 +257,18 @@ const Objects = () => {
         ) {
           data = {
             ...data,
-            company_object: {
-              show_only: "company",
-              actual: "1",
-              given_objects: "1",
-              not_actual: "1",
-              overdue: "1",
-              show_street_base_company: "1",
-            },
+            // company_object: {
+            //   show_only: "company",
+            //   actual: "1",
+            //   given_objects: "1",
+            //   not_actual: "1",
+            //   overdue: "1",
+            //   show_street_base_company: "1",
+            // },
             street_base_object: {
               sorting_id: "16",
             },
-            mls_object: {},
+            // mls_object: {},
           };
         }
 
@@ -486,18 +486,18 @@ const Objects = () => {
     if (id) {
       setFilters({
         id_hash: id,
-        company_object: {
-          show_only: "company",
-          actual: "1",
-          given_objects: "1",
-          not_actual: "1",
-          overdue: "1",
-          show_street_base_company: "1",
-        },
+        // company_object: {
+        //   show_only: "company",
+        //   actual: "1",
+        //   given_objects: "1",
+        //   not_actual: "1",
+        //   overdue: "1",
+        //   show_street_base_company: "1",
+        // },
         street_base_object: {
           sorting_id: "16",
         },
-        mls_object: {},
+        // mls_object: {},
       });
       filterActive.current = true;
       setUpdateData(true);
@@ -521,18 +521,18 @@ const Objects = () => {
         id_location: initFiltersObject?.id_location
           ? [initFiltersObject?.id_location]
           : undefined,
-        company_object: {
-          show_only: "company",
-          actual: "1",
-          given_objects: "1",
-          not_actual: "1",
-          overdue: "1",
-          show_street_base_company: "1",
-        },
+        // company_object: {
+        //   show_only: "company",
+        //   actual: "1",
+        //   given_objects: "1",
+        //   not_actual: "1",
+        //   overdue: "1",
+        //   show_street_base_company: "1",
+        // },
         street_base_object: {
           sorting_id: "16",
         },
-        mls_object: {},
+        // mls_object: {},
       });
       if (initFiltersObject?.id_rubric) {
         handleGetRubricsFields(initFiltersObject?.id_rubric);

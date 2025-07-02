@@ -251,18 +251,18 @@ export const Filter = ({
     ) {
       data = {
         ...data,
-        company_object: {
-          show_only: "company",
-          actual: "1",
-          given_objects: "1",
-          not_actual: "1",
-          overdue: "1",
-          show_street_base_company: "1",
-        },
+        // company_object: {
+        //   show_only: "company",
+        //   actual: "1",
+        //   given_objects: "1",
+        //   not_actual: "1",
+        //   overdue: "1",
+        //   show_street_base_company: "1",
+        // },
         street_base_object: {
           sorting_id: "16",
         },
-        mls_object: {},
+        // mls_object: {},
       };
     }
 

@@ -156,7 +156,7 @@ export const Base = ({
 
   useEffect(() => {
     // setStreetBase(streetBaseOpen);
-    setCompany(!!Object.keys(data.company_object || {}).length);
+    // setCompany(!!Object.keys(data.company_object || {}).length);
     if (streetBaseOpen && data?.street_base_object) {
       let changed = false;
       const defaults = {};
@@ -227,8 +227,6 @@ export const Base = ({
   };
 
   const handleToggleMlsBase = () => {
-    // onChange("reset", { ...data, mls_object: mlsBase ? undefined : {} }, true);
-
     setMlsBase(!mlsBase);
     if (onChangeDefaultFiltersOpened) {
       onChangeDefaultFiltersOpened("mls_object", !mlsBase);
@@ -321,7 +319,6 @@ export const Base = ({
         value={company}
         onChange={handleToggleCompany}
       />
-
       {company ? (
         <>
           <CheckOption
