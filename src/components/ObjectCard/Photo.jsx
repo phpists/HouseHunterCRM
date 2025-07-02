@@ -19,7 +19,7 @@ export const Photo = ({ photos }) => {
             src={photos?.[0] ?? noPhoto}
             alt="Vehicle preview"
             loading="lazy"
-            className={`previewImage ${!photos?.[0] && "empty"}`}
+            className={`max-w-[230px] previewImage ${!photos?.[0] && "empty"}`}
           />
         </LazyLoadComponent>
       </div>
@@ -48,5 +48,4 @@ const StyledPhoto = styled.img`
   &.empty {
     object-fit: cover;
   }
-  max-width: unset !important;
 `;
