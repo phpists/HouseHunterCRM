@@ -8,6 +8,7 @@ import { CarMainInfo } from "./CarMainInfo";
 import { ShowMore } from "./ShowMore/ShowMore";
 import { CarInfo } from "./CarInfo";
 import { checkIsArray, checkIsJSON } from "../../utilits";
+import { useNavigate } from "react-router-dom";
 
 export const ObjectCard = memo(
   ({
@@ -59,9 +60,19 @@ export const ObjectCard = memo(
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
     const { ref, inView } = useInView({ triggerOnce: window.innerWidth < 801 });
+    const navigate = useNavigate();
 
-    const handleClick = (e) =>
-      e.target.classList.contains("clickable") && onSelect();
+    const handleClick = (e) => {
+      const isInteractive =
+        e.target.closest("a") ||
+        e.target.closest("button") ||
+        e.target.classList.contains("notClickable") ||
+        e.target.closest(".notClickable");
+
+      if (!isInteractive) {
+        window.open(`/car/${data.id}`, "_blank");
+      }
+    };
 
     const handleResize = () => {
       const currentWidth = window.innerWidth;
@@ -77,7 +88,6 @@ export const ObjectCard = memo(
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }, [isMobile]);
-
     return (
       <StyledObjectCard
         className={` clickable list-card-wrapper ${selected && "selected"} ${

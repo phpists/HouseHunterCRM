@@ -18,6 +18,27 @@ export const objects = createApi({
         ),
       }),
     }),
+    getOpenObject: build.query({
+      query: (hash_object) => ({
+        url: "",
+        method: "POST",
+        headers: headers(),
+        body: handleToFormData({
+          action: "showOpenObject",
+          mod: "system_info",
+          hash_object,
+        }),
+      }),
+      transformResponse: (response) => {
+        return handleResponse(
+          response,
+          () => response,
+          () => null,
+          false,
+          true
+        );
+      },
+    }),
     getRubricFields: build.query({
       query: (id_rubric) => ({
         url: "",
@@ -759,5 +780,6 @@ export const {
   useLazyGetCarBodyQuery,
   useLazyAddViewLinkQuery,
   useGetCarColorsQuery,
-  useLazyGetCarColorsQuery
+  useLazyGetCarColorsQuery,
+  useLazyGetOpenObjectQuery,
 } = objects;

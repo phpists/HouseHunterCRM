@@ -17,6 +17,7 @@ import { License } from "./pages/License";
 import { CookiePolicy } from "./pages/CookiePolicy";
 import Ad from "./pages/Ad/Ad";
 import { Notifications } from "./pages/Notifications/Notifications";
+import Car from "./pages/Car/Car";
 
 const Company = lazy(() => import("./pages/Company/Company"));
 const Auth = lazy(() => import("./pages/Auth/Auth"));
@@ -330,6 +331,8 @@ export const App = () => {
                             path="/notifications"
                             element={<Notifications />}
                           />
+                          <Route path="/car/:id" element={<Car />} />
+                          <Route path="/request/:id" element={<Request />} />
                           <Route path="*" element={<Dashboard />} />
                         </Routes>
                       </Suspense>
