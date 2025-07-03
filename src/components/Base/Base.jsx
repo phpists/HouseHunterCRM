@@ -195,7 +195,6 @@ export const Base = ({
   useEffect(() => {
     if (company && !companyWorkers) {
       getCompanyWorkers().then(({ data }) => {
-        console.log(data);
         setCompanyWorkers(data);
       });
     }

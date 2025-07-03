@@ -3,43 +3,43 @@ import priceUp from "../../../assets/images/price-up.svg";
 import priceDown from "../../../assets/images/price-down.svg";
 import { handleFormatDate } from "../../../utilits";
 
-export const Price = ({ data }) => {
-  const isJsonString = (str) => {
-    try {
-      JSON.parse(str);
-    } catch (e) {
-      return false;
-    }
-    return true;
-  };
+const isJsonString = (str) => {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+};
 
-  const handleGetPrices = (data) => {
-    if (isJsonString(data)) {
-      const dates = JSON.parse(data);
-      if (Object.entries(dates)?.length > 1) {
-        try {
-          return Object.entries(dates)?.map((date) => {
-            return Object.entries(date?.[1])?.[0]?.[1]?.price
-              ? Number(Object.entries(date[1])?.[0]?.[1]?.price)
-              : Number(date?.[1]?.price) ?? 0;
-          });
-        } catch {
-          return [];
-        }
-      } else if (typeof dates === "object") {
-        try {
-          return [Number(Object.entries(dates)[0][1]?.price) ?? 0];
-        } catch {
-          return [];
-        }
-      } else {
+export const handleGetPrices = (data) => {
+  if (isJsonString(data)) {
+    const dates = JSON.parse(data);
+    if (Object.entries(dates)?.length > 1) {
+      try {
+        return Object.entries(dates)?.map((date) => {
+          return Object.entries(date?.[1])?.[0]?.[1]?.price
+            ? Number(Object.entries(date[1])?.[0]?.[1]?.price)
+            : Number(date?.[1]?.price) ?? 0;
+        });
+      } catch {
+        return [];
+      }
+    } else if (typeof dates === "object") {
+      try {
+        return [Number(Object.entries(dates)[0][1]?.price) ?? 0];
+      } catch {
         return [];
       }
     } else {
       return [];
     }
-  };
+  } else {
+    return [];
+  }
+};
 
+export const Price = ({ data }) => {
   return (
     <StyledPrice>
       <div className="flex items-center gap-[3px] price closedPrice">

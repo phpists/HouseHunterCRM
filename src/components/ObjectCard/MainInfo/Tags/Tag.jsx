@@ -16,7 +16,9 @@ export const Tag = ({
   onClick,
 }) => (
   <StyledTag
-    className={`flex items-center clickable select-none ${className}`}
+    className={`${
+      (title || titleHtml || subtitle) && "gap-1"
+    } flex items-center clickable select-none ${className}`}
     title={hoverTitle ?? title}
     onClick={(e) => {
       onClick && onClick();
@@ -49,7 +51,6 @@ export const Tag = ({
 const StyledTag = styled.div`
   display: flex;
   align-items: center;
-  gap: 5px;
   padding: 4px 6px;
   border-radius: 5px;
   background: var(--tag-bg-2);

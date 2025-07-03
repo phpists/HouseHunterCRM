@@ -359,6 +359,8 @@ const StyledApp = styled.div`
   width: 100%;
   margin: 0 auto;
   .app-content {
+    scrollbar-width: none;
+
     padding: 0px 42px 40px 40px;
     overflow: auto;
     overflow-x: hidden;

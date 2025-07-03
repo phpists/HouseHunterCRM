@@ -71,7 +71,7 @@ const Search = ({
       <MultipleAccordion
         active={active}
         label={"Теги"}
-        options={CARS_TAGS.filter((t) => t.value !== "tag_exchangePossible")}
+        options={CARS_TAGS}
         onChange={handleTagChange}
       />
       <Divider />

@@ -33,7 +33,6 @@ export const CarInfo = ({
 
   return (
     <StyledCarInfo>
-      {" "}
       <div
         className="descr clickable"
         ref={textRef}

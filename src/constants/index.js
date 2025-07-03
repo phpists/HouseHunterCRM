@@ -587,3 +587,17 @@ export const CarMainInfoFileds = [
     type: "json",
   },
 ];
+
+export const CarsColor = [
+  { id: "1", name: "Чорний", hex: "#000000", eng: "black" },
+  { id: "2", name: "Синій", hex: "#334dff", eng: "darkblue" },
+  { id: "3", name: "Сірий", hex: "#9c9999", eng: "gray" },
+  { id: "4", name: "Білий", hex: "#ffffff", eng: "white" },
+  { id: "5", name: "Бежевий", hex: "#f1d9b2", eng: "beige" },
+  { id: "6", name: "Зелений", hex: "#35ba2b", eng: "green" },
+  { id: "7", name: "Коричневий", hex: "#926547", eng: "brown" },
+  { id: "8", name: "Червоний", hex: "#fc4829", eng: "red" },
+  { id: "9", name: "Жовтий", hex: "#fde90f", eng: "yellow" },
+  { id: "10", name: "Фіолетовий", hex: "#9966cc", eng: "purple" },
+  { id: "11", name: "Помаранчевий", hex: "#f57d00", eng: "orange" },
+];
