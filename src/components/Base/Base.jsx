@@ -3,7 +3,6 @@ import { TitleDivider } from "./TitleDivider";
 import { CheckOption } from "../CheckOption";
 import {
   useGetCommentsToFieldsQuery,
-  useGetSourcesQuery,
   useGetTagsListQuery,
 } from "../../store/objects/objects.api";
 import { useEffect, useState } from "react";
@@ -117,7 +116,6 @@ export const Base = ({
     !!Object.keys(data?.mls_object || {}).length
   );
   const { data: workers } = useGetWorkerMyStructureQuery();
-  const { data: sources } = useGetSourcesQuery();
   const { data: tagsList } = useGetTagsListQuery({ only_notepad: "0" });
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
   const { data: companyInfo } = useGetCompanyInfoQuery();

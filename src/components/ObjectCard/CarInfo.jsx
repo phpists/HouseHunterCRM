@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Tag } from "./MainInfo/Tags/Tag";
-import { useGetSourcesQuery } from "../../store/objects/objects.api";
 import { AdTags } from "./Tags/AdTags/AdTags";
 import { Tags } from "./Tags/Tags";
+import { source } from "../../constants";
 
 export const CarInfo = ({
   data,
@@ -14,7 +14,6 @@ export const CarInfo = ({
 }) => {
   const textRef = useRef();
   const tagsRef = useRef();
-  const { data: sources } = useGetSourcesQuery();
 
   useEffect(() => {
     const textDividedByBr =
@@ -47,7 +46,7 @@ export const CarInfo = ({
       <div className="tags" ref={tagsRef}>
         {data.id_source && (
           <Tag
-            title={sources[data.id_source]}
+            title={source[data.id_source]}
             // сopyValue={data?.id_ad_in_source}
             // copy
             className={"!text-xs"}

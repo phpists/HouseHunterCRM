@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
-  useGetSourcesQuery,
   useLazyGetCarBodyQuery,
   useLazyGetOpenObjectQuery,
 } from "../../store/objects/objects.api";
@@ -32,7 +31,6 @@ const Car = () => {
   const { id } = useParams();
   const [getOpenObject, { data, isLoading }] = useLazyGetOpenObjectQuery();
   const [getCarBody, { data: carBody }] = useLazyGetCarBodyQuery();
-  const { data: sources } = useGetSourcesQuery();
   const [carData, setCarData] = useState(null);
   const [contacts, setContacts] = useState(null);
   const [isOpenHistoryModal, setIsOpenHistoryModal] = useState(false);
@@ -183,7 +181,7 @@ const Car = () => {
             {carData.count_likes} <img className="w-3" src={Like} alt="" />
           </h1>
         </div>
-        <h1>Розміщено: {sources[carData.id_source]}</h1>
+        <h1>Розміщено: {source[carData.id_source]}</h1>
       </div>
 
       <div>
