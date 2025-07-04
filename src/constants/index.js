@@ -601,3 +601,5 @@ export const CarsColor = [
   { id: "10", name: "Фіолетовий", hex: "#9966cc", eng: "purple" },
   { id: "11", name: "Помаранчевий", hex: "#f57d00", eng: "orange" },
 ];
+
+export const source = { 1: "Avtoria", 2: "OLX", 3: "Rst" };

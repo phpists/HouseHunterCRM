@@ -22,6 +22,26 @@ import {
 import { useLocation, useParams } from "react-router-dom";
 import { useAppSelect } from "../../hooks/redux";
 
+export const handleFindSimilarTo = (obj) => {
+  const { id_location, id_rubric, price_uah, id_brand, id_model } = obj;
+
+  const objData = {
+    id_rubric,
+    id_location,
+    price_min: handleGetRange(Number(price_uah), true)?.start.toFixed(0),
+    price_max: handleGetRange(Number(price_uah), true)?.end.toFixed(0),
+    id_brand,
+    id_model,
+    price_currency: "1",
+  };
+
+  const objUrl = `/objects?findSelectionSimilar=true${Object.entries(objData)
+    ?.map((d) => `&${d[0]}=${d[1]}`)
+    ?.join("")}`;
+
+  window.open(objUrl, "_blank");
+};
+
 const Objects = () => {
   const { user } = useAppSelect((state) => state.auth);
   const {
@@ -458,26 +478,6 @@ const Objects = () => {
     );
     dataRef.current = updatedData;
     setObjects(updatedData);
-  };
-
-  const handleFindSimilarTo = (obj) => {
-    const { id_location, id_rubric, price_uah, id_brand, id_model } = obj;
-
-    const objData = {
-      id_rubric,
-      id_location,
-      price_min: handleGetRange(Number(price_uah), true)?.start.toFixed(0),
-      price_max: handleGetRange(Number(price_uah), true)?.end.toFixed(0),
-      id_brand,
-      id_model,
-      price_currency: "1",
-    };
-
-    const objUrl = `/objects?findSelectionSimilar=true${Object.entries(objData)
-      ?.map((d) => `&${d[0]}=${d[1]}`)
-      ?.join("")}`;
-
-    window.open(objUrl, "_blank");
   };
 
   useEffect(() => {

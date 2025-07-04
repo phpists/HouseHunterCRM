@@ -11,6 +11,7 @@ import {
   car_body_type,
   CarMainInfoFileds,
   CarsColor,
+  source,
   type_fuel,
 } from "../../constants";
 import { Tag } from "../../components/ObjectCard/MainInfo/Tags/Tag";
@@ -23,6 +24,9 @@ import Phone from "../../assets/images/small-phone.svg";
 import Telegram from "../../assets/images/telegram.svg";
 import Like from "../../assets/images/heart.svg";
 import Eye from "../../assets/images/eye.svg";
+import rst from "../../assets/images/rst.svg";
+import olx from "../../assets/images/olx.png";
+import Autoria from "../../assets/images/autoria.svg";
 
 const Car = () => {
   const { id } = useParams();
@@ -168,7 +172,7 @@ const Car = () => {
         </Modal>
       )}
 
-      <Slider photos={photos} data={carData} />
+      <Slider photos={photos} data={carData} isCarPage />
 
       <div className="flex justify-between my-4 text-white/60 text-xs">
         <div className="flex gap-2">
@@ -183,7 +187,21 @@ const Car = () => {
       </div>
 
       <div>
-        <h1 className="text-2xl">
+        <h1
+          onClick={() => {
+            window.open(`${carData.link}`, "_blank");
+          }}
+          className="cursor-pointer hover:underline flex items-center gap-2 text-2xl"
+        >
+          {carData.id_source === "1" && (
+            <img src={Autoria} alt="Autoria" className="w-10" />
+          )}
+          {carData.id_source === "2" && (
+            <img src={olx} alt="olx" className="w-6" />
+          )}
+          {carData.id_source === "3" && (
+            <img src={rst} alt="RST" className="w-8" />
+          )}
           {`${carData?.brand_name} ${carData?.model_name} ${carData?.year}`}
         </h1>
       </div>
@@ -230,7 +248,7 @@ const Car = () => {
         </div>
       </div>
 
-      <div className="my-4 flex flex-wrap gap-2">
+      {/* <div className="my-4 flex flex-wrap gap-2">
         {carData?.state_number && (
           <Tag className="!text-xs" title={carData?.state_number} copy />
         )}
@@ -257,7 +275,7 @@ const Car = () => {
         {carData?.id && (
           <Tag className="!text-xs" title={"ID"} copy сopyValue={carData?.id} />
         )}
-      </div>
+      </div> */}
 
       <div className="grid grid-cols-2 gap-2">
         <Tag
@@ -319,9 +337,34 @@ const Car = () => {
 
       <p className="text-xs my-4 text-white/60">{carData.description}</p>
 
+      {carData.comment_autoria_days.length > 1 && (
+        <div className="my-4">
+          <h1>Коментарі</h1>
+          <p className="text-sm my-2">
+            дата додавання коментаря | {carData.comment_autoria_days}
+          </p>
+          <div
+            className="text"
+            dangerouslySetInnerHTML={{
+              __html: carData.comment_autoria,
+            }}
+          ></div>
+        </div>
+      )}
+
       {carData.VIN && (
         <div className="flex flex-wrap gap-2 items-center">
-          <Tag className="!text-xs" title={`VIN ${carData.VIN}`} />
+          <Tag
+            className="!text-xs cursor-pointer"
+            title={`VIN ${carData.VIN}`}
+            onClick={() => {
+              localStorage.setItem(
+                "objectsLastFilters",
+                JSON.stringify({ VIN: carData.VIN })
+              );
+              window.open(`/objects`, "_blank");
+            }}
+          />
 
           <Tag
             className="!text-xs cursor-pointer"
@@ -380,91 +423,101 @@ const Car = () => {
         </span>
       </div>
 
+      <div className="my-4 flex items-center gap-2">
+        <Tag className="!text-xs" title={`id xdrive ${carData.id_hash}`} />
+
+        <Tag
+          className="!text-xs cursor-pointer"
+          сopyValue={carData.id_hash}
+          iIcom="bi bi-copy"
+          copy
+        />
+      </div>
+
+      <div className="my-4 flex items-center gap-2">
+        <Tag
+          className="!text-xs"
+          title={`Першоджерело ${carData.id_ad_in_source}`}
+        />
+
+        <Tag
+          className="!text-xs cursor-pointer"
+          сopyValue={carData.id_ad_in_source}
+          iIcom="bi bi-copy"
+          copy
+        />
+      </div>
+
       <p className="text-sm text-white/60 mb-6">{formatSaleInfo()}</p>
 
-      <span
-        onClick={() => setIsOpenContactsModal(true)}
-        className="sticky cursor-pointer bottom-0 w-full h-12 bg-green-500 flex items-center justify-center rounded"
-      >
-        +{contacts?.phones[0]?.phone}
-      </span>
-
-      {/* ------------------------------- */}
-      {/* <div className="info">
-        <h1>{carData.title}</h1>
-        <div className="flex flex-col">
-          {price_history.map((price) => (
-            <span>{price}</span>
-          ))}
-        </div>
-        <div className="params">
-          <span>{carData.year} рік</span>
-          <span>
-            {carData.volume_engine && carData.volume_engine !== "0"
-              ? `${Number(carData.volume_engine) / 1000} л`
-              : ""}
-          </span>
-          <span>
-            {carData["сar_mileage"]
-              ? `${Math.round(Number(carData["сar_mileage"]) / 1000)} тис. км`
-              : "-"}
-          </span>
-          <span>{carData.kpp && carData.kpp !== "0" ? carData.kpp : "-"}</span>
-        </div>
-
-        <span>зацікавленість {carData.index_overbuying}/10</span>
-
-        <p>{carData.description}</p>
-        {carData?.tag_faster && carData?.tag_faster === "1" && (
-          <Tag title={"Терміново"} />
+      <div className="flex gap-2 my-4">
+        {carData?.exchangePossible !== "0" && (
+          <Tag className="!text-xs" title={`Можливий обмін`} />
+        )}
+        {carData?.tag_afterDTP !== "0" && (
+          <Tag className="!text-xs" title={`Участь у дтп`} />
+        )}
+        {carData?.id_custom !== "0" && (
+          <Tag className="!text-xs" title={`Не розмитнена`} />
+        )}
+        {carData?.id_technical_condition !== "0" && (
+          <Tag
+            className="!text-xs"
+            title={getFromCarMainInfoFiledsOptions(
+              "id_technical_condition",
+              carData.id_technical_condition
+            )}
+          />
         )}
         {carData?.tag_nativePaint && carData?.tag_nativePaint === "1" && (
-          <Tag title={"Рідна фарба"} />
+          <Tag className="!text-xs" title={"Рідна фарба"} />
         )}
         {carData?.tag_freshlyDriven &&
           (carData?.tag_freshlyDriven === "1") === "1" && (
-            <Tag title={"Свіжопригнана"} />
+            <Tag className="!text-xs" title={"Свіжопригнана"} />
           )}
-        {carData?.tag_afterDTP && carData?.tag_afterDTP === "1" && (
-          <Tag title={"Після дтп"} />
-        )}
-        {carData?.tag_market_bottom &&
-          (carData?.tag_market_bottom === "1") === "1" && (
-            <Tag title={"По низу ринку"} />
+      </div>
+
+      {carData.state_number && (
+        <div className="flex flex-wrap gap-2 items-center">
+          <Tag className="!text-xs" title={`${carData.state_number}`} />
+
+          <Tag
+            className="!text-xs"
+            сopyValue={carData.state_number}
+            iIcom="bi bi-copy"
+            copy
+          />
+        </div>
+      )}
+
+      {contacts?.phones[0]?.phone !== "380000000000" ? (
+        <span
+          onClick={() => setIsOpenContactsModal(true)}
+          className=" cursor-pointer bottom-0 w-full h-12 bg-green-500 flex items-center justify-center rounded"
+        >
+          +{contacts?.phones[0]?.phone}
+        </span>
+      ) : (
+        <span
+          onClick={() => {
+            window.open(`${data.link}`, "_blank");
+          }}
+          className="text-xs cursor-pointer hover:underline w-full h-12 bg-red-400 flex items-center justify-center rounded gap-2"
+        >
+          <span>Номер телефону відсутній, перейдіть на</span>
+
+          {carData.id_source === "1" && (
+            <img src={Autoria} alt="Autoria" className="w-10" />
           )}
-        <a href={carData.link} target="_blank" rel="noopener noreferrer">
-          Відкрити на платформі
-        </a>
-
-        <span></span>
-
-        <div className="flex flex-col">
-          <span>
-            {getFromCarMainInfoFiledsOptions(
-              "id_type_fuel",
-              carData.id_type_fuel
-            )}
-          </span>
-          <span>{getFromCarMainInfoFiledsOptions("kpp", carData.kpp)}</span>
-          <span>{carData.location_name}</span>
-          <span>
-            {getFromCarMainInfoFiledsOptions("drive_type", carData.drive_type)}
-          </span>
-          {carData.VIN && <Tag title={`VIN ${carData.VIN}`} copy />}
-          <span className={carData.exchangePossible === "0" && "line-through"}>
-            можливий обмін
-          </span>
-        </div>
-
-        <div className="flex flex-col">
-          <h1>обране</h1>
-
-          <span>
-            к-ть переглядів | к-ть лайків - {carData.count_views} |{" "}
-            {carData.count_likes}
-          </span>
-        </div>
-      </div> */}
+          {carData.id_source === "2" && (
+            <img src={olx} alt="olx" className="w-6" />
+          )}
+          {carData.id_source === "3" && (
+            <img src={rst} alt="RST" className="w-8" />
+          )}
+        </span>
+      )}
     </StyledCar>
   );
 };
@@ -477,46 +530,6 @@ const StyledCar = styled.div`
   .price {
     color: var(--green);
   }
-
-  // .info {
-  //   flex: 1;
-  //   .top-row {
-  //     margin-bottom: 12px;
-  //     .back-btn {
-  //       background: #222;
-  //       color: #fff;
-  //       border: none;
-  //       border-radius: 6px;
-  //       cursor: pointer;
-  //       font-size: 1rem;
-  //     }
-  //   }
-  //   .price {
-  //     display: flex;
-
-  //     font-size: 2rem;
-  //     color: #6f0;
-  //     margin-bottom: 12px;
-  //   }
-  //   .params {
-  //     display: flex;
-  //     flex-wrap: wrap;
-  //     gap: 16px;
-  //     margin-bottom: 12px;
-  //     span {
-  //       background: #222;
-  //       border-radius: 6px;
-  //       padding: 4px 10px;
-  //       font-size: 1rem;
-  //     }
-  //   }
-  //   a {
-  //     display: inline-block;
-  //     margin-top: 16px;
-  //     color: #4af;
-  //     text-decoration: underline;
-  //   }
-  // }
 `;
 
 export default Car;

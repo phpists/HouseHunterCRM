@@ -64,7 +64,7 @@ export const ShowMore = ({
 
   return (
     <StyledShowMore isfocusedbtn={isFocusedBtn?.toString()} ref={moreRef}>
-      <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />{" "}
+      <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />
       {!isDeleted && (
         <ActionButton
           Icon={StarIcon}
