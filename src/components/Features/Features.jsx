@@ -133,6 +133,7 @@ const Features = ({
           return (
             <React.Fragment key={select[0]}>
               <Accordion
+                hideSearch
                 active={data?.id_type_body}
                 label={"Тип кузова"}
                 options={
@@ -155,6 +156,7 @@ const Features = ({
           return (
             <React.Fragment key={select[0]}>
               <Accordion
+                hideSearch
                 active={data?.id_custom}
                 label={"Розмитнені/Не розмитнені"}
                 options={Object.entries(select[1]?.field_option)?.map(
@@ -194,6 +196,7 @@ const Features = ({
       />
       <Divider />
       <Accordion
+        hideSearch
         active={data?.id_type_body}
         label={"Колір"}
         options={carColors.map(({ id, name }) => ({
@@ -224,6 +227,7 @@ const Features = ({
           return (
             <React.Fragment key={select[0]}>
               <Accordion
+                hideSearch
                 active={data?.id_ecological_standard}
                 label={"Екологічний стандарт"}
                 options={Object.entries(
@@ -245,6 +249,7 @@ const Features = ({
           return (
             <React.Fragment key={select[0]}>
               <Accordion
+                hideSearch
                 active={data?.id_technical_condition}
                 label={"Технічний стан"}
                 options={Object.entries(

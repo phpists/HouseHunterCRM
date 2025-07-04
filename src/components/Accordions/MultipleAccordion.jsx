@@ -140,7 +140,14 @@ const ClearButton = styled.button`
   }
 `;
 
-const MultipleAccordion = ({ label, options = [], onChange, active, kpp }) => {
+const MultipleAccordion = ({
+  label,
+  options = [],
+  onChange,
+  active,
+  kpp,
+  hideSearch,
+}) => {
   const [isActive, setIsActive] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [search, setSearch] = useState("");
@@ -229,12 +236,14 @@ const MultipleAccordion = ({ label, options = [], onChange, active, kpp }) => {
           <Arrow active={isActive} innerRef={arrowRef} className="main-arrow" />
         </AccordionTitle>
         <AccordionContent active={isActive}>
-          <SearchInput
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Пошук"
-            autoFocus
-          />
+          {!hideSearch && (
+            <SearchInput
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Пошук"
+              autoFocus
+            />
+          )}
           <ClearButton onClick={handleClose}>Очистити всі</ClearButton>
           {filteredOptions.map((option) => (
             <ListItem

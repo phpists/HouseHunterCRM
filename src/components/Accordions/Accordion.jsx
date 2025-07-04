@@ -140,7 +140,14 @@ const ClearButton = styled.button`
   }
 `;
 
-const Accordion = ({ label, options = [], onChange, active, hideClearBtn }) => {
+const Accordion = ({
+  label,
+  options = [],
+  onChange,
+  active,
+  hideClearBtn,
+  hideSearch,
+}) => {
   const [isActive, setIsActive] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [search, setSearch] = useState("");
@@ -203,12 +210,14 @@ const Accordion = ({ label, options = [], onChange, active, hideClearBtn }) => {
           <Arrow active={isActive} innerRef={arrowRef} className="main-arrow" />
         </AccordionTitle>
         <AccordionContent active={isActive}>
-          <SearchInput
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Пошук"
-            autoFocus
-          />
+          {!hideSearch && (
+            <SearchInput
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Пошук"
+              autoFocus
+            />
+          )}
           {!hideClearBtn && (
             <ClearButton onClick={handleClose}>Очистити всі</ClearButton>
           )}

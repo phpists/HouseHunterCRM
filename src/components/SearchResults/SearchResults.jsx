@@ -64,6 +64,7 @@ const SearchResults = ({ data, onChangeFilter }) => {
       <Divider />
 
       <Accordion
+        hideSearch
         active={+data?.sorting}
         label={"Cортування"}
         options={sortData?.map(({ id, name }) => ({ value: id, title: name }))}

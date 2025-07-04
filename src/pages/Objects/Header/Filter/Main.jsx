@@ -205,6 +205,7 @@ export const Main = ({
       <Accordion
         close={close}
         // hideClearBtn
+        hideSearch
         active={filters?.id_rubric}
         label={"Категорія"}
         options={
@@ -270,6 +271,7 @@ export const Main = ({
           return (
             <React.Fragment key={select[0]}>
               <Accordion
+                hideSearch
                 active={filters?.id_type_fuel}
                 label={"Тип палива"}
                 options={Object.entries(select[1].field_option).map(
@@ -329,6 +331,7 @@ export const Main = ({
           return (
             <React.Fragment key={select[0]}>
               <MultipleAccordion
+                hideSearch
                 kpp
                 active={options.filter((opt) =>
                   Array.isArray(filters?.kpp)
@@ -354,6 +357,7 @@ export const Main = ({
               <Accordion
                 active={filters?.drive_type}
                 label={"Привід"}
+                hideSearch
                 options={Object.entries(select[1].field_option).map(
                   ([value, title]) => ({
                     title,

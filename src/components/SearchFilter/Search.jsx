@@ -69,6 +69,7 @@ const Search = ({
   return (
     <div className="section filterFieldsWrapper">
       <MultipleAccordion
+        hideSearch
         active={active}
         label={"Теги"}
         options={CARS_TAGS}

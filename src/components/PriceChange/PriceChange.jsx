@@ -20,6 +20,7 @@ const PriceChange = ({
       <Divider />
 
       <Accordion
+        hideSearch
         active={data?.street_base_object?.price_change_up}
         label={"Ціна пішла"}
         options={[
@@ -36,6 +37,7 @@ const PriceChange = ({
       <Divider />
 
       <Accordion
+        hideSearch
         active={data?.street_base_object?.price_change_period}
         label={"Ціна змінилась за період"}
         options={[
