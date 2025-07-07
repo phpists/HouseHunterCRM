@@ -26,6 +26,8 @@ import Eye from "../../assets/images/eye.svg";
 import rst from "../../assets/images/rst.svg";
 import olx from "../../assets/images/olx.png";
 import Autoria from "../../assets/images/autoria.svg";
+import Message from "../../assets/images/message.svg";
+import { useAppSelect } from "../../hooks/redux";
 
 const Car = () => {
   const { id } = useParams();
@@ -35,6 +37,7 @@ const Car = () => {
   const [contacts, setContacts] = useState(null);
   const [isOpenHistoryModal, setIsOpenHistoryModal] = useState(false);
   const [isOpenContactsModal, setIsOpenContactsModal] = useState(false);
+  const { user } = useAppSelect((state) => state.auth);
   const navigate = useNavigate();
   const carColor = CarsColor.filter(({ id }) => id === carData?.id_color)[0];
 
@@ -106,7 +109,7 @@ const Car = () => {
             {contacts?.phones.map(({ phone }) => (
               <div className="flex flex-col w-full items-center gap-2">
                 <h1 className="text-xl">+{phone}</h1>
-                <div className="grid grid-cols-4 w-full">
+                <div className="grid grid-cols-5 w-full">
                   <div className="flex justify-center">
                     <Tag
                       className="!text-2xl cursor-pointer w-12 !h-12 justify-center"
@@ -115,6 +118,22 @@ const Car = () => {
                       copy
                     />
                   </div>
+                  <a
+                    href={`sms:${phone}?&amp;body=${user.sms_template.replace(
+                      "[TEL]",
+                      phone
+                    )}`}
+                    className="cursor-pointer flex justify-center"
+                    aria-label="Call phone number"
+                  >
+                    <span className="flex items-center justify-center bg-slate-600 rounded-lg w-12 h-12">
+                      <img
+                        className="w-8 h-8"
+                        src={Message}
+                        alt="Message icon"
+                      />
+                    </span>
+                  </a>
                   <a
                     href={`tel:+${phone}`}
                     className="cursor-pointer flex justify-center"
@@ -327,8 +346,8 @@ const Car = () => {
         )}
 
         <Tag
-          className={`!bg-[${carColor.hex}]`}
-          title={carColor.name}
+          className={`!bg-[${carColor?.hex}]`}
+          title={carColor?.name}
           iIcom="bi bi-circle-fill"
         />
       </div>

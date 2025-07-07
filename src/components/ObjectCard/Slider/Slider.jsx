@@ -279,8 +279,6 @@ export const Slider = ({ photos, data, showLike, isCarPage }) => {
             </div>
           )}
 
-          {console.log(data)}
-
           {isCarPage && (
             <div className="threbtn-dropdown bg-white w-7 h-7 flex items-center justify-center rounded absolute right-[5px] top-[10px] z-30">
               <Button onChangeFocus={(val) => setIsOpenDropDown(val)} />
