@@ -215,16 +215,23 @@ const Car = () => {
         </div>
 
         <div
-          // onClick={() => {
-          //   const shareData = {
-          //     url: window.location.href,
-          //     text: `${window.location}`,
-          //   };
-          //   const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(
-          //     shareData.url
-          //   )}&text=${encodeURIComponent(shareData.text)}`;
-          //   window.open(telegramUrl, "_blank", "width=600,height=400");
-          // }}
+          onClick={() => {
+            const shareUrl = `${window.location.origin}/cars/${carData.id}`; // або carData.link, якщо зовнішнє
+            const shareText = `${window.location} - ${carData.brand_name} ${carData.model_name} ${carData.year}`;
+
+            if (navigator.share) {
+              navigator
+                .share({
+                  title: shareText,
+                  text: `Переглянь це авто: ${shareText}`,
+                  url: shareUrl,
+                })
+                .catch((error) => console.error("Share failed:", error));
+            } else {
+              handleCopy(shareUrl); // твоя функція копіювання
+              alert("Посилання скопійовано. Ви можете поділитися вручну.");
+            }
+          }}
           className="cursor-pointer border border-[#848484] w-7 h-7 flex items-center justify-center rounded z-10"
         >
           <img className="w-4 h-4" src={Share} alt="Share on Telegram" />
