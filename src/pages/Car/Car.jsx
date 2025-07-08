@@ -511,7 +511,7 @@ const Car = () => {
       {contacts?.phones[0]?.phone !== "380000000000" ? (
         <span
           onClick={() => setIsOpenContactsModal(true)}
-          className=" cursor-pointer bottom-0 w-full h-12 bg-green-500 flex items-center justify-center rounded"
+          className="sticky cursor-pointer bottom-0 w-full h-12 bg-green-500 flex items-center justify-center rounded"
         >
           +{contacts?.phones[0]?.phone}
         </span>
