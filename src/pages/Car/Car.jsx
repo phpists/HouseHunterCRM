@@ -518,7 +518,7 @@ const Car = () => {
       ) : (
         <span
           onClick={() => {
-            window.open(`${data.link}`, "_blank");
+            carData.link && window.open(`${carData.link}`, "_blank");
           }}
           className="text-xs cursor-pointer hover:underline w-full h-12 bg-red-400 flex items-center justify-center rounded gap-2"
         >
