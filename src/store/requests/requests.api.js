@@ -426,6 +426,7 @@ export const {
   useLazyDeleteRequestInGroupQuery,
   useLazyAddEmptyRequestInGroupQuery,
   useGetCompaniesQuery,
+  useLazyGetCompaniesQuery,
   useGetSortingObjectQuery,
   useLazyEditRequestCommentQuery,
   useLazyRestoreRequestsQuery,

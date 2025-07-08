@@ -12,6 +12,7 @@ import { ToggleOption } from "../ToggleOption";
 import {
   useGetCompaniesQuery,
   useGetSortingObjectQuery,
+  useLazyGetCompaniesQuery,
 } from "../../store/requests/requests.api";
 import { SelectTags } from "../SelectTags/SelectTags";
 import { Field } from "../Field";
@@ -103,7 +104,9 @@ export const Base = ({
 }) => {
   const { user } = useAppSelect((state) => state.auth);
   const { data: level } = useGetCompanyStructureLevelQuery();
-  const { data: companies } = useGetCompaniesQuery();
+  // const { data: companies } = useGetCompaniesQuery();
+  const [companies, setCompanies] = useState([]);
+  const [getCompanies] = useLazyGetCompaniesQuery();
   const { data: sortingPeriods } = useGetSortingObjectQuery();
   // const { data: companyWorkers } = useGetWorkersMyCompanyQuery();
   const [companyWorkers, setCompanyWorkers] = useState();
@@ -128,6 +131,12 @@ export const Base = ({
       isOpenStreetBase();
     }
   }, [data.street_base_object]);
+
+  useEffect(() => {
+    if (!Object.keys(companies).length && mlsBase) {
+      getCompanies().then((companies) => setCompanies(companies.data.data));
+    }
+  }, [mlsBase]);
 
   function isOpenStreetBase() {
     const requiredFields = [
