@@ -9,7 +9,9 @@ const RatingContainer = styled.div`
   font-family: Arial, sans-serif;
   border-radius: 9px;
   padding: 10px;
-  display: flex;
+  // display: flex;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
   transition: all 0.1s;
   align-items: center;
   gap: 6px;
@@ -62,32 +64,34 @@ const Views = ({ data, onChangeFilter, onFocus, onBlur }) => {
       <Title>
         <p className="label">Перегляди</p>
       </Title>
-      <PositionCard
-        title="Від"
-        onFocus={onFocus}
-        onBlur={onBlur}
-        value={data?.street_base_object?.count_views_from}
-        className="input"
-        onChange={(val) => {
-          onChangeFilter("street_base_object", {
-            ...data?.street_base_object,
-            count_views_from: val,
-          });
-        }}
-      />
-      <PositionCard
-        title="До"
-        onFocus={onFocus}
-        onBlur={onBlur}
-        value={data?.street_base_object?.count_views_to}
-        className="input w-auto"
-        onChange={(val) => {
-          onChangeFilter("street_base_object", {
-            ...data?.street_base_object,
-            count_views_to: val,
-          });
-        }}
-      />
+      <div className="flex gap-1">
+        <PositionCard
+          title="Від"
+          onFocus={onFocus}
+          onBlur={onBlur}
+          value={data?.street_base_object?.count_views_from}
+          className="input"
+          onChange={(val) => {
+            onChangeFilter("street_base_object", {
+              ...data?.street_base_object,
+              count_views_from: val,
+            });
+          }}
+        />
+        <PositionCard
+          title="До"
+          onFocus={onFocus}
+          onBlur={onBlur}
+          value={data?.street_base_object?.count_views_to}
+          className="input w-auto"
+          onChange={(val) => {
+            onChangeFilter("street_base_object", {
+              ...data?.street_base_object,
+              count_views_to: val,
+            });
+          }}
+        />
+      </div>
     </RatingContainer>
   );
 };

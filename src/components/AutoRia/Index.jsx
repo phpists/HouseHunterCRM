@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ReactComponent as Star } from "../../assets/images/star-autoria.svg";
 import styled from "styled-components";
+import { PositionCard } from "../Ranger/Footer/PositionCard";
 
 // Styled container for the star rating component
 const RatingContainer = styled.div`
@@ -8,7 +9,9 @@ const RatingContainer = styled.div`
   font-family: Arial, sans-serif;
   border-radius: 9px;
   padding: 10px;
-  display: flex;
+  // display: flex;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
   border: 1px solid transparent;
   transition: all 0.1s;
   align-items: center;
@@ -93,9 +96,24 @@ const Index = ({ data, onChange }) => {
     <RatingContainer>
       <Title>
         <p className="label">Індекс зац.</p>
-        <span>* від {rating || 0} з 10</span>
+        <span>
+          * {data?.street_base_object?.index_overbuying_from || 0}/10 це авто,
+          де найбільший % лайків{" "}
+        </span>
       </Title>
-      <StarWrapper onMouseLeave={handleMouseLeave}>
+      <PositionCard
+        title="Вiд"
+        value={data?.street_base_object?.index_overbuying_from}
+        className="w-full !justify-start"
+        error={data?.street_base_object?.index_overbuying_from > 10}
+        onChange={(val) => {
+          onChange("street_base_object", {
+            ...data?.street_base_object,
+            index_overbuying_from: val,
+          });
+        }}
+      />
+      {/* <StarWrapper onMouseLeave={handleMouseLeave}>
         {[...Array(10)].map((_, index) => (
           <StyledStar
             key={index}
@@ -104,7 +122,7 @@ const Index = ({ data, onChange }) => {
             onMouseEnter={() => handleStarHover(index)}
           />
         ))}
-      </StarWrapper>
+      </StarWrapper> */}
     </RatingContainer>
   );
 };

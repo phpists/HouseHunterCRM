@@ -10,7 +10,9 @@ const RatingContainer = styled.div`
   font-family: Arial, sans-serif;
   border-radius: 9px;
   padding: 10px;
-  display: flex;
+  // display: flex;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
   border: 1px solid transparent;
   transition: all 0.1s;
   align-items: center;

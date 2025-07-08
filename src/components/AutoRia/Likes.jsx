@@ -6,11 +6,13 @@ import { handleChangeRange } from "../../utilits";
 
 // Styled container for the star rating component
 const RatingContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 3fr;
   max-width: 600px;
   font-family: Arial, sans-serif;
   border-radius: 9px;
   padding: 10px;
-  display: flex;
+  // display: flex;
   border: 1px solid transparent;
   transition: all 0.1s;
   align-items: center;

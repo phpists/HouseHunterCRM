@@ -59,7 +59,6 @@ const StyledPositionCard = styled.div`
   padding: 8px 10px 5px 7px;
   border-radius: 7px;
   background: var(--range-input-bg);
-  min-width: 113px;
   transition: all 0.3s;
   border: 1px solid rgba(255, 255, 255, 0);
   cursor: pointer;
