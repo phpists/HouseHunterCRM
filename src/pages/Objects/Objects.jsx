@@ -77,7 +77,7 @@ const Objects = () => {
   const [restoreObjects] = useLazyRestoreObjectsQuery();
 
   const INIT_FILTERS = {
-    id_rubric: "1",
+    id_rubric: "",
     id_location: [],
     price_currency: "2",
     price: "",

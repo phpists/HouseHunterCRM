@@ -27,7 +27,9 @@ import rst from "../../assets/images/rst.svg";
 import olx from "../../assets/images/olx.png";
 import Autoria from "../../assets/images/autoria.svg";
 import Message from "../../assets/images/message.svg";
+import Share from "../../assets/images/share.svg";
 import { useAppSelect } from "../../hooks/redux";
+import { handleCopy } from "../../utilits";
 
 const Car = () => {
   const { id } = useParams();
@@ -93,6 +95,17 @@ const Car = () => {
 
     return `${status} ${diffDays} днів у продажі ${formattedDate}`;
   }
+
+  const drive_type = getFromCarMainInfoFiledsOptions(
+    "drive_type",
+    carData.drive_type
+  );
+  const id_type_body = carBody?.data?.filter(
+    ({ id }) => id === carData?.id_type_body
+  )[0]?.name;
+  const id_ecological_standard = CarMainInfoFileds.filter(
+    ({ field }) => field === "id_ecological_standard"
+  )[0].field_option[carData.id_ecological_standard];
 
   return (
     <StyledCar>
@@ -200,7 +213,22 @@ const Car = () => {
             {carData.count_likes} <img className="w-3" src={Like} alt="" />
           </h1>
         </div>
-        <h1>Розміщено: {source[carData.id_source]}</h1>
+
+        <div
+          // onClick={() => {
+          //   const shareData = {
+          //     url: window.location.href,
+          //     text: `${window.location}`,
+          //   };
+          //   const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(
+          //     shareData.url
+          //   )}&text=${encodeURIComponent(shareData.text)}`;
+          //   window.open(telegramUrl, "_blank", "width=600,height=400");
+          // }}
+          className="cursor-pointer border border-[#848484] w-7 h-7 flex items-center justify-center rounded z-10"
+        >
+          <img className="w-4 h-4" src={Share} alt="Share on Telegram" />
+        </div>
       </div>
 
       <div>
@@ -319,22 +347,22 @@ const Car = () => {
           title={getFromCarMainInfoFiledsOptions("kpp", carData.kpp)}
           iIcom="bi bi-circle-fill"
         />
-        <Tag
+        {/* <Tag
           title={getFromCarMainInfoFiledsOptions(
             "drive_type",
             carData.drive_type
           )}
           iIcom="bi bi-circle-fill"
-        />
-        <Tag
+        /> */}
+        {/* <Tag
           title={
             carBody?.data?.filter(({ id }) => id === carData?.id_type_body)[0]
               ?.name
           }
           iIcom="bi bi-circle-fill"
-        />
-        <Tag title={carData.rubric_name} iIcom="bi bi-circle-fill" />
-        {carData.id_ecological_standard !== "0" && (
+        /> */}
+        {/* <Tag title={carData.rubric_name} iIcom="bi bi-circle-fill" /> */}
+        {/* {carData.id_ecological_standard !== "0" && (
           <Tag
             title={
               CarMainInfoFileds.filter(
@@ -343,29 +371,38 @@ const Car = () => {
             }
             iIcom="bi bi-circle-fill"
           />
-        )}
-
+        )} */}
+        {/* 
         <Tag
           className={`!bg-[${carColor?.hex}]`}
           title={carColor?.name}
           iIcom="bi bi-circle-fill"
-        />
+        /> */}
       </div>
+
+      <p className="text-xs mt-3">
+        <span>{drive_type && drive_type + " • "}</span>
+        <span>{id_type_body && id_type_body + " • "}</span>
+        <span>{carData.rubric_name && carData.rubric_name + " • "}</span>
+        <span>{carColor?.name && carColor?.name + " • "}</span>
+        <span>{id_ecological_standard}</span>
+      </p>
 
       <p className="text-xs my-4 text-white/60">{carData.description}</p>
 
       {carData.comment_autoria.length > 1 && (
-        <div className="my-4">
-          <h1>Коментарі</h1>
-          <p className="text-sm my-2">
-            дата додавання коментаря | {carData.comment_autoria_days}
-          </p>
+        <div className="my-4 bg-[var(--card-bg)] rounded px-2 py-3">
+          <h1 className="text-lg font-bold">Коментар</h1>
           <div
-            className="text"
+            className="my-2 text-sm text-white/60 "
             dangerouslySetInnerHTML={{
               __html: carData.comment_autoria,
             }}
-          ></div>
+          />
+          <p className="text-sm text-white/60">
+            {console.log(carData)}
+            дата додавання коментаря | {carData.comment_autoria_days}
+          </p>
         </div>
       )}
 
@@ -416,30 +453,6 @@ const Car = () => {
         </div>
       )}
 
-      <div className="my-4 flex items-center gap-4">
-        <Tag
-          className={`${
-            carData?.Count_object > 10
-              ? "!bg-red-300/20 !text-red-500"
-              : "!bg-inherit"
-          }`}
-          titleHtml={
-            <span className={`text-xs`}>
-              {carData?.Count_object > 10
-                ? " Перекуп "
-                : carData?.Count_object > 5
-                ? " Перекуп ? "
-                : carData?.Count_object > 2
-                ? " Перекуп ? "
-                : " Продавець "}
-            </span>
-          }
-        />
-        <span className="text-xs text-white/60">
-          Продав ({carData?.Count_object}) авто
-        </span>
-      </div>
-
       <div className="my-4 flex items-center gap-2">
         <Tag className="!text-xs" title={`id xdrive ${carData.id_hash}`} />
 
@@ -465,7 +478,29 @@ const Car = () => {
         />
       </div>
 
-      <p className="text-sm text-white/60 mb-6">{formatSaleInfo()}</p>
+      <div className="my-4 flex items-center gap-4">
+        <Tag
+          className={`${
+            carData?.Count_object > 10
+              ? "!bg-red-300/20 !text-red-500"
+              : "!bg-inherit"
+          }`}
+          titleHtml={
+            <span className={`text-xs`}>
+              {carData?.Count_object > 10
+                ? " Перекуп "
+                : carData?.Count_object > 5
+                ? " Перекуп ? "
+                : carData?.Count_object > 2
+                ? " Перекуп ? "
+                : " Продавець "}
+            </span>
+          }
+        />
+        <span className="text-xs text-white/60">
+          Продав ({carData?.Count_object}) авто
+        </span>
+      </div>
 
       <div className="flex gap-2 my-4">
         {carData?.exchangePossible !== "0" && (
@@ -507,6 +542,8 @@ const Car = () => {
           />
         </div>
       )}
+
+      <p className="text-sm text-white/60 mb-6">{formatSaleInfo()}</p>
 
       {contacts?.phones[0]?.phone !== "380000000000" ? (
         <span
