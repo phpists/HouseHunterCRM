@@ -392,7 +392,8 @@ const Car = () => {
         <span>{id_type_body && id_type_body + " • "}</span>
         <span>{carData.rubric_name && carData.rubric_name + " • "}</span>
         <span>{carColor?.name && carColor?.name + " • "}</span>
-        <span>{id_ecological_standard}</span>
+        <span>{id_ecological_standard + " • "}</span>
+        <span>{carData?.tag_market_bottom === "1" && "Хороша ціна"}</span>
       </p>
 
       <p className="text-xs my-4 text-white/60">{carData.description}</p>
@@ -516,7 +517,7 @@ const Car = () => {
         {carData?.tag_afterDTP !== "0" && (
           <Tag className="!text-xs" title={`Участь у дтп`} />
         )}
-        {carData?.id_custom !== "0" && (
+        {carData?.id_custom === "0" && (
           <Tag className="!text-xs" title={`Не розмитнена`} />
         )}
         {carData?.id_technical_condition !== "0" && (

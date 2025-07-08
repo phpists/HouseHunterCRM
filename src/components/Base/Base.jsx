@@ -43,7 +43,6 @@ export const CARS_STATUSES = [
     title: "Видалено автоматично(термін публікації закінчився)",
     value: "14",
   },
-  { title: "По низу ринку", value: "tag_market_bottom" },
 ];
 
 export const CARS_TAGS = [
@@ -52,6 +51,7 @@ export const CARS_TAGS = [
   { title: "Можливий обмін", value: "tag_exchangePossible" },
   { title: "Свіжопригнана", value: "tag_freshlyDriven" },
   { title: "Після дтп", value: "tag_afterDTP" },
+  { title: "Хороша ціна", value: "tag_market_bottom" },
 ];
 
 export const Base = ({
