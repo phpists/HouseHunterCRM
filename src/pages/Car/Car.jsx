@@ -144,7 +144,7 @@ const Car = () => {
                     </span>
                   </a>
                   <a
-                    href={`viber://contact?number=%2B${phone}`}
+                    href={`viber://contact?number=${phone}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="cursor-pointer flex justify-center"
