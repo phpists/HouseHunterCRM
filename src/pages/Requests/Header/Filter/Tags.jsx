@@ -41,12 +41,20 @@ export const Tags = ({
   const { data: level } = useGetCompanyStructureLevelQuery();
   const { data: workers } = useGetWorkerMyStructureQuery();
   const { data: companyWorkers } = useGetWorkersMyCompanyQuery();
-  const [getBrands, { data: brandsList }] = useLazyGetBrandsQuery();
+  const [brandsList, setBrandsList] = useState();
+  const [getBrands] = useLazyGetBrandsQuery();
   const [getModels, { data: modelsList }] = useLazyGetModelsQuery();
 
   useEffect(() => {
-    getBrands(filters.id_rubric);
-  }, [filters.id_rubric]);
+    if (!brandsList) {
+      if (filtersFields && handleGetFieldsOptions(filtersFields, "id_brand")) {
+        getBrands(filters.id_rubric).then((data) => {
+          setBrandsList(data?.data);
+        });
+      }
+    }
+    // getBrands(filters.id_rubric);
+  }, [filters.id_rubric, filtersFields]);
 
   useEffect(() => {
     const idBrand = brandsList?.data?.find(
