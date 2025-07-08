@@ -101,7 +101,7 @@ const Search = ({
       <Divider />
 
       <Field
-        placeholder="Введіть значення..."
+        placeholder="Пошук по ID на першому джерелі"
         value={data?.street_base_object?.id_ad_in_source}
         onChange={(val) =>
           onChangeFilter("street_base_object", {
@@ -109,7 +109,7 @@ const Search = ({
             id_ad_in_source: val,
           })
         }
-        label="Пошук по ID на першому джерелі"
+        // label="Пошук по ID на першому джерелі"
         className="field-wrapper"
         onFocus={() => onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
@@ -117,10 +117,10 @@ const Search = ({
       <Divider />
 
       <ProfileField
-        placeholder="Введіть значення"
+        placeholder="Пошук по ID xDrive"
         value={data?.id_hash}
         onChange={(val) => onChangeFilter("id_hash", val)}
-        label="Пошук по ID xDrive"
+        // label="Пошук по ID xDrive"
         className="field"
         grey
         onFocus={() => onChangeInputFocus(true)}
@@ -129,8 +129,8 @@ const Search = ({
       <Divider />
 
       <ProfileField
-        label="Пошук по номеру телефону"
-        placeholder="Введіть значення..."
+        // label="Пошук по номеру телефону"
+        placeholder="Пошук по номеру телефону"
         value={data.search_phone}
         onChange={(val) => onChangeFilter("search_phone", val)}
         phone
@@ -148,7 +148,7 @@ const Search = ({
           return (
             <React.Fragment key={select[0]}>
               <ProfileField
-                placeholder="Введіть значення"
+                placeholder={commentsToFields?.object["VIN"]}
                 value={data["VIN"]}
                 onChange={(val) =>
                   onChangeFilter(
@@ -158,7 +158,7 @@ const Search = ({
                       : val
                   )
                 }
-                label={commentsToFields?.object["VIN"]}
+                // label={commentsToFields?.object["VIN"]}
                 className="field"
                 grey
                 type={

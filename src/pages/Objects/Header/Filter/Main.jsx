@@ -250,7 +250,7 @@ export const Main = ({
         rubricId={filters?.id_rubric}
         typeValue={filters?.price_for}
         onChangeType={(val) => onChangeFilter("price_for", val)}
-        hideCurrency
+        // hideCurrency
       />
       <Divider />
       <ObjectsFilterYear
@@ -297,6 +297,7 @@ export const Main = ({
           return (
             <React.Fragment key={select[0]}>
               <VolumeEngine
+                mainType={"л"}
                 label={"Об'єм"}
                 max={100}
                 values={[

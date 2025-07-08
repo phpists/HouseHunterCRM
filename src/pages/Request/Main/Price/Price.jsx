@@ -31,6 +31,7 @@ export const Price = ({
         values={values}
         onChange={onChange}
         currencyValue={currency}
+        mainType={"$"}
         onChangeCurrency={(val) => onChangeCurrency(val)}
         typeError={typeError}
         onFocus={onFocus}

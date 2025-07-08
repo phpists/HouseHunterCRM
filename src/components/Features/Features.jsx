@@ -69,6 +69,7 @@ const Features = ({
   return (
     <div className="section filterFieldsWrapper">
       <VolumeEngine
+        mainType={"т.км"}
         onFocus={() => !isInputFocused && onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
         label={"Пробіг тис. км."}
@@ -197,7 +198,7 @@ const Features = ({
       <Divider />
       <Accordion
         hideSearch
-        active={data?.id_type_body}
+        active={data?.id_color}
         label={"Колір"}
         options={carColors.map(({ id, name }) => ({
           title: name,

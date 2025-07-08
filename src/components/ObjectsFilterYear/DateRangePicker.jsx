@@ -65,7 +65,7 @@ const DateRangePicker = ({ onChange, onClose, initial }) => {
   );
 
   const [selectedRange, setSelectedRange] = useState({
-    from: initial[0] || minYear.toString(),
+    from: initial[0] || 2000,
     to: initial[1] || maxYear.toString(),
   });
 

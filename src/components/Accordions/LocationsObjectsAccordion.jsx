@@ -181,7 +181,7 @@ const LocationsObjectsAccordion = ({
 
   const displayTitle =
     selectedTitles.length === 0
-      ? "Локації"
+      ? "Область"
       : selectedTitles.length > 3
       ? `${selectedTitles.slice(0, 3).join(", ")} +${selectedTitles.length - 3}`
       : selectedTitles.join(", ");

@@ -86,18 +86,20 @@ const Objects = () => {
     id_hash: id ?? "",
     price_for: "4",
     sorting: "0",
-    street_base_object: {},
+    street_base_object: {
+      sorting_id: "14",
+    },
   };
 
   const DEFAULT_FILTERS = {
     price_currency: "2",
     // id_rubric: "1",
     sorting: "0",
-    // street_base_object: {
-    //   // sorting_id: "12",
-    //   // price_change_up: "2",
-    //   // price_change_period: "4",
-    // },
+    street_base_object: {
+      sorting_id: "14",
+      // price_change_up: "2",
+      // price_change_period: "4",
+    },
     // price_for: "4",
     // company_object: {
     //   show_only: "only_my",
