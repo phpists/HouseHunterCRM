@@ -446,10 +446,10 @@ const Objects = () => {
             );
         dataRef.current = updatedData;
         setObjects(updatedData);
-        const updatedCount = isFavorite ? allCount - 1 : allCount;
+        const updatedCount = isFavorite ? allCount : allCount;
         allCountRef.current = updatedCount;
         setAllCount(updatedCount);
-        const updatedAllCount = (objectsCount || 0) - 1;
+        const updatedAllCount = objectsCount || 0;
         saveObjectsCount(updatedAllCount);
         showAlert("success", "Статус успішно змінено!");
       });

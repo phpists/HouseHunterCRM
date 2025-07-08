@@ -91,6 +91,7 @@ export const ObjectCard = memo(
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }, [isMobile]);
+
     return (
       <StyledObjectCard
         className={` clickable list-card-wrapper ${selected && "selected"} ${

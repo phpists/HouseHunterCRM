@@ -354,7 +354,7 @@ const Car = () => {
 
       <p className="text-xs my-4 text-white/60">{carData.description}</p>
 
-      {carData.comment_autoria_days.length > 1 && (
+      {carData.comment_autoria.length > 1 && (
         <div className="my-4">
           <h1>Коментарі</h1>
           <p className="text-sm my-2">
