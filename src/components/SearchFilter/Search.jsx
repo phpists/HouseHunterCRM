@@ -26,21 +26,17 @@ const Search = ({
   const { data: commentsToFields } = useGetCommentsToFieldsQuery();
 
   const active = CARS_TAGS.filter(
-    (t) =>
-      t.value !== "tag_exchangePossible" &&
-      data?.street_base_object?.[t.value] === "1"
+    (t) => data?.street_base_object?.[t.value] === "1"
   );
 
   const handleTagChange = (selectedValues) => {
     // Create a new street_base_object with all tags reset
     const updatedTags = {};
-    CARS_TAGS.filter((t) => t.value !== "tag_exchangePossible").forEach(
-      (tag) => {
-        updatedTags[tag.value] = selectedValues.includes(tag.value)
-          ? "1"
-          : undefined;
-      }
-    );
+    CARS_TAGS.forEach((tag) => {
+      updatedTags[tag.value] = selectedValues.includes(tag.value)
+        ? "1"
+        : undefined;
+    });
 
     // Update the parent component's state
     onChangeFilter("street_base_object", {
