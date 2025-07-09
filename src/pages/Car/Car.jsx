@@ -25,6 +25,7 @@ import Share from "../../assets/images/share.svg";
 import { useAppSelect } from "../../hooks/redux";
 import { handleCopy } from "../../utilits";
 import DaysOnSale from "../../components/Car/DaysOnSale";
+import { auth } from "../../store/auth/auth.api";
 
 const Car = () => {
   const { id } = useParams();
@@ -269,7 +270,10 @@ const Car = () => {
           } тис. км.`}
           iIcom="bi bi-circle-fill"
         />
-        <Tag title={carData.location_name} iIcom="bi bi-circle-fill" />
+        <Tag
+          title={getFromCarMainInfoFiledsOptions("kpp", carData.kpp)}
+          iIcom="bi bi-circle-fill"
+        />
         <Tag
           title={`${getFromCarMainInfoFiledsOptions(
             "id_type_fuel",
@@ -281,19 +285,45 @@ const Car = () => {
           }`}
           iIcom="bi bi-circle-fill"
         />
-        <Tag
-          title={getFromCarMainInfoFiledsOptions("kpp", carData.kpp)}
-          iIcom="bi bi-circle-fill"
-        />
+        <Tag title={carData.location_name} iIcom="bi bi-circle-fill" />
       </div>
 
-      <p className="text-xs mt-3">
-        <span>{drive_type && drive_type + " • "}</span>
-        <span>{id_type_body && id_type_body + " • "}</span>
-        <span>{carData.rubric_name && carData.rubric_name + " • "}</span>
-        <span>{carColor?.name && carColor?.name + " • "}</span>
-        <span>{carData?.tag_market_bottom === "1" && "Хороша ціна"}</span>
-      </p>
+      <Tag
+        className="text-xs mt-3"
+        titleHtml={
+          <>
+            <span>{drive_type && drive_type + " • "}</span>
+            <span>{id_type_body && id_type_body + " • "}</span>
+            <span>{carData.rubric_name && carData.rubric_name + " • "}</span>
+            <span>{carColor?.name && carColor?.name + " • "}</span>
+          </>
+        }
+      />
+
+      <div className="flex gap-2 my-4">
+        {carData?.tag_faster !== "0" && (
+          <Tag
+            className="!text-xs !bg-red-500/20 !text-red-400"
+            title={`Терміново`}
+          />
+        )}
+        {carData?.tag_market_bottom === "1" && (
+          <Tag className="!text-xs" title={"Хороша ціна"} />
+        )}
+        {carData?.tag_nativePaint && carData?.tag_nativePaint === "1" && (
+          <Tag className="!text-xs" title={"Рідна фарба"} />
+        )}
+        {carData?.tag_exchangePossible !== "0" && (
+          <Tag className="!text-xs" title={`Обмін`} />
+        )}
+        {carData?.tag_freshlyDriven &&
+          (carData?.tag_freshlyDriven === "1") === "1" && (
+            <Tag className="!text-xs" title={"Свіжопригнана"} />
+          )}
+        {carData?.tag_afterDTP !== "0" && (
+          <Tag className="!text-xs" title={`Після дтп`} />
+        )}
+      </div>
 
       <p className="text-xs my-4 text-white/60">{carData.description}</p>
 
@@ -359,6 +389,21 @@ const Car = () => {
         </div>
       )}
 
+      <div className="flex my-4 gap-2">
+        {carData?.exchangePossible !== "0" && (
+          <Tag
+            className="!text-xs !bg-orange-500/20 !text-orange-400"
+            title={`Можливий обмін`}
+          />
+        )}
+        {carData?.id_dtp_status !== "0" && (
+          <Tag className="!text-xs" title={`Участь у дтп`} />
+        )}
+        {carData?.id_custom === "0" && (
+          <Tag className="!text-xs" title={`Не розмитнена`} />
+        )}
+      </div>
+
       <div className="my-4 flex items-center gap-2">
         <Tag className="!text-xs" title={`id xdrive ${carData.id_hash}`} />
 
@@ -387,13 +432,21 @@ const Car = () => {
       <div
         className="my-4 flex items-center gap-4 cursor-pointer"
         onClick={() => {
-          window.open(
-            `/objects?findClientsObjects=${contacts?.phones[0]?.phone?.replace(
-              "38",
-              ""
-            )}`,
-            "_blank"
-          );
+          if (carData.id_source === "2") {
+            const { owner_id, id_source } = contacts;
+            window.open(
+              `/objects?showOwnerObject=${owner_id}&ownerSource=${id_source}`,
+              "_blank"
+            );
+          } else {
+            window.open(
+              `/objects?findClientsObjects=${contacts?.phones[0]?.phone?.replace(
+                "38",
+                ""
+              )}`,
+              "_blank"
+            );
+          }
         }}
       >
         {carData?.Count_object > 10 ? (
@@ -417,31 +470,6 @@ const Car = () => {
         <span className="text-xs text-white/60">
           Продав ({carData?.Count_object}) авто
         </span>
-      </div>
-
-      <div className="flex gap-2 my-4">
-        {carData?.tag_faster !== "0" && (
-          <Tag
-            className="!text-xs !bg-red-500/20 !text-red-400"
-            title={`Терміново`}
-          />
-        )}
-        {carData?.exchangePossible !== "0" && (
-          <Tag className="!text-xs" title={`Можливий обмін`} />
-        )}
-        {carData?.tag_afterDTP !== "0" && (
-          <Tag className="!text-xs" title={`Участь у дтп`} />
-        )}
-        {carData?.id_custom === "0" && (
-          <Tag className="!text-xs" title={`Не розмитнена`} />
-        )}
-        {carData?.tag_nativePaint && carData?.tag_nativePaint === "1" && (
-          <Tag className="!text-xs" title={"Рідна фарба"} />
-        )}
-        {carData?.tag_freshlyDriven &&
-          (carData?.tag_freshlyDriven === "1") === "1" && (
-            <Tag className="!text-xs" title={"Свіжопригнана"} />
-          )}
       </div>
 
       {carData.state_number && (
