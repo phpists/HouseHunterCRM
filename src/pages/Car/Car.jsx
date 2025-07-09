@@ -24,6 +24,7 @@ import Message from "../../assets/images/message.svg";
 import Share from "../../assets/images/share.svg";
 import { useAppSelect } from "../../hooks/redux";
 import { handleCopy } from "../../utilits";
+import DaysOnSale from "../../components/Car/DaysOnSale";
 
 const Car = () => {
   const { id } = useParams();
@@ -62,30 +63,6 @@ const Car = () => {
       .field_option[+index];
   };
 
-  function formatSaleInfo() {
-    const date = new Date(carData.dt_add_in_source * 1000);
-
-    const formattedDate = date.toLocaleDateString("uk-UA", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
-
-    const today = new Date();
-
-    today.setHours(0, 0, 0, 0);
-    date.setHours(0, 0, 0, 0);
-
-    const diffTime = today - date;
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-    const status = CARS_STATUSES.filter(
-      ({ value }) => value === carData.id_status_add
-    )[0].title;
-
-    return `${status} ${diffDays} днів у продажі ${formattedDate}`;
-  }
-
   const drive_type = getFromCarMainInfoFiledsOptions(
     "drive_type",
     carData?.drive_type
@@ -93,9 +70,6 @@ const Car = () => {
   const id_type_body = carBody?.data?.filter(
     ({ id }) => id === carData?.id_type_body
   )[0]?.name;
-  const id_ecological_standard = CarMainInfoFileds.filter(
-    ({ field }) => field === "id_ecological_standard"
-  )[0].field_option[carData?.id_ecological_standard];
 
   if (isLoading) return <div>Завантаження...</div>;
   if (!carData) return <div>Не вдалося завантажити дані про автомобіль.</div>;
@@ -411,30 +385,36 @@ const Car = () => {
       </div>
 
       <div className="my-4 flex items-center gap-4">
-        <Tag
-          className={`${
-            carData?.Count_object > 10
-              ? "!bg-red-300/20 !text-red-500"
-              : "!bg-inherit"
-          }`}
-          titleHtml={
-            <span className={`text-xs`}>
-              {carData?.Count_object > 10
-                ? " Перекуп "
-                : carData?.Count_object > 5
-                ? " Перекуп ? "
-                : carData?.Count_object > 2
-                ? " Перекуп ? "
-                : " Продавець "}
-            </span>
-          }
-        />
+        {carData?.Count_object > 10 ? (
+          <Tag
+            className="!text-xs !bg-red-500/20 !text-red-400"
+            title={"Перекуп"}
+          />
+        ) : carData?.Count_object > 5 ? (
+          <Tag
+            className="!text-xs !bg-red-500/20 !text-red-400"
+            title={"Перекуп ?"}
+          />
+        ) : carData?.Count_object > 2 ? (
+          <Tag className="!text-xs" title={"Перекуп ?"} />
+        ) : (
+          <Tag
+            className="!text-xs !bg-green-500/20 !text-green-400"
+            title={"Продавець"}
+          />
+        )}
         <span className="text-xs text-white/60">
           Продав ({carData?.Count_object}) авто
         </span>
       </div>
 
       <div className="flex gap-2 my-4">
+        {carData?.tag_faster !== "0" && (
+          <Tag
+            className="!text-xs !bg-red-500/20 !text-red-400"
+            title={`Терміново`}
+          />
+        )}
         {carData?.exchangePossible !== "0" && (
           <Tag className="!text-xs" title={`Можливий обмін`} />
         )}
@@ -466,7 +446,7 @@ const Car = () => {
         </div>
       )}
 
-      <p className="text-sm text-white/60 mb-6">{formatSaleInfo()}</p>
+      <DaysOnSale carData={carData} />
 
       {contacts?.phones[0]?.phone !== "380000000000" ? (
         <span
