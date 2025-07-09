@@ -242,6 +242,8 @@ const Objects = () => {
               removePhoneMask(filters?.search_phone)?.length > 0
                 ? phoneCode
                 : undefined,
+            showOwnerObject: filters?.street_base_object?.showOwnerObject,
+            ownerSource: filters?.street_base_object?.ownerSource,
             findPhone:
               filters?.findPhone?.length > 0 ? filters?.findPhone : undefined,
             search_phone:
@@ -330,6 +332,8 @@ const Objects = () => {
         isLoading.current = false;
         setLoading(false);
 
+        console.log(resp);
+
         handleResponse(
           resp,
           () => {
@@ -347,13 +351,6 @@ const Objects = () => {
               : [...dataRef.current, ...objectsResp];
             dataRef.current = updatedObjects;
             setObjects(updatedObjects);
-
-            // if (isFirstRequest.current) {
-            //   isFirstRequest.current = false;
-            //   getAllObjects({ ...data, only_count_item: "1" }).then((resp) =>
-            //     saveObjectsCount(resp?.data?.count_item ?? 0)
-            //   );
-            // }
           },
           () => {
             setIsAllPages(true);
@@ -634,8 +631,24 @@ const Objects = () => {
       setUpdateData(true);
     } else if (filterApply === "?findClientsObjects") {
       setFilters({
+        search_phone_code: 1,
         search_phone: filterApplyValue,
         street_base_object: {
+          sorting_id: "16",
+        },
+      });
+      filterActive.current = true;
+      setUpdateData(true);
+    } else if (filterApply === "?showOwnerObject") {
+      const url = new URL(window.location.href);
+      const params = new URLSearchParams(url.search);
+      const filters = {
+        showOwnerObject: params.get("showOwnerObject"),
+        ownerSource: params.get("ownerSource"),
+      };
+      setFilters({
+        street_base_object: {
+          ...filters,
           sorting_id: "16",
         },
       });

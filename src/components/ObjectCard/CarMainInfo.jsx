@@ -68,6 +68,30 @@ export const CarMainInfo = ({
     return editInSourceDate > today || priceChangeDate > today;
   };
 
+  const searchByNumber = async () => {
+    if (data.id_source === "2") {
+      const { id_source, owner_id } = data.clients_inf.contact;
+
+      window.open(
+        `/objects?showOwnerObject=${owner_id}&ownerSource=${id_source}`,
+        "_blank"
+      );
+    } else {
+      let number = phones;
+      if (!phones) {
+        const client = await fetchClient(data.id);
+        number = client;
+      }
+      // if there's no number don't redirect
+      if (number?.length) {
+        window.open(
+          `/objects?findClientsObjects=${number[0]?.phone?.replace("38", "")}`,
+          "_blank"
+        );
+      }
+    }
+  };
+
   return (
     <StyledCarMainInfo>
       <div className="car-info-header">
@@ -134,25 +158,7 @@ export const CarMainInfo = ({
           className="mb-2.5"
         />
       </div>
-      <span
-        onClick={async (e) => {
-          let number = phones;
-          if (!phones) {
-            const client = await fetchClient(data.id);
-            number = client;
-          }
-          // if there's no number don't redirect
-          if (number?.length) {
-            window.open(
-              `/objects?findClientsObjects=${number[0]?.phone?.replace(
-                "38",
-                ""
-              )}`,
-              "_blank"
-            );
-          }
-        }}
-      >
+      <span onClick={searchByNumber}>
         <Tag
           titleHtml={
             <>

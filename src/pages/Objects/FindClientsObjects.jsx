@@ -58,6 +58,7 @@ export const FindClientsObjects = ({ onClose, id, phones, setPhones }) => {
 };
 
 const StyledFindClientsObjects = styled.div`
+  position: absolute;
   .loader {
     height: 40px;
   }

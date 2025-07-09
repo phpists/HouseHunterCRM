@@ -107,17 +107,19 @@ export const objects = createApi({
       }),
     }),
     getAllObjects: build.query({
-      query: ({ only_favorite, ...filters }) => ({
-        url: "",
-        method: "POST",
-        headers: headers(),
-        body: handleToFormData({
-          action: "view",
-          mod: "objects",
-          only_favorite,
-          ...filters,
-        }),
-      }),
+      query: ({ only_favorite, ...filters }) => {
+        return {
+          url: "",
+          method: "POST",
+          headers: headers(),
+          body: handleToFormData({
+            action: "view",
+            mod: "objects",
+            only_favorite,
+            ...filters,
+          }),
+        };
+      },
       transformResponse: (response) => {
         return handleResponse(
           response,
