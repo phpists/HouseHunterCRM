@@ -244,6 +244,7 @@ const Objects = () => {
                 : undefined,
             showOwnerObject: filters?.street_base_object?.showOwnerObject,
             ownerSource: filters?.street_base_object?.ownerSource,
+            VIN: filters?.street_base_object?.VIN,
             findPhone:
               filters?.findPhone?.length > 0 ? filters?.findPhone : undefined,
             search_phone:
@@ -647,6 +648,15 @@ const Objects = () => {
       setFilters({
         street_base_object: {
           ...filters,
+          sorting_id: "16",
+        },
+      });
+      filterActive.current = true;
+      setUpdateData(true);
+    } else if (filterApply === "?VIN") {
+      setFilters({
+        street_base_object: {
+          VIN: filterApplyValue,
           sorting_id: "16",
         },
       });

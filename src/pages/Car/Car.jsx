@@ -348,11 +348,7 @@ const Car = () => {
             className="!text-xs cursor-pointer"
             title={`VIN ${carData.VIN}`}
             onClick={() => {
-              localStorage.setItem(
-                "objectsLastFilters",
-                JSON.stringify({ VIN: carData.VIN })
-              );
-              window.open(`/objects`, "_blank");
+              window.open(`/objects?VIN=${carData.VIN}`, "_blank");
             }}
           />
 
