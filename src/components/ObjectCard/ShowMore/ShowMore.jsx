@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Button } from "./Button";
 import { Dropdown } from "./Dropdown";
 import { useRef, useState } from "react";
-import { ReactComponent as StarIcon } from "../../../assets/images/card-star.svg";
+import { ReactComponent as HeartIcon } from "../../../assets/images/nocolor-heart.svg";
 import { ReactComponent as PhoneIcon } from "../../../assets/images/phone-menu.svg";
 import { ReactComponent as ChatIcon } from "../../../assets/images/chat-grey.svg";
 import { ActionButton } from "./ActionButton";
@@ -67,7 +67,7 @@ export const ShowMore = ({
       <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />
       {!isDeleted && (
         <ActionButton
-          Icon={StarIcon}
+          Icon={HeartIcon}
           onClick={onToggleFavoriteStatus}
           active={isFavorite}
         />

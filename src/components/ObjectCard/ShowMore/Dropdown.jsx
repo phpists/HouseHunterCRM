@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import { ReactComponent as Star } from "../../../assets/images/star-object.svg";
+import { ReactComponent as Heart } from "../../../assets/images/blue-heart.svg";
 import { ReactComponent as Search } from "../../../assets/images/search-object.svg";
 import { ReactComponent as History } from "../../../assets/images/history-object.svg";
 import { ReactComponent as Prices } from "../../../assets/images/price-object.svg";
@@ -241,7 +241,8 @@ export const Dropdown = ({
               className="flex items-center justify-between"
               onClick={onToggleFavoriteStatus}
             >
-              <span> {isFavorite ? "Із" : "До"} улюблених</span> <Star />
+              <span> {isFavorite ? "Із" : "До"} улюблених</span>
+              <Heart />
             </div>
           )}
           {onFindSimilar ? (

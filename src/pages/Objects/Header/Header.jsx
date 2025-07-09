@@ -3,7 +3,7 @@ import { Title } from "./Title";
 import { IconButton } from "../../../components/IconButton";
 import { ReactComponent as SettingIcon } from "../../../assets/images/search.svg";
 import { ReactComponent as PlusIcon } from "../../../assets/images/plus.svg";
-import { ReactComponent as StarIcon } from "../../../assets/images/card-star.svg";
+import { ReactComponent as HeartIcon } from "../../../assets/images/nocolor-heart.svg";
 import { SelectItems } from "../../../components/SelectItems/SelectItems";
 import { Filter } from "./Filter/Filter";
 import { useEffect, useState } from "react";
@@ -195,7 +195,7 @@ export const Header = ({
               />
             ) : null}
             <IconButton
-              Icon={StarIcon}
+              Icon={HeartIcon}
               className="icon-btn icon-btn-last"
               active={isFavorite}
               onClick={onIsFavotite}
