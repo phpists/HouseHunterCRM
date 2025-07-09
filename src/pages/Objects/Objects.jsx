@@ -332,8 +332,6 @@ const Objects = () => {
         isLoading.current = false;
         setLoading(false);
 
-        console.log(resp);
-
         handleResponse(
           resp,
           () => {

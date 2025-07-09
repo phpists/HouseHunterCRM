@@ -4,7 +4,7 @@ const initialState = {
   objectsCount: null,
   objects: [],
   selected: [],
-  isFavorite: [],
+  isFavorite: false,
   filtersFields: [],
   isAllPages: false,
   loading: false,
