@@ -7,8 +7,10 @@ import { Photo } from "./Photo";
 import { CarMainInfo } from "./CarMainInfo";
 import { ShowMore } from "./ShowMore/ShowMore";
 import { CarInfo } from "./CarInfo";
-import { checkIsArray, checkIsJSON } from "../../utilits";
+import { checkIsArray, checkIsJSON, handleResponse } from "../../utilits";
 import { useNavigate } from "react-router-dom";
+import { FindClientsObjects } from "../../pages/Objects/FindClientsObjects";
+import { useLazyGetPhoneObjectQuery } from "../../store/objects/objects.api";
 
 export const ObjectCard = memo(
   ({
@@ -60,6 +62,9 @@ export const ObjectCard = memo(
   }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 801);
     const { ref, inView } = useInView({ triggerOnce: window.innerWidth < 801 });
+    const [phones, setPhones] = useState(null);
+    const [isOpenContactModal, setIsOpenContactModal] = useState(false);
+    const [getClient] = useLazyGetPhoneObjectQuery();
     const navigate = useNavigate();
 
     const handleClick = (e) => {
@@ -87,72 +92,95 @@ export const ObjectCard = memo(
       }
     };
 
+    const fetchClient = async (id) => {
+      const resp = await getClient(id);
+      const result = resp?.data?.contact?.phones ?? [];
+      handleResponse(resp, () => {
+        setPhones(resp?.data?.contact?.phones ?? []);
+      });
+
+      return result;
+    };
+
     useEffect(() => {
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }, [isMobile]);
 
     return (
-      <StyledObjectCard
-        className={` clickable list-card-wrapper ${selected && "selected"} ${
-          !inView && "notInView"
-        }`}
-        ref={ref}
-      >
-        <Photo
-          photos={
-            checkIsArray(checkIsJSON(data?.photo_links_json))?.length > 0
-              ? checkIsArray(checkIsJSON(data?.photo_links_json))
-              : checkIsArray(checkIsJSON(data?.photos_json))
-          }
-        />
-        <CarMainInfo
-          onClick={handleClick}
-          data={data}
-          onOpenPriceHistory={onOpenPriceHistory}
-        />
-        <CarInfo
-          data={data}
-          onOpenInfo={onOpenInfo}
-          onUpdateField={onUpdateField}
-          noEdit={noEdit}
-          onChangeTags={onChangeTags}
-        />
-        <ShowMore
-          clientId={data?.id_client}
-          id={data?.id}
-          onToggleFavoriteStatus={onToggleFavoriteStatus}
-          isFavorite={data?.favorite}
-          onFindSimilar={onFindSimilar}
-          isEdit={isEdit}
-          onHide={onHide}
-          onAddToSelection={onAddToSelection}
-          onOpenTagsHistory={onOpenTagsHistory}
-          onOpenPriceHistory={onOpenPriceHistory}
-          isAccess={data?.acsses_change}
-          link={data?.link ?? data?.url_resource}
-          isHideObjects={isHideObjects}
-          onOpenCommetHistory={onOpenCommetHistory}
-          onDelete={onDelete}
-          isStreetBase={data?.obj_street_base === "1"}
-          searchTag={searchTag}
-          onMarkPhone={onMarkPhone}
-          isDeleted={isDeleted}
-          onRestore={onRestore}
-          onDeleteFinally={onDeleteFinally}
-          onOpenDeleteReason={onOpenDeleteReason}
-          onFastSelection={onFastSelection}
-          onAdvertise={onAdvertise}
-          onAdvertiseTelegram={onAdvertiseTelegram}
-          ad={ad}
-          onDeleteHistory={onDeleteHistory}
-          onDeleteAd={onDeleteAd}
-          idRubric={data?.id_rubric}
-          onOpenCommentAutoria={onOpenCommentAutoria}
-          onOpenPhonesModal={onOpenPhonesModal}
-          commentAutoria={data?.comment_autoria}
-        />
-      </StyledObjectCard>
+      <>
+        {isOpenContactModal ? (
+          <FindClientsObjects
+            phones={phones}
+            setPhones={setPhones}
+            onClose={() => setIsOpenContactModal(false)}
+            id={data.id}
+            fetchClient={fetchClient}
+          />
+        ) : null}
+        <StyledObjectCard
+          className={` clickable list-card-wrapper ${selected && "selected"} ${
+            !inView && "notInView"
+          }`}
+          ref={ref}
+        >
+          <Photo
+            photos={
+              checkIsArray(checkIsJSON(data?.photo_links_json))?.length > 0
+                ? checkIsArray(checkIsJSON(data?.photo_links_json))
+                : checkIsArray(checkIsJSON(data?.photos_json))
+            }
+          />
+          <CarMainInfo
+            onClick={handleClick}
+            data={data}
+            onOpenPriceHistory={onOpenPriceHistory}
+            phones={phones}
+            fetchClient={fetchClient}
+          />
+          <CarInfo
+            data={data}
+            onOpenInfo={onOpenInfo}
+            onUpdateField={onUpdateField}
+            noEdit={noEdit}
+            onChangeTags={onChangeTags}
+          />
+          <ShowMore
+            clientId={data?.id_client}
+            id={data?.id}
+            onToggleFavoriteStatus={onToggleFavoriteStatus}
+            isFavorite={data?.favorite}
+            onFindSimilar={onFindSimilar}
+            isEdit={isEdit}
+            onHide={onHide}
+            onAddToSelection={onAddToSelection}
+            onOpenTagsHistory={onOpenTagsHistory}
+            onOpenPriceHistory={onOpenPriceHistory}
+            isAccess={data?.acsses_change}
+            link={data?.link ?? data?.url_resource}
+            isHideObjects={isHideObjects}
+            onOpenCommetHistory={onOpenCommetHistory}
+            onDelete={onDelete}
+            isStreetBase={data?.obj_street_base === "1"}
+            searchTag={searchTag}
+            onMarkPhone={onMarkPhone}
+            isDeleted={isDeleted}
+            onRestore={onRestore}
+            onDeleteFinally={onDeleteFinally}
+            onOpenDeleteReason={onOpenDeleteReason}
+            onFastSelection={onFastSelection}
+            onAdvertise={onAdvertise}
+            onAdvertiseTelegram={onAdvertiseTelegram}
+            ad={ad}
+            onDeleteHistory={onDeleteHistory}
+            onDeleteAd={onDeleteAd}
+            idRubric={data?.id_rubric}
+            onOpenCommentAutoria={onOpenCommentAutoria}
+            onOpenPhonesModal={() => setIsOpenContactModal(true)}
+            commentAutoria={data?.comment_autoria}
+          />
+        </StyledObjectCard>
+      </>
     );
   }
 );

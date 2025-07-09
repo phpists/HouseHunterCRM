@@ -8,25 +8,25 @@ import { Phones } from "../../components/Phones/Phones";
 import { Phone } from "../../components/Phones/Phone";
 import { useNavigate } from "react-router-dom";
 
-export const FindClientsObjects = ({ onClose, id }) => {
+export const FindClientsObjects = ({ onClose, id, phones, setPhones }) => {
   const [getClient] = useLazyGetPhoneObjectQuery();
-  const [clientPhones, setClientPhones] = useState([]);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleShowClient = () => {
     setLoading(true);
     getClient(id).then((resp) => {
       setLoading(false);
       handleResponse(resp, () => {
-        setClientPhones(resp?.data?.contact?.phones ?? []);
+        setPhones(resp?.data?.contact?.phones ?? []);
       });
     });
   };
 
   useEffect(() => {
-    if (id) {
-      handleShowClient();
+    if (!phones) {
+      if (id) {
+        handleShowClient();
+      }
     }
   }, [id]);
 
@@ -36,11 +36,11 @@ export const FindClientsObjects = ({ onClose, id }) => {
         <div>
           {loading ? (
             <Loader white className="loader" />
-          ) : clientPhones?.length === 0 ? (
+          ) : phones?.length === 0 ? (
             <div className="empty">Пусто</div>
           ) : (
             <div className="phoneList">
-              {clientPhones?.map((p, i) => (
+              {phones?.map((p, i) => (
                 <Phone
                   key={i}
                   phone={p?.phone}

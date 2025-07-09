@@ -14,7 +14,13 @@ import {
 } from "../../store/objects/objects.api";
 import { car_body_type, CarMainInfoFileds } from "../../constants";
 
-export const CarMainInfo = ({ data, onOpenPriceHistory, onClick }) => {
+export const CarMainInfo = ({
+  data,
+  onOpenPriceHistory,
+  onClick,
+  phones,
+  fetchClient,
+}) => {
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
   const [addViewLink] = useLazyAddViewLinkQuery();
@@ -127,6 +133,26 @@ export const CarMainInfo = ({ data, onOpenPriceHistory, onClick }) => {
           }/10 • TOP ${data?.data_level}`}
           className="mb-2.5"
         />
+      </div>
+      <span
+        onClick={async (e) => {
+          let number = phones;
+          if (!phones) {
+            const client = await fetchClient(data.id);
+            number = client;
+          }
+          // if there's no number don't redirect
+          if (number?.length) {
+            window.open(
+              `/objects?findClientsObjects=${number[0]?.phone?.replace(
+                "38",
+                ""
+              )}`,
+              "_blank"
+            );
+          }
+        }}
+      >
         <Tag
           titleHtml={
             <>
@@ -144,7 +170,7 @@ export const CarMainInfo = ({ data, onOpenPriceHistory, onClick }) => {
             </>
           }
         />
-      </div>
+      </span>
     </StyledCarMainInfo>
   );
 };

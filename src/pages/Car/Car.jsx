@@ -384,7 +384,18 @@ const Car = () => {
         />
       </div>
 
-      <div className="my-4 flex items-center gap-4">
+      <div
+        className="my-4 flex items-center gap-4 cursor-pointer"
+        onClick={() => {
+          window.open(
+            `/objects?findClientsObjects=${contacts?.phones[0]?.phone?.replace(
+              "38",
+              ""
+            )}`,
+            "_blank"
+          );
+        }}
+      >
         {carData?.Count_object > 10 ? (
           <Tag
             className="!text-xs !bg-red-500/20 !text-red-400"
@@ -490,5 +501,3 @@ const StyledCar = styled.div`
 `;
 
 export default Car;
-
-// date_update_comment
