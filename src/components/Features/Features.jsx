@@ -210,12 +210,12 @@ const Features = ({
       <CheckOption
         label="Обмін"
         className="check-opt"
-        value={data?.street_base_object?.tag_exchangePossible}
+        value={data?.street_base_object?.exchangePossible}
         onChange={(val) =>
           onChangeFilter("street_base_object", {
             ...data?.street_base_object,
-            tag_exchangePossible:
-              data?.street_base_object?.tag_exchangePossible === "1"
+            exchangePossible:
+              data?.street_base_object?.exchangePossible === "1"
                 ? undefined
                 : "1",
           })
