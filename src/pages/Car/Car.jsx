@@ -300,35 +300,6 @@ const Car = () => {
         </div>
       </div>
 
-      {/* <div className="my-4 flex flex-wrap gap-2">
-        {carData?.state_number && (
-          <Tag className="!text-xs" title={carData?.state_number} copy />
-        )}
-        {carData?.tag_faster && carData?.tag_faster === "1" && (
-          <Tag className="!text-xs" title={"Терміново"} />
-        )}
-        {carData?.tag_nativePaint && carData?.tag_nativePaint === "1" && (
-          <Tag className="!text-xs" title={"Рідна фарба"} />
-        )}
-        {carData?.tag_freshlyDriven &&
-          (carData?.tag_freshlyDriven === "1") === "1" && (
-            <Tag className="!text-xs" title={"Свіжопригнана"} />
-          )}
-        {carData?.tag_afterDTP && carData?.tag_afterDTP === "1" && (
-          <Tag className="!text-xs" title={"Після дтп"} />
-        )}
-        {carData?.tag_market_bottom &&
-          (carData?.tag_market_bottom === "1") === "1" && (
-            <Tag className="!text-xs" title={"По низу ринку"} />
-          )}
-        {carData?.exchangePossible && carData?.exchangePossible === "1" && (
-          <Tag className="!text-xs" title={"Можливий обмін"} />
-        )}
-        {carData?.id && (
-          <Tag className="!text-xs" title={"ID"} copy сopyValue={carData?.id} />
-        )}
-      </div> */}
-
       <div className="grid grid-cols-2 gap-2">
         <Tag
           title={`${
@@ -354,37 +325,6 @@ const Car = () => {
           title={getFromCarMainInfoFiledsOptions("kpp", carData.kpp)}
           iIcom="bi bi-circle-fill"
         />
-        {/* <Tag
-          title={getFromCarMainInfoFiledsOptions(
-            "drive_type",
-            carData.drive_type
-          )}
-          iIcom="bi bi-circle-fill"
-        /> */}
-        {/* <Tag
-          title={
-            carBody?.data?.filter(({ id }) => id === carData?.id_type_body)[0]
-              ?.name
-          }
-          iIcom="bi bi-circle-fill"
-        /> */}
-        {/* <Tag title={carData.rubric_name} iIcom="bi bi-circle-fill" /> */}
-        {/* {carData.id_ecological_standard !== "0" && (
-          <Tag
-            title={
-              CarMainInfoFileds.filter(
-                ({ field }) => field === "id_ecological_standard"
-              )[0].field_option[carData.id_ecological_standard]
-            }
-            iIcom="bi bi-circle-fill"
-          />
-        )} */}
-        {/* 
-        <Tag
-          className={`!bg-[${carColor?.hex}]`}
-          title={carColor?.name}
-          iIcom="bi bi-circle-fill"
-        /> */}
       </div>
 
       <p className="text-xs mt-3">
@@ -392,7 +332,6 @@ const Car = () => {
         <span>{id_type_body && id_type_body + " • "}</span>
         <span>{carData.rubric_name && carData.rubric_name + " • "}</span>
         <span>{carColor?.name && carColor?.name + " • "}</span>
-        <span>{id_ecological_standard + " • "}</span>
         <span>{carData?.tag_market_bottom === "1" && "Хороша ціна"}</span>
       </p>
 
@@ -519,15 +458,6 @@ const Car = () => {
         )}
         {carData?.id_custom === "0" && (
           <Tag className="!text-xs" title={`Не розмитнена`} />
-        )}
-        {carData?.id_technical_condition !== "0" && (
-          <Tag
-            className="!text-xs"
-            title={getFromCarMainInfoFiledsOptions(
-              "id_technical_condition",
-              carData.id_technical_condition
-            )}
-          />
         )}
         {carData?.tag_nativePaint && carData?.tag_nativePaint === "1" && (
           <Tag className="!text-xs" title={"Рідна фарба"} />

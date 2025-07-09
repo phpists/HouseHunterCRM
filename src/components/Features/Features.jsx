@@ -221,50 +221,6 @@ const Features = ({
           })
         }
       />
-      <Divider />
-
-      {selects?.map((select) => {
-        if (select[0] === "id_ecological_standard") {
-          return (
-            <React.Fragment key={select[0]}>
-              <Accordion
-                hideSearch
-                active={data?.id_ecological_standard}
-                label={"Екологічний стандарт"}
-                options={Object.entries(
-                  filtersFields?.main_field?.id_ecological_standard
-                    ?.field_option
-                )?.map((opt) => ({ value: opt[0], title: opt[1] }))}
-                onChange={(val) =>
-                  onChangeFilter("id_ecological_standard", val)
-                }
-              />
-              <Divider />
-            </React.Fragment>
-          );
-        }
-      })}
-
-      {selects?.map((select) => {
-        if (select[0] === "id_ecological_standard") {
-          return (
-            <React.Fragment key={select[0]}>
-              <Accordion
-                hideSearch
-                active={data?.id_technical_condition}
-                label={"Технічний стан"}
-                options={Object.entries(
-                  filtersFields?.main_field?.id_technical_condition
-                    ?.field_option
-                )?.map((opt) => ({ value: opt[0], title: opt[1] }))}
-                onChange={(val) =>
-                  onChangeFilter("id_technical_condition", val)
-                }
-              />
-            </React.Fragment>
-          );
-        }
-      })}
     </div>
   );
 };
