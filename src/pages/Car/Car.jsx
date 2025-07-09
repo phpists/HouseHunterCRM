@@ -1,18 +1,12 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   useLazyGetCarBodyQuery,
   useLazyGetOpenObjectQuery,
 } from "../../store/objects/objects.api";
 import { Slider } from "../../components/ObjectCard/Slider/Slider";
-import {
-  car_body_type,
-  CarMainInfoFileds,
-  CarsColor,
-  source,
-  type_fuel,
-} from "../../constants";
+import { CarMainInfoFileds, CarsColor } from "../../constants";
 import { Tag } from "../../components/ObjectCard/MainInfo/Tags/Tag";
 import { handleGetPrices } from "../../components/ObjectCard/Info/Price";
 import { CARS_STATUSES } from "../../components/Base/Base";
@@ -33,14 +27,13 @@ import { handleCopy } from "../../utilits";
 
 const Car = () => {
   const { id } = useParams();
-  const [getOpenObject, { data, isLoading }] = useLazyGetOpenObjectQuery();
+  const [getOpenObject, { isLoading }] = useLazyGetOpenObjectQuery();
   const [getCarBody, { data: carBody }] = useLazyGetCarBodyQuery();
   const [carData, setCarData] = useState(null);
   const [contacts, setContacts] = useState(null);
   const [isOpenHistoryModal, setIsOpenHistoryModal] = useState(false);
   const [isOpenContactsModal, setIsOpenContactsModal] = useState(false);
   const { user } = useAppSelect((state) => state.auth);
-  const navigate = useNavigate();
   const carColor = CarsColor.filter(({ id }) => id === carData?.id_color)[0];
 
   useEffect(() => {
@@ -57,9 +50,6 @@ const Car = () => {
   useEffect(() => {
     carData?.id_rubric && getCarBody(carData?.id_rubric);
   }, [carData?.id_rubric]);
-
-  if (isLoading) return <div>Завантаження...</div>;
-  if (!carData) return <div>Не вдалося завантажити дані про автомобіль.</div>;
 
   let photos = [];
   try {
@@ -98,14 +88,17 @@ const Car = () => {
 
   const drive_type = getFromCarMainInfoFiledsOptions(
     "drive_type",
-    carData.drive_type
+    carData?.drive_type
   );
   const id_type_body = carBody?.data?.filter(
     ({ id }) => id === carData?.id_type_body
   )[0]?.name;
   const id_ecological_standard = CarMainInfoFileds.filter(
     ({ field }) => field === "id_ecological_standard"
-  )[0].field_option[carData.id_ecological_standard];
+  )[0].field_option[carData?.id_ecological_standard];
+
+  if (isLoading) return <div>Завантаження...</div>;
+  if (!carData) return <div>Не вдалося завантажити дані про автомобіль.</div>;
 
   return (
     <StyledCar>
@@ -140,20 +133,7 @@ const Car = () => {
                     aria-label="Call phone number"
                   >
                     <span className="flex items-center justify-center bg-slate-600 rounded-lg w-12 h-12">
-                      <img
-                        className="w-8 h-8"
-                        src={Message}
-                        alt="Message icon"
-                      />
-                    </span>
-                  </a>
-                  <a
-                    href={`tel:+${phone}`}
-                    className="cursor-pointer flex justify-center"
-                    aria-label="Call phone number"
-                  >
-                    <span className="flex items-center justify-center bg-gray-600 rounded-lg w-12 h-12">
-                      <img className="w-8 h-8" src={Phone} alt="Phone icon" />
+                      SMS
                     </span>
                   </a>
                   <a
@@ -192,12 +172,18 @@ const Car = () => {
                       />
                     </span>
                   </a>
+                  <a
+                    href={`tel:+${phone}`}
+                    className="cursor-pointer flex justify-center"
+                    aria-label="Call phone number"
+                  >
+                    <span className="flex items-center justify-center bg-green-600 rounded-lg w-12 h-12">
+                      <img className="w-8 h-8" src={Phone} alt="Phone icon" />
+                    </span>
+                  </a>
                 </div>
               </div>
             ))}
-            {/* {contacts?.phones.map(({ phone }) => (
-              <a href={`tel:+${phone}`}>+{phone}</a>
-            ))} */}
           </div>
         </Modal>
       )}
@@ -216,7 +202,7 @@ const Car = () => {
 
         <div
           onClick={() => {
-            const shareUrl = `${window.location.origin}/cars/${carData.id}`; // або carData.link, якщо зовнішнє
+            const shareUrl = `${window.location.origin}/cars/${carData.id}`;
             const shareText = `${window.location} - ${carData.brand_name} ${carData.model_name} ${carData.year}`;
 
             if (navigator.share) {
@@ -345,9 +331,8 @@ const Car = () => {
             dangerouslySetInnerHTML={{
               __html: carData.comment_autoria,
             }}
-          />
+          ></div>
           <p className="text-sm text-white/60">
-            {console.log(carData)}
             дата додавання коментаря | {carData.comment_autoria_days}
           </p>
         </div>
