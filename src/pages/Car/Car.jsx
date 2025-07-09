@@ -325,9 +325,9 @@ const Car = () => {
         )}
       </div>
 
-      <p className="text-xs my-4 text-white/60">{carData.description}</p>
+      <p className="text-xs my-4 text-white/60">{carData?.description}</p>
 
-      {carData.comment_autoria.length > 1 && (
+      {carData.comment_autoria?.length > 1 && (
         <div className="my-4 bg-[var(--card-bg)] rounded px-2 py-3">
           <h1 className="text-lg font-bold">Коментар</h1>
           <div

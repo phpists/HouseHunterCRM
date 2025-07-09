@@ -26,9 +26,10 @@ const DaysOnSale = ({ carData }) => {
     <p className="text-sm text-white/60 mb-6 flex gap-1 items-center">
       <Tag
         className={`${
-          carData.id_status_add === "0" &&
-          "!text-xs !bg-green-500/30 !bg-text-400"
-        }`}
+          carData.id_status_add === "1" && "!bg-green-500/30 !bg-text-400"
+        } ${
+          carData.id_status_add === "14" && "!bg-red-500/30 !bg-red-400"
+        } !text-xs`}
         title={status}
       />
       {`${diffDays} днів у продажі ${formattedDate}`}
