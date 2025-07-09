@@ -1,5 +1,5 @@
 import { CARS_STATUSES } from "../Base/Base";
-import { Tag } from "../SelectTags/Tag";
+import { Tag } from "../ObjectCard/MainInfo/Tags/Tag";
 
 const DaysOnSale = ({ carData }) => {
   const date = new Date(carData.dt_add_in_source * 1000);

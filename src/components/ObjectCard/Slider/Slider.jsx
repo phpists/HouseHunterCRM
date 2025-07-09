@@ -250,6 +250,7 @@ export const Slider = ({ photos, data, showLike, isCarPage }) => {
         ref={sliderRef}
         empty={(photos?.length < 2).toString()}
         isOpenDropDown={isOpenDropDown}
+        isCarPage={isCarPage}
       >
         <div className="relative slider">
           {showLike && <Status data={data} />}
@@ -427,7 +428,7 @@ const StyledSlider = styled.div`
   height: 200px;
   /* height: 100%; */
   .slider {
-    width: 200px;
+    width: ${({ isCarPage }) => (isCarPage ? "100%" : "200px")};
     min-height: 200px;
     height: 100%;
     overflow: hidden;
@@ -441,6 +442,20 @@ const StyledSlider = styled.div`
   .slick-slide > div {
     height: 100%;
   }
+
+  ${({ isCarPage }) =>
+    isCarPage &&
+    ` .slick-slide {
+    display: flex;
+    justify-content: center;
+
+    div {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }`};
+
   .slick-arrow {
     transition: all 0.3s;
     &::before {
@@ -480,38 +495,39 @@ const StyledSlider = styled.div`
     flex-direction: row;
     margin: 0;
     .slider {
-      width: calc(100svw - 4px - 8px - 50px - 24px - 39px);
+      width: ${({ isCarPage }) =>
+        isCarPage ? "100%" : "calc(100svw - 4px - 8px - 50px - 24px - 39px)"};
     }
   }
 
   @media (max-width: 500px) {
     .slider {
-      width: 350px;
+      width: ${({ isCarPage }) => (isCarPage ? "100%" : "350px")};
     }
   }
   @media (max-width: 450px) {
     .slider {
-      width: 320px;
+      width: ${({ isCarPage }) => (isCarPage ? "100%" : "320px")};
     }
   }
   @media (max-width: 400px) {
     .slider {
-      width: 300px;
+      width: ${({ isCarPage }) => (isCarPage ? "100%" : "300px")};
     }
   }
   @media (max-width: 380px) {
     .slider {
-      width: 280px;
+      width: ${({ isCarPage }) => (isCarPage ? "100%" : "280px")};
     }
   }
   @media (max-width: 360px) {
     .slider {
-      width: 270px;
+      width: ${({ isCarPage }) => (isCarPage ? "100%" : "270px")};
     }
   }
   @media (max-width: 340px) {
     .slider {
-      width: 250px;
+      width: ${({ isCarPage }) => (isCarPage ? "100%" : "250px")};
     }
   }
   @media (max-width: 1399.9px) {
@@ -522,7 +538,7 @@ const StyledSlider = styled.div`
 
   @media (min-width: 1400px) {
     .slider {
-      width: 200px;
+      width: ${({ isCarPage }) => (isCarPage ? "100%" : "200px")};
     }
   }
 `;
