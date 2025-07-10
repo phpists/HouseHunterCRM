@@ -378,14 +378,14 @@ const StyledApp = styled.div`
   @media (max-width: 1200px) {
     grid-template-columns: 1fr;
     .app-content {
-      padding: 0px 24px;
+      padding: 0px 24px 40px;
     }
   }
 
   @media (max-width: 500px) {
     grid-template-columns: 1fr;
     .app-content {
-      padding: 0px 10px;
+      padding: 0px 10px 10px;
     }
   }
 `;

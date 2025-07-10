@@ -60,12 +60,12 @@ const Likes = ({ data, onChangeFilter, onFocus, onBlur }) => {
         title="Від"
         onFocus={onFocus}
         onBlur={onBlur}
-        value={data?.street_base_object?.count_likes_to}
+        value={data?.street_base_object?.count_likes_from}
         className="w-full !justify-start"
         onChange={(val) => {
           onChangeFilter("street_base_object", {
             ...data?.street_base_object,
-            count_likes_to: val,
+            count_likes_from: val,
           });
         }}
       />

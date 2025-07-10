@@ -3,15 +3,25 @@ import { PositionCard } from "../Ranger/Footer/PositionCard";
 import { Header } from "../Ranger/Header/Header";
 
 const Price = ({ onChangeFilter, data, onFocus, onBlur }) => {
+  const { price_change, price_change_up_procent } = data?.street_base_object;
   return (
     <>
       <Header label={"Ціна"} />
       <Wrapper>
         <PositionCard
           onFocus={onFocus}
-          onBlur={onBlur}
+          onBlur={() => {
+            onBlur();
+            if (price_change < 50 && price_change !== 0) {
+              onChangeFilter("street_base_object", {
+                ...data?.street_base_object,
+                price_change: 50,
+                price_change_up_procent: undefined,
+              });
+            }
+          }}
           title="Від"
-          value={data?.street_base_object?.price_change}
+          value={price_change}
           className="from-card"
           placeholder="min 50"
           mainType={"$"}
@@ -22,29 +32,31 @@ const Price = ({ onChangeFilter, data, onFocus, onBlur }) => {
               price_change_up_procent: undefined,
             });
           }}
-          error={
-            data?.street_base_object?.price_change < 50 &&
-            data?.street_base_object?.price_change !== 0
-          }
+          error={price_change < 50 && price_change !== 0}
         />
         <PositionCard
           title="Від"
           mainType={"％"}
           onFocus={onFocus}
-          onBlur={onBlur}
+          onBlur={() => {
+            onBlur();
+            if (price_change_up_procent < 2 && price_change_up_procent !== 0) {
+              onChangeFilter("street_base_object", {
+                ...data?.street_base_object,
+                price_change_up_procent: 2,
+              });
+            }
+          }}
           placeholder="min 2"
           onChange={(val) =>
             onChangeFilter("street_base_object", {
               ...data?.street_base_object,
-              price_change_period: val,
+              price_change_up_procent: val,
             })
           }
-          value={data?.street_base_object?.price_change_period}
+          value={price_change_up_procent}
           className="from-card"
-          error={
-            data?.street_base_object?.price_change_period < 2 &&
-            data?.street_base_object?.price_change_period !== 0
-          }
+          error={price_change_up_procent < 2 && price_change_up_procent !== 0}
         />
       </Wrapper>
     </>

@@ -412,4 +412,14 @@ const StyledObjectPriceHistory = styled.div`
   text {
     color: var(--bg-60) !important;
   }
+
+  @media (max-width: 768px) {
+    .modal {
+      max-width: 100%;
+      padding: 10px;
+    }
+    .object-history-cards {
+      overflow: hidden;
+    }
+  }
 `;

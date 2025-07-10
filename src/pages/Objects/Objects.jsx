@@ -88,6 +88,8 @@ const Objects = () => {
     sorting: "0",
     street_base_object: {
       sorting_id: "14",
+      // price_change_up: "2",
+      // price_change_period: "4",
     },
   };
 

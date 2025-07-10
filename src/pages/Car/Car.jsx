@@ -395,7 +395,7 @@ const Car = () => {
         {carData?.id_dtp_status !== "0" && (
           <Tag className="!text-xs" title={`Участь у дтп`} />
         )}
-        {carData?.id_custom === "0" && (
+        {carData?.id_custom === "2" && (
           <Tag className="!text-xs" title={`Не розмитнена`} />
         )}
       </div>
@@ -486,7 +486,7 @@ const Car = () => {
       {contacts?.phones[0]?.phone !== "380000000000" ? (
         <span
           onClick={() => setIsOpenContactsModal(true)}
-          className="sticky cursor-pointer bottom-0 w-full h-12 bg-green-500 flex items-center justify-center rounded"
+          className="cursor-pointer bottom-0 w-full h-12 bg-green-500 flex items-center justify-center rounded"
         >
           +{contacts?.phones[0]?.phone}
         </span>
