@@ -16,7 +16,7 @@ const AutoRia = ({
   const onBlur = () => onChangeInputFocus(false);
   return (
     <div className="section filterFieldsWrapper">
-      <Index data={data} onChange={onChangeFilter} />
+      <Index onBlur={onBlur} data={data} onChange={onChangeFilter} />
       <Divider />
 
       <Likes

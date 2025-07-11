@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { PositionCard } from "./PositionCard";
 import { SymbolSelect } from "./SymbolSelect";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Footer = ({
   currency,
@@ -22,8 +22,8 @@ export const Footer = ({
 
   const handleBlur = (type) => {
     setTimeout(() => {
-      type === "from" && setFromInputFocused(false);
-      type === "to" && setToInputFocused(false);
+      if (type === "from") setFromInputFocused(false);
+      if (type === "to") setToInputFocused(false);
     }, 500);
   };
 
@@ -38,14 +38,14 @@ export const Footer = ({
       onBlur && onBlur();
       setIsChanged(false);
     }
-  }, [fromInputFocused, toInputFocused]);
+  }, [fromInputFocused, toInputFocused, isChanged, onBlur]);
 
   return (
     <StyledFooter className="flex items-center">
       <PositionCard
         title="Від"
         onChange={(val) => {
-          onChange([noCeil ? val : Math.ceil(val), values[1]]);
+          onChange([val, values[1]]);
           setIsChanged(true);
         }}
         value={values[0]}
@@ -61,7 +61,7 @@ export const Footer = ({
       <PositionCard
         title="До"
         onChange={(val) => {
-          onChange([values[0], noCeil ? val : Math.ceil(val)]);
+          onChange([values[0], val]);
           setIsChanged(true);
         }}
         value={values[1]}

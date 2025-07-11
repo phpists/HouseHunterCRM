@@ -29,7 +29,7 @@ export const PositionCard = ({
       }`}
       onClick={() => inputRef.current.focus()}
     >
-      <div className="title">{title}</div>
+      <div className="title whitespace-nowrap">{title}</div>
       <div className="value">
         <input
           value={

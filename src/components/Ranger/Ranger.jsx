@@ -40,12 +40,13 @@ export const Ranger = ({
   onFocus,
   noCeil,
   noRange,
+  stepSize = 1,
 }) => {
   const { getTrackProps, handles, segments } = useRanger({
     values,
     min,
     max,
-    stepSize: 1,
+    stepSize: stepSize,
     onDrag: (val) => {
       onChange(val);
       onFocus && onFocus();

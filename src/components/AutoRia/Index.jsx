@@ -69,7 +69,7 @@ const Title = styled.div`
   }
 `;
 
-const Index = ({ data, onChange }) => {
+const Index = ({ data, onChange, onBlur }) => {
   const [rating, setRating] = useState(
     data?.street_base_object?.index_overbuying_from
   );
@@ -95,14 +95,14 @@ const Index = ({ data, onChange }) => {
   return (
     <RatingContainer>
       <Title>
-        <p className="label">Індекс зац.</p>
+        <p className="label">Індекс зацікавленості</p>
         <span>
           * {data?.street_base_object?.index_overbuying_from || 0}/10 це авто,
           де найбільший % лайків{" "}
         </span>
       </Title>
       <PositionCard
-        title="Вiд"
+        title="iз 10"
         value={data?.street_base_object?.index_overbuying_from}
         className="w-full !justify-start"
         error={data?.street_base_object?.index_overbuying_from > 10}
@@ -111,6 +111,15 @@ const Index = ({ data, onChange }) => {
             ...data?.street_base_object,
             index_overbuying_from: val,
           });
+        }}
+        onBlur={() => {
+          onBlur();
+          if (data?.street_base_object?.index_overbuying_from > 10) {
+            onChange("street_base_object", {
+              ...data?.street_base_object,
+              index_overbuying_from: 10,
+            });
+          }
         }}
       />
       {/* <StarWrapper onMouseLeave={handleMouseLeave}>

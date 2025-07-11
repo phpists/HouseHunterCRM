@@ -308,6 +308,7 @@ export const Main = ({
                   filters?.volume_engine_from ?? "0",
                   filters?.volume_engine_to ?? "0",
                 ]}
+                stepSize={0.1}
                 onFocus={() => !isInputFocused && onChangeInputFocus(true)}
                 onBlur={() => onChangeInputFocus(false)}
                 onChange={(values) => {
@@ -322,6 +323,7 @@ export const Main = ({
                       onChangeFilter("update", { ...filters, ...values }, true)
                   );
                 }}
+                noCeil
               />
               <Divider />
             </React.Fragment>

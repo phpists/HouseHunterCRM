@@ -10,6 +10,8 @@ export const VolumeEngine = ({
   onBlur,
   onFocus,
   mainType,
+  stepSize = 1,
+  noCeil,
 }) => {
   return (
     <StyledPrice
@@ -25,6 +27,8 @@ export const VolumeEngine = ({
         onBlur={onBlur}
         noRange
         mainType={mainType}
+        stepSize={stepSize}
+        noCeil={noCeil}
       />
     </StyledPrice>
   );
