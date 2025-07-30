@@ -125,6 +125,8 @@ export const ObjectCard = memo(
           ref={ref}
         >
           <Photo
+            onToggleFavoriteStatus={onToggleFavoriteStatus}
+            data={data}
             photos={
               checkIsArray(checkIsJSON(data?.photo_links_json))?.length > 0
                 ? checkIsArray(checkIsJSON(data?.photo_links_json))
@@ -137,6 +139,7 @@ export const ObjectCard = memo(
             onOpenPriceHistory={onOpenPriceHistory}
             phones={phones}
             fetchClient={fetchClient}
+            onOpenCommentAutoria={onOpenCommentAutoria}
           />
           <CarInfo
             data={data}
@@ -144,6 +147,7 @@ export const ObjectCard = memo(
             onUpdateField={onUpdateField}
             noEdit={noEdit}
             onChangeTags={onChangeTags}
+            onOpenCommentAutoria={onOpenCommentAutoria}
           />
           <ShowMore
             clientId={data?.id_client}
@@ -193,12 +197,18 @@ const StyledObjectCard = styled.div`
   border: 1px solid transparent;
   cursor: pointer;
   display: grid;
-  grid-template-columns: max-content minmax(300px, 400px) 1fr max-content;
+  grid-template-columns: max-content minmax(300px, 500px) 1fr max-content;
   gap: 20px;
   width: 100%;
   @media (max-width: 1110px) {
     grid-template-columns: 230px 1fr;
     padding-right: 50px;
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    padding-right: 10px;
   }
   /* min-height: 160px; */
 `;

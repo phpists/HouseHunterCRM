@@ -2,7 +2,10 @@ import styled from "styled-components";
 import { Price } from "./Info/Price";
 import { Tag } from "./MainInfo/Tags/Tag";
 import { useEffect, useState } from "react";
-import { handleGetLocationAllPath } from "../../utilits";
+import {
+  getFromCarMainInfoFiledsOptions,
+  handleGetLocationAllPath,
+} from "../../utilits";
 import {
   useGetLocationsQuery,
   useGetRubricsQuery,
@@ -13,6 +16,12 @@ import {
   useLazyGetCarBodyQuery,
 } from "../../store/objects/objects.api";
 import { car_body_type, CarMainInfoFileds } from "../../constants";
+import rst from "../../assets/images/rst.svg";
+import olx from "../../assets/images/olx.png";
+import Autoria from "../../assets/images/autoria.svg";
+import { ReactComponent as Exchange } from "../../assets/images/exchange.svg";
+import { ReactComponent as ChatIcon } from "../../assets/images/chat-grey.svg";
+import { ActionButton } from "./ShowMore/ActionButton";
 
 export const CarMainInfo = ({
   data,
@@ -20,6 +29,8 @@ export const CarMainInfo = ({
   onClick,
   phones,
   fetchClient,
+  onOpenCommentAutoria,
+  onToggleFavoriteStatus,
 }) => {
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
@@ -92,91 +103,200 @@ export const CarMainInfo = ({
     }
   };
 
+  const drive_type = getFromCarMainInfoFiledsOptions(
+    "drive_type",
+    data?.drive_type
+  );
+
+  const id_type_body = data?.data?.filter(
+    ({ id }) => id === data?.id_type_body
+  )[0]?.name;
+
   return (
     <StyledCarMainInfo>
       <div className="car-info-header">
-        {" "}
-        <div
-          className="main-title clickable mb-2"
-          onClick={(e) => {
-            e.stopPropagation();
-            addViewLink(data.id);
-            onClick(e);
-            // if (data?.link) {
-            //   window.open(data?.link, "_blank");
-            // }
-          }}
-        >
-          {`${data?.brand_name} ${data?.model_name} ${data?.year}`}
+        <div>
+          <h1 className="flex items-center gap-1 text-md">
+            <div
+              className="cursor-pointer"
+              onClick={() => data?.link && window.open(data?.link, "_blank")}
+            >
+              {data.id_source === "1" && (
+                <img src={Autoria} alt="Autoria" className="w-10" />
+              )}
+              {data.id_source === "2" && (
+                <img src={olx} alt="olx" className="w-6" />
+              )}
+              {data.id_source === "3" && (
+                <img src={rst} alt="RST" className="w-8" />
+              )}
+            </div>
+            <span
+              className="cursor-pointer hover:underline"
+              onClick={(e) => {
+                e.stopPropagation();
+                addViewLink(data.id);
+                onClick(e);
+              }}
+            >{`${data?.brand_name} ${data?.model_name} ${data?.year}`}</span>
+          </h1>
         </div>
-        <div onClick={onOpenPriceHistory}>
-          {" "}
-          <Price data={data} />
+        <div className="flex justify-between items-center">
+          <div onClick={onOpenPriceHistory}>
+            <Price data={data} />
+          </div>
+          {data?.comment_autoria && onOpenCommentAutoria && (
+            <ActionButton
+              Icon={ChatIcon}
+              onClick={onOpenCommentAutoria}
+              className={`md:hidden ${
+                data?.comment_autoria && "chat-active pulse"
+              }`}
+            />
+          )}
         </div>
       </div>
-      <div onClick={(e) => onClick(e)}>
-        <div className="top-tags">
-          <Tag
-            title={`${
-              Number(data?.сar_mileage) / 1000 === 0
-                ? "-"
-                : Number(data?.сar_mileage) / 1000
-            } тис. км.`}
-            iIcom="bi bi-speedometer2"
-          />
-          <Tag
-            title={`${formatedLocations
-              ?.find((l) => l?.value === data?.id_location)
-              ?.title?.split("=>")
-              ?.join(" • ")}`}
-            iIcom="bi bi-geo-alt"
-          />
-          <Tag
-            title={`${
-              Number(data?.volume_engine) / 1000 === 0 ||
-              data?.volume_engine === "0"
-                ? "-"
-                : Number(data?.volume_engine) / 1000
-            } • ${handleGetTagValue("id_type_fuel", data?.id_type_fuel) ?? ""}`}
-            iIcom="bi bi-fuel-pump"
-          />
-          <Tag
-            title={`${
-              data?.kpp === "0" ? "-" : handleGetTagValue("kpp", data?.kpp)
-            }`}
-            iIcom="bi bi-gear"
-          />
-        </div>{" "}
+
+      <div className="grid grid-cols-2 gap-1 mt-1">
         <Tag
           title={`${
-            data?.drive_type === "0"
+            Number(data?.сar_mileage) / 1000 === 0
               ? "-"
-              : handleGetTagValue("drive_type", data?.drive_type)
-          } • ${handleGetTagValue("id_type_body", data?.id_type_body)} • ${
-            data.index_overbuying
-          }/10 • TOP ${data?.data_level}`}
-          className="mb-2.5"
+              : Number(data?.сar_mileage) / 1000
+          } тис. км.`}
+          iIcom="bi bi-circle-fill"
         />
-      </div>
-      <span onClick={searchByNumber}>
         <Tag
-          titleHtml={
-            <>
-              {handleCheckIsNew() ? "NEW" : ""} •
-              <span className={`mx-[1px] ${data?.Count_object > 5 && "red"}`}>
-                {data?.Count_object > 10
-                  ? " Перекуп "
-                  : data?.Count_object > 5
-                  ? " Перекуп ? "
-                  : data?.Count_object > 2
-                  ? " Перекуп ? "
-                  : " Продавець "}
-                ({data?.Count_object})
-              </span>
-            </>
-          }
+          title={getFromCarMainInfoFiledsOptions("kpp", data.kpp)}
+          iIcom="bi bi-circle-fill"
         />
-      </span>
+        <Tag
+          title={`${getFromCarMainInfoFiledsOptions(
+            "id_type_fuel",
+            data.id_type_fuel
+          )} ${
+            data.volume_engine && data.volume_engine !== "0"
+              ? `${Number(data.volume_engine) / 1000} л`
+              : ""
+          }`}
+          iIcom="bi bi-circle-fill"
+        />
+        <Tag title={data.location_name} iIcom="bi bi-circle-fill" />
+      </div>
+      <Tag
+        className="text-xs mt-1"
+        iIcom="bi bi-circle-fill"
+        titleHtml={
+          <>
+            <span>{drive_type && drive_type + " • "}</span>
+            <span>{id_type_body && id_type_body + " • "}</span>
+            <span>{data.rubric_name && data.rubric_name + " • "}</span>
+            <span>{data?.name && data?.name + " • "}</span>
+          </>
+        }
+      />
+
+      <div className="flex my-1 gap-1">
+        {data?.exchangePossible !== "0" && (
+          <>
+            <Tag
+              Icon={<Exchange />}
+              className="!hidden md:!flex !bg-orange-500/20 !text-orange-400"
+              title={`Обмін`}
+            />
+            <Tag
+              Icon={<Exchange />}
+              className="md:!hidden !bg-orange-500/20 !text-orange-400"
+            />
+          </>
+        )}
+        {data?.exchangeType.length !== 0 && <Tag title={data?.exchangeType} />}
+        {data?.id_dtp_status !== "0" && <Tag title={`Участь у дтп`} />}
+        {data?.id_custom === "2" && <Tag title={`Не розмитнена`} />}
+      </div>
+
+      {data.VIN && (
+        <div className="hidden md:flex flex-wrap gap-1 items-center">
+          <Tag
+            className="!text-xs cursor-pointer"
+            title={`VIN ${data.VIN}`}
+            onClick={() => {
+              window.open(`/objects?VIN=${data.VIN}`, "_blank");
+            }}
+          />
+
+          <Tag
+            className="!text-xs cursor-pointer"
+            сopyValue={data.VIN}
+            iIcom="bi bi-copy"
+            copy
+          />
+          <p
+            onClick={() =>
+              window.open(
+                `https://www.google.com/search?q=VIN+${data.VIN}`,
+                "_blank"
+              )
+            }
+            className="cursor-pointer underline text-white/60 text-xs"
+          >
+            шукати в Google
+          </p>
+        </div>
+      )}
+
+      <div className="hidden md:flex justify-between items-center">
+        <div
+          className="mt-1 flex items-center gap-4 cursor-pointer"
+          onClick={() => {
+            if (data.id_source === "2") {
+              const { owner_id, id_source } = data?.clients_inf?.contacts;
+              window.open(
+                `/objects?showOwnerObject=${owner_id}&ownerSource=${id_source}`,
+                "_blank"
+              );
+            } else {
+              window.open(
+                `/objects?findClientsObjects=${data?.clients_inf?.contacts?.phones[0]?.phone?.replace(
+                  "38",
+                  ""
+                )}`,
+                "_blank"
+              );
+            }
+          }}
+        >
+          {data?.Count_object > 10 ? (
+            <Tag className="!bg-red-500/20 !text-red-400" title={"Перекуп"} />
+          ) : data?.Count_object > 5 ? (
+            <Tag
+              className=" !bg-red-500/20 !text-red-400"
+              title={"Перекуп ?"}
+            />
+          ) : data?.Count_object > 2 ? (
+            <Tag title={"Перекуп ?"} />
+          ) : (
+            <Tag
+              className=" !bg-green-500/20 !text-green-400"
+              title={`Продавець ${
+                data?.Count_object && `(${data?.Count_object})`
+              }`}
+            />
+          )}
+        </div>
+        <div className="flex gap-2">
+          <Tag
+            className={"!bg-transparent"}
+            title={data?.count_views}
+            iIcom="bi bi-eye"
+          />
+          <Tag
+            className={"!bg-transparent"}
+            title={data?.count_likes}
+            iIcom="bi bi-heart"
+          />
+        </div>
+      </div>
     </StyledCarMainInfo>
   );
 };
@@ -209,5 +329,11 @@ const StyledCarMainInfo = styled.div`
   }
   .red {
     color: #f94343;
+  }
+
+  @media (max-width: 768px) {
+    .car-info-header {
+      grid-template-columns: 1fr;
+    }
   }
 `;

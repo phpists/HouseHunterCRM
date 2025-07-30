@@ -1,7 +1,7 @@
 import { CARS_STATUSES } from "../Base/Base";
 import { Tag } from "../ObjectCard/MainInfo/Tags/Tag";
 
-const DaysOnSale = ({ carData }) => {
+const DaysOnSale = ({ carData, isCarPage }) => {
   const date = new Date(carData.dt_add_in_source * 1000);
 
   const formattedDate = date.toLocaleDateString("uk-UA", {
@@ -23,7 +23,8 @@ const DaysOnSale = ({ carData }) => {
   )[0].title;
 
   return (
-    <p className="text-sm text-white/60 mb-6 flex gap-1 items-center">
+    <p className="text-sm text-white/60 flex gap-1 items-center">
+      {!isCarPage && <p>{formattedDate}</p>}
       <Tag
         className={`${
           carData.id_status_add === "1" && "!bg-green-500/30 !bg-text-400"
@@ -32,7 +33,7 @@ const DaysOnSale = ({ carData }) => {
         } !text-xs`}
         title={status}
       />
-      {`${diffDays} днів у продажі ${formattedDate}`}
+      {isCarPage && `${diffDays} днів у продажі ${formattedDate}`}
     </p>
   );
 };

@@ -73,13 +73,13 @@ export const ShowMore = ({
         />
       )}{" "}
       <ActionButton Icon={PhoneIcon} onClick={onOpenPhonesModal} />{" "}
-      {onOpenCommentAutoria && (
+      {/* {onOpenCommentAutoria && (
         <ActionButton
           Icon={ChatIcon}
           onClick={onOpenCommentAutoria}
           className={`${commentAutoria && "chat-active pulse"}`}
         />
-      )}
+      )} */}
       <Dropdown
         clientId={clientId}
         id={id}
@@ -155,5 +155,13 @@ const StyledShowMore = styled.button`
     position: absolute;
     top: 10px;
     right: 10px;
+  }
+  @media (max-width: 768px) {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
   }
 `;

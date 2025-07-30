@@ -4,6 +4,7 @@ import avatar2 from "../assets/images/avatars/2.svg";
 import avatar3 from "../assets/images/avatars/3.svg";
 import avatar4 from "../assets/images/avatars/4.svg";
 import { ReactComponent as CloseIcon } from "../assets/images/close-modal.svg";
+import { CarMainInfoFileds } from "../constants";
 
 export const showAlert = (type, msg) => {
   let timeout;
@@ -576,4 +577,9 @@ export const handleGetParentLocationId = (locationId, locations) => {
   const names = name?.split(" => ");
   const parentName = names?.[names?.length - 1];
   return locations.find(({ title }) => title === parentName)?.value;
+};
+
+export const getFromCarMainInfoFiledsOptions = (fieldName, index) => {
+  return CarMainInfoFileds.filter(({ field }) => field === fieldName)[0]
+    .field_option[+index];
 };

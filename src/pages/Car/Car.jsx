@@ -23,7 +23,7 @@ import Autoria from "../../assets/images/autoria.svg";
 import Message from "../../assets/images/message.svg";
 import Share from "../../assets/images/share.svg";
 import { useAppSelect } from "../../hooks/redux";
-import { handleCopy } from "../../utilits";
+import { getFromCarMainInfoFiledsOptions, handleCopy } from "../../utilits";
 import DaysOnSale from "../../components/Car/DaysOnSale";
 import { auth } from "../../store/auth/auth.api";
 
@@ -58,11 +58,6 @@ const Car = () => {
     const parsedPhotos = JSON.parse(carData.photo_links_json || "[]");
     photos = parsedPhotos.map((p) => ({ name: p }));
   } catch {}
-
-  const getFromCarMainInfoFiledsOptions = (fieldName, index) => {
-    return CarMainInfoFileds.filter(({ field }) => field === fieldName)[0]
-      .field_option[+index];
-  };
 
   const drive_type = getFromCarMainInfoFiledsOptions(
     "drive_type",
@@ -481,10 +476,10 @@ const Car = () => {
         </div>
       )}
 
-      <DaysOnSale carData={carData} />
+      <DaysOnSale isCarPage carData={carData} />
 
       {contacts?.phones[0]?.phone !== "380000000000" ? (
-        <div className="flex flex-col gap-3">
+        <div className="mt-6 flex flex-col gap-3">
           {contacts.phones.map(({ phone }) => (
             <>
               <span
