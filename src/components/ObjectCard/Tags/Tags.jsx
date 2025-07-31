@@ -28,6 +28,7 @@ export const Tags = ({
   ad,
   onUpdateField,
   noEdit,
+  isLeftDropdown,
 }) => {
   const { id } = useParams();
   const { data: tagsList } = useGetTagsListQuery({
@@ -179,6 +180,7 @@ export const Tags = ({
           >
             <Tag title="+" />
             <Dropdown
+              isLeftDropdown={isLeftDropdown}
               options={[
                 ...(tagsList?.data?.map((value) => ({
                   title:

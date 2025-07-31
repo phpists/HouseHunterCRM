@@ -210,7 +210,9 @@ export const CarMainInfo = ({
             />
           </>
         )}
-        {data?.exchangeType.length !== 0 && <Tag title={data?.exchangeType} />}
+        {data?.exchangePossible !== "0" && data?.exchangeType.length !== 0 && (
+          <Tag title={data?.exchangeType} />
+        )}
         {data?.id_dtp_status !== "0" && <Tag title={`Участь у дтп`} />}
         {data?.id_custom === "2" && <Tag title={`Не розмитнена`} />}
       </div>

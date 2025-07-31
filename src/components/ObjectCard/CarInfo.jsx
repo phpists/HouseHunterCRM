@@ -70,8 +70,8 @@ export const CarInfo = ({
       )}
 
       <div className="tags" ref={tagsRef}>
-        <div className="!hidden md:flex gap-2 items-center">
-          <div className="flex gap-2 my-4">
+        <div className="!hidden md:!flex gap-2 items-center">
+          <div className="flex gap-2">
             {data?.tag_faster !== "0" && (
               <Tag
                 className="!text-xs !bg-red-500/20 !text-red-400"
@@ -128,6 +128,7 @@ const StyledCarInfo = styled.div`
     overflow: auto;
   }
   .tags {
+    display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 5px;

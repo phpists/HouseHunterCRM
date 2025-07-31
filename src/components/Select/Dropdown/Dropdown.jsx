@@ -8,8 +8,12 @@ export const Dropdown = ({
   editValue,
   activeValue,
   onDelete,
+  isLeftDropdown,
 }) => (
-  <StyledDropdown className="hide-scroll select-none selectDropdown">
+  <StyledDropdown
+    isLeftDropdown={isLeftDropdown}
+    className="hide-scroll select-none selectDropdown"
+  >
     {options?.length === 0 && editValue ? null : options?.length === 0 ? (
       <div className="empty-select">Пусто</div>
     ) : (
@@ -29,7 +33,7 @@ const StyledDropdown = styled.div`
   position: absolute;
   top: 100%;
   width: 100%;
-  right: 0;
+  ${({ isLeftDropdown }) => (isLeftDropdown ? "  left: 0;" : "right: 0;")}
   background: var(--active-bg);
   border-radius: 0 0 6px 6px;
   max-height: 230px;

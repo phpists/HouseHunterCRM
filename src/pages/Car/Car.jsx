@@ -26,6 +26,9 @@ import { useAppSelect } from "../../hooks/redux";
 import { getFromCarMainInfoFiledsOptions, handleCopy } from "../../utilits";
 import DaysOnSale from "../../components/Car/DaysOnSale";
 import { auth } from "../../store/auth/auth.api";
+import { ReactComponent as Exchange } from "../../assets/images/exchange.svg";
+import { ReactComponent as ChatIcon } from "../../assets/images/chat-grey.svg";
+import { Tags } from "../../components/ObjectCard/Tags/Tags";
 
 const Car = () => {
   const { id } = useParams();
@@ -66,6 +69,10 @@ const Car = () => {
   const id_type_body = carBody?.data?.filter(
     ({ id }) => id === carData?.id_type_body
   )[0]?.name;
+
+  // change id_hash to id
+  const { id_hash, ...rest } = carData || {};
+  const renamedCarData = { id: id_hash, ...rest };
 
   if (isLoading) return <div>Завантаження...</div>;
   if (!carData) return <div>Не вдалося завантажити дані про автомобіль.</div>;
@@ -322,9 +329,39 @@ const Car = () => {
 
       <p className="text-xs my-4 text-white/60">{carData?.description}</p>
 
+      {carData?.technicalCondition2.length !== 0 && (
+        <div className="mb-4">
+          <h1 className="text-xs text-white/60">Техн. стан:</h1>
+          <p className="text-xs text-white">{carData?.technicalCondition2}</p>
+        </div>
+      )}
+
+      {carData?.paintCondition.length !== 0 && (
+        <div className="mb-4">
+          <h1 className="text-xs text-white/60">Лакофарбове покриття:</h1>
+          <p className="text-xs text-white">{carData?.paintCondition}</p>
+        </div>
+      )}
+
+      <div className="mb-4 flex gap-2">
+        <Tags
+          data={renamedCarData}
+          onUpdateField={() => {}}
+          noEdit={() => {}}
+          onChangeTags={() => {}}
+          isLeftDropdown
+        />
+      </div>
+
       {carData.comment_autoria?.length > 1 && (
         <div className="my-4 bg-[var(--card-bg)] rounded px-2 py-3">
-          <h1 className="text-lg font-bold">Коментар</h1>
+          <div className="flex items-center gap-2">
+            <div className="relative">
+              <ChatIcon width={20} height={20} />
+              <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
+            </div>
+            <h1 className="text-md font-bold">Коментар</h1>
+          </div>
           <div
             className="my-2 text-sm text-white/60 "
             dangerouslySetInnerHTML={{
@@ -383,7 +420,8 @@ const Car = () => {
       <div className="flex my-4 gap-2">
         {carData?.exchangePossible !== "0" && (
           <Tag
-            className="!text-xs !bg-orange-500/20 !text-orange-400"
+            Icon={<Exchange />}
+            className="!text-xs flex !bg-orange-500/20 !text-orange-400"
             title={`Можливий обмін`}
           />
         )}
