@@ -101,7 +101,7 @@ export const Photo = ({
             ref={moreRef}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="threbtn-dropdown bg-white w-7 h-7 flex items-center justify-center rounded absolute right-[5px] top-[10px] z-60">
+            <div className="flex md:hidden threbtn-dropdown bg-white w-7 h-7 items-center justify-center rounded absolute right-[5px] top-[10px] z-60">
               <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />
 
               <Dropdown

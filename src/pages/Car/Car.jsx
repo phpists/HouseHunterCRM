@@ -6,7 +6,7 @@ import {
   useLazyGetOpenObjectQuery,
 } from "../../store/objects/objects.api";
 import { Slider } from "../../components/ObjectCard/Slider/Slider";
-import { CarMainInfoFileds, CarsColor } from "../../constants";
+import { CarMainInfoFileds, CarsColor, SMSTags } from "../../constants";
 import { Tag } from "../../components/ObjectCard/MainInfo/Tags/Tag";
 import { handleGetPrices } from "../../components/ObjectCard/Info/Price";
 import { CARS_STATUSES } from "../../components/Base/Base";
@@ -29,6 +29,8 @@ import { auth } from "../../store/auth/auth.api";
 import { ReactComponent as Exchange } from "../../assets/images/exchange.svg";
 import { ReactComponent as ChatIcon } from "../../assets/images/chat-grey.svg";
 import { Tags } from "../../components/ObjectCard/Tags/Tags";
+import SMSModal from "../../components/Car/SMSModal";
+import ContactsModal from "../../components/Car/ContactsModal";
 
 const Car = () => {
   const { id } = useParams();
@@ -38,6 +40,7 @@ const Car = () => {
   const [contacts, setContacts] = useState(null);
   const [isOpenHistoryModal, setIsOpenHistoryModal] = useState(false);
   const [isOpenContactsModal, setIsOpenContactsModal] = useState(false);
+  const [isOpenSMSModal, setIsOpenSMSModal] = useState(false);
   const { user } = useAppSelect((state) => state.auth);
   const carColor = CarsColor.filter(({ id }) => id === carData?.id_color)[0];
 
@@ -87,82 +90,15 @@ const Car = () => {
       )}
 
       {isOpenContactsModal && (
-        <Modal onClose={() => setIsOpenContactsModal(false)} title="Contacts">
-          <div className="flex flex-col justify-center gap-4">
-            {contacts?.phones.map(({ phone }) => (
-              <div className="flex flex-col w-full items-center gap-2">
-                <h1 className="text-xl">+{phone}</h1>
-                <div className="grid grid-cols-5 w-full">
-                  <div className="flex justify-center">
-                    <Tag
-                      className="!text-2xl cursor-pointer w-12 !h-12 justify-center"
-                      iIcom={"bi bi-copy"}
-                      сopyValue={`+${phone}`}
-                      copy
-                    />
-                  </div>
-                  <a
-                    href={`sms:${phone}?&amp;body=${user.sms_template.replace(
-                      "[TEL]",
-                      phone
-                    )}`}
-                    className="cursor-pointer flex justify-center"
-                    aria-label="Call phone number"
-                  >
-                    <span className="flex items-center justify-center bg-slate-600 rounded-lg w-12 h-12">
-                      SMS
-                    </span>
-                  </a>
-                  <a
-                    href={`viber://contact?number=${phone}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="cursor-pointer flex justify-center"
-                    aria-label="Open Viber chat"
-                    onClick={(e) => {
-                      if (
-                        !navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/)
-                      ) {
-                        e.preventDefault();
-                        alert(
-                          "Please open Viber on your mobile device to start a chat."
-                        );
-                      }
-                    }}
-                  >
-                    <span className="flex items-center justify-center bg-purple-600 rounded-lg w-12 h-12">
-                      <img className="w-8 h-8" src={Viber} alt="Viber icon" />
-                    </span>
-                  </a>
-                  <a
-                    href={`https://t.me/+${phone}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="cursor-pointer flex justify-center"
-                    aria-label="Open Telegram chat"
-                  >
-                    <span className="flex items-center justify-center bg-blue-600 rounded-lg w-12 h-12">
-                      <img
-                        className="w-8 h-8"
-                        src={Telegram}
-                        alt="Telegram icon"
-                      />
-                    </span>
-                  </a>
-                  <a
-                    href={`tel:+${phone}`}
-                    className="cursor-pointer flex justify-center"
-                    aria-label="Call phone number"
-                  >
-                    <span className="flex items-center justify-center bg-green-600 rounded-lg w-12 h-12">
-                      <img className="w-8 h-8" src={Phone} alt="Phone icon" />
-                    </span>
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Modal>
+        <ContactsModal
+          contacts={contacts}
+          user={user}
+          onClose={() => setIsOpenContactsModal(false)}
+        />
+      )}
+
+      {isOpenSMSModal && (
+        <SMSModal closeModal={() => setIsOpenSMSModal(false)} />
       )}
 
       <Slider photos={photos} data={carData} isCarPage />
@@ -597,7 +533,10 @@ const Car = () => {
               </div>
             </>
           ))}
-          <span className="text-center w-full my-2 text-white/80">
+          <span
+            onClick={() => setIsOpenSMSModal(true)}
+            className="cursor-pointer hover:underline text-center w-full my-2 text-white/80"
+          >
             Налаштування SMS шаблону
           </span>
         </div>
