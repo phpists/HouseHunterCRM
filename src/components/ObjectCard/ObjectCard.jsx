@@ -126,7 +126,33 @@ export const ObjectCard = memo(
         >
           <Photo
             onToggleFavoriteStatus={onToggleFavoriteStatus}
+            isFavorite={data?.favorite}
+            onFindSimilar={onFindSimilar}
+            isEdit={isEdit}
             data={data}
+            isAccess={data?.acsses_change}
+            onHide={onHide}
+            onAddToSelection={onAddToSelection}
+            onOpenTagsHistory={onOpenTagsHistory}
+            onOpenPriceHistory={onOpenPriceHistory}
+            link={data?.link ?? data?.url_resource}
+            isHideObjects={isHideObjects}
+            onOpenCommetHistory={onOpenCommetHistory}
+            onDelete={onDelete}
+            isStreetBase={data?.obj_street_base === "1"}
+            searchTag={searchTag}
+            onMarkPhone={onMarkPhone}
+            isDeleted={isDeleted}
+            onRestore={onRestore}
+            onDeleteFinally={onDeleteFinally}
+            onOpenDeleteReason={onOpenDeleteReason}
+            onFastSelection={onFastSelection}
+            onAdvertise={onAdvertise}
+            onAdvertiseTelegram={onAdvertiseTelegram}
+            onDeleteHistory={onDeleteHistory}
+            onDeleteAd={onDeleteAd}
+            idRubric={data?.id_rubric}
+            ad={ad}
             photos={
               checkIsArray(checkIsJSON(data?.photo_links_json))?.length > 0
                 ? checkIsArray(checkIsJSON(data?.photo_links_json))

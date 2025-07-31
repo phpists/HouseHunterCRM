@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { PhotoSlider } from "react-photo-view";
 import styled from "styled-components";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
@@ -8,9 +8,59 @@ import { NewTag } from "../../pages/Client/Object/Maininfo/Slider/NewTag";
 import Heart from "../../assets/images/red-heart.svg";
 import EmptyHeart from "../../assets/images/empty-heart.svg";
 import Star from "../../assets/images/star.svg";
+import { Button } from "./ShowMore/Button";
+import { Dropdown } from "./ShowMore/Dropdown";
+import { useLazyAddToFavoritesQuery } from "../../store/objects/objects.api";
+import { handleCheckAccess, handleResponse, showAlert } from "../../utilits";
 
-export const Photo = ({ photos, data, onToggleFavoriteStatus }) => {
+export const Photo = ({
+  photos,
+  data,
+  onToggleFavoriteStatus,
+  onFindSimilar,
+  isFavorite,
+  isEdit,
+  isAccess,
+  onHide,
+  onAddToSelection,
+  onOpenTagsHistory,
+  onOpenPriceHistory,
+  link,
+  isHideObjects,
+  onOpenCommetHistory,
+  onDelete,
+  isStreetBase,
+  searchTag,
+  onMarkPhone,
+  isDeleted,
+  onRestore,
+  onDeleteFinally,
+  onOpenDeleteReason,
+  onFastSelection,
+  onAdvertise,
+  onAdvertiseTelegram,
+  ad,
+  onDeleteHistory,
+  onDeleteAd,
+  idRubric,
+}) => {
+  const [isFocusedBtn, setIsFocusedBtn] = useState(false);
   const [openView, setOpenView] = useState(false);
+  const moreRef = useRef(null);
+
+  const handleCloseDropdown = () => moreRef.current.blur();
+
+  const handleFindSimilar = () => {
+    onFindSimilar();
+    handleCloseDropdown();
+  };
+
+  const handleDelete = () => {
+    onDelete && onDelete();
+    handleCloseDropdown();
+  };
+
+  const handleFocus = () => moreRef.current.focus();
 
   return (
     <>
@@ -46,12 +96,55 @@ export const Photo = ({ photos, data, onToggleFavoriteStatus }) => {
             </div>
           </div>
 
+          <DropdownWrapper
+            isfocusedbtn={isFocusedBtn?.toString()}
+            ref={moreRef}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="threbtn-dropdown bg-white w-7 h-7 flex items-center justify-center rounded absolute right-[5px] top-[10px] z-60">
+              <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />
+
+              <Dropdown
+                clientId={data?.id_client}
+                id={data?.id}
+                onToggleFavoriteStatus={onToggleFavoriteStatus}
+                isFavorite={isFavorite}
+                onFindSimilar={onFindSimilar ? handleFindSimilar : null}
+                isEdit={isEdit && isAccess}
+                onHide={onHide}
+                onAddToSelection={onAddToSelection}
+                onOpenTagsHistory={onOpenTagsHistory}
+                onOpenPriceHistory={onOpenPriceHistory}
+                link={link}
+                isHideObjects={isHideObjects}
+                onOpenCommetHistory={onOpenCommetHistory}
+                onDelete={onDelete && isAccess ? handleDelete : null}
+                isStreetBase={isStreetBase}
+                searchTag={searchTag}
+                onFocus={handleFocus}
+                onMarkPhone={onMarkPhone}
+                onClose={handleCloseDropdown}
+                isDeleted={isDeleted}
+                onRestore={onRestore}
+                onDeleteFinally={onDeleteFinally}
+                onOpenDeleteReason={onOpenDeleteReason}
+                onFastSelection={onFastSelection}
+                onAdvertise={onAdvertise}
+                onAdvertiseTelegram={onAdvertiseTelegram}
+                ad={ad}
+                onDeleteHistory={onDeleteHistory}
+                onDeleteAd={onDeleteAd}
+                idRubric={idRubric}
+              />
+            </div>
+          </DropdownWrapper>
+
           <div
             onClick={(e) => {
               e.stopPropagation();
               onToggleFavoriteStatus();
             }}
-            className="cursor-pointer bg-white w-7 h-7 flex items-center justify-center rounded absolute right-[5px] bottom-[10px] z-10"
+            className="flex md:hidden cursor-pointer bg-white w-7 h-7 items-center justify-center rounded absolute right-[5px] bottom-[10px] z-10"
           >
             {data?.favorite ? (
               <img className="w-4 h-4" src={Heart} alt="" />
@@ -98,5 +191,19 @@ const StyledPhoto = styled.img`
   @media (max-width: 768px) {
     width: 100%;
     object-fit: cover;
+  }
+`;
+
+const DropdownWrapper = styled.div`
+  ${({ isfocusedbtn }) =>
+    isfocusedbtn === "true" &&
+    `
+   .dropdown {
+      opacity: 1;
+      visibility: visible;
+    }
+`}
+  .threbtn-dropdown path {
+    fill: #3d3d3d;
   }
 `;

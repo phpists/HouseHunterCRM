@@ -31,6 +31,7 @@ export const CarMainInfo = ({
   fetchClient,
   onOpenCommentAutoria,
   onToggleFavoriteStatus,
+  onFindSimilar,
 }) => {
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
