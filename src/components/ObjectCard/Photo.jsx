@@ -83,18 +83,20 @@ export const Photo = ({
             )}
           </div>
 
-          <div className="text-xs stats absolute left-0 bottom-[10px] z-10">
-            <div
-              className={`${+data.index_overbuying >= 8 && "bg-red-400"} ${
-                +data.index_overbuying >= 6 && "bg-orange-400"
-              } ${
-                +data.index_overbuying <= 5 && "bg-gray-400"
-              }  items-center flex gap-2 pl-2 pr-1 py-0.5`}
-            >
-              <img src={Star} alt="" />
-              <span>{data.index_overbuying}/10</span>
+          {data.index_overbuying !== "0" && (
+            <div className="text-xs stats absolute left-0 bottom-[10px] z-10">
+              <div
+                className={`${+data.index_overbuying >= 8 && "bg-red-400"} ${
+                  +data.index_overbuying >= 6 && "bg-orange-400"
+                } ${
+                  +data.index_overbuying <= 5 && "bg-gray-400"
+                }  items-center flex gap-2 pl-2 pr-1 py-0.5`}
+              >
+                <img src={Star} alt="" />
+                <span>{data.index_overbuying}/10</span>
+              </div>
             </div>
-          </div>
+          )}
 
           <DropdownWrapper
             isfocusedbtn={isFocusedBtn?.toString()}

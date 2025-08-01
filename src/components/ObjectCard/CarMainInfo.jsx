@@ -109,7 +109,7 @@ export const CarMainInfo = ({
     data?.drive_type
   );
 
-  const id_type_body = data?.data?.filter(
+  const id_type_body = car_body_type[0].data?.filter(
     ({ id }) => id === data?.id_type_body
   )[0]?.name;
 
@@ -143,14 +143,14 @@ export const CarMainInfo = ({
           </h1>
         </div>
         <div className="flex justify-between items-center">
-          <div onClick={onOpenPriceHistory}>
-            <Price data={data} />
+          <div onClick={onOpenPriceHistory} className="w-full">
+            <Price onClick={onOpenPriceHistory} data={data} />
           </div>
           {data?.comment_autoria && onOpenCommentAutoria && (
             <ActionButton
               Icon={ChatIcon}
               onClick={onOpenCommentAutoria}
-              className={`md:hidden ${
+              className={` md:hidden ${
                 data?.comment_autoria && "chat-active pulse"
               }`}
             />
@@ -158,8 +158,9 @@ export const CarMainInfo = ({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-1 mt-1">
+      <div className="grid md:grid-cols-2 gap-1 mt-1">
         <Tag
+          className={"!text-xs"}
           title={`${
             Number(data?.сar_mileage) / 1000 === 0
               ? "-"
@@ -168,10 +169,12 @@ export const CarMainInfo = ({
           iIcom="bi bi-circle-fill"
         />
         <Tag
+          className={"!text-xs"}
           title={getFromCarMainInfoFiledsOptions("kpp", data.kpp)}
           iIcom="bi bi-circle-fill"
         />
         <Tag
+          className={"!text-xs"}
           title={`${getFromCarMainInfoFiledsOptions(
             "id_type_fuel",
             data.id_type_fuel
@@ -182,20 +185,29 @@ export const CarMainInfo = ({
           }`}
           iIcom="bi bi-circle-fill"
         />
-        <Tag title={data.location_name} iIcom="bi bi-circle-fill" />
+        <Tag
+          className={"!text-xs"}
+          title={data.location_name}
+          iIcom="bi bi-circle-fill"
+        />
       </div>
-      <Tag
-        className="text-xs mt-1"
-        iIcom="bi bi-circle-fill"
-        titleHtml={
-          <>
-            <span>{drive_type && drive_type + " • "}</span>
-            <span>{id_type_body && id_type_body + " • "}</span>
-            <span>{data.rubric_name && data.rubric_name + " • "}</span>
-            <span>{data?.name && data?.name + " • "}</span>
-          </>
-        }
-      />
+
+      {(drive_type || id_type_body) && (
+        <Tag
+          className="!text-xs mt-1"
+          iIcom="bi bi-circle-fill"
+          titleHtml={
+            <>
+              <span>
+                {drive_type && id_type_body ? drive_type + " • " : drive_type}
+              </span>
+              <span>{id_type_body && id_type_body}</span>
+              {/* <span>{data.rubric_name && data.rubric_name + " • "}</span>
+            <span>{data?.name && data?.name + " • "}</span> */}
+            </>
+          }
+        />
+      )}
 
       <div className="flex my-1 gap-1">
         {data?.exchangePossible !== "0" && (
@@ -214,14 +226,19 @@ export const CarMainInfo = ({
         {data?.exchangePossible !== "0" && data?.exchangeType.length !== 0 && (
           <Tag title={data?.exchangeType} />
         )}
-        {data?.id_dtp_status !== "0" && <Tag title={`Участь у дтп`} />}
+        {data?.id_dtp_status === "2" && (
+          <Tag
+            className="!bg-red-500/20 !text-red-400"
+            title={`Участь у дтп`}
+          />
+        )}
         {data?.id_custom === "2" && <Tag title={`Не розмитнена`} />}
       </div>
 
       {data.VIN && (
-        <div className="hidden md:flex flex-wrap gap-1 items-center">
+        <div className="hidden md:flex flex-wrap gap-2 items-center">
           <Tag
-            className="!text-xs cursor-pointer"
+            className="!text-xs cursor-pointer !bg-transparent !border !border-white !text-white"
             title={`VIN ${data.VIN}`}
             onClick={() => {
               window.open(`/objects?VIN=${data.VIN}`, "_blank");
@@ -251,36 +268,23 @@ export const CarMainInfo = ({
       <div className="hidden md:flex justify-between items-center">
         <div
           className="mt-1 flex items-center gap-4 cursor-pointer"
-          onClick={() => {
-            if (data.id_source === "2") {
-              const { owner_id, id_source } = data?.clients_inf?.contacts;
-              window.open(
-                `/objects?showOwnerObject=${owner_id}&ownerSource=${id_source}`,
-                "_blank"
-              );
-            } else {
-              window.open(
-                `/objects?findClientsObjects=${data?.clients_inf?.contacts?.phones[0]?.phone?.replace(
-                  "38",
-                  ""
-                )}`,
-                "_blank"
-              );
-            }
-          }}
+          onClick={searchByNumber}
         >
           {data?.Count_object > 10 ? (
-            <Tag className="!bg-red-500/20 !text-red-400" title={"Перекуп"} />
+            <Tag
+              className="!text-xs !bg-red-500/20 !text-red-400"
+              title={"Перекуп"}
+            />
           ) : data?.Count_object > 5 ? (
             <Tag
-              className=" !bg-red-500/20 !text-red-400"
+              className="!text-xs !bg-red-500/20 !text-red-400"
               title={"Перекуп ?"}
             />
           ) : data?.Count_object > 2 ? (
-            <Tag title={"Перекуп ?"} />
+            <Tag className="!text-xs" title={"Перекуп ?"} />
           ) : (
             <Tag
-              className=" !bg-green-500/20 !text-green-400"
+              className="!text-xs !bg-green-500/20 !text-green-400"
               title={`Продавець ${
                 data?.Count_object && `(${data?.Count_object})`
               }`}

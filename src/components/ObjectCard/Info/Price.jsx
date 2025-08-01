@@ -42,18 +42,10 @@ export const handleGetPrices = (data) => {
 export const Price = ({ data }) => {
   return (
     <StyledPrice>
-      <div className="flex items-center gap-[3px] price closedPrice">
+      <div className="flex items-start gap-[3px] price closedPrice">
         <div className="flex items-center gap-1">
           {" "}
           {`$${data?.price_usd ?? data?.price}`}
-          {data?.tag_market_bottom &&
-          data?.tag_price_dump !== "0" &&
-          new Date(Number(data?.tag_price_dump) * 1000) >=
-            new Date().getTime() ? (
-            <div className="danger-price animate-pulse">!!!</div>
-          ) : (
-            ""
-          )}
         </div>
 
         {/* {["1", "2"].includes(data?.price_change_up) ? (
@@ -62,10 +54,18 @@ export const Price = ({ data }) => {
             alt=""
           />
         ) : null} */}
-        <span className={`${data?.price_change_up === "1" && "red"}`}>
+        <span
+          className={`${
+            data?.price_change_up === "1" && "red"
+          }flex red danger-price animate-pulse`}
+        >
           {data?.price_change_for_last === "0"
             ? ""
-            : data?.price_change_for_last}
+            : `${
+                data?.price_change_up === "1"
+                  ? `+${data?.price_change_for_last}`
+                  : `-${data?.price_change_for_last}`
+              }!!!`}
         </span>
       </div>
       <div className="last-prices">
@@ -73,12 +73,7 @@ export const Price = ({ data }) => {
           ? null
           : handleGetPrices(data?.price_history_json)
               .slice(0, 2)
-              ?.map((p, i) => (
-                <>
-                  {i !== 0 && <span>.</span>}
-                  <div key={i}>{p}</div>
-                </>
-              ))}
+              ?.map((p, i) => <>{`${p}$ `}</>)}
       </div>
     </StyledPrice>
   );
@@ -155,6 +150,20 @@ const StyledPrice = styled.div`
       100% {
         background: #f94343;
       }
+    }
+  }
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0px;
+    padding-right: 12px;
+    width: 100%;
+    .price {
+      font-size: 18px;
+    }
+    .last-prices {
+      font-size: 14px;
+      text-decoration: underline;
     }
   }
 `;

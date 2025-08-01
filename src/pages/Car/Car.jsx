@@ -305,7 +305,15 @@ const Car = () => {
             }}
           ></div>
           <p className="text-sm text-white/60">
-            дата додавання коментаря | {carData.comment_autoria_days}
+            {new Date(+carData.date_update_comment).toLocaleDateString(
+              "uk-UA",
+              {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              }
+            )}{" "}
+            | {carData.comment_autoria_days}
           </p>
         </div>
       )}

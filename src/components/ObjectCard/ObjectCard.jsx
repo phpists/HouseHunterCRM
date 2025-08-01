@@ -223,7 +223,7 @@ const StyledObjectCard = styled.div`
   border: 1px solid transparent;
   cursor: pointer;
   display: grid;
-  grid-template-columns: max-content minmax(300px, 500px) 1fr max-content;
+  grid-template-columns: max-content minmax(300px, 400px) 1fr max-content;
   gap: 20px;
   width: 100%;
   @media (max-width: 1110px) {

@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { Button } from "./Button";
 import { Dropdown } from "./Dropdown";
 import { useRef, useState } from "react";
-import { ReactComponent as HeartIcon } from "../../../assets/images/nocolor-heart.svg";
+import HeartIcon from "../../../assets/images/nocolor-heart.svg";
 import { ReactComponent as PhoneIcon } from "../../../assets/images/phone-menu.svg";
 import { ReactComponent as ChatIcon } from "../../../assets/images/chat-grey.svg";
+import Heart from "../../../assets/images/red-heart.svg";
+import EmptyHeart from "../../../assets/images/empty-heart.svg";
 import { ActionButton } from "./ActionButton";
 
 export const ShowMore = ({
@@ -66,11 +68,18 @@ export const ShowMore = ({
     <StyledShowMore isfocusedbtn={isFocusedBtn?.toString()} ref={moreRef}>
       <Button onChangeFocus={(val) => setIsFocusedBtn(val)} />
       {!isDeleted && (
-        <ActionButton
-          Icon={HeartIcon}
+        <button
           onClick={onToggleFavoriteStatus}
-          active={isFavorite}
-        />
+          className={`${
+            isFavorite ? "bg-white" : "bg-[var(--card-bg-2)]"
+          } flex cursor-pointer w-[32px] h-[32px] items-center justify-center rounded`}
+        >
+          {isFavorite ? (
+            <img className="w-4 h-4" src={Heart} alt="" />
+          ) : (
+            <img className="w-4 h-4" src={HeartIcon} alt="" />
+          )}
+        </button>
       )}{" "}
       <ActionButton Icon={PhoneIcon} onClick={onOpenPhonesModal} />{" "}
       {/* {onOpenCommentAutoria && (

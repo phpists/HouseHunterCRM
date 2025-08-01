@@ -56,16 +56,24 @@ export const CarInfo = ({
         >
           <div className="w-full">
             <div
-              className="text-white/60"
+              className="max-h-24 truncate text-white/60"
               dangerouslySetInnerHTML={{
                 __html: data.comment_autoria,
               }}
             ></div>
-            <p className="text-white/60">
-              дата додавання коментаря | {data.comment_autoria_days}
+            <p className="mt-2 text-xs text-white/60">
+              {new Date(+data.date_update_comment).toLocaleDateString("uk-UA", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })}{" "}
+              | {data.comment_autoria_days}
             </p>
           </div>
-          <ChatIcon width={30} height={30} />
+          <div className="relative">
+            <div className="absolute top-[-7px] right-[-7px] before:inline-block before:w-1.5 before:h-1.5 before:mr-2 before:bg-red-500 before:rounded-full" />
+            <ChatIcon className="" width={20} height={20} />
+          </div>
         </div>
       )}
 
@@ -104,6 +112,32 @@ export const CarInfo = ({
           />
         </div>
 
+        <div
+          className="!flex md:!hidden mt-1 items-center gap-4 cursor-pointer"
+          // onClick={searchByNumber}
+        >
+          {data?.Count_object > 10 ? (
+            <Tag
+              className="!text-xs !bg-red-500/20 !text-red-400"
+              title={"Перекуп"}
+            />
+          ) : data?.Count_object > 5 ? (
+            <Tag
+              className="whitespace-nowrap !text-xs !bg-red-500/20 !text-red-400"
+              title={"Перекуп ?"}
+            />
+          ) : data?.Count_object > 2 ? (
+            <Tag className="whitespace-nowrap !text-xs" title={"Перекуп ?"} />
+          ) : (
+            <Tag
+              className="whitespace-nowrap !text-xs !bg-green-500/20 !text-green-400"
+              title={`Продавець ${
+                data?.Count_object && `(${data?.Count_object})`
+              }`}
+            />
+          )}
+        </div>
+
         <DaysOnSale carData={data} />
       </div>
     </StyledCarInfo>
@@ -136,5 +170,10 @@ const StyledCarInfo = styled.div`
   }
   @media (max-width: 1110px) {
     grid-column: 1/3;
+  }
+  @media (max-width: 768px) {
+    .tags {
+      flex-wrap: nowrap;
+    }
   }
 `;
