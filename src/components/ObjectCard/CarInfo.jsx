@@ -33,6 +33,15 @@ export const CarInfo = ({
     textRef.current.innerHTML = textDividedByBr;
   }, [data]);
 
+  const getCommentDate = (commentDate) => {
+    const date = new Date(commentDate * 1000);
+    const day = String(date.getUTCDate()).padStart(2, "0");
+    const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+    const year = date.getUTCFullYear();
+    const formattedDate = `${day}.${month}.${year}`;
+    return formattedDate;
+  };
+
   return (
     <StyledCarInfo>
       <div
@@ -56,18 +65,14 @@ export const CarInfo = ({
         >
           <div className="w-full">
             <div
-              className="max-h-24 truncate text-white/60"
+              className="max-h-24 overflow-hidden text-white/60"
               dangerouslySetInnerHTML={{
                 __html: data.comment_autoria,
               }}
             ></div>
-            <p className="mt-2 text-xs text-white/60">
-              {new Date(+data.date_update_comment).toLocaleDateString("uk-UA", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-              })}{" "}
-              | {data.comment_autoria_days}
+            <p className="mt-2 text-xs text-white/60 flex gap-2">
+              <span>{getCommentDate(+data.date_update_comment)}</span>
+              <span>{data.comment_autoria_days}</span>
             </p>
           </div>
           <div className="relative">

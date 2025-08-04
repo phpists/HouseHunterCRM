@@ -8,7 +8,7 @@ export const CommentButton = ({ onClick, active }) => {
       active={active}
       className="flex items-center justify-center"
     >
-      <img src={chatIcon} alt="" />
+      <img src={chatIcon} width="20px" height="20px" />
     </StyledCommentButton>
   );
 };

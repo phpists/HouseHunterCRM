@@ -147,13 +147,14 @@ export const CarMainInfo = ({
             <Price onClick={onOpenPriceHistory} data={data} />
           </div>
           {data?.comment_autoria && onOpenCommentAutoria && (
-            <ActionButton
-              Icon={ChatIcon}
-              onClick={onOpenCommentAutoria}
-              className={` md:hidden ${
-                data?.comment_autoria && "chat-active pulse"
-              }`}
-            />
+            <div className="md:hidden relative">
+              <div className="absolute top-[-5px] right-[-5px] before:inline-block before:w-1.5 before:h-1.5 before:mr-2 before:bg-red-500 before:rounded-full" />
+              <ActionButton
+                Icon={ChatIcon}
+                onClick={onOpenCommentAutoria}
+                className={` ${data?.comment_autoria && "chat-active pulse"}`}
+              />
+            </div>
           )}
         </div>
       </div>
@@ -175,14 +176,14 @@ export const CarMainInfo = ({
         />
         <Tag
           className={"!text-xs"}
-          title={`${getFromCarMainInfoFiledsOptions(
-            "id_type_fuel",
-            data.id_type_fuel
-          )} ${
+          title={`${
             data.volume_engine && data.volume_engine !== "0"
               ? `${Number(data.volume_engine) / 1000} л`
               : ""
-          }`}
+          } ${getFromCarMainInfoFiledsOptions(
+            "id_type_fuel",
+            data.id_type_fuel
+          )}`}
           iIcom="bi bi-circle-fill"
         />
         <Tag
@@ -198,12 +199,10 @@ export const CarMainInfo = ({
           iIcom="bi bi-circle-fill"
           titleHtml={
             <>
-              <span>
-                {drive_type && id_type_body ? drive_type + " • " : drive_type}
-              </span>
-              <span>{id_type_body && id_type_body}</span>
-              {/* <span>{data.rubric_name && data.rubric_name + " • "}</span>
-            <span>{data?.name && data?.name + " • "}</span> */}
+              <span>{drive_type && drive_type + " • "}</span>
+              <span>{id_type_body && id_type_body + " • "}</span>
+              <span>{data.rubric_name && data.rubric_name + " • "}</span>
+              <span>{data?.name && data?.name + " • "}</span>
             </>
           }
         />
@@ -273,15 +272,24 @@ export const CarMainInfo = ({
           {data?.Count_object > 10 ? (
             <Tag
               className="!text-xs !bg-red-500/20 !text-red-400"
-              title={"Перекуп"}
+              title={`Перекуп ${
+                data?.Count_object && `(${data?.Count_object})`
+              }`}
             />
           ) : data?.Count_object > 5 ? (
             <Tag
               className="!text-xs !bg-red-500/20 !text-red-400"
-              title={"Перекуп ?"}
+              title={`Перекуп ? ${
+                data?.Count_object && `(${data?.Count_object})`
+              }`}
             />
           ) : data?.Count_object > 2 ? (
-            <Tag className="!text-xs" title={"Перекуп ?"} />
+            <Tag
+              className="!text-xs"
+              title={`Перекуп ? ${
+                data?.Count_object && `(${data?.Count_object})`
+              }`}
+            />
           ) : (
             <Tag
               className="!text-xs !bg-green-500/20 !text-green-400"

@@ -22,7 +22,7 @@ export const ChatButton = ({ newMessege }) => {
     <>
       {active && <Chat onClose={() => setActive(false)} requestObjectId={id} />}
       <StyledChatButton onClick={handleOpen} active={active}>
-        <ChatIcon className="chat-btn-icon" />
+        <ChatIcon width="20px" height="20px" className="chat-btn-icon" />
         {isNew === 1 ? (
           <div className="flex align-center justify-center">1</div>
         ) : null}

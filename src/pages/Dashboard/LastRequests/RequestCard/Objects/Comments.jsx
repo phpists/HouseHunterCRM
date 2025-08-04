@@ -6,7 +6,7 @@ export const Comments = ({ onOpenChat, isNew }) => (
     className="flex items-center justify-center"
     onClick={onOpenChat}
   >
-    <img src={chatIcon} alt="" />
+    <img src={chatIcon} width="20px" height="20px" alt="" />
     {isNew ? <div className="flex align-center justify-center">1</div> : null}
   </StyledComments>
 );

@@ -40,6 +40,8 @@ export const handleGetPrices = (data) => {
 };
 
 export const Price = ({ data }) => {
+  // true if "Ціна часто змінюється" selected
+  const isActivePuls = data?.tag_market_bottom && data?.tag_price_dump !== "0";
   return (
     <StyledPrice>
       <div className="flex items-start gap-[3px] price closedPrice">
@@ -48,16 +50,10 @@ export const Price = ({ data }) => {
           {`$${data?.price_usd ?? data?.price}`}
         </div>
 
-        {/* {["1", "2"].includes(data?.price_change_up) ? (
-          <img
-            src={data?.price_change_up === "1" ? priceUp : priceDown}
-            alt=""
-          />
-        ) : null} */}
         <span
-          className={`${
-            data?.price_change_up === "1" && "red"
-          }flex red danger-price animate-pulse`}
+          className={`${data?.price_change_up === "1" ? "green" : "red"} flex ${
+            isActivePuls && "animate-pulse"
+          }`}
         >
           {data?.price_change_for_last === "0"
             ? ""
@@ -65,15 +61,25 @@ export const Price = ({ data }) => {
                 data?.price_change_up === "1"
                   ? `+${data?.price_change_for_last}`
                   : `-${data?.price_change_for_last}`
-              }!!!`}
+              }${isActivePuls ? "!!!" : ""}`}
         </span>
       </div>
+
       <div className="last-prices">
-        {handleGetPrices(data?.price_history_json)?.length < 3
-          ? null
-          : handleGetPrices(data?.price_history_json)
-              .slice(0, 2)
-              ?.map((p, i) => <>{`${p}$ `}</>)}
+        <span className="prices">
+          {handleGetPrices(data?.price_history_json)?.length < 3
+            ? null
+            : handleGetPrices(data?.price_history_json)
+                .slice(0, 2)
+                ?.map((p, i) => (
+                  <>
+                    <span className="md:hidden">
+                      {`${p}$`} {i < 1 && <span className="md:hidden"> ,</span>}
+                    </span>
+                    <span className="hidden md:inline-block mr-1">{`${p}$`}</span>
+                  </>
+                ))}
+        </span>
       </div>
     </StyledPrice>
   );
@@ -112,6 +118,10 @@ const StyledPrice = styled.div`
       color: #f94343;
       margin-bottom: 10px;
     }
+    .green {
+      color: #55f943ff;
+      margin-bottom: 10px;
+    }
 
     .danger-price {
       color: #f94343;
@@ -127,7 +137,7 @@ const StyledPrice = styled.div`
     font-weight: 300;
     margin-top: -2px;
     span {
-      font-size: 10px;
+      font-size: 12px;
       margin-top: -5px;
     }
   }
@@ -163,7 +173,9 @@ const StyledPrice = styled.div`
     }
     .last-prices {
       font-size: 14px;
-      text-decoration: underline;
+      .prices {
+        text-decoration: underline;
+      }
     }
   }
 `;

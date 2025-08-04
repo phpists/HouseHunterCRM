@@ -12,6 +12,7 @@
     "axios": "^1.6.8",
     "bootstrap-icons": "^1.11.3",
     "cogo-toast": "^4.2.3",
+    "date-fns": "^4.1.0",
     "font-awesome": "^4.7.0",
     "framer-motion": "^10.16.1",
     "leaflet": "^1.9.4",

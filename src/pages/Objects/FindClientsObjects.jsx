@@ -7,8 +7,24 @@ import { Loader } from "../../components/Loader";
 import { Phones } from "../../components/Phones/Phones";
 import { Phone } from "../../components/Phones/Phone";
 import { useNavigate } from "react-router-dom";
+import rst from "../../assets/images/rst.svg";
+import olx from "../../assets/images/olx.png";
+import Autoria from "../../assets/images/autoria.svg";
+import Viber from "../../assets/images/viber.svg";
+import Telegram from "../../assets/images/telegram.svg";
+import PhoneImg from "../../assets/images/small-phone.svg";
+import { Tag } from "../../components/ObjectCard/MainInfo/Tags/Tag";
+import { useAppSelect } from "../../hooks/redux";
+import ContactsContent from "../../components/Car/ContactsContent";
 
-export const FindClientsObjects = ({ onClose, id, phones, setPhones }) => {
+export const FindClientsObjects = ({
+  data,
+  onClose,
+  id,
+  phones,
+  setPhones,
+}) => {
+  const { user } = useAppSelect((state) => state.auth);
   const [getClient] = useLazyGetPhoneObjectQuery();
   const [loading, setLoading] = useState(false);
 
@@ -36,20 +52,10 @@ export const FindClientsObjects = ({ onClose, id, phones, setPhones }) => {
         <div>
           {loading ? (
             <Loader white className="loader" />
-          ) : phones?.length === 0 ? (
-            <div className="empty">Пусто</div>
+          ) : phones ? (
+            <ContactsContent isMainPage data={data} phones={phones} />
           ) : (
-            <div className="phoneList">
-              {phones?.map((p, i) => (
-                <Phone
-                  key={i}
-                  phone={p?.phone}
-                  maskedPhone={p?.phone}
-                  className="phone-card"
-                  onClick={() => handleCopy(p?.phone)}
-                />
-              ))}
-            </div>
+            <div className="empty">Пусто</div>
           )}
         </div>
       </Modal>
