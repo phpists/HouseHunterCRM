@@ -583,3 +583,27 @@ export const getFromCarMainInfoFiledsOptions = (fieldName, index) => {
   return CarMainInfoFileds.filter(({ field }) => field === fieldName)[0]
     .field_option[+index];
 };
+
+export const searchByNumber = async (data, fetchClient, phones) => {
+  if (data.id_source === "2" || data.id_source === "3") {
+    const { id_source, owner_id } = data.clients_inf.contact;
+
+    window.open(
+      `/objects?showOwnerObject=${owner_id}&ownerSource=${id_source}`,
+      "_blank"
+    );
+  } else {
+    let number = phones;
+    if (!phones) {
+      const client = await fetchClient(data.id);
+      number = client;
+    }
+    // if there's no number don't redirect
+    if (number?.length) {
+      window.open(
+        `/objects?findClientsObjects=${number[0]?.phone?.replace("38", "")}`,
+        "_blank"
+      );
+    }
+  }
+};

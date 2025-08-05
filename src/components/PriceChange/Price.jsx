@@ -12,12 +12,8 @@ const Price = ({ onChangeFilter, data, onFocus, onBlur }) => {
           onFocus={onFocus}
           onBlur={() => {
             onBlur();
-            if (price_change < 50 && price_change !== 0) {
-              onChangeFilter("street_base_object", {
-                ...data?.street_base_object,
-                price_change: 50,
-                price_change_up_procent: undefined,
-              });
+            if (price_change < 50) {
+              onChangeFilter({ price_change: 50 });
             }
           }}
           title="Від"
@@ -26,11 +22,7 @@ const Price = ({ onChangeFilter, data, onFocus, onBlur }) => {
           placeholder="min 50"
           mainType={"$"}
           onChange={(val) => {
-            onChangeFilter("street_base_object", {
-              ...data?.street_base_object,
-              price_change: val,
-              price_change_up_procent: undefined,
-            });
+            onChangeFilter({ price_change: val });
           }}
           error={price_change < 50 && price_change !== 0}
         />
@@ -40,20 +32,12 @@ const Price = ({ onChangeFilter, data, onFocus, onBlur }) => {
           onFocus={onFocus}
           onBlur={() => {
             onBlur();
-            if (price_change_up_procent < 2 && price_change_up_procent !== 0) {
-              onChangeFilter("street_base_object", {
-                ...data?.street_base_object,
-                price_change_up_procent: 2,
-              });
+            if (price_change_up_procent < 2) {
+              onChangeFilter({ price_change_up_procent: 2 });
             }
           }}
           placeholder="min 2"
-          onChange={(val) =>
-            onChangeFilter("street_base_object", {
-              ...data?.street_base_object,
-              price_change_up_procent: val,
-            })
-          }
+          onChange={(val) => onChangeFilter({ price_change_up_procent: val })}
           value={price_change_up_procent}
           className="from-card"
           error={price_change_up_procent < 2 && price_change_up_procent !== 0}

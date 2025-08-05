@@ -147,6 +147,7 @@ const Accordion = ({
   active,
   hideClearBtn,
   hideSearch,
+  categoryFilter,
 }) => {
   const [isActive, setIsActive] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -178,13 +179,25 @@ const Accordion = ({
       newValue = selectedOption?.value === option.value ? "0" : option.value;
     }
 
-    if (!(selectedOption?.value === "1" && option.value === "1")) {
-      setSelectedOption(newValue ? option : "1");
-      setIsActive(false);
-      setSearch("");
-      onChange?.(newValue);
+    if (categoryFilter) {
+      // if categoryFilter is true that means that we cannot unchose first option (легковi)
+      if (!(selectedOption?.value === "1" && option.value === "1")) {
+        setSelectedOption(newValue ? option : "1");
+        setIsActive(false);
+        setSearch("");
+        onChange?.(newValue);
+      } else {
+        setIsActive(false);
+      }
     } else {
-      setIsActive(false);
+      if (selectedOption?.value === option.value) {
+        handleClose();
+      } else {
+        setSelectedOption(newValue ? option : "1");
+        setIsActive(false);
+        setSearch("");
+        onChange?.(newValue);
+      }
     }
   };
 

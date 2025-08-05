@@ -7,17 +7,35 @@ import Phone from "../../assets/images/small-phone.svg";
 import { useAppSelect } from "../../hooks/redux";
 import { Tag } from "../ObjectCard/MainInfo/Tags/Tag";
 import SMSModal from "./SMSModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useActions } from "../../hooks/actions";
 
 const ContactsContent = ({ phones, data, isMainPage }) => {
   const { user } = useAppSelect((state) => state.auth);
+  const { smsMessage } = useAppSelect((state) => state.car);
+  const { setSmsMessage } = useActions();
   const [isOpenSMSModal, setIsOpenSMSModal] = useState(false);
+  const defaultMessage = "Куплю ваше авто сьогодні, Ціну узгодимо [TEL].";
+
+  // set default message
+  useEffect(() => {
+    setSmsMessage(
+      defaultMessage.replaceAll("[TEL]", `+${user?.phones?.[0]?.phone}`)
+    );
+  }, []);
 
   return (
     <>
       {isOpenSMSModal && (
-        <SMSModal closeModal={() => setIsOpenSMSModal(false)} />
+        <SMSModal
+          data={data}
+          setDefault={() => setSmsMessage(defaultMessage)}
+          realMessage={smsMessage}
+          defaultMessage={defaultMessage}
+          closeModal={() => setIsOpenSMSModal(false)}
+        />
       )}
+
       {phones[0]?.phone !== "380000000000" ? (
         <div className="mt-6 flex flex-col gap-3">
           {phones.map(({ phone }) => (
@@ -78,10 +96,7 @@ const ContactsContent = ({ phones, data, isMainPage }) => {
                 ) : (
                   <div className="flex gap-4 md:gap-12">
                     <a
-                      href={`sms:${phone}?&amp;body=${user.sms_template.replace(
-                        "[TEL]",
-                        phone
-                      )}`}
+                      href={`sms:${phone}?body=${smsMessage}`}
                       className="cursor-pointer flex justify-center"
                       aria-label="Call phone number"
                     >

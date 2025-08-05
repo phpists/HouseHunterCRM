@@ -9,12 +9,45 @@ const PriceChange = ({
   onChangeInputFocus,
   isInputFocused,
 }) => {
+  const changeFilter = (option) => {
+    const defaults = {
+      price_change: 50,
+      price_change_period: "4",
+      price_change_up: "2",
+      price_change_up_procent: 2,
+    };
+
+    const updatedValues = {
+      price_change:
+        option?.price_change ??
+        data?.street_base_object?.price_change ??
+        defaults.price_change,
+      price_change_period:
+        option?.price_change_period ??
+        data?.street_base_object?.price_change_period ??
+        defaults.price_change_period,
+      price_change_up:
+        option?.price_change_up ??
+        data?.street_base_object?.price_change_up ??
+        defaults.price_change_up,
+      price_change_up_procent:
+        option?.price_change_up_procent ??
+        data?.street_base_object?.price_change_up_procent ??
+        defaults.price_change_up_procent,
+    };
+
+    onChangeFilter("street_base_object", {
+      ...data?.street_base_object,
+      ...updatedValues,
+    });
+  };
+
   return (
     <div className="section filterFieldsWrapper">
       <Price
         onFocus={() => !isInputFocused && onChangeInputFocus(true)}
         onBlur={() => onChangeInputFocus(false)}
-        onChangeFilter={onChangeFilter}
+        onChangeFilter={(option) => changeFilter(option)}
         data={data}
       />
       <Divider />
@@ -27,12 +60,7 @@ const PriceChange = ({
           { title: "Вгору", value: "1" },
           { title: "Вниз", value: "2" },
         ]}
-        onChange={(val) =>
-          onChangeFilter("street_base_object", {
-            ...data?.street_base_object,
-            price_change_up: val,
-          })
-        }
+        onChange={(val) => changeFilter({ price_change_up: val })}
       />
       <Divider />
 
@@ -46,12 +74,7 @@ const PriceChange = ({
           { title: "Дві доби", value: "3" },
           { title: "За тиждень", value: "4" },
         ]}
-        onChange={(val) =>
-          onChangeFilter("street_base_object", {
-            ...data?.street_base_object,
-            price_change_period: val,
-          })
-        }
+        onChange={(val) => changeFilter({ price_change_period: val })}
       />
       <Divider />
 

@@ -169,12 +169,14 @@ export const ObjectCard = memo(
             onOpenCommentAutoria={onOpenCommentAutoria}
           />
           <CarInfo
+            phones={phones}
             data={data}
             onOpenInfo={onOpenInfo}
             onUpdateField={onUpdateField}
             noEdit={noEdit}
             onChangeTags={onChangeTags}
             onOpenCommentAutoria={onOpenCommentAutoria}
+            fetchClient={fetchClient}
           />
           <ShowMore
             clientId={data?.id_client}

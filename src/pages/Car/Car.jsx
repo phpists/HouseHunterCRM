@@ -374,7 +374,13 @@ const Car = () => {
       </div>
 
       <div className="my-4 flex items-center gap-2">
-        <Tag className="!text-xs" title={`id xdrive ${carData.id_hash}`} />
+        <Tag
+          className="!text-xs cursor-pointer"
+          title={`id xdrive ${carData.id_hash}`}
+          onClick={() =>
+            window.open(`/objects?xdrive=${carData.id_hash}`, "_blank")
+          }
+        />
 
         <Tag
           className="!text-xs cursor-pointer"

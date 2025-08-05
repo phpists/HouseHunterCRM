@@ -405,7 +405,7 @@ const Objects = () => {
     filterActive.current = isApply;
     if (!isApply) {
       setFilters(DEFAULT_FILTERS);
-      setFilterFields([]);
+      handleGetRubricsFields(DEFAULT_FILTERS.id_rubric);
       localStorage.removeItem("objectsLastFilters");
     }
     currentPage.current = 0;
@@ -635,7 +635,16 @@ const Objects = () => {
         search_phone_code: 1,
         search_phone: filterApplyValue,
         street_base_object: {
-          sorting_id: "16",
+          sorting_id: "14",
+        },
+      });
+      filterActive.current = true;
+      setUpdateData(true);
+    } else if (filterApply === "?xdrive") {
+      setFilters({
+        id_hash: filterApplyValue,
+        street_base_object: {
+          sorting_id: "14",
         },
       });
       filterActive.current = true;
@@ -650,7 +659,7 @@ const Objects = () => {
       setFilters({
         street_base_object: {
           ...filters,
-          sorting_id: "16",
+          sorting_id: "14",
         },
       });
       filterActive.current = true;
@@ -659,7 +668,7 @@ const Objects = () => {
       setFilters({
         street_base_object: {
           VIN: filterApplyValue,
-          sorting_id: "16",
+          sorting_id: "14",
         },
       });
       filterActive.current = true;

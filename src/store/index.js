@@ -16,6 +16,7 @@ import { selections } from "./selections/selections.api";
 import { selectionsReducer } from "./selections/selections.slice";
 import { billing } from "./billing/billing.api";
 import { billingReducer } from "./billing/billing.slice";
+import { carReducer } from "./car/car.slice";
 
 export const store = configureStore({
   reducer: {
@@ -35,6 +36,7 @@ export const store = configureStore({
     selections: selectionsReducer,
     [billing.reducerPath]: billing.reducer,
     billing: billingReducer,
+    car: carReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

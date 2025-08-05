@@ -41,13 +41,18 @@ export const Notification = ({ data }) => {
         style={{ backgroundSize: data?.image ? "150%" : "300%" }}
         loading="lazy"
       />
-      <div>
-        <div className="title">{`${TYPES?.[data?.id_filter]}`}</div>
-        <div className="subtitle">{`${data?.brand_name} ${data?.model_name} ${
-          data?.year
-        } ${data?.price_usd}$  ${data?.volume_engine} ${data?.id_type_fuel} ${
-          data?.сar_mileage === "0" ? "" : `${data?.сar_mileage}км`
-        } ${data?.location_name}`}</div>
+
+      <div className="title">
+        <h3>{`${TYPES?.[data?.id_filter]}`}</h3>
+        <h1>
+          {`${data?.brand_name} ${data?.model_name} ${data?.year} `}
+          <span className="text-[var(--green)]">{`${data?.price_usd}$`}</span>
+        </h1>
+        <p className="truncate">
+          {`${data?.volume_engine} ${data?.id_type_fuel} - ${
+            data?.сar_mileage === "0" ? "" : `${data?.сar_mileage}км`
+          } - ${data?.location_name}`}
+        </p>
       </div>
     </StyledNotification>
   );
@@ -70,23 +75,12 @@ const StyledNotification = styled.div`
     color: var(--main-color);
     font-feature-settings: "clig" off, "liga" off;
     font-family: Overpass;
-    font-size: 14px;
+    font-size: 13px;
     font-style: normal;
-    font-weight: var(--font-weight-200);
-    line-height: 22px;
+    font-weight: var(--font-weight-600);
+    line-height: 16px;
     max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-  .subtitle {
-    color: var(--second-color);
-    font-family: Overpass;
-    font-size: 11px;
-    font-style: normal;
-    font-weight: var(--font-weight-200);
-    line-height: normal;
-    max-width: 200px;
-    white-space: unset;
-    word-break: normal;
   }
 `;

@@ -6,6 +6,7 @@ import { Tags } from "./Tags/Tags";
 import { source } from "../../constants";
 import { ReactComponent as ChatIcon } from "../../assets/images/chat-grey.svg";
 import DaysOnSale from "../Car/DaysOnSale";
+import { searchByNumber } from "../../utilits";
 
 export const CarInfo = ({
   data,
@@ -14,6 +15,8 @@ export const CarInfo = ({
   noEdit,
   onChangeTags,
   onOpenCommentAutoria,
+  fetchClient,
+  phones,
 }) => {
   const textRef = useRef();
   const tagsRef = useRef();
@@ -119,7 +122,7 @@ export const CarInfo = ({
 
         <div
           className="!flex md:!hidden mt-1 items-center gap-4 cursor-pointer"
-          // onClick={searchByNumber}
+          onClick={() => searchByNumber(data, fetchClient, phones)}
         >
           {data?.Count_object > 10 ? (
             <Tag

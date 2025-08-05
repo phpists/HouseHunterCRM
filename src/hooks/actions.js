@@ -8,6 +8,7 @@ import { structureActions } from "../store/structure/structure.slice";
 import { callsActions } from "../store/calls/calls.slice";
 import { selectionsActions } from "../store/selections/selections.slice";
 import { billingActions } from "../store/billing/billing.slice";
+import { carActions } from "../store/car/car.slice";
 
 const actions = {
   ...authActions,
@@ -18,6 +19,7 @@ const actions = {
   ...callsActions,
   ...selectionsActions,
   ...billingActions,
+  ...carActions,
 };
 
 export const useActions = () => {

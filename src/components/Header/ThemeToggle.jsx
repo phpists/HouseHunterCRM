@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 import sun from "../../assets/images/sun.svg";
 import moon from "../../assets/images/moon.svg";

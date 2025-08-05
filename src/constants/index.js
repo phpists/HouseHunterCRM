@@ -603,35 +603,3 @@ export const CarsColor = [
 ];
 
 export const source = { 1: "Avtoria", 2: "OLX", 3: "Rst" };
-
-export const SMSTags = [
-  {
-    tag: "[TEL]",
-    description:
-      "- цей текст заміниться на ваш номер телефону, який ви вказали в профілі",
-  },
-  {
-    tag: "MARKA",
-    description: `- Якшо в певному оголошенні марка авто BMW, то текст [MARKA] перетвориться в "BMW"`,
-  },
-  {
-    tag: "MODEL",
-    description: `- модель авто, в оголошенні`,
-  },
-  {
-    tag: "TORG_5",
-    description: `- Якщо в оголошенні була ціна "10000", то тег замінть текст на "9500"`,
-  },
-  {
-    tag: "TORG_10",
-    description: `- ціна на авто в оголошенні -10%`,
-  },
-  {
-    tag: "TORG_15",
-    description: `- ціна на авто в оголошенні -15%`,
-  },
-  {
-    tag: "TORG_20",
-    description: `- ціна на авто в оголошенні -20%`,
-  },
-];

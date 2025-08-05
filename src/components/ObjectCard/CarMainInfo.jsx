@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import {
   getFromCarMainInfoFiledsOptions,
   handleGetLocationAllPath,
+  searchByNumber,
 } from "../../utilits";
 import {
   useGetLocationsQuery,
@@ -55,6 +56,11 @@ export const CarMainInfo = ({
     }
   }, [locationsList]);
 
+  const location = formatedLocations
+    .filter(({ value }) => data.id_location === value)[0]
+    ?.title.replace(" ", "")
+    .replace("=>", ",");
+
   const handleGetTagValue = (field, value) => {
     if (field === "id_type_body") {
       return car_body_type
@@ -78,30 +84,6 @@ export const CarMainInfo = ({
     today = today.getTime();
 
     return editInSourceDate > today || priceChangeDate > today;
-  };
-
-  const searchByNumber = async () => {
-    if (data.id_source === "2") {
-      const { id_source, owner_id } = data.clients_inf.contact;
-
-      window.open(
-        `/objects?showOwnerObject=${owner_id}&ownerSource=${id_source}`,
-        "_blank"
-      );
-    } else {
-      let number = phones;
-      if (!phones) {
-        const client = await fetchClient(data.id);
-        number = client;
-      }
-      // if there's no number don't redirect
-      if (number?.length) {
-        window.open(
-          `/objects?findClientsObjects=${number[0]?.phone?.replace("38", "")}`,
-          "_blank"
-        );
-      }
-    }
   };
 
   const drive_type = getFromCarMainInfoFiledsOptions(
@@ -159,7 +141,7 @@ export const CarMainInfo = ({
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-1 mt-1">
+      <div className="grid grid-cols-2 gap-1 mt-1">
         <Tag
           className={"!text-xs"}
           title={`${
@@ -188,14 +170,25 @@ export const CarMainInfo = ({
         />
         <Tag
           className={"!text-xs"}
-          title={data.location_name}
+          title={location}
           iIcom="bi bi-circle-fill"
+        />
+
+        <Tag
+          className={"md:!hidden !text-xs"}
+          title={drive_type}
+          iIcom="bi bi-circle-fill"
+        />
+        <Tag
+          className="md:!hidden !text-xs"
+          iIcom="bi bi-circle-fill"
+          title={id_type_body}
         />
       </div>
 
       {(drive_type || id_type_body) && (
         <Tag
-          className="!text-xs mt-1"
+          className="!hidden md:!flex !text-xs mt-1"
           iIcom="bi bi-circle-fill"
           titleHtml={
             <>
@@ -267,7 +260,7 @@ export const CarMainInfo = ({
       <div className="hidden md:flex justify-between items-center">
         <div
           className="mt-1 flex items-center gap-4 cursor-pointer"
-          onClick={searchByNumber}
+          onClick={() => searchByNumber(data, fetchClient, phones)}
         >
           {data?.Count_object > 10 ? (
             <Tag
@@ -317,6 +310,12 @@ export const CarMainInfo = ({
 };
 
 const StyledCarMainInfo = styled.div`
+  .title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
   .car-info-header {
     display: grid;
     grid-template-columns: 1fr max-content;

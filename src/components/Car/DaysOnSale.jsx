@@ -86,7 +86,7 @@ export default DaysOnSale;
 const Wrapper = styled.div`
   @media (max-width: 768px) {
     .title {
-      width: 300px;
+      max-width: 300px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -94,12 +94,12 @@ const Wrapper = styled.div`
   }
   @media (max-width: 630px) {
     .title {
-      width: 200px;
+      max-width: 200px;
     }
   }
   @media (max-width: 480px) {
     .title {
-      width: 100px;
+      max-width: 100px;
     }
   }
 `;

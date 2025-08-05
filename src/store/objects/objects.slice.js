@@ -13,6 +13,7 @@ const initialState = {
   actionLoading: false,
   phoneCode: 1,
   isDeleted: false,
+  locations: [],
 };
 
 export const objectsSlice = createSlice({
@@ -54,6 +55,9 @@ export const objectsSlice = createSlice({
     },
     setIsDeleted(state, action) {
       state.isDeleted = action.payload;
+    },
+    setLocations(state, action) {
+      state.locations = action.payload;
     },
   },
 });
