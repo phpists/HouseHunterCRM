@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   smsMessage: "",
   smsTagsMessage: "",
+  isFavorite: "",
 };
 
 export const carSlice = createSlice({
@@ -14,6 +15,9 @@ export const carSlice = createSlice({
     },
     setSmsTagsMessage(state, action) {
       state.smsTagsMessage = action.payload;
+    },
+    setIsFavorite(state, action) {
+      state.isFavorite = action.payload;
     },
   },
 });

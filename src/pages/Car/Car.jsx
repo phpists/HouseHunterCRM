@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
+  useLazyAddToFavoritesQuery,
   useLazyGetCarBodyQuery,
   useLazyGetOpenObjectQuery,
 } from "../../store/objects/objects.api";
@@ -22,8 +23,15 @@ import olx from "../../assets/images/olx.png";
 import Autoria from "../../assets/images/autoria.svg";
 import Message from "../../assets/images/message.svg";
 import Share from "../../assets/images/share.svg";
+import Heart from "../../assets/images/red-heart.svg";
+import EmptyHeart from "../../assets/images/empty-heart.svg";
 import { useAppSelect } from "../../hooks/redux";
-import { getFromCarMainInfoFiledsOptions, handleCopy } from "../../utilits";
+import {
+  getFromCarMainInfoFiledsOptions,
+  handleCopy,
+  handleResponse,
+  showAlert,
+} from "../../utilits";
 import DaysOnSale from "../../components/Car/DaysOnSale";
 import { auth } from "../../store/auth/auth.api";
 import { ReactComponent as Exchange } from "../../assets/images/exchange.svg";
@@ -32,6 +40,7 @@ import { Tags } from "../../components/ObjectCard/Tags/Tags";
 import SMSModal from "../../components/Car/SMSModal";
 import ContactsModal from "../../components/Car/ContactsModal";
 import ContactsContent from "../../components/Car/ContactsContent";
+import { useActions } from "../../hooks/actions";
 
 const Car = () => {
   const { id } = useParams();
@@ -42,7 +51,29 @@ const Car = () => {
   const [isOpenHistoryModal, setIsOpenHistoryModal] = useState(false);
   const [isOpenContactsModal, setIsOpenContactsModal] = useState(false);
   const { user } = useAppSelect((state) => state.auth);
+  const { isFavorite } = useAppSelect((state) => state.car);
+  const { setIsFavorite } = useActions();
   const carColor = CarsColor.filter(({ id }) => id === carData?.id_color)[0];
+  const [addObjectsToFavorites] = useLazyAddToFavoritesQuery();
+
+  function handleToggleFavoriteStatus() {
+    if (user) {
+      addObjectsToFavorites([carData.id_hash]).then((resp) => {
+        handleResponse(resp, () => {
+          showAlert("success", "Статус успішно змінено!");
+        });
+      });
+    }
+    let favorites = JSON.parse(localStorage.getItem("favorite")) || [];
+    if (favorites.includes(carData.id_hash)) {
+      favorites = favorites.filter((id) => id !== carData.id_hash);
+      setIsFavorite(false);
+    } else {
+      favorites.push(carData.id_hash);
+      setIsFavorite(true);
+    }
+    localStorage.setItem("favorite", JSON.stringify(favorites));
+  }
 
   useEffect(() => {
     if (id) {
@@ -88,7 +119,6 @@ const Car = () => {
           data={carData.price_history_json}
         />
       )}
-
       {isOpenContactsModal && (
         <ContactsModal
           contacts={contacts}
@@ -96,394 +126,429 @@ const Car = () => {
           onClose={() => setIsOpenContactsModal(false)}
         />
       )}
+      <div
+        onClick={() => handleToggleFavoriteStatus()}
+        className="hidden md:flex ml-auto mb-2 cursor-pointer bg-white w-7 h-7 items-center justify-center rounded"
+      >
+        {isFavorite ? (
+          <img className="w-4 h-4" src={Heart} alt="" />
+        ) : (
+          <img className="w-4 h-4" src={EmptyHeart} alt="" />
+        )}
+      </div>
+      <div className="content">
+        <Slider
+          photos={photos}
+          data={carData}
+          isCarPage
+          handleToggleFavoriteStatus={handleToggleFavoriteStatus}
+          isFavorite={isFavorite}
+          setIsFavorite={setIsFavorite}
+        />
 
-      <Slider photos={photos} data={carData} isCarPage />
+        <div>
+          <div className="flex justify-between my-4 text-white/60 text-xs">
+            <div className="flex gap-2">
+              <h1 className="flex items-center gap-1">
+                {carData.count_views} <img className="w-4" src={Eye} alt="" />
+              </h1>
+              <h1 className="flex items-center gap-1">
+                {carData.count_likes} <img className="w-3" src={Like} alt="" />
+              </h1>
+            </div>
 
-      <div>
-        <div className="flex justify-between my-4 text-white/60 text-xs">
-          <div className="flex gap-2">
-            <h1 className="flex items-center gap-1">
-              {carData.count_views} <img className="w-4" src={Eye} alt="" />
-            </h1>
-            <h1 className="flex items-center gap-1">
-              {carData.count_likes} <img className="w-3" src={Like} alt="" />
+            <div
+              onClick={() => {
+                const shareUrl = `${window.location.origin}/cars/${carData.id}`;
+                const shareText = `${window.location} - ${carData.brand_name} ${carData.model_name} ${carData.year}`;
+
+                if (navigator.share) {
+                  navigator
+                    .share({
+                      title: shareText,
+                      text: `Переглянь це авто: ${shareText}`,
+                      url: shareUrl,
+                    })
+                    .catch((error) => console.error("Share failed:", error));
+                } else {
+                  handleCopy(shareUrl); // твоя функція копіювання
+                  alert("Посилання скопійовано. Ви можете поділитися вручну.");
+                }
+              }}
+              className="cursor-pointer border border-[#848484] w-7 h-7 flex items-center justify-center rounded z-10"
+            >
+              <img className="w-4 h-4" src={Share} alt="Share on Telegram" />
+            </div>
+          </div>
+
+          <div>
+            <h1
+              onClick={() => {
+                window.open(`${carData.link}`, "_blank");
+              }}
+              className="cursor-pointer hover:underline flex items-center gap-2 text-2xl"
+            >
+              {carData.id_source === "1" && (
+                <img src={Autoria} alt="Autoria" className="w-10" />
+              )}
+              {carData.id_source === "2" && (
+                <img src={olx} alt="olx" className="w-6" />
+              )}
+              {carData.id_source === "3" && (
+                <img src={rst} alt="RST" className="w-8" />
+              )}
+              {`${carData?.brand_name} ${carData?.model_name} ${carData?.year}`}
             </h1>
           </div>
 
           <div
-            onClick={() => {
-              const shareUrl = `${window.location.origin}/cars/${carData.id}`;
-              const shareText = `${window.location} - ${carData.brand_name} ${carData.model_name} ${carData.year}`;
-
-              if (navigator.share) {
-                navigator
-                  .share({
-                    title: shareText,
-                    text: `Переглянь це авто: ${shareText}`,
-                    url: shareUrl,
-                  })
-                  .catch((error) => console.error("Share failed:", error));
-              } else {
-                handleCopy(shareUrl); // твоя функція копіювання
-                alert("Посилання скопійовано. Ви можете поділитися вручну.");
-              }
-            }}
-            className="cursor-pointer border border-[#848484] w-7 h-7 flex items-center justify-center rounded z-10"
+            className="cursor-pointer my-4 flex price justify-between"
+            onClick={() => setIsOpenHistoryModal(true)}
           >
-            <img className="w-4 h-4" src={Share} alt="Share on Telegram" />
-          </div>
-        </div>
-
-        <div>
-          <h1
-            onClick={() => {
-              window.open(`${carData.link}`, "_blank");
-            }}
-            className="cursor-pointer hover:underline flex items-center gap-2 text-2xl"
-          >
-            {carData.id_source === "1" && (
-              <img src={Autoria} alt="Autoria" className="w-10" />
-            )}
-            {carData.id_source === "2" && (
-              <img src={olx} alt="olx" className="w-6" />
-            )}
-            {carData.id_source === "3" && (
-              <img src={rst} alt="RST" className="w-8" />
-            )}
-            {`${carData?.brand_name} ${carData?.model_name} ${carData?.year}`}
-          </h1>
-        </div>
-
-        <div
-          className="cursor-pointer my-4 flex price justify-between"
-          onClick={() => setIsOpenHistoryModal(true)}
-        >
-          <div>
-            <div className="flex">
-              <span className="text-lg">{carData.price_usd}$</span>
-              <span className="text-red-500 text-xs ml-1">
-                {carData.price_change_for_last !== "0" &&
-                  `- ${carData.price_change_for_last}`}
-              </span>
-            </div>
-            {carData?.tag_market_bottom &&
-            carData?.tag_price_dump !== "0" &&
-            new Date(Number(carData?.tag_price_dump) * 1000) >=
-              new Date().getTime() ? (
-              <div className="text-xs text-red-500 animate-pulse">
-                !!! Ціна часто змінюється
+            <div>
+              <div className="flex">
+                <span className="text-lg">{carData.price_usd}$</span>
+                <span className="text-red-500 text-xs ml-1">
+                  {carData.price_change_for_last !== "0" &&
+                    `- ${carData.price_change_for_last}`}
+                </span>
               </div>
-            ) : (
-              ""
-            )}
-          </div>
-          <div className="flex flex-col justify-between items-end">
-            <div className="flex text-white/60 text-sm">
-              {handleGetPrices(carData?.price_history_json)?.length < 3
-                ? null
-                : handleGetPrices(carData?.price_history_json)
-                    .slice(0, 2)
-                    ?.map((p, i) => (
-                      <>
-                        {i !== 0 && <span className="mr-1">,</span>}
-                        <div key={i}>{p}$</div>
-                      </>
-                    ))}
+              {carData?.tag_market_bottom &&
+              carData?.tag_price_dump !== "0" &&
+              new Date(Number(carData?.tag_price_dump) * 1000) >=
+                new Date().getTime() ? (
+                <div className="text-xs text-red-500 animate-pulse">
+                  !!! Ціна часто змінюється
+                </div>
+              ) : (
+                ""
+              )}
             </div>
-            <p className="underline text-white/60 text-xs">
-              Переглянути всю історію цін
-            </p>
+            <div className="flex flex-col justify-between items-end">
+              <div className="flex text-white/60 text-sm">
+                {handleGetPrices(carData?.price_history_json)?.length < 3
+                  ? null
+                  : handleGetPrices(carData?.price_history_json)
+                      .slice(0, 2)
+                      ?.map((p, i) => (
+                        <>
+                          {i !== 0 && <span className="mr-1">,</span>}
+                          <div key={i}>{p}$</div>
+                        </>
+                      ))}
+              </div>
+              <p className="underline text-white/60 text-xs">
+                Переглянути всю історію цін
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-2">
-          <Tag
-            title={`${
-              Number(carData?.сar_mileage) / 1000 === 0
-                ? "-"
-                : Number(carData?.сar_mileage) / 1000
-            } тис. км.`}
-            iIcom="bi bi-circle-fill"
-          />
-          <Tag
-            title={getFromCarMainInfoFiledsOptions("kpp", carData.kpp)}
-            iIcom="bi bi-circle-fill"
-          />
-          <Tag
-            title={`${getFromCarMainInfoFiledsOptions(
-              "id_type_fuel",
-              carData.id_type_fuel
-            )} ${
-              carData.volume_engine && carData.volume_engine !== "0"
-                ? `${Number(carData.volume_engine) / 1000} л`
-                : ""
-            }`}
-            iIcom="bi bi-circle-fill"
-          />
-          <Tag title={carData.location_name} iIcom="bi bi-circle-fill" />
-        </div>
-
-        <Tag
-          iIcom="bi bi-circle-fill"
-          className="text-xs mt-2"
-          titleHtml={
-            <>
-              <span>{drive_type && drive_type + " • "}</span>
-              <span>{id_type_body && id_type_body + " • "}</span>
-              <span>{carData.rubric_name && carData.rubric_name + " • "}</span>
-              <span>{carColor?.name && carColor?.name}</span>
-            </>
-          }
-        />
-
-        <div className="flex gap-2 my-4">
-          {carData?.tag_faster !== "0" && (
+          <div className="grid grid-cols-2 gap-2">
             <Tag
-              className="!text-xs !bg-red-500/20 !text-red-400"
-              title={`Терміново`}
+              title={`${
+                Number(carData?.сar_mileage) / 1000 === 0
+                  ? "-"
+                  : Number(carData?.сar_mileage) / 1000
+              } тис. км.`}
+              iIcom="bi bi-circle-fill"
             />
-          )}
-          {carData?.tag_market_bottom === "1" && (
-            <Tag className="!text-xs" title={"Хороша ціна"} />
-          )}
-          {carData?.tag_nativePaint && carData?.tag_nativePaint === "1" && (
-            <Tag className="!text-xs" title={"Рідна фарба"} />
-          )}
-          {carData?.tag_exchangePossible !== "0" && (
-            <Tag className="!text-xs" title={`Обмін`} />
-          )}
-          {carData?.tag_freshlyDriven &&
-            (carData?.tag_freshlyDriven === "1") === "1" && (
-              <Tag className="!text-xs" title={"Свіжопригнана"} />
-            )}
-          {carData?.tag_afterDTP !== "0" && (
-            <Tag className="!text-xs" title={`Після дтп`} />
-          )}
-        </div>
-
-        <p className="text-xs my-4 text-white/60">{carData?.description}</p>
-
-        {carData?.technicalCondition2.length !== 0 && (
-          <div className="mb-4">
-            <h1 className="text-xs text-white/60">Техн. стан:</h1>
-            <p className="text-xs text-white">{carData?.technicalCondition2}</p>
+            <Tag
+              title={getFromCarMainInfoFiledsOptions("kpp", carData.kpp)}
+              iIcom="bi bi-circle-fill"
+            />
+            <Tag
+              title={`${getFromCarMainInfoFiledsOptions(
+                "id_type_fuel",
+                carData.id_type_fuel
+              )} ${
+                carData.volume_engine && carData.volume_engine !== "0"
+                  ? `${Number(carData.volume_engine) / 1000} л`
+                  : ""
+              }`}
+              iIcom="bi bi-circle-fill"
+            />
+            <Tag title={carData.location_name} iIcom="bi bi-circle-fill" />
           </div>
-        )}
 
-        {carData?.paintCondition.length !== 0 && (
-          <div className="mb-4">
-            <h1 className="text-xs text-white/60">Лакофарбове покриття:</h1>
-            <p className="text-xs text-white">{carData?.paintCondition}</p>
-          </div>
-        )}
-
-        <div className="mb-4 flex gap-2">
-          <Tags
-            data={renamedCarData}
-            onUpdateField={() => {}}
-            noEdit={() => {}}
-            onChangeTags={() => {}}
-            isLeftDropdown
+          <Tag
+            iIcom="bi bi-circle-fill"
+            className="text-xs mt-2"
+            titleHtml={
+              <>
+                <span>{drive_type && drive_type + " • "}</span>
+                <span>{id_type_body && id_type_body + " • "}</span>
+                <span>
+                  {carData.rubric_name && carData.rubric_name + " • "}
+                </span>
+                <span>{carColor?.name && carColor?.name}</span>
+              </>
+            }
           />
-        </div>
 
-        {carData.comment_autoria?.length > 1 && (
-          <div className="my-4 bg-[var(--card-bg)] rounded px-2 py-3">
-            <div className="flex items-center gap-2">
-              <div className="relative">
-                <ChatIcon width={20} height={20} />
-                <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
-              </div>
-              <h1 className="text-md font-bold">Коментар</h1>
+          <div className="flex gap-2 my-4">
+            {carData?.tag_faster !== "0" && (
+              <Tag
+                className="!text-xs !bg-red-500/20 !text-red-400"
+                title={`Терміново`}
+              />
+            )}
+            {carData?.tag_market_bottom === "1" && (
+              <Tag className="!text-xs" title={"Хороша ціна"} />
+            )}
+            {carData?.tag_nativePaint && carData?.tag_nativePaint === "1" && (
+              <Tag className="!text-xs" title={"Рідна фарба"} />
+            )}
+            {carData?.tag_exchangePossible !== "0" && (
+              <Tag className="!text-xs" title={`Обмін`} />
+            )}
+            {carData?.tag_freshlyDriven &&
+              (carData?.tag_freshlyDriven === "1") === "1" && (
+                <Tag className="!text-xs" title={"Свіжопригнана"} />
+              )}
+            {carData?.tag_afterDTP !== "0" && (
+              <Tag className="!text-xs" title={`Після дтп`} />
+            )}
+          </div>
+
+          <p className="text-xs my-4 text-white/60">{carData?.description}</p>
+
+          {carData?.technicalCondition2.length !== 0 && (
+            <div className="mb-4">
+              <h1 className="text-xs text-white/60">Техн. стан:</h1>
+              <p className="text-xs text-white">
+                {carData?.technicalCondition2}
+              </p>
             </div>
-            <div
-              className="my-2 text-sm text-white/60 "
-              dangerouslySetInnerHTML={{
-                __html: carData.comment_autoria,
-              }}
-            ></div>
-            <p className="text-sm text-white/60">
-              {new Date(+carData.date_update_comment).toLocaleDateString(
-                "uk-UA",
-                {
-                  day: "2-digit",
-                  month: "2-digit",
-                  year: "numeric",
+          )}
+
+          {carData?.paintCondition.length !== 0 && (
+            <div className="mb-4">
+              <h1 className="text-xs text-white/60">Лакофарбове покриття:</h1>
+              <p className="text-xs text-white">{carData?.paintCondition}</p>
+            </div>
+          )}
+
+          <div className="mb-4 flex gap-2">
+            <Tags
+              data={renamedCarData}
+              onUpdateField={() => {}}
+              noEdit={() => {}}
+              onChangeTags={() => {}}
+              isLeftDropdown
+            />
+          </div>
+
+          {carData.comment_autoria?.length > 1 && (
+            <div className="my-4 bg-[var(--card-bg)] rounded px-2 py-3">
+              <div className="flex items-center gap-2">
+                <div className="relative">
+                  <ChatIcon width={20} height={20} />
+                  <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
+                </div>
+                <h1 className="text-md font-bold">Коментар</h1>
+              </div>
+              <div
+                className="my-2 text-sm text-white/60 "
+                dangerouslySetInnerHTML={{
+                  __html: carData.comment_autoria,
+                }}
+              ></div>
+              <p className="text-sm text-white/60">
+                {new Date(+carData.date_update_comment).toLocaleDateString(
+                  "uk-UA",
+                  {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  }
+                )}{" "}
+                | {carData.comment_autoria_days}
+              </p>
+            </div>
+          )}
+
+          {carData.VIN && (
+            <div className="flex flex-wrap gap-2 items-center">
+              <Tag
+                className="!text-xs cursor-pointer"
+                title={`VIN ${carData.VIN}`}
+                onClick={() => {
+                  window.open(`/objects?VIN=${carData.VIN}`, "_blank");
+                }}
+              />
+
+              <Tag
+                className="!text-xs cursor-pointer"
+                сopyValue={carData.VIN}
+                iIcom="bi bi-copy"
+                copy
+              />
+              <p
+                onClick={() =>
+                  window.open(
+                    `https://www.google.com/search?q=VIN+${carData.VIN}`,
+                    "_blank"
+                  )
                 }
-              )}{" "}
-              | {carData.comment_autoria_days}
-            </p>
+                className="cursor-pointer underline text-white/60 text-xs"
+              >
+                шукати в Google
+              </p>
+            </div>
+          )}
+
+          {carData.state_number && (
+            <div className="flex flex-wrap gap-2 items-center">
+              <Tag className="!text-xs" title={`${carData.state_number}`} />
+
+              <Tag
+                className="!text-xs"
+                сopyValue={carData.state_number}
+                iIcom="bi bi-copy"
+                copy
+              />
+            </div>
+          )}
+
+          <div className="flex my-4 gap-2">
+            {carData?.exchangePossible !== "0" && (
+              <Tag
+                Icon={<Exchange />}
+                className="!text-xs flex !bg-orange-500/20 !text-orange-400"
+                title={`Можливий обмін`}
+              />
+            )}
+            {carData?.id_dtp_status !== "0" && (
+              <Tag className="!text-xs" title={`Участь у дтп`} />
+            )}
+            {carData?.id_custom === "2" && (
+              <Tag className="!text-xs" title={`Не розмитнена`} />
+            )}
           </div>
-        )}
 
-        {carData.VIN && (
-          <div className="flex flex-wrap gap-2 items-center">
+          <div className="my-4 flex items-center gap-2">
             <Tag
               className="!text-xs cursor-pointer"
-              title={`VIN ${carData.VIN}`}
-              onClick={() => {
-                window.open(`/objects?VIN=${carData.VIN}`, "_blank");
-              }}
-            />
-
-            <Tag
-              className="!text-xs cursor-pointer"
-              сopyValue={carData.VIN}
-              iIcom="bi bi-copy"
-              copy
-            />
-            <p
+              title={`id xdrive ${carData.id_hash}`}
               onClick={() =>
-                window.open(
-                  `https://www.google.com/search?q=VIN+${carData.VIN}`,
-                  "_blank"
-                )
+                window.open(`/objects?xdrive=${carData.id_hash}`, "_blank")
               }
-              className="cursor-pointer underline text-white/60 text-xs"
-            >
-              шукати в Google
-            </p>
-          </div>
-        )}
-
-        {carData.state_number && (
-          <div className="flex flex-wrap gap-2 items-center">
-            <Tag className="!text-xs" title={`${carData.state_number}`} />
+            />
 
             <Tag
-              className="!text-xs"
-              сopyValue={carData.state_number}
+              className="!text-xs cursor-pointer"
+              сopyValue={carData.id_hash}
               iIcom="bi bi-copy"
               copy
             />
           </div>
-        )}
 
-        <div className="flex my-4 gap-2">
-          {carData?.exchangePossible !== "0" && (
-            <Tag
-              Icon={<Exchange />}
-              className="!text-xs flex !bg-orange-500/20 !text-orange-400"
-              title={`Можливий обмін`}
-            />
-          )}
-          {carData?.id_dtp_status !== "0" && (
-            <Tag className="!text-xs" title={`Участь у дтп`} />
-          )}
-          {carData?.id_custom === "2" && (
-            <Tag className="!text-xs" title={`Не розмитнена`} />
-          )}
-        </div>
-
-        <div className="my-4 flex items-center gap-2">
-          <Tag
-            className="!text-xs cursor-pointer"
-            title={`id xdrive ${carData.id_hash}`}
-            onClick={() =>
-              window.open(`/objects?xdrive=${carData.id_hash}`, "_blank")
-            }
-          />
-
-          <Tag
-            className="!text-xs cursor-pointer"
-            сopyValue={carData.id_hash}
-            iIcom="bi bi-copy"
-            copy
-          />
-        </div>
-
-        <div className="my-4 flex items-center gap-2">
-          <Tag
-            className="!text-xs"
-            title={`Першоджерело ${carData.id_ad_in_source}`}
-          />
-
-          <Tag
-            className="!text-xs cursor-pointer"
-            сopyValue={carData.id_ad_in_source}
-            iIcom="bi bi-copy"
-            copy
-          />
-        </div>
-
-        <div
-          className="my-4 flex items-center gap-4 cursor-pointer"
-          onClick={() => {
-            if (carData.id_source === "2") {
-              const { owner_id, id_source } = contacts;
-              window.open(
-                `/objects?showOwnerObject=${owner_id}&ownerSource=${id_source}`,
-                "_blank"
-              );
-            } else {
-              window.open(
-                `/objects?findClientsObjects=${contacts?.phones[0]?.phone?.replace(
-                  "38",
-                  ""
-                )}`,
-                "_blank"
-              );
-            }
-          }}
-        >
-          {carData?.Count_object > 10 ? (
-            <Tag
-              className="!text-xs !bg-red-500/20 !text-red-400"
-              title={"Перекуп"}
-            />
-          ) : carData?.Count_object > 5 ? (
-            <Tag
-              className="!text-xs !bg-red-500/20 !text-red-400"
-              title={"Перекуп ?"}
-            />
-          ) : carData?.Count_object > 2 ? (
-            <Tag className="!text-xs" title={"Перекуп ?"} />
-          ) : (
-            <Tag
-              className="!text-xs !bg-green-500/20 !text-green-400"
-              title={"Продавець"}
-            />
-          )}
-          <span className="text-xs text-white/60">
-            Продав ({carData?.Count_object}) авто
-          </span>
-        </div>
-
-        {carData.state_number && (
-          <div className="flex flex-wrap gap-2 items-center">
-            <Tag className="!text-xs" title={`${carData.state_number}`} />
-
+          <div className="my-4 flex items-center gap-2">
             <Tag
               className="!text-xs"
-              сopyValue={carData.state_number}
+              title={`Першоджерело ${carData.id_ad_in_source}`}
+            />
+
+            <Tag
+              className="!text-xs cursor-pointer"
+              сopyValue={carData.id_ad_in_source}
               iIcom="bi bi-copy"
               copy
             />
           </div>
-        )}
 
-        <DaysOnSale isCarPage carData={carData} />
+          <div
+            className="my-4 flex items-center gap-4 cursor-pointer"
+            onClick={() => {
+              if (carData.id_source === "2") {
+                const { owner_id, id_source } = contacts;
+                window.open(
+                  `/objects?showOwnerObject=${owner_id}&ownerSource=${id_source}`,
+                  "_blank"
+                );
+              } else {
+                window.open(
+                  `/objects?findClientsObjects=${contacts?.phones[0]?.phone?.replace(
+                    "38",
+                    ""
+                  )}`,
+                  "_blank"
+                );
+              }
+            }}
+          >
+            {carData?.Count_object > 10 ? (
+              <Tag
+                className="!text-xs !bg-red-500/20 !text-red-400"
+                title={"Перекуп"}
+              />
+            ) : carData?.Count_object > 5 ? (
+              <Tag
+                className="!text-xs !bg-red-500/20 !text-red-400"
+                title={"Перекуп ?"}
+              />
+            ) : carData?.Count_object > 2 ? (
+              <Tag className="!text-xs" title={"Перекуп ?"} />
+            ) : (
+              <Tag
+                className="!text-xs !bg-green-500/20 !text-green-400"
+                title={"Продавець"}
+              />
+            )}
+            <span className="text-xs text-white/60">
+              Продав ({carData?.Count_object}) авто
+            </span>
+          </div>
 
-        <ContactsContent data={carData} phones={contacts?.phones} />
+          {carData.state_number && (
+            <div className="flex flex-wrap gap-2 items-center">
+              <Tag className="!text-xs" title={`${carData.state_number}`} />
+
+              <Tag
+                className="!text-xs"
+                сopyValue={carData.state_number}
+                iIcom="bi bi-copy"
+                copy
+              />
+            </div>
+          )}
+
+          <DaysOnSale isCarPage carData={carData} />
+
+          <ContactsContent data={carData} phones={contacts?.phones} />
+        </div>
       </div>
     </StyledCar>
   );
 };
 
 const StyledCar = styled.div`
-  display: grid;
-  grid-template-columns: 50% 50%;
-
-  height: calc(100svh - 2000px);
+  background-color: var(--element-bg);
+  overflow: scroll;
+  height: calc(100svh - 100px);
   color: #fff;
-  padding: 0 10px;
+  padding: 30px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
 
   .price {
     color: var(--green);
   }
 
   @media (max-width: 1024px) {
-    grid-template-columns: 100%;
+    .content {
+      grid-template-columns: 100%;
+    }
+  }
+  @media (max-width: 768px) {
+    padding: 10px;
   }
 `;
 

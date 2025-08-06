@@ -51,7 +51,15 @@ const settings = {
   swipe: false,
 };
 
-export const Slider = ({ photos, data, showLike, isCarPage }) => {
+export const Slider = ({
+  photos,
+  data,
+  showLike,
+  isCarPage,
+  handleToggleFavoriteStatus,
+  isFavorite,
+  setIsFavorite,
+}) => {
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
   const { user } = useAppSelect((state) => state.auth);
@@ -59,7 +67,6 @@ export const Slider = ({ photos, data, showLike, isCarPage }) => {
   const [openView, setOpenView] = useState(false);
   const [sortPhotos, setSortPhotos] = useState(null);
   const [isOpenDropDown, setIsOpenDropDown] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(data?.id_hash);
   const [openAddModal, setOpenAddModal] = useState(null);
   const [openHistoryModal, setOpenHistoryModal] = useState(null);
   const [openHistoryPriceModal, setOpenHistoryPriceModal] = useState(null);
@@ -71,7 +78,6 @@ export const Slider = ({ photos, data, showLike, isCarPage }) => {
   const [advertaseObject, setAdvertaseObject] = useState(null);
   const { data: companyInfo } = useGetCompanyInfoQuery();
   const [publishObject] = useLazyPublishObjectQuery();
-  const [addObjectsToFavorites] = useLazyAddToFavoritesQuery();
   const moreRef = useRef(null);
   const { accessData } = useAppSelect((state) => state.auth);
 
@@ -119,25 +125,6 @@ export const Slider = ({ photos, data, showLike, isCarPage }) => {
 
     return editInSourceDate > today || priceChangeDate > today;
   };
-
-  function handleToggleFavoriteStatus() {
-    if (user) {
-      addObjectsToFavorites([data.id_hash]).then((resp) => {
-        handleResponse(resp, () => {
-          showAlert("success", "Статус успішно змінено!");
-        });
-      });
-    }
-    let favorites = JSON.parse(localStorage.getItem("favorite")) || [];
-    if (favorites.includes(data.id_hash)) {
-      favorites = favorites.filter((id) => id !== data.id_hash);
-      setIsFavorite(false);
-    } else {
-      favorites.push(data.id_hash);
-      setIsFavorite(true);
-    }
-    localStorage.setItem("favorite", JSON.stringify(favorites));
-  }
 
   const handleFocus = () => moreRef.current.focus();
 
