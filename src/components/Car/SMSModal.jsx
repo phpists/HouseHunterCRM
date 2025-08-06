@@ -3,16 +3,11 @@ import { useAppSelect } from "../../hooks/redux";
 import { Modal } from "../Modal/Modal";
 import { useActions } from "../../hooks/actions";
 
-const SMSModal = ({
-  data,
-  closeModal,
-  realMessage,
-  defaultMessage,
-  setDefault,
-}) => {
+const SMSModal = ({ data, closeModal, defaultMessage, setDefault }) => {
   const { setSmsMessage } = useActions();
-  const [message, setMessage] = useState(realMessage || defaultMessage);
+  const { setSmsTagsMessage } = useActions();
   const { user } = useAppSelect((state) => state.auth);
+  const { smsMessage, smsTagsMessage } = useAppSelect((state) => state.car);
   const userPhoneNumber = `+${user?.phones?.[0]?.phone}`;
 
   const applyDiscount = (price, discountPercentage) => {
@@ -22,7 +17,7 @@ const SMSModal = ({
     return Math.round(discountedPrice / 100) * 100;
   };
 
-  const finalMessage = message
+  const finalMessage = smsTagsMessage
     .replaceAll("[TEL]", userPhoneNumber)
     .replaceAll("[MARKA]", data.brand_name)
     .replaceAll("[MODEL]", data.model_name)
@@ -34,7 +29,7 @@ const SMSModal = ({
   const Tag = ({ text }) => {
     return (
       <span
-        onClick={() => setMessage((prev) => prev + text)}
+        onClick={() => setSmsTagsMessage(smsTagsMessage + text)}
         className="cursor-pointer text-sm bg-zinc-700 w-fit h-fit rounded-md px-1 font-bold text-white/80"
       >
         {text}
@@ -52,16 +47,16 @@ const SMSModal = ({
             onChange={(e) => {
               const inputValue = e.target.value;
               if (inputValue.length > 300) {
-                setMessage(inputValue.slice(0, 300));
+                setSmsTagsMessage(inputValue.slice(0, 300));
               } else {
-                setMessage(inputValue);
+                setSmsTagsMessage(inputValue);
               }
             }}
-            value={message}
+            value={smsTagsMessage}
             className="resize-none text-xs h-20 w-full"
             placeholder=" Enter your message here..."
           />
-          <span className="text-xs text-gray-500">{message.length}/300</span>
+          <span className="text-xs text-gray-500">{smsMessage.length}/300</span>
         </div>
 
         <div className="flex gap-3">
@@ -77,7 +72,7 @@ const SMSModal = ({
           <button
             onClick={() => {
               setDefault();
-              setMessage(defaultMessage);
+              setSmsTagsMessage(defaultMessage);
             }}
             className="rounded py-1 w-full hover:bg-white/60 bg-white/50 text-[var(--modal-bg)]"
           >

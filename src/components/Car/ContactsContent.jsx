@@ -20,7 +20,7 @@ const ContactsContent = ({ phones, data, isMainPage }) => {
   // set default message
   useEffect(() => {
     setSmsMessage(
-      defaultMessage.replaceAll("[TEL]", `+${user?.phones?.[0]?.phone}`)
+      defaultMessage?.replaceAll("[TEL]", `+${user?.phones?.[0]?.phone}`)
     );
   }, []);
 

@@ -8,9 +8,9 @@ const StyledNewTag = styled.div`
   color: var(--green);
   background: rgb(59 133 1 / 68%);
   font-family: "Open Sans", sans-serif;
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 15px;
+  line-height: 22px;
   letter-spacing: 0.02em;
   text-align: left;
   z-index: 12;

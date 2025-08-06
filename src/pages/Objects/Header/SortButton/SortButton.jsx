@@ -13,13 +13,19 @@ export const SortButton = ({ value, onChange }) => {
     if (btnRef.current) {
       btnRef.current.blur();
     }
+    setOpen(false); // Explicitly close dropdown after selection
+  };
+
+  const handleToggleOpen = () => {
+    setOpen((prev) => !prev);
   };
 
   return (
     <StyledSortButton
       ref={btnRef}
-      onClick={() => setOpen(true)}
+      onClick={handleToggleOpen}
       onBlur={() => setOpen(false)}
+      tabIndex={0} // Ensure button is focusable
     >
       <IconButton
         Icon={SortIcon}
@@ -27,7 +33,7 @@ export const SortButton = ({ value, onChange }) => {
         active={open}
         onClick={() => null}
       />
-      <Dropdown value={value} onChange={handleChangeValue} />
+      <Dropdown value={value} onChange={handleChangeValue} open={open} />
     </StyledSortButton>
   );
 };
@@ -43,7 +49,7 @@ const StyledSortButton = styled.button`
       opacity: 1;
     }
   }
-  &:focus {
+  &:focus-within {
     .dropdown {
       opacity: 1;
       visibility: visible;

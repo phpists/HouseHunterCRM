@@ -36,24 +36,25 @@ import { AddToSelections } from "../../../pages/Objects/AddToSelections";
 import { ObjectHistory } from "../../ObjectHistory/ObjectHistory";
 import { ObjectPriceHistory } from "../../ObjectPriceHistory";
 import { ObjectCommentHistory } from "../../ObjectCommentHistory/ObjectCommentHistory";
-import { MarkObjectPhones } from "../../MarkObjectPhones/MarkObjectPhones";
 import { useGetCompanyInfoQuery } from "../../../store/billing/billing.api";
 import cogoToast from "cogo-toast";
 
+// Main slider settings
 const settings = {
   dots: false,
-  infinite: true,
+  infinite: false,
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
   swipeToSlide: false,
-  touchMove: true,
+  touchMove: false,
+  swipe: false,
 };
 
 export const Slider = ({ photos, data, showLike, isCarPage }) => {
+  const [nav1, setNav1] = useState(null);
+  const [nav2, setNav2] = useState(null);
   const { user } = useAppSelect((state) => state.auth);
-  const sliderRef = useRef(null);
-  const slickRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(1);
   const [openView, setOpenView] = useState(false);
   const [sortPhotos, setSortPhotos] = useState(null);
@@ -84,9 +85,9 @@ export const Slider = ({ photos, data, showLike, isCarPage }) => {
     setCurrentSlide(val);
   };
 
-  useEffect(() => {
-    slickRef.current && slickRef.current.slickGoTo(0);
-  }, []);
+  // useEffect(() => {
+  //   slickRef.current && slickRef.current.slickGoTo(0);
+  // }, []);
 
   const handleCloseDropdown = () => moreRef.current.blur();
 
@@ -197,7 +198,7 @@ export const Slider = ({ photos, data, showLike, isCarPage }) => {
   };
 
   return (
-    <>
+    <div className="lg:mr-5">
       {openAddModal && (
         <AddToSelections
           onClose={() => setOpenAddModal(false)}
@@ -247,7 +248,6 @@ export const Slider = ({ photos, data, showLike, isCarPage }) => {
 
       <StyledSlider
         className="flex items-center"
-        ref={sliderRef}
         empty={(photos?.length < 2).toString()}
         isOpenDropDown={isOpenDropDown}
         isCarPage={isCarPage}
@@ -291,7 +291,7 @@ export const Slider = ({ photos, data, showLike, isCarPage }) => {
           )}
 
           {isCarPage && (
-            <div className="threbtn-dropdown bg-white w-7 h-7 flex items-center justify-center rounded absolute right-[5px] top-[10px] z-30">
+            <div className="flex md:hidden threbtn-dropdown bg-white w-7 h-7 items-center justify-center rounded absolute right-[5px] top-[10px] z-30">
               <Button onChangeFocus={(val) => setIsOpenDropDown(val)} />
               <Dropdown
                 // clientId={clientId}
@@ -354,7 +354,7 @@ export const Slider = ({ photos, data, showLike, isCarPage }) => {
           {isCarPage && (
             <div
               onClick={() => handleToggleFavoriteStatus()}
-              className="cursor-pointer bg-white w-7 h-7 flex items-center justify-center rounded absolute right-[5px] bottom-[10px] z-10"
+              className="flex md:hidden cursor-pointer bg-white w-7 h-7 items-center justify-center rounded absolute right-[5px] bottom-[10px] z-10"
             >
               {isFavorite ? (
                 <img className="w-4 h-4" src={Heart} alt="" />
@@ -370,6 +370,7 @@ export const Slider = ({ photos, data, showLike, isCarPage }) => {
           ) : (
             <SlickSlider
               {...settings}
+              asNavFor={nav2}
               beforeChange={(currentSlide, nextSlide) =>
                 setCurrentSlide(1 + nextSlide)
               }
@@ -384,7 +385,8 @@ export const Slider = ({ photos, data, showLike, isCarPage }) => {
                   <img src={nextIcon} alt="" />
                 </button>
               }
-              ref={slickRef}
+              slidesToShow={1}
+              ref={(slider) => setNav1(slider)}
             >
               {photos
                 ?.map(({ name }) => name)
@@ -401,11 +403,51 @@ export const Slider = ({ photos, data, showLike, isCarPage }) => {
           )}
         </div>
       </StyledSlider>
-    </>
+
+      <MiniStyledSlider
+        className="hidden md:flex items-center"
+        empty={(photos?.length < 2).toString()}
+        isOpenDropDown={isOpenDropDown}
+        isCarPage={isCarPage}
+      >
+        <div className="relative slider">
+          {photos?.length === 0 ? (
+            <Slide photo={noPhoto} active empty onOpen={() => null} />
+          ) : (
+            <SlickSlider
+              {...settings}
+              asNavFor={nav1}
+              beforeChange={(currentSlide, nextSlide) =>
+                setCurrentSlide(1 + nextSlide)
+              }
+              // currentSlide={currentSlide}
+              slidesToShow={7}
+              ref={(slider) => setNav2(slider)}
+              // centerMode={true}
+              // centerPadding={"10px"}
+            >
+              {photos
+                ?.map(({ name }) => name)
+                .map((photo, i) => (
+                  <Slide
+                    key={i}
+                    photo={photo}
+                    active={true}
+                    empty={photos?.length === 1}
+                    onOpen={() => nav1.slickGoTo(i)}
+                    className="cursor-pointer"
+                  />
+                ))}
+            </SlickSlider>
+          )}
+        </div>
+      </MiniStyledSlider>
+    </div>
   );
 };
 
 const StyledSlider = styled.div`
+  margin: 0 0 10px 0;
   ${({ isOpenDropDown }) =>
     isOpenDropDown &&
     `
@@ -424,12 +466,10 @@ const StyledSlider = styled.div`
   }
 
   position: relative;
-  margin-right: 10px;
-  height: 200px;
+  height: 500px;
   /* height: 100%; */
   .slider {
     width: ${({ isCarPage }) => (isCarPage ? "100%" : "200px")};
-    min-height: 200px;
     height: 100%;
     overflow: hidden;
     border-radius: 8px;
@@ -491,54 +531,87 @@ const StyledSlider = styled.div`
     }
   }
 
-  @media (max-width: 800px) {
-    flex-direction: row;
-    margin: 0;
-    .slider {
-      width: ${({ isCarPage }) =>
-        isCarPage ? "100%" : "calc(100svw - 4px - 8px - 50px - 24px - 39px)"};
-    }
-  }
-
-  @media (max-width: 500px) {
-    .slider {
-      width: ${({ isCarPage }) => (isCarPage ? "100%" : "350px")};
-    }
+  @media (max-width: 768px) {
+    height: 300px;
   }
   @media (max-width: 450px) {
-    .slider {
-      width: ${({ isCarPage }) => (isCarPage ? "100%" : "320px")};
+    height: 200px;
+  }
+`;
+const MiniStyledSlider = styled.div`
+  position: relative;
+  height: 70px;
+  .slick-current {
+    div {
+      div {
+        border: 2px solid #fff;
+      }
     }
   }
-  @media (max-width: 400px) {
-    .slider {
-      width: ${({ isCarPage }) => (isCarPage ? "100%" : "300px")};
-    }
+  .slick-slide {
+    padding: 0 4px;
   }
-  @media (max-width: 380px) {
-    .slider {
-      width: ${({ isCarPage }) => (isCarPage ? "100%" : "280px")};
-    }
-  }
-  @media (max-width: 360px) {
-    .slider {
-      width: ${({ isCarPage }) => (isCarPage ? "100%" : "270px")};
-    }
-  }
-  @media (max-width: 340px) {
-    .slider {
-      width: ${({ isCarPage }) => (isCarPage ? "100%" : "250px")};
-    }
-  }
-  @media (max-width: 1399.9px) {
-    flex-direction: column;
-    height: auto;
+  /* height: 100%; */
+  .slider {
+    width: ${({ isCarPage }) => (isCarPage ? "100%" : "200px")};
+    height: 100%;
     overflow: hidden;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+  .slick-slider,
+  .slick-list,
+  .slick-track,
+  .slick-slide,
+  .slick-slide > div {
+    height: 100%;
   }
 
-  @media (min-width: 1400px) {
-    .slider {
-      width: ${({ isCarPage }) => (isCarPage ? "100%" : "200px")};
+  ${({ isCarPage }) =>
+    isCarPage &&
+    ` .slick-slide {
+    display: flex;
+    justify-content: center;
+
+    div {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }`};
+
+  .slick-arrow {
+    transition: all 0.3s;
+    &::before {
+      display: none;
+    }
+  }
+  .slick-next,
+  .slick-prev {
+    width: 30px;
+    height: 30px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+  .slick-next {
+    right: 8px;
+    z-index: 4;
+  }
+  .slick-prev {
+    left: 8px;
+    z-index: 4;
+  }
+  .slider-arrows {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+  }
+
+  &:hover {
+    .slider-arrows {
+      opacity: 1;
+      visibility: visible;
     }
   }
 `;
