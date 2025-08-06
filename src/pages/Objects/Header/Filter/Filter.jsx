@@ -35,6 +35,7 @@ import { ReactComponent as AutoRiaImg } from "../../../../assets/images/autoria.
 import Search from "../../../../components/SearchFilter/Search";
 import SearchResults from "../../../../components/SearchResults/SearchResults";
 import { Base } from "../../../../components/Base/Base";
+import Notifications from "../../../../components/Notifications/Notifications";
 
 export const Filter = ({
   open,
@@ -437,6 +438,8 @@ export const Filter = ({
             onChangePhoneCode={onChangePhoneCode}
             errors={errors}
           />
+
+          <Notifications data={filters} onChange={onChangeFilter} />
 
           <Base
             className="base-wrapper"

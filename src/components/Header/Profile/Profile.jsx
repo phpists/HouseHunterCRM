@@ -29,6 +29,7 @@ import axios from "axios";
 import { baseUrlWebsoket } from "../../../api/baseUrl";
 import { io } from "socket.io-client";
 import { CarMainInfoFileds } from "../../../constants";
+import { useLazyGetNotificationsQuery } from "../../../store/notifications/notifications.api";
 
 export const Profile = () => {
   const { pathname } = useLocation();
@@ -41,8 +42,10 @@ export const Profile = () => {
   const [getProfile] = useLazyGetUserQuery();
   const [editProfile] = useLazyEditProfileQuery();
   const [deleteAvatar] = useLazyDeleteAvatarQuery();
+  const [getNotifications] = useLazyGetNotificationsQuery();
   const [errors, setErrors] = useState([]);
-  const { data, refetch } = useGetNotificationsQuery();
+  const [data, setData] = useState(null);
+  // const { data, refetch } = useGetNotificationsQuery();
   const [logout] = useLazyLogoutQuery();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -80,9 +83,9 @@ export const Profile = () => {
     // eslint-disable-next-line
   }, [user]);
 
-  useEffect(() => {
-    data && refetch();
-  }, [pathname]);
+  // useEffect(() => {
+  //   data && refetch();
+  // }, [pathname]);
 
   const handleCheckAllFields = () => {
     const { first_name, last_name, email, phones } = profileData;
@@ -214,6 +217,7 @@ export const Profile = () => {
   };
 
   useEffect(() => {
+    getNotifications().then(({ data }) => setData(data));
     setOpenNotifications(false);
   }, [pathname]);
 
@@ -249,64 +253,64 @@ export const Profile = () => {
     CarMainInfoFileds?.find((f) => f.field === field)?.field_option?.[value] ??
     value;
 
-  useEffect(() => {
-    // getRubricField(1);
-    let socket;
-    let interval;
-    if (CarMainInfoFileds) {
-      socket = new WebSocket(
-        `wss://socket.cars.xcorp.com.ua/socket/?token=${localStorage.getItem(
-          "token"
-        )}`
-      );
+  // useEffect(() => {
+  //   // getRubricField(1);
+  //   let socket;
+  //   let interval;
+  //   if (CarMainInfoFileds) {
+  //     socket = new WebSocket(
+  //       `wss://socket.cars.xcorp.com.ua/socket/?token=${localStorage.getItem(
+  //         "token"
+  //       )}`
+  //     );
 
-      function sendMessage() {
-        socket.send("Get");
-      }
-      interval = setInterval(sendMessage, 900000);
+  //     function sendMessage() {
+  //       socket.send("Get");
+  //     }
+  //     interval = setInterval(sendMessage, 900000);
 
-      socket.onopen = () => {};
+  //     socket.onopen = () => {};
 
-      socket.onmessage = (event) => {
-        try {
-          const message = JSON.parse(event.data);
-          if (message?.error === 0) {
-            const data = JSON.parse(message?.data);
-            const image =
-              data?.photo_links_json?.length > 0
-                ? JSON.parse(data?.photo_links_json)?.[0]
-                : null;
+  //     socket.onmessage = (event) => {
+  //       try {
+  //         const message = JSON.parse(event.data);
+  //         if (message?.error === 0) {
+  //           const data = JSON.parse(message?.data);
+  //           const image =
+  //             data?.photo_links_json?.length > 0
+  //               ? JSON.parse(data?.photo_links_json)?.[0]
+  //               : null;
 
-            addNotification({
-              ...data,
-              date: new Date().getTime(),
-              id_filter: message?.id_filter,
-              image,
-              volume_engine: handleGetTagValue(
-                "volume_engine",
-                data?.volume_engine
-              ),
-              id_type_fuel: handleGetTagValue(
-                "id_type_fuel",
-                data?.id_type_fuel
-              ),
-              id_type_body: handleGetTagValue(
-                "id_type_body",
-                data?.id_type_body
-              ),
-            });
-          }
-        } catch (error) {
-          console.error("Error parsing WebSocket message:", error);
-        }
-      };
-    }
+  //           addNotification({
+  //             ...data,
+  //             date: new Date().getTime(),
+  //             id_filter: message?.id_filter,
+  //             image,
+  //             volume_engine: handleGetTagValue(
+  //               "volume_engine",
+  //               data?.volume_engine
+  //             ),
+  //             id_type_fuel: handleGetTagValue(
+  //               "id_type_fuel",
+  //               data?.id_type_fuel
+  //             ),
+  //             id_type_body: handleGetTagValue(
+  //               "id_type_body",
+  //               data?.id_type_body
+  //             ),
+  //           });
+  //         }
+  //       } catch (error) {
+  //         console.error("Error parsing WebSocket message:", error);
+  //       }
+  //     };
+  //   }
 
-    return () => {
-      socket?.close();
-      clearInterval(interval);
-    };
-  }, []);
+  //   return () => {
+  //     socket?.close();
+  //     clearInterval(interval);
+  //   };
+  // }, []);
 
   return (
     <>
@@ -346,7 +350,7 @@ export const Profile = () => {
         <Notification
           active={openNotifications}
           onToggle={handleOpenNotifications}
-          count={data?.count_notify + notifications?.length}
+          count={data?.count_notify}
         />
         <NotificationsDropdown
           data={data}

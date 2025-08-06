@@ -603,3 +603,12 @@ export const CarsColor = [
 ];
 
 export const source = { 1: "Avtoria", 2: "OLX", 3: "Rst" };
+
+export const notifications = [
+  { id: 1, title: "Ціна автомобіля" },
+  { id: 2, title: "Індекс зацікавленості від" },
+  { id: 3, title: "Мінімум на х %" },
+  { id: 4, title: "Ціна впала вниз на будь-які авто в моїх обраних" },
+  { id: 5, title: "Отримали новий коментар в Чат Авторіа" },
+  { id: 6, title: "Ціна посипалась" },
+];

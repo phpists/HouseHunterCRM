@@ -206,25 +206,27 @@ export const CarMainInfo = ({
           <>
             <Tag
               Icon={<Exchange />}
-              className="!hidden md:!flex !bg-orange-500/20 !text-orange-400"
+              className="!text-xs  !hidden md:!flex !bg-orange-500/20 !text-orange-400"
               title={`Обмін`}
             />
             <Tag
               Icon={<Exchange />}
-              className="md:!hidden !bg-orange-500/20 !text-orange-400"
+              className="!text-xs md:!hidden !bg-orange-500/20 !text-orange-400"
             />
           </>
         )}
         {data?.exchangePossible !== "0" && data?.exchangeType.length !== 0 && (
-          <Tag title={data?.exchangeType} />
+          <Tag className="!text-xs" title={data?.exchangeType} />
         )}
         {data?.id_dtp_status === "2" && (
           <Tag
-            className="!bg-red-500/20 !text-red-400"
+            className="!text-xs !bg-red-500/20 !text-red-400"
             title={`Участь у дтп`}
           />
         )}
-        {data?.id_custom === "2" && <Tag title={`Не розмитнена`} />}
+        {data?.id_custom === "2" && (
+          <Tag className="!text-xs" title={`Не розмитнена`} />
+        )}
       </div>
 
       {data.VIN && (

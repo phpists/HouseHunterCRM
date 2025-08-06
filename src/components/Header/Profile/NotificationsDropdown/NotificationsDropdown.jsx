@@ -86,6 +86,16 @@ export const NotificationsDropdown = ({
               }
             />
           )}
+
+          {data?.socketNotification && (
+            <Card
+              type="objects"
+              messages={[data?.socketNotification]}
+              links={["/objects?showFilterObject"]}
+              onClose={() => onClose("socketNotification")}
+            />
+          )}
+
           {data?.objectLiquidity && (
             <Card
               type="objects"
@@ -103,17 +113,17 @@ export const NotificationsDropdown = ({
             />
           )}
 
-          {[...notifications]
+          {/* {[...notifications]
             ?.sort((a, b) => b?.date - a?.date)
             ?.map(
               (data, i) =>
                 i < 9 && <Notification key={data?.id_hash} data={data} />
-            )}
-          <Button
+            )} */}
+          {/* <Button
             title="Переглянути всі сповіщення"
             className="mt-2"
             onClick={() => navigate("/notifications")}
-          />
+          /> */}
           <Button
             title="Налаштування"
             className="mt-2"

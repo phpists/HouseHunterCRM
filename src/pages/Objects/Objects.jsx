@@ -153,7 +153,20 @@ const Objects = () => {
             ?.length === 0;
 
         if (isEmpty) {
-          updatedFilters = { ...updatedFilters, street_base_object: {} };
+          const filters = { ...updatedFilters, street_base_object: {} };
+
+          if (updatedFilters.street_base_object.showFilterObject) {
+            updatedFilters = {
+              ...updatedFilters,
+              street_base_object: {
+                ...updatedFilters.street_base_object,
+                showFilterObject:
+                  updatedFilters.street_base_object.showFilterObject,
+              },
+            };
+          } else {
+            updatedFilters = filters;
+          }
         }
       }
 
@@ -231,7 +244,7 @@ const Objects = () => {
             ...company_object,
             dt_end_agreement_to: dt_end_agreement_to?.getTime() / 1000,
           },
-          street_base_object,
+          street_base_object: { ...street_base_object },
           mls_object,
           sorting,
           filters: {
@@ -669,6 +682,14 @@ const Objects = () => {
         street_base_object: {
           VIN: filterApplyValue,
           sorting_id: "14",
+        },
+      });
+      filterActive.current = true;
+      setUpdateData(true);
+    } else if (filterApply === "?showFilterObject") {
+      setFilters({
+        street_base_object: {
+          showFilterObject: [],
         },
       });
       filterActive.current = true;

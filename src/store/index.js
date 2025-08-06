@@ -17,6 +17,8 @@ import { selectionsReducer } from "./selections/selections.slice";
 import { billing } from "./billing/billing.api";
 import { billingReducer } from "./billing/billing.slice";
 import { carReducer } from "./car/car.slice";
+import { notifications } from "./notifications/notifications.api";
+import { notificationsReducer } from "./notifications/notifications.slice";
 
 export const store = configureStore({
   reducer: {
@@ -37,6 +39,8 @@ export const store = configureStore({
     [billing.reducerPath]: billing.reducer,
     billing: billingReducer,
     car: carReducer,
+    [notifications.reducerPath]: notifications.reducer,
+    notifications: notificationsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -47,7 +51,8 @@ export const store = configureStore({
       structure.middleware,
       calls.middleware,
       selections.middleware,
-      billing.middleware
+      billing.middleware,
+      notifications.middleware
     ),
 });
 
