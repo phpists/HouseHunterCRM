@@ -16,11 +16,10 @@ import {
   useLazyAddViewLinkQuery,
   useLazyGetCarBodyQuery,
 } from "../../store/objects/objects.api";
-import { car_body_type, CarMainInfoFileds } from "../../constants";
+import { car_body_type, CarMainInfoFileds, CarsColor } from "../../constants";
 import rst from "../../assets/images/rst.svg";
 import olx from "../../assets/images/olx.png";
 import Autoria from "../../assets/images/autoria.svg";
-import { ReactComponent as Exchange } from "../../assets/images/exchange.svg";
 import { ReactComponent as ChatIcon } from "../../assets/images/chat-grey.svg";
 import { ActionButton } from "./ShowMore/ActionButton";
 
@@ -37,6 +36,7 @@ export const CarMainInfo = ({
   const { data: locationsList } = useGetLocationsQuery();
   const [formatedLocations, setFormatedLocations] = useState([]);
   const [addViewLink] = useLazyAddViewLinkQuery();
+  const carColor = CarsColor.filter(({ id }) => id === data?.id_color)[0];
 
   const handleFormatLocations = () => {
     const locList = Object.entries(locationsList)?.map((loc) => loc[1]);
@@ -99,7 +99,7 @@ export const CarMainInfo = ({
     <StyledCarMainInfo>
       <div className="car-info-header">
         <div>
-          <h1 className="flex items-center gap-1 text-md">
+          <h1 className="flex items-center gap-1">
             <div
               className="cursor-pointer"
               onClick={() => data?.link && window.open(data?.link, "_blank")}
@@ -115,7 +115,7 @@ export const CarMainInfo = ({
               )}
             </div>
             <span
-              className="cursor-pointer hover:underline"
+              className="!text-2xl md:!text-lg cursor-pointer hover:underline"
               onClick={(e) => {
                 e.stopPropagation();
                 addViewLink(data.id);
@@ -196,21 +196,26 @@ export const CarMainInfo = ({
               <span>{id_type_body && id_type_body + " • "}</span>
               <span>{data.rubric_name && data.rubric_name + " • "}</span>
               <span>{data?.name && data?.name + " • "}</span>
+              <span>
+                {data?.seatingCapacity != 0 &&
+                  `${data?.seatingCapacity} місць` + " • "}
+              </span>
+              <span>{carColor?.name && carColor?.name}</span>
             </>
           }
         />
       )}
 
-      <div className="flex my-1 gap-1">
+      <div className="flex mt-2 md:my-1 gap-1">
         {data?.exchangePossible !== "0" && (
           <>
             <Tag
-              Icon={<Exchange />}
-              className="!text-xs  !hidden md:!flex !bg-orange-500/20 !text-orange-400"
+              className="!text-xs !hidden md:!flex !bg-orange-500/20 !text-orange-400"
               title={`Обмін`}
+              iIcom="bi bi-arrow-left-right"
             />
             <Tag
-              Icon={<Exchange />}
+              iIcom="bi bi-arrow-left-right"
               className="!text-xs md:!hidden !bg-orange-500/20 !text-orange-400"
             />
           </>
@@ -319,8 +324,8 @@ const StyledCarMainInfo = styled.div`
     width: 100%;
   }
   .car-info-header {
-    display: grid;
-    grid-template-columns: 1fr max-content;
+    display: flex;
+    justify-content: space-between;
     gap: 10px;
     align-items: center;
   }
@@ -348,8 +353,14 @@ const StyledCarMainInfo = styled.div`
   }
 
   @media (max-width: 768px) {
+    margin: 10px 0 0 0;
+  }
+
+  @media (max-width: 768px) {
     .car-info-header {
-      grid-template-columns: 1fr;
+      flex-direction: column;
+      align-items: normal;
+      gap: 0px;
     }
   }
 `;

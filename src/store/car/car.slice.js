@@ -16,7 +16,7 @@ export const carSlice = createSlice({
     setSmsTagsMessage(state, action) {
       state.smsTagsMessage = action.payload;
     },
-    setIsFavorite(state, action) {
+    setIsFavoriteCar(state, action) {
       state.isFavorite = action.payload;
     },
   },

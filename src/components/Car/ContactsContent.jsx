@@ -9,27 +9,42 @@ import { Tag } from "../ObjectCard/MainInfo/Tags/Tag";
 import SMSModal from "./SMSModal";
 import { useEffect, useState } from "react";
 import { useActions } from "../../hooks/actions";
+import { applyDiscount } from "../../utilits";
 
 const ContactsContent = ({ phones, data, isMainPage }) => {
   const { user } = useAppSelect((state) => state.auth);
-  const { smsMessage } = useAppSelect((state) => state.car);
-  const { setSmsMessage } = useActions();
+  const { smsMessage, smsTagsMessage } = useAppSelect((state) => state.car);
+  const { setSmsMessage, setSmsTagsMessage } = useActions();
   const [isOpenSMSModal, setIsOpenSMSModal] = useState(false);
-  const defaultMessage = "Куплю ваше авто сьогодні, Ціну узгодимо [TEL].";
+  const defaultMessage = "Куплю ваш [MARKA] по ціні [TORG_10] [TEL].";
+
+  const finalMessage = (tagText) =>
+    tagText
+      .replaceAll("[TEL]", user?.phones?.[0]?.phone)
+      .replaceAll("[MARKA]", data.brand_name)
+      .replaceAll("[MODEL]", data.model_name)
+      .replaceAll("[TORG_5]", applyDiscount(data.price_usd, 5))
+      .replaceAll("[TORG_10]", applyDiscount(data.price_usd, 10))
+      .replaceAll("[TORG_15]", applyDiscount(data.price_usd, 15))
+      .replaceAll("[TORG_20]", applyDiscount(data.price_usd, 20));
 
   // set default message
   useEffect(() => {
-    setSmsMessage(
-      defaultMessage?.replaceAll("[TEL]", `+${user?.phones?.[0]?.phone}`)
-    );
+    const storageSmsMessage = localStorage.getItem("smsMessage");
+    const storageSmsTagsMessage = localStorage.getItem("smsTagsMessage");
+    // console.log(storageSmsMessage);
+    // console.log(storageSmsTagsMessage);
+    setSmsMessage(storageSmsMessage || finalMessage(defaultMessage));
+    setSmsTagsMessage(storageSmsTagsMessage || defaultMessage);
   }, []);
 
   return (
     <>
       {isOpenSMSModal && (
         <SMSModal
+          finalMessage={finalMessage(smsTagsMessage)}
           data={data}
-          setDefault={() => setSmsMessage(defaultMessage)}
+          setDefault={() => setSmsTagsMessage(defaultMessage)}
           realMessage={smsMessage}
           defaultMessage={defaultMessage}
           closeModal={() => setIsOpenSMSModal(false)}
@@ -55,7 +70,7 @@ const ContactsContent = ({ phones, data, isMainPage }) => {
                 {isMainPage ? (
                   <>
                     <a
-                      href={`viber://contact?number=${phone}`}
+                      href={`viber://chat?number=${phone}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="cursor-pointer flex justify-center"
@@ -170,7 +185,7 @@ const ContactsContent = ({ phones, data, isMainPage }) => {
           onClick={() => {
             data.link && window.open(`${data.link}`, "_blank");
           }}
-          className="text-xs cursor-pointer hover:underline w-full h-12 bg-red-500 flex items-center justify-center rounded gap-2"
+          className="mt-6 text-xs cursor-pointer hover:underline w-full h-12 bg-red-500 flex items-center justify-center rounded gap-2"
         >
           <span>Номер телефону відсутній, перейдіть на</span>
           {data.id_source === "1" && (

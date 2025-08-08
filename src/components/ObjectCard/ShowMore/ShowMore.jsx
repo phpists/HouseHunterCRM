@@ -125,7 +125,7 @@ export const ShowMore = ({
   );
 };
 
-const StyledShowMore = styled.button`
+const StyledShowMore = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;

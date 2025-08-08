@@ -238,6 +238,7 @@ const StyledObjectCard = styled.div`
     display: flex;
     flex-direction: column;
     padding-right: 10px;
+    gap: 0px;
   }
   /* min-height: 160px; */
 `;

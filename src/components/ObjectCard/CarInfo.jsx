@@ -183,5 +183,6 @@ const StyledCarInfo = styled.div`
     .tags {
       flex-wrap: nowrap;
     }
+    margin: 10px 0 0 0;
   }
 `;

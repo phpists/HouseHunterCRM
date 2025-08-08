@@ -2,29 +2,24 @@ import { useState } from "react";
 import { useAppSelect } from "../../hooks/redux";
 import { Modal } from "../Modal/Modal";
 import { useActions } from "../../hooks/actions";
+import { applyDiscount } from "../../utilits";
 
-const SMSModal = ({ data, closeModal, defaultMessage, setDefault }) => {
+const SMSModal = ({
+  data,
+  closeModal,
+  defaultMessage,
+  setDefault,
+  finalMessage,
+}) => {
   const { setSmsMessage } = useActions();
   const { setSmsTagsMessage } = useActions();
   const { user } = useAppSelect((state) => state.auth);
   const { smsMessage, smsTagsMessage } = useAppSelect((state) => state.car);
-  const userPhoneNumber = `+${user?.phones?.[0]?.phone}`;
 
-  const applyDiscount = (price, discountPercentage) => {
-    const priceNum = parseFloat(price);
-    const discount = priceNum * (discountPercentage / 100);
-    const discountedPrice = priceNum - discount;
-    return Math.round(discountedPrice / 100) * 100;
+  const saveSmsMesssage = () => {
+    localStorage.setItem("smsMessage", finalMessage);
+    localStorage.setItem("smsTagsMessage", smsTagsMessage);
   };
-
-  const finalMessage = smsTagsMessage
-    .replaceAll("[TEL]", userPhoneNumber)
-    .replaceAll("[MARKA]", data.brand_name)
-    .replaceAll("[MODEL]", data.model_name)
-    .replaceAll("[TORG_5]", applyDiscount(data.price_usd, 5))
-    .replaceAll("[TORG_10]", applyDiscount(data.price_usd, 10))
-    .replaceAll("[TORG_15]", applyDiscount(data.price_usd, 15))
-    .replaceAll("[TORG_20]", applyDiscount(data.price_usd, 20));
 
   const Tag = ({ text }) => {
     return (
@@ -46,7 +41,7 @@ const SMSModal = ({ data, closeModal, defaultMessage, setDefault }) => {
           <textarea
             onChange={(e) => {
               const inputValue = e.target.value;
-              if (inputValue.length > 300) {
+              if (inputValue > 300) {
                 setSmsTagsMessage(inputValue.slice(0, 300));
               } else {
                 setSmsTagsMessage(inputValue);
@@ -62,6 +57,7 @@ const SMSModal = ({ data, closeModal, defaultMessage, setDefault }) => {
         <div className="flex gap-3">
           <button
             onClick={() => {
+              saveSmsMesssage();
               setSmsMessage(finalMessage);
               closeModal();
             }}
@@ -79,7 +75,7 @@ const SMSModal = ({ data, closeModal, defaultMessage, setDefault }) => {
             Скасувати
           </button>
         </div>
-        <div className="relative bg-green-500 p-2 rounded-md text-xs flex items-center gap-2">
+        <div className="relative bg-green-500 p-2 rounded-md text-xs flex flex-col gap-1">
           <svg
             width="17"
             height="11"
@@ -91,6 +87,9 @@ const SMSModal = ({ data, closeModal, defaultMessage, setDefault }) => {
             <path d="M16.5 11L0 1.5L16.5 0V11Z" fill="#22c55e" />
           </svg>
           <p className="overflow-hidden">{finalMessage}</p>
+          <span className="self-end text-xs text-white/80">
+            {finalMessage.length}
+          </span>
         </div>
 
         <h1 className="font-bold text-lg">Як праюють [ТЕГИ]?</h1>

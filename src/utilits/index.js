@@ -607,3 +607,10 @@ export const searchByNumber = async (data, fetchClient, phones) => {
     }
   }
 };
+
+export const applyDiscount = (price, discountPercentage) => {
+  const priceNum = parseFloat(price);
+  const discount = priceNum * (discountPercentage / 100);
+  const discountedPrice = priceNum - discount;
+  return Math.round(discountedPrice / 100) * 100;
+};

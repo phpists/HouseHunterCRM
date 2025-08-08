@@ -13,9 +13,6 @@ import { handleGetPrices } from "../../components/ObjectCard/Info/Price";
 import { CARS_STATUSES } from "../../components/Base/Base";
 import { ObjectPriceHistory } from "../../components/ObjectPriceHistory";
 import { Modal } from "../../components/Modal/Modal";
-import Viber from "../../assets/images/viber.svg";
-import Phone from "../../assets/images/small-phone.svg";
-import Telegram from "../../assets/images/telegram.svg";
 import Like from "../../assets/images/heart.svg";
 import Eye from "../../assets/images/eye.svg";
 import rst from "../../assets/images/rst.svg";
@@ -34,7 +31,6 @@ import {
 } from "../../utilits";
 import DaysOnSale from "../../components/Car/DaysOnSale";
 import { auth } from "../../store/auth/auth.api";
-import { ReactComponent as Exchange } from "../../assets/images/exchange.svg";
 import { ReactComponent as ChatIcon } from "../../assets/images/chat-grey.svg";
 import { Tags } from "../../components/ObjectCard/Tags/Tags";
 import SMSModal from "../../components/Car/SMSModal";
@@ -52,7 +48,7 @@ const Car = () => {
   const [isOpenContactsModal, setIsOpenContactsModal] = useState(false);
   const { user } = useAppSelect((state) => state.auth);
   const { isFavorite } = useAppSelect((state) => state.car);
-  const { setIsFavorite } = useActions();
+  const { setIsFavoriteCar } = useActions();
   const carColor = CarsColor.filter(({ id }) => id === carData?.id_color)[0];
   const [addObjectsToFavorites] = useLazyAddToFavoritesQuery();
 
@@ -67,10 +63,10 @@ const Car = () => {
     let favorites = JSON.parse(localStorage.getItem("favorite")) || [];
     if (favorites.includes(carData.id_hash)) {
       favorites = favorites.filter((id) => id !== carData.id_hash);
-      setIsFavorite(false);
+      setIsFavoriteCar(false);
     } else {
       favorites.push(carData.id_hash);
-      setIsFavorite(true);
+      setIsFavoriteCar(true);
     }
     localStorage.setItem("favorite", JSON.stringify(favorites));
   }
@@ -143,7 +139,7 @@ const Car = () => {
           isCarPage
           handleToggleFavoriteStatus={handleToggleFavoriteStatus}
           isFavorite={isFavorite}
-          setIsFavorite={setIsFavorite}
+          setIsFavorite={setIsFavoriteCar}
         />
 
         <div>
@@ -243,7 +239,7 @@ const Car = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
+          <div className=" grid grid-cols-2 gap-2">
             <Tag
               title={`${
                 Number(carData?.сar_mileage) / 1000 === 0
@@ -251,10 +247,12 @@ const Car = () => {
                   : Number(carData?.сar_mileage) / 1000
               } тис. км.`}
               iIcom="bi bi-circle-fill"
+              className="!text-xs"
             />
             <Tag
               title={getFromCarMainInfoFiledsOptions("kpp", carData.kpp)}
               iIcom="bi bi-circle-fill"
+              className="!text-xs"
             />
             <Tag
               title={`${getFromCarMainInfoFiledsOptions(
@@ -266,19 +264,28 @@ const Car = () => {
                   : ""
               }`}
               iIcom="bi bi-circle-fill"
+              className="!text-xs"
             />
-            <Tag title={carData.location_name} iIcom="bi bi-circle-fill" />
+            <Tag
+              title={carData.location_name}
+              iIcom="bi bi-circle-fill"
+              className="!text-xs"
+            />
           </div>
 
           <Tag
             iIcom="bi bi-circle-fill"
-            className="text-xs mt-2"
+            className="!text-xs mt-2"
             titleHtml={
               <>
                 <span>{drive_type && drive_type + " • "}</span>
                 <span>{id_type_body && id_type_body + " • "}</span>
                 <span>
                   {carData.rubric_name && carData.rubric_name + " • "}
+                </span>
+                <span>
+                  {carData?.seatingCapacity != 0 &&
+                    `${carData?.seatingCapacity} місць` + " • "}
                 </span>
                 <span>{carColor?.name && carColor?.name}</span>
               </>
@@ -413,11 +420,15 @@ const Car = () => {
           <div className="flex my-4 gap-2">
             {carData?.exchangePossible !== "0" && (
               <Tag
-                Icon={<Exchange />}
+                iIcom="bi bi-arrow-left-right"
                 className="!text-xs flex !bg-orange-500/20 !text-orange-400"
-                title={`Можливий обмін`}
+                title={`Обмін`}
               />
             )}
+            {carData?.exchangePossible !== "0" &&
+              carData?.exchangeType.length !== 0 && (
+                <Tag className="!text-xs" title={carData?.exchangeType} />
+              )}
             {carData?.id_dtp_status !== "0" && (
               <Tag className="!text-xs" title={`Участь у дтп`} />
             )}

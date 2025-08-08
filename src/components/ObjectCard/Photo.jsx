@@ -184,7 +184,7 @@ export const Photo = ({
 
 const StyledPhoto = styled.img`
   border-radius: 5px !important;
-  height: 170px !important;
+  height: 180px !important;
   object-fit: contain;
   background: var(--main-bg);
   &.empty {
