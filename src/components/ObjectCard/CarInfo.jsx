@@ -6,7 +6,7 @@ import { Tags } from "./Tags/Tags";
 import { source } from "../../constants";
 import { ReactComponent as ChatIcon } from "../../assets/images/chat-grey.svg";
 import DaysOnSale from "../Car/DaysOnSale";
-import { getCommentDate, searchByNumber } from "../../utilits";
+import { formatDate, searchByNumber } from "../../utilits";
 
 export const CarInfo = ({
   data,
@@ -65,7 +65,7 @@ export const CarInfo = ({
               }}
             ></div>
             <p className="mt-2 text-xs text-white/60 flex gap-2">
-              <span>{getCommentDate(+data.date_update_comment)}</span>
+              <span>{formatDate(+data.date_update_comment)}</span>
               <span>{data.comment_autoria_days}</span>
             </p>
           </div>

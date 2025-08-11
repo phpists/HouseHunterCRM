@@ -24,7 +24,7 @@ import Heart from "../../assets/images/red-heart.svg";
 import EmptyHeart from "../../assets/images/empty-heart.svg";
 import { useAppSelect } from "../../hooks/redux";
 import {
-  getCommentDate,
+  formatDate,
   getFromCarMainInfoFiledsOptions,
   handleCopy,
   handleResponse,
@@ -362,7 +362,7 @@ const Car = () => {
                 }}
               ></div>
               <p className="mt-2 text-xs text-white/60 flex gap-2">
-                <span>{getCommentDate(+carData.date_update_comment)}</span>
+                <span>{formatDate(+carData.date_update_comment)}</span>
                 <span>{carData.comment_autoria_days}</span>
               </p>
             </div>

@@ -1,35 +1,10 @@
 import styled from "styled-components";
 import { CARS_STATUSES } from "../Base/Base";
 import { Tag } from "../ObjectCard/MainInfo/Tags/Tag";
-import {
-  differenceInDays,
-  differenceInMinutes,
-  differenceInHours,
-  format,
-} from "date-fns";
-import { uk } from "date-fns/locale";
+import { formatDate } from "../../utilits";
 
 const DaysOnSale = ({ carData, isCarPage }) => {
   const inputDate = new Date(carData.dt_add_in_source * 1000);
-  const now = new Date();
-
-  const daysDiff = differenceInDays(now, inputDate);
-  const minutesDiff = differenceInMinutes(now, inputDate);
-  const hoursDiff = differenceInHours(now, inputDate);
-
-  const formatDate = () => {
-    if (daysDiff === 2) {
-      return "Позавчора";
-    } else if (daysDiff === 1) {
-      return "Вчора";
-    } else if (minutesDiff < 60) {
-      return `${minutesDiff} хвилин тому`;
-    } else if (hoursDiff < 24) {
-      return `${hoursDiff} годин тому`;
-    } else {
-      return format(inputDate, "dd.MM.yyyy", { locale: uk });
-    }
-  };
 
   const fullFormattedDate = inputDate
     .toLocaleString("uk-UA", {
@@ -54,7 +29,7 @@ const DaysOnSale = ({ carData, isCarPage }) => {
 
   return (
     <p className="text-sm text-white/60 flex flex-row-reverse md:flex-row gap-1 items-center">
-      {!isCarPage && formatDate()}
+      {!isCarPage && formatDate(carData?.dt_add_in_source)}
       <Wrapper>
         <Tag
           className={`

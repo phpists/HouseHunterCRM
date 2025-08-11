@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Modal } from "../../components/Modal/Modal";
 import Comment from "../../assets/images/chat.svg";
+import { formatDate } from "../../utilits";
 
 export const CommentModal = ({ onClose, comment }) => {
   return (
@@ -14,12 +15,21 @@ export const CommentModal = ({ onClose, comment }) => {
           <h1>Коментар</h1>
         </div>
 
-        <div
-          className="text bg-[var(--tag-bg-2)] p-2 rounded"
-          dangerouslySetInnerHTML={{
-            __html: comment?.length > 0 ? comment : "Коментар відсутній",
-          }}
-        ></div>
+        <div className="bg-[var(--tag-bg-2)] p-2 rounded">
+          <div
+            className="text"
+            dangerouslySetInnerHTML={{
+              __html:
+                comment.comment_autoria?.length > 0
+                  ? comment.comment_autoria
+                  : "Коментар відсутній",
+            }}
+          ></div>
+          <p className="mt-2 text-xs text-white/60 flex gap-2">
+            <span>{formatDate(+comment.date_update_comment)}</span>
+            <span>{comment.comment_autoria_days}</span>
+          </p>
+        </div>
       </Modal>
     </StyledCommentModal>
   );

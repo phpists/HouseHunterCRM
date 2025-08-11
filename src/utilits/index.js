@@ -5,6 +5,13 @@ import avatar3 from "../assets/images/avatars/3.svg";
 import avatar4 from "../assets/images/avatars/4.svg";
 import { ReactComponent as CloseIcon } from "../assets/images/close-modal.svg";
 import { CarMainInfoFileds } from "../constants";
+import {
+  differenceInDays,
+  differenceInHours,
+  differenceInMinutes,
+  format,
+} from "date-fns";
+import { uk } from "date-fns/locale";
 
 export const showAlert = (type, msg) => {
   let timeout;
@@ -615,11 +622,22 @@ export const applyDiscount = (price, discountPercentage) => {
   return Math.round(discountedPrice / 100) * 100;
 };
 
-export const getCommentDate = (commentDate) => {
-  const date = new Date(commentDate * 1000);
-  const day = String(date.getUTCDate()).padStart(2, "0");
-  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-  const year = date.getUTCFullYear();
-  const formattedDate = `${day}.${month}.${year}`;
-  return formattedDate;
+export const formatDate = (date) => {
+  const inputDate = new Date(date * 1000);
+  const now = new Date();
+  const daysDiff = differenceInDays(now, inputDate);
+  const minutesDiff = differenceInMinutes(now, inputDate);
+  const hoursDiff = differenceInHours(now, inputDate);
+
+  if (daysDiff === 2) {
+    return "Позавчора";
+  } else if (daysDiff === 1) {
+    return "Вчора";
+  } else if (minutesDiff < 60) {
+    return `${minutesDiff} хвилин тому`;
+  } else if (hoursDiff < 24) {
+    return `${hoursDiff} годин тому`;
+  } else {
+    return format(inputDate, "dd.MM.yyyy", { locale: uk });
+  }
 };
