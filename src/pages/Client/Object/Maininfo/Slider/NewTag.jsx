@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const NewTag = () => <StyledNewTag>New</StyledNewTag>;
+export const NewTag = ({ className }) => (
+  <StyledNewTag className={className}>New</StyledNewTag>
+);
 
 const StyledNewTag = styled.div`
   padding: 1px 4px 2px 4px;
