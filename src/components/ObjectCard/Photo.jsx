@@ -186,7 +186,6 @@ const StyledPhoto = styled.img`
   border-radius: 5px !important;
   height: 180px !important;
   object-fit: contain;
-  background: var(--main-bg);
   &.empty {
     object-fit: cover;
   }

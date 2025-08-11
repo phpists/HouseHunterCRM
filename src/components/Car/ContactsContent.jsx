@@ -30,11 +30,12 @@ const ContactsContent = ({ phones, data, isMainPage }) => {
 
   // set default message
   useEffect(() => {
-    const storageSmsMessage = localStorage.getItem("smsMessage");
     const storageSmsTagsMessage = localStorage.getItem("smsTagsMessage");
-    // console.log(storageSmsMessage);
-    // console.log(storageSmsTagsMessage);
-    setSmsMessage(storageSmsMessage || finalMessage(defaultMessage));
+    setSmsMessage(
+      smsTagsMessage
+        ? finalMessage(smsTagsMessage)
+        : finalMessage(defaultMessage)
+    );
     setSmsTagsMessage(storageSmsTagsMessage || defaultMessage);
   }, []);
 

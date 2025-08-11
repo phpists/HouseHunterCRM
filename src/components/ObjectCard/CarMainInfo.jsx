@@ -115,7 +115,7 @@ export const CarMainInfo = ({
               )}
             </div>
             <span
-              className="!text-2xl md:!text-lg cursor-pointer hover:underline"
+              className="!text-xl md:!text-lg cursor-pointer hover:underline"
               onClick={(e) => {
                 e.stopPropagation();
                 addViewLink(data.id);
@@ -143,7 +143,7 @@ export const CarMainInfo = ({
 
       <div className="grid grid-cols-2 gap-1 mt-1">
         <Tag
-          className={"!text-xs"}
+          className={"!text-sm"}
           title={`${
             Number(data?.сar_mileage) / 1000 === 0
               ? "-"
@@ -152,12 +152,12 @@ export const CarMainInfo = ({
           iIcom="bi bi-circle-fill"
         />
         <Tag
-          className={"!text-xs"}
+          className={"!text-sm"}
           title={getFromCarMainInfoFiledsOptions("kpp", data.kpp)}
           iIcom="bi bi-circle-fill"
         />
         <Tag
-          className={"!text-xs"}
+          className={"!text-sm"}
           title={`${
             data.volume_engine && data.volume_engine !== "0"
               ? `${Number(data.volume_engine) / 1000} л`
@@ -169,18 +169,18 @@ export const CarMainInfo = ({
           iIcom="bi bi-circle-fill"
         />
         <Tag
-          className={"!text-xs"}
+          className={"!text-sm"}
           title={location}
           iIcom="bi bi-circle-fill"
         />
 
         <Tag
-          className={"md:!hidden !text-xs"}
+          className={"md:!hidden !text-sm"}
           title={drive_type}
           iIcom="bi bi-circle-fill"
         />
         <Tag
-          className="md:!hidden !text-xs"
+          className="md:!hidden !text-sm"
           iIcom="bi bi-circle-fill"
           title={id_type_body}
         />
@@ -188,7 +188,7 @@ export const CarMainInfo = ({
 
       {(drive_type || id_type_body) && (
         <Tag
-          className="!hidden md:!flex !text-xs mt-1"
+          className="!hidden md:!flex !text-sm mt-1"
           iIcom="bi bi-circle-fill"
           titleHtml={
             <>
@@ -272,30 +272,22 @@ export const CarMainInfo = ({
           {data?.Count_object > 10 ? (
             <Tag
               className="!text-xs !bg-red-500/20 !text-red-400"
-              title={`Перекуп ${
-                data?.Count_object && `(${data?.Count_object})`
-              }`}
+              title={`Перекуп ${`(${data?.Count_object})`}`}
             />
           ) : data?.Count_object > 5 ? (
             <Tag
               className="!text-xs !bg-red-500/20 !text-red-400"
-              title={`Перекуп ? ${
-                data?.Count_object && `(${data?.Count_object})`
-              }`}
+              title={`Перекуп ? ${`(${data?.Count_object})`}`}
             />
           ) : data?.Count_object > 2 ? (
             <Tag
               className="!text-xs"
-              title={`Перекуп ? ${
-                data?.Count_object && `(${data?.Count_object})`
-              }`}
+              title={`Перекуп ? ${`(${data?.Count_object})`}`}
             />
           ) : (
             <Tag
               className="!text-xs !bg-green-500/20 !text-green-400"
-              title={`Продавець ${
-                data?.Count_object && `(${data?.Count_object})`
-              }`}
+              title={`Продавець ${`(${data?.Count_object})`}`}
             />
           )}
         </div>

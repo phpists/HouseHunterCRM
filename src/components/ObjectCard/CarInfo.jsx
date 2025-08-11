@@ -6,7 +6,7 @@ import { Tags } from "./Tags/Tags";
 import { source } from "../../constants";
 import { ReactComponent as ChatIcon } from "../../assets/images/chat-grey.svg";
 import DaysOnSale from "../Car/DaysOnSale";
-import { searchByNumber } from "../../utilits";
+import { getCommentDate, searchByNumber } from "../../utilits";
 
 export const CarInfo = ({
   data,
@@ -35,15 +35,6 @@ export const CarInfo = ({
         : "-";
     textRef.current.innerHTML = textDividedByBr;
   }, [data]);
-
-  const getCommentDate = (commentDate) => {
-    const date = new Date(commentDate * 1000);
-    const day = String(date.getUTCDate()).padStart(2, "0");
-    const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-    const year = date.getUTCFullYear();
-    const formattedDate = `${day}.${month}.${year}`;
-    return formattedDate;
-  };
 
   return (
     <StyledCarInfo>
@@ -127,21 +118,22 @@ export const CarInfo = ({
           {data?.Count_object > 10 ? (
             <Tag
               className="!text-xs !bg-red-500/20 !text-red-400"
-              title={"Перекуп"}
+              title={`Перекуп ${`(${data?.Count_object})`}`}
             />
           ) : data?.Count_object > 5 ? (
             <Tag
-              className="whitespace-nowrap !text-xs !bg-red-500/20 !text-red-400"
-              title={"Перекуп ?"}
+              className="!text-xs !bg-red-500/20 !text-red-400"
+              title={`Перекуп ? ${`(${data?.Count_object})`}`}
             />
           ) : data?.Count_object > 2 ? (
-            <Tag className="whitespace-nowrap !text-xs" title={"Перекуп ?"} />
+            <Tag
+              className="!text-xs"
+              title={`Перекуп ? ${`(${data?.Count_object})`}`}
+            />
           ) : (
             <Tag
-              className="whitespace-nowrap !text-xs !bg-green-500/20 !text-green-400"
-              title={`Продавець ${
-                data?.Count_object && `(${data?.Count_object})`
-              }`}
+              className="!text-xs !bg-green-500/20 !text-green-400"
+              title={`Продавець ${`(${data?.Count_object})`}`}
             />
           )}
         </div>

@@ -24,6 +24,7 @@ import Heart from "../../assets/images/red-heart.svg";
 import EmptyHeart from "../../assets/images/empty-heart.svg";
 import { useAppSelect } from "../../hooks/redux";
 import {
+  getCommentDate,
   getFromCarMainInfoFiledsOptions,
   handleCopy,
   handleResponse,
@@ -247,12 +248,12 @@ const Car = () => {
                   : Number(carData?.сar_mileage) / 1000
               } тис. км.`}
               iIcom="bi bi-circle-fill"
-              className="!text-xs"
+              className="!text-sm"
             />
             <Tag
               title={getFromCarMainInfoFiledsOptions("kpp", carData.kpp)}
               iIcom="bi bi-circle-fill"
-              className="!text-xs"
+              className="!text-sm"
             />
             <Tag
               title={`${getFromCarMainInfoFiledsOptions(
@@ -264,18 +265,18 @@ const Car = () => {
                   : ""
               }`}
               iIcom="bi bi-circle-fill"
-              className="!text-xs"
+              className="!text-sm"
             />
             <Tag
               title={carData.location_name}
               iIcom="bi bi-circle-fill"
-              className="!text-xs"
+              className="!text-sm"
             />
           </div>
 
           <Tag
             iIcom="bi bi-circle-fill"
-            className="!text-xs mt-2"
+            className="!text-sm mt-2"
             titleHtml={
               <>
                 <span>{drive_type && drive_type + " • "}</span>
@@ -317,7 +318,7 @@ const Car = () => {
             )}
           </div>
 
-          <p className="text-xs my-4 text-white/60">{carData?.description}</p>
+          <p className="text-base my-4 text-white/60">{carData?.description}</p>
 
           {carData?.technicalCondition2.length !== 0 && (
             <div className="mb-4">
@@ -360,16 +361,9 @@ const Car = () => {
                   __html: carData.comment_autoria,
                 }}
               ></div>
-              <p className="text-sm text-white/60">
-                {new Date(+carData.date_update_comment).toLocaleDateString(
-                  "uk-UA",
-                  {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                  }
-                )}{" "}
-                | {carData.comment_autoria_days}
+              <p className="mt-2 text-xs text-white/60 flex gap-2">
+                <span>{getCommentDate(+carData.date_update_comment)}</span>
+                <span>{carData.comment_autoria_days}</span>
               </p>
             </div>
           )}

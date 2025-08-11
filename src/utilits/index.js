@@ -614,3 +614,12 @@ export const applyDiscount = (price, discountPercentage) => {
   const discountedPrice = priceNum - discount;
   return Math.round(discountedPrice / 100) * 100;
 };
+
+export const getCommentDate = (commentDate) => {
+  const date = new Date(commentDate * 1000);
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const year = date.getUTCFullYear();
+  const formattedDate = `${day}.${month}.${year}`;
+  return formattedDate;
+};
