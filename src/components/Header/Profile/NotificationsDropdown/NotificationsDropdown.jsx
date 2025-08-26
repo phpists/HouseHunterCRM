@@ -118,8 +118,8 @@ export const NotificationsDropdown = ({
             ?.map(
               (data, i) =>
                 i < 9 && <Notification key={data?.id_hash} data={data} />
-            )}
-          <Button
+            )} */}
+          {/* <Button
             title="Переглянути всі сповіщення"
             className="mt-2"
             onClick={() => navigate("/notifications")}
