@@ -31,13 +31,16 @@ const ContactsContent = ({ phones, data, isMainPage }) => {
   // set default message
   useEffect(() => {
     const storageSmsTagsMessage = localStorage.getItem("smsTagsMessage");
+
     setSmsMessage(
-      smsTagsMessage
-        ? finalMessage(smsTagsMessage)
+      storageSmsTagsMessage
+        ? finalMessage(storageSmsTagsMessage)
         : finalMessage(defaultMessage)
     );
     setSmsTagsMessage(storageSmsTagsMessage || defaultMessage);
   }, []);
+
+  console.log(smsMessage);
 
   return (
     <>
@@ -71,7 +74,7 @@ const ContactsContent = ({ phones, data, isMainPage }) => {
                 {isMainPage ? (
                   <>
                     <a
-                      href={`viber://chat?number=${phone}`}
+                      href={`viber://contact?number=${phone}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="cursor-pointer flex justify-center"

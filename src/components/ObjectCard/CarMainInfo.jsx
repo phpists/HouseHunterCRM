@@ -100,7 +100,7 @@ export const CarMainInfo = ({
       <div className="car-info-header">
         <div>
           <h1 className="flex items-center gap-1">
-            <div
+            <h1
               className="cursor-pointer"
               onClick={() => data?.link && window.open(data?.link, "_blank")}
             >
@@ -113,7 +113,7 @@ export const CarMainInfo = ({
               {data.id_source === "3" && (
                 <img src={rst} alt="RST" className="w-8" />
               )}
-            </div>
+            </h1>
             <span
               className="!text-xl md:!text-lg cursor-pointer hover:underline"
               onClick={(e) => {
@@ -130,7 +130,7 @@ export const CarMainInfo = ({
           </div>
           {data?.comment_autoria && onOpenCommentAutoria && (
             <div className="md:hidden relative">
-              <div className="absolute top-[-5px] right-[-5px] before:inline-block before:w-1.5 before:h-1.5 before:mr-2 before:bg-red-500 before:rounded-full" />
+              <div className="absolute top-[-5px] right-[-5px] before:inline-block before:w-1.5 before:h-1.5 before:mr-2 before:bg-red-500 before:rounded-full " />
               <ActionButton
                 Icon={ChatIcon}
                 onClick={onOpenCommentAutoria}

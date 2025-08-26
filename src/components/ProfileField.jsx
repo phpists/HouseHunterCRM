@@ -176,7 +176,10 @@ export const ProfileField = ({
                 onChange={onChange}
                 inputClassName="value"
                 onKeyDown={handlePressKey}
-                onFocus={onFocus}
+                onFocus={() => {
+                  handleChangePhoneCode("1");
+                  onFocus();
+                }}
                 mask={mask}
                 placeholder={phonePlaceholder}
               />

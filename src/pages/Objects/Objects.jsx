@@ -732,8 +732,12 @@ const Objects = () => {
     ) {
       return;
     }
-    currentPage.current += 1;
-    handleGetObjects();
+
+    // load more objects only if we are online
+    if (navigator.onLine) {
+      currentPage.current += 1;
+      handleGetObjects();
+    }
   };
 
   useEffect(() => {
